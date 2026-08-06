@@ -6,7 +6,9 @@
 | **Target user** | Intercity round-trip bus travellers, 22–30, metro-based, booking online. **Segmented by trip, not by person** — the same traveller books both legs together on a fixed-window trip and defers on an open-ended one (n28 n41 n42 n58 n59 n08) |
 | **AARRR stage** | Revenue (primary) |
 | **Feature / flow** | The return decision inside the outbound booking session. Before-vs-after payment is a design decision, deliberately not fixed here — it belongs in BRIEF.md |
-| **Success metric** | In-session return-attach rate: % of one-way booking sessions that add a return leg in the same session |
+| **Input metric** (ours) | In-session return-attach rate: % of one-way booking sessions that add a return leg before payment. **Reclassified from "success metric" on 2026-08-03** — per the input-vs-output distinction, this is a behaviour one step from the design decision, which is what a designer can own |
+| **Output metrics** (influenced, not owned) | Round-trip attach rate · commission per session · return-leg leakage to competitors (26.1%, n75) · cancellation and support-contact rate |
+| **North Star** (inferred, not published) | Journeys booked on RedBus per active traveller per year. This feature captures share; it does not create demand |
 | **Guardrail** | Outbound-booking completion must stay at or above **95% of its pre-change baseline** — the return step may cost at most 5% relative of outbound conversions. *Set as a concept target; no live baseline exists* |
 | **Hypothesis (v2)** | Travellers defer because the product has no state between *booked* and *nothing*. Holding a return requires buying it, and buying it requires a date they often don't have. Giving the return a state that doesn't demand the date — and making the price of waiting visible while they decide to wait — lifts in-session return-attach rate |
 

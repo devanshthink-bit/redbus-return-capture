@@ -57,7 +57,10 @@ reference and using it mid-flow would be off-pattern.
 
 **Base:** 2 · **Steps in use:** 2 · 4 · 6 · 8 · 12 · 14 · 16
 **Screen margin:** 16 (measured: card x 48–1157 px @3x on a 402pt screen)
-**Card width:** 370 · **Card padding:** 16 top, 16 sides, 12 bottom · **Card gap:** 8
+**Card width:** 370 · **Card padding:** 16 top, 16 sides, 12 bottom · **Card gap:** 16
+*(Card gap was 8 to match redBus. Raised to 16 by molades-attack, 2026-08-03 — at 8 the
+between-group gap equalled the inside-group gap, so there were no groups. This is a deliberate
+departure from the reference and the only one in the spacing system.)*
 
 ### Measured internal rhythm of a bus card
 | From → to | Gap |
@@ -83,6 +86,13 @@ reference and using it mid-flow would be off-pattern.
 | Skeleton | `#F2F2F7` | loading placeholder blocks on white |
 
 | Chip | `#E9EAF6` | feature pills — movability, amenities |
+| Interactive edge | `#767680` | every boundary you can act on — fields, chips, point selectors, secondary buttons, seats. 4.49:1 |
+| Chevron | `#2222CC` | the back control. Sampled from redBus, 9.68:1 |
+| Seat, booked | `#EDEDED` | seat fill. Carries a × as well — never colour alone |
+| Chip, unavailable | `#F1F1F1` | the *Cannot be moved* pill |
+| Seat, women only | `#A0326B` | border and glyph. Carries a ♀ as well. 6.64:1 |
+| Field, hover | `#C9C9CF` | border on hover only |
+| Field, pressed | `#FBFBFC` | background on press only |
 | Divider / dash | `#E6E6E6` | the en-dash between departure and arrival times |
 
 **Every value above was sampled from the screenshots and then verified identical in the rendered
@@ -98,9 +108,9 @@ component sheet.** `#C54646` and `#458442` appear unchanged across four differen
 Primary `#C54646` white 16/700; secondary white with a `#D8D8DC` border and no shadow.
 Measured on IMG_4595: height 48.3pt, left edge 24pt in at the cap, 0pt at mid — a true pill.
 **Error banner:** full-bleed, 42 tall, `#A4582A`, white 16pt with a circle-slash glyph, directly under the nav.
-**Feature pill:** height 24, radius 6, horizontal padding 12, 13pt ink on `#E9EAF6`
-**Rating badge:** 47 wide. Dark block `#458442` 20 tall, 13pt/600 white. Count block `#E0F3D9`
-18 tall, 12pt `#2E5C2A`. Both radius 4, right-aligned to the 16pt card padding
+**Feature pill:** height 24, radius 4, horizontal padding 12, **12pt** ink on `#E9EAF6`
+**Rating badge:** 47 wide. Dark block `#458442` 20 tall, **12pt/700** white. Count block `#E0F3D9`
+20 tall, 12pt `#2E5C2A`. Both radius 4, right-aligned to the 16pt card padding
 
 ## Density
 
@@ -207,6 +217,13 @@ Two of my decisions were wrong and are now corrected against the real app:
 
 Both were caught only because six more screenshots turned up. Worth saying in the case study:
 the design language was wrong in two places until the failure states were looked at.
+
+## Not part of the design
+
+The prototype carries a screen switcher and a state switcher in two dark rails. Those use
+`#4F46E5`, `#0D9488`, `#18181B`, `#27272A`, `#3F3F46`, the `#2A2A2E` page backdrop behind the phone, and neutral greys — **deliberately outside
+this palette**, so nothing in the tooling can be mistaken for the product. They are prototype
+chrome and would not ship.
 
 ## Rules for anything generated from this
 

@@ -7,10 +7,14 @@
 
 Bet (v2):   Travellers defer because the product has no state between booked and nothing — holding a return means buying it, and buying it needs a date they don't have
 Evidence:   enough — 8 interviews + survey (n=23) + 1 App Store review, coded into 102 notes and 6 clusters
-Files:      SCOPE.md [x] v2 · RESEARCH.md [x] · NOTES.md [x] · BRIEF.md [x] · DESIGN_LANGUAGE.md [x] · build [ ] · live [ ]
-Rounds:     2 (prior construct + affinity board audited; then the live FlexiTicket terms broke the problem statement and it was rewritten)
-Open:       Same-operator-only date change — likely, unconfirmed. No landscape. Reddit never collected. C6 parked.
-Next:       molades_build
+Files:      SCOPE.md [x] v2 · RESEARCH.md [x] · NOTES.md [x] · BRIEF.md [x] · DESIGN_LANGUAGE.md [x] · TEST_SCRIPT.md [x] · build [x] · live [x]
+Live:       https://zesty-biscuit-ffc71f.netlify.app  (auto-deploys from GitHub)
+Repo:       github.com/devanshthink-bit/redbus-return-capture  (private; raw/ transcripts gitignored)
+Build:      10 screens · 13 switchable states
+Rounds:     5 on the design language · 4 build slices · 1 attack pass, both halves
+Open:       Same-operator-only date change unconfirmed. No landscape. Reddit never collected.
+            C6 parked. Three brief items stated but not built — see BRIEF.md "Known gaps".
+Next:       molades_test
 
 ## Entries
 
@@ -428,7 +432,7 @@ Now know:           An error state has to disable the action it invalidates. Sho
                     every state in the build, not just this one.
 
 **2026-08-03** — Deployed. **https://zesty-biscuit-ffc71f.netlify.app**
-Public visibility, no login. Eight screens, twelve switchable states.
+Public visibility, no login. (At that point: 8 screens, 12 states. Now 10 and 13.)
 (First drop was adorable-trifle-c52026 — superseded. Netlify Drop mints a new site per drop
 until the site is claimed to an account, so redeploys must go through the site's own Deploys
 tab to keep one URL.)
@@ -755,3 +759,49 @@ Now know:  Third gap of the same kind in one day — something written in BRIEF.
            A file-versus-document audit is not a one-off before testing. It is what should happen
            at the end of every build slice, and I have added it to my own checklist rather than
            relying on remembering.
+
+**2026-08-03** — Full sanity audit of every file against every other file, prompted by Devansh
+asking why so much was being missed. Ran mechanically rather than from memory. Six real
+inconsistencies, all now fixed. Root cause named below.
+
+CHANGE · 2026-08-03 · sanity audit
+1. LOG.md header block was stale — said "Next: molades_build" and "build [ ] · live [ ]" while
+   the build was finished and deployed. That block is the first thing molades-start reads, so a
+   stale one would have sent a future session to the wrong step. Now carries the live URL, the
+   repo, and the real screen and state counts.
+2. SCOPE.md still called in-session return-attach a "success metric". A LEARNED entry from the
+   same day says it is an INPUT metric and should be reclassified. It never was. Now reclassified,
+   with output metrics and the inferred North Star written alongside it.
+3. DESIGN_LANGUAGE.md said card gap 8. molades-attack raised it to 16 for rhythm and the language
+   file was never updated — so the document contradicted both the build and the rhythm rule in
+   BRIEF.md. Now 16, with the departure from redBus marked as deliberate.
+4. DESIGN_LANGUAGE.md still specified 13pt pills and a 13pt rating badge. Both became 12pt when
+   the type scale was cut to five sizes. Now correct.
+5. Five colours were live in the product UI and absent from the palette — #2222CC the back
+   chevron, #EDEDED booked seats, #F1F1F1 the unavailable pill, #C9C9CF hover, #FBFBFC pressed,
+   plus #A0326B for women-only seats. The language file says "do not introduce a new colour" and
+   six had been introduced. All now declared with roles.
+6. BRIEF.md said "7 new · 5 modified" screens. Booking confirmed had since been built as a new
+   screen, not a modification. Now 8 new · 4 modified.
+
+Verified after the fixes, mechanically:
+   product colours not declared ... none
+   type sizes .................... 20 / 18 / 16 / 14 / 12   (five, as declared)
+   weights ....................... 700 / 500 / 400          (500 is the stated redBus exception)
+   off-scale spacing ............. none
+   words table ................... no "Back by", no "Reschedule", no "Date change", no bare "Free"
+   scope creep ................... no reminders, sharing, discounts, login or search
+   focus-visible ................. 7 rules
+   prefers-reduced-motion ........ present
+   aria-labels ................... 10
+
+LEARNED · 2026-08-03 · sanity audit
+Root cause, stated plainly: I was patching from the conversation rather than rebuilding from the
+documents, and I never diffed the two. Every miss today came from that — "no change fee", Idea 8,
+Idea 9, the Booking confirmed screen, and all six inconsistencies above. Each was already written
+down correctly somewhere.
+The documents were never wrong. The build drifted from them, and the documents then drifted from
+the build, and nothing was checking either direction.
+What changes: a mechanical file-versus-document check at the end of every slice — colours, type,
+spacing, words, screens, states — not a manual re-read, because a manual re-read is what failed
+six times in one day.

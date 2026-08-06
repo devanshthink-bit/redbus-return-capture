@@ -290,7 +290,9 @@ on the ticket it is not *Change date* in the confirmation.
 
 ## Screens
 
-**7 new · 5 modified.** With states, roughly 24 artboards.
+**8 new · 4 modified.** With states, roughly 26 artboards.
+*(Booking confirmed moved from modified to new — the two-leg version shares nothing with the
+one-leg original.)*
 
 | | The place where… |
 |---|---|
