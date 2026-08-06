@@ -15,8 +15,9 @@
 [hidden]{display:none!important}   /* .err uses display:flex, which beat the hidden attribute */
 html,body{height:100%}
 body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;color:var(--ink);
- -webkit-font-smoothing:antialiased;display:flex;justify-content:center;align-items:flex-start;padding:24px 0 32px}
-.phone{width:402px;height:874px;background:var(--page);position:relative;overflow:hidden;display:flex;flex-direction:column;
+ -webkit-font-smoothing:antialiased;display:flex;justify-content:center;align-items:flex-start;padding:24px 0}
+.phone{width:402px;height:874px;margin-block:auto;   /* centres vertically and still scrolls if the window is shorter */
+ background:var(--page);position:relative;overflow:hidden;display:flex;flex-direction:column;
  border-radius:24px;box-shadow:0 12px 40px rgba(0,0,0,.4)}
 
 /* ---------- chrome ---------- */
