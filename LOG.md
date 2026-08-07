@@ -1066,3 +1066,21 @@ decision screen has not landed.
 LEARNED · 2026-08-07 · molades-build
 When a claim is corrected, the fix belongs first on the screen where the traveller forms
 the belief, not on the screens where they'd find out it was wrong.
+
+CRITIQUE · 2026-08-07 · molades-build · Source: user
+"No change fee might signal to them that they don't have to pay the difference."
+Correct, and it is the second instance of the same fault in one day: a cost promise made
+where the traveller decides, qualified only on a screen they reach afterwards. Two places
+said it unqualified — the Last day rules and the Move earlier row on the ticket. Both now
+carry "you'd pay any fare difference", matching the return bus list, which already did.
+
+The empty state said "allows a free date change", borrowing redBus's badge wording to
+describe our own mechanism. Changed to "can be moved to an earlier day" so the two names
+stay distinct — TEST_SCRIPT.md is already watching whether participants conflate them.
+The two remaining "Free date change" strings are redBus's real badge on the outbound list
+and stay as they are.
+
+LEARNED · 2026-08-07 · molades-build
+"Free cannot be the headline" was written here on 2026-08-05 and I have now broken it
+twice. Writing a rule in the log does not enforce it. Grep for the claim across the build
+before shipping copy that touches money.
