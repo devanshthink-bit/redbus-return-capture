@@ -8,8 +8,8 @@
 Bet (v2):   Travellers defer because the product has no state between booked and nothing — holding a return means buying it, and buying it needs a date they don't have
 Evidence:   enough — 8 interviews + survey (n=23) + 1 App Store review, coded into 102 notes and 6 clusters
 Files:      SCOPE.md [x] v2 · RESEARCH.md [x] · NOTES.md [x] · BRIEF.md [x] · DESIGN_LANGUAGE.md [x] · TEST_SCRIPT.md [x] · build [x] · live [x]
-Live:       https://zesty-biscuit-ffc71f.netlify.app  (auto-deploys from GitHub)
-Repo:       github.com/devanshthink-bit/redbus-return-capture  (private; raw/ transcripts gitignored)
+Live:       https://devanshthink-bit.github.io/redbus-return-capture/  (GitHub Pages, auto-deploys on push)
+Repo:       github.com/devanshthink-bit/redbus-return-capture  (public; raw/ transcripts gitignored)
 Build:      10 screens · 13 switchable states
 Rounds:     5 on the design language · 4 build slices · 1 attack pass, both halves
 Open:       Same-operator-only date change unconfirmed. No landscape. Reddit never collected.
@@ -1010,3 +1010,19 @@ Because:   Devansh, 2026-08-03 — "what will happen if no buses allow it?"
            The two cases look identical on screen and are ethically different. (a) is a promise
            that should never be made. (b) is a promise made honestly and not kept, which is why
            it must offer the next thing to try rather than dead-end.
+
+**2026-08-03** — Moved hosting from Netlify to GitHub Pages.
+Netlify's free tier is capped in build MINUTES (300/month), which penalises a single static file
+the same as a full build, so it ran out and paused production deploys — the live site sat two
+commits behind while the copy being tested was in those two commits. GitHub Pages has no monthly
+build ceiling, only a 10/hour rate limit, so this cannot happen again.
+Repo made public to enable Pages on the free plan. Devansh's call, taken after being told that
+NOTES.md, RESEARCH.md and TEST_SCRIPT.md carry participants' full names against verbatim
+quotes. raw/ transcripts remain gitignored.
+Old URL zesty-biscuit-ffc71f.netlify.app is superseded and will drift.
+
+LEARNED · 2026-08-03 · hosting
+Now know:  A deploy that silently stops is worse than one that fails loudly. The Netlify site
+           stayed up and kept serving an old build, so nothing looked broken — the only way I
+           found it was curling the live URL for a string I had just written. Verifying a deploy
+           means checking the deployed bytes, not that the page loads.
