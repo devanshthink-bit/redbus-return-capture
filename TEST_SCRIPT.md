@@ -4,6 +4,14 @@
 **The job:** a traveller who doesn't yet know their return date leaves the session holding a return they can move earlier.
 **Five people. Thirty minutes each.** Video call is fine — ask them to share their screen.
 
+> **Never mention the two dark rails.** The screen list on the left and the state list on the right
+> are *your* controls, not theirs. Say nothing about them. The participant goes through the flow and
+> enters whatever it asks, exactly as they would in the real app.
+>
+> If a task needs a particular state — offline, nothing earlier, seat lost — **you** click it,
+> quietly, before you hand over. Telling somebody to try all thirteen states turns a usability test
+> into a feature tour, and every finding evaporates.
+
 ---
 
 ## Who to message, and why these five

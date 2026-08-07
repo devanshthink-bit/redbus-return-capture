@@ -837,3 +837,17 @@ Actually happened:  The gap applied between the bold phrase and its own explanat
 Now know:            This is the identical rhythm failure molades-attack found in the bus cards,
                     reintroduced in a new component within hours of fixing it. A shorthand that
                     spaces every child equally cannot express grouping. Margins can.
+
+CHANGE · 2026-08-03 · molades-build
+Changed:    Rails and phone wrapped in one flex row so all three share a top edge, and the whole
+            group is centred as a unit. Rails are no longer position:fixed.
+Caused by:  Devansh, 2026-08-03 — the rails were pinned to the viewport top while the phone was
+            vertically centred, so nothing lined up.
+
+CHANGE · 2026-08-03 · molades-test
+Changed:    TEST_SCRIPT.md now opens with an instruction never to mention the prototype rails to
+            a participant, and to switch states silently before handing over.
+Caused by:  Devansh asking whether participants should be told to click through all the screens
+            and states.
+Result:     Telling somebody to try thirteen states turns a usability test into a feature tour.
+            The rails are the facilitator's instrument; the participant should not know they exist.
