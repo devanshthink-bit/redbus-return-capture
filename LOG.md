@@ -10,7 +10,7 @@ Evidence:   enough — 8 interviews + survey (n=23) + 1 App Store review, coded 
 Files:      SCOPE.md [x] v2 · RESEARCH.md [x] · NOTES.md [x] · BRIEF.md [x] · DESIGN_LANGUAGE.md [x] · TEST_SCRIPT.md [x] · build [x] · live [x]
 Live:       https://devanshthink-bit.github.io/redbus-return-capture/  (GitHub Pages, auto-deploys on push)
 Repo:       github.com/devanshthink-bit/redbus-return-capture  (public; raw/ transcripts gitignored)
-Build:      10 screens · 13 switchable states
+Build:      14 screens · 13 switchable states
 Rounds:     5 on the design language · 4 build slices · 1 attack pass, both halves
 Open:       Same-operator-only date change unconfirmed. No landscape. Reddit never collected.
             C6 parked. Three brief items stated but not built — see BRIEF.md "Known gaps".
@@ -1049,3 +1049,20 @@ Now know:  I had been defending earlier-only as a design principle when it was r
            attack pass and the whole build without anyone testing whether the restriction was
            necessary or even true. Rehearsing the stakeholder question found it in one go —
            which is an argument for rehearsing hostile questions before the room, not in it.
+
+CHANGE · 2026-08-07 · molades-build · Source: user
+The Last day screen carried four shapes for one small amount of information: a bold
+sentence, a trailing clause, and two bullets. Replaced with the same `.rules` dt/dd pairs
+already used on Trip review, Move confirm, Move done and Booking confirmed. Three pairs:
+*We'll book this day* / *Need a later day?* / *Not booking now?* The bold lines alone now
+carry the whole story, which is the test DESIGN_LANGUAGE.md sets for that block.
+
+Also added the later-day path here. Yesterday's correction removed the false claim that a
+later move was impossible, but only fixed it on the three screens after payment. The
+screen where the traveller actually commits to a deadline still implied earlier was the
+only direction. A correction that lands on the confirmation screens but not on the
+decision screen has not landed.
+
+LEARNED · 2026-08-07 · molades-build
+When a claim is corrected, the fix belongs first on the screen where the traveller forms
+the belief, not on the screens where they'd find out it was wrong.

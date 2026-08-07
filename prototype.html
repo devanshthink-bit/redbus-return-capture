@@ -366,12 +366,14 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       </button>
       <p class="err" id="f-err" hidden><span aria-hidden="true">&#9888;</span><span>That&rsquo;s before your outbound on <b>Thu, 7 Aug</b></span></p>
 
-      <p class="help" style="margin-top:16px"><b id="help-date">We&rsquo;ll book you on that day.</b> Next, we&rsquo;ll show returns you can move to an earlier day for <b>no change fee</b>.</p>
-
-      <ul class="points">
-        <li>Your onward journey isn&rsquo;t affected.</li>
-        <li>Book later and you may lose this seat, or pay more.</li>
-      </ul>
+      <dl class="rules" style="margin-top:24px">
+        <dt id="help-date">We&rsquo;ll book this day</dt>
+        <dd>You can move it earlier in one tap. No change fee.</dd>
+        <dt>Need a later day?</dt>
+        <dd>Change it from My Bookings. Same one change.</dd>
+        <dt>Not booking now?</dt>
+        <dd>Your onward journey isn&rsquo;t affected. But book the return later and you may lose this seat, or pay more.</dd>
+      </dl>
     </div>
     <div class="bottombar">
       <button class="btn sec" onclick="skipReturn()">Skip</button>
@@ -897,7 +899,7 @@ function cycleDate(){
   document.getElementById('b-cont').disabled = (di===0 || bad || offline);
   if(di===1) document.getElementById('bus-sub').textContent = 'Nainital → Delhi · last day Mon, 11 Aug';
   const hd=document.getElementById('help-date');
-  hd.innerHTML = (di===1) ? 'We&rsquo;ll book you on <b>Mon, 11 Aug</b>.' : 'We&rsquo;ll book you on that day.';
+  hd.textContent = (di===1) ? 'We\u2019ll book Mon, 11 Aug' : 'We\u2019ll book this day';
 }
 function loadBuses(){
   const b = document.getElementById('b-cont');
