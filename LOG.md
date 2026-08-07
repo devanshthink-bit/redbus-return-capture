@@ -945,3 +945,25 @@ Decided:   Outbound keeps redBus's "Free date change"; return uses "Can be moved
             badge would misrepresent the app the participant is meant to recognise.
 Note:       A participant now meets both labels in one session, which turns test question 4 from
             a hypothetical into something observable. Added to TEST_SCRIPT.md.
+
+CHANGE · 2026-08-03 · molades-build
+Changed:    Operator eligibility made consistent across the outbound and return bus lists.
+            RS Yadav now carries "Free date change" on the outbound, matching its "Can be moved
+            earlier" on the return. International Tourist Centre now carries the ineligible pill
+            on both.
+Caused by:  Devansh, 2026-08-03 — "why am I getting the option to move the return even on buses
+            where the free date change tag is not there."
+Result:     He was right. When I built the outbound list I invented badges without checking them
+            against the return list, so the same operator offered date change on one screen and
+            not the other. Eligibility is an operator property; it cannot differ by leg.
+Not a bug:  The Last day step appears whichever outbound bus is chosen. That is correct — the
+            step concerns the return, whose operator is chosen later. The two legs are separate
+            tickets.
+
+LEARNED · 2026-08-03 · molades-build
+Now know:  Sample data has to be internally consistent or it teaches participants the wrong rule.
+           A traveller in a session would have concluded that movability is arbitrary, and every
+           finding after that point would have been contaminated. Two screens, one fact, and I
+           wrote it twice without cross-checking.
+           This is the fifth item today found by Devansh clicking rather than by me checking —
+           and the first one that was a data error rather than a missing connection.
