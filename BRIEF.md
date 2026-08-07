@@ -374,7 +374,7 @@ which is where they started from and almost always where they're going back to.
 
 1. Outbound — **component**
 2. Return, with *movable* and *back by* shown — **component**
-3. What the return allows and what it doesn't — one free move, earlier only, fare difference if any, **and that moving ends free cancellation** — static, unmissable
+3. What the return allows and what it doesn't — **a rules list, not prose.** Each rule is a short bold phrase with a muted explanation beneath it, so the whole block can be read by the bold alone. No sentence over eight words. The critical rule — *No cancelling after* — is the only coloured item on the screen, in the warning colour, with the words carrying the meaning as well. Static, unmissable, nothing to tap
 4. Passenger details — **component**
 5. Free Cancellation opt-in, per leg — **component**
 6. Total — **component**

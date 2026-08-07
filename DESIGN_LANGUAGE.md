@@ -127,6 +127,22 @@ Inherited and non-negotiable: bottom tab bar (Home · My Bookings · Offers · H
 back chevron top-left, screen title centred on flow screens and left-aligned on Home.
 Full-width sticky primary action at the bottom of flow screens.
 
+## The rules list
+
+Used wherever terms have to be read rather than skimmed — Trip review, Move confirm, Move done,
+Booking confirmed.
+
+| Part | Value |
+|---|---|
+| Block label | 12 / 700 / muted, uppercase, `.04em` tracking |
+| Rule | 16 / 700 ink — short enough to scan alone, never over four words |
+| Explanation | 14 / 400 muted, never over eight words |
+| Gap inside a pair | 4 |
+| Gap between pairs | 16 |
+| The critical rule | `#A45729`, and only one per block |
+
+**The test:** read only the bold lines. If you don't have every rule, the block has failed.
+
 ## Inherited state patterns
 
 Measured from IMG_4595–4600, so these are not invented:

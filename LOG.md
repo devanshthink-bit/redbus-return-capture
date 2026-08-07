@@ -805,3 +805,35 @@ the build, and nothing was checking either direction.
 What changes: a mechanical file-versus-document check at the end of every slice — colours, type,
 spacing, words, screens, states — not a manual re-read, because a manual re-read is what failed
 six times in one day.
+
+CHANGE · 2026-08-03 · molades-build
+Changed:    The terms became a rules list instead of prose. Four pairs: a short bold phrase and a
+            muted explanation under it. Block heading dropped to a 12pt uppercase muted label.
+            Applied to Trip review, Move confirm, Move done and Booking confirmed.
+Before:     Four paragraphs of 15-25 words each, one bolded mid-sentence, one greyed at the end.
+After:      "One change, no fee" / "Earlier days only" / "No cancelling after" / "Until 8 hours
+            before" — every rule readable in three words, detail underneath for anyone who wants it.
+Caused by:  Devansh, 2026-08-03 — "so many points, cluttered, I need to understand them first.
+            Make them easy to scan."
+Result:     The block can now be read by the bold alone. The critical rule is the only coloured
+            item on the screen and the words carry the meaning as well, so it is not colour alone.
+            No sentence over eight words.
+Note:       The old version bolded a phrase in the MIDDLE of a sentence, which forces you to read
+            the sentence to find where the bold starts and stops. Moving the emphasis to the front
+            of its own line is what made it scannable — not the wording.
+
+CHANGE · 2026-08-03 · molades-build
+Changed:    Last day's single note split into two points, and the second names what is at risk.
+After:      "Your onward journey isn't affected." / "Book later and you may lose this seat, or pay
+            more."
+Caused by:  Devansh, 2026-08-03 — keep them separate, and warn subtly about losing the seat or
+            the price.
+
+LEARNED · 2026-08-03 · molades-build
+Tried:              A grid with gap:12 for the rules list.
+Actually happened:  The gap applied between the bold phrase and its own explanation as well as
+                    between pairs, so inside-pair spacing (12+4) exceeded between-pair spacing
+                    (12). No pairs, just eight loose lines.
+Now know:            This is the identical rhythm failure molades-attack found in the bus cards,
+                    reintroduced in a new component within hours of fixing it. A shorthand that
+                    spaces every child equally cannot express grouping. Margins can.
