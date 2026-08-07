@@ -984,3 +984,29 @@ Result:     The step appearing is correct — outbound and return are separate t
 Note:       A caveat placed under a flat promise does not undo the promise. Anyone who reads the
             bold line and stops has been told something untrue. The condition has to live inside
             the sentence that makes the claim.
+
+CHANGE · 2026-08-03 · molades-build
+Changed:    Last day's helper stops promising and starts describing what happens next.
+Before:     "If the return you pick allows it, you can change to an earlier day with no change
+            fee — you'll only pay the fare difference."
+After:      "Next, we'll show returns you can move to an earlier day for no change fee."
+            The fare difference moved to the return list, where a fare actually exists:
+            "No change fee — you'd pay any fare difference."
+Caused by:  Devansh, 2026-08-03 — "why are we showing 'if the return you pick allows it'? We are
+            anyway disabling the bus that doesn't allow it on the next screen."
+Result:     Right. The hedge made the traveller carry a doubt the next screen resolves in five
+            seconds, and the fare difference was premature — no bus, no fare, nothing to apply it
+            to. Two revisions ago the line over-promised; one revision ago it over-hedged. It now
+            states what the next screen does, which is true and needs no qualifier.
+
+DECISION · 2026-08-03 · molades-build
+Decided:   Documented two distinct "no movable returns" cases in BRIEF.md.
+           (a) No operator on the route offers date change — knowable up front, so Last day
+               never appears. This is the Idea 9 guard, still stated rather than built.
+           (b) Movable operators exist but none run on the chosen day — not knowable until the
+               date is entered, so the step appears and the "No movable returns that day" state
+               offers Show all returns or Choose another day.
+Because:   Devansh, 2026-08-03 — "what will happen if no buses allow it?"
+           The two cases look identical on screen and are ethically different. (a) is a promise
+           that should never be made. (b) is a promise made honestly and not kept, which is why
+           it must offer the next thing to try rather than dead-end.

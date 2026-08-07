@@ -229,6 +229,13 @@ table. Everywhere else in the app FlexiTicket keeps its own name and its own bid
 *This is FlexiTicket narrowed for one context, not a second product.*
 **Unverified with users. First question in the test script.**
 
+**2a. Two different kinds of "no movable returns", and they need different answers.**
+
+| | What redBus knows | What happens |
+|---|---|---|
+| **No operator on the route offers date change** | Known before anything is asked | ***Last day* never appears.** Today's flow, unchanged. A promise that cannot be kept should not be made. **This is the Idea 9 guard — stated, not built** |
+| **Movable operators exist, none run on the chosen day** | Not knowable until the date is entered | The step appears, then *"No movable returns that day"* with **Show all returns** and **Choose another day**. Never a dead end |
+
 **2. The step is not shown to everyone.** Idea 9 was carried forward from ideation as a guard and was
 never built. Constraint 5 says the answer must never be forced on somebody who may not return by bus —
 17.4% of the survey (n71). The route and trip shape decide whether the *Last day* step appears at all.
