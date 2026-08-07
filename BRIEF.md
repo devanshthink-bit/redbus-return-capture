@@ -217,8 +217,10 @@ female-only seats need a per-seat cue, not just a fill and a border.
 Not two names for one thing — two contexts with different rules. The outbound ticket genuinely
 moves in either direction; the return in this feature is earlier only. Renaming redBus's badge
 would misrepresent the app. **The outbound badge says nothing about whether the return can be
-moved** — that depends on the return bus — so *Last day* carries the line *"Not every return can
-be moved. We'll show you the ones that can."*
+moved** — that depends on the return bus — so the promise on *Last day* is
+conditional at the point it is made: *"If the return you pick allows it, you can change to an
+earlier day with no change fee."* A caveat in a bullet underneath does not undo a flat promise
+above it — the condition has to live inside the sentence that makes the claim.
 
 **1. On return legs, *Can be moved earlier* replaces the FlexiTicket badge. It never sits beside it.**
 Both describe the same mechanism under different names and **different rules** — FlexiTicket moves in

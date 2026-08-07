@@ -967,3 +967,20 @@ Now know:  Sample data has to be internally consistent or it teaches participant
            wrote it twice without cross-checking.
            This is the fifth item today found by Devansh clicking rather than by me checking —
            and the first one that was a data error rather than a missing connection.
+
+CHANGE · 2026-08-03 · molades-build
+Changed:    The promise on Last day is now conditional at the point it is made.
+Before:     "We'll book you on that day. You can change it to an earlier day with no change fee."
+            — then a bullet underneath saying not every return can be moved.
+After:      "We'll book you on that day. If the return you pick allows it, you can change to an
+            earlier day with no change fee." The bullet is gone; the screen drops from three
+            bullets to two.
+Caused by:  Devansh, 2026-08-03 — asking twice why the step appears after choosing an outbound
+            operator that does not allow date changes.
+Result:     The step appearing is correct — outbound and return are separate tickets from
+            separate operators, and the return's operator is chosen later. But the question
+            exposed a real over-promise: the helper claimed the change flatly before any return
+            bus existed, and a bullet below quietly contradicted it.
+Note:       A caveat placed under a flat promise does not undo the promise. Anyone who reads the
+            bold line and stops has been told something untrue. The condition has to live inside
+            the sentence that makes the claim.
