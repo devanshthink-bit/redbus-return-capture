@@ -290,7 +290,13 @@ on the ticket it is not *Change date* in the confirmation.
 
 ## Screens
 
-**8 new · 5 modified.** With states, roughly 28 artboards.
+**8 new · 6 inherited-and-rebuilt.** With states, roughly 32 artboards.
+
+The outbound flow — Home, Outbound buses, Outbound seat, Outbound points, Payment — was rebuilt
+on **2026-08-03** so the prototype can be walked from search to a moved return. It is deliberately
+faithful rather than redesigned: nothing in it is new, and the *Free date change* badge appears on
+the outbound list exactly as redBus ships it, so a participant meets the existing feature in its
+existing form before meeting this one.
 *(The outbound boarding-points screen is included because it is the entry point — the Continue
 button on it is where the feature begins. The rest of the outbound flow is deliberately absent.)*
 *(Booking confirmed moved from modified to new — the two-leg version shares nothing with the
@@ -345,8 +351,9 @@ screen never appears without the trip it belongs to.
    The label is first person and completes into the value, so the traveller reads their own declaration rather than answering a question. **There is no separate screen question** — the nav title carries the name and redBus writes form screens as noun title + labelled fields, not as headings with questions above them
 2. What that means, in one line — *We'll book that day. If you can leave earlier, one free change, no change fee* — static
 3. Trip summary — where from, where to, outbound date — static
-4. Skip — **component**, equal weight to Continue
-5. Continue — **component**
+4. Skip and Continue — **components, in a sticky bottom bar**, Skip equal weight.
+   Inline buttons appear nowhere in the 51 reference screenshots; every flow screen in redBus uses
+   a sticky bar. Moved there on 2026-08-03
 6. What skipping means — *"Your onward journey isn't affected. Book the return later and you take whatever seats are left, often at a higher fare."* — static, 12pt muted, no colour.
    **This is Idea 8.** Two calibrations, both deliberate:
    - **No number.** The product has no route-level data here; a fabricated statistic on the screen whose job is honesty would be worse than no line at all

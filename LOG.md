@@ -901,3 +901,30 @@ Now know:            I tested the happy path in one direction. A flow has two di
                     branches, and I checked one of four. The end-of-slice check now has to assert
                     every control on every screen goes somewhere, not just that the main path
                     completes — which is trivial to do in code and I never did it.
+
+DECISION · 2026-08-03 · molades-build
+Decided:   Built the outbound flow — Home, Outbound buses, Outbound seat, Payment — so the
+           prototype walks from search to a moved return. 14 screens total.
+           Deliberately faithful, not redesigned. The "Free date change" badge appears on the
+           outbound list exactly as redBus ships it, so a participant meets the existing feature
+           in its existing form before meeting this one — which makes the FlexiTicket comparison
+           in TEST_SCRIPT.md answerable rather than hypothetical.
+Rejected:  Improving anything in the outbound flow. It is out of scope, it works, and people
+           praise it unprompted (n96 n97 n98). Its only job here is context.
+Because:   Devansh, 2026-08-03 — the prototype opened mid-flow, so neither a participant nor a
+           portfolio viewer could see where the feature comes from.
+
+CHANGE · 2026-08-03 · molades-build
+Changed:    Skip and Continue moved from inline buttons to a sticky bottom bar on Last day.
+Caused by:  Devansh, 2026-08-03 — "shouldn't the Skip and Continue button be on the bottom?"
+Result:     Correct. Inline action buttons appear nowhere in the 51 reference screenshots. Every
+            flow screen in redBus uses a sticky bar — Select boarding & dropping points, Proceed,
+            Pay now. The screen had read as unfinished because it was off-pattern, not because it
+            was empty; redBus's own form screens have the same empty middle.
+
+DECISION · 2026-08-03 · molades-build
+Decided:   The Last day step stays its own screen rather than moving inline onto another.
+Because:   Reaffirms the Shape 1 decision from molades-brief. It is the only shape with room for
+           the return's boarding and drop points, which the research says people choose buses by
+           (n90 n144). Now that it is entered from Outbound points and exits to Return buses, it
+           reads as one step in a sequence rather than a screen that appeared from nowhere.
