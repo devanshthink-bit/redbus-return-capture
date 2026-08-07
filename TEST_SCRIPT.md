@@ -82,6 +82,12 @@ If they only notice on the Move done screen, the terms block failed at its one j
 Not in the flow, so watch for the moment they look for it.
 
 **4. Does *Can be moved earlier* clash with *Free date change*?**
+The participant now meets both in one session: redBus's real badge on the outbound bus list, and
+the new label on the return list. **Watch whether they connect them, and whether picking a
+*Free date change* outbound makes them assume the return is covered too.** Ask afterwards:
+
+> "You saw two different labels about changing dates. What did you think each one meant?"
+
 Show one person two return cards on paper or on screen — one carrying redBus's **FREE DATE CHANGE**
 badge, one carrying **Can be moved earlier**. Ask, without explaining either:
 

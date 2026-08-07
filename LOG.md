@@ -928,3 +928,20 @@ Because:   Reaffirms the Shape 1 decision from molades-brief. It is the only sha
            the return's boarding and drop points, which the research says people choose buses by
            (n90 n144). Now that it is entered from Outbound points and exits to Return buses, it
            reads as one step in a sequence rather than a screen that appeared from nowhere.
+
+CHANGE · 2026-08-03 · molades-build
+Changed:    Added a third point to Last day — "Not every return can be moved. We'll show you the
+            ones that can."
+Caused by:  Devansh, 2026-08-03 — one outbound bus shows "Free date change" and two do not; will
+            moving earlier work on all three, and should they be separate tags?
+Result:     Two things were unstated. Movability depends on the operator, so a bus without the
+            badge can never be moved — the return list already shows this correctly, 2 of 3.
+            But the OUTBOUND badge says nothing about whether the RETURN can be moved, and a
+            traveller could pick a "Free date change" outbound and assume they are covered.
+            Nothing corrected that. Now one line does.
+Decided:   Outbound keeps redBus's "Free date change"; return uses "Can be moved earlier". Not
+            two names for one thing — two contexts with different rules. The outbound ticket
+            genuinely moves either direction; the return here is earlier only. Renaming redBus's
+            badge would misrepresent the app the participant is meant to recognise.
+Note:       A participant now meets both labels in one session, which turns test question 4 from
+            a hypothetical into something observable. Added to TEST_SCRIPT.md.

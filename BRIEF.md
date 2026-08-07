@@ -213,6 +213,13 @@ female-only seats need a per-seat cue, not just a fill and a border.
 
 ## Decisions made after the build, before testing (2026-08-03)
 
+**1a. Outbound legs keep redBus's own *Free date change* badge. Return legs use *Can be moved earlier*.**
+Not two names for one thing — two contexts with different rules. The outbound ticket genuinely
+moves in either direction; the return in this feature is earlier only. Renaming redBus's badge
+would misrepresent the app. **The outbound badge says nothing about whether the return can be
+moved** — that depends on the return bus — so *Last day* carries the line *"Not every return can
+be moved. We'll show you the ones that can."*
+
 **1. On return legs, *Can be moved earlier* replaces the FlexiTicket badge. It never sits beside it.**
 Both describe the same mechanism under different names and **different rules** — FlexiTicket moves in
 either direction, this moves earlier only. Two names for one thing breaks the rule set in the words
