@@ -211,6 +211,29 @@ The current border at 1.27:1 is the single widest-reaching failure in the build.
 **Never colour alone:** every state also carries a word or a shape. Seat map booked and
 female-only seats need a per-seat cue, not just a fill and a border.
 
+## The three stakeholder questions, and the answers
+
+**"Why not just use FlexiTicket in the existing flow?"**
+It *is* FlexiTicket. Say so first. What changes is the question: *"date of journey"* makes booking
+a day you don't intend to travel on unthinkable, so the capability is unreachable no matter how
+the badge is styled. FlexiTicket answers *"what if my plans change?"* — a hypothetical. This
+answers *"I don't know when I'm coming back"* — a present fact.
+**Evidence that awareness is not the lever:** 39.1% did not know FlexiTicket existed (n76), and
+Anand knew and refused anyway (n07). A visibility fix reaches the first group and not the second.
+**The honest risk:** this is a behavioural bet, and it is what the usability sessions test.
+
+**"Why earlier only, when FlexiTicket allows later?"**
+It does not restrict later. *Move earlier* is the surfaced path because that is the direction a
+deadline implies; a later change stays where it already lives. Travellers overwhelmingly extend
+within their window (n34 n04 n59 and Prayani's six weeks), so booking the deadline puts them at
+the far end of the drift and every deviation runs toward them. Soumya's failure — booked early,
+wanted to push, couldn't, never booked early again (n49) — becomes impossible.
+**Operator argument:** a seat handed back early resells better than one cancelled near departure.
+This asks for something cheaper than what operators already offer, not a concession.
+
+**"Why not offer the change during return booking?"**
+It is offered there. *Last day* is the return booking.
+
 ## Decisions made after the build, before testing (2026-08-03)
 
 **1a. Outbound legs keep redBus's own *Free date change* badge. Return legs use *Can be moved earlier*.**
@@ -425,7 +448,11 @@ unreadable.
 4. What moving ends — one line, before they choose anything — static
 5. Keep my current booking — **component**
 
-**Not here:** later days. They do not exist in this flow.
+**Not here:** later days as a *choice*. They are not removed — the underlying ticket is a
+FlexiTicket and a later change remains available through Change date in My Bookings, using the
+same one reschedule. This screen surfaces the direction the deadline implies, and says where the
+other one lives. **Corrected 2026-08-03** — the copy previously claimed "you cannot move it to a
+later day", which was false and removed a capability the traveller already has.
 
 ### Move confirm
 **For:** accepting what the move costs and what it ends.

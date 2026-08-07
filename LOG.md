@@ -1026,3 +1026,26 @@ Now know:  A deploy that silently stops is worse than one that fails loudly. The
            stayed up and kept serving an old build, so nothing looked broken — the only way I
            found it was curling the live URL for a string I had just written. Verifying a deploy
            means checking the deployed bytes, not that the page loads.
+
+CHANGE · 2026-08-03 · molades-build
+Changed:    Removed the claim "You cannot move it to a later day". The rule is now "Earlier days,
+            in one tap / For a later day, use Change date in My Bookings", and the Earlier buses
+            screen and Booking confirmed say the same.
+Caused by:  Devansh, 2026-08-03, rehearsing stakeholder questions — "why are we restricting the
+            user to earlier only when FlexiTicket allows later as well?"
+Result:     The restriction was mine, not the mechanism's, and the copy was false. The underlying
+            ticket is a FlexiTicket; a later change was always available through the normal
+            reschedule path. I had written a sentence that removed a capability the traveller
+            already had.
+            Move earlier is now the SURFACED path, not the only one — the direction the deadline
+            implies, with the other one named where it lives.
+Why it matters: "we took half a feature away" has no defence in a stakeholder room. "We surfaced
+            the direction the input implies and left the other where it already is" does. The
+            idea got stronger by giving something back.
+
+LEARNED · 2026-08-03 · molades-build
+Now know:  I had been defending earlier-only as a design principle when it was really an
+           implementation shortcut I stopped questioning. It survived ideation, the brief, the
+           attack pass and the whole build without anyone testing whether the restriction was
+           necessary or even true. Rehearsing the stakeholder question found it in one go —
+           which is an argument for rehearsing hostile questions before the room, not in it.
