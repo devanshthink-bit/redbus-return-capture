@@ -149,6 +149,10 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 .bottombar{flex:0 0 auto;background:var(--raised);border-top:1px solid var(--line);
  padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .bb1{font-size:14px;color:var(--muted)} .bb2{font-size:18px;font-weight:700}
+/* ---------- context strip: what they already booked ---------- */
+.ctx{background:var(--chip);border-radius:8px;padding:12px 16px;margin-bottom:16px}
+.ctx span{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}
+.ctx b{font-size:14px;font-weight:700;line-height:1.3}
 /* ---------- rules list: scannable by the bold phrase alone ---------- */
 .rules dt{font-size:16px;font-weight:700;line-height:1.3;margin-top:16px}   /* between pairs */
 .rules dt:first-child{margin-top:0}
@@ -219,8 +223,39 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 <div class="stage">
 <div class="phone">
 
+
+  <!-- ============ SCREEN: Outbound points — the entry point ============ -->
+  <section class="screen on" id="s-outpoints">
+    <div class="nav">
+      <button class="back" aria-label="Back">&#8249;</button>
+      <div class="navtxt"><h1>Select board &amp; drop points</h1><p>Delhi &rarr; Nainital &middot; Thu, 7 Aug</p></div>
+      <span style="width:44px"></span>
+    </div>
+    <div class="wrap">
+      <h2 class="q" style="font-size:16px;margin-bottom:8px">Boarding point in Delhi</h2>
+      <button class="ptn" data-g="oboard" onclick="setPt(this,'oboard')" aria-pressed="true">
+        <div class="pt-t">23:55 &middot; ISBT Kashmiri Gate</div>
+        <div class="pt-s">Gate Number 4, towards Civil Line Road</div></button>
+      <button class="ptn" data-g="oboard" onclick="setPt(this,'oboard')" aria-pressed="false">
+        <div class="pt-t">00:20 &middot; Akshardham</div>
+        <div class="pt-s">NH24, near the metro station</div></button>
+
+      <h2 class="q" style="font-size:16px;margin:24px 0 8px">Dropping point in Nainital</h2>
+      <button class="ptn" data-g="odrop" onclick="setPt(this,'odrop')" aria-pressed="true">
+        <div class="pt-t">08:00 &middot; Nainital Bus Stand</div>
+        <div class="pt-s">Tallital, near the boat house</div></button>
+      <button class="ptn" data-g="odrop" onclick="setPt(this,'odrop')" aria-pressed="false">
+        <div class="pt-t">07:40 &middot; Kathgodam</div>
+        <div class="pt-s">Railway station forecourt</div></button>
+    </div>
+    <div class="bottombar">
+      <div><div class="bb1">Laxmi Holidays &middot; Seat SU4</div><div class="bb2">&#8377;1,599</div></div>
+      <button class="btn pri" onclick="go('s-backby')">Continue</button>
+    </div>
+  </section>
+
   <!-- ============ SCREEN: Last day ============ -->
-  <section class="screen on" id="s-backby">
+  <section class="screen" id="s-backby">
     <div class="nav">
       <button class="back" aria-label="Back">&#8249;</button>
       <div class="navtxt"><h1>Last day</h1><p>Nainital &rarr; Delhi</p></div>
@@ -229,6 +264,10 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
     <div class="banner" data-only="offline"><span aria-hidden="true">&#8856;</span><span>You&rsquo;re offline. Check your internet connection.</span></div>
 
     <div class="wrap">
+      <div class="ctx">
+        <span>Onward journey</span>
+        <b>Delhi &rarr; Nainital &middot; Thu, 7 Aug &middot; 23:55</b>
+      </div>
       <button class="field" id="f-date" onclick="cycleDate()">
         <span class="lab">The last day I can travel is</span>
         <span class="val ph" id="f-val">Choose a date</span>
@@ -665,7 +704,8 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 <!-- prototype controls, not part of the design -->
 <div class="dev screens">
   <b>SCREEN</b>
-  <button onclick="go('s-backby')" id="t-backby" aria-pressed="true">Last day</button>
+  <button onclick="go('s-outpoints')" id="t-outpoints" aria-pressed="true">Outbound points &rarr;</button>
+  <button onclick="go('s-backby')" id="t-backby">Last day</button>
   <button onclick="go('s-buses')" id="t-buses">Return buses</button>
   <button onclick="go('s-seat')" id="t-seat">Return seat</button>
   <button onclick="go('s-points')" id="t-points">Return points</button>

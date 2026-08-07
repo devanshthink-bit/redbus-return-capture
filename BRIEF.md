@@ -290,7 +290,9 @@ on the ticket it is not *Change date* in the confirmation.
 
 ## Screens
 
-**8 new · 4 modified.** With states, roughly 26 artboards.
+**8 new · 5 modified.** With states, roughly 28 artboards.
+*(The outbound boarding-points screen is included because it is the entry point — the Continue
+button on it is where the feature begins. The rest of the outbound flow is deliberately absent.)*
 *(Booking confirmed moved from modified to new — the two-leg version shares nothing with the
 one-leg original.)*
 
@@ -312,7 +314,7 @@ My Bookings (the trip as one object, not two tickets) · Ticket (carries *Move e
 ## Where they hang off the existing product
 
 ```
-Boarding points (outbound, exists)
+Boarding points (outbound, exists — **built as the entry point 2026-08-03**)
   └ Last day                   reached by Continue; Skip sits beside it
       └ Return buses
           └ Return seat
@@ -334,6 +336,10 @@ entry point. This is one decision inside an existing purchase, not a destination
 
 ### Last day
 **For:** saying the last day they could travel.
+
+**Entered from** the outbound boarding-points screen. A context strip at the top restates the
+journey they have just chosen — *Onward journey · Delhi → Nainital · Thu, 7 Aug · 23:55* — so the
+screen never appears without the trip it belongs to.
 
 1. The field — label *"The last day I can travel is"* above the date. **Component**, holds the date.
    The label is first person and completes into the value, so the traveller reads their own declaration rather than answering a question. **There is no separate screen question** — the nav title carries the name and redBus writes form screens as noun title + labelled fields, not as headings with questions above them

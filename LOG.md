@@ -851,3 +851,25 @@ Caused by:  Devansh asking whether participants should be told to click through 
             and states.
 Result:     Telling somebody to try thirteen states turns a usability test into a feature tour.
             The rails are the facilitator's instrument; the participant should not know they exist.
+
+CHANGE · 2026-08-03 · molades-build
+Changed:    Built the outbound boarding-points screen as the entry point, and added a context
+            strip to Last day showing the journey just chosen.
+Caused by:  Devansh, 2026-08-03 — "shouldn't I give them screens before that? Where did it come
+            from? Where do they first encounter this?"
+Result:     BRIEF.md already specified the entry point — "Boarding points (outbound, exists) └
+            Last day, reached by Continue" — and it was never built, so the prototype opened
+            mid-air with no sign a trip existed. In a session that can be papered over with the
+            task; a portfolio viewer cannot be. Now the first screen is a real redBus screen the
+            traveller recognises, and the feature begins where the brief said it does.
+Rejected:   Building the rest of the outbound flow — home, search, bus list, seat map. BRIEF.md
+            "Not in this project" names them, they work, and people praise them unprompted
+            (n96 n97 n98). One screen is enough to establish where this comes from.
+Also:       The context strip first read "Booked". Corrected to "Onward journey" — at that point
+            nothing has been paid for, and "onward journey" is the word already in the word list.
+
+LEARNED · 2026-08-03 · molades-build
+Now know:  Fourth item today that BRIEF.md specified and the build omitted. Every one was a
+           connection rather than a screen — the entry point, the confirmation, the handoff into
+           the loop. I build the screens a document names and skip the arrows between them.
+           The document draws both. The check at the end of a slice has to cover the arrows.
