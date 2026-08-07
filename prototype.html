@@ -227,7 +227,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
   <!-- ============ SCREEN: Outbound points — the entry point ============ -->
   <section class="screen on" id="s-outpoints">
     <div class="nav">
-      <button class="back" aria-label="Back">&#8249;</button>
+      <button class="back" aria-label="Back" disabled title="Start of the prototype">&#8249;</button>
       <div class="navtxt"><h1>Select board &amp; drop points</h1><p>Delhi &rarr; Nainital &middot; Thu, 7 Aug</p></div>
       <span style="width:44px"></span>
     </div>
@@ -257,7 +257,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
   <!-- ============ SCREEN: Last day ============ -->
   <section class="screen" id="s-backby">
     <div class="nav">
-      <button class="back" aria-label="Back">&#8249;</button>
+      <button class="back" aria-label="Back" onclick="go('s-outpoints')">&#8249;</button>
       <div class="navtxt"><h1>Last day</h1><p>Nainital &rarr; Delhi</p></div>
       <span style="width:34px"></span>
     </div>
@@ -277,7 +277,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       <p class="help" style="margin-top:16px"><b id="help-date">We&rsquo;ll book you on that day.</b> You can change it to an earlier day with <b>no change fee</b> &mdash; you&rsquo;ll only pay the fare difference.</p>
 
       <div class="btns">
-        <button class="btn sec" onclick="go('s-buses')">Skip</button>
+        <button class="btn sec" onclick="skipReturn()">Skip</button>
         <button class="btn pri" id="b-cont" disabled onclick="loadBuses()">Continue</button>
       </div>
       <ul class="points">
@@ -493,7 +493,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
   <!-- ============ SCREEN: Ticket ============ -->
   <section class="screen" id="s-ticket">
     <div class="nav">
-      <button class="back" aria-label="Back">&#8249;</button>
+      <button class="back" aria-label="Back" onclick="go('s-done2')">&#8249;</button>
       <div class="navtxt"><h1>Your ticket</h1><p id="tk-sub">Delhi &harr; Nainital</p></div>
       <span style="width:34px"></span>
     </div>
@@ -847,6 +847,7 @@ function abortMove(){
   go('s-earlier');
 }
 function dropReturn(){ setState('noreturn'); }
+function skipReturn(){ setState('noreturn'); go('s-review'); }   // Skip leaves the return out and goes straight to review
 function payNow(){
   const b=document.getElementById('b-pay');
   b.disabled=true; b.innerHTML='<span class="spin"></span> Paying';

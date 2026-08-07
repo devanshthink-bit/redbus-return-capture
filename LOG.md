@@ -873,3 +873,31 @@ Now know:  Fourth item today that BRIEF.md specified and the build omitted. Ever
            connection rather than a screen — the entry point, the confirmation, the handoff into
            the loop. I build the screens a document names and skip the arrows between them.
            The document draws both. The check at the end of a slice has to cover the arrows.
+
+CHANGE · 2026-08-03 · molades-build
+Changed:    Skip now leaves the return out and goes straight to Trip review with the return
+            hidden and the total at ₹1,599. It previously called go('s-buses') — the same
+            destination as Continue.
+Caused by:  Devansh, 2026-08-03 — "Skip is also taking them to the same flow as continue."
+Result:     This was the most damaging bug in the build. The guardrail says the step must never
+            block the outbound, and BRIEF.md says skipping goes straight to review with nothing
+            remembered and nothing nagged. Instead Skip pushed people INTO the return flow, so a
+            participant trying to decline would have found no way out — and I would have read
+            that as the feature being persuasive rather than broken.
+            Verified: Skip → s-review, return leg hidden, total ₹1,599.
+
+CHANGE · 2026-08-03 · molades-build
+Changed:    Three back buttons had no click handler. Last day → Outbound points, Ticket →
+            Booking confirmed. The one on Outbound points is now explicitly disabled, since it
+            is the start of the prototype — a disabled control is honest, a dead one is not.
+Caused by:  Devansh, 2026-08-03 — "the back button is not taking them back."
+
+LEARNED · 2026-08-03 · molades-build
+Tried:              Verifying the flow by walking it forwards.
+Actually happened:  Every forward path worked, so I called it walkable. Three back buttons did
+                    nothing and the secondary action on the most important screen went to the
+                    wrong place.
+Now know:            I tested the happy path in one direction. A flow has two directions and two
+                    branches, and I checked one of four. The end-of-slice check now has to assert
+                    every control on every screen goes somewhere, not just that the main path
+                    completes — which is trivial to do in code and I never did it.
