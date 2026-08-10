@@ -1177,3 +1177,9 @@ LEARNED · 2026-08-07 · molades-test
 My first test set .checked in script and passed. The user's browser restored .checked
 without an event, and failed. A test that produces the state by a different route than the
 user does is not testing the same thing — reproduce the symptom before claiming the fix.
+
+CHANGE · 2026-08-07 · molades-build · Source: user
+Brought the Move earlier row on the ticket in line with the phrasing settled earlier:
+"One date change. Only pay the fare difference." All three places that name the cost now
+use the same construction — the fare difference stated as what you pay, never as a caveat
+hanging off a denial.
