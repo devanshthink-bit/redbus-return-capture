@@ -1115,3 +1115,24 @@ OPEN · must-see moment #1 now decides this
 If participants answer "what's the last day you can travel?" with "probably Tuesday"
 rather than "I can definitely travel Tuesday", the deadline framing has failed and
 Idea 16 needs rethinking, not rewording.
+
+DECISION · 2026-08-07 · molades-build · Source: user
+"What if the tag says 'Free date change', same as FlexiTicket?" Rejected, and the reason
+is the problem statement: the flexibility today is "offered as a property of a bus,
+discovered incidentally". Putting redBus's own badge on the return list turns the return
+leg back into a bus with an attribute, and the contribution of Idea 16 stops being
+visible. Secondary reason: *free* is the false cost signal removed twice today; that word
+is the strongest version of it.
+
+The two labels name different things — redBus's badge names what the operator permits,
+ours names what the ticket does against the deadline — so two names is defensible where
+two synonyms would not be. Kept *Can be moved earlier*.
+
+CHANGE · 2026-08-07 · molades-build
+Fixed the completeness problem in the sentence under the return list instead of in the
+pill. Was: "These allow one date change to an earlier day. No change fee — you'd pay any
+fare difference." Now: "These allow one date change. Move to an earlier day in one tap,
+or to a later day from My Bookings. Only pay the fare difference." Consistent with the
+morning's decision — silence about later days belongs only on Last day, where the
+constraint is entered. This list sits after it, and Trip review already names later on
+the same side of payment.
