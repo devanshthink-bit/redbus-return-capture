@@ -1136,3 +1136,29 @@ or to a later day from My Bookings. Only pay the fare difference." Consistent wi
 morning's decision — silence about later days belongs only on Last day, where the
 constraint is entered. This list sits after it, and Trip review already names later on
 the same side of payment.
+
+CRITIQUE · 2026-08-07 · molades-test · Source: user
+Ticking Free Cancellation left the total at ₹2,598. The checkbox had no handler at all —
+it was decoration. A traveller could select a paid add-on, read a total that excluded it,
+and pay.
+Severity:  blocker
+Layer:     things
+Action:    fixed
+
+Root cause is the one from 2026-08-05, unlearned: rupee figures were written in two
+places. setState() hardcoded '₹2,598'/'₹1,599' strings, and a second block below it
+recomputed from (1599+ret)*mult. Whichever ran last won, and neither knew about the
+add-on. Replaced both with recalc() — every rupee figure on Trip review and Pay now
+derives from one function, and the six state combinations were asserted rather than eyeballed:
+
+  default no addon   ₹2,598   ·  default + addon    ₹2,758
+  dropped + addon    ₹1,759   ·  6 pax + addon      ₹16,548
+  6 pax no addon     ₹15,588  ·  back to default    ₹2,598
+
+The add-on survives dropping the return, which is right — it is sold on the onward leg,
+and the operator doesn't offer it on the return. Total now carries a Free Cancellation
+line so the ₹160 is visible in the breakdown, not only in the sum.
+
+LEARNED · 2026-08-07 · molades-test
+Twice now the same bug: a number rendered from two places. The fix is not care, it is
+structure — one function owns the money, everything else reads it.

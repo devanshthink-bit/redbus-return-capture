@@ -564,7 +564,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       <!-- free cancellation, per leg -->
       <div class="leg">
         <div class="legtag">Free Cancellation</div>
-        <label class="addon"><input type="checkbox"><span><b>Onward journey</b><br><span class="cap">100% refund up to 12 hours before departure</span></span><span class="addonp">&#8377;160</span></label>
+        <label class="addon"><input type="checkbox" id="fc-on" onchange="recalc()"><span><b>Onward journey</b><br><span class="cap">100% refund up to 12 hours before departure</span></span><span class="addonp">&#8377;160</span></label>
         <div class="addon off" data-ret><span><b>Return journey</b><br><span class="cap">Not offered on this bus by the operator</span></span><span class="addonp">&mdash;</span></div>
       </div>
 
@@ -572,6 +572,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       <div class="leg">
         <div class="fare"><span>Onward</span><span>&#8377;1,599</span></div>
         <div class="fare" data-ret><span>Return</span><span id="rv-f2">&#8377;999</span></div>
+        <div class="fare" id="rv-fc" hidden><span>Free Cancellation &middot; onward</span><span id="rv-fcv">&#8377;160</span></div>
         <div class="fare tot"><span>Total</span><span id="rv-tot">&#8377;2,598</span></div>
       </div>
     </div>
@@ -765,6 +766,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
         <div class="legtag">Paying for</div>
         <div class="fare"><span>Onward &middot; Thu, 7 Aug</span><span id="pay-out">&#8377;1,599</span></div>
         <div class="fare" data-ret><span>Return &middot; last day Mon, 11 Aug</span><span id="pay-ret">&#8377;999</span></div>
+        <div class="fare" id="pay-fc" hidden><span>Free Cancellation &middot; onward</span><span id="pay-fcv">&#8377;160</span></div>
         <div class="fare tot"><span>Total</span><span id="pay-tot">&#8377;2,598</span></div>
       </div>
       <div class="leg">
@@ -1004,7 +1006,34 @@ function payNow(){
   b.disabled=true; b.innerHTML='<span class="spin"></span> Paying';
   setTimeout(()=>{ b.innerHTML='Pay now'; b.disabled=false; go('s-done2'); },900);
 }
+let state='default';
+const RUP = n => '₹'+n.toLocaleString('en-IN');
+const PAX = () => (state==='crowded' ? 6 : 1);
+
+// Every rupee figure on Trip review and Pay is derived here and nowhere else.
+function recalc(){
+  const E=id=>document.getElementById(id);
+  const mult = PAX();
+  const out  = 1599*mult;
+  const ret  = (state==='noreturn' ? 0 : 999)*mult;      // a dropped return contributes nothing
+  const fc   = (E('fc-on') && E('fc-on').checked) ? 160*mult : 0;   // onward only — the operator doesn't offer it on the return
+  const tot  = out + ret + fc;
+
+  if(E('rv-fc')) E('rv-fc').hidden = !fc;
+  if(E('pay-fc')) E('pay-fc').hidden = !fc;
+  if(E('rv-fcv')) E('rv-fcv').textContent = RUP(fc);
+  if(E('pay-fcv')) E('pay-fcv').textContent = RUP(fc);
+  if(E('rv-f2')) E('rv-f2').textContent = RUP(ret);
+  if(E('pay-ret')) E('pay-ret').textContent = RUP(ret);
+  if(E('pay-out')) E('pay-out').textContent = RUP(out);
+  const first = document.querySelector('#s-review .fare span:last-child');
+  if(first) first.textContent = RUP(out);
+  ['rv-tot','rv-bb','pay-tot','pay-bb'].forEach(id=>{ if(E(id)) E(id).textContent = RUP(tot); });
+  if(E('pay-title')) E('pay-title').textContent = 'Pay ' + RUP(tot);
+}
+
 function setState(s){
+  state = s;
   document.querySelectorAll('.dev [id^="st-"]').forEach(x=>x.setAttribute('aria-pressed', x.id==='st-'+s));
   offline = (s==='offline');
   document.querySelectorAll('[data-only="offline"]').forEach(el=>el.style.display = offline ? 'flex' : 'none');
@@ -1034,16 +1063,11 @@ function setState(s){
   // return present / dropped
   const dropped = (s==='noreturn');
   document.querySelectorAll('#s-review [data-ret]').forEach(el=>el.hidden = dropped);
-  if(E('rv-bb')) E('rv-bb').textContent = dropped ? '₹1,599' : '₹2,598';
-  if(E('rv-tot')) E('rv-tot').textContent = dropped ? '₹1,599' : '₹2,598';
   if(E('tk-ret'))   E('tk-ret').hidden   = dropped;
   if(E('bc-ret'))   E('bc-ret').hidden   = dropped;
   if(E('bc-terms')) E('bc-terms').hidden = dropped;
   if(E('bc-sub'))   E('bc-sub').textContent = dropped ? 'Delhi → Nainital · one way · 1 passenger' : 'Delhi ↔ Nainital · 1 passenger';
   document.querySelectorAll('#s-pay [data-ret]').forEach(el=>el.hidden = dropped);
-  const ptot = dropped ? '₹1,599' : '₹2,598';
-  ['pay-tot','pay-bb'].forEach(id=>{ if(E(id)) E(id).textContent = ptot; });
-  if(E('pay-title')) E('pay-title').textContent = 'Pay ' + ptot;
   if(E('tk-noret')) E('tk-noret').hidden = !dropped;
   if(dropped){ E('mv-act').hidden = true; E('mv-off').hidden = true; }
   if(E('tk-sub')) E('tk-sub').textContent = dropped ? 'Delhi → Nainital · one way' : 'Delhi ↔ Nainital';
@@ -1053,15 +1077,9 @@ function setState(s){
       ? ['Devansh Somvanshi','Priyanka Ramachandran-Iyer','Sai Srinivas Buddi','Harshraj Vamanjoor','Soumya Mishra','Jaimin Gagiya']
           .map((n,i)=>'<div class="paxname" style="margin-top:'+(i?10:0)+'px">'+n+'</div><div class="cap">Seat '+['SU4/U5','SL2/L3','SU6/U8','SL1/L1','SU2/U2','SL5/L6'][i]+'</div>').join('')
       : '<div class="paxname">Devansh Somvanshi</div><div class="cap">Male, 29 · Seat '+(dropped?'SU4':'SU4 / U5')+'</div>';
-    const mult = s==='crowded'?6:1;
-    const ret  = dropped ? 0 : 999;              // a dropped return contributes nothing
-    const tot  = (1599+ret)*mult;
-    document.getElementById('rv-f2').textContent='₹'+(ret*mult).toLocaleString('en-IN');
-    document.querySelector('.fare span:last-child').textContent='₹'+(1599*mult).toLocaleString('en-IN');
-    document.getElementById('rv-tot').textContent='₹'+tot.toLocaleString('en-IN');
-    document.getElementById('rv-bb').textContent='₹'+tot.toLocaleString('en-IN');
-    document.querySelector('#s-review .navtxt p').textContent='Delhi ↔ Nainital · '+mult+' passenger'+(mult>1?'s':'');
+    document.querySelector('#s-review .navtxt p').textContent='Delhi ↔ Nainital · '+PAX()+' passenger'+(PAX()>1?'s':'');
   }
+  recalc();
   if(s==='error'){ di=1; cycleDate(); }
   if(s==='default'&&di===2){ di=0; cycleDate(); }
 }
