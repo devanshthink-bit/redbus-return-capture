@@ -1162,3 +1162,18 @@ line so the ₹160 is visible in the breakdown, not only in the sum.
 LEARNED · 2026-08-07 · molades-test
 Twice now the same bug: a number rendered from two places. The fix is not care, it is
 structure — one function owns the money, everything else reads it.
+
+CRITIQUE · 2026-08-07 · molades-test · Source: user — "not working"
+The handler fix was correct and still didn't work. Browsers restore checkbox state across
+a reload, and restoration fires no change event, so the box came back ticked while
+recalc() never ran — which is exactly what the reported screenshot showed: ticked, ₹2,598.
+Added autocomplete="off" to stop the restore, and a window load listener so the totals are
+re-derived once even if it happens anyway.
+Severity:  blocker
+Layer:     things
+Action:    fixed
+
+LEARNED · 2026-08-07 · molades-test
+My first test set .checked in script and passed. The user's browser restored .checked
+without an event, and failed. A test that produces the state by a different route than the
+user does is not testing the same thing — reproduce the symptom before claiming the fix.

@@ -564,7 +564,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       <!-- free cancellation, per leg -->
       <div class="leg">
         <div class="legtag">Free Cancellation</div>
-        <label class="addon"><input type="checkbox" id="fc-on" onchange="recalc()"><span><b>Onward journey</b><br><span class="cap">100% refund up to 12 hours before departure</span></span><span class="addonp">&#8377;160</span></label>
+        <label class="addon"><input type="checkbox" id="fc-on" autocomplete="off" onchange="recalc()"><span><b>Onward journey</b><br><span class="cap">100% refund up to 12 hours before departure</span></span><span class="addonp">&#8377;160</span></label>
         <div class="addon off" data-ret><span><b>Return journey</b><br><span class="cap">Not offered on this bus by the operator</span></span><span class="addonp">&mdash;</span></div>
       </div>
 
@@ -1085,6 +1085,7 @@ function setState(s){
 }
 buildSeats();
 setState('default');
+window.addEventListener('load', recalc);
 booted=true;
 </script>
 </body></html>
