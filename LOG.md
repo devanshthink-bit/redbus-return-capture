@@ -7,7 +7,7 @@
 
 Bet (v2):   Travellers defer because the product has no state between booked and nothing — holding a return means buying it, and buying it needs a date they don't have
 Evidence:   enough — 8 interviews + survey (n=23) + 1 App Store review, coded into 102 notes and 6 clusters
-Files:      SCOPE.md [x] v2 · RESEARCH.md [x] · NOTES.md [x] · BRIEF.md [x] · DESIGN_LANGUAGE.md [x] · TEST_SCRIPT.md [x] · build [x] · live [x]
+Files:      SCOPE.md [x] v2 · RESEARCH.md [x] · NOTES.md [x] · BRIEF.md [x] · DESIGN_LANGUAGE.md [x] · TEST_SCRIPT.md [x] · DEFENCE.md [x] · build [x] · live [x]
 Live:       https://devanshthink-bit.github.io/redbus-return-capture/  (GitHub Pages, auto-deploys on push)
 Repo:       github.com/devanshthink-bit/redbus-return-capture  (public; raw/ transcripts gitignored)
 Build:      17 screens · 13 switchable states
@@ -1268,3 +1268,12 @@ two unrelated cards.
 Both are global. Re-ran the full audit: 221 combinations, no failures, no target under 44,
 type scale still 20/18/16/14/12, no JS errors. Ticket, both bus lists and Move earlier all
 render unchanged apart from the alignment fix.
+
+CHANGE · 2026-08-11 · Source: user — stakeholder demo and interviews
+Wrote DEFENCE.md: the questions a PM, PD, senior PD or principal designer is likely to ask,
+with the reasoning and the pushback behind each. Every answer is traced to a note, a survey
+figure, a verified redBus term or a logged decision — nothing asserted from memory.
+
+Section 7 is the one that matters: ten gaps to volunteer before anyone finds them, led by the
+fact that **no usability testing has run yet**. A gap raised by the designer reads as rigour;
+the same gap found by the room reads as a hole.
