@@ -61,10 +61,10 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 .time .arr{font-weight:500}
 .time .d{color:var(--dash);font-weight:400;padding:0 8px}
 .price{font-size:18px;font-weight:700;text-align:right;letter-spacing:-.2px}
-.subrow{display:flex;justify-content:space-between;align-items:baseline;margin-top:8px}
-.sub{font-size:14px;color:var(--muted)}
+.subrow{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:8px}
+.sub{font-size:14px;color:var(--muted);flex:1 1 auto;min-width:0}
 .sub .s{color:var(--warn)}
-.onw{font-size:12px;color:var(--muted)}
+.onw{font-size:12px;color:var(--muted);flex:0 0 auto;text-align:right}
 .oprow{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-top:16px}
 .op{font-size:16px;font-weight:700;line-height:1.15}
 .cap{font-size:14px;color:var(--muted);margin-top:8px}
@@ -198,13 +198,14 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 .legerr-a{display:flex;flex-direction:column;gap:8px;margin-top:16px}
 .legerr-a .btn{width:100%;flex:none}
 /* ---------- move earlier ---------- */
-.rowact{width:100%;background:var(--raised);border:0;border-radius:12px;padding:16px;display:flex;
+.rowact{width:100%;background:var(--raised);border:0;border-radius:12px;padding:16px;margin-bottom:12px;display:flex;
  align-items:center;justify-content:space-between;gap:12px;text-align:left;font-size:16px;cursor:pointer;
  transition:box-shadow var(--t-state)}
 .rowact:hover{box-shadow:0 2px 10px rgba(0,0,0,.07)}
 .rowact:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(197,70,70,.35)}
 .rowact .chev{color:var(--muted);font-size:20px} .rowact .cap{font-weight:400}
 .rowact.off{color:var(--muted);cursor:default}
+.rowact:last-child{margin-bottom:0}
 .held{background:var(--raised);border-radius:12px;padding:16px;margin-bottom:12px}
 .terms-lead{font-size:16px;line-height:1.5;color:var(--ink);margin-bottom:16px}
 .diffup{color:var(--warn)!important}

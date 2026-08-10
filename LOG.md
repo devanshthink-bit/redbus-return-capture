@@ -1250,3 +1250,21 @@ one screen visible in every one. Both origins routed correctly through confirm a
 dropped return hides the trip's return leg and the Change date action. Loading, no-days and
 check-failed states all drive the new list. Type scale 20/18/16/14/12, no target under 44,
 no contrast failure on either new screen.
+
+CHANGE · 2026-08-07 · molades-build · Source: user
+Two layout faults, both from styles that had never met content long enough to expose them.
+
+`.subrow` was a bare space-between with no flex rules, so the left text grew until it
+squeezed the right one, which then wrapped and rendered ragged-left. The right column
+carries money — "₹100 less — not refunded", "Pay ₹300 more" — and money that is not
+right-aligned reads as a different column on every row. Now `.sub` shrinks (`flex:1 1 auto;
+min-width:0`) and `.onw` holds its width and right-aligns. Measured: flush to the card edge
+and one line on every card across every list.
+
+`.rowact` had no bottom margin. It never showed because until today no screen stacked two.
+12px, not the 16px used between sections — these are one group of actions, and 16 read as
+two unrelated cards.
+
+Both are global. Re-ran the full audit: 221 combinations, no failures, no target under 44,
+type scale still 20/18/16/14/12, no JS errors. Ticket, both bus lists and Move earlier all
+render unchanged apart from the alignment fix.
