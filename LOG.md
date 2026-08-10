@@ -1084,3 +1084,34 @@ LEARNED · 2026-08-07 · molades-build
 "Free cannot be the headline" was written here on 2026-08-05 and I have now broken it
 twice. Writing a rule in the log does not enforce it. Grep for the claim across the build
 before shipping copy that touches money.
+
+DECISION · 2026-08-07 · molades-build · Source: user
+"If the user can also shift it to a later date, why call it 'last day I can travel'?"
+The deadline was being contradicted by the screen that asks for it. Removed the
+*Need a later day?* pair from Last day. It stays on Trip review, Earlier buses and
+Booking confirmed.
+
+The Last day screen has one job: get a constraint, not a guess. That distinction is the
+whole idea — "the last day I can travel" is answerable when "when will you return?" is
+not (n67, 65.2% cite date uncertainty), but only if the traveller answers it as a limit
+they actually have. Offering the escape hatch while asking for the commitment guarantees
+a guess, and a guessed deadline makes moving earlier meaningless and the fare difference
+a trap.
+
+Not a return to the 2026-08-06 fault. That screen asserted something false ("You cannot
+move it to a later day"). This asserts nothing. Silence where the commitment is made,
+named plainly on the three screens reached after a plan changes.
+
+CRITIQUE · 2026-08-07 · molades-build · Source: self
+Yesterday's stakeholder-question fix was right on the facts and wrong on the design. It
+surfaced the later path on the entry screen, which attacks TEST_SCRIPT.md must-see moment
+#1 — written before the change, and the most important thing in the session. A correction
+to a false claim should not have silently relocated the load-bearing decision.
+Severity:  major
+Layer:     the bet
+Action:    reverted on the entry screen only; the claim stays corrected everywhere else
+
+OPEN · must-see moment #1 now decides this
+If participants answer "what's the last day you can travel?" with "probably Tuesday"
+rather than "I can definitely travel Tuesday", the deadline framing has failed and
+Idea 16 needs rethinking, not rewording.
