@@ -10,7 +10,7 @@ Evidence:   enough — 8 interviews + survey (n=23) + 1 App Store review, coded 
 Files:      SCOPE.md [x] v2 · RESEARCH.md [x] · NOTES.md [x] · BRIEF.md [x] · DESIGN_LANGUAGE.md [x] · TEST_SCRIPT.md [x] · build [x] · live [x]
 Live:       https://devanshthink-bit.github.io/redbus-return-capture/  (GitHub Pages, auto-deploys on push)
 Repo:       github.com/devanshthink-bit/redbus-return-capture  (public; raw/ transcripts gitignored)
-Build:      14 screens · 13 switchable states
+Build:      15 screens · 13 switchable states
 Rounds:     5 on the design language · 4 build slices · 1 attack pass, both halves
 Open:       Same-operator-only date change unconfirmed. No landscape. Reddit never collected.
             C6 parked. Three brief items stated but not built — see BRIEF.md "Known gaps".
@@ -1183,3 +1183,48 @@ Brought the Move earlier row on the ticket in line with the phrasing settled ear
 "One date change. Only pay the fare difference." All three places that name the cost now
 use the same construction — the fare difference stated as what you pay, never as a caveat
 hanging off a denial.
+
+CRITIQUE · 2026-08-07 · molades-attack · Source: self — full sanity audit, user-requested
+Ran the build and every document against each other in code rather than by reading.
+
+**Build: clean.** 15 screens × 13 states = 195 combinations driven headless — no JS errors,
+exactly one screen visible in every combination, every go() target a real screen, every
+handler defined, every id referenced present, all 15 screens reachable from the rail.
+Money asserted across six state combinations: all four figures agree in every one.
+
+**Build faults found and fixed**
+- Six inline `font-size:17px` on *Earlier buses* — off the declared 20/18/16/14/12 scale.
+  Removed; the screen renders at 18 and the scale is now exactly as documented.
+- Two payment rows measured 36pt tall, under the 44pt minimum. `min-height:44px`.
+- The `—` between departure and arrival is 1.25:1 on white. Decorative, matches the
+  reference, carries no information — now declared in DESIGN_LANGUAGE.md as an exception
+  rather than left to look like an oversight. Nothing that must be read is below 4.5:1.
+
+**Document drift found and fixed**
+- LOG header said 14 screens. It is 15.
+- DESIGN_LANGUAGE gave the error banner as `#A4582A` twice and `#A45729` four times. The
+  build uses `#A45729`. Two typos corrected.
+- The declared dev-rail palette listed colours the rails do not use. Replaced with the four
+  they actually use.
+- BRIEF's words table still agreed on *No change fee* — a phrase that no longer appears
+  anywhere in the build. Now *Only pay the fare difference*, with the reason recorded.
+- BRIEF quoted Idea 8's copy as shipped on 2026-08-03; the line has been rewritten twice
+  since. Updated to the built text.
+- BRIEF's screen arithmetic read "8 new · 6 inherited" = 14, leaving Trip review out of
+  both totals. Now 8 + 7 = 15, both lists written out.
+- TEST_SCRIPT must-see #3 read "later days aren't offered — not in the flow." False since
+  2026-08-06; later days are named on four screens. Rewritten to ask the question that now
+  matters: does knowing the later path exists soften the deadline?
+- TEST_SCRIPT quoted terms copy that does not exist in the build. Corrected to the real string.
+
+**Left alone deliberately:** two stale counts inside dated 2026-08-03 entries. A log is a
+record; correcting what was true when written would be worse than the drift.
+
+**Real gap, not a drift — My Bookings is specified and not built.** Four screens send the
+traveller there for a later date. In the prototype that path dead-ends. Recorded as OPEN in
+BRIEF.md, and TEST_SCRIPT.md now warns the moderator so it is not mistaken for a finding.
+
+LEARNED · 2026-08-07 · molades-attack
+Every document error found today was downstream of a copy change I made and did not chase
+into the files that quote it. The build is checkable in code and was clean; the prose is not,
+and that is where all the rot was.

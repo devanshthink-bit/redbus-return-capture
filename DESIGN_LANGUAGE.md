@@ -93,7 +93,10 @@ departure from the reference and the only one in the spacing system.)*
 | Seat, women only | `#A0326B` | border and glyph. Carries a ♀ as well. 6.64:1 |
 | Field, hover | `#C9C9CF` | border on hover only |
 | Field, pressed | `#FBFBFC` | background on press only |
-| Divider / dash | `#E6E6E6` | the en-dash between departure and arrival times |
+| Divider / dash | `#E6E6E6` | the en-dash between departure and arrival times. **1.25:1 on white — a
+declared WCAG exception, not an oversight.** It is decorative: it separates two times that are
+already separated by layout, carries no information of its own, and is this light in the
+reference app. Nothing that must be read is below 4.5:1 |
 
 **Every value above was sampled from the screenshots and then verified identical in the rendered
 component sheet.** `#C54646` and `#458442` appear unchanged across four different screens.
@@ -107,7 +110,7 @@ component sheet.** `#C54646` and `#458442` appear unchanged across four differen
 **Buttons are pills.** Radius = height ÷ 2 = **24**, not 8. Soft drop shadow `0 2px 6px rgba(0,0,0,.10)`.
 Primary `#C54646` white 16/700; secondary white with a `#D8D8DC` border and no shadow.
 Measured on IMG_4595: height 48.3pt, left edge 24pt in at the cap, 0pt at mid — a true pill.
-**Error banner:** full-bleed, 42 tall, `#A4582A`, white 16pt with a circle-slash glyph, directly under the nav.
+**Error banner:** full-bleed, 42 tall, `#A45729`, white 16pt with a circle-slash glyph, directly under the nav.
 **Feature pill:** height 24, radius 4, horizontal padding 12, **12pt** ink on `#E9EAF6`
 **Rating badge:** 47 wide. Dark block `#458442` 20 tall, **12pt/700** white. Count block `#E0F3D9`
 20 tall, 12pt `#2E5C2A`. Both radius 4, right-aligned to the 16pt card padding
@@ -147,7 +150,7 @@ Booking confirmed.
 
 Measured from IMG_4595–4600, so these are not invented:
 
-- **Connectivity error, partial data** — amber `#A4582A` banner under the nav, skeleton blocks below, a pill *Refresh page* over them. Content stays in place
+- **Connectivity error, partial data** — amber `#A45729` banner under the nav, skeleton blocks below, a pill *Refresh page* over them. Content stays in place
 - **Connectivity error, no data** — full-page: illustration, 20pt bold headline, 16pt muted subline, pill button. *"You are offline!" / "Please connect to the internet and retry" / Retry*
 - **No results** — illustration, 20pt bold headline, 16pt subline, then a longer muted paragraph, then a **primary pill offering an alternative** and a secondary pill. *"Oops!! / No buses found for this route / … Search different route or select trains"* → *Show available trains* · *Search other bus routes*
 - **Loading** — `#F2F2F7` rounded blocks on white, laid out in the shape of the content that's coming
@@ -237,7 +240,7 @@ the design language was wrong in two places until the failure states were looked
 ## Not part of the design
 
 The prototype carries a screen switcher and a state switcher in two dark rails. Those use
-`#4F46E5`, `#0D9488`, `#18181B`, `#27272A`, `#3F3F46`, the `#2A2A2E` page backdrop behind the phone, and neutral greys — **deliberately outside
+`#4F46E5`, `#0D9488`, `#2E2E33`, `#5A5A63`, `#9A9AA4`, `#E4E4E7`, the `#2A2A2E` page backdrop behind the phone — **deliberately outside
 this palette**, so nothing in the tooling can be mistaken for the product. They are prototype
 chrome and would not ship.
 

@@ -8,6 +8,11 @@
 > are *your* controls, not theirs. Say nothing about them. The participant goes through the flow and
 > enters whatever it asks, exactly as they would in the real app.
 >
+> **My Bookings does not exist in the prototype.** Four screens say to use *Change date in My
+> Bookings* for a later day. If a participant goes looking for it, they will find nothing —
+> that is a prototype limit, not a finding. Note that they looked, say "that part isn't built",
+> and carry on.
+>
 > If a task needs a particular state — offline, nothing earlier, seat lost — **you** click it,
 > quietly, before you hand over. Telling somebody to try all thirteen states turns a usability test
 > into a feature tour, and every finding evaporates.
@@ -55,7 +60,7 @@ Do they say anything out loud while choosing the date?
 
 > "You've picked a return. Before you pay — is there anything you'd want to know?"
 
-**Watching for:** do they read the terms block unprompted? Do they notice *"this ticket can no longer be cancelled"*?
+**Watching for:** do they read the terms block unprompted? Do they notice *"The ticket becomes non-refundable, including Free Cancellation"*?
 Do they go looking for a *Know more* that doesn't exist?
 
 ### Task 3 — from C4: nothing carries the return forward
@@ -78,8 +83,12 @@ Ask afterwards, in their words: **"What did you think that question was asking?"
 **2. Do they see that moving ends cancellation — before they confirm, not after?**
 If they only notice on the Move done screen, the terms block failed at its one job.
 
-**3. What do they do when they realise later days aren't offered?**
-Not in the flow, so watch for the moment they look for it.
+**3. Do they find the later-day path, and does knowing it exists soften the deadline?**
+Moving to a later day is **not** offered on *Last day* — deliberately, so the field is answered as a
+constraint rather than a guess. It is named on *Return buses*, *Trip review*, the ticket and
+*Booking confirmed*. Watch whether they look for it on *Last day*, and whether meeting it later
+makes them say the date they entered was only a guess. **This is the same question as moment 1,
+asked from the other end.**
 
 **4. Does *Can be moved earlier* clash with *Free date change*?**
 The participant now meets both in one session: redBus's real badge on the outbound bus list, and

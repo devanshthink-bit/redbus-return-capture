@@ -274,7 +274,7 @@ Honest list, so nobody discovers them in an interview:
 
 | Gap | Status |
 |---|---|
-| **Idea 8 — the cost of waiting** | **Built 2026-08-03**, as information rather than pressure. One line under the buttons on *Last day*: *"Book the return later and you take whatever seats are left, often at a higher fare."* No number, no count, no colour, no urgency — but a named consequence and a direction |
+| **Idea 8 — the cost of waiting** | **Built 2026-08-03**, as information rather than pressure. A rule pair on *Last day* — *Not booking now?* / *"Your onward journey isn’t affected. But book the return later and you may lose this seat, or pay more."* No number, no count, no colour, no urgency — but a named consequence and a direction |
 | **Idea 9 — the product deciding whether to raise the return at all** | Decision 2 above. Stated, not built |
 | **Group all-or-nothing move** | Decision 3 above. Stated, not built |
 | **One-bus-a-day routes** (#17) | "Earlier" means 24-hour jumps. Not addressed |
@@ -318,7 +318,7 @@ the skip as visible as the continue. No blocking, no modal that must be dismisse
 |---|---|---|
 | **Last day** | Return date · Back by | Four of eight described a deadline, never a date. Vivek: *"I have to return anyhow on that date."* Samarth: back before Monday office. Sai books Saturday to keep Sunday. **Renamed from "Back by" on 2026-08-03** — *by* carried all the weight and was easy to skim past, so the field read as a guess rather than a commitment. The field label is first-person, *"Last day I can travel"*, which is harder to answer with "probably" |
 | **Move earlier** | Reschedule · Date change | "Reschedule" is the operator's word for a policy. "Move earlier" is what the traveller is doing, and it states the one direction |
-| **No change fee** | Free · Flexible | RedBus's own terms require the fare difference. "Free" would be untrue, and untrue contradicts the company's trust bet |
+| **Only pay the fare difference** | Free · Flexible · No change fee | RedBus's own terms require the fare difference. "Free" would be untrue, and untrue contradicts the company's trust bet. **Changed from "No change fee" on 2026-08-07** — a denial of one charge reads as a denial of all of them, so the payment is now the sentence rather than a caveat hanging off it |
 | **Return** | Inbound · Return leg | Every participant said "return", unprompted, without exception |
 | **Trip** | Round trip booking | Both legs are one thing to the traveller. Samarth and Sai both say "trip" |
 
@@ -329,7 +329,12 @@ on the ticket it is not *Change date* in the confirmation.
 
 ## Screens
 
-**8 new · 6 inherited-and-rebuilt.** With states, roughly 32 artboards.
+**8 new · 7 inherited-and-rebuilt — 15 screens in the build.** With states, roughly 32 artboards.
+
+*New:* Last day · Return buses · Return seat · Return points · Earlier buses · Move confirm ·
+Move done · Booking confirmed. *Rebuilt:* Home · Outbound buses · Outbound seat · Outbound
+points · Trip review · Payment · Ticket. **Corrected 2026-08-07** — the old count read 8+6
+and left Trip review out of both totals.
 
 The outbound flow — Home, Outbound buses, Outbound seat, Outbound points, Payment — was rebuilt
 on **2026-08-03** so the prototype can be walked from search to a moved return. It is deliberately
@@ -355,6 +360,11 @@ one-leg original.)*
 Booking confirmed (two legs, **built 2026-08-03** — carries the handoff line *"If you can leave
 earlier, open your ticket and choose Move earlier"*, which is where the engagement loop starts) ·
 My Bookings (the trip as one object, not two tickets) · Ticket (carries *Move earlier*)
+
+> **My Bookings is specified, not built.** Four screens send the traveller there for a later
+> date — *Return buses*, *Trip review*, *Earlier buses*, *Booking confirmed*. In the prototype
+> that path dead-ends. A participant who follows it will find nothing, so the moderator must
+> expect it. Noted in TEST_SCRIPT.md. **Open, 2026-08-07.**
 
 ## Where they hang off the existing product
 

@@ -159,9 +159,10 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
  border-radius:12px;padding:16px;margin-top:16px;font-size:16px;font-weight:700}
 .toggle{width:44px;height:24px;border-radius:12px;background:#D8D8DC;display:inline-block}
 /* ---------- payment ---------- */
-.payopt{display:flex;align-items:center;gap:12px;padding:12px 0;font-size:16px;cursor:pointer;
+.payopt{display:flex;align-items:center;gap:12px;padding:12px 0;min-height:44px;font-size:16px;cursor:pointer;
  border-top:1px solid var(--line)}
 .payopt:first-of-type{border-top:0;padding-top:4px}
+.addon input,.payopt input{margin:0}
 .payopt input{width:20px;height:20px;accent-color:var(--accent);flex:0 0 auto}
 /* ---------- context strip: what they already booked ---------- */
 .ctx{background:var(--chip);border-radius:8px;padding:12px 16px;margin-bottom:16px}
@@ -647,15 +648,15 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 
       <div id="e-list">
         <button class="card" onclick="confirmMove('Sat, 9 Aug','22:15',1199,200)">
-          <div class="row"><span class="time" style="font-size:17px">Sat, 9 Aug &middot; 22:15</span><span class="price" style="font-size:17px">&#8377;1,199</span></div>
+          <div class="row"><span class="time" >Sat, 9 Aug &middot; 22:15</span><span class="price" >&#8377;1,199</span></div>
           <div class="subrow"><span class="sub">Laxmi Holidays Pvt Ltd &middot; Seat U5 free</span><span class="onw diffup">Pay &#8377;200 more</span></div>
         </button>
         <button class="card" onclick="confirmMove('Sun, 10 Aug','23:55',949,-50)">
-          <div class="row"><span class="time" style="font-size:17px">Sun, 10 Aug &middot; 23:55</span><span class="price" style="font-size:17px">&#8377;949</span></div>
+          <div class="row"><span class="time" >Sun, 10 Aug &middot; 23:55</span><span class="price" >&#8377;949</span></div>
           <div class="subrow"><span class="sub">Laxmi Holidays Pvt Ltd &middot; Seat U5 free</span><span class="onw">&#8377;50 less &mdash; not refunded</span></div>
         </button>
         <button class="card" onclick="confirmMove('Fri, 8 Aug','23:30',1450,451)">
-          <div class="row"><span class="time" style="font-size:17px">Fri, 8 Aug &middot; 23:30</span><span class="price" style="font-size:17px">&#8377;1,450</span></div>
+          <div class="row"><span class="time" >Fri, 8 Aug &middot; 23:30</span><span class="price" >&#8377;1,450</span></div>
           <div class="subrow"><span class="sub">Laxmi Holidays Pvt Ltd &middot; Seat U3 only</span><span class="onw diffup">Pay &#8377;451 more</span></div>
         </button>
         <p class="note">Only Laxmi Holidays runs on these days. A date change stays with the same operator.<br>
