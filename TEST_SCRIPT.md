@@ -8,7 +8,7 @@
 > are *your* controls, not theirs. Say nothing about them. The participant goes through the flow and
 > enters whatever it asks, exactly as they would in the real app.
 >
-If a task needs a particular state — offline, nothing earlier, seat lost — **you** click it,
+> If a task needs a particular state — offline, nothing earlier, seat lost — **you** click it,
 > quietly, before you hand over. Telling somebody to try all thirteen states turns a usability test
 > into a feature tour, and every finding evaporates.
 
@@ -51,6 +51,15 @@ and it isn't. If the silence gets long, you may say one thing and nothing else: 
 **Watching for:** do they use the *Last day* field or skip past it? **Do they enter Tuesday, or do they enter a guess?**
 Do they say anything out loud while choosing the date?
 
+**Give Samarth this variant instead** — he is the fixed-plan person (n45), and 39.1% with a fixed
+return date still book separately (n73), so certain travellers are the biggest leak, not a side case:
+
+> "You're going to Nainital on Thursday for a wedding. You're definitely coming back Tuesday —
+> it's fixed, you have work. Book your travel."
+
+**Watching for:** does the *Last day* wording put him off because he isn't unsure? If a certain
+traveller skips the step, the framing is costing attach in the largest group.
+
 ### Task 2 — from C2: not booking is the cheapest way to stay flexible
 
 > "You've picked a return. Before you pay — is there anything you'd want to know?"
@@ -68,7 +77,7 @@ Do they hesitate at the confirm screen, and if so, at which line?
 
 ---
 
-## The three must-see moments
+## The four must-see moments
 
 **1. Does *"What's the last day you can travel?"* read as a commitment, or as a guess?**
 This is the most important thing in the whole session. If people answer it with *"probably Tuesday"* rather than
