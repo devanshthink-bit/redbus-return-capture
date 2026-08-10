@@ -613,12 +613,115 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
         <div class="acts"><button class="btn pri" style="width:100%" onclick="go('s-backby')">Book a return</button></div>
       </div>
 
-      <button class="rowact" id="mv-act" onclick="go('s-earlier')">
+      <button class="rowact" id="mv-act" onclick="moveOrigin='s-earlier';go('s-earlier')">
         <span><b>Move earlier</b><br><span class="cap" id="mv-sub">Leaving before Mon, 11 Aug? One date change. Only pay the fare difference.</span></span>
         <span class="chev">&#8250;</span>
       </button>
       <div class="rowact off" id="mv-off" hidden>
         <span><b>Move earlier</b><br><span class="cap" id="mv-why">Not available</span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN: My Bookings ============ -->
+  <section class="screen" id="s-mybook">
+    <div class="nav">
+      <div style="width:34px"></div>
+      <div class="navtxt"><h1>My Bookings</h1><p>1 upcoming trip</p></div>
+      <span style="width:34px"></span>
+    </div>
+    <div class="banner" data-only="offline"><span aria-hidden="true">&#8856;</span><span>You&rsquo;re offline. Check your internet connection.</span></div>
+    <div class="wrap">
+
+      <div class="leg">
+        <div class="legtag">Delhi &harr; Nainital &middot; 1 passenger</div>
+        <div class="row"><span class="time">Onward &middot; Thu, 7 Aug</span><span class="price">&#8377;1,599</span></div>
+        <div class="subrow"><span class="sub">Laxmi Holidays Pvt Ltd &middot; 23:55</span><span class="onw">Seat SU4</span></div>
+        <div id="mb-ret">
+          <div class="row" style="margin-top:16px"><span class="time">Return &middot; <span id="mb-rdate">Mon, 11 Aug</span></span><span class="price">&#8377;999</span></div>
+          <div class="subrow"><span class="sub">Laxmi Holidays Pvt Ltd &middot; 23:55</span><span class="onw">Seat U5</span></div>
+        </div>
+        <div id="mb-noret" hidden>
+          <div class="row" style="margin-top:16px"><span class="time" style="color:var(--muted)">No return booked</span><span class="price" style="color:var(--muted)">&mdash;</span></div>
+          <div class="subrow"><span class="sub">You booked this trip one way</span></div>
+        </div>
+      </div>
+
+      <button class="rowact" onclick="go('s-ticket')">
+        <span><b>View ticket</b><br><span class="cap">Both legs, seats and boarding points</span></span>
+        <span class="chev">&#8250;</span>
+      </button>
+
+      <button class="rowact" id="mb-act" onclick="openLater()">
+        <span><b>Change date</b><br><span class="cap" id="mb-sub">Move the return to a later day. One date change. Only pay the fare difference.</span></span>
+        <span class="chev">&#8250;</span>
+      </button>
+      <div class="rowact off" id="mb-off" hidden>
+        <span><b>Change date</b><br><span class="cap" id="mb-why">Not available</span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN: Change date (later) ============ -->
+  <section class="screen" id="s-later">
+    <div class="nav">
+      <button class="back" aria-label="Back" onclick="go('s-mybook')">&#8249;</button>
+      <div class="navtxt"><h1>Change date</h1><p>Nainital &rarr; Delhi</p></div>
+      <span style="width:34px"></span>
+    </div>
+    <div class="banner" data-only="offline"><span aria-hidden="true">&#8856;</span><span>You&rsquo;re offline. Check your internet connection.</span></div>
+    <div class="wrap">
+
+      <div class="held">
+        <div class="legtag">You have</div>
+        <div class="row"><span class="time" style="font-size:16px">Mon, 11 Aug &middot; 23:55</span><span class="price" style="font-size:16px">&#8377;999</span></div>
+        <div class="cap" style="margin-top:4px">Laxmi Holidays Pvt Ltd &middot; Seat U5</div>
+      </div>
+
+      <p class="terms-lead">Changing the date ends cancellation on this ticket, and you can only do it once.</p>
+
+      <div id="l-loading" hidden>
+        <div class="skelcard"><div class="skel" style="width:45%"></div><div class="skel" style="width:62%;margin-top:12px"></div></div>
+        <div class="skelcard"><div class="skel" style="width:40%"></div><div class="skel" style="width:58%;margin-top:12px"></div></div>
+      </div>
+
+      <div id="l-list">
+        <button class="card" onclick="confirmMove('Tue, 12 Aug','23:55',1049,50)">
+          <div class="row"><span class="time">Tue, 12 Aug &middot; 23:55</span><span class="price">&#8377;1,049</span></div>
+          <div class="subrow"><span class="sub">Laxmi Holidays Pvt Ltd &middot; Seat U5 free</span><span class="onw diffup">Pay &#8377;50 more</span></div>
+        </button>
+        <button class="card" onclick="confirmMove('Wed, 13 Aug','22:15',899,-100)">
+          <div class="row"><span class="time">Wed, 13 Aug &middot; 22:15</span><span class="price">&#8377;899</span></div>
+          <div class="subrow"><span class="sub">Laxmi Holidays Pvt Ltd &middot; Seat U5 free</span><span class="onw">&#8377;100 less &mdash; not refunded</span></div>
+        </button>
+        <button class="card" onclick="confirmMove('Fri, 15 Aug','23:30',1299,300)">
+          <div class="row"><span class="time">Fri, 15 Aug &middot; 23:30</span><span class="price">&#8377;1,299</span></div>
+          <div class="subrow"><span class="sub">Laxmi Holidays Pvt Ltd &middot; Seat U2 only</span><span class="onw diffup">Pay &#8377;300 more</span></div>
+        </button>
+        <p class="note">Only Laxmi Holidays runs on these days. A date change stays with the same operator.<br>
+          Leaving <b>earlier</b> instead? Open your ticket and choose Move earlier.</p>
+      </div>
+
+      <div id="l-none" hidden>
+        <div class="blank">
+          <h2>No later days available</h2>
+          <p>Laxmi Holidays isn&rsquo;t running after Mon, 11 Aug.</p>
+          <p class="long">Your Mon, 11 Aug booking is unchanged and still valid. Seat U5, &#8377;999, nothing has been charged.</p>
+          <div class="acts">
+            <button class="btn pri" style="width:100%" onclick="go('s-mybook')">Keep my current booking</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="l-err" hidden>
+        <div class="blank">
+          <h2>We couldn&rsquo;t check other days</h2>
+          <p>Your Mon, 11 Aug booking is unchanged. Nothing has been charged.</p>
+          <div class="acts">
+            <button class="btn pri" style="width:100%" onclick="setState('default')">Try again</button>
+            <button class="btn pri" style="width:100%" onclick="go('s-mybook')">Keep my current booking</button>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -690,7 +793,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
   <!-- ============ SCREEN: Move confirm ============ -->
   <section class="screen" id="s-confirm">
     <div class="nav">
-      <button class="back" aria-label="Back" onclick="go('s-earlier')">&#8249;</button>
+      <button class="back" aria-label="Back" onclick="abortMove()">&#8249;</button>
       <div class="navtxt"><h1>Confirm the move</h1></div>
       <span style="width:34px"></span>
     </div>
@@ -699,7 +802,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       <div class="legerr" id="c-err" hidden>
         <p class="legerr-t">That seat went while you were confirming</p>
         <p class="legerr-b"><b>Your Mon, 11 Aug booking is untouched.</b> Seat U5, &#8377;999. Nothing was charged and nothing was cancelled.</p>
-        <div class="legerr-a"><button class="btn pri" onclick="go('s-earlier')">See other days</button></div>
+        <div class="legerr-a"><button class="btn pri" onclick="go(moveOrigin)">See other days</button></div>
       </div>
 
       <div class="swap">
@@ -846,6 +949,8 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
   <button onclick="go('s-pay')" id="t-pay">Payment</button>
   <button onclick="go('s-done2')" id="t-done2">Booking confirmed</button>
   <button onclick="go('s-ticket')" id="t-ticket">Ticket</button>
+  <button onclick="go('s-mybook')" id="t-mybook">My Bookings</button>
+  <button onclick="go('s-later')" id="t-later">Change date</button>
   <button onclick="go('s-earlier')" id="t-earlier">Earlier buses</button>
   <button onclick="go('s-confirm')" id="t-confirm">Move confirm</button>
   <button onclick="go('s-done')" id="t-done">Move done</button>
@@ -967,6 +1072,8 @@ function setPt(el,group){
   document.querySelectorAll('.ptn[data-g="'+group+'"]').forEach(p=>p.setAttribute('aria-pressed','false'));
   el.setAttribute('aria-pressed','true');
 }
+let moveOrigin='s-earlier';
+function openLater(){ moveOrigin='s-later'; go('s-later'); }
 function confirmMove(date,time,fare,diff){
   document.getElementById('c-to').textContent = date+' · '+time;
   document.getElementById('c-tosub').textContent = 'Seat U5 · ₹'+fare.toLocaleString('en-IN');
@@ -998,7 +1105,7 @@ function abortMove(){
     const b=document.getElementById('b-conf');
     b.innerHTML='Confirm move'; b.disabled=false;
   }
-  go('s-earlier');
+  go(moveOrigin);
 }
 function dropReturn(){ setState('noreturn'); }
 function skipReturn(){ setState('noreturn'); go('s-review'); }   // Skip leaves the return out and goes straight to review
@@ -1053,6 +1160,12 @@ function setState(s){
     E('e-list').hidden    = ['loading','nothingearlier','checkfail'].includes(s);
     E('e-none').hidden    = s!=='nothingearlier';
     E('e-err').hidden     = s!=='checkfail';
+  }
+  if(E('l-list')){
+    E('l-loading').hidden = s!=='loading';
+    E('l-list').hidden    = ['loading','nothingearlier','checkfail'].includes(s);
+    E('l-none').hidden    = s!=='nothingearlier';
+    E('l-err').hidden     = s!=='checkfail';
     E('c-err').hidden     = s!=='swapfail';
     if(E('b-conf')) E('b-conf').disabled = s==='swapfail';
     const blocked = s==='alreadymoved' || s==='pastcutoff';
@@ -1070,7 +1183,15 @@ function setState(s){
   if(E('bc-sub'))   E('bc-sub').textContent = dropped ? 'Delhi → Nainital · one way · 1 passenger' : 'Delhi ↔ Nainital · 1 passenger';
   document.querySelectorAll('#s-pay [data-ret]').forEach(el=>el.hidden = dropped);
   if(E('tk-noret')) E('tk-noret').hidden = !dropped;
-  if(dropped){ E('mv-act').hidden = true; E('mv-off').hidden = true; }
+  if(E('mb-ret'))   E('mb-ret').hidden   = dropped;
+  if(E('mb-noret')) E('mb-noret').hidden = !dropped;
+  if(dropped){ E('mv-act').hidden = true; E('mv-off').hidden = true;
+               E('mb-act').hidden = true; E('mb-off').hidden = true; }
+  else { const bl = s==='alreadymoved' || s==='pastcutoff';
+         E('mb-act').hidden = bl; E('mb-off').hidden = !bl;
+         if(bl) E('mb-why').textContent = s==='alreadymoved'
+           ? 'You have already used your one date change on this ticket.'
+           : 'Changes close 8 hours before departure. That window has passed.'; }
   if(E('tk-sub')) E('tk-sub').textContent = dropped ? 'Delhi → Nainital · one way' : 'Delhi ↔ Nainital';
   const pax=document.getElementById('rv-pax');
   if(pax){

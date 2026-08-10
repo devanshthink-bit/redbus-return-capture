@@ -329,10 +329,10 @@ on the ticket it is not *Change date* in the confirmation.
 
 ## Screens
 
-**8 new · 7 inherited-and-rebuilt — 15 screens in the build.** With states, roughly 32 artboards.
+**10 new · 7 inherited-and-rebuilt — 17 screens in the build.** With states, roughly 32 artboards.
 
 *New:* Last day · Return buses · Return seat · Return points · Earlier buses · Move confirm ·
-Move done · Booking confirmed. *Rebuilt:* Home · Outbound buses · Outbound seat · Outbound
+Move done · Booking confirmed · My Bookings · Change date. *Rebuilt:* Home · Outbound buses · Outbound seat · Outbound
 points · Trip review · Payment · Ticket. **Corrected 2026-08-07** — the old count read 8+6
 and left Trip review out of both totals.
 
@@ -361,10 +361,11 @@ Booking confirmed (two legs, **built 2026-08-03** — carries the handoff line *
 earlier, open your ticket and choose Move earlier"*, which is where the engagement loop starts) ·
 My Bookings (the trip as one object, not two tickets) · Ticket (carries *Move earlier*)
 
-> **My Bookings is specified, not built.** Four screens send the traveller there for a later
-> date — *Return buses*, *Trip review*, *Earlier buses*, *Booking confirmed*. In the prototype
-> that path dead-ends. A participant who follows it will find nothing, so the moderator must
-> expect it. Noted in TEST_SCRIPT.md. **Open, 2026-08-07.**
+> **My Bookings and Change date — built 2026-08-07.** Four screens send the traveller there for
+> a later date — *Return buses*, *Trip review*, *Earlier buses*, *Booking confirmed* — and the
+> path used to dead-end. My Bookings shows the trip as one object with both legs in a single
+> card; *Change date* lists later days on the same operator and hands off to the existing
+> *Confirm the move* and *Return moved* screens, which serve both directions. **Closed.**
 
 ## Where they hang off the existing product
 

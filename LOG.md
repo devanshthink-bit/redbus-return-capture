@@ -10,7 +10,7 @@ Evidence:   enough — 8 interviews + survey (n=23) + 1 App Store review, coded 
 Files:      SCOPE.md [x] v2 · RESEARCH.md [x] · NOTES.md [x] · BRIEF.md [x] · DESIGN_LANGUAGE.md [x] · TEST_SCRIPT.md [x] · build [x] · live [x]
 Live:       https://devanshthink-bit.github.io/redbus-return-capture/  (GitHub Pages, auto-deploys on push)
 Repo:       github.com/devanshthink-bit/redbus-return-capture  (public; raw/ transcripts gitignored)
-Build:      15 screens · 13 switchable states
+Build:      17 screens · 13 switchable states
 Rounds:     5 on the design language · 4 build slices · 1 attack pass, both halves
 Open:       Same-operator-only date change unconfirmed. No landscape. Reddit never collected.
             C6 parked. Three brief items stated but not built — see BRIEF.md "Known gaps".
@@ -1228,3 +1228,25 @@ LEARNED · 2026-08-07 · molades-attack
 Every document error found today was downstream of a copy change I made and did not chase
 into the files that quote it. The build is checkable in code and was clean; the prose is not,
 and that is where all the rot was.
+
+DECISION · 2026-08-07 · molades-build · Source: user
+Built **My Bookings** and **Change date**, closing the gap the audit found. Four screens
+told the traveller to change to a later day from My Bookings and the path dead-ended.
+
+Decided:   Build both, not just My Bookings. A My Bookings screen whose Change date button
+           goes nowhere moves the dead end rather than closing it.
+Rejected:  A separate confirm and done screen for the later direction. *Confirm the move* and
+           *Return moved* already say what is true of a change in either direction — one
+           change used, fare difference payable, cancellation ended. Duplicating them would
+           have created two places to keep in step, which is the fault this build keeps hitting.
+           Instead the move remembers which list launched it, so Go back returns there.
+Shape:     My Bookings shows the trip as **one object** — both legs in a single card — which is
+           what BRIEF specified and what separates it from today's two independent tickets.
+           Change date mirrors *Earlier buses* exactly: the held booking, the terms lead, the
+           same-operator note, and the cross-reference pointing the other way.
+
+Checked in code, not by clicking: 17 screens × 13 states = 221 combinations, no JS errors,
+one screen visible in every one. Both origins routed correctly through confirm and back. A
+dropped return hides the trip's return leg and the Change date action. Loading, no-days and
+check-failed states all drive the new list. Type scale 20/18/16/14/12, no target under 44,
+no contrast failure on either new screen.

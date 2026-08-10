@@ -8,12 +8,7 @@
 > are *your* controls, not theirs. Say nothing about them. The participant goes through the flow and
 > enters whatever it asks, exactly as they would in the real app.
 >
-> **My Bookings does not exist in the prototype.** Four screens say to use *Change date in My
-> Bookings* for a later day. If a participant goes looking for it, they will find nothing —
-> that is a prototype limit, not a finding. Note that they looked, say "that part isn't built",
-> and carry on.
->
-> If a task needs a particular state — offline, nothing earlier, seat lost — **you** click it,
+If a task needs a particular state — offline, nothing earlier, seat lost — **you** click it,
 > quietly, before you hand over. Telling somebody to try all thirteen states turns a usability test
 > into a feature tour, and every finding evaporates.
 
@@ -86,7 +81,8 @@ If they only notice on the Move done screen, the terms block failed at its one j
 **3. Do they find the later-day path, and does knowing it exists soften the deadline?**
 Moving to a later day is **not** offered on *Last day* — deliberately, so the field is answered as a
 constraint rather than a guess. It is named on *Return buses*, *Trip review*, the ticket and
-*Booking confirmed*. Watch whether they look for it on *Last day*, and whether meeting it later
+*Booking confirmed*, and it now works end to end — My Bookings → Change date → Confirm →
+Return moved. Watch whether they look for it on *Last day*, and whether meeting it later
 makes them say the date they entered was only a guess. **This is the same question as moment 1,
 asked from the other end.**
 
