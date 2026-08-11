@@ -1745,3 +1745,21 @@ Two small changes so the list carries the signal:
 
 Nothing else on that screen changed; the picker itself stays one step later, which keeps the
 common path at one tap.
+
+CHANGE · 2026-08-11 · molades-build · Source: user
+"Why show 'Last day you could travel' when the user already knows it — they selected the
+window." Right. It restated the traveller's own input, and position already says which day is
+last: it is the bottom of the list. The pill was spending space on a fact nobody needed.
+
+But the slot was worth keeping, because the *reason* to pick that day is not obvious. Now
+**No change needed** — which names the benefit rather than repeating the input.
+
+The same question exposed a real fault. On a flat-fare window one day still carried
+**Cheapest** while the note underneath said *"Every day here is the same fare."* The screen
+contradicted itself: `cheapestIn()` returns the first day at the minimum, so with equal fares it
+labelled an arbitrary one. The pill now appears only when the fares actually differ.
+
+Verified across all three shapes:
+  spread     Sun 10 = Cheapest · Tue 12 = No change needed
+  flat       Tue 12 = No change needed, and nothing is called cheapest
+  single day no pills at all

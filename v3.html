@@ -1032,8 +1032,11 @@ function renderPicked(){
 
   wrap.innerHTML = days.map(function(d){
     const tags=[];
-    if(days.length>1 && d===cheap) tags.push('<div class="pill">\u21BB Cheapest</div>');
-    if(days.length>1 && d===last)  tags.push('<div class="pill">\u21BB Last day you could travel</div>');
+    // "Cheapest" only means something when the fares actually differ.
+    // The last day needs no label saying it is last — the traveller chose it and it sits at the
+    // bottom of the list. What is not obvious is why it is worth picking, so name that instead.
+    if(days.length>1 && spread && d===cheap) tags.push('<div class="pill">\u21BB Cheapest</div>');
+    if(days.length>1 && d===last)  tags.push('<div class="pill">\u21BB No change needed</div>');
     const diff = heldDay ? FARE[d]-FARE[heldDay] : 0;
     const right = d===heldDay ? '<span class="onw">Booked</span>'
       : (!heldDay ? ''
