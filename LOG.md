@@ -1763,3 +1763,42 @@ Verified across all three shapes:
   spread     Sun 10 = Cheapest · Tue 12 = No change needed
   flat       Tue 12 = No change needed, and nothing is called cheapest
   single day no pills at all
+
+CRITIQUE · 2026-08-11 · molades-test · Source: user
+Three faults in one screenshot, and the first caused the other two.
+
+**`spread` compared the cheapest day against the last day.** That is false exactly when the
+last day happens to be the cheapest — which is what the traveller was looking at, a window
+8–13 Aug where Wed 13 was both. So the screen declared *"Every day here is the same fare"*
+above a list reading ₹1,450 · ₹1,199 · ₹949 · ₹999 · ₹1,049 · ₹899, suppressed the **Cheapest**
+pill, and pre-selected a day it should have let the traveller choose. Now it compares the
+cheapest against the dearest, which is what "spread" actually means.
+Severity:  blocker
+Layer:     things
+
+**The last-day pill is gone.** *"Last day you could travel"* restated the traveller's own
+input; *"No change needed"* replaced it and was worse — opaque on its own, and it sat on a day
+they had not booked, reading as advice about something else. Two attempts at wording is a
+signal the slot was the problem, not the words. Position already says which day is last, and
+the lead line gives the reason. **Cheapest** stays, because comparing fares is work the
+traveller would otherwise do themselves.
+
+**The note said three things at once and one of them was wrong.** Rewritten per case, and it
+now separates the two moments that were being blurred — changing your pick before paying,
+which is free, and the one date change after booking, which is not:
+- *cheapest exists* — "Wed, 13 Aug is the cheapest at ₹899. Pick it now and you keep the
+  difference — book a dearer day and switch later, and it is not refunded. Changing your pick
+  is free until you pay."
+- *flat fares* — "Every day here is the same fare. Changing your pick is free until you pay,
+  and after that you get one date change."
+- *single day* — "After booking you get one date change, either direction. You pay any
+  difference, and a lower fare is not refunded."
+
+Verified: 8–13 with real differences now pre-selects nothing and marks Wed 13 as cheapest;
+flat fares pre-select the last day and claim no bargain. Full click-through 18 steps, 208
+combinations, no failures.
+
+LEARNED · 2026-08-11 · molades-build
+A derived boolean needs a test that matches its name. `spread` meant "do the fares differ" and
+was written as "is the last day dearer than the cheapest" — right in most data, wrong in the
+case the traveller hit. Three visible defects came from one wrong comparison.
