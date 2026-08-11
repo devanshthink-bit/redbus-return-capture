@@ -1698,3 +1698,35 @@ Two rules, both bought expensively today.
    named functions, or nothing.
 2. **A passing test that never touches a control is not evidence.** State coverage and click
    coverage are different things, and only one of them is what the traveller does.
+
+DECISION · 2026-08-11 · molades-build · Source: user
+"Shouldn't we give control to the user to select a seat — we auto-assign when it isn't
+available, and even when it is, they might want a different one."
+
+Built, as a **default with an override** rather than a required step. *Confirm the move* now
+names the seat and carries a **Change seat** action that opens the seat map for that day, with
+the auto-assigned seat already selected. One tap to accept, two to change.
+
+**Why this differs from the day choice, where I removed the default.** For the day there were
+two options with genuinely different value — money against certainty — and the product had no
+way to know which the traveller wanted, so choosing for them was taking their decision. For the
+seat there *is* a defensible default: keep the one you have, or the nearest thing free. And the
+cost of a wrong default is low and undoable before confirming. Default plus override is right
+here; it would have been wrong there. The test is not "is there a default" but "can the product
+justify one".
+
+It also protects the one-tap promise, which matters because a move often happens in a hurry on
+a poor connection (failure #20).
+
+The seat map is drawn per day, so availability differs by day and the auto-assigned seat is
+always genuinely free. The confirm rule now distinguishes the two cases, which the first
+version got wrong:
+- seat taken   -> *"Seat U5 is taken that day. You would be in L3"*
+- seat chosen  -> *"You chose L1 instead of U5"*
+- same seat    -> the rule does not appear at all
+
+Also demoted *Different seat* from the critical colour. Losing the refund outranks it, and
+DESIGN_LANGUAGE allows one critical rule per block — there were two.
+
+Verified by the click-through walk, now 21 steps including the seat picker, plus 208
+combinations, no target under 44, exactly one critical rule on the confirm screen.

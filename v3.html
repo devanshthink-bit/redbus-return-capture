@@ -80,7 +80,9 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 .pill{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--ink);background:var(--chip);
  border-radius:4px;height:24px;padding:0 12px;margin-top:16px}
 .pill.no{color:var(--muted);background:#F1F1F1}
-.pill.warnpill{color:var(--warn);background:#F6EDE6}   /* state rules go after the base */
+.pill.warnpill{color:var(--warn);background:#F6EDE6}
+.linkbtn{background:none;border:0;padding:8px 0 0;font:700 14px/1 inherit;color:var(--accent);cursor:pointer;min-height:44px;text-align:left}
+.linkbtn:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(197,70,70,.35);border-radius:4px}   /* state rules go after the base */
 
 /* ---------- controls row ---------- */
 .ctrls{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px;scrollbar-width:none}
@@ -464,13 +466,13 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
   <!-- ============ SCREEN: Return seat ============ -->
   <section class="screen" id="s-seat">
     <div class="nav">
-      <button class="back" aria-label="Back" onclick="go('s-picked')">&#8249;</button>
-      <div class="navtxt"><h1>Select seats</h1><p id="seat-sub">Nainital &rarr; Delhi</p></div>
+      <button class="back" aria-label="Back" id="seat-back" onclick="go('s-picked')">&#8249;</button>
+      <div class="navtxt"><h1 id="seat-h1">Select seats</h1><p id="seat-sub">Nainital &rarr; Delhi</p></div>
       <span style="width:34px"></span>
     </div>
     <div class="banner" data-only="offline"><span aria-hidden="true">&#8856;</span><span>You&rsquo;re offline. Check your internet connection.</span></div>
     <div class="wrap">
-      <p class="note" style="margin:0 0 12px">Return leg. Your seat on the way out is unchanged.</p>
+      <p class="note" style="margin:0 0 12px" id="seat-note">Return leg. Your seat on the way out is unchanged.</p>
       <div class="deckwrap">
         <div class="deck"><p class="deckt">Lower deck</p><div class="grid" id="g-lower"></div></div>
         <div class="deck"><p class="deckt">Upper deck</p><div class="grid" id="g-upper"></div></div>
@@ -482,7 +484,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
     </div>
     <div class="bottombar">
       <div><div class="bb1" id="seat-count">No seat selected</div><div class="bb2" id="seat-price">&nbsp;</div></div>
-      <button class="btn pri" id="b-seat" disabled onclick="go('s-points')">Select points</button>
+      <button class="btn pri" id="b-seat" disabled onclick="seatDone()">Select points</button>
     </div>
   </section>
 
@@ -742,7 +744,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       <div class="swap">
         <div class="swapleg was"><div class="legtag">From</div><div class="swapd" id="c-from">Sun, 10 Aug &middot; 23:55</div><div class="cap" id="c-fromsub">Seat U5 &middot; &#8377;949</div></div>
         <div class="swaparrow" aria-hidden="true">&darr;</div>
-        <div class="swapleg"><div class="legtag">To</div><div class="swapd" id="c-to">Sat, 9 Aug &middot; 22:15</div><div class="cap" id="c-tosub">Seat U5 &middot; &#8377;1,199</div></div>
+        <div class="swapleg"><div class="legtag">To</div><div class="swapd" id="c-to">Sat, 9 Aug &middot; 22:15</div><div class="cap" id="c-tosub">Seat U5 &middot; &#8377;1,199</div><button class="linkbtn" id="c-seatbtn" onclick="openSeatForMove()">Change seat</button></div>
       </div>
 
       <div class="leg">
@@ -1137,8 +1139,21 @@ function pick(op,fare){
 }
 const LOWER=['a','a','booked','a','female','a','a','a','booked','a','a','a'];
 const UPPER=['a','booked','a','a','a','a','booked','a','a','a','a','a'];
-function buildSeats(){
-  [['g-lower',LOWER],['g-upper',UPPER],['og-lower',LOWER],['og-upper',UPPER]].forEach(([id,arr])=>{
+// Pass a day to redraw the return decks with that day's availability; leave it out for the
+// static booking-flow map.
+function buildSeats(day){
+  let decks=[['g-lower',LOWER],['g-upper',UPPER],['og-lower',LOWER],['og-upper',UPPER]];
+  if(day){
+    const taken=bookedOn(day), free=SEAT[day];
+    const mk=(pfx)=>LOWER.map((st,i)=>{
+      const nm=pfx+(i+1);
+      if(nm===free) return 'a';                 // the seat we would auto-assign is always free
+      if(st==='female') return 'female';
+      return taken.has(i+1) ? 'booked' : 'a';
+    });
+    decks=[['g-lower',mk('L')],['g-upper',mk('U')]];
+  }
+  decks.forEach(([id,arr])=>{
     const g=document.getElementById(id); if(!g) return;
     g.innerHTML='';
     arr.forEach((st,i)=>{
@@ -1177,16 +1192,52 @@ function setPt(el,group){
   document.querySelectorAll('.ptn[data-g="'+group+'"]').forEach(p=>p.setAttribute('aria-pressed','false'));
   el.setAttribute('aria-pressed','true');
 }
-let movedTo='', movedSeat=HELD_SEAT;
+let movedTo='', movedSeat=HELD_SEAT, movedDay=0;
+let seatMode='';        // '' = booking the return · 'move' = choosing a seat for a date change
+
+// Which seats are gone on a given day. Deterministic per day, so each day differs and the
+// auto-assigned seat is always one that is actually free.
+function bookedOn(day){
+  const taken=new Set();
+  for(let i=0;i<5;i++) taken.add(((day*7+i*5)%12)+1);
+  return taken;
+}
+function openSeatForMove(){
+  seatMode='move';
+  document.getElementById('seat-h1').textContent='Choose your seat';
+  document.getElementById('seat-sub').textContent=label(movedDay)+' \u00B7 Nainital \u2192 Delhi';
+  document.getElementById('seat-note').textContent='Seats free on this day. You keep '+HELD_SEAT+' only if it is still open.';
+  document.getElementById('seat-back').setAttribute('onclick',"seatMode='';go('s-confirm')");
+  document.getElementById('b-seat').textContent='Use this seat';
+  buildSeats(movedDay);
+  const btn=[].find.call(document.querySelectorAll('#g-lower .seat,#g-upper .seat'),
+                         b=>b.getAttribute('aria-label').indexOf('Seat '+movedSeat+',')===0);
+  if(btn && !btn.dataset.s) btn.click();
+  go('s-seat');
+}
+function seatDone(){
+  if(seatMode!=='move'){ go('s-points'); return; }
+  movedSeat = chosen.seat || movedSeat;
+  seatMode='';
+  document.getElementById('seat-h1').textContent='Select seats';
+  document.getElementById('seat-note').textContent='Return leg. Your seat on the way out is unchanged.';
+  document.getElementById('seat-back').setAttribute('onclick',"go('s-picked')");
+  document.getElementById('b-seat').textContent='Select points';
+  confirmMove(movedTo, '23:55', FARE[movedDay], FARE[movedDay]-FARE[heldDay], movedSeat);
+}
 function confirmMove(date,time,fare,diff,seat){
   movedTo=date; movedSeat=seat||HELD_SEAT;
+  movedDay=BOOKABLE.find(d=>label(d)===date)||movedDay;
   document.getElementById('c-to').textContent = date+' · '+time;
   const sameSeat = movedSeat===HELD_SEAT;
   document.getElementById('c-tosub').textContent = 'Seat '+movedSeat+' · ₹'+fare.toLocaleString('en-IN');
   const sr=document.getElementById('c-seatrule');
   sr.hidden = sameSeat;
-  if(!sameSeat) sr.innerHTML = '<dt class="crit">Different seat</dt>'
-    + '<dd>Seat '+HELD_SEAT+' is taken that day. You would be in '+movedSeat+'</dd>';
+  if(!sameSeat) sr.innerHTML = '<dt>Different seat</dt><dd>'
+    + (SEAT[movedDay]===HELD_SEAT
+        ? 'You chose '+movedSeat+' instead of '+HELD_SEAT
+        : 'Seat '+HELD_SEAT+' is taken that day. You would be in '+movedSeat)
+    + '</dd>';
   const up = diff>0;
   document.getElementById('c-diff').textContent = up ? '₹'+diff : '₹'+Math.abs(diff)+' less — not refunded';
   document.getElementById('c-payl').textContent = up ? 'You pay now' : 'You pay now';
