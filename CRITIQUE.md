@@ -257,3 +257,51 @@ Say this out loud before anyone asks:
 
 The first two are answered by five usability sessions. The third needs data I do not have, and
 it is the first thing I would ask a PM for.
+
+---
+
+# Ranking every idea on merit
+
+**Careful — this is not the score in BRIEF.md.** That one measures *predictability*, where low is
+good and Idea 16 scored 2. This one measures *merit*, where high is good. Same denominator,
+opposite direction. Never quote them in the same breath without saying which is which.
+
+**Scored on five things:** does it solve the stated problem · is it backed by the research · does
+it move the in-session metric · is it inside an aggregator's power and a designer's remit · is
+it fair to the traveller, not only to RedBus.
+
+| # | Idea | /10 | Why |
+|---|---|---|---|
+| **A** | **Book the best day in a window** — traveller gives earliest and latest, product books the cheapest good option inside it | **8** | Fixes the worst flaw in Idea 16 — the traveller lands on the cheap day instead of paying to reach it — while keeping the seat and fare hold, the in-session metric and the existing reschedule. Costs a second input and still spends the one change |
+| **16** | **Book the deadline, not the date** *(chosen)* | **7** | Only idea where the traveller commits to something they possess. Holds seat and fare, needs nothing new from operators, clears metric and guardrail. Loses marks for the fare direction, for adverse selection on the one change, and for doing nothing for the fixed-date 39.1% |
+| **13** | **Design for the moment the plan resolves** | **7** | Highest of all on user value and research fit — no commitment device, no spent reschedule, and it serves the 47.8% whose plans depend on other people. Scores 7 not 9 because it moves the in-session metric by zero. It fails the brief, not the user |
+| **9** | **The product decides whether to raise the return at all** | **7** | Not standalone — a targeting rule. But it is the fix for the fairness critique: without it the product argues for booking on routes where waiting is correct. High value, and still unbuilt |
+| **C** | **Price the flexibility** — small fixed fee at booking that caps the fare difference | **6** | Fixes the root money problem: an unknown ₹451 at the moment of use becomes a small known number at the moment of choice. Marked down only because it is a pricing decision, not a design one. Take it to a PM |
+| **7** | **Return proposed to the group, books on agreement** | **5** | The only idea that addresses the 47.8% directly. Scored 4 in ideation and that was too harsh. Held back because it needs other people to act, which is the same dependency it is trying to solve |
+| **8** | **Show what waiting costs** | **5** | True, useful, and honest — but it informs a decision without changing what is possible. Correctly built as a supporting line rather than a feature |
+| **6** | **Return saved inside the trip, unbooked, no date** | **4** | The only option that costs the traveller nothing and keeps every option open. Loses because it holds nothing — the seat and the fare still go, which is the actual damage |
+| **11** | **Book a duration, not a date** | **4** | The seed of idea A, left unfinished. A window with no booking behind it holds neither seat nor fare. Fixed, it becomes the top of this table |
+| **1** | **Auto-flipped "add your return" card at checkout** | **3** | Removes typing, not uncertainty. Still ends at a date picker. And RedBus already flips the cities after payment |
+| **2** | **Confidence slider, then filter to flexible buses** | **3** | Asks people to rate their own certainty at the moment they are least able to, and segments the person when the research says segment the trip |
+| **12** | **Operator and route now, date later** | **3** | Half a booking. Fare and seat still unheld, so the loss it is meant to prevent still happens |
+| **14** | **They teach it their rule once** | **3** | Still needs a date at confirm time. Makes the second visit cheaper; does not remove it. Fails the in-session metric by design |
+| **3** | **"Book both, save ₹X"** | **2** | It already ships — "Min. 10% off on return" — and 73.9% still defer. Also a pricing lever, which is not a designer's to pull |
+| **4** | **Badge return buses with *Free date change*** | **2** | Ships twice already, as a filter chip and a card badge. The fix would be "make an existing badge bigger" |
+| **15** | **Guaranteed return seat at today's fare** | **2** | Uncapped financial exposure for a company that owns no inventory. Not a design decision to take |
+| **5 / 10** | **Remind them in two days** / **"When shall we remind you?"** | **1** | **0% forgot.** A reminder solves forgetting and nobody forgot. The lowest score in the table is the easiest to defend |
+
+## What the ranking says
+
+**The chosen idea is not the highest-scoring one.** Idea A scores higher, and it is a repair of
+Idea 16 rather than a rival — the same construct with the product picking the day instead of
+defaulting to one end of the range. If the sessions confirm the deadline framing works, that
+repair is the next version. If they show people answer with a guess, A is also the better
+fallback, because a window does not ask anyone to pretend a soft plan is hard.
+
+**Three ideas tie at 7 for different reasons,** and saying which is which is the point:
+16 wins on fit to the brief, 13 wins on value to the traveller, 9 wins on fairness. A complete
+answer is probably 16 or A *with* 9 built, and 13 as the next project.
+
+**The bottom of the table is where the research did its work.** Five of the six lowest scores
+were killed by a number rather than an opinion — 0% forgot, 73.9% still defer despite a
+discount, a badge that ships twice already. That is what the survey bought.
