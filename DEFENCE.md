@@ -254,7 +254,7 @@ omission.
 ### "And if movable operators exist but none run on the chosen day?"
 
 **Answer.** That one isn't knowable until the date is entered, so the step appears and then shows
-*"No movable returns that day"* with two ways out — Show all returns, or Choose another day.
+*"No returns that day can be moved"* with two ways out — Show all returns, or Choose another day.
 Never a dead end. That state is built and is in the prototype.
 
 ### "What about groups?"

@@ -1922,3 +1922,54 @@ sweeps for 550ms end to end. Three changes and each does something different: th
 duration gives each cell time to settle, the wider stagger makes the direction legible, and the
 smaller scale change turns a pop into a settle. `prefers-reduced-motion` still disables it, and
 it still plays once per selection rather than on every repaint.
+
+DECISION · 2026-08-12 · molades-build · Source: user
+Built the **change balance** on v3. The single reschedule was the most consequential rule in
+the construct and existed only as prose on three screens. It is now a countable state on the
+rows that spend it — *"1 change left"* on the ticket and My Bookings, *"No changes left"* once
+it is gone, with the row itself becoming the disabled variant. A traveller no longer has to
+remember the rule; the product carries it.
+
+Two bugs found while wiring it, both the same shape as earlier ones: after a completed move
+nothing repainted, so the balance and the ticket's return date both went stale; and a new
+booking reset the balance without re-enabling the row. Both now go through `setState` + `recalc`
+so one path owns the state.
+
+CRITIQUE · 2026-08-12 · molades-attack · Source: user — full sanity audit of v3
+**Build: clean.** 16 screens × 13 states = 208 combinations, no failures, no JS errors, one
+screen visible in every combination. No missing handler, id, go() target or rail target; no
+duplicate ids. Twenty-one-step click-through completes, including the seat picker inside the
+move. Type scale 20/18/16/14/12, no target under 44, no contrast failure, one critical rule per
+terms block.
+
+**Logic: sixteen assertions, all passing.** Fares deterministic and weekend-shaped · 7-day
+window allowed and 8-day refused · outbound not selectable · 24 August days and 6 September days
+offered · cheapest is the true minimum in range · all three seat outcomes occur and no-seat days
+are never tappable · the held day is excluded from its own move list · money agrees across four
+state combinations and total equals outbound plus return.
+
+**Documents: this is where everything was wrong.** Only LOG.md knew v2 and v3 existed. BRIEF,
+SCOPE, TEST_SCRIPT, DEFENCE and CRITIQUE all still described one prototype, and TEST_SCRIPT
+pointed a moderator at a single URL with no way to know two others existed. Fixed:
+- LOG header now lists all three builds, which is frozen and which is live
+- BRIEF opens its build section by naming which version it describes and tabling the other two
+- TEST_SCRIPT names the build to test — **v1** — and why, in a block a moderator cannot miss
+- DEFENCE warns that section 3 changes if the stakeholder has seen v3
+- CRITIQUE records that Idea A was built, and that building it changed the ranking: "books the
+  cheapest" is the weaker half of A, which is why v3 books the last day instead
+
+**Three quoted strings had drifted from the build**, found by checking every quoted UI string
+in every document against both builds: DEFENCE quoted *"No movable returns that day"* (renamed
+days ago), BRIEF quoted the field label as *"Last day I can travel"* rather than *"The last day
+I can travel is"*, and BRIEF quoted a Booking-confirmed handoff sentence that is actually a
+heading plus a rule.
+
+**One real gap surfaced, now recorded rather than hidden.** BRIEF Decision 1a requires the
+promise on *Last day* to be conditional — *"If the return you pick allows it…"* — because the
+outbound badge says nothing about the return. It was never built; v1 states it unconditionally.
+Added to Known gaps.
+
+LEARNED · 2026-08-12 · molades-build
+The build can be checked by machine and was clean. The documents cannot, and every error was
+there. Quoted strings are the cheapest thing to verify automatically — a doc that quotes the
+interface is making a claim the build can be asked about.

@@ -295,6 +295,7 @@ Honest list, so nobody discovers them in an interview:
 | **One-bus-a-day routes** (#17) | "Earlier" means 24-hour jumps. Not addressed |
 | **Overnight date semantics** (#18) | A "Monday" bus departing 23:00 Sunday. Rule not decided |
 | **Same-operator restriction** | One line on *Earlier buses*. Still unverified against the live app |
+| **The conditional promise on *Last day*** | Decision 1a says the claim must be conditional at the point it is made — *"If the return you pick allows it…"* — because the outbound badge says nothing about the return. **Not built.** v1 reads *"You can move it earlier in one tap. Only pay the fare difference."*, which is unconditional. Found 2026-08-12 by checking every quoted string against the build |
 
 ## Open
 
@@ -331,7 +332,7 @@ the skip as visible as the continue. No blocking, no modal that must be dismisse
 
 | We call it | Not | Because |
 |---|---|---|
-| **Last day** | Return date · Back by | Four of eight described a deadline, never a date. Vivek: *"I have to return anyhow on that date."* Samarth: back before Monday office. Sai books Saturday to keep Sunday. **Renamed from "Back by" on 2026-08-03** — *by* carried all the weight and was easy to skim past, so the field read as a guess rather than a commitment. The field label is first-person, *"Last day I can travel"*, which is harder to answer with "probably" |
+| **Last day** | Return date · Back by | Four of eight described a deadline, never a date. Vivek: *"I have to return anyhow on that date."* Samarth: back before Monday office. Sai books Saturday to keep Sunday. **Renamed from "Back by" on 2026-08-03** — *by* carried all the weight and was easy to skim past, so the field read as a guess rather than a commitment. The field label is first-person, *"The last day I can travel is"*, which is harder to answer with "probably" |
 | **Move earlier** | Reschedule · Date change | "Reschedule" is the operator's word for a policy. "Move earlier" is what the traveller is doing, and it states the one direction |
 | **Only pay the fare difference** | Free · Flexible · No change fee | RedBus's own terms require the fare difference. "Free" would be untrue, and untrue contradicts the company's trust bet. **Changed from "No change fee" on 2026-08-07** — a denial of one charge reads as a denial of all of them, so the payment is now the sentence rather than a caveat hanging off it |
 | **Return** | Inbound · Return leg | Every participant said "return", unprompted, without exception |
@@ -372,8 +373,8 @@ one-leg original.)*
 | **Move done** | they see the ticket they now hold |
 
 **Modified:** Trip review (was one leg, now two) · Payment (two legs, one amount) ·
-Booking confirmed (two legs, **built 2026-08-03** — carries the handoff line *"If you can leave
-earlier, open your ticket and choose Move earlier"*, which is where the engagement loop starts) ·
+Booking confirmed (two legs, **built 2026-08-03** — carries the handoff — *If you can leave earlier* / *Open your ticket* /
+*Choose **Move earlier** and pick a day*, which is where the engagement loop starts) ·
 My Bookings (the trip as one object, not two tickets) · Ticket (carries *Move earlier*)
 
 > **My Bookings and Change date — built 2026-08-07.** Four screens send the traveller there for
