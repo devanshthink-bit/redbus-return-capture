@@ -1426,7 +1426,24 @@ Severity:  major
 Layer:     things
 Action:    fixed in v3; **v2 still has it** — left alone under the instruction not to touch v2
 
+CRITIQUE · 2026-08-11 · molades-build · Source: self, found while fixing the above
+The fare fix exposed a **blocker in v3 that was live**: `setState('default')` threw at boot.
+`renderPicked()` runs at the end of setState, and before any day is chosen `daysInPlay()`
+returned `[undefined]`, so `FARE[undefined].toLocaleString()` threw. `booted` never became
+true and the whole script stopped at load.
+
+It had been there since v3 was built and my own test missed it, because the test ran the
+224-combination loop **after** setting `sel` by hand. A clean first load never happens in
+that order. Same fault I logged this morning on the Free Cancellation checkbox: the test
+produced the state by a different route than a real user does, so it tested something else.
+Guarded all three functions against an empty selection.
+Severity:  blocker
+Layer:     things
+Action:    fixed; the combination loop now runs first, from a clean load
+
 LEARNED · 2026-08-11 · molades-build
-Replacing a screen silently orphaned the function that set up state for the screens after it.
-When a screen is swapped out, check what its handlers did besides navigate — `pick()` looked
-like navigation and was actually initialisation.
+Two lessons, and the second is the one that keeps costing.
+1. Replacing a screen silently orphaned the function that set up state for the screens after
+   it. `pick()` looked like navigation and was actually initialisation.
+2. **Run the full-matrix check before any hand-set state, not after.** Twice today a test
+   passed because it had already put the app in a state a real first load never reaches.

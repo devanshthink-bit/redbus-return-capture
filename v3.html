@@ -994,14 +994,15 @@ function loadWindow(){
   setTimeout(()=>{ b.innerHTML='Continue'; b.disabled=false; heldDay=bookedDay(); renderPicked(); go('s-picked'); }, 800);
 }
 
-const daysInPlay = () => sel.length===2
-  ? Array.from({length: sel[1]-sel[0]+1}, (_,i)=>sel[0]+i)
+const daysInPlay = () => !sel.length ? []
+  : sel.length===2 ? Array.from({length: sel[1]-sel[0]+1}, (_,i)=>sel[0]+i)
   : [sel[0]];
 
 // The booked day and every alternative, with what switching would cost or save.
 // Before payment a switch is free — the single reschedule only starts after booking.
 function renderPicked(){
   const wrap=document.getElementById('pk-list'); if(!wrap) return;
+  if(!sel.length){ wrap.innerHTML=''; return; }        // nothing chosen yet — nothing to draw
   const days=daysInPlay(), cheap = sel.length===2 ? cheapestIn(sel[0],sel[1]) : heldDay;
   wrap.innerHTML = days.map(function(d){
     const diff=FARE[d]-FARE[heldDay];
@@ -1030,6 +1031,7 @@ function choosePick(d){ heldDay=d; renderPicked(); recalc(); }
 // Changing the booked day after payment — any day in the range, either direction.
 function renderWithin(){
   const wrap=document.getElementById('wi-list'); if(!wrap) return;
+  if(!sel.length || !heldDay){ wrap.innerHTML=''; return; }
   const days=daysInPlay().filter(d=>d!==heldDay);
   const held=document.querySelector('#s-within .held');
   if(held) held.innerHTML='<div class="legtag">You have</div>'
