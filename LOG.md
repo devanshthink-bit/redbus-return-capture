@@ -1339,3 +1339,41 @@ same number was used to demote.
 Action: none yet. Two of the three are answered by the usability sessions. The fare-direction
 question needs route fare data that does not exist in a concept study, and is the first thing
 to ask a PM for.
+
+DECISION · 2026-08-11 · molades-build · Source: user
+Built **Idea A + Idea 9** as a second prototype at `/v2.html`. The original build is
+untouched — the two are meant to be compared, not merged.
+
+**What changed, and why each change follows from the critique**
+
+| v1 — Last day | v2 — Return window |
+|---|---|
+| One field: the last day you can travel | Two fields: earliest and latest you could travel |
+| Books that day | Books the **cheapest** day in the window, and says so |
+| Move earlier is surfaced; later lives in My Bookings | One *Change day*, either direction, inside the window |
+| Every move costs more (+₹200, +₹451) | Starts at the cheapest; any move is the traveller's choice to pay |
+| Return step always appears | **Idea 9 guard**: on a route with no movable operators the step never appears |
+
+The point of the window is the fairness fix. In v1 the deadline is the cheap weekday and
+moving earlier lands on weekend peak, so the product books the cheap day and charges to
+reach the expensive one. Here the product optimises inside the range the traveller gave, so
+they start at ₹949 rather than paying ₹250 to get there. Every option on *Change day* now
+costs more — which is honest, and is the traveller choosing convenience over price rather
+than being charged to reach a day they need.
+
+The window also removes the commitment problem. A window is honestly a window, so nobody
+has to pretend a soft plan is hard, and the earlier/later split disappears along with the
+copy problems it created.
+
+**Idea 9 is real, not narrated.** `afterOutbound()` runs on the outbound boarding-points
+Continue. With the guard state on, the return step never appears and today's flow runs to
+Trip review unchanged. The absence is the design — there is no screen to look at, which is
+the point.
+
+Checked: 16 screens × 14 states = 224 combinations, no failures, no JS errors, one screen
+visible in every combination. Type scale 20/18/16/14/12, no target under 44, no contrast
+failure. Money agrees across all four figures in every state — ₹2,548 default, ₹2,708 with
+the add-on, ₹1,599 dropped, ₹16,248 for six.
+
+**Not built in v2:** group all-or-nothing moves, one-bus-a-day routes, overnight date
+semantics. Same gaps as v1.
