@@ -2,6 +2,12 @@
 
 For the stakeholder demo and for interviews.
 
+> **Which build are they looking at?** Three exist. `/` is **v1, *Last day***, the construct this
+> document defends and the one the research supports. `/v2.html` and `/v3.html` are repairs built
+> after the critique — they ask for a *window* instead of a deadline. If a stakeholder has seen
+> v3, section 3 changes: the fixed-date objection is weaker there, because a window with both
+> ends on the same day is just a date. Say which build you are showing before you start.
+
 **How to use this.** Each question has four parts: what they are really asking, your answer,
 the pushback that follows, and how to hold it. Read the *why they're asking* line first — most
 questions are a test of whether you know your own weak points, not a request for information.

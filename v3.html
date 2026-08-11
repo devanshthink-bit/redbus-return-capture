@@ -81,6 +81,8 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
  border-radius:4px;height:24px;padding:0 12px;margin-top:16px}
 .pill.no{color:var(--muted);background:#F1F1F1}
 .pill.warnpill{color:var(--warn);background:#F6EDE6}
+.bal{display:inline-block;margin-top:8px;font-size:12px;font-weight:700;color:var(--ink);background:var(--chip);border-radius:4px;padding:4px 8px}
+.bal.none{color:var(--muted);background:#F1F1F1}
 .dlead{font-size:18px;font-weight:700;color:var(--ink);line-height:1.3;margin:0 0 4px}
 #d-what{margin-bottom:16px}
 .linkbtn{background:none;border:0;padding:8px 0 0;font-family:inherit;font-size:14px;font-weight:700;color:var(--accent);cursor:pointer;min-height:44px;text-align:left}
@@ -447,7 +449,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 
       <div id="pk-none" hidden>
         <div class="blank">
-          <h2>No movable returns in that window</h2>
+          <h2>No returns in that window can be moved</h2>
           <p id="pk-none-b">Nothing between Sat, 9 Aug and Tue, 12 Aug can be changed after booking.</p>
           <p class="long">You can still book a return normally, or widen your window.</p>
           <div class="acts">
@@ -639,7 +641,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       </div>
 
       <button class="rowact" id="mv-act" onclick="openWithin()">
-        <span><b>Change day</b><br><span class="cap" id="mv-sub">Any day between Sat, 9 Aug and Tue, 12 Aug. One date change. Only pay the fare difference.</span></span>
+        <span><b>Change day</b><br><span class="cap" id="mv-sub">Any day between Sat, 9 Aug and Tue, 12 Aug. Only pay the fare difference.</span><span class="bal" id="mv-bal">1 change left</span></span>
         <span class="chev">&#8250;</span>
       </button>
       <div class="rowact off" id="mv-off" hidden>
@@ -678,7 +680,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       </button>
 
       <button class="rowact" id="mb-act" onclick="openWithin()">
-        <span><b>Change day</b><br><span class="cap" id="mb-sub">Any day between Sat, 9 Aug and Tue, 12 Aug. One date change. Only pay the fare difference.</span></span>
+        <span><b>Change day</b><br><span class="cap" id="mb-sub">Any day between Sat, 9 Aug and Tue, 12 Aug. Only pay the fare difference.</span><span class="bal" id="mb-bal">1 change left</span></span>
         <span class="chev">&#8250;</span>
       </button>
       <div class="rowact off" id="mb-off" hidden>
@@ -1069,6 +1071,7 @@ function paintWindow(){
 }
 
 function loadWindow(){
+  moveDone=false; setState(state);   // a new booking restores the balance and the row that spends it
   const b=document.getElementById('b-cont');
   b.disabled=true; b.innerHTML='<span class="spin"></span> Checking';
   setTimeout(()=>{
@@ -1264,6 +1267,8 @@ function setPt(el,group){
   el.setAttribute('aria-pressed','true');
 }
 let movedTo='', movedSeat=HELD_SEAT, movedDay=0;
+let moveDone=false;                       // the single reschedule, once it has been spent
+const changesLeft = () => (moveDone || state==='alreadymoved') ? 0 : 1;
 let seatMode='';        // '' = booking the return · 'move' = choosing a seat for a date change
 
 // Which seats are gone on a given day. Deterministic per day, so each day differs and the
@@ -1335,7 +1340,7 @@ function doMove(){
     moveTimer=null;
     b.innerHTML='Confirm move'; b.disabled=false;
     if(document.getElementById('st-sf').getAttribute('aria-pressed')==='true'){ setState('swapfail'); }
-    else { const m=movedTo.match(/(\d+) Aug/); if(m) heldDay=+m[1]; go('s-done'); }
+    else { moveDone=true; heldDay=movedDay||heldDay; setState(state); recalc(); go('s-done'); }   // the move changes the booked day and spends the balance — repaint both
   },1100);
 }
 function abortMove(){
@@ -1369,6 +1374,8 @@ const PAX = () => (state==='crowded' ? 6 : 1);
 // the money totals follow. Hardcoded copies of these drifted from the booked day four times.
 function paintReturn(){
   const E=id=>document.getElementById(id);
+  const n=changesLeft(), txt = n ? n+' change left' : 'No changes left';
+  ['mv-bal','mb-bal'].forEach(function(id){ const b=E(id); if(b){ b.textContent=txt; b.classList.toggle('none', !n); } });
   if(!heldDay) return;
   const nights = heldDay - OUT_DAY;                    // days present in Nainital
   const trip = E('bc-trip');
@@ -1446,10 +1453,10 @@ function setState(s){
     E('wi-err').hidden     = s!=='checkfail';
     E('c-err').hidden     = s!=='swapfail';
     if(E('b-conf')) E('b-conf').disabled = s==='swapfail';
-    const blocked = s==='alreadymoved' || s==='pastcutoff';
+    const blocked = s==='alreadymoved' || s==='pastcutoff' || moveDone;
     E('mv-act').hidden = blocked; E('mv-off').hidden = !blocked;
-    if(blocked) E('mv-why').textContent = s==='alreadymoved'
-      ? 'You have already used your one date change on this ticket.'
+    if(blocked) E('mv-why').textContent = (s==='alreadymoved'||moveDone)
+      ? 'No changes left \u2014 this ticket is now final.'
       : 'Changes close 8 hours before departure. That window has passed.';
   }
   // return present / dropped
@@ -1465,10 +1472,10 @@ function setState(s){
   if(E('mb-noret')) E('mb-noret').hidden = !dropped;
   if(dropped){ E('mv-act').hidden = true; E('mv-off').hidden = true;
                E('mb-act').hidden = true; E('mb-off').hidden = true; }
-  else { const bl = s==='alreadymoved' || s==='pastcutoff';
+  else { const bl = s==='alreadymoved' || s==='pastcutoff' || moveDone;
          E('mb-act').hidden = bl; E('mb-off').hidden = !bl;
-         if(bl) E('mb-why').textContent = s==='alreadymoved'
-           ? 'You have already used your one date change on this ticket.'
+         if(bl) E('mb-why').textContent = (s==='alreadymoved'||moveDone)
+           ? 'No changes left \u2014 this ticket is now final.'
            : 'Changes close 8 hours before departure. That window has passed.'; }
   if(E('tk-sub')) E('tk-sub').textContent = dropped ? 'Delhi → Nainital · one way' : 'Delhi ↔ Nainital';
   const pax=document.getElementById('rv-pax');

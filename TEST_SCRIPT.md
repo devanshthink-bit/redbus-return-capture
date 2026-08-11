@@ -1,7 +1,15 @@
 # Usability script — the return flow
 
-**Build:** https://devanshthink-bit.github.io/redbus-return-capture/
+**Build to test:** https://devanshthink-bit.github.io/redbus-return-capture/  — **v1, *Last day***
 **The job:** a traveller who doesn't yet know their return date leaves the session holding a return they can move earlier.
+
+> **Three prototypes exist. Give each participant exactly one.**
+> `/` v1 *Last day* · `/v2.html` *Return window, cheapest booked* · `/v3.html` *Calendar, last day booked*
+>
+> Test **v1**. It is the construct the research, BRIEF and DEFENCE all describe, and it carries the
+> open bet — does *"the last day you can travel"* read as a commitment or a guess. v2 and v3 answer
+> a question that only matters once v1 has been answered. Showing one person two builds measures
+> which came second, and destroys must-see moment 1. If v1 fails, test v3 with **fresh people**.
 **Five people. Thirty minutes each.** Video call is fine — ask them to share their screen.
 
 > **Never mention the two dark rails.** The screen list on the left and the state list on the right

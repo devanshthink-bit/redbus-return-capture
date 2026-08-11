@@ -292,6 +292,13 @@ it fair to the traveller, not only to RedBus.
 
 ## What the ranking says
 
+> **Built since this was written (2026-08-11/12).** Idea A is live at `/v2.html` and `/v3.html`,
+> and Idea 9 is in both. Building A changed my mind on one thing: v2 books the *cheapest* day in
+> the window, which puts people on a day they may not be able to make and forces them to spend
+> their single reschedule. v3 books the **last** day and shows the saving instead. So A scores 8
+> as a construct, but "books the cheapest" — the version scored here — is the weaker half of it.
+> Idea C remains unbuilt; it is a pricing decision, not a design one.
+
 **The chosen idea is not the highest-scoring one.** Idea A scores higher, and it is a repair of
 Idea 16 rather than a rival — the same construct with the product picking the day instead of
 defaulting to one end of the range. If the sessions confirm the deadline framing works, that

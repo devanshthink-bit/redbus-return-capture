@@ -10,7 +10,10 @@ Evidence:   enough — 8 interviews + survey (n=23) + 1 App Store review, coded 
 Files:      SCOPE.md [x] v2 · RESEARCH.md [x] · NOTES.md [x] · BRIEF.md [x] · DESIGN_LANGUAGE.md [x] · TEST_SCRIPT.md [x] · DEFENCE.md [x] · CRITIQUE.md [x] · build [x] · live [x]
 Live:       https://devanshthink-bit.github.io/redbus-return-capture/  (GitHub Pages, auto-deploys on push)
 Repo:       github.com/devanshthink-bit/redbus-return-capture  (public; raw/ transcripts gitignored)
-Build:      17 screens · 13 switchable states
+Builds:     v1  /            17 screens · 13 states · Last day  (the researched construct)
+            v2  /v2.html     16 screens · 13 states · Return window, product books the cheapest
+            v3  /v3.html     16 screens · 13 states · Calendar, books the last day  (current)
+            v1 and v2 are frozen for comparison. Only v3 is being changed.
 Rounds:     5 on the design language · 4 build slices · 1 attack pass, both halves
 Open:       Same-operator-only date change unconfirmed. No landscape. Reddit never collected.
             C6 parked. Three brief items stated but not built — see BRIEF.md "Known gaps".

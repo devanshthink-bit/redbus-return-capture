@@ -268,6 +268,21 @@ never built. Constraint 5 says the answer must never be forced on somebody who m
 available earlier, the move is not offered. A partial move reproduces Soumya's split group (n52), which
 is the failure this project is meant to prevent. **Not in the prototype.**
 
+## Which build this document describes
+
+**This BRIEF describes v1 — *Last day*** — the construct the research supports and the one at
+`/`. Two later builds exist and are documented in LOG.md rather than here, because they are
+answers to the critique rather than to the research:
+
+| | | |
+|---|---|---|
+| **v1** | `/` | *Last day.* One date. Move earlier surfaced, later in My Bookings |
+| **v2** | `/v2.html` | *Return window.* Two fields, product books the **cheapest** day in the range |
+| **v3** | `/v3.html` | *Calendar.* One tap for a fixed date, two for a range; books the **last** day and shows the saving. Carries the Idea 9 guard, a seat picker on the move, and a visible change balance |
+
+v1 and v2 are frozen. Only v3 is still being changed. The screens, words and failure cases below
+are v1's; where v3 differs, LOG.md records the decision and the reason.
+
 ## Known gaps between this document and the build
 
 Honest list, so nobody discovers them in an interview:
