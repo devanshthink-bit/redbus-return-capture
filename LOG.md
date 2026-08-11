@@ -1989,3 +1989,36 @@ LEARNED · 2026-08-12 · molades-attack
 An audit that reads the document against the copy finds wording gaps. Only an audit that reads
 the document against the *behaviour* can tell whether the gap matters. I found a real difference
 and reported it at the wrong severity, which in an interview is its own kind of error.
+
+DECISION · 2026-08-12 · molades-build · Source: user
+Built **undo on the move** in v3. Confirming a date change was a cliff: it spends the single
+reschedule and makes the ticket permanently non-refundable, the instant the button is tapped.
+There is now a 60-second window to take it back.
+
+**Why it is real rather than a trick.** redBus decides when the change is submitted to the
+operator. Holding it for a minute costs nothing — the same shape as undo-send in email — and
+BRIEF already records a ~7-minute in-session seat block, so briefly holding two seats is inside
+what the platform does today.
+
+**Why it belongs in this project.** CRITIQUE #2 is the sharpest attack on the whole construct:
+the feature selects for uncertain travellers, spends their one change on the first shift, and
+leaves them with nothing when plans move again. Undo does not fix that. It fixes the version
+caused by a mis-tap, which is the cheapest and commonest way the change gets lost. The honest
+line is that it protects the first minute and does nothing for next week.
+
+**The part most implementations get wrong, and the reason to build it carefully:** while the
+move can still be taken back, the ticket is *not* final — so the screen must not say it is.
+During the window the critical rule reads *"This ticket is about to be final / It becomes final
+when the undo window closes"*, and reverts to *"now final / cannot be cancelled or moved again"*
+when the window shuts. Undoing restores the day, the seat, the fare, the total, the change
+balance and the Change day row.
+
+Two contradictions found while checking the rendered screen rather than the logic: the crit
+heading still said *"now final"* under a rule saying it was not, and *Return moved* showed
+22:15–06:20 from the original static markup while every day in v3's list departs 23:55. Both
+now derive from the move.
+
+Verified: bar appears on *Return moved* and the ticket, counts down, undo restores everything
+and lands on the ticket with *"1 change left"* back, expiry hides the bar and restores the final
+wording, and `undoMove()` after expiry is a no-op. Full 19-step click-through including the
+undo, 208 combinations, no failures, no target under 44, type scale intact.
