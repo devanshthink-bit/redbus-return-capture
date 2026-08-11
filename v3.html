@@ -242,22 +242,22 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 .cal .dow{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px}
 .cal .dow span{font-size:12px;color:var(--muted);text-align:center}
 .cal .grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
-.d{height:52px;min-height:44px;border:0;background:transparent;border-radius:10px;display:flex;flex-direction:column;
+.cday{height:52px;min-height:44px;border:0;background:transparent;border-radius:10px;display:flex;flex-direction:column;
    align-items:center;justify-content:center;gap:1px;cursor:pointer;padding:0;font-family:inherit}
-.d .n{font-size:16px;font-weight:500;color:var(--ink);line-height:1}
-.d .f{font-size:12px;color:var(--muted);line-height:1}
-.d.off{cursor:default}
-.d.off .n,.d.off .f{color:#9A9AA4}
-.d.out{background:var(--chip);cursor:default}
-.d.out .n{font-weight:700}
-.d.sel{background:var(--accent)}
-.d.sel .n,.d.sel .f{color:#fff}
-.d.mid{background:#F6E4E4;border-radius:0}
-.d.s1{border-top-right-radius:0;border-bottom-right-radius:0}
-.d.s2{border-top-left-radius:0;border-bottom-left-radius:0}
-.d.cheap .f{color:var(--rate);font-weight:700}
-.d.sel.cheap .f{color:#fff}
-.d:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(197,70,70,.35)}
+.cday .n{font-size:16px;font-weight:500;color:var(--ink);line-height:1}
+.cday .f{font-size:12px;color:var(--muted);line-height:1}
+.cday.off{cursor:default}
+.cday.off .n,.cday.off .f{color:#9A9AA4}
+.cday.out{background:var(--chip);cursor:default}
+.cday.out .n{font-weight:700}
+.cday.sel{background:var(--accent)}
+.cday.sel .n,.cday.sel .f{color:#fff}
+.cday.mid{background:#F6E4E4;border-radius:0}
+.cday.s1{border-top-right-radius:0;border-bottom-right-radius:0}
+.cday.s2{border-top-left-radius:0;border-bottom-left-radius:0}
+.cday.cheap .f{color:var(--ratink);font-weight:700}   /* --rate is only 3.7:1 on the range band */
+.cday.sel.cheap .f{color:#fff}
+.cday:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(197,70,70,.35)}
 </style>
 </head><body>
 
@@ -945,7 +945,7 @@ function paintWindow(){
   let html='<div></div>'.repeat(LEAD);
   for(let d=1; d<=31; d++){
     const usable = d>OUT_DAY && d<=LAST_BOOKABLE;
-    const cls=['d']; let inner='<span class="n">'+d+'</span>'; let aria=label(d), dis='';
+    const cls=['cday']; let inner='<span class="n">'+d+'</span>'; let aria=label(d), dis='';
     if(d===OUT_DAY){ cls.push('out'); inner+='<span class="f">Out</span>'; aria+=', your outbound journey'; dis=' disabled'; }
     else if(!usable){ cls.push('off'); aria+=', not available'; dis=' disabled'; }
     else {

@@ -1447,3 +1447,27 @@ Two lessons, and the second is the one that keeps costing.
    it. `pick()` looked like navigation and was actually initialisation.
 2. **Run the full-matrix check before any hand-set state, not after.** Twice today a test
    passed because it had already put the app in a state a real first load never reaches.
+
+CRITIQUE · 2026-08-11 · molades-attack · Source: user — "why are cards in v3 not matching v2?"
+Departure and arrival times stacked vertically on every bus card in v3. Cause: my calendar
+day button used `class="d"`, and `.d` was already the dash inside `.time`. The new rule
+`display:flex; flex-direction:column; height:52px` therefore applied to every dash in the
+app and broke each row into three lines. Renamed to `.cday`.
+Severity:  major
+Layer:     looks
+Action:    fixed
+
+Two follow-ons the rename itself caused, both found by measuring rather than looking:
+- The rename regex only matched selectors preceded by whitespace, so `.cday.sel .n,.d.sel .f`
+  kept a dead second half — the fare on selected days lost its white and sat unreadable on
+  the accent fill. Both comma-separated selectors repaired.
+- With the calendar finally rendering correctly, a contrast pass found the green *cheapest*
+  fare at **3.70:1** on the pink range band. Moved from `--rate` to `--ratink`, the darker
+  green already in the palette: now 6.39:1. Every selectable day is above 4.5:1.
+  Disabled days sit at 2.79:1 and stay there — WCAG exempts inactive controls, and darkening
+  them would make unavailable days read as available. Declared, not overlooked.
+
+LEARNED · 2026-08-11 · molades-build
+A new component in a single-file build shares one global namespace. `.d` was taken. Grep the
+stylesheet for a class name before introducing it — this cost three separate defects from one
+collision, and the first one shipped.
