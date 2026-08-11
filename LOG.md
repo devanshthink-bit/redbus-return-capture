@@ -1377,3 +1377,36 @@ the add-on, ₹1,599 dropped, ₹16,248 for six.
 
 **Not built in v2:** group all-or-nothing moves, one-bus-a-day routes, overnight date
 semantics. Same gaps as v1.
+
+DECISION · 2026-08-11 · molades-build · Source: user
+Built **v3** at `/v3.html`. v1 and v2 untouched.
+
+The brief: a traveller who already knows their date must not enter it twice. My earlier
+suggestion — two fields plus a "same day" chip — still made them fill two boxes for one
+fact, and the student was right to reject it.
+
+**One calendar. One tap is a complete answer.**
+- Tap one day → that is the booking. Continue enables immediately. Two touches in total,
+  no second field, no mode toggle, nothing that asks whether they are sure.
+- Tap two days → a range. A third tap starts fresh, so nobody gets stuck inside one.
+
+**A range books the LAST day, not the cheapest.** This reverses v2 and it is the important
+correction. v2 optimised for fare and put people on a day they might not be able to make,
+which forces them to spend their single reschedule — the expensive, irreversible part.
+v3 books the day they are safe on and *offers* the saving: *"Sun, 10 Aug is ₹100 cheaper.
+Switch to it free before you pay."* Switching before payment costs nothing; the one change
+only starts after booking, and saying so plainly is what makes the offer honest.
+
+**Fares sit under every day in the calendar,** so the trade-off is visible before anything is
+chosen. Green marks the cheapest **inside the selected range only** — an earlier mock
+marked ₹949 green when ₹899 existed outside the range, which would have been a lie.
+
+**The date-error state is gone, and that is a design result rather than a deletion.** Days
+before the outbound and past the booking horizon are disabled, so an invalid selection cannot
+be made. There is no validation message because there is nothing invalid to type.
+
+Idea 9 carried over from v2 and still works: with the guard on, the return step never appears.
+
+Checked: 16 screens × 13 states = 208 combinations, no failures, no JS errors, one screen
+visible in every one. Type scale 20/18/16/14/12, no target under 44. Money: ₹2,648 booked
+on the last day, ₹2,548 after switching to the cheap day — all four figures agree.
