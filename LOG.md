@@ -1309,3 +1309,10 @@ LEARNED · 2026-08-11 · Source: self
 Two of the six strings existed in both markup and JS. Fixing the visible one would have
 looked correct and changed nothing at runtime. Grep the whole file for a string before
 declaring it changed — the same duplication fault as the money totals, in copy this time.
+
+CHANGE · 2026-08-11 · Source: user — microcopy audit item 7
+The greyed-out *Move earlier* and *Change date* rows carried "Not available" as their
+fallback text. Both blocked states overwrite it with a real reason, so it never showed —
+but a fallback is exactly what appears when something unplanned happens, and a blocked
+action with no cause and no next step is a dead end. Now: *"This ticket can't be moved.
+Contact support if you need to change it."* True whatever the cause, and it names a way out.
