@@ -7,7 +7,7 @@
 
 Bet (v2):   Travellers defer because the product has no state between booked and nothing — holding a return means buying it, and buying it needs a date they don't have
 Evidence:   enough — 8 interviews + survey (n=23) + 1 App Store review, coded into 102 notes and 6 clusters
-Files:      SCOPE.md [x] v2 · RESEARCH.md [x] · NOTES.md [x] · BRIEF.md [x] · DESIGN_LANGUAGE.md [x] · TEST_SCRIPT.md [x] · DEFENCE.md [x] · build [x] · live [x]
+Files:      SCOPE.md [x] v2 · RESEARCH.md [x] · NOTES.md [x] · BRIEF.md [x] · DESIGN_LANGUAGE.md [x] · TEST_SCRIPT.md [x] · DEFENCE.md [x] · CRITIQUE.md [x] · build [x] · live [x]
 Live:       https://devanshthink-bit.github.io/redbus-return-capture/  (GitHub Pages, auto-deploys on push)
 Repo:       github.com/devanshthink-bit/redbus-return-capture  (public; raw/ transcripts gitignored)
 Build:      17 screens · 13 switchable states
@@ -1316,3 +1316,26 @@ fallback text. Both blocked states overwrite it with a real reason, so it never 
 but a fallback is exactly what appears when something unplanned happens, and a blocked
 action with no cause and no next step is a dead end. Now: *"This ticket can't be moved.
 Contact support if you need to change it."* True whatever the cause, and it names a way out.
+
+CRITIQUE · 2026-08-11 · Source: user — "critique the construct ruthlessly"
+Wrote CRITIQUE.md: six attacks on Idea 16, each with its strongest honest defence and an
+explicit note where the defence does not hold.
+
+The one that landed hardest came from the build's own data. On *Move earlier* the three
+options cost +₹200, +₹451, and −₹50 that is not refunded. **There is no outcome in the
+prototype where a traveller moves and is not worse off in cash.** And it is structural, not a
+data accident — the deadline is usually the cheap weekday, and moving earlier from a hill
+station lands on weekend peak. The construct books the cheap day and charges to reach the
+expensive one. "No change fee" is true and misleading at the same time.
+
+Second: the feature selects for the most uncertain travellers, spends their one reschedule on
+the first change of plan, and leaves them holding a ticket that can never be cancelled when
+the second arrives. Adverse selection, built into the mechanism.
+
+Third: n73 — 39.1% with a fixed return date still book separately — is the most surprising
+number in the research and Idea 16 does nothing for them. The solution targets the cause that
+same number was used to demote.
+
+Action: none yet. Two of the three are answered by the usability sessions. The fare-direction
+question needs route fare data that does not exist in a concept study, and is the first thing
+to ask a PM for.
