@@ -366,7 +366,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
         <span class="lab">The last day I can travel is</span>
         <span class="val ph" id="f-val">Choose a date</span>
       </button>
-      <p class="err" id="f-err" hidden><span aria-hidden="true">&#9888;</span><span>That&rsquo;s before your outbound on <b>Thu, 7 Aug</b></span></p>
+      <p class="err" id="f-err" hidden><span aria-hidden="true">&#9888;</span><span>Choose a day after <b>Thu, 7 Aug</b></span></p>
 
       <dl class="rules" style="margin-top:24px">
         <dt id="help-date">We&rsquo;ll book this day</dt>
@@ -438,8 +438,8 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       <!-- no movable buses -->
       <div id="bus-none" hidden>
         <div class="blank">
-          <h2>No movable returns that day</h2>
-          <p>Nothing running on Mon, 11 Aug can be moved to an earlier day.</p>
+          <h2>No returns that day can be moved</h2>
+          <p>No buses on Mon, 11 Aug can be moved earlier.</p>
           <p class="long">You can still book a return normally, or pick a different day.</p>
           <div class="acts">
             <button class="btn pri" style="width:100%">Show all returns</button>
@@ -601,7 +601,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       </div>
 
       <div class="leg" id="tk-ret">
-        <div class="legtag">Return &middot; Mon, 11 Aug</div>
+        <div class="legtag">Return &middot; last day Mon, 11 Aug</div>
         <div class="row"><span class="time">23:55<span class="d">&mdash;</span><span class="arr">08:00</span></span><span class="price">&#8377;999</span></div>
         <div class="subrow"><span class="sub">Nainital &rarr; Delhi &middot; 8h 5m</span><span class="onw">Seat U5</span></div>
         <div class="oprow"><div><div class="op">Laxmi Holidays Pvt Ltd</div><div class="cap">Nainital Bus Stand &rarr; ISBT Kashmiri Gate, Gate 4</div></div></div>
@@ -925,7 +925,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
         </dl>
       </div>
 
-      <p class="note">Ticket details have been sent to devanshoffc@gmail.com and on WhatsApp.</p>
+      <p class="note">Ticket details have been sent to your email and WhatsApp.</p>
 
       <div class="btns">
         <button class="btn pri" style="flex:1" onclick="go('s-ticket')">View ticket</button>
@@ -1001,8 +1001,8 @@ function cycleDate(){
   const err=document.getElementById('f-err');
   err.hidden = !bad;
   if(bad) err.querySelector('span:last-child').innerHTML = early
-    ? 'That&rsquo;s before your outbound on <b>Thu, 7 Aug</b>'
-    : 'We can only book up to <b>'+WINDOW_END+'</b> on this route';
+    ? 'Choose a day after <b>Thu, 7 Aug</b>'
+    : 'Choose a day up to <b>'+WINDOW_END+'</b> &mdash; that is as far ahead as this route is booking';
   document.getElementById('b-cont').disabled = (di===0 || bad || offline);
   if(di===1) document.getElementById('bus-sub').textContent = 'Nainital → Delhi · last day Mon, 11 Aug';
   const hd=document.getElementById('help-date');

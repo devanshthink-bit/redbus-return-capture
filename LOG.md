@@ -1277,3 +1277,35 @@ figure, a verified redBus term or a logged decision — nothing asserted from me
 Section 7 is the one that matters: ten gaps to volunteer before anyone finds them, led by the
 fact that **no usability testing has run yet**. A gap raised by the designer reads as rigour;
 the same gap found by the room reads as a hole.
+
+CHANGE · 2026-08-11 · Source: user — microcopy audit (ux-writing)
+Pulled every user-facing string out of all 17 screens and audited them. Fixes applied:
+
+- **"One change, no fee"** was still the bold line in two terms blocks after the phrase had
+  been replaced everywhere else. It failed the rule those blocks are built on: read only the
+  bold and you must have every rule. Read that way, the move was free. Now *"One change, only
+  the fare difference"*.
+- The **ticket** was the one screen calling it *Return · Mon, 11 Aug* rather than *last day
+  Mon, 11 Aug* — and it is the screen where the deadline is the reason for the action.
+- The **date validation error** named the problem and not the fix. *"That's before your
+  outbound on Thu, 7 Aug"* → *"Choose a day after Thu, 7 Aug"*. Same for the window-cap
+  error. Both existed twice, in markup and in JS; the JS copy would have overridden the fix.
+- *"Nothing running on Mon, 11 Aug can be moved to an earlier day"* → *"No buses on Mon, 11
+  Aug can be moved earlier."*
+- *"No movable returns that day"* → *"No returns that day can be moved."* One form of the
+  word; *movable* appeared nowhere else in the product. BRIEF's quote of the old string updated.
+- *"sent to devanshoffc@gmail.com and on WhatsApp"* → *"sent to your email and WhatsApp."*
+  Grammar, and a real address does not belong in a public demo.
+
+Left for the student to decide: **"Pay now" on Trip review does not pay** — it opens the
+payment screen, where a second button with the same words does charge. Two identical labels
+with different consequences on the money path. Not changed because matching the live app is
+an explicit constraint and I have not verified what redBus uses there.
+Also left: **"Edit"** in the Return buses header has no object for a screen reader.
+
+Regression: 221 combinations, no failures, no JS errors.
+
+LEARNED · 2026-08-11 · Source: self
+Two of the six strings existed in both markup and JS. Fixing the visible one would have
+looked correct and changed nothing at runtime. Grep the whole file for a string before
+declaring it changed — the same duplication fault as the money totals, in copy this time.
