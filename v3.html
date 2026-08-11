@@ -1099,7 +1099,7 @@ function renderWithin(){
         + '<div class="subrow"><span class="sub">Laxmi Holidays Pvt Ltd</span><span class="onw">No seats left</span></div></div>';
     }
     const same = seat===HELD_SEAT;
-    const seatTxt = same ? 'Seat '+HELD_SEAT+' free' : 'Seat '+HELD_SEAT+' taken \u2014 '+seat+' instead';
+    const seatTxt = same ? 'Seat '+HELD_SEAT+' free' : 'Seat '+HELD_SEAT+' taken \u2014 we\u2019d put you in '+seat+'';
     const right = diff>0 ? '<span class="onw diffup">Pay '+RUPEE(diff)+' more</span>'
                          : '<span class="onw">'+RUPEE(-diff)+' less \u2014 not refunded</span>';
     return '<button class="card" onclick="confirmMove(\''+label(d)+'\',\'23:55\','+FARE[d]+','+diff+',\''+seat+'\')">'
@@ -1107,7 +1107,7 @@ function renderWithin(){
       + '<div class="subrow"><span class="sub">Laxmi Holidays Pvt Ltd \u00B7 '+seatTxt+'</span>'+right+'</div>'
       + (same?'':'<div class="pillrow"><div class="pill warnpill">\u21BB Different seat</div></div>') + '</button>';
   }).join('');
-  wrap.innerHTML += '<p class="note">Your seat is only held on the day you booked. On any other day you get whatever is free.<br>Only Laxmi Holidays runs this route. A date change stays with the same operator.</p>';
+  wrap.innerHTML += '<p class="note">Your seat is only held on the day you booked. On any other day you get whatever is free \u2014 <b>you can pick a different one before confirming</b>.<br>Only Laxmi Holidays runs this route. A date change stays with the same operator.</p>';
 }
 
 let chosen={op:'',fare:0,seat:null};

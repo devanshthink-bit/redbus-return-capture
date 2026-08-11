@@ -1730,3 +1730,18 @@ DESIGN_LANGUAGE allows one critical rule per block — there were two.
 
 Verified by the click-through walk, now 21 steps including the seat picker, plus 208
 combinations, no target under 44, exactly one critical rule on the confirm screen.
+
+CHANGE · 2026-08-11 · molades-build · Source: user
+The seat picker was built on *Confirm the move*, but the *Change day* list gave no sign it
+existed. The card read *"Seat U5 taken — L3 instead"*, which states an assignment as settled.
+A traveller who finds L3 unacceptable could abandon there and never learn they get a choice —
+the picker only helps people who tap through to find it.
+
+Two small changes so the list carries the signal:
+- *"Seat U5 taken — **we'd put you in** L3"* — names it as the product's suggestion rather
+  than a decision already taken
+- the note now ends *"…you get whatever is free — **you can pick a different one before
+  confirming**"*
+
+Nothing else on that screen changed; the picker itself stays one step later, which keeps the
+common path at one tap.
