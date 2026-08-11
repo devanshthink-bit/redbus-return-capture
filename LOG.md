@@ -1907,3 +1907,15 @@ interested in being charmed.
 Found while checking: the *Change seat* link was rendering at **13.33px**, Chrome's default
 button size. The `font:` shorthand with `inherit` as the family had silently dropped the size.
 Split into longhand; the scale is back to 20/18/16/14/12 everywhere.
+
+CHANGE · 2026-08-12 · molades-build · Source: user
+"The animation in the date picker is too quick. Make it smooth."
+
+Was 180ms per cell, 28ms apart, easing into a scale of .94 — a pop, and over in ~350ms for a
+week-long window, which reads as a flicker rather than a movement.
+
+Now 280ms per cell, 45ms apart, scale .96, `cubic-bezier(.25,.8,.25,1)`. A seven-day window
+sweeps for 550ms end to end. Three changes and each does something different: the longer
+duration gives each cell time to settle, the wider stagger makes the direction legible, and the
+smaller scale change turns a pop into a settle. `prefers-reduced-motion` still disables it, and
+it still plays once per selection rather than on every repaint.

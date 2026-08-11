@@ -266,8 +266,8 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 .cday.sel{background:var(--accent)}
 .cday.sel .n,.cday.sel .f{color:#fff}
 .cday.mid{background:#F6E4E4;border-radius:0}
-@keyframes fillin{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
-.cday.sweep{animation:fillin 180ms cubic-bezier(.2,.7,.3,1) both}
+@keyframes fillin{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+.cday.sweep{animation:fillin 280ms cubic-bezier(.25,.8,.25,1) both}
 @media (prefers-reduced-motion:reduce){.cday.sweep{animation:none}}
 .cday.s1{border-top-right-radius:0;border-bottom-right-radius:0}
 .cday.s2{border-top-left-radius:0;border-bottom-left-radius:0}
@@ -1032,7 +1032,7 @@ function paintWindow(){
     const on = sel.includes(d) || (sel.length===2 && d>sel[0] && d<sel[1]);
     let anim='';
     if(sweepFrom && d>=sweepFrom && d<=sweepTo){        // one sweep across the new range
-      cls.push('sweep'); anim=' style="animation-delay:'+((d-sweepFrom)*28)+'ms"';
+      cls.push('sweep'); anim=' style="animation-delay:'+((d-sweepFrom)*45)+'ms"';
     }
     html += '<button class="'+cls.join(' ')+'"'+dis+anim+' aria-label="'+aria+'" aria-pressed="'+on+'" onclick="tapDay('+d+')">'+inner+'</button>';
   }
