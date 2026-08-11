@@ -1499,3 +1499,28 @@ LEARNED · 2026-08-11 · molades-build
 The range is an input to the *pick*, not a constraint on the *mechanism*. I let one become
 the other without noticing, and the copy on two screens contradicted each other as a result.
 When a construct invents a boundary, check every promise made outside it.
+
+CRITIQUE · 2026-08-11 · molades-test · Source: user
+Booked a day from a window, opened the ticket, tapped **Change day** — the screen showed the
+held booking and then nothing. No days, nothing tappable.
+
+Cause: all four entry points to that screen were bare `go('s-within')`. Nothing drew the list
+on the way in. It was only ever drawn from inside `setState`, and at boot that runs with no
+day booked, so it renders empty and stays empty until a state button happens to be pressed.
+The screen was showing a list from a moment that never happened.
+
+One entry point now — `openWithin()` draws, then navigates. Verified by replaying the exact
+reported path rather than by calling the render function directly: pick a window, book, open
+the ticket, tap the row. **12 days, held day excluded, and the same via My Bookings.**
+
+Also removed the range from that screen's subtitle. It read *"Fri, 8 Aug – Wed, 20 Aug"* —
+a range the screen no longer honours now that a reschedule is not bound by the stated window.
+The held card carries the date; the subtitle is just the route.
+Severity:  blocker
+Layer:     things
+Action:    fixed
+
+LEARNED · 2026-08-11 · molades-build
+Third time today the same shape: state written in one place, read in another, and the two
+drift. Totals, then form restoration, now list rendering. A screen that needs data must draw
+it on entry — never rely on something else having run first.

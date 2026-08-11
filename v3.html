@@ -619,7 +619,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
         <div class="acts"><button class="btn pri" style="width:100%" onclick="go('s-window')">Book a return</button></div>
       </div>
 
-      <button class="rowact" id="mv-act" onclick="go('s-within')">
+      <button class="rowact" id="mv-act" onclick="openWithin()">
         <span><b>Change day</b><br><span class="cap" id="mv-sub">Any day between Sat, 9 Aug and Tue, 12 Aug. One date change. Only pay the fare difference.</span></span>
         <span class="chev">&#8250;</span>
       </button>
@@ -658,7 +658,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
         <span class="chev">&#8250;</span>
       </button>
 
-      <button class="rowact" id="mb-act" onclick="go('s-within')">
+      <button class="rowact" id="mb-act" onclick="openWithin()">
         <span><b>Change day</b><br><span class="cap" id="mb-sub">Any day between Sat, 9 Aug and Tue, 12 Aug. One date change. Only pay the fare difference.</span></span>
         <span class="chev">&#8250;</span>
       </button>
@@ -674,7 +674,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
   <section class="screen" id="s-within">
     <div class="nav">
       <button class="back" aria-label="Back" onclick="go('s-ticket')">&#8249;</button>
-      <div class="navtxt"><h1>Change day</h1><p id="wi-sub">Nainital &rarr; Delhi &middot; Sat 9 &ndash; Tue 12 Aug</p></div>
+      <div class="navtxt"><h1>Change day</h1><p id="wi-sub">Nainital &rarr; Delhi</p></div>
       <span style="width:34px"></span>
     </div>
     <div class="banner" data-only="offline"><span aria-hidden="true">&#8856;</span><span>You&rsquo;re offline. Check your internet connection.</span></div>
@@ -731,7 +731,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       <div class="legerr" id="c-err" hidden>
         <p class="legerr-t">That seat went while you were confirming</p>
         <p class="legerr-b"><b>Your Sun, 10 Aug booking is untouched.</b> Seat U5, &#8377;949. Nothing was charged and nothing was cancelled.</p>
-        <div class="legerr-a"><button class="btn pri" onclick="go('s-within')">See other days</button></div>
+        <div class="legerr-a"><button class="btn pri" onclick="openWithin()">See other days</button></div>
       </div>
 
       <div class="swap">
@@ -879,7 +879,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
   <button onclick="go('s-done2')" id="t-done2">Booking confirmed</button>
   <button onclick="go('s-ticket')" id="t-ticket">Ticket</button>
   <button onclick="go('s-mybook')" id="t-mybook">My Bookings</button>
-  <button onclick="go('s-within')" id="t-within">Change day</button>
+  <button onclick="openWithin()" id="t-within">Change day</button>
   <button onclick="go('s-confirm')" id="t-confirm">Move confirm</button>
   <button onclick="go('s-done')" id="t-done">Move done</button>
 </div>
@@ -984,8 +984,8 @@ function paintWindow(){
   document.getElementById('b-cont').disabled = (!sel.length || offline);
   const w = sel.length===2 ? 'Nainital \u2192 Delhi \u00B7 '+label(sel[0])+' \u2013 '+label(sel[1])
                            : 'Nainital \u2192 Delhi \u00B7 '+(sel.length?label(sel[0]):'');
-  const ps=document.getElementById('pk-sub'), ws=document.getElementById('wi-sub');
-  if(ps) ps.textContent=w; if(ws) ws.textContent=w;
+  const ps=document.getElementById('pk-sub');
+  if(ps) ps.textContent=w;
 }
 
 function loadWindow(){
@@ -1026,14 +1026,14 @@ function renderPicked(){
       : 'We looked at '+label(sel[0])+' \u2013 '+label(sel[1])+'. Switching between them is free until you pay, and you can change the day once after booking.')
     + '<br>Only Laxmi Holidays runs this route &mdash; a date change stays with the same operator.';
   const sub = sel.length===2 ? label(sel[0])+' \u2013 '+label(sel[1]) : label(heldDay);
-  const ps=document.getElementById('pk-sub'), ws=document.getElementById('wi-sub');
+  const ps=document.getElementById('pk-sub');
   if(ps) ps.textContent='Nainital \u2192 Delhi \u00B7 '+sub;
-  if(ws) ws.textContent='Nainital \u2192 Delhi \u00B7 '+sub;
 }
 function choosePick(d){ heldDay=d; renderPicked(); recalc(); }
 
 // Changing the booked day after payment — any day in the range, either direction.
 const BOOKABLE = Array.from({length: LAST_BOOKABLE-OUT_DAY}, (_,i)=>OUT_DAY+1+i);
+function openWithin(){ renderWithin(); go('s-within'); }
 function renderWithin(){
   const wrap=document.getElementById('wi-list'); if(!wrap) return;
   if(!heldDay){ wrap.innerHTML=''; return; }
@@ -1156,7 +1156,7 @@ function abortMove(){
     const b=document.getElementById('b-conf');
     b.innerHTML='Confirm move'; b.disabled=false;
   }
-  go('s-within');
+  openWithin();
 }
 function dropReturn(){ setState('noreturn'); }
 // Idea 9 — the guard. If no operator on this route allows a date change, the promise
