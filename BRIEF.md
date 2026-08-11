@@ -295,7 +295,7 @@ Honest list, so nobody discovers them in an interview:
 | **One-bus-a-day routes** (#17) | "Earlier" means 24-hour jumps. Not addressed |
 | **Overnight date semantics** (#18) | A "Monday" bus departing 23:00 Sunday. Rule not decided |
 | **Same-operator restriction** | One line on *Earlier buses*. Still unverified against the live app |
-| **The conditional promise on *Last day*** | Decision 1a says the claim must be conditional at the point it is made — *"If the return you pick allows it…"* — because the outbound badge says nothing about the return. **Not built.** v1 reads *"You can move it earlier in one tap. Only pay the fare difference."*, which is unconditional. Found 2026-08-12 by checking every quoted string against the build |
+| **The conditional promise on *Last day*** | Decision 1a says the claim should be conditional — *"If the return you pick allows it…"* — because the promise is made before a return is chosen. The build solves it differently: returns that cannot be moved are **disabled and labelled**, so nobody can hold one. The wording stays flat and stays true. **The residual risk is a route where no operator allows changes** — there the step should not appear at all, which is the Idea 9 guard, built in v3 and not in v1. Recorded 2026-08-12; downgraded the same day after checking the build rather than only the document |
 
 ## Open
 

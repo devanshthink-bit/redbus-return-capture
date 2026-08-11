@@ -1973,3 +1973,19 @@ LEARNED · 2026-08-12 · molades-build
 The build can be checked by machine and was clean. The documents cannot, and every error was
 there. Quoted strings are the cheapest thing to verify automatically — a doc that quotes the
 interface is making a claim the build can be asked about.
+
+CRITIQUE · 2026-08-12 · molades-attack · Source: self
+Overstated a finding in yesterday's audit and corrected it. I reported the conditional promise
+on *Last day* as unbuilt, having compared BRIEF against the copy and stopped there. Checking the
+build properly: returns that cannot be moved are `aria-disabled` and labelled *"This operator
+doesn't allow date changes"*, so the traveller cannot select one. The flat wording is therefore
+true — the build keeps the promise structurally instead of conditionally.
+
+The residual risk is narrower than stated: a route where **no** operator allows changes, where
+the step should not appear at all. That is the Idea 9 guard, built in v3 and already on the gaps
+list for v1. BRIEF's entry rewritten to say that.
+
+LEARNED · 2026-08-12 · molades-attack
+An audit that reads the document against the copy finds wording gaps. Only an audit that reads
+the document against the *behaviour* can tell whether the gap matters. I found a real difference
+and reported it at the wrong severity, which in an interview is its own kind of error.
