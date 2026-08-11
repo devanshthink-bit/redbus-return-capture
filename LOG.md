@@ -1471,3 +1471,31 @@ LEARNED · 2026-08-11 · molades-build
 A new component in a single-file build shares one global namespace. `.d` was taken. Grep the
 stylesheet for a class name before introducing it — this cost three separate defects from one
 collision, and the first one shipped.
+
+CRITIQUE · 2026-08-11 · molades-test · Source: user
+Two faults on v3, one cosmetic and one a broken promise.
+
+**The rules block sat 0px below the calendar card** — off the 4/8/12/16/24 scale entirely.
+Now 24, which is larger than the 16 between rule pairs, so the rhythm rule holds: the gap
+between groups is bigger than the gap inside one.
+
+**Picking a single day left Change day with nothing to offer.** The entry screen promised
+*"One date change later, either direction"* and the change screen then said there was
+nowhere to go. The cause was a modelling error of mine: I had let the stated range bound
+the reschedule as well as the booking. It should only bound the booking. redBus's reschedule
+is not limited to whatever range the traveller typed, and pretending otherwise turned a
+one-day booking into a ticket that could not be changed at all — the exact thing the feature
+claims to prevent.
+
+Change day now offers every bookable day, one day or a range. The note on the picked screen
+adapts too: one day says *"You can change this day once after booking, either direction"*;
+a range says *"We looked at Sat, 9 – Tue, 12 Aug. Switching between them is free until you
+pay."* The old static line claimed moves were limited to the range, which was never true.
+Severity:  major
+Layer:     the bet
+Action:    fixed
+
+LEARNED · 2026-08-11 · molades-build
+The range is an input to the *pick*, not a constraint on the *mechanism*. I let one become
+the other without noticing, and the copy on two screens contradicted each other as a result.
+When a construct invents a boundary, check every promise made outside it.

@@ -210,6 +210,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 .held{background:var(--raised);border-radius:12px;padding:16px;margin-bottom:12px}
 .q{font-size:20px;font-weight:700;color:var(--ink);line-height:1.25}
 .qhint{font-size:14px;color:var(--muted);margin-top:4px;line-height:1.4}
+#win-rules{margin-top:24px}
 .terms-lead{font-size:16px;line-height:1.5;color:var(--ink);margin-bottom:16px}
 .diffup{color:var(--warn)!important}
 .swap{background:var(--raised);border-radius:12px;padding:16px;margin-bottom:16px}
@@ -422,8 +423,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       <div id="pk-main">
         <p class="terms-lead" id="pk-lead">We picked <b>Sun, 10 Aug</b> &mdash; the cheapest day in your window.</p>
         <div id="pk-list"></div>
-        <p class="note">Every day here can be moved once, in either direction, inside your range.<br>
-          Only Laxmi Holidays runs this route on these days &mdash; a date change stays with the same operator.</p>
+        <p class="note" id="pk-note"></p>
       </div>
 
       <div id="pk-none" hidden>
@@ -1021,6 +1021,10 @@ function renderPicked(){
         ? 'We picked <b>'+label(heldDay)+'</b> \u2014 the last day you could travel, so you never have to change.'
         : 'You chose <b>'+label(heldDay)+'</b>. Switching is free until you pay.');
   document.getElementById('pk-bb').textContent=RUPEE(FARE[heldDay]);
+  document.getElementById('pk-note').innerHTML = (days.length===1
+      ? 'You can change this day once after booking, either direction. Only pay the fare difference.'
+      : 'We looked at '+label(sel[0])+' \u2013 '+label(sel[1])+'. Switching between them is free until you pay, and you can change the day once after booking.')
+    + '<br>Only Laxmi Holidays runs this route &mdash; a date change stays with the same operator.';
   const sub = sel.length===2 ? label(sel[0])+' \u2013 '+label(sel[1]) : label(heldDay);
   const ps=document.getElementById('pk-sub'), ws=document.getElementById('wi-sub');
   if(ps) ps.textContent='Nainital \u2192 Delhi \u00B7 '+sub;
@@ -1029,10 +1033,11 @@ function renderPicked(){
 function choosePick(d){ heldDay=d; renderPicked(); recalc(); }
 
 // Changing the booked day after payment — any day in the range, either direction.
+const BOOKABLE = Array.from({length: LAST_BOOKABLE-OUT_DAY}, (_,i)=>OUT_DAY+1+i);
 function renderWithin(){
   const wrap=document.getElementById('wi-list'); if(!wrap) return;
-  if(!sel.length || !heldDay){ wrap.innerHTML=''; return; }
-  const days=daysInPlay().filter(d=>d!==heldDay);
+  if(!heldDay){ wrap.innerHTML=''; return; }
+  const days=BOOKABLE.filter(d=>d!==heldDay);   // a reschedule is not limited to the stated range
   const held=document.querySelector('#s-within .held');
   if(held) held.innerHTML='<div class="legtag">You have</div>'
     + '<div class="row"><span class="time" style="font-size:16px">'+label(heldDay)+' \u00B7 23:55</span>'
@@ -1045,8 +1050,8 @@ function renderWithin(){
     return '<button class="card" onclick="confirmMove(\''+label(d)+'\',\'23:55\','+FARE[d]+','+diff+')">'
       + '<div class="row"><span class="time">'+label(d)+' \u00B7 23:55</span><span class="price">'+RUPEE(FARE[d])+'</span></div>'
       + '<div class="subrow"><span class="sub">Laxmi Holidays Pvt Ltd \u00B7 Seat U5 free</span>'+right+'</div></button>';
-  }).join('') || '<div class="blank"><h2>No other days to move to</h2><p>You picked a single day, so there is nothing else in range.</p></div>';
-  if(days.length) wrap.innerHTML += '<p class="note">Only Laxmi Holidays runs this route on these days. A date change stays with the same operator.<br>Every day here is inside the range you set.</p>';
+  }).join('');
+  wrap.innerHTML += '<p class="note">Only Laxmi Holidays runs this route. A date change stays with the same operator.</p>';
 }
 
 let chosen={op:'',fare:0,seat:null};
