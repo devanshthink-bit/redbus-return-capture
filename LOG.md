@@ -1410,3 +1410,23 @@ Idea 9 carried over from v2 and still works: with the guard on, the return step 
 Checked: 16 screens × 13 states = 208 combinations, no failures, no JS errors, one screen
 visible in every one. Type scale 20/18/16/14/12, no target under 44. Money: ₹2,648 booked
 on the last day, ₹2,548 after switching to the cheap day — all four figures agree.
+
+CRITIQUE · 2026-08-11 · molades-test · Source: user — "where Rupee Zero is shown"
+The return seat screen showed **₹0** in the bottom bar after selecting a seat.
+
+In v1 the return bus cards call `pick(op, fare)`, which sets `chosen.fare`. In v2 and v3 the
+day list replaced the bus list, and its **Choose seat** button calls `go('s-seat')` directly —
+so `pick()` never runs and `chosen.fare` stays 0. The seat bar and the boarding-points bar
+both read that value, and the points screen additionally carried a hardcoded ₹999.
+
+Fixed in v3 with `toSeat()`: it clears any seat chosen on a previous visit, then calls
+`pick()` with the booked day's fare so both bars derive from one value. Verified — booking
+Tue 12 shows ₹1,049 on both bars, switching to Sun 10 shows ₹949.
+Severity:  major
+Layer:     things
+Action:    fixed in v3; **v2 still has it** — left alone under the instruction not to touch v2
+
+LEARNED · 2026-08-11 · molades-build
+Replacing a screen silently orphaned the function that set up state for the screens after it.
+When a screen is swapped out, check what its handlers did besides navigate — `pick()` looked
+like navigation and was actually initialisation.

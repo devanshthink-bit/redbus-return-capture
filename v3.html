@@ -451,7 +451,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
     </div>
     <div class="bottombar" id="pk-bar">
       <div><div class="bb1">Return</div><div class="bb2" id="pk-bb">&#8377;949</div></div>
-      <button class="btn pri" onclick="go('s-seat')">Choose seat</button>
+      <button class="btn pri" onclick="toSeat()">Choose seat</button>
     </div>
   </section>
 
@@ -1057,6 +1057,16 @@ function pickOut(op,fare,dep,arr){
   document.getElementById('b-oseat').disabled=true;
   document.querySelectorAll('#og-lower .seat,#og-upper .seat').forEach(b=>b.removeAttribute('aria-pressed'));
   go('s-oseat');
+}
+// entering seat selection from the picked day — carries the fare the bar and the
+// points screen both read, and clears any seat chosen on a previous visit
+function toSeat(){
+  chosen.seat=null;
+  document.querySelectorAll('#g-lower .seat,#g-upper .seat').forEach(b=>b.removeAttribute('aria-pressed'));
+  document.getElementById('seat-count').textContent='No seat selected';
+  document.getElementById('seat-price').innerHTML='&nbsp;';
+  document.getElementById('b-seat').disabled=true;
+  pick('Laxmi Holidays Pvt Ltd', FARE[heldDay]);
 }
 function pick(op,fare){
   chosen.op=op; chosen.fare=fare;
