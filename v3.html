@@ -51,6 +51,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 
 /* ---------- card ---------- */
 .card.sel{box-shadow:0 0 0 2px var(--accent)}
+.pillrow{display:flex;gap:8px;flex-wrap:wrap}
 .card{background:var(--raised);border-radius:12px;padding:16px 16px 12px;margin-bottom:16px;width:100%;
  text-align:left;border:0;display:block;cursor:pointer;transition:transform var(--t-fast),box-shadow var(--t-state)}
 .card:hover{box-shadow:0 2px 10px rgba(0,0,0,.07)}
@@ -451,7 +452,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
     </div>
     <div class="bottombar" id="pk-bar">
       <div><div class="bb1">Return</div><div class="bb2" id="pk-bb">&#8377;949</div></div>
-      <button class="btn pri" onclick="toSeat()">Choose seat</button>
+      <button class="btn pri" id="b-pk" disabled onclick="toSeat()">Choose seat</button>
     </div>
   </section>
 
@@ -991,7 +992,12 @@ function paintWindow(){
 function loadWindow(){
   const b=document.getElementById('b-cont');
   b.disabled=true; b.innerHTML='<span class="spin"></span> Checking';
-  setTimeout(()=>{ b.innerHTML='Continue'; b.disabled=false; heldDay=bookedDay(); renderPicked(); go('s-picked'); }, 800);
+  setTimeout(()=>{
+    b.innerHTML='Continue'; b.disabled=false;
+    const spread = sel.length===2 && FARE[cheapestIn(sel[0],sel[1])] !== FARE[sel[1]];
+    heldDay = spread ? 0 : bookedDay();   // a real money trade-off is the traveller's to make
+    renderPicked(); go('s-picked');
+  }, 800);
 }
 
 const daysInPlay = () => !sel.length ? []
@@ -1003,29 +1009,53 @@ const daysInPlay = () => !sel.length ? []
 function renderPicked(){
   const wrap=document.getElementById('pk-list'); if(!wrap) return;
   if(!sel.length){ wrap.innerHTML=''; return; }        // nothing chosen yet — nothing to draw
-  const days=daysInPlay(), cheap = sel.length===2 ? cheapestIn(sel[0],sel[1]) : heldDay;
+  const days=daysInPlay(), cheap = sel.length===2 ? cheapestIn(sel[0],sel[1]) : sel[0];
+  const last = sel.length===2 ? sel[1] : sel[0];
+  const spread = FARE[cheap] !== FARE[last];
+
   wrap.innerHTML = days.map(function(d){
-    const diff=FARE[d]-FARE[heldDay];
+    const tags=[];
+    if(days.length>1 && d===cheap) tags.push('<div class="pill">\u21BB Cheapest</div>');
+    if(days.length>1 && d===last)  tags.push('<div class="pill">\u21BB Last day you could travel</div>');
+    const diff = heldDay ? FARE[d]-FARE[heldDay] : 0;
     const right = d===heldDay ? '<span class="onw">Booked</span>'
-      : (diff>0 ? '<span class="onw diffup">'+RUPEE(diff)+' more</span>'
-                : '<span class="onw">'+RUPEE(-diff)+' cheaper</span>');
-    const tag = (d===cheap && days.length>1) ? '<div class="pill">\u21BB Cheapest in your range</div>' : '';
+      : (!heldDay ? ''
+        : diff>0 ? '<span class="onw diffup">'+RUPEE(diff)+' more</span>'
+                 : '<span class="onw">'+RUPEE(-diff)+' cheaper</span>');
     return '<button class="card'+(d===heldDay?' sel':'')+'" onclick="choosePick('+d+')" aria-pressed="'+(d===heldDay)+'">'
       + '<div class="row"><span class="time">'+label(d)+' \u00B7 23:55</span><span class="price">'+RUPEE(FARE[d])+'</span></div>'
       + '<div class="subrow"><span class="sub">Laxmi Holidays Pvt Ltd \u00B7 Seat U5 free</span>'+right+'</div>'
-      + tag + '</button>';
+      + (tags.length?'<div class="pillrow">'+tags.join('')+'</div>':'') + '</button>';
   }).join('');
-  document.getElementById('pk-lead').innerHTML = days.length===1
-    ? 'Your return on <b>'+label(heldDay)+'</b>.'
-    : (heldDay===sel[1]
-        ? 'We picked <b>'+label(heldDay)+'</b> \u2014 the last day you could travel, so you never have to change.'
-        : 'You chose <b>'+label(heldDay)+'</b>. Switching is free until you pay.');
-  document.getElementById('pk-bb').textContent=RUPEE(FARE[heldDay]);
-  document.getElementById('pk-note').innerHTML = (days.length===1
-      ? 'You can change this day once after booking, either direction. Only pay the fare difference.'
-      : 'We looked at '+label(sel[0])+' \u2013 '+label(sel[1])+'. Switching between them is free until you pay, and you can change the day once after booking.')
-    + '<br>Only Laxmi Holidays runs this route &mdash; a date change stays with the same operator.';
-  const sub = sel.length===2 ? label(sel[0])+' \u2013 '+label(sel[1]) : label(heldDay);
+
+  const lead=document.getElementById('pk-lead');
+  if(!heldDay){
+    lead.innerHTML = '<b>Pick your return day.</b> Two of them are worth knowing about.';
+  } else if(days.length===1){
+    lead.innerHTML = 'Your return on <b>'+label(heldDay)+'</b>.';
+  } else if(heldDay===last){
+    lead.innerHTML = 'Booking <b>'+label(last)+'</b> \u2014 the last day you could travel, so you never have to change.';
+  } else {
+    lead.innerHTML = 'Booking <b>'+label(heldDay)+'</b>.';
+  }
+
+  // the trade-off, stated where the choice is made rather than where the loss happens
+  const note=document.getElementById('pk-note');
+  if(days.length===1){
+    note.innerHTML = 'You can change this day once after booking, either direction. Only pay the fare difference.'
+      + '<br>Only Laxmi Holidays runs this route \u2014 a date change stays with the same operator.';
+  } else if(spread){
+    note.innerHTML = '<b>'+label(cheap)+'</b> costs '+RUPEE(FARE[last]-FARE[cheap])+' less \u2014 pick it now and you keep that. '
+      + 'Book <b>'+label(last)+'</b> and leave earlier instead, and the difference is <b>not refunded</b>.'
+      + '<br>Switching between these days is free until you pay. Only Laxmi Holidays runs this route.';
+  } else {
+    note.innerHTML = 'Every day here is the same fare, so nothing is lost either way.'
+      + '<br>Switching is free until you pay. Only Laxmi Holidays runs this route.';
+  }
+
+  document.getElementById('pk-bb').textContent = heldDay ? RUPEE(FARE[heldDay]) : '\u2014';
+  document.getElementById('b-pk').disabled = !heldDay;
+  const sub = sel.length===2 ? label(sel[0])+' \u2013 '+label(sel[1]) : label(sel[0]);
   const ps=document.getElementById('pk-sub');
   if(ps) ps.textContent='Nainital \u2192 Delhi \u00B7 '+sub;
 }

@@ -1524,3 +1524,37 @@ LEARNED · 2026-08-11 · molades-build
 Third time today the same shape: state written in one place, read in another, and the two
 drift. Totals, then form restoration, now list rendering. A screen that needs data must draw
 it on entry — never rely on something else having run first.
+
+DECISION · 2026-08-11 · molades-build · Source: user
+"When we book the last date, which might be expensive, and the user moves to an earlier
+cheaper date, we are not refunding the difference — they might feel betrayed."
+
+Correct, and worse than a rough edge: **the product's own advice created the loss.** v3 said
+*"we'll book the last day so you never have to change"*, and booking the last day is exactly
+what makes a cheaper day likely to exist inside the range. Move earlier, and redBus keeps the
+difference for a seat it resold. It is also a reversal of v2 — v2 booked the cheapest so every
+move cost more, which is a decision the traveller makes; v3 made the loss silent and automatic.
+
+Two changes.
+
+**1. The trade-off is now stated where the choice is made, not where the loss happens.**
+*"Sun, 10 Aug costs ₹100 less — pick it now and you keep that. Book Tue, 12 Aug and leave
+earlier instead, and the difference is not refunded."* The fact had only ever appeared on the
+move screen, after payment, after the product had talked them onto the dearer day.
+
+**2. Nothing is pre-selected when there is a price spread.** The rule: *pre-select when the
+product knows better than the traveller; do not when it does not.* It knows the fares — but so
+do they, they are on every day in the calendar. It has no advantage on the only thing that
+decides this: how likely they are to leave early. That is the private fact the whole construct
+exists to elicit, and a range does not answer it. Having just told them a real trade exists,
+making the choice for them anyway would be worse than before.
+
+Three cases, all verified:
+- one day picked        -> selected by definition, Choose seat enabled
+- range, flat fares     -> pre-selects the last day; nothing is at stake either way
+- range, price spread   -> nothing selected, Choose seat disabled until they tap
+
+Cost: one tap on an optional step. Bought: the product stops taking a money decision that is
+not its to take, and stops profiting from its own recommendation.
+
+Checked: 208 combinations, no failures, no JS errors.
