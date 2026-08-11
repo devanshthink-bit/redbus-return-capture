@@ -1880,3 +1880,30 @@ LEARNED · 2026-08-11 · molades-build
 Fake data has edges, and every edge reads to a user as a rule the product is imposing. Three
 separate complaints came from one hardcoded table. Generate the data instead — then the only
 limits on screen are the ones that were designed.
+
+DECISION · 2026-08-11 · molades-build · Source: user
+Three small pieces of delight, all built from something the product already knows rather than
+from decoration. This is a transactional app used by people in a hurry with money at stake;
+anything ornamental would undercut five rounds of design-language work.
+
+**1. The trip, named as a trip.** BRIEF's words table says participants call it a *trip*, not
+two tickets — and the product still showed two tickets stapled together. Booking confirmed now
+opens with *"Your trip · Thu, 7 Aug → Tue, 12 Aug · 5 days in Nainital"*, and My Bookings
+carries the same count. Nothing new is needed to know it; it was always derivable.
+
+**2. Why they moved, on Return moved.** The screen stated mechanics and never the reason.
+Now *"Back in Delhi 3 days earlier than planned."* The student caught the first draft, which
+said **home** — the product knows the city they departed from, not where they live. *Back in
+Delhi* is true either way. Handles one day ("a day earlier"), later moves, and no change.
+
+**3. The range fills as one movement.** Tapping the second date sweeps the band across in
+180ms, 28ms apart, so the window reads as an object that was stretched rather than two taps
+that happened. Plays once per selection, not on every repaint, and is disabled under
+`prefers-reduced-motion`.
+
+Deliberately nothing at payment — that is the moment people are most anxious and least
+interested in being charmed.
+
+Found while checking: the *Change seat* link was rendering at **13.33px**, Chrome's default
+button size. The `font:` shorthand with `inherit` as the family had silently dropped the size.
+Split into longhand; the scale is back to 20/18/16/14/12 everywhere.

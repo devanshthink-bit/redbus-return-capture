@@ -81,7 +81,9 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
  border-radius:4px;height:24px;padding:0 12px;margin-top:16px}
 .pill.no{color:var(--muted);background:#F1F1F1}
 .pill.warnpill{color:var(--warn);background:#F6EDE6}
-.linkbtn{background:none;border:0;padding:8px 0 0;font:700 14px/1 inherit;color:var(--accent);cursor:pointer;min-height:44px;text-align:left}
+.dlead{font-size:18px;font-weight:700;color:var(--ink);line-height:1.3;margin:0 0 4px}
+#d-what{margin-bottom:16px}
+.linkbtn{background:none;border:0;padding:8px 0 0;font-family:inherit;font-size:14px;font-weight:700;color:var(--accent);cursor:pointer;min-height:44px;text-align:left}
 .linkbtn:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(197,70,70,.35);border-radius:4px}   /* state rules go after the base */
 
 /* ---------- controls row ---------- */
@@ -264,6 +266,9 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 .cday.sel{background:var(--accent)}
 .cday.sel .n,.cday.sel .f{color:#fff}
 .cday.mid{background:#F6E4E4;border-radius:0}
+@keyframes fillin{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
+.cday.sweep{animation:fillin 180ms cubic-bezier(.2,.7,.3,1) both}
+@media (prefers-reduced-motion:reduce){.cday.sweep{animation:none}}
 .cday.s1{border-top-right-radius:0;border-bottom-right-radius:0}
 .cday.s2{border-top-left-radius:0;border-bottom-left-radius:0}
 .cday.cheap .f{color:var(--ratink);font-weight:700}   /* --rate is only 3.7:1 on the range band */
@@ -654,7 +659,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
     <div class="wrap">
 
       <div class="leg">
-        <div class="legtag">Delhi &harr; Nainital &middot; 1 passenger</div>
+        <div class="legtag" id="mb-trip">Delhi &harr; Nainital &middot; 1 passenger</div>
         <div class="row"><span class="time">Onward &middot; Thu, 7 Aug</span><span class="price">&#8377;1,599</span></div>
         <div class="subrow"><span class="sub">Laxmi Holidays Pvt Ltd &middot; 23:55</span><span class="onw">Seat SU4</span></div>
         <div id="mb-ret">
@@ -789,6 +794,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
         <div class="subrow"><span class="sub">Nainital &rarr; Delhi</span><span class="onw">Seat U5</span></div>
         <div class="oprow"><div><div class="op">Laxmi Holidays Pvt Ltd</div><div class="cap">Nainital Bus Stand &rarr; ISBT Kashmiri Gate, Gate 4</div></div></div>
       </div>
+      <p class="dlead" id="d-lead"></p>
       <p class="note" id="d-what">Moved from Mon, 11 Aug. You paid &#8377;200.</p>
       <div class="terms">
         <h3>What&rsquo;s changed</h3>
@@ -843,6 +849,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       <span style="width:44px"></span>
     </div>
     <div class="wrap">
+      <div class="ctx" id="bc-trip" data-ret></div>
       <div class="leg">
         <div class="legtag">Onward &middot; Thu, 7 Aug</div>
         <div class="row"><span class="time">23:55<span class="d">&mdash;</span><span class="arr">08:00</span></span><span class="price">&#8377;1,599</span></div>
@@ -979,12 +986,14 @@ function go(id){
 }
 
 // A third tap starts a new selection, so nobody can get stuck inside a range.
+let sweepFrom=0, sweepTo=0;
 function tapDay(d){
   if(sel.length===1){
     if(Math.abs(d-sel[0])+1 > MAX_WINDOW){ sel=[d]; paintWindow(); return; }   // out of reach: start again there
     sel = d===sel[0] ? [d] : (d>sel[0] ? [sel[0],d] : [d,sel[0]]);
+    if(sel.length===2){ sweepFrom=sel[0]; sweepTo=sel[1]; }
   }
-  else { sel=[d]; }
+  else { sel=[d]; sweepFrom=sweepTo=0; }
   paintWindow();
 }
 
@@ -1021,9 +1030,14 @@ function paintWindow(){
       }
     }
     const on = sel.includes(d) || (sel.length===2 && d>sel[0] && d<sel[1]);
-    html += '<button class="'+cls.join(' ')+'"'+dis+' aria-label="'+aria+'" aria-pressed="'+on+'" onclick="tapDay('+d+')">'+inner+'</button>';
+    let anim='';
+    if(sweepFrom && d>=sweepFrom && d<=sweepTo){        // one sweep across the new range
+      cls.push('sweep'); anim=' style="animation-delay:'+((d-sweepFrom)*28)+'ms"';
+    }
+    html += '<button class="'+cls.join(' ')+'"'+dis+anim+' aria-label="'+aria+'" aria-pressed="'+on+'" onclick="tapDay('+d+')">'+inner+'</button>';
   }
   g.innerHTML=html;
+  sweepFrom=sweepTo=0;   // the sweep plays once, not on every repaint
 
   document.getElementById('cal-month').textContent = M.name;
   const prev=document.getElementById('cal-prev'), next=document.getElementById('cal-next');
@@ -1302,6 +1316,12 @@ function confirmMove(date,time,fare,diff,seat){
   document.getElementById('d-date').textContent = date;
   document.getElementById('d-price').textContent = '₹'+fare.toLocaleString('en-IN');
   const ds=document.querySelector('#s-done .subrow .onw'); if(ds) ds.textContent='Seat '+movedSeat;
+  const shift = heldDay - movedDay;                 // + = earlier, - = later
+  const n = Math.abs(shift), day = n===1 ? 'a day' : n+' days';
+  const dl=document.getElementById('d-lead');
+  if(dl) dl.textContent = shift>0 ? 'Back in Delhi '+day+' earlier than planned.'
+                        : shift<0 ? 'Back in Delhi '+day+' later than planned.'
+                                  : 'Your return is set.';
   document.getElementById('d-what').innerHTML = up
     ? 'Moved from '+label(heldDay)+'. You paid ₹'+diff+'.'
     : 'Moved from '+label(heldDay)+'. The fare was ₹'+Math.abs(diff)+' lower; that difference is not refunded.';
@@ -1350,6 +1370,12 @@ const PAX = () => (state==='crowded' ? 6 : 1);
 function paintReturn(){
   const E=id=>document.getElementById(id);
   if(!heldDay) return;
+  const nights = heldDay - OUT_DAY;                    // days present in Nainital
+  const trip = E('bc-trip');
+  if(trip) trip.innerHTML = '<span>Your trip</span><b>Thu, 7 Aug \u2192 '+label(heldDay)
+    + ' \u00B7 '+nights+' day'+(nights===1?'':'s')+' in Nainital</b>';
+  const mb = E('mb-trip');
+  if(mb) mb.textContent = 'Delhi \u2194 Nainital \u00B7 '+nights+' day'+(nights===1?'':'s')+' \u00B7 1 passenger';
   const d=label(heldDay), f=RUPEE(FARE[heldDay]);
   const win = sel.length===2 ? label(sel[0])+' \u2013 '+label(sel[1]) : d;
   const set=(id,v)=>{ const e=E(id); if(e) e.textContent=v; };
