@@ -546,7 +546,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 
       <!-- leg 2 -->
       <div class="leg" data-ret>
-        <div class="legtag">Return &middot; Sun, 10 Aug</div>
+        <div class="legtag" id="rv-legtag">Return &middot; Sun, 10 Aug</div>
         <div class="row"><span class="time">23:55<span class="d">&mdash;</span><span class="arr">08:00</span></span><span class="price" id="rv-ret">&#8377;999</span></div>
         <div class="subrow"><span class="sub">Nainital &rarr; Delhi &middot; 8h 5m</span><span class="onw">Seat U5</span></div>
         <div class="oprow"><div><div class="op">Laxmi Holidays Pvt Ltd</div><div class="cap">Nainital Bus Stand &rarr; ISBT Kashmiri Gate, Gate 4</div></div></div>
@@ -558,7 +558,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
         <h3>Changing your return</h3>
         <dl class="rules">
           <dt>One change, only the fare difference</dt><dd>No change fee. If the new bus costs more, you pay the difference</dd>
-          <dt>Any day in your window</dt><dd>Sat, 9 &ndash; Tue, 12 Aug. Earlier or later, in one tap</dd>
+          <dt>Any day in your window</dt><dd id="rv-window">Sat, 9 &ndash; Tue, 12 Aug. Earlier or later, in one tap</dd>
           <dt class="crit">No cancelling after</dt><dd>The ticket becomes non&#8209;refundable, including Free Cancellation</dd>
           <dt>Until 8 hours before</dt><dd>After that the date is fixed</dd>
         </dl>
@@ -608,8 +608,8 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       </div>
 
       <div class="leg" id="tk-ret">
-        <div class="legtag">Return &middot; Sun, 10 Aug</div>
-        <div class="row"><span class="time">23:55<span class="d">&mdash;</span><span class="arr">08:00</span></span><span class="price">&#8377;999</span></div>
+        <div class="legtag" id="tk-legtag">Return &middot; Sun, 10 Aug</div>
+        <div class="row"><span class="time">23:55<span class="d">&mdash;</span><span class="arr">08:00</span></span><span class="price" id="tk-price">&#8377;999</span></div>
         <div class="subrow"><span class="sub">Nainital &rarr; Delhi &middot; 8h 5m</span><span class="onw">Seat U5</span></div>
         <div class="oprow"><div><div class="op">Laxmi Holidays Pvt Ltd</div><div class="cap">Nainital Bus Stand &rarr; ISBT Kashmiri Gate, Gate 4</div></div></div>
       </div>
@@ -646,7 +646,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
         <div class="row"><span class="time">Onward &middot; Thu, 7 Aug</span><span class="price">&#8377;1,599</span></div>
         <div class="subrow"><span class="sub">Laxmi Holidays Pvt Ltd &middot; 23:55</span><span class="onw">Seat SU4</span></div>
         <div id="mb-ret">
-          <div class="row" style="margin-top:16px"><span class="time">Return &middot; <span id="mb-rdate">Sun, 10 Aug</span></span><span class="price">&#8377;949</span></div>
+          <div class="row" style="margin-top:16px"><span class="time">Return &middot; <span id="mb-rdate">Sun, 10 Aug</span></span><span class="price" id="mb-rprice">&#8377;949</span></div>
           <div class="subrow"><span class="sub">Laxmi Holidays Pvt Ltd &middot; 23:55</span><span class="onw">Seat U5</span></div>
         </div>
         <div id="mb-noret" hidden>
@@ -701,7 +701,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
         <div class="blank">
           <h2>No other days available</h2>
           <p>Laxmi Holidays isn&rsquo;t running on the other days in your window.</p>
-          <p class="long">Your Sun, 10 Aug booking is unchanged and still valid. Seat U5, &#8377;949, nothing has been charged.</p>
+          <p class="long" id="wi-none-b">Your booking is unchanged and still valid.</p>
           <div class="acts">
             <button class="btn pri" style="width:100%" onclick="go('s-ticket')">Keep my current booking</button>
           </div>
@@ -711,7 +711,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       <div id="wi-err" hidden>
         <div class="blank">
           <h2>We couldn&rsquo;t check other days</h2>
-          <p>Your Sun, 10 Aug booking is unchanged. Nothing has been charged.</p>
+          <p id="wi-err-b">Your booking is unchanged. Nothing has been charged.</p>
           <div class="acts">
             <button class="btn pri" style="width:100%" onclick="setState('default')">Try again</button>
             <button class="btn sec" style="width:100%" onclick="go('s-ticket')">Keep my current booking</button>
@@ -732,12 +732,12 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 
       <div class="legerr" id="c-err" hidden>
         <p class="legerr-t">That seat went while you were confirming</p>
-        <p class="legerr-b"><b>Your Sun, 10 Aug booking is untouched.</b> Seat U5, &#8377;949. Nothing was charged and nothing was cancelled.</p>
+        <p class="legerr-b" id="c-errb"><b>Your booking is untouched.</b> Nothing was charged and nothing was cancelled.</p>
         <div class="legerr-a"><button class="btn pri" onclick="openWithin()">See other days</button></div>
       </div>
 
       <div class="swap">
-        <div class="swapleg was"><div class="legtag">From</div><div class="swapd" id="c-from">Sun, 10 Aug &middot; 23:55</div><div class="cap">Seat U5 &middot; &#8377;949</div></div>
+        <div class="swapleg was"><div class="legtag">From</div><div class="swapd" id="c-from">Sun, 10 Aug &middot; 23:55</div><div class="cap" id="c-fromsub">Seat U5 &middot; &#8377;949</div></div>
         <div class="swaparrow" aria-hidden="true">&darr;</div>
         <div class="swapleg"><div class="legtag">To</div><div class="swapd" id="c-to">Sat, 9 Aug &middot; 22:15</div><div class="cap" id="c-tosub">Seat U5 &middot; &#8377;1,199</div></div>
       </div>
@@ -800,7 +800,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       <div class="leg">
         <div class="legtag">Paying for</div>
         <div class="fare"><span>Onward &middot; Thu, 7 Aug</span><span id="pay-out">&#8377;1,599</span></div>
-        <div class="fare" data-ret><span>Return &middot; Sun, 10 Aug</span><span id="pay-ret">&#8377;999</span></div>
+        <div class="fare" data-ret><span id="pay-retlabel">Return &middot; Sun, 10 Aug</span><span id="pay-ret">&#8377;999</span></div>
         <div class="fare" id="pay-fc" hidden><span>Free Cancellation &middot; onward</span><span id="pay-fcv">&#8377;160</span></div>
         <div class="fare tot"><span>Total</span><span id="pay-tot">&#8377;2,598</span></div>
       </div>
@@ -838,8 +838,8 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       </div>
 
       <div class="leg" id="bc-ret">
-        <div class="legtag">Return &middot; Sun, 10 Aug</div>
-        <div class="row"><span class="time">23:55<span class="d">&mdash;</span><span class="arr">08:00</span></span><span class="price">&#8377;949</span></div>
+        <div class="legtag" id="bc-legtag">Return &middot; Sun, 10 Aug</div>
+        <div class="row"><span class="time">23:55<span class="d">&mdash;</span><span class="arr">08:00</span></span><span class="price" id="bc-price">&#8377;949</span></div>
         <div class="subrow"><span class="sub">Nainital &rarr; Delhi &middot; 8h 5m</span><span class="onw">Seat U5</span></div>
         <div class="oprow"><div><div class="op">Laxmi Holidays Pvt Ltd</div><div class="cap">Nainital Bus Stand &rarr; ISBT Kashmiri Gate, Gate 4</div></div></div>
         <div class="pill"><span aria-hidden="true">&#8635;</span> Can be moved in your window</div>
@@ -850,7 +850,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
         <dl class="rules">
           <dt>Open your ticket</dt><dd>Choose <b>Change day</b> and pick another day in your window</dd>
           <dt>One change, only the fare difference</dt><dd>No change fee. If the new bus costs more, you pay the difference</dd>
-          <dt>Sat, 9 &ndash; Tue, 12 Aug</dt><dd>Any day in that window, earlier or later. One change in total</dd>
+          <dt id="bc-window">Sat, 9 &ndash; Tue, 12 Aug</dt><dd>Any day in that window, earlier or later. One change in total</dd>
           <dt class="crit">No cancelling after</dt><dd>The return becomes non&#8209;refundable</dd>
         </dl>
       </div>
@@ -1212,6 +1212,31 @@ let state='default';
 const RUP = n => '₹'+n.toLocaleString('en-IN');
 const PAX = () => (state==='crowded' ? 6 : 1);
 
+
+// Every date and fare for the return leg is derived here and nowhere else — the same rule
+// the money totals follow. Hardcoded copies of these drifted from the booked day four times.
+function paintReturn(){
+  const E=id=>document.getElementById(id);
+  if(!heldDay) return;
+  const d=label(heldDay), f=RUPEE(FARE[heldDay]);
+  const win = sel.length===2 ? label(sel[0])+' \u2013 '+label(sel[1]) : d;
+  const set=(id,v)=>{ const e=E(id); if(e) e.textContent=v; };
+  set('rv-legtag','Return \u00B7 '+d);       set('rv-ret',f);
+  set('tk-legtag','Return \u00B7 '+d);       set('tk-price',f);
+  set('bc-legtag','Return \u00B7 '+d);       set('bc-price',f);
+  set('mb-rdate',d);                         set('mb-rprice',f);
+  set('pay-retlabel','Return \u00B7 '+d);
+  set('c-from',d+' \u00B7 23:55');           set('c-fromsub','Seat U5 \u00B7 '+f);
+  set('wi-none-b','Your '+d+' booking is unchanged and still valid. Seat U5, '+f+', nothing has been charged.');
+  set('wi-err-b','Your '+d+' booking is unchanged. Nothing has been charged.');
+  set('bc-window',win);
+  const rw=E('rv-window'); if(rw) rw.textContent = sel.length===2
+    ? win+'. Earlier or later, in one tap'
+    : 'Any other day, earlier or later, in one tap';
+  const ce=E('c-errb'); if(ce) ce.innerHTML='<b>Your '+d+' booking is untouched.</b> Seat U5, '+f
+    +'. Nothing was charged and nothing was cancelled.';
+}
+
 // Every rupee figure on Trip review and Pay is derived here and nowhere else.
 function recalc(){
   const E=id=>document.getElementById(id);
@@ -1232,6 +1257,7 @@ function recalc(){
   if(first) first.textContent = RUP(out);
   ['rv-tot','rv-bb','pay-tot','pay-bb'].forEach(id=>{ if(E(id)) E(id).textContent = RUP(tot); });
   if(E('pay-title')) E('pay-title').textContent = 'Pay ' + RUP(tot);
+  paintReturn();
 }
 
 function setState(s){

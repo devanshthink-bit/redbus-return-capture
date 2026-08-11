@@ -1609,3 +1609,29 @@ LEARNED · 2026-08-11 · molades-build
 Second specificity fault today from the same habit: I add new rules next to related ones
 instead of after the states they must beat. State rules go last, in the order
 base -> hover -> selected -> focus.
+
+CRITIQUE · 2026-08-11 · molades-test · Source: user — "how 899 changed to 999?"
+Picked Wed, 13 Aug at ₹899. The boarding-points bar said ₹899 and the total said ₹2,498 —
+both right. Trip review's return card said **Sun, 10 Aug · ₹999**.
+
+Fifteen hardcoded copies of the return date and fare were sitting in the markup: Trip review,
+the ticket, Booking confirmed, My Bookings, Payment, Move confirm and both Change-day blank
+states. Only the totals were ever computed, so the moment the traveller picked any day other
+than the one I happened to type into the HTML, every leg card lied while the total told the
+truth. The two most trusted numbers on the screen disagreed.
+
+All fifteen now derive from `paintReturn()`, called from `recalc()` — the same rule the money
+already follows: **one function owns it, everything else reads it.** Verified across a pick and
+a move: choosing Wed 13 shows ₹899 on all seven surfaces and totals ₹2,498; moving to Fri 15
+shows ₹1,299 everywhere and totals ₹2,898.
+Severity:  blocker
+Layer:     things
+Action:    fixed
+
+LEARNED · 2026-08-11 · molades-build
+This is the fourth instance today of one fault: **a value written in two places drifts.**
+Dropped-return totals, the add-on total, list rendering, now the whole return leg. Each time
+I fixed the instance rather than the class. The rule, applied properly this time: any value
+that can change at runtime gets exactly one writer and no literal in the markup. Static HTML
+is a default, not a source of truth — and a default that is never repainted is a bug waiting
+for the first person who picks something else.
