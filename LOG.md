@@ -1802,3 +1802,23 @@ LEARNED · 2026-08-11 · molades-build
 A derived boolean needs a test that matches its name. `spread` meant "do the fares differ" and
 was written as "is the last day dearer than the cheapest" — right in most data, wrong in the
 case the traveller hit. Three visible defects came from one wrong comparison.
+
+CHANGE · 2026-08-11 · molades-build · Source: user
+"On reading it feels very confusing and it's very long." The note under the day list was a
+three-sentence grey paragraph doing four jobs at once — naming the cheapest day, warning about
+the forfeit, explaining that switching is free before payment, and naming the operator. Nothing
+told the eye which of those mattered.
+
+Rebuilt as `.rules` pairs, the pattern already used on *Last day* and *Trip review*, and held to
+the same test: read only the bold and you have every rule.
+
+  Cheapest is Wed, 13 Aug · ₹899
+  A cheaper day later is not refunded      <- the only coloured line
+  Free to switch until you pay
+
+Three pairs instead of three sentences, and the money risk is now the one item in the warning
+colour rather than a clause buried mid-paragraph. Flat-fare windows get two pairs, single days
+get two. One critical rule per block throughout.
+
+The operator constraint moved into the detail line of the last pair — it is real, but it is not
+something the traveller is deciding between, so it should not compete for a bold line.

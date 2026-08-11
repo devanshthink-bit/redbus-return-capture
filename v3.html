@@ -430,7 +430,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       <div id="pk-main">
         <p class="terms-lead" id="pk-lead">We picked <b>Sun, 10 Aug</b> &mdash; the cheapest day in your window.</p>
         <div id="pk-list"></div>
-        <p class="note" id="pk-note"></p>
+        <dl class="rules" id="pk-note" style="margin-top:20px"></dl>
       </div>
 
       <div id="pk-none" hidden>
@@ -1061,18 +1061,23 @@ function renderPicked(){
   }
 
   // the trade-off, stated where the choice is made rather than where the loss happens
+  // Scannable by the bold lines alone — the same test the terms blocks are held to.
   const note=document.getElementById('pk-note');
-  const operator = '<br>Only Laxmi Holidays runs this route \u2014 a date change stays with the same operator.';
+  const after = '<dt>Free to switch until you pay</dt>'
+    + '<dd>After that, one date change on Laxmi Holidays \u2014 the only operator on this route.</dd>';
   if(days.length===1){
-    note.innerHTML = 'After booking you get one date change, either direction. You pay any '
-      + 'difference, and a lower fare is not refunded.' + operator;
+    note.innerHTML = '<dt>One date change after booking</dt>'
+      + '<dd>Either direction, on Laxmi Holidays. You pay any difference.</dd>'
+      + '<dt class="crit">A cheaper day is not refunded</dt>'
+      + '<dd>Move to a cheaper day later and the difference is kept.</dd>';
   } else if(spread){
-    note.innerHTML = '<b>'+label(cheap)+'</b> is the cheapest at '+RUPEE(FARE[cheap])+'. Pick it now and '
-      + 'you keep the difference \u2014 book a dearer day and switch later, and it is not refunded.'
-      + '<br>Changing your pick is free until you pay.' + operator;
+    note.innerHTML = '<dt>Cheapest is '+label(cheap)+' \u00B7 '+RUPEE(FARE[cheap])+'</dt>'
+      + '<dd>Pick it now and you keep the difference.</dd>'
+      + '<dt class="crit">A cheaper day later is not refunded</dt>'
+      + '<dd>Book a dearer day, move down after paying, and the difference is kept.</dd>'
+      + after;
   } else {
-    note.innerHTML = 'Every day here is the same fare. Changing your pick is free until you pay, '
-      + 'and after that you get one date change.' + operator;
+    note.innerHTML = '<dt>Same fare every day</dt><dd>Pick whichever suits you.</dd>' + after;
   }
   document.getElementById('pk-bb').textContent = heldDay ? RUPEE(FARE[heldDay]) : '\u2014';
   document.getElementById('b-pk').disabled = !heldDay;
