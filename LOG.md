@@ -1670,3 +1670,31 @@ Third specificity slip today and the same one every time: I declared `.warnpill`
 so the base class won and the warning colour never applied — it measured 14:1 because it was
 still ink. Caught only because I measured contrast rather than looking at it. **State rules go
 after the base rule: base -> hover -> selected -> focus -> variant.** Written down twice now.
+
+CRITIQUE · 2026-08-11 · molades-build · Source: user — "a lot of things are broken"
+Self-inflicted, and shipped. The seat-availability change replaced a source range running from
+`renderWithin` to `movedTo`. Everything in between went with it: `chosen`, `out`, `pickOut`,
+`pick`, `toSeat`, `LOWER`, `UPPER`, `buildSeats`, `toggleSeat`, `toggleOutSeat`, `setPt` —
+5,182 characters. Both seat maps rendered empty and every bus card did nothing.
+
+`booted` was false, so the whole tail of the script never ran. Restored the block from the
+previous commit, keeping the new `renderWithin`.
+
+**Why the checks missed it, which is the real finding.** My 208-combination harness only calls
+`setState` and `go`. Both were defined above the deleted range, so all 208 passed while the
+product was unusable. It has never once clicked a bus card, a seat, or a Continue button — so
+it cannot see a dead handler. I have now written a walk test that drives the whole journey by
+`.click()`: home -> outbound bus -> seat -> points -> window -> pick day -> seat -> points ->
+review -> pay -> ticket -> change day -> confirm -> moved. Fourteen steps, each asserting which
+screen it lands on. That is what caught it, and what should have existed all along.
+Severity:  blocker
+Layer:     things
+Action:    fixed
+
+LEARNED · 2026-08-11 · molades-build
+Two rules, both bought expensively today.
+1. **Never replace a source range by two string indexes when the end marker is far away.**
+   `s[s.index(A):s.index(B)]` silently swallows whatever grew between A and B. Replace whole
+   named functions, or nothing.
+2. **A passing test that never touches a control is not evidence.** State coverage and click
+   coverage are different things, and only one of them is what the traveller does.

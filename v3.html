@@ -1108,6 +1108,75 @@ function renderWithin(){
   wrap.innerHTML += '<p class="note">Your seat is only held on the day you booked. On any other day you get whatever is free.<br>Only Laxmi Holidays runs this route. A date change stays with the same operator.</p>';
 }
 
+let chosen={op:'',fare:0,seat:null};
+let out={op:'Laxmi Holidays Pvt Ltd',fare:1599,dep:'23:55',arr:'08:00',seat:null};
+function pickOut(op,fare,dep,arr){
+  out.op=op; out.fare=fare; out.dep=dep; out.arr=arr; out.seat=null;
+  document.getElementById('oseat-sub').textContent='Delhi → Nainital · '+op;
+  document.getElementById('oseat-count').textContent='No seat selected';
+  document.getElementById('oseat-price').innerHTML='&nbsp;';
+  document.getElementById('b-oseat').disabled=true;
+  document.querySelectorAll('#og-lower .seat,#og-upper .seat').forEach(b=>b.removeAttribute('aria-pressed'));
+  go('s-oseat');
+}
+// entering seat selection from the picked day — carries the fare the bar and the
+// points screen both read, and clears any seat chosen on a previous visit
+function toSeat(){
+  chosen.seat=null;
+  document.querySelectorAll('#g-lower .seat,#g-upper .seat').forEach(b=>b.removeAttribute('aria-pressed'));
+  document.getElementById('seat-count').textContent='No seat selected';
+  document.getElementById('seat-price').innerHTML='&nbsp;';
+  document.getElementById('b-seat').disabled=true;
+  pick('Laxmi Holidays Pvt Ltd', FARE[heldDay]);
+}
+function pick(op,fare){
+  chosen.op=op; chosen.fare=fare;
+  document.getElementById('seat-sub').textContent='Nainital → Delhi · '+op;
+  document.getElementById('pt-price').textContent='₹'+fare.toLocaleString('en-IN');
+  go('s-seat');
+}
+const LOWER=['a','a','booked','a','female','a','a','a','booked','a','a','a'];
+const UPPER=['a','booked','a','a','a','a','booked','a','a','a','a','a'];
+function buildSeats(){
+  [['g-lower',LOWER],['g-upper',UPPER],['og-lower',LOWER],['og-upper',UPPER]].forEach(([id,arr])=>{
+    const g=document.getElementById(id); if(!g) return;
+    g.innerHTML='';
+    arr.forEach((st,i)=>{
+      const b=document.createElement('button');
+      b.className='seat'; b.type='button';
+      b.setAttribute('aria-label','Seat '+(id==='g-lower'?'L':'U')+(i+1));
+      if(st!=='a') b.dataset.s=st;
+      b.textContent = st==='booked' ? '\u00D7' : st==='female' ? '\u2640' : '';
+      b.setAttribute('aria-label','Seat '+(id.endsWith('lower')?'L':'U')+(i+1)+(st==='booked'?', booked':st==='female'?', women only':', available'));
+      const nm=(id.endsWith('lower')?'L':'U')+(i+1);
+      if(st!=='booked') b.onclick = id.startsWith('og') ? (()=>toggleOutSeat(b,nm)) : (()=>toggleSeat(b,nm));
+      if(st==='booked') b.disabled=true;
+      g.appendChild(b);
+    });
+  });
+}
+function toggleOutSeat(b,name){
+  const already=b.getAttribute('aria-pressed')==='true';
+  document.querySelectorAll('#og-lower .seat,#og-upper .seat').forEach(x=>x.removeAttribute('aria-pressed'));
+  out.seat = already?null:name;
+  if(!already) b.setAttribute('aria-pressed','true');
+  document.getElementById('oseat-count').textContent = out.seat?('Seat '+out.seat+' selected'):'No seat selected';
+  document.getElementById('oseat-price').innerHTML   = out.seat?('₹'+out.fare.toLocaleString('en-IN')):'&nbsp;';
+  document.getElementById('b-oseat').disabled = !out.seat;
+}
+function toggleSeat(b,name){
+  const already=b.getAttribute('aria-pressed')==='true';
+  document.querySelectorAll('#g-lower .seat,#g-upper .seat').forEach(s=>s.removeAttribute('aria-pressed'));
+  chosen.seat = already?null:name;
+  if(!already) b.setAttribute('aria-pressed','true');
+  document.getElementById('seat-count').textContent = chosen.seat?('Seat '+chosen.seat+' selected'):'No seat selected';
+  document.getElementById('seat-price').innerHTML = chosen.seat?('₹'+chosen.fare.toLocaleString('en-IN')):'&nbsp;';
+  document.getElementById('b-seat').disabled = !chosen.seat;
+}
+function setPt(el,group){
+  document.querySelectorAll('.ptn[data-g="'+group+'"]').forEach(p=>p.setAttribute('aria-pressed','false'));
+  el.setAttribute('aria-pressed','true');
+}
 let movedTo='', movedSeat=HELD_SEAT;
 function confirmMove(date,time,fare,diff,seat){
   movedTo=date; movedSeat=seat||HELD_SEAT;
