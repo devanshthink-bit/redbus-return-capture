@@ -1822,3 +1822,28 @@ get two. One critical rule per block throughout.
 
 The operator constraint moved into the detail line of the last pair — it is real, but it is not
 something the traveller is deciding between, so it should not compete for a bold line.
+
+DECISION · 2026-08-11 · molades-build · Source: user
+Capped the return window at **7 days**. Previously any span inside the bookable range was
+allowed — up to 13 days, which is how a test window produced a ₹551 spread and a booked day
+nobody would realistically travel on.
+
+Why 7, in order of weight:
+1. **One reschedule is the binding constraint.** The wider the window, the further the booked
+   day sits from the day actually travelled, and the more likely the single change gets spent.
+   Past some width the feature stops protecting and starts costing.
+2. **Fares run on a weekly cycle.** Seven days is one full cycle, so cheapest-against-dearest
+   is a real comparison rather than two different weeks.
+3. **Beyond a week, "the last day I could travel" stops being a constraint.** It becomes a
+   shrug, which is the state the traveller started in.
+4. It matches the trip shapes in the research — wedding, long weekend, work trip.
+
+Enforced by the calendar rather than by a message, at the student's instruction: once one day
+is picked, days more than six away are disabled, so an over-wide window cannot be built. A tap
+beyond reach starts a new selection at that day rather than dead-ending. Screen readers hear
+*"more than 7 days from the day you picked"* — the constraint is announced, not narrated on
+screen.
+
+Verified at the edges: from the 11th, days 8–17 stay live; 8→14 gives a legal 7-day window;
+8→15 restarts rather than building an 8-day one; from the 20th the range clamps to 14–20 at the
+end of the bookable period. 208 combinations, no failures.

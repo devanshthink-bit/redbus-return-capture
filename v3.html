@@ -918,6 +918,7 @@ const WINDOW_END = 'Wed, 5 Nov';   // furthest bookable date on this route — 9
 // ---- one month of return days -----------------------------------------------
 // The build's fiction: Thu 7 Aug is the outbound, so 1 Aug is a Friday.
 const OUT_DAY = 7, LAST_BOOKABLE = 20, LEAD = 4;   // LEAD = blank cells before the 1st
+const MAX_WINDOW = 7;                              // days, inclusive of both ends
 const FARE = {8:1450, 9:1199, 10:949, 11:999, 12:1049, 13:899, 14:1150,
               15:1299, 16:1400, 17:1050, 18:980, 19:1020, 20:1100};
 // What you would actually get on each day. The booked seat is only held on the booked day —
@@ -947,7 +948,10 @@ function go(id){
 
 // A third tap starts a new selection, so nobody can get stuck inside a range.
 function tapDay(d){
-  if(sel.length===1){ sel = d===sel[0] ? [d] : (d>sel[0] ? [sel[0],d] : [d,sel[0]]); }
+  if(sel.length===1){
+    if(Math.abs(d-sel[0])+1 > MAX_WINDOW){ sel=[d]; paintWindow(); return; }   // out of reach: start again there
+    sel = d===sel[0] ? [d] : (d>sel[0] ? [sel[0],d] : [d,sel[0]]);
+  }
   else { sel=[d]; }
   paintWindow();
 }
@@ -956,11 +960,18 @@ function paintWindow(){
   const g=document.getElementById('cal-grid'); if(!g) return;
   const cheap = sel.length===2 ? cheapestIn(sel[0],sel[1]) : 0;
   let html='<div></div>'.repeat(LEAD);
+  // With one day chosen, only days that keep the window within MAX_WINDOW stay selectable.
+  const lo = sel.length===1 ? Math.max(OUT_DAY+1, sel[0]-(MAX_WINDOW-1)) : OUT_DAY+1;
+  const hi = sel.length===1 ? Math.min(LAST_BOOKABLE, sel[0]+(MAX_WINDOW-1)) : LAST_BOOKABLE;
   for(let d=1; d<=31; d++){
-    const usable = d>OUT_DAY && d<=LAST_BOOKABLE;
+    const inRange = d>=lo && d<=hi;
+    const usable = d>OUT_DAY && d<=LAST_BOOKABLE && inRange;
     const cls=['cday']; let inner='<span class="n">'+d+'</span>'; let aria=label(d), dis='';
     if(d===OUT_DAY){ cls.push('out'); inner+='<span class="f">Out</span>'; aria+=', your outbound journey'; dis=' disabled'; }
-    else if(!usable){ cls.push('off'); aria+=', not available'; dis=' disabled'; }
+    else if(!usable){ cls.push('off'); dis=' disabled';
+      aria += (d>OUT_DAY && d<=LAST_BOOKABLE && !inRange)
+        ? ', more than '+MAX_WINDOW+' days from the day you picked'
+        : ', not available'; }
     else {
       inner+='<span class="f">'+RUPEE(FARE[d])+'</span>';
       aria+=', '+RUPEE(FARE[d]);
