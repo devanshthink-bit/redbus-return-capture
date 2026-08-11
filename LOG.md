@@ -1583,3 +1583,29 @@ Same fault as the "last day" correction on 6 August: I changed a behaviour and f
 on the screen where the behaviour lives, not on the screen where the traveller forms the
 expectation. **A behaviour change has to be chased backwards through every screen that
 predicts it**, not just forwards.
+
+CRITIQUE · 2026-08-11 · molades-attack · Source: user
+Tapping a day card showed no red border until the pointer moved off it.
+
+`.card.sel{box-shadow:0 0 0 2px var(--accent)}` and `.card:hover{box-shadow:...}` have the
+same specificity, and I had inserted `.card.sel` **above** the hover rule, so hover won for as
+long as the pointer stayed on the card. On a mouse that is until you move away; on a phone,
+until the next tap clears the sticky hover state. The selection was applying correctly the
+whole time — only the evidence of it was hidden, which is the worst kind of feedback bug.
+
+Moved it below `.card:hover` and added the hover case explicitly:
+`.card.sel,.card.sel:hover{box-shadow:0 0 0 2px var(--accent)}`. Also gave the selected card
+its own focus ring so keyboard focus does not wipe the selection out either. Verified by
+reading the stylesheet rule indexes, not by looking: `.card:hover` is rule 29,
+`.card.sel,.card.sel:hover` is rule 30.
+
+Selection was already announced properly — `aria-pressed="true"` on the chosen card and on
+no other — so a screen reader was never affected. Only the visual.
+Severity:  major
+Layer:     looks
+Action:    fixed in v3; **v2 carries the same rule order** and is untouched per instruction
+
+LEARNED · 2026-08-11 · molades-build
+Second specificity fault today from the same habit: I add new rules next to related ones
+instead of after the states they must beat. State rules go last, in the order
+base -> hover -> selected -> focus.
