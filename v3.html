@@ -246,7 +246,10 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 }
 
 .cal{background:var(--raised);border-radius:12px;padding:16px;margin-top:16px}
-.cal .mon{font-size:16px;font-weight:700;color:var(--ink);text-align:center;margin-bottom:12px}
+.cal .mon{font-size:16px;font-weight:700;color:var(--ink);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.calnav{width:44px;height:44px;border:0;background:none;color:var(--ink);font-size:20px;cursor:pointer;border-radius:8px}
+.calnav[disabled]{color:#C4C4C8;cursor:default}
+.calnav:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(197,70,70,.35)}
 .cal .dow{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px}
 .cal .dow span{font-size:12px;color:var(--muted);text-align:center}
 .cal .grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
@@ -399,7 +402,11 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       <p class="qhint" id="q-hint">Pick one day. Pick two if you&rsquo;re not sure yet.</p>
 
       <div class="cal">
-        <div class="mon">August 2026</div>
+        <div class="mon">
+          <button class="calnav" id="cal-prev" aria-label="Previous month" onclick="calStep(-1)">&#8249;</button>
+          <span id="cal-month">August 2026</span>
+          <button class="calnav" id="cal-next" aria-label="Next month" onclick="calStep(1)">&#8250;</button>
+        </div>
         <div class="dow"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
         <div class="grid" id="cal-grid" role="group" aria-label="Choose your return day, or two days if you are not sure"></div>
       </div>
@@ -915,20 +922,45 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 let booted=false;
 let offline=false;
 const WINDOW_END = 'Wed, 5 Nov';   // furthest bookable date on this route — 90 days out
-// ---- one month of return days -----------------------------------------------
-// The build's fiction: Thu 7 Aug is the outbound, so 1 Aug is a Friday.
-const OUT_DAY = 7, LAST_BOOKABLE = 20, LEAD = 4;   // LEAD = blank cells before the 1st
-const MAX_WINDOW = 7;                              // days, inclusive of both ends
-const FARE = {8:1450, 9:1199, 10:949, 11:999, 12:1049, 13:899, 14:1150,
-              15:1299, 16:1400, 17:1050, 18:980, 19:1020, 20:1100};
-// What you would actually get on each day. The booked seat is only held on the booked day —
-// anywhere else it is whatever is left. null = the bus runs but has nothing free.
-const SEAT = {8:'U5', 9:'L3', 10:'U5', 11:'U5', 12:'U2', 13:'U5', 14:null,
-              15:'U5', 16:'L1', 17:'U5', 18:'U5', 19:null, 20:'U5'};
-const HELD_SEAT = 'U5';
+// ---- the return calendar ----------------------------------------------------
+// Day numbers count from 1 Aug, so 32 = 1 Sep. The build's fiction: Thu 7 Aug is the
+// outbound, which makes 1 Aug a Friday. Fares and seats are generated, not tabulated, so
+// every bookable date has real data instead of the calendar stopping at a hardcoded edge.
+const OUT_DAY = 7;                 // the outbound
+const HORIZON = 30;                // days ahead redBus takes bookings
+const LAST_BOOKABLE = OUT_DAY + HORIZON;   // 37 = 6 Sep
+const MAX_WINDOW = 7;              // days, inclusive of both ends
+const AUG_LEN = 31;
 const DOW = ['Fri','Sat','Sun','Mon','Tue','Wed','Thu'];
+const MONTHS = [{name:'August 2026', first:1, len:AUG_LEN, lead:4},
+                {name:'September 2026', first:AUG_LEN+1, len:30, lead:(4+AUG_LEN)%7}];
+let calMonth = 0;
+
 const dname = d => DOW[(d-1)%7];
-const label = d => dname(d)+', '+d+' Aug';
+const dnum  = d => d<=AUG_LEN ? d : d-AUG_LEN;
+const mname = d => d<=AUG_LEN ? 'Aug' : 'Sep';
+const label = d => dname(d)+', '+dnum(d)+' '+mname(d);
+
+// Deterministic, so the same date always costs the same. Weekends carry the peak, which is
+// what makes the cheapest-versus-dearest choice on the next screen mean anything.
+function FAREOF(d){
+  const w = dname(d);
+  let f = 880 + ((d*37) % 9) * 30;
+  if(w==='Fri'||w==='Sat') f += 320;
+  else if(w==='Sun') f += 160;
+  return f;
+}
+const FARE = new Proxy({}, {get:(_,k)=>{const d=+k; return d>0 ? FAREOF(d) : undefined;}});
+
+// Which seat you would get on a given day: your own if it is still free, otherwise what is.
+const HELD_SEAT = 'U5';
+function SEATOF(d){
+  const r = (d*13) % 10;
+  if(r < 5) return HELD_SEAT;          // your seat is still free
+  if(r < 9) return ['L3','U2','L1','U8'][r-5];
+  return null;                          // nothing left on that bus
+}
+const SEAT = new Proxy({}, {get:(_,k)=>{const d=+k; return d>0 ? SEATOF(d) : undefined;}});
 
 let sel = [];            // [] nothing · [d] one day · [a,b] a range
 let heldDay = 0;         // the day currently booked
@@ -956,22 +988,27 @@ function tapDay(d){
   paintWindow();
 }
 
+function calStep(n){ calMonth=Math.max(0,Math.min(MONTHS.length-1,calMonth+n)); paintWindow(); }
+
 function paintWindow(){
   const g=document.getElementById('cal-grid'); if(!g) return;
+  const M=MONTHS[calMonth];
   const cheap = sel.length===2 ? cheapestIn(sel[0],sel[1]) : 0;
-  let html='<div></div>'.repeat(LEAD);
   // With one day chosen, only days that keep the window within MAX_WINDOW stay selectable.
   const lo = sel.length===1 ? Math.max(OUT_DAY+1, sel[0]-(MAX_WINDOW-1)) : OUT_DAY+1;
   const hi = sel.length===1 ? Math.min(LAST_BOOKABLE, sel[0]+(MAX_WINDOW-1)) : LAST_BOOKABLE;
-  for(let d=1; d<=31; d++){
+
+  let html='<div></div>'.repeat(M.lead);
+  for(let i=0;i<M.len;i++){
+    const d=M.first+i;
+    const bookable = d>OUT_DAY && d<=LAST_BOOKABLE;
     const inRange = d>=lo && d<=hi;
-    const usable = d>OUT_DAY && d<=LAST_BOOKABLE && inRange;
-    const cls=['cday']; let inner='<span class="n">'+d+'</span>'; let aria=label(d), dis='';
+    const cls=['cday']; let inner='<span class="n">'+dnum(d)+'</span>'; let aria=label(d), dis='';
     if(d===OUT_DAY){ cls.push('out'); inner+='<span class="f">Out</span>'; aria+=', your outbound journey'; dis=' disabled'; }
-    else if(!usable){ cls.push('off'); dis=' disabled';
-      aria += (d>OUT_DAY && d<=LAST_BOOKABLE && !inRange)
-        ? ', more than '+MAX_WINDOW+' days from the day you picked'
-        : ', not available'; }
+    else if(!bookable){ cls.push('off'); dis=' disabled';
+      aria += d<=OUT_DAY ? ', before your outbound journey' : ', beyond the booking window'; }
+    else if(!inRange){ cls.push('off'); dis=' disabled';
+      aria += ', more than '+MAX_WINDOW+' days from the day you picked'; }
     else {
       inner+='<span class="f">'+RUPEE(FARE[d])+'</span>';
       aria+=', '+RUPEE(FARE[d]);
@@ -983,10 +1020,15 @@ function paintWindow(){
         else if(d>sel[0] && d<sel[1]) cls.push('mid');
       }
     }
-    const on = (sel.includes(d)) || (sel.length===2 && d>sel[0] && d<sel[1]);
+    const on = sel.includes(d) || (sel.length===2 && d>sel[0] && d<sel[1]);
     html += '<button class="'+cls.join(' ')+'"'+dis+' aria-label="'+aria+'" aria-pressed="'+on+'" onclick="tapDay('+d+')">'+inner+'</button>';
   }
   g.innerHTML=html;
+
+  document.getElementById('cal-month').textContent = M.name;
+  const prev=document.getElementById('cal-prev'), next=document.getElementById('cal-next');
+  prev.disabled = calMonth===0;
+  next.disabled = calMonth===MONTHS.length-1;
 
   document.getElementById('q-hint').textContent = sel.length
     ? 'Pick another day if you might travel earlier.'
@@ -1000,7 +1042,6 @@ function paintWindow(){
       + '<dd>One date change later, either direction. Only pay the fare difference.</dd>';
   } else {
     const b=sel[1], c=cheapestIn(sel[0],sel[1]), save=FARE[b]-FARE[c];
-    // when the fares differ the product does not choose — say that, rather than promising a day
     R.innerHTML = (save>0
       ? '<dt>Next, pick your day</dt>'
       + '<dd>'+label(c)+' is cheapest at '+RUPEE(FARE[c])+'. '+label(b)+' is the last day you could '
@@ -1011,10 +1052,6 @@ function paintWindow(){
       + '<dd>Only pay the fare difference. A lower fare isn\u2019t refunded.</dd>';
   }
   document.getElementById('b-cont').disabled = (!sel.length || offline);
-  const w = sel.length===2 ? 'Nainital \u2192 Delhi \u00B7 '+label(sel[0])+' \u2013 '+label(sel[1])
-                           : 'Nainital \u2192 Delhi \u00B7 '+(sel.length?label(sel[0]):'');
-  const ps=document.getElementById('pk-sub');
-  if(ps) ps.textContent=w;
 }
 
 function loadWindow(){

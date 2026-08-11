@@ -1847,3 +1847,36 @@ screen.
 Verified at the edges: from the 11th, days 8–17 stay live; 8→14 gives a legal 7-day window;
 8→15 restarts rather than building an 8-day one; from the 20th the range clamps to 14–20 at the
 end of the bookable period. 208 combinations, no failures.
+
+CRITIQUE · 2026-08-11 · molades-test · Source: user
+"Why are we not showing prices on other dates? Why are they greyed out? Why can't I select a
+window starting on the 20th?"
+
+All three had one cause: **a prototype data limit pretending to be a product rule.** Fares and
+seats were hand-written maps covering 8–20 Aug only, and `LAST_BOOKABLE` was set to the edge of
+that data. Everything past the 20th greyed out with no fare, so a legitimate trip — leaving on
+the 20th and coming back within the week — could not be expressed. Nothing about redBus stops
+that; my table did.
+
+Fixed at the cause rather than by extending the table:
+- **Fares are generated, not tabulated.** Deterministic per date, with the weekend premium that
+  makes the cheapest-versus-dearest choice on the next screen mean anything. Every bookable day
+  now carries a real price.
+- **Seat availability likewise** — same three outcomes, now derivable for any date.
+- **The horizon is real**: 30 days from the outbound, so 8 Aug to 6 Sep, which is roughly what
+  redBus sells. Days past it are still greyed, but now for a reason that would exist in the
+  product, and screen readers hear *"beyond the booking window"* rather than *"not available"*.
+- **The calendar pages between months.** A window can now cross into September — 30 Aug to
+  2 Sep is a legal 7-day window and books correctly.
+
+Verified: 24 selectable days in August and 6 in September; a window starting on the 20th offers
+14–26 Aug; 20→26 books a 7-day window at ₹940–₹1,120; the full 18-step click-through still
+completes; 208 combinations, no contrast failure, no target under 44, pagers 44×44.
+Severity:  major
+Layer:     things
+Action:    fixed
+
+LEARNED · 2026-08-11 · molades-build
+Fake data has edges, and every edge reads to a user as a rule the product is imposing. Three
+separate complaints came from one hardcoded table. Generate the data instead — then the only
+limits on screen are the ones that were designed.
