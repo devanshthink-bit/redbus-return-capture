@@ -58,7 +58,9 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 .card.sel:focus-visible{box-shadow:0 0 0 2px var(--accent),0 0 0 5px rgba(197,70,70,.35)}
 .card:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(197,70,70,.35)}
 .card:active{transform:scale(.995)}
-.card[aria-disabled="true"]{opacity:.55;cursor:not-allowed}
+.card.off{opacity:1;background:#F7F7FA;box-shadow:none}
+.card.off .time,.card.off .price{color:var(--muted)}
+.card[aria-disabled="true"]{cursor:not-allowed}
 .row{display:flex;justify-content:space-between;align-items:flex-start}
 .time{font-size:18px;font-weight:700;letter-spacing:-.2px}
 .time .arr{font-weight:500}
@@ -78,6 +80,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 .pill{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--ink);background:var(--chip);
  border-radius:4px;height:24px;padding:0 12px;margin-top:16px}
 .pill.no{color:var(--muted);background:#F1F1F1}
+.pill.warnpill{color:var(--warn);background:#F6EDE6}   /* state rules go after the base */
 
 /* ---------- controls row ---------- */
 .ctrls{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px;scrollbar-width:none}
@@ -751,6 +754,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       <div class="terms">
         <h3>What this ends</h3>
         <dl class="rules">
+          <span id="c-seatrule" hidden></span>
           <dt class="crit">No refund after this</dt><dd>The ticket cannot be cancelled for any reason</dd>
           <dt>No second change</dt><dd>This uses your one date change</dd>
         </dl>
@@ -914,6 +918,11 @@ const WINDOW_END = 'Wed, 5 Nov';   // furthest bookable date on this route — 9
 const OUT_DAY = 7, LAST_BOOKABLE = 20, LEAD = 4;   // LEAD = blank cells before the 1st
 const FARE = {8:1450, 9:1199, 10:949, 11:999, 12:1049, 13:899, 14:1150,
               15:1299, 16:1400, 17:1050, 18:980, 19:1020, 20:1100};
+// What you would actually get on each day. The booked seat is only held on the booked day —
+// anywhere else it is whatever is left. null = the bus runs but has nothing free.
+const SEAT = {8:'U5', 9:'L3', 10:'U5', 11:'U5', 12:'U2', 13:'U5', 14:null,
+              15:'U5', 16:'L1', 17:'U5', 18:'U5', 19:null, 20:'U5'};
+const HELD_SEAT = 'U5';
 const DOW = ['Fri','Sat','Sun','Mon','Tue','Wed','Thu'];
 const dname = d => DOW[(d-1)%7];
 const label = d => dname(d)+', '+d+' Aug';
@@ -1078,98 +1087,44 @@ function renderWithin(){
   if(held) held.innerHTML='<div class="legtag">You have</div>'
     + '<div class="row"><span class="time" style="font-size:16px">'+label(heldDay)+' \u00B7 23:55</span>'
     + '<span class="price" style="font-size:16px">'+RUPEE(FARE[heldDay])+'</span></div>'
-    + '<div class="cap" style="margin-top:4px">Laxmi Holidays Pvt Ltd \u00B7 Seat U5</div>';
+    + '<div class="cap" style="margin-top:4px">Laxmi Holidays Pvt Ltd \u00B7 Seat '+HELD_SEAT+'</div>';
+
   wrap.innerHTML = days.map(function(d){
-    const diff=FARE[d]-FARE[heldDay];
+    const seat=SEAT[d], diff=FARE[d]-FARE[heldDay];
+    if(!seat){          // the bus runs, the seat does not exist — say which, and do not offer it
+      return '<div class="card off" aria-disabled="true">'
+        + '<div class="row"><span class="time">'+label(d)+' \u00B7 23:55</span><span class="price">'+RUPEE(FARE[d])+'</span></div>'
+        + '<div class="subrow"><span class="sub">Laxmi Holidays Pvt Ltd</span><span class="onw">No seats left</span></div></div>';
+    }
+    const same = seat===HELD_SEAT;
+    const seatTxt = same ? 'Seat '+HELD_SEAT+' free' : 'Seat '+HELD_SEAT+' taken \u2014 '+seat+' instead';
     const right = diff>0 ? '<span class="onw diffup">Pay '+RUPEE(diff)+' more</span>'
                          : '<span class="onw">'+RUPEE(-diff)+' less \u2014 not refunded</span>';
-    return '<button class="card" onclick="confirmMove(\''+label(d)+'\',\'23:55\','+FARE[d]+','+diff+')">'
+    return '<button class="card" onclick="confirmMove(\''+label(d)+'\',\'23:55\','+FARE[d]+','+diff+',\''+seat+'\')">'
       + '<div class="row"><span class="time">'+label(d)+' \u00B7 23:55</span><span class="price">'+RUPEE(FARE[d])+'</span></div>'
-      + '<div class="subrow"><span class="sub">Laxmi Holidays Pvt Ltd \u00B7 Seat U5 free</span>'+right+'</div></button>';
+      + '<div class="subrow"><span class="sub">Laxmi Holidays Pvt Ltd \u00B7 '+seatTxt+'</span>'+right+'</div>'
+      + (same?'':'<div class="pillrow"><div class="pill warnpill">\u21BB Different seat</div></div>') + '</button>';
   }).join('');
-  wrap.innerHTML += '<p class="note">Only Laxmi Holidays runs this route. A date change stays with the same operator.</p>';
+  wrap.innerHTML += '<p class="note">Your seat is only held on the day you booked. On any other day you get whatever is free.<br>Only Laxmi Holidays runs this route. A date change stays with the same operator.</p>';
 }
 
-let chosen={op:'',fare:0,seat:null};
-let out={op:'Laxmi Holidays Pvt Ltd',fare:1599,dep:'23:55',arr:'08:00',seat:null};
-function pickOut(op,fare,dep,arr){
-  out.op=op; out.fare=fare; out.dep=dep; out.arr=arr; out.seat=null;
-  document.getElementById('oseat-sub').textContent='Delhi → Nainital · '+op;
-  document.getElementById('oseat-count').textContent='No seat selected';
-  document.getElementById('oseat-price').innerHTML='&nbsp;';
-  document.getElementById('b-oseat').disabled=true;
-  document.querySelectorAll('#og-lower .seat,#og-upper .seat').forEach(b=>b.removeAttribute('aria-pressed'));
-  go('s-oseat');
-}
-// entering seat selection from the picked day — carries the fare the bar and the
-// points screen both read, and clears any seat chosen on a previous visit
-function toSeat(){
-  chosen.seat=null;
-  document.querySelectorAll('#g-lower .seat,#g-upper .seat').forEach(b=>b.removeAttribute('aria-pressed'));
-  document.getElementById('seat-count').textContent='No seat selected';
-  document.getElementById('seat-price').innerHTML='&nbsp;';
-  document.getElementById('b-seat').disabled=true;
-  pick('Laxmi Holidays Pvt Ltd', FARE[heldDay]);
-}
-function pick(op,fare){
-  chosen.op=op; chosen.fare=fare;
-  document.getElementById('seat-sub').textContent='Nainital → Delhi · '+op;
-  document.getElementById('pt-price').textContent='₹'+fare.toLocaleString('en-IN');
-  go('s-seat');
-}
-const LOWER=['a','a','booked','a','female','a','a','a','booked','a','a','a'];
-const UPPER=['a','booked','a','a','a','a','booked','a','a','a','a','a'];
-function buildSeats(){
-  [['g-lower',LOWER],['g-upper',UPPER],['og-lower',LOWER],['og-upper',UPPER]].forEach(([id,arr])=>{
-    const g=document.getElementById(id); if(!g) return;
-    g.innerHTML='';
-    arr.forEach((st,i)=>{
-      const b=document.createElement('button');
-      b.className='seat'; b.type='button';
-      b.setAttribute('aria-label','Seat '+(id==='g-lower'?'L':'U')+(i+1));
-      if(st!=='a') b.dataset.s=st;
-      b.textContent = st==='booked' ? '\u00D7' : st==='female' ? '\u2640' : '';
-      b.setAttribute('aria-label','Seat '+(id.endsWith('lower')?'L':'U')+(i+1)+(st==='booked'?', booked':st==='female'?', women only':', available'));
-      const nm=(id.endsWith('lower')?'L':'U')+(i+1);
-      if(st!=='booked') b.onclick = id.startsWith('og') ? (()=>toggleOutSeat(b,nm)) : (()=>toggleSeat(b,nm));
-      if(st==='booked') b.disabled=true;
-      g.appendChild(b);
-    });
-  });
-}
-function toggleOutSeat(b,name){
-  const already=b.getAttribute('aria-pressed')==='true';
-  document.querySelectorAll('#og-lower .seat,#og-upper .seat').forEach(x=>x.removeAttribute('aria-pressed'));
-  out.seat = already?null:name;
-  if(!already) b.setAttribute('aria-pressed','true');
-  document.getElementById('oseat-count').textContent = out.seat?('Seat '+out.seat+' selected'):'No seat selected';
-  document.getElementById('oseat-price').innerHTML   = out.seat?('₹'+out.fare.toLocaleString('en-IN')):'&nbsp;';
-  document.getElementById('b-oseat').disabled = !out.seat;
-}
-function toggleSeat(b,name){
-  const already=b.getAttribute('aria-pressed')==='true';
-  document.querySelectorAll('#g-lower .seat,#g-upper .seat').forEach(s=>s.removeAttribute('aria-pressed'));
-  chosen.seat = already?null:name;
-  if(!already) b.setAttribute('aria-pressed','true');
-  document.getElementById('seat-count').textContent = chosen.seat?('Seat '+chosen.seat+' selected'):'No seat selected';
-  document.getElementById('seat-price').innerHTML = chosen.seat?('₹'+chosen.fare.toLocaleString('en-IN')):'&nbsp;';
-  document.getElementById('b-seat').disabled = !chosen.seat;
-}
-function setPt(el,group){
-  document.querySelectorAll('.ptn[data-g="'+group+'"]').forEach(p=>p.setAttribute('aria-pressed','false'));
-  el.setAttribute('aria-pressed','true');
-}
-let movedTo='';
-function confirmMove(date,time,fare,diff){
-  movedTo=date;
+let movedTo='', movedSeat=HELD_SEAT;
+function confirmMove(date,time,fare,diff,seat){
+  movedTo=date; movedSeat=seat||HELD_SEAT;
   document.getElementById('c-to').textContent = date+' · '+time;
-  document.getElementById('c-tosub').textContent = 'Seat U5 · ₹'+fare.toLocaleString('en-IN');
+  const sameSeat = movedSeat===HELD_SEAT;
+  document.getElementById('c-tosub').textContent = 'Seat '+movedSeat+' · ₹'+fare.toLocaleString('en-IN');
+  const sr=document.getElementById('c-seatrule');
+  sr.hidden = sameSeat;
+  if(!sameSeat) sr.innerHTML = '<dt class="crit">Different seat</dt>'
+    + '<dd>Seat '+HELD_SEAT+' is taken that day. You would be in '+movedSeat+'</dd>';
   const up = diff>0;
   document.getElementById('c-diff').textContent = up ? '₹'+diff : '₹'+Math.abs(diff)+' less — not refunded';
   document.getElementById('c-payl').textContent = up ? 'You pay now' : 'You pay now';
   document.getElementById('c-pay').textContent  = up ? '₹'+diff : '₹0';
   document.getElementById('d-date').textContent = date;
   document.getElementById('d-price').textContent = '₹'+fare.toLocaleString('en-IN');
+  const ds=document.querySelector('#s-done .subrow .onw'); if(ds) ds.textContent='Seat '+movedSeat;
   document.getElementById('d-what').innerHTML = up
     ? 'Moved from '+label(heldDay)+'. You paid ₹'+diff+'.'
     : 'Moved from '+label(heldDay)+'. The fare was ₹'+Math.abs(diff)+' lower; that difference is not refunded.';

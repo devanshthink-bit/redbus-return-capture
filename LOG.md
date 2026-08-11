@@ -1635,3 +1635,38 @@ I fixed the instance rather than the class. The rule, applied properly this time
 that can change at runtime gets exactly one writer and no literal in the markup. Static HTML
 is a default, not a source of truth — and a default that is never repainted is a bug waiting
 for the first person who picks something else.
+
+DECISION · 2026-08-11 · molades-build · Source: user
+"What if, while changing the date after booking, the same seat is not available?"
+
+It was a fiction. Every day on *Change day* said *"Seat U5 free"* regardless — the one thing
+on that screen the product genuinely cannot promise, because the seat is only held on the day
+that was booked. Anywhere else it is whatever is left.
+
+Three outcomes, each shown differently:
+- **Same seat free** — unchanged, *"Seat U5 free"*
+- **Only a different seat** — *"Seat U5 taken — L3 instead"*, plus a *Different seat* pill in
+  the warning colour. On a sleeper this is a real difference (upper vs lower, over the wheel or
+  not) and it has to be visible before confirming, not discovered on the ticket
+- **No seat at all** — the day is still listed, greyed, not tappable, *"No seats left"*. The
+  bus runs; the problem is capacity, and hiding the row would look like the bus does not exist
+
+The confirm screen carries it too: the *To* block names the new seat, and a critical rule
+appears only when the seat changes — *"Different seat. Seat U5 is taken that day. You would be
+in L3."* Move done shows the seat actually held.
+
+Added a line the screen was missing entirely: *"Your seat is only held on the day you booked.
+On any other day you get whatever is free."*
+
+This is distinct from the existing `swapfail` state, which is the seat going **during**
+confirmation. This is the commoner case: it was already gone when the list was drawn.
+
+Verified: 12 rows, 10 tappable, 2 with no seats. Different-seat rule shows for Sat 9 (L3) and
+hides for Mon 11 (U5). Pill 4.57:1, no-seat rows 5.62:1, no target under 44.
+208 combinations, no failures.
+
+LEARNED · 2026-08-11 · molades-build
+Third specificity slip today and the same one every time: I declared `.warnpill` above `.pill`,
+so the base class won and the warning colour never applied — it measured 14:1 because it was
+still ink. Caught only because I measured contrast rather than looking at it. **State rules go
+after the base rule: base -> hover -> selected -> focus -> variant.** Written down twice now.
