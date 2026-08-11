@@ -1558,3 +1558,28 @@ Cost: one tap on an optional step. Bought: the product stops taking a money deci
 not its to take, and stops profiting from its own recommendation.
 
 Checked: 208 combinations, no failures, no JS errors.
+
+CRITIQUE · 2026-08-11 · molades-build · Source: user — "where the copy says we will book on the 14th"
+The entry screen still promised *"We'll book Thu, 14 Aug · ₹1,150"* while the very next screen
+now selects nothing and asks the traveller to choose. I created that contradiction an hour ago
+by removing the pre-selection and not chasing the change back one screen.
+
+The entry rules now match what actually happens next:
+- **one day** -> *"We'll book Mon, 11 Aug · ₹999"* — still true, a single day is selected by definition
+- **range with a price spread** -> *"Next, pick your day. Wed, 13 Aug is cheapest at ₹899.
+  Thu, 14 Aug is the last day you could travel, at ₹1,150."* — no promise of a day, because
+  none is made
+- **range with flat fares** -> *"We'll book Thu, 14 Aug"* — the product does pick here, and says so
+
+All three now carry *"One date change later, either direction. Only pay the fare difference.
+A lower fare isn't refunded."* The refund term belongs on the screen where the range is set,
+because it is what makes the choice on the next screen matter.
+Severity:  major
+Layer:     moments
+Action:    fixed
+
+LEARNED · 2026-08-11 · molades-build
+Same fault as the "last day" correction on 6 August: I changed a behaviour and fixed the copy
+on the screen where the behaviour lives, not on the screen where the traveller forms the
+expectation. **A behaviour change has to be chased backwards through every screen that
+predicts it**, not just forwards.

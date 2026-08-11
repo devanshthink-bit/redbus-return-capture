@@ -977,10 +977,15 @@ function paintWindow(){
       + '<dd>One date change later, either direction. Only pay the fare difference.</dd>';
   } else {
     const b=sel[1], c=cheapestIn(sel[0],sel[1]), save=FARE[b]-FARE[c];
-    R.innerHTML = '<dt>We\u2019ll book '+label(b)+' \u00B7 '+RUPEE(FARE[b])+'</dt>'
-      + '<dd>The last day you could travel, so you never have to change.</dd>'
-      + (save>0 ? '<dt>'+label(c)+' is '+RUPEE(save)+' cheaper</dt>'
-                + '<dd>Switch to it free before you pay, or later with your one date change.</dd>' : '');
+    // when the fares differ the product does not choose — say that, rather than promising a day
+    R.innerHTML = (save>0
+      ? '<dt>Next, pick your day</dt>'
+      + '<dd>'+label(c)+' is cheapest at '+RUPEE(FARE[c])+'. '+label(b)+' is the last day you could '
+      + 'travel, at '+RUPEE(FARE[b])+'.</dd>'
+      : '<dt>We\u2019ll book '+label(b)+' \u00B7 '+RUPEE(FARE[b])+'</dt>'
+      + '<dd>The last day you could travel, so you never have to change. Every day in your range is the same fare.</dd>')
+      + '<dt>One date change later, either direction</dt>'
+      + '<dd>Only pay the fare difference. A lower fare isn\u2019t refunded.</dd>';
   }
   document.getElementById('b-cont').disabled = (!sel.length || offline);
   const w = sel.length===2 ? 'Nainital \u2192 Delhi \u00B7 '+label(sel[0])+' \u2013 '+label(sel[1])
