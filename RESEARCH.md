@@ -123,6 +123,54 @@ One per cluster, no solution inside any of them. These replace the board's JTBDs
 
 **All of them reduce to one:** *"I want to be wrong about my return date without it costing me much."*
 
+## Combined into four (2026-08-13)
+
+Two pairs are one job seen twice.
+
+- **C1 + C5** — C1 is the moment they can't commit; C5 is the cost of not committing. Both want the
+  return resolved *without naming a date they don't own*.
+- **C3 + C6** — both are the timing decision made blind. C3 is what waiting costs in seats and fares;
+  C6 is which way the fare will move. Merging also lifts C6 out of `THIN`, since C3 carries the survey quant.
+- **C2 and C4 stay alone.** C2 is the price of the commitment; C4 is the product's memory. Neither is about the other.
+
+| | Final JTBD | From |
+|---|---|---|
+| **J1 · Holding a return without owning the date** | When my return depends on something that hasn't resolved yet, I want the return handled without naming a date I don't have, so I can get on with the trip instead of carrying it around with me | C1 + C5 |
+| **J2 · Being wrong cheaply** | When I might be wrong about my return, I want being wrong to cost me very little, so I can decide now instead of waiting | C2 |
+| **J3 · Deciding to wait with the price of waiting visible** | When I'm deciding whether to book the return now or later, I want to know what waiting will cost me, so I'm not making a money decision on a guess | C3 + C6 |
+| **J4 · Resuming instead of restarting** | When I come back to book the return, I want to carry on from where I stopped, so I'm not redoing work I already did | C4 |
+
+## Insight statements — one per final JTBD
+
+Structure: *[User segment] struggles with [problem] because [root cause], which means [implication for design].*
+**Segment and problem come from the notes. Root cause and implication for design are the designer's interpretation.**
+
+**J1** — Intercity round-trip travellers whose return depends on an event, a group or a recovery that hasn't
+resolved struggle with leaving on the outbound with no return at all, and then carrying that unbooked return
+through the whole trip, **because** RedBus has only two states for a return — bought, or nothing — and both
+require a date the traveller doesn't own, **which means** the product needs a third state: a return they can
+hold using what they *do* know, their constraint, rather than what they don't. · n04 n10 n16 n24 n34 n42 n43
+n50 n59 n67 n68 · n18 n19 n29 n30 n39 n40 n53 n58
+
+**J2** — Travellers who think their return plans might still change struggle with choosing not to book at all
+rather than book and risk what it costs to get out, **because** the price of being wrong is set by a 20/40/80%
+cancellation ladder and a paid add-on, both priced and explained *after* the decision point — so the cheapest
+way to stay flexible is to take no position, **which means** the cost of being wrong has to be knowable and
+small at the moment of committing, not discoverable afterwards. · n07 n12 n45 n49 n56 n57 n62 n64 n70 n76
+
+**J3** — Travellers deciding whether to book the return now or later struggle with deferring on a hunch and
+discovering the price a week later — a lost seat, a higher fare, a group split across two buses — **because**
+RedBus holds the seat and fare history for every route and shows none of it at the moment they are choosing to
+wait, so a decision with real money on it is made blind, **which means** the cost of waiting has to be visible
+*while* they are deciding to wait, and stated as information rather than urgency. · n33 n51 n52 n60 n61 n71 n74
+· n02 n09 n26 n36 n38 n44 n54 n69
+
+**J4** — Travellers returning to book the return leg days after the outbound struggle with repeating the entire
+search from zero — and 26.1% finishing it on a different app — **because** the return is not an object the
+product holds; the route, operator, seat and boarding point already chosen are not carried forward, **which
+means** the return has to persist as something already in progress, so coming back to it is resuming rather
+than restarting. · n11 n17 n35 n65 n66 n73 n75 n78
+
 ---
 
 # Problem statement
