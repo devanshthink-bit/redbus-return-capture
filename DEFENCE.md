@@ -5,7 +5,7 @@ For the stakeholder demo and for interviews.
 > **Which build are they looking at?** Three exist. `/` is **v1, *Last day***, the construct this
 > document defends and the one the research supports. `/v2.html` and `/v3.html` are repairs built
 > after the critique — they ask for a *window* instead of a deadline. If a stakeholder has seen
-> v3, section 3 changes: the fixed-date objection is weaker there, because a window with both
+> v3, section 4 changes: the fixed-date objection is weaker there, because a window with both
 > ends on the same day is just a date. Say which build you are showing before you start.
 
 **How to use this.** Each question has four parts: what they are really asking, your answer,
@@ -15,10 +15,37 @@ questions are a test of whether you know your own weak points, not a request for
 **Three rules for the room.**
 
 1. **Name the weakness before they find it.** A gap you raise is rigour. The same gap they
-   find is a hole. Section 7 lists everything you should volunteer.
+   find is a hole. Section 13 lists everything you should volunteer.
 2. **Never bluff a number.** "I don't know, here's how I'd find out" beats a guess every time.
    Senior people are testing your honesty, not your memory.
 3. **Answer in one sentence, then stop.** Let them ask for more. Long answers sound defensive.
+
+---
+
+## Contents
+
+Ninety-seven questions. Jump to the section, not the page.
+
+| | Section | Questions |
+|---|---|---|
+| **1** | The problem | 3 |
+| **2** | Why not the things that already exist | 4 |
+| **3** | The sixteen ideas — and why fifteen died | 7 |
+| **4** | The construct itself | 6 |
+| **5** | The three versions — what changed and why | 10 |
+| **6** | Screen and copy decisions — the "why is it like that" questions | 14 |
+| **7** | Business and metrics | 7 |
+| **8** | Risk and edge cases | 5 |
+| **9** | Craft and process | 4 |
+| **10** | Dismissive and hostile questions | 12 |
+| **11** | Situational and hypothetical questions | 15 |
+| **12** | Testing, evidence and the honest state of things | 6 |
+| **13** | Volunteer these before they find them | 0 |
+| **14** | If you don't know | 0 |
+| **15** | Interview versions of the same questions | 4 |
+
+> **Under pressure, the three that decide the room:** *"Why not just use FlexiTicket?"* (2) ·
+> *"This is a pretty generic solution."* (10) · *"Have you tested it?"* (12).
 
 ---
 
@@ -108,7 +135,80 @@ not happening. Every deferral is a decision.
 
 ---
 
-## 3. The construct itself
+---
+
+## 3. The sixteen ideas — and why fifteen died
+
+*Why they ask:* to find out whether you chose or whether you settled. The kill reasons matter more
+than the winner. **Learn the four numbers in bold — they do most of the killing.**
+
+### "Walk me through what else you considered."
+
+Sixteen ideas across four rounds. Rounds were structured: obvious first, then ideas from prior
+work, then a **banned-moves** round where every move already used was forbidden. Idea 16 came out
+of that last round — which is the point of running it.
+
+| # | Idea | The move underneath | Why it died |
+|---|---|---|---|
+| 1 | Auto-flipped "add your return" card at checkout | collapse two steps into one | Removes typing, not uncertainty. Still ends at a date picker. And RedBus already flips the cities after payment |
+| 2 | Confidence slider, then filter to flexible buses | ask the person to sort themselves | Asks people to self-report certainty at the moment they are least able to. Segments the person when the research says segment the **trip** |
+| 3 | "Book both, save ₹X" | change who pays the cost | **It already ships** — "Min. 10% off on return" on the cards. They already pay people to do this and **73.9%** still defer. Also a pricing lever, not mine |
+| 4 | Badge return buses with *Free date change* | make the invisible visible | Ships twice already — a filter chip and a card badge. The fix would be "make an existing badge bigger" |
+| 5 | Remind them in two days | remind at a time | **0% forgot.** A reminder solves forgetting. Nobody forgot |
+| 6 | Return saved in the trip, unbooked, no date | give it memory | Holds nothing, so the seat and the fare still go. Solves the annoyance, not the loss |
+| 7 | Return proposed to the group, books on agreement | change who decides | Needs other people to act — the same dependency it is trying to remove. Serves 47.8% at best |
+| 8 | Show what waiting costs before they wait | make the cost visible | Informs the decision without changing what is possible. **Kept as a supporting line, not a feature** |
+| 9 | Product decides whether to raise the return at all | let the system decide | Not a standalone idea — a targeting rule. **Kept as a mechanic; built in v3** |
+| 10 | "When shall we remind you?" | remind at a time | Same move as Idea 5. Collapsed into it |
+| 11 | Book a duration, not a date | change what gets counted | A window with no booking behind it holds neither seat nor fare. **Later fixed and became v2/v3** |
+| 12 | Operator and route now, date later | split one moment into two | Half a booking. Fare and seat still unheld, so the loss still happens |
+| 13 | Design for the moment the plan resolves | change when it happens | Lives *after* the session; the scope card says in-session. **Strongest parked idea — this is my "what I'd do next"** |
+| 14 | They teach it their rule once | let the person teach it | Still needs a date at confirm time. Makes the second visit cheaper; does not remove it |
+| 15 | Guaranteed return seat at today's fare | borrow trust from elsewhere | Uncapped financial exposure for a company that owns no inventory. Not a design decision to take |
+| **16** | **Book the deadline, not the date** | **defer the decision** | **Survived** |
+
+### "How did you decide, rather than just prefer?"
+
+Each idea was scored on **how predictable it was** — out of ten, low is better. The obvious round
+scored 8–9. Idea 16 scored 2. That score is not quality, it is *"would a competent designer reach
+this in ten minutes?"* If yes, it is probably already shipped — and in four cases it literally was.
+
+### "Isn't 'it already ships' just an excuse to reject things?"
+
+No, and it is checkable. Ideas 3 and 4 were killed by **screenshots of the live app** — the
+FREE DATE CHANGE filter chip, the badge on bus cards, the 10% return discount at seat selection.
+The test was not "do I like this", it was "does RedBus already do this and is the problem still
+here?" It does, and it is.
+
+### "Why did you kill the reminder? Every product does reminders."
+
+**0% of the survey said they forgot.** Not a small number — zero. Every deferral in this data is a
+decision, not an oversight. A reminder is a solution to forgetting, and forgetting is not the
+problem. This one number kills ideas 5 and 10 outright and is the fastest answer in the whole deck.
+
+### "Idea 13 sounds better than what you built. Why isn't that the answer?"
+
+Honestly, on user value it may be. Catching the moment the plan resolves — the wedding ends, the
+leave is approved — needs no commitment device, spends no reschedule, and serves the group-dependent
+47.8% properly. **It lost on scope, not on merit:** the scope card says in-session, and Idea 13 is
+out-of-session. I would name it as the next project rather than defend its absence.
+
+### "You rejected the group idea. Groups are 47.8% of your reasons."
+
+Idea 7 needs the other people to engage with RedBus — which is the exact dependency the traveller
+is stuck behind. It converts a coordination problem into a coordination problem *inside my product*.
+I scored it 4 in ideation and I now think that was harsh; it is the one rejected idea I would
+reopen first after Idea 13.
+
+### "What did you generate and then kill before scoring?"
+
+One: *"the outbound ticket carries the unfinished return so they don't have to remember."* Killed
+on **0% forgot** before it was ever scored. Worth mentioning — it shows the numbers were doing the
+work, not taste.
+
+---
+
+## 4. The construct itself
 
 ### "Why 'last day' and not just a date?"
 
@@ -176,7 +276,203 @@ that.
 
 ---
 
-## 4. Business and metrics
+---
+
+## 5. The three versions — what changed and why
+
+*Why they ask:* iteration is where they check whether you respond to evidence or to opinion. **Say
+which build you are showing before you start.**
+
+| | Asks for | Books | Carries |
+|---|---|---|---|
+| **v1** `/` | The last day you can travel | that day | Move earlier surfaced; later change in My Bookings |
+| **v2** `/v2.html` | Earliest and latest, two fields | the **cheapest** day in the range | One *Change day*, either direction |
+| **v3** `/v3.html` | One calendar — one tap for a fixed date, two for a range | the **last** day, and shows the saving | Idea 9 guard · seat picker on the move · visible change balance · 60-second undo |
+
+### "Why are there three? Couldn't you get it right first time?"
+
+v1 is what the research supports and what the whole document set describes. v2 and v3 are **repairs
+to critiques I wrote against my own work**, not responses to user feedback — I have not tested yet.
+That distinction is the honest one: they are reasoning, not evidence.
+
+### "What actually made you build v2?"
+
+I attacked v1 and found something the prototype's own data proved: **on *Move earlier*, two of the
+three options cost more (+₹200, +₹451) and the third was ₹50 cheaper and not refunded.** There was
+no outcome where a traveller moved and was not worse off in cash. And it was structural, not a data
+accident — the deadline is usually the cheap weekday, and moving earlier from a hill station lands
+on weekend peak. So "no change fee" was true and misleading at the same time. v2 books the cheapest
+day so the traveller starts at the best price.
+
+### "Then why does v3 undo that? You just told me cheapest was better."
+
+Because v2 traded one harm for a worse one. Booking the **cheapest** day puts people on a day they
+may not be able to make — which forces them to spend their **single** reschedule. And spending it
+is the expensive, irreversible move: it costs the fare difference *and* kills cancellation forever.
+v3 books the **last** day, so most people never need to change at all, and shows the saving instead:
+*"Sun, 10 Aug is ₹100 cheaper. Switch to it free before you pay."*
+
+**Say this plainly:** I was wrong in v2, and building it is how I found out. Optimising the fare
+looked right in a spreadsheet and was wrong once I traced what it did to the one reschedule.
+
+### "So which one would you ship?"
+
+**v3**, with the caveat that v1 is the one carrying the open bet. If testing shows people answer
+"last day" as a real constraint, v1's simplicity wins and v3's extra tap is complexity I added for
+a problem that did not exist. If they answer with a guess, v3 is already the answer.
+
+### "Why test v1 and not the most refined one?"
+
+v1 asks a question nobody can predict the answer to — does *"the last day I can travel"* read as a
+commitment or a guess? v3 asks *"when could you travel back?"* with a calendar range picker, which
+people already know from hotels. **I would mostly learn that a calendar works.** The uncertainty is
+all in v1, and uncertainty removed is the only thing a session buys.
+
+### "Isn't v3 just v1 with a calendar?"
+
+No, and the difference is the default. v1 asks for a constraint and books it. v3 lets one tap be a
+complete answer, so a traveller with a fixed date never sees wording implying they are unsure —
+which matters because **39.1% with a fixed return date still book separately** and they are the
+biggest leak, not a side case.
+
+### "You added a seat picker, an undo, a change balance. Isn't that scope creep?"
+
+Each answers a specific hole someone found:
+- **Seat availability** — every day claimed *"Seat U5 free"*, which the product cannot promise. The
+  seat is only held on the booked day.
+- **Change balance** — the single reschedule was the most consequential rule in the construct and
+  existed only as prose on three screens. Now it is a countable state.
+- **Undo** — confirming a move was a cliff. It spends the one change and makes the ticket
+  permanently non-refundable, instantly. Sixty seconds costs nothing, because the operator has not
+  been told yet.
+
+### "The undo is a gimmick. The T&Cs say it's final."
+
+It is final **once submitted**. RedBus controls when that happens, and the platform already holds a
+seat for about seven minutes in-session. This is undo-send, not a promise I cannot keep. And the
+screen tells the truth while the window is open: the rule reads *"This ticket is about to be final /
+It becomes final when the undo window closes"*, and flips only when it actually is.
+
+### "Why cap the window at seven days?"
+
+The binding constraint is **one reschedule**. The wider the window, the further the booked day sits
+from the day actually travelled, and the more likely that single change gets spent. Seven days is
+also one full fare cycle, so cheapest-versus-dearest is a real comparison rather than two different
+weeks. Beyond a week, *"the last day I can travel"* stops being a constraint and becomes a shrug.
+
+### "Why enforce it silently instead of warning them?"
+
+Because a warning you can ignore is worse than a control that cannot express the mistake. Pick a
+day and everything more than six days away greys out. Nothing to read, nothing to dismiss.
+
+---
+
+## 6. Screen and copy decisions — the "why is it like that" questions
+
+*Why they ask:* to see whether the small choices were reasoned or defaulted. Every answer here is
+one sentence plus the evidence.
+
+### "Why is the return its own step instead of inline?"
+
+Three shapes were costed. A separate step adds screens and is **the only shape that can breach the
+guardrail** — so it is skippable, optional, and never blocks payment. It won because the return
+decision needs its own terms and its own list, and burying that inline reproduces the original
+problem: terms nobody can read at the moment of deciding.
+
+### "Why is Skip a real skip?"
+
+Because a step you cannot decline is a tax on the outbound, and the guardrail exists to stop that.
+Skip goes somewhere genuinely different — straight to trip review with no return, nothing
+remembered, nothing nagged. *(This was a real bug once: Skip and Continue went to the same place.
+A participant declining the return would have had no way out.)*
+
+### "Why put the terms on the screen instead of behind a *Know more*?"
+
+Because the whole problem is that the flexibility is discovered incidentally. If the terms need a
+tap to be read, this screen has failed at the exact thing the project exists to fix. The rule I held
+them to: **read only the bold lines and you must have every rule.**
+
+### "Why 'Only pay the fare difference' instead of 'No change fee'?"
+
+Because *"no change fee"* is a denial of one charge that reads as a denial of all of them. RedBus's
+own terms require the fare difference. Leading with *free* is technically true and practically
+misleading — and it is the wording that would produce a ₹451 surprise at the moment of use.
+
+### "Why does the return badge say *Can be moved earlier* and not *Free date change*?"
+
+Because your problem statement says the flexibility today is *"offered as a property of a bus,
+discovered incidentally."* Putting RedBus's own badge on the return list turns the return back into
+a bus with an attribute, and the contribution disappears. Secondary reason: *free* is the same false
+cost signal.
+
+**Pushback: "Two names for one mechanism is confusing."** Agreed in principle — but they name
+different things. RedBus's badge names what the **operator permits**; mine names what **this ticket
+does against the deadline**. Two names for two things is defensible; two synonyms would not be. And
+it is on the test script as a paper task, because that is settleable by five minutes with a
+participant and not by argument.
+
+### "Why doesn't *Last day* mention that a later change is possible?"
+
+That screen has one job: get a **constraint**, not a guess. Offering the escape hatch while asking
+for the commitment guarantees a guess. It is named on four screens after it — so the product never
+asserts anything false, it simply does not advertise a recovery path at the moment of commitment.
+
+**This is my correction of my own error:** an early build said *"You cannot move it to a later day."*
+That was false — it was my design restriction stated as if it were the mechanism. I removed it.
+
+### "In v3, why is nothing pre-selected when the fares differ?"
+
+**Rule I used: pre-select when the product knows better than the traveller; do not when it does not.**
+It knows the fares — but so do they, they are on every day in the calendar. It has no advantage on
+the only thing that decides this: how likely they are to leave early. That is the private fact the
+whole construct exists to elicit.
+
+### "Then why does the seat picker have a default?"
+
+Because there *is* a defensible default — keep the seat you have, or the nearest thing free — and a
+wrong default costs nothing, since it is changeable before confirming. The day choice had two
+options of genuinely different value with no way to know which the traveller wanted. **The test is
+not "is there a default" but "can the product justify one."**
+
+### "Why is the change balance visible?"
+
+The single reschedule was the scarcest thing in the whole construct and lived only as prose on three
+screens. Making it countable — *"1 change left"*, then *"No changes left"* — means the traveller
+does not have to remember the rule; the product carries it. It also makes the cost of moving real
+**before** they tap, not on the confirm screen after they have chosen a day.
+
+### "There are no notifications anywhere. Isn't that a miss?"
+
+Deliberate, and it is the same answer as the reminder: **0% forgot.** The engagement loop is
+designed to close **without** a notification — a live trip in the app is the reason to return. If I
+needed a push to make it work, the loop would not be real.
+
+### "Why does the product name the trip — '5 days in Nainital'?"
+
+Because your own words table says participants call it a *trip*, not two tickets, and the product
+still showed two tickets stapled together. It costs nothing, needs no operator agreement, and it is
+the one place the product sounds like it understands what they are doing rather than what they
+bought.
+
+### "Why nothing celebratory at payment?"
+
+That is the moment people are most anxious and least interested in being charmed. Delight belongs at
+relief — *"Back in Delhi 3 days earlier than planned"* on the moved ticket — not at the moment money
+leaves.
+
+### "Why 'Back in Delhi' and not 'home'?"
+
+Because the product knows the city they departed from, not where they live. *Home* is an assumption;
+*back in Delhi* is true either way.
+
+### "Why is a no-seat day still shown if it can't be picked?"
+
+Because the bus **runs** — the problem is capacity, not schedule. Hiding the row would say "no bus
+that day", which is a different and wrong fact.
+
+---
+
+## 7. Business and metrics
 
 ### "What number does this move?"
 
@@ -241,7 +537,7 @@ resells better than one cancelled near departure.
 
 ---
 
-## 5. Risk and edge cases
+## 8. Risk and edge cases
 
 ### "What happens if no buses on that route allow a date change?"
 
@@ -280,7 +576,7 @@ coloured line on the review screen.
 
 ---
 
-## 6. Craft and process
+## 9. Craft and process
 
 ### "Why does this look exactly like RedBus?"
 
@@ -317,7 +613,256 @@ Then say what changed: a correction belongs first on the screen where the belief
 
 ---
 
-## 7. Volunteer these before they find them
+---
+
+## 10. Dismissive and hostile questions
+
+*Why they ask:* to see whether you fold. **Do not get defensive and do not over-explain.** Concede
+the true part in one sentence, then give the part they have missed.
+
+### "This is a pretty generic solution."
+
+Concede nothing here, because it is checkable. The generic solutions are ideas 1–5 — a bundled
+card, a discount, a badge, a reminder. I generated all of them, scored them 8–9 out of 10 for
+predictability, and killed four of them because **RedBus already ships them and 73.9% still defer.**
+The idea I built scored 2, and it came out of a round where every move I had already used was
+banned. If it were generic, the obvious round would have produced it.
+
+### "I don't think this would work."
+
+Ask which part, then answer that part — they usually mean one of three things:
+- **People won't answer honestly** → that is the real risk, it is must-see moment 1, and it is what
+  the sessions decide. I am not claiming it works; I am claiming the problem is real and I have
+  written the test that settles the rest.
+- **Operators won't play** → it uses their existing reschedule policy and asks for nothing new.
+- **It won't move the number** → it might not. It captures share of an existing journey. Anyone
+  promising more than that is overselling.
+
+### "This is just FlexiTicket with a different label."
+
+**It is FlexiTicket** — say that first. What changes is the question asked. *"Date of journey"*
+makes booking a day you don't intend to travel on unthinkable, so the capability is unreachable
+however the badge is styled. And if it were only a label, the other eleven screens would not have
+had to change — the return list has to filter to movable buses, the terms have to collapse into one
+decision instead of six, and the ticket needs a move path that did not exist.
+
+### "You've added friction to a flow that works."
+
+Yes — one optional step, which is why there is a **95% guardrail** rather than a target. Two things
+protect the outbound: it is skippable with a real skip, and it never blocks payment. If it costs
+more than 5% relative of outbound conversions, it should not ship, and I would say so.
+
+### "Nobody reads terms. Your whole design rests on people reading."
+
+Partly true, and it is why the terms are not prose. They are short bold rules with muted detail
+beneath, held to one test: read only the bold and you have every rule. That is a design response to
+exactly your objection. What I cannot claim is that it works — that is must-see moment 2, and if
+people only notice the non-refundable term on the *done* screen, the block failed at its one job.
+
+### "This feels like a PM's job, not a designer's."
+
+The design decision is what the product asks for. Everything downstream follows from it. And the
+reason I can hold the metric conversation is that I own the **input** metric — in-session
+return-attach rate — and I am explicit that I only influence the outputs. That is the distinction
+that keeps a designer accountable for something real instead of blamed for revenue.
+
+### "23 people is not research."
+
+23 is small for sizing and I never use it to size anything. I use it for direction, and the
+direction is corroborated by 8 interviews and by RedBus's own product — they ship three separate
+things to solve this. **You do not build three things for a problem you do not have.** If I had a
+real dataset, the first number I would pull is the share of one-way bookings on round-trip routes
+that never get a return.
+
+### "You've designed for an edge case."
+
+**73.9%** booked the outbound first and the return later. That is the majority path, not the edge.
+The edge case is booking both together — 13%.
+
+### "This will fail because Indian travellers are price-sensitive, not convenience-driven."
+
+The design agrees with you, which is why it does not sell convenience. It shows the money: the
+cheapest day is labelled, the fare difference is stated before confirming, and a lower fare is
+marked *not refunded*. **26.1% deferred hoping the price would drop** — this makes that bet visible
+rather than blind.
+
+### "Why should we build this instead of the ten other things on the roadmap?"
+
+I cannot answer that without the roadmap, and I would not pretend to. What I can give you is the
+case: it needs no new operator capability, it sits where the product already has attention and
+payment details, and there is a leak with a number on it — **26.1% book the return on another app.**
+Whether that beats your other ten is a prioritisation call I do not have the inputs for.
+
+### "What if leadership just says no?"
+
+Then I would ask which of the three claims they disagree with — that the problem is real, that the
+mechanism exists, or that the framing changes behaviour. The first two are evidenced. Only the third
+is a bet, and it is testable for the cost of five sessions.
+
+### "Your prototype is not the real product. How do I know this survives engineering?"
+
+It rides an existing reschedule mechanism, so the expensive parts already exist. What is new is an
+entry point, a filtered list, and a move path. The thing I would flag as genuinely unresolved is
+whether a date change is **same-operator only** — I believe it is, I have not confirmed it, and if
+it is wrong the return list has to be rebuilt around operator eligibility from the first screen.
+
+---
+
+## 11. Situational and hypothetical questions
+
+*Why they ask:* to watch you reason under pressure rather than recite. **Answer with a decision, not
+a survey of options.**
+
+### "It ships. Attach is up 8%, outbound completion is down 6%. What do you do?"
+
+Roll it back. The guardrail is 95% and 6% breaches it. Then find out where the 6% went — my first
+hypothesis is that the step is being read as mandatory, so I would test making Skip more prominent
+before touching anything else. **A feature that buys attach by taxing the outbound is not a win, it
+is a transfer.**
+
+### "Attach is up 8% and completion is flat. Cancellation contacts are up 30%. What now?"
+
+That is the terms block failing. People are booking, then discovering what they agreed to. I would
+look at where they contact from — if it is after a move, the non-refundable rule was not read before
+confirming, and the fix is on the confirm screen, not on *Last day*.
+
+### "Six months in, attach is up but journeys per traveller is flat. Did it work?"
+
+No. That is exactly the failure I named when I chose the metric: return-attach is an **input** and
+can rise while the North Star does not move. I would check whether we captured returns that would
+have been booked on RedBus anyway — in which case we moved a booking, not a traveller.
+
+### "The PM wants the step made mandatory to hit a quarterly target. What do you say?"
+
+That it will work, briefly. Attach goes up, outbound completion goes down, and the guardrail exists
+precisely to make that trade visible instead of accidental. I would ask to run it as a time-boxed
+test against the guardrail rather than argue about it — and if completion holds, I am wrong and I
+would say so.
+
+### "Operators complain that free date changes cost them money."
+
+They already offer it — this uses their existing policy. And the direction helps them: **a seat
+handed back early resells better than one cancelled near departure.** If a specific operator
+objects, the Idea 9 guard already handles it — the step simply does not appear on routes where the
+promise cannot be kept.
+
+### "A competitor ships this next month. Does that change your case?"
+
+It strengthens the urgency and weakens the differentiation, and I would say both. The defensible
+part is not the mechanic — it is that RedBus has the operator relationships and the reschedule
+policy already in place. The part that is copyable is the framing.
+
+### "You have two weeks and one engineer. What ships?"
+
+The *Last day* field and the movable-return filter on the return list — the entry point and the
+list. Not the move flow: that reuses RedBus's existing reschedule, so it can point at what already
+exists for v1. **The thing I would not cut is the terms block**, because shipping the commitment
+without the terms is the version that generates support tickets.
+
+### "The A/B test comes back flat. What do you conclude?"
+
+That the framing did not change behaviour — which is a real answer, not a failure of the test. Then
+I would check the segment split before concluding anything: if attach moved for open-ended trips and
+fell for fixed-date ones, the flat average is hiding two opposite effects, and the fix is the wording
+for certain travellers.
+
+### "Legal flags the non-refundable term as a customer-complaint risk."
+
+They are right, and it is the harshest term in the product. It is RedBus's existing term, not
+something I introduced — but I chose to build on it. I would show them that it appears three times
+before anyone can act, in the warning colour, and ask whether the undo window is enough or whether
+the term itself needs renegotiating with operators. **That second question is above my pay grade and
+I would say so.**
+
+### "One metric to watch after launch. Which?"
+
+In-session return-attach rate, split by trip shape. Not because it is the most important number, but
+because it is the one my design decision directly causes — everything else has too many variables
+between my change and the result.
+
+### "What would make you kill this yourself?"
+
+Three things, and I have written them down: participants answering *"probably Tuesday"* instead of
+*"definitely Tuesday"*; fixed-date travellers skipping the step because the wording sounds like it is
+for unsure people; or route fare data showing that moving earlier usually costs more. **The third is
+the one I cannot test without data I do not have.**
+
+### "A user moves their date, then their plan changes again. What happens?"
+
+They are stuck, and I do not hide it. They have spent their one reschedule, and the ticket is now
+non-refundable. This is the sharpest attack on the whole construct: it selects for uncertain
+travellers and leaves the twice-uncertain ones worse off than if they had never used it. The undo
+covers the first minute. It does nothing for next week.
+
+### "Someone books the deadline and the bus is cancelled by the operator."
+
+Out of scope for this feature and already broken in the real product — one participant was charged
+and only refunded after complaining. I would not claim to have fixed it, and I would flag that it
+sits upstream of anything I designed.
+
+### "What if the traveller wants to move to a day outside their stated window?"
+
+They can. The window bounds what the product **books**, not what the reschedule allows. That was a
+bug I introduced and had to fix — I had let the stated range restrict the change too, which turned
+a one-day booking into a ticket that could not be changed at all.
+
+### "Show me you'd change your mind. What has this session made you rethink?"
+
+The single reschedule is a scarcer resource than I treated it as. Everything I have added since —
+the undo, the visible balance, booking the safe day rather than the cheap one — is me responding to
+the same realisation: I was designing as though the change were free, and it is the most expensive
+thing in the product.
+
+---
+
+## 12. Testing, evidence and the honest state of things
+
+### "Have you tested it?"
+
+**Not yet — say this first, unprompted.** Five sessions are scripted, the participants are named,
+and each is chosen for a specific reason: Soumya booked early once, couldn't push the date, and
+never booked early again — she is the exact person this exists for. Anand knew the flexibility
+existed and refused it anyway — he is the hardest sceptic. Samarth refuses a ₹300 add-on when his
+plan is fixed. Until those run, **the deadline framing is a bet.**
+
+### "What exactly would the sessions have to show for you to change the design?"
+
+Four things I have written into the script as must-see moments:
+1. Do they answer *"the last day you can travel"* as a commitment or a guess? *(the whole construct)*
+2. Do they see that moving ends cancellation **before** confirming, or only after?
+3. Do they look for a later-day change on the entry screen — and does knowing it exists soften the deadline?
+4. Do *Can be moved earlier* and *Free date change* read as the same thing?
+
+### "Why five people? Why not twenty?"
+
+Five is enough to find blockers. Twenty is for measuring, which is what the A/B test is for. And the
+script says the honest version: three is enough to be worth doing; zero is the only number that
+isn't.
+
+### "You wrote the tasks. Aren't they leading?"
+
+They are scenario tasks with no interface words in them — *"you have to be back at work by Tuesday,
+you genuinely don't know which day you'll leave, book your travel."* Nothing names the field or the
+feature. The moderator rules are stricter than the tasks: give a task, then stop talking; never ask
+"did you like it"; ask *"what did you expect to happen there?"* only **after** they act.
+
+### "What's the weakest part of your evidence?"
+
+Three, in order. **No competitive landscape** — FlixBus was looked at informally and that is not a
+landscape. **The guardrail has no baseline** — 95% is a target I set, not an observed number.
+**Same-operator-only is unverified** — I believe a date change stays with the same operator, and if
+that is wrong the return list must be rebuilt around operator eligibility from the first screen.
+
+### "How much of this is your work versus AI?"
+
+I would answer plainly: the research, the sorting, the kill decisions and the judgement calls are
+mine — including the ones where I overruled the tooling, like keeping C5 as its own cluster and
+setting the guardrail at 95% rather than 98%. The prototype is code I directed and reviewed; I found
+and reported bugs in it, including a blocker where a paid add-on did not reach the total.
+
+---
+
+## 13. Volunteer these before they find them
 
 Say them plainly, early, without apology. Each one, followed by what you'd do about it.
 
@@ -336,7 +881,7 @@ Say them plainly, early, without apology. Each one, followed by what you'd do ab
 
 ---
 
-## 8. If you don't know
+## 14. If you don't know
 
 Use this exact shape and then stop:
 
@@ -349,7 +894,7 @@ cost, support volume, whether operators would object in practice, market size.
 
 ---
 
-## 9. Interview versions of the same questions
+## 15. Interview versions of the same questions
 
 ### "What was your role?"
 
