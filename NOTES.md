@@ -146,7 +146,7 @@ Nothing is deleted.
 
 ## CLUSTERS (6)
 
-### C1 — The return date isn't theirs to set
+### C1 — User can't commit to a return date that isn't theirs to set
 **Tension:** The date they'd have to commit to is owned by someone or something else
 **What they did:** Flew out with no return booked and waited until an event, a group or a recovery resolved itself — Jaimin, Sai, Prayani, Vivek, Soumya, Samarth · n04 n10 n16 n24 n34 n42 n43 n50 n59 n67 n68
 
@@ -154,7 +154,7 @@ Nothing is deleted.
 - b — waiting on other people — n24, n50, n68, n31
 - c — multi-stop trips where leg 2 can't be known until leg 1 ends — n42, n10
 
-### C2 — Not booking is the cheapest way to stay flexible
+### C2 — User avoids booking at all, because every way of staying flexible costs money
 **Tension:** Undoing a commitment costs real money, so they avoid taking the position at all
 **What they did:** Skipped the cancellation add-on and simply didn't book, rather than book and risk the 20/40/80% cancellation ladder — Vivek, Samarth, Anand, Soumya, Harshraj · n07 n12 n45 n49 n56 n57 n62 n64 n70 n76
 
@@ -162,7 +162,7 @@ Nothing is deleted.
 - b — the change/cancel product is priced out or unknown — n07, n12, n45, n76, n27, n57
 - c — the ones who do buy it, buy it exactly when uncertain — n20, n21, n37, n46, n13
 
-### C3 — The cost of waiting lands after the decision is made
+### C3 — User only finds out what waiting cost them after the decision is made
 **Tension:** Deferring feels free at the moment of choosing and expensive a week later
 **What they did:** Came back to an emptier bus — seat gone, price up, group split across two buses — Soumya, Vivek, Sai · n33 n51 n52 n60 n61 n71 n74
 
@@ -170,7 +170,7 @@ Nothing is deleted.
 - b — the price went up — n60, n74
 - c — the group couldn't travel together any more — n52
 
-### C4 — Nothing carries the return forward
+### C4 — User has to start the return search from scratch, because nothing is carried forward
 **Tension:** The return is a fresh search later, not a thing already in progress
 **What they did:** Re-found the return from scratch days later, sometimes on a different app — and one ₹50 pop-up was enough to convert one of them — Harshraj, Jaimin, Sai, Vivek · n11 n17 n35 n65 n66 n73 n75 n78
 
@@ -178,7 +178,7 @@ Nothing is deleted.
 - b — the return is re-searched from zero, sometimes elsewhere — n75, n35, n65
 - c — a tiny nudge is what actually converts — n17, n78
 
-### C5 — The unbooked return runs in the background for the whole trip
+### C5 — User carries the unbooked return around for the whole trip
 **Tension:** An open return is not free — it occupies them until it's closed
 **What they did:** Described booking both as relief, and described the open return as something they kept thinking about mid-trip — Sai, Prayani, Jaimin, Soumya · n18 n19 n29 n30 n39 n40 n53 n58
 
@@ -186,7 +186,7 @@ Nothing is deleted.
 - b — the open return occupies the trip itself — n40
 - c — they argue for booking together and lose to the group or the situation — n53, n29, n31
 
-### C6 — Price movement is guesswork, and they act on the guess · THIN
+### C6 — User is guessing which way the fare will move, and acts on the guess · THIN
 **Tension:** They're making a timing bet with no information, and their beliefs directly contradict each other
 **What they did:** One waited deliberately and halved his fare; two others stopped waiting after concluding prices only rise; one refuses to re-check at all in case checking raises the price — Anand, Sai, Soumya, Samarth · n02 n09 n26 n36 n38 n44 n54 n69
 

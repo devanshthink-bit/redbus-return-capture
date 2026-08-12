@@ -51,12 +51,12 @@ to change."*). Reddit still not collected.
 
 | | Tension | What they did | Notes |
 |---|---|---|---|
-| C1 | The return date isn't theirs to set | Flew out with no return booked, waited for an event, a group or a recovery to resolve | n04 n16 n24 n34 n50 n59 n67 n68 |
-| C2 | Not booking is the cheapest way to stay flexible | Skipped the add-on and didn't book, rather than book into the 20/40/80% ladder | n07 n45 n49 n56 n62 n64 n70 n76 |
-| C3 | The cost of waiting lands after the decision | Came back to an emptier bus — seat gone, price up, group split | n33 n51 n52 n60 n61 n74 |
-| C4 | Nothing carries the return forward | Re-found the return from scratch, sometimes on another app | n11 n17 n35 n66 n73 n75 |
-| C5 | The unbooked return runs in the background all trip | Described booking both as relief; described the open return as a running thought | n18 n19 n30 n39 n40 n53 |
-| C6 `THIN` | Price movement is guesswork, acted on anyway | One waited and halved his fare; two concluded prices only rise; one won't re-check in case checking raises it | n02 n38 n44 n54 |
+| C1 | User can't commit to a return date that isn't theirs to set | Flew out with no return booked, waited for an event, a group or a recovery to resolve | n04 n16 n24 n34 n50 n59 n67 n68 |
+| C2 | User avoids booking at all, because every way of staying flexible costs money | Skipped the add-on and didn't book, rather than book into the 20/40/80% ladder | n07 n45 n49 n56 n62 n64 n70 n76 |
+| C3 | User only finds out what waiting cost them after the decision is made | Came back to an emptier bus — seat gone, price up, group split | n33 n51 n52 n60 n61 n74 |
+| C4 | User has to start the return search from scratch, because nothing is carried forward | Re-found the return from scratch, sometimes on another app | n11 n17 n35 n66 n73 n75 |
+| C5 | User carries the unbooked return around for the whole trip | Described booking both as relief; described the open return as a running thought | n18 n19 n30 n39 n40 n53 |
+| C6 `THIN` | User is guessing which way the fare will move, and acts on the guess | One waited and halved his fare; two concluded prices only rise; one won't re-check in case checking raises it | n02 n38 n44 n54 |
 
 C5 kept as its own cluster (student's call): its cost lands *during the trip*, not at rebooking,
 so it is a different cost from C1 and C3.
