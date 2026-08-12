@@ -2071,3 +2071,33 @@ and five note bodies appeared missing only because the board wraps quoted text i
 split the strings my matcher was comparing. Unescape and strip tags first, then compare.
 
 **One real drift fixed:** LOG.md's file list did not mention artefacts.html.
+
+CHANGE · 2026-08-13 · Source: user
+Added **09 · The Business Lens** to artefacts.html, between the problem statement and the design
+brief — the position matters, because the brief's success metric is chosen by what this section
+establishes. Read all five business lectures first (PAM04L01–L04, PAM05L03) and built the section
+from this project's own analysis, structured by their frameworks rather than restating them.
+
+What it carries:
+- **Business model → strategy → design pressure.** Transaction marketplace, commission per ticket
+  from the operator, marked as publicly reported rather than verified. Strategic bet as it bears on
+  this work: win the whole journey — a round trip in one session is two commissions at one
+  acquisition cost. Design pressure that follows: frequency and trust, which is *why* the return
+  step is skippable and sits behind a guardrail rather than a target.
+- **North Star**, inferred not published, run through the four-question check from PAM04L02, with
+  the caveat stated plainly: this feature captures share of an existing journey, it does not create
+  demand.
+- **Four metrics rejected as vanity** — including our own return-attach rate, which is an *input*
+  and can rise while journeys per traveller falls. That is the honest one and the reason the
+  guardrail sits beside it.
+- **The causal chain** from PAM04L03, filled in: design decision → input metric owned → output
+  metrics influenced → NSM, with the 95% guardrail underneath.
+- **Which loop this belongs to**, answering PAM05L03's three questions: primary engagement loop
+  with its own diagram and closure metric, secondary monetisation loop, explicitly *not* an
+  acquisition loop, and an honest limit — it compounds weakly, one trip yields at most one move
+  visit.
+- **What would contradict the strategy** — a reminder, a mandatory step, a discount. Each already
+  refused elsewhere in this work, now traced to the business model rather than to taste.
+
+Checked: 10 frames in order, 159 stickies and 102 ids intact, no contrast failure in the new
+section, no horizontal overflow at 1280px or 390px.
