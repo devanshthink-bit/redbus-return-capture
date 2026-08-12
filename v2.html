@@ -50,10 +50,11 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 .err{font-size:14px;color:var(--warn);margin:8px 0 0;display:flex;gap:8px;align-items:flex-start;line-height:1.4}
 
 /* ---------- card ---------- */
-.card.sel{box-shadow:0 0 0 2px var(--accent)}
 .card{background:var(--raised);border-radius:12px;padding:16px 16px 12px;margin-bottom:16px;width:100%;
  text-align:left;border:0;display:block;cursor:pointer;transition:transform var(--t-fast),box-shadow var(--t-state)}
 .card:hover{box-shadow:0 2px 10px rgba(0,0,0,.07)}
+.card.sel,.card.sel:hover{box-shadow:0 0 0 2px var(--accent)}   /* must beat :hover, so it comes after */
+.card.sel:focus-visible{box-shadow:0 0 0 2px var(--accent),0 0 0 5px rgba(197,70,70,.35)}
 .card:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(197,70,70,.35)}
 .card:active{transform:scale(.995)}
 .card[aria-disabled="true"]{opacity:.55;cursor:not-allowed}
@@ -436,7 +437,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
     </div>
     <div class="bottombar" id="pk-bar">
       <div><div class="bb1">Return</div><div class="bb2" id="pk-bb">&#8377;949</div></div>
-      <button class="btn pri" onclick="go('s-seat')">Choose seat</button>
+      <button class="btn pri" onclick="toSeat()">Choose seat</button>
     </div>
   </section>
 
@@ -529,7 +530,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 
       <!-- leg 2 -->
       <div class="leg" data-ret>
-        <div class="legtag">Return &middot; Sun, 10 Aug</div>
+        <div class="legtag" id="rv-legtag">Return &middot; Sun, 10 Aug</div>
         <div class="row"><span class="time">23:55<span class="d">&mdash;</span><span class="arr">08:00</span></span><span class="price" id="rv-ret">&#8377;999</span></div>
         <div class="subrow"><span class="sub">Nainital &rarr; Delhi &middot; 8h 5m</span><span class="onw">Seat U5</span></div>
         <div class="oprow"><div><div class="op">Laxmi Holidays Pvt Ltd</div><div class="cap">Nainital Bus Stand &rarr; ISBT Kashmiri Gate, Gate 4</div></div></div>
@@ -591,8 +592,8 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       </div>
 
       <div class="leg" id="tk-ret">
-        <div class="legtag">Return &middot; Sun, 10 Aug</div>
-        <div class="row"><span class="time">23:55<span class="d">&mdash;</span><span class="arr">08:00</span></span><span class="price">&#8377;999</span></div>
+        <div class="legtag" id="tk-legtag">Return &middot; Sun, 10 Aug</div>
+        <div class="row"><span class="time">23:55<span class="d">&mdash;</span><span class="arr">08:00</span></span><span class="price" id="tk-price">&#8377;999</span></div>
         <div class="subrow"><span class="sub">Nainital &rarr; Delhi &middot; 8h 5m</span><span class="onw">Seat U5</span></div>
         <div class="oprow"><div><div class="op">Laxmi Holidays Pvt Ltd</div><div class="cap">Nainital Bus Stand &rarr; ISBT Kashmiri Gate, Gate 4</div></div></div>
       </div>
@@ -629,7 +630,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
         <div class="row"><span class="time">Onward &middot; Thu, 7 Aug</span><span class="price">&#8377;1,599</span></div>
         <div class="subrow"><span class="sub">Laxmi Holidays Pvt Ltd &middot; 23:55</span><span class="onw">Seat SU4</span></div>
         <div id="mb-ret">
-          <div class="row" style="margin-top:16px"><span class="time">Return &middot; <span id="mb-rdate">Sun, 10 Aug</span></span><span class="price">&#8377;949</span></div>
+          <div class="row" style="margin-top:16px"><span class="time">Return &middot; <span id="mb-rdate">Sun, 10 Aug</span></span><span class="price" id="mb-rprice">&#8377;949</span></div>
           <div class="subrow"><span class="sub">Laxmi Holidays Pvt Ltd &middot; 23:55</span><span class="onw">Seat U5</span></div>
         </div>
         <div id="mb-noret" hidden>
@@ -720,7 +721,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       </div>
 
       <div class="swap">
-        <div class="swapleg was"><div class="legtag">From</div><div class="swapd" id="c-from">Sun, 10 Aug &middot; 23:55</div><div class="cap">Seat U5 &middot; &#8377;949</div></div>
+        <div class="swapleg was"><div class="legtag">From</div><div class="swapd" id="c-from">Sun, 10 Aug &middot; 23:55</div><div class="cap" id="c-fromsub">Seat U5 &middot; &#8377;949</div></div>
         <div class="swaparrow" aria-hidden="true">&darr;</div>
         <div class="swapleg"><div class="legtag">To</div><div class="swapd" id="c-to">Sat, 9 Aug &middot; 22:15</div><div class="cap" id="c-tosub">Seat U5 &middot; &#8377;1,199</div></div>
       </div>
@@ -783,7 +784,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       <div class="leg">
         <div class="legtag">Paying for</div>
         <div class="fare"><span>Onward &middot; Thu, 7 Aug</span><span id="pay-out">&#8377;1,599</span></div>
-        <div class="fare" data-ret><span>Return &middot; Sun, 10 Aug</span><span id="pay-ret">&#8377;999</span></div>
+        <div class="fare" data-ret><span id="pay-retlabel">Return &middot; Sun, 10 Aug</span><span id="pay-ret">&#8377;999</span></div>
         <div class="fare" id="pay-fc" hidden><span>Free Cancellation &middot; onward</span><span id="pay-fcv">&#8377;160</span></div>
         <div class="fare tot"><span>Total</span><span id="pay-tot">&#8377;2,598</span></div>
       </div>
@@ -821,8 +822,8 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       </div>
 
       <div class="leg" id="bc-ret">
-        <div class="legtag">Return &middot; Sun, 10 Aug</div>
-        <div class="row"><span class="time">23:55<span class="d">&mdash;</span><span class="arr">08:00</span></span><span class="price">&#8377;949</span></div>
+        <div class="legtag" id="bc-legtag">Return &middot; Sun, 10 Aug</div>
+        <div class="row"><span class="time">23:55<span class="d">&mdash;</span><span class="arr">08:00</span></span><span class="price" id="bc-price">&#8377;949</span></div>
         <div class="subrow"><span class="sub">Nainital &rarr; Delhi &middot; 8h 5m</span><span class="onw">Seat U5</span></div>
         <div class="oprow"><div><div class="op">Laxmi Holidays Pvt Ltd</div><div class="cap">Nainital Bus Stand &rarr; ISBT Kashmiri Gate, Gate 4</div></div></div>
         <div class="pill"><span aria-hidden="true">&#8635;</span> Can be moved in your window</div>
@@ -1006,6 +1007,16 @@ function pickOut(op,fare,dep,arr){
   document.querySelectorAll('#og-lower .seat,#og-upper .seat').forEach(b=>b.removeAttribute('aria-pressed'));
   go('s-oseat');
 }
+// entering seat selection from the picked day — carries the fare that the seat bar and the
+// points bar both read, and clears any seat chosen on an earlier visit
+function toSeat(){
+  chosen.seat=null;
+  document.querySelectorAll('#g-lower .seat,#g-upper .seat').forEach(b=>b.removeAttribute('aria-pressed'));
+  document.getElementById('seat-count').textContent='No seat selected';
+  document.getElementById('seat-price').innerHTML='&nbsp;';
+  document.getElementById('b-seat').disabled=true;
+  pick('Laxmi Holidays Pvt Ltd', DAYS[pickIdx].fare);
+}
 function pick(op,fare){
   chosen.op=op; chosen.fare=fare;
   document.getElementById('seat-sub').textContent='Nainital → Delhi · '+op;
@@ -1108,6 +1119,18 @@ const RUP = n => '₹'+n.toLocaleString('en-IN');
 const PAX = () => (state==='crowded' ? 6 : 1);
 
 // Every rupee figure on Trip review and Pay is derived here and nowhere else.
+// Every date and fare for the return leg derives here — the same rule the money follows.
+function paintReturn(){
+  const E=id=>document.getElementById(id);
+  const day=DAYS[heldIdx]; if(!day) return;
+  const f=RUP(day.fare), set=(id,v)=>{const e=E(id); if(e) e.textContent=v;};
+  set('rv-legtag','Return \u00B7 '+day.d);   set('rv-ret',f);
+  set('tk-legtag','Return \u00B7 '+day.d);   set('tk-price',f);
+  set('bc-legtag','Return \u00B7 '+day.d);   set('bc-price',f);
+  set('mb-rdate',day.d);                     set('mb-rprice',f);
+  set('pay-retlabel','Return \u00B7 '+day.d);
+  set('c-from',day.d+' \u00B7 23:55');       set('c-fromsub','Seat U5 \u00B7 '+f);
+}
 function recalc(){
   const E=id=>document.getElementById(id);
   const mult = PAX();
@@ -1127,6 +1150,7 @@ function recalc(){
   if(first) first.textContent = RUP(out);
   ['rv-tot','rv-bb','pay-tot','pay-bb'].forEach(id=>{ if(E(id)) E(id).textContent = RUP(tot); });
   if(E('pay-title')) E('pay-title').textContent = 'Pay ' + RUP(tot);
+  paintReturn();
 }
 
 function setState(s){

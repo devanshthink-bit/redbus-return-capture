@@ -2022,3 +2022,27 @@ Verified: bar appears on *Return moved* and the ticket, counts down, undo restor
 and lands on the ticket with *"1 change left"* back, expiry hides the bar and restores the final
 wording, and `undoMove()` after expiry is a no-op. Full 19-step click-through including the
 undo, 208 combinations, no failures, no target under 44, type scale intact.
+
+CHANGE · 2026-08-12 · molades-build · Source: user
+Fixed the three real bugs in **v2** that had been left alone while it was frozen. They were
+found by asking whether v3's fixes applied to the other builds — v1 turned out to be clean on
+all three, v2 had all three.
+
+1. **The seat screen showed ₹0.** Same cause as v3: the day list replaced the bus list, and its
+   *Choose seat* button called `go('s-seat')` directly, so `pick()` never ran and `chosen.fare`
+   stayed 0. Now `toSeat()` clears any earlier seat and passes the booked day's fare. Verified:
+   Sun 10 shows ₹949 on both bars, switching to Sat 9 shows ₹1,199.
+2. **A selected day showed no border until the pointer left it.** `.card.sel` was declared above
+   `.card:hover` at equal specificity. Moved below, with the hover case named explicitly.
+   Verified by stylesheet index: hover is rule 28, selected is rule 29.
+3. **The return date and fare could go stale.** Six literals in the markup with nothing
+   repainting them, on a screen where the day is choosable. Now derived by `paintReturn()`,
+   called from `recalc()`. Verified across two different picks; totals follow.
+
+Regression on v2: 224 combinations, no failures, no target under 44, type scale 20/18/16/14/12,
+no JS errors, full click-through completes. **v1 untouched.**
+
+Note for the record: v1 is clean on all three for structural reasons, not luck. It picks the
+return from a bus card so `pick()` runs; it has no selectable day cards so there is no
+selected-versus-hover conflict; and its return day is fixed by the deadline, so a literal is
+correct rather than a drift risk.
