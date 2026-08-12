@@ -2101,3 +2101,10 @@ What it carries:
 
 Checked: 10 frames in order, 159 stickies and 102 ids intact, no contrast failure in the new
 section, no horizontal overflow at 1280px or 390px.
+
+**Trimmed the same day, at the student's call.** The four-question NSM check, the four rejected
+vanity metrics, the not-an-acquisition-loop note, the honest-limit note and the three strategy
+contradictions all came out. They were me showing the working rather than the business substance —
+a case-study reader wants the model, the number, the chain and the loop. The reasoning survives in
+LOG.md and DEFENCE.md, which is where it belongs if a stakeholder asks how the metric was chosen
+or why a reminder was refused.
