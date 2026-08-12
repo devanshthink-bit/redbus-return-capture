@@ -7,7 +7,9 @@
 
 Bet (v2):   Travellers defer because the product has no state between booked and nothing — holding a return means buying it, and buying it needs a date they don't have
 Evidence:   enough — 8 interviews + survey (n=23) + 1 App Store review, coded into 102 notes and 6 clusters
-Files:      SCOPE.md [x] v2 · RESEARCH.md [x] · NOTES.md [x] · BRIEF.md [x] · DESIGN_LANGUAGE.md [x] · TEST_SCRIPT.md [x] · DEFENCE.md [x] · CRITIQUE.md [x] · build [x] · live [x]
+Files:      SCOPE.md [x] v2 · RESEARCH.md [x] · NOTES.md [x] · BRIEF.md [x] · DESIGN_LANGUAGE.md [x] ·
+            TEST_SCRIPT.md [x] · DEFENCE.md [x] · CRITIQUE.md [x] · artefacts.html [x] · build [x] · live [x]
+Artefacts:  /artefacts.html — scope card through design brief, one board, generated from NOTES.md
 Live:       https://devanshthink-bit.github.io/redbus-return-capture/  (GitHub Pages, auto-deploys on push)
 Repo:       github.com/devanshthink-bit/redbus-return-capture  (public; raw/ transcripts gitignored)
 Builds:     v1  /            17 screens · 13 states · Last day  (the researched construct)
@@ -2046,3 +2048,26 @@ Note for the record: v1 is clean on all three for structural reasons, not luck. 
 return from a bus card so `pick()` runs; it has no selectable day cards so there is no
 selected-versus-hover conflict; and its return day is fixed by the deadline, so a literal is
 correct rather than a drift risk.
+
+CRITIQUE · 2026-08-13 · molades-attack · Source: user — final sanity check
+Ran the board, the six documents and all three builds against each other in code.
+
+**Board: clean.** 9 frames in order, 159 stickies, 102 unique note ids, 6 clusters, 6 affinity
+maps, 4 final JTBDs, 4 insight statements. **Every one of the 102 note bodies verified verbatim
+against NOTES.md** — the board is generated from the file, not retyped. No contrast failure on
+any sticky or label, no horizontal overflow at 1280px or at 390px.
+
+**Documents: consistent.** All six cluster labels identical across NOTES.md, RESEARCH.md and
+the board. Every note id cited anywhere — 60 in RESEARCH, 23 in BRIEF, 14 in TEST_SCRIPT —
+resolves to a real note; no ghosts. Survey figures agree wherever they appear. The four PAM03L08
+brief components are present and the metric and 95% guardrail match SCOPE v2.
+
+**Builds: clean.** v1 221 combinations, v2 224, v3 208 — no failures, no JS errors, no target
+under 44, type scale 20/18/16/14/12 in all three. All three live and byte-identical to local.
+
+**Two false alarms worth recording, because both were faults in the checker rather than the work:**
+the C1 label appeared to differ only because `html.escape` turns an apostrophe into `&#x27;`,
+and five note bodies appeared missing only because the board wraps quoted text in `<em>`, which
+split the strings my matcher was comparing. Unescape and strip tags first, then compare.
+
+**One real drift fixed:** LOG.md's file list did not mention artefacts.html.
