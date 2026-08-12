@@ -2108,3 +2108,27 @@ contradictions all came out. They were me showing the working rather than the bu
 a case-study reader wants the model, the number, the chain and the loop. The reasoning survives in
 LOG.md and DEFENCE.md, which is where it belongs if a stakeholder asks how the metric was chosen
 or why a reminder was refused.
+
+DECISION · 2026-08-13 · Source: user
+Split the business section in two and moved the first half to the front, because the board was
+telling the order backwards. The scope card already contains **AARRR stage: Revenue** and a
+**provisional metric** — neither of which can be filled without knowing RedBus takes a commission
+per ticket. So the business thinking demonstrably preceded the scope card, and showing it after
+the problem statement implied it was found afterwards to justify the work.
+
+Not all of it belongs first, though. Two pieces need the solution to exist: the causal chain's
+first box is the design decision, and the growth loop depends on the move-earlier mechanic. So:
+
+| | Position | Carries |
+|---|---|---|
+| **01 · The Business Lens** | before the scope card | business model → strategic bet → design pressure · North Star |
+| **11 · The Chain and the Loop** | after the design brief | causal chain with the guardrail · which loop this belongs to |
+
+Business understanding opens the case, business consequence closes it.
+
+CHANGE · 2026-08-13 · Source: user
+Removed the explaining-to-the-reader tone from the business cards. The North Star note read
+*"Anyone claiming a return-capture feature moves the North Star on its own is overselling"* —
+arguing with an imaginary sceptic inside the student's own process artefact. Now it states the
+fact: *"Captures share of an existing journey. Does not create demand."* The strategy card had
+the same problem — a rhetorical closing question replaced with the number it was gesturing at.
