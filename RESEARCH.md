@@ -213,8 +213,7 @@ date, and the cost of waiting made visible while the traveller is deciding to wa
 
 **Traces to:** n66 n72 n73 n74 n11 n35 n75 n76 n57 n07 n64
 **How sure:** saw it — survey (n=23) plus all 8 interviews
-**Leaves out:** C6 (price forecasting, outside the feasibility filter), and the *causes* of date
-uncertainty (weddings, groups, a broken leg — outside any product)
+**Leaves out:** Fare **forecasting** — predicting which way the price will move. The C6 notes now sit inside J3, whose implication is showing what waiting *has* cost, not predicting what it *will* cost; forecasting stays outside the aggregator constraint. Also the *causes* of date uncertainty — weddings, groups, a broken leg — outside any product
 
 ## Rejected candidates
 
