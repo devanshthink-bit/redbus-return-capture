@@ -2132,3 +2132,35 @@ Removed the explaining-to-the-reader tone from the business cards. The North Sta
 arguing with an imaginary sceptic inside the student's own process artefact. Now it states the
 fact: *"Captures share of an existing journey. Does not create demand."* The strategy card had
 the same problem — a rhetorical closing question replaced with the number it was gesturing at.
+
+CRITIQUE · 2026-08-13 · Source: mentor, during a live v3 demo
+Three questions asked live that I could not answer in the room. Two of them turned out to rest on
+a factual error, and I did not have the terms at hand to say so — which is the actual failure here.
+The facts were in a screenshot folder I had already collected and never transcribed into the
+verified-terms table.
+
+1. **"Users get free cancellation with FlexiTicket but not with yours."** False. FlexiTicket gives a
+   **minimum 50% refund** at 12h+ (50–100%, operator-dependent). The 100% product is **Free
+   Cancellation**, a separate **paid** add-on. Two products had been merged into one.
+2. **"You should charge for this flexibility, like they charge for FlexiTicket."** False premise —
+   the page says **"FREE DATE CHANGE — AT NO EXTRA RATE"**. But the business instinct underneath is
+   sound and deserves engaging with: seat churn, support cost, and cannibalisation of the paid
+   add-on. Charging to *cap* the fare difference is already ranked 6/10 in CRITIQUE.md as a pricing
+   decision rather than a design one.
+3. **"This construct IS a flexi-ticket. Why build it separately?"** This one has real force and
+   should be conceded, not argued. It *is* FlexiTicket — BRIEF has said so in writing since day one.
+   What changes is what the product asks for: FlexiTicket requires a date you already have.
+
+**Added to BRIEF's verified terms:** the three verbatim lines from redBus's own FlexiTicket page —
+no extra rate, fare difference payable, minimum 50% refund. They settle two of the three arguments
+on their own and should have been in the table from the start.
+
+**Added DEFENCE.md §2A**, five questions, including the order to answer in. The mistake in the room
+was arguing the *difference* before conceding the *sameness*. Correct order: it is FlexiTicket →
+here is what it cannot do → here is the evidence that awareness is not the lever → here is the bet
+and how the sessions settle it.
+
+LEARNED · 2026-08-13
+A fact I have collected but not written into the traceable table is a fact I do not have in a
+room. The FlexiTicket screenshots were gathered on 4 July and the two lines that answer this
+cross-examination were never transcribed.

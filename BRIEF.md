@@ -33,6 +33,9 @@ becomes reachable.
 | **Not refunded if the new fare is lower** | redBus T&Cs |
 | Offered **only by select operators** | redBus T&Cs |
 | Free date change up to **8h** before departure (FlexiTicket) | FlexiTicket page |
+| FlexiTicket is **free — "at no extra rate"**. It is not a paid add-on | FlexiTicket page |
+| FlexiTicket's own FAQ: *"the 'date change fee' is zero. You will, however, be required to pay the fare difference (if any)."* | FlexiTicket FAQ 1 |
+| FlexiTicket gives a **minimum 50% refund** at 12h+ (50–100%, operator-dependent) — **not** free cancellation | FlexiTicket FAQ 2 |
 | Free Cancellation: 100% refund till 6/12h, paid add-on, **voided by rescheduling**, add-on fee itself non-refundable | Free Cancellation page |
 
 *Still unverified:* whether a date change is **same-operator only**. Multiple descriptions of the

@@ -24,12 +24,13 @@ questions are a test of whether you know your own weak points, not a request for
 
 ## Contents
 
-Ninety-seven questions. Jump to the section, not the page.
+102 questions. Jump to the section, not the page.
 
 | | Section | Questions |
 |---|---|---|
 | **1** | The problem | 3 |
 | **2** | Why not the things that already exist | 4 |
+| **2A** | The FlexiTicket cross-examination — asked live, and got me | 5 |
 | **3** | The sixteen ideas — and why fifteen died | 7 |
 | **4** | The construct itself | 6 |
 | **5** | The three versions — what changed and why | 10 |
@@ -44,7 +45,8 @@ Ninety-seven questions. Jump to the section, not the page.
 | **14** | If you don't know | 0 |
 | **15** | Interview versions of the same questions | 4 |
 
-> **Under pressure, the three that decide the room:** *"Why not just use FlexiTicket?"* (2) ·
+> **Under pressure, the four that decide the room:** *"Why not just use FlexiTicket?"* (2) ·
+> **the full FlexiTicket cross-examination (2A) — the one that got me live** ·
 > *"This is a pretty generic solution."* (10) · *"Have you tested it?"* (12).
 
 ---
@@ -133,7 +135,96 @@ not happening. Every deferral is a decision.
 
 *This is your strongest single number. It kills a whole class of obvious solutions in four words.*
 
+
 ---
+
+## 2A. The FlexiTicket cross-examination — asked live, and got me
+
+*These three came from a mentor during a live v3 demo and I had no answer. Two of them rest on a
+factual error I can now settle from redBus's own page. The third has real force and I concede it.*
+
+**Learn these three quotes. They are verbatim from redBus's FlexiTicket page and they end two of
+the three arguments on their own.**
+
+> **"the 'date change fee' is zero. You will, however, be required to pay the fare difference (if any)."**
+>
+> **"a minimum 50% refund if you cancel at least 12 hours before the departure… anywhere from 50%–100% depending on the bus operator's policy."**
+>
+> **"FREE DATE CHANGE — AT NO EXTRA RATE"**
+
+### "Users get free cancellation with FlexiTicket but not with yours. Why would anyone use this?"
+
+*Why it lands:* it sounds like your construct strips away a protection.
+
+**The premise is wrong, and it is checkable.** FlexiTicket does **not** give free cancellation. It
+gives a **minimum 50% refund** if you cancel 12h+ before departure — 50–100% depending on the
+operator. The 100%-refund product is **Free Cancellation**, a **separate paid add-on** (₹160 on the
+onward leg in the prototype). Two different products have been merged into one.
+
+**Say this:** *"You're comparing my design to a FlexiTicket that doesn't exist. Here is their own
+page."*
+
+### "And does FlexiTicket also not refund the fare difference after a date change?"
+
+**Correct — it doesn't, and that is their term, not mine.** Their FAQ says it in one sentence: the
+date change fee is zero, *you will be required to pay the fare difference (if any)*.
+
+**So my construct carries exactly FlexiTicket's terms. I removed nothing.** One date change, fee
+zero, fare difference payable, and — from redBus's own T&Cs — once rescheduled the ticket cannot be
+cancelled at all. Book a FlexiTicket separately, change its date, and you land in the identical
+position. The only thing I added is that the traveller sees those terms **at the moment of
+deciding** instead of discovering them a week later.
+
+### "From a business point of view you should charge for this flexibility, like they charge extra for FlexiTicket."
+
+**They don't charge for it.** The page says *at no extra rate*. So I am not giving away something
+redBus currently sells. The paid product is Free Cancellation, which this does not touch.
+
+**But the instinct underneath is right, so engage with it rather than just correcting them.** Does
+flexibility cost the business something in the backend? Yes — operator seat churn, support contacts,
+and a real risk of cannibalising the paid Free Cancellation add-on. That last one is already on my
+list as a counter-metric to watch.
+
+**And I have considered charging.** It is in my ranked alternatives at 6/10: *charge a small fixed
+fee that caps the fare difference*. It would fix the genuine flaw — an unknown ₹451 at the moment of
+use becomes a small known number at the moment of choice — and it would create revenue. I ruled it
+out because **it is a pricing decision, not a design one**: redBus is an aggregator and does not set
+fares. That is a proposal I would take to a PM, not something I would design around.
+
+### "This construct IS a flexi-ticket. It does the same thing. Why build it separately at all?"
+
+*Why it lands:* because it is true, and pretending otherwise loses the room.
+
+**Concede it in the first sentence. It is FlexiTicket.** My brief says so in writing: *not a new
+capability — a new decision model on an existing one.* I am not proposing a second product, a second
+operator agreement, or a second set of terms.
+
+**What changes is not what the ticket does. It is what the product asks for.**
+
+> FlexiTicket requires you to **already have a date**. It answers *"what if my plans change?"* — a
+> hypothetical. It is not an answer to *"I don't know when I'm coming back,"* because you still have
+> to name a day to buy one.
+
+**Concede the second thing too, before they say it.** A savvy traveller could do this today: filter
+**FREE DATE CHANGE**, book their last acceptable day, move earlier later. Identical outcome. What I
+built is the product doing that **deliberately**, instead of the traveller having to invent the
+strategy and then find the terms.
+
+**The evidence that packaging might be the lever:** **39.1%** did not know FlexiTicket or the
+cancellation add-on existed — and Anand knew and refused anyway: *"I know there is an option but I
+just prefer okay this option doesn't exist."* A visibility fix reaches the first group and misses
+the second. A shape change might reach both.
+
+**Then close honestly, because this is a bet and not a fact:** *"If testing shows people answer
+'probably Tuesday' rather than 'definitely Tuesday', then you're right — this is FlexiTicket with
+extra steps. That is exactly what the five sessions decide."*
+
+### What to do differently next time this comes up
+
+The mistake was arguing the difference before conceding the sameness. **Order matters:** *it is
+FlexiTicket* → *here is what it cannot do* → *here is the evidence awareness is not the lever* →
+*here is the bet and how I will settle it*. Leading with the difference sounds defensive. Leading
+with the concession buys the right to make the argument.
 
 ---
 
