@@ -2164,3 +2164,46 @@ LEARNED · 2026-08-13
 A fact I have collected but not written into the traceable table is a fact I do not have in a
 room. The FlexiTicket screenshots were gathered on 4 July and the two lines that answer this
 cross-examination were never transcribed.
+
+DECISION · 2026-08-13 · molades-build · Source: mentor, live v3 demo
+Three more from the same demo. All three were real gaps, and all three exist because v3 replaced
+a bus list with a day list and I did not carry the mixed-inventory handling across — the same
+class of mistake as the fare not reaching the seat screen.
+
+**1 · Day-level movability.** v3 had only the route-level Idea 9 guard. It assumed every day in a
+range had a bus that allows a date change, which on a real route is false. Now `MOVABLE(d)` is part
+of the model:
+- the calendar marks non-movable days with a dot and a legend, and they stay bookable
+- **a range books the last day that can actually be changed**, not blindly the last day — and the
+  lead line says so: *"Booking Mon, 11 Aug — the last day in your range that can be changed later.
+  Tue, 12 Aug has no bus that allows it."*
+- booking a non-movable day is allowed but the terms flip to a critical rule and the ticket carries
+  no Change day row at all
+- the move list only offers days that are themselves movable
+
+Without this, the product hands someone a ticket every screen claims they can move.
+
+**2 · The window affordance.** The mentor could not tell a range was possible — which is exactly
+the risk I had predicted for the sessions. The fix is not more copy: **the 7-day cap already
+decides which days are still reachable, it was just invisible.** After the first tap, days inside
+the cap are tinted and days outside grey out, so the band the traveller can extend into is
+something they can see. The prompt also moved out of the grey line above the calendar to an
+accent-coloured rule directly under the day they picked: *"Not sure? Tap a second day."*
+Rejected: a One day / Range toggle — that is the confidence-slider idea already killed in ideation,
+because it makes people classify themselves before they can act.
+
+**3 · The return seat screen is gone.** His suggestion, and the right one — it removes a whole
+screen from the flow the 95% guardrail protects, and it matches the default-plus-override pattern
+already used on the move. One correction to the implementation: *"same seat as the outbound"* is the
+wrong default, because the return is usually a different bus and U5 is not the same physical
+position. `equivalentSeat()` takes the same **kind** — same deck, nearest position — and Trip review
+names it with a **Change seat** action that opens the seat map in a third mode.
+
+Verified: 19-step click-through completes, outbound L1 auto-assigns L1 on the return, Change seat at
+review works and the total follows. 208 combinations, no failures, no target under 44, type scale
+intact, no JS errors.
+
+LEARNED · 2026-08-13 · molades-build
+One of the four replacements in this batch silently did nothing, because I matched against copy I
+had already rewritten and did not assert. It cost a full test cycle to find. **Assert on every
+replacement, including the ones that look trivial** — a silent no-op looks exactly like success.

@@ -89,7 +89,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 .bal.none{color:var(--muted);background:#F1F1F1}
 .dlead{font-size:18px;font-weight:700;color:var(--ink);line-height:1.3;margin:0 0 4px}
 #d-what{margin-bottom:16px}
-.linkbtn{background:none;border:0;padding:8px 0 0;font-family:inherit;font-size:14px;font-weight:700;color:var(--accent);cursor:pointer;min-height:44px;text-align:left}
+.linkbtn{display:block;background:none;border:0;padding:8px 0 0;font-family:inherit;font-size:14px;font-weight:700;color:var(--accent);cursor:pointer;min-height:44px;text-align:left}
 .linkbtn:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(197,70,70,.35);border-radius:4px}   /* state rules go after the base */
 
 /* ---------- controls row ---------- */
@@ -189,6 +189,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 .rules dt:first-child{margin-top:0}
 .rules dd{font-size:14px;color:var(--muted);line-height:1.4;margin-top:4px}  /* inside a pair */
 .rules dt.crit{color:var(--warn)}
+.rules dt.prompt{color:var(--accent)}
 .points{list-style:none;margin:8px 0 0;display:grid;gap:4px}
 .points li{font-size:12px;color:var(--muted);line-height:1.4;padding-left:12px;position:relative}
 .points li::before{content:"";position:absolute;left:0;top:7px;width:4px;height:4px;border-radius:50%;background:var(--muted)}
@@ -272,12 +273,19 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 .cday.sel{background:var(--accent)}
 .cday.sel .n,.cday.sel .f{color:#fff}
 .cday.mid{background:#F6E4E4;border-radius:0}
+.cday.reach{background:#FBF4F4}
+.cday.reach .n{color:#3A3A44}
 @keyframes fillin{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
 .cday.sweep{animation:fillin 280ms cubic-bezier(.25,.8,.25,1) both}
 @media (prefers-reduced-motion:reduce){.cday.sweep{animation:none}}
 .cday.s1{border-top-right-radius:0;border-bottom-right-radius:0}
 .cday.s2{border-top-left-radius:0;border-bottom-left-radius:0}
-.cday.cheap .f{color:var(--ratink);font-weight:700}   /* --rate is only 3.7:1 on the range band */
+.cday.cheap .f{color:var(--ratink);font-weight:700}
+.cday{position:relative}
+.nmdot{position:absolute;top:5px;right:6px;width:5px;height:5px;border-radius:50%;background:#B9B9C4}
+.cday.sel .nmdot{background:rgba(255,255,255,.85)}
+.callegend{display:flex;align-items:center;gap:7px;margin-top:10px;font-size:12px;color:var(--muted)}
+.callegend i{width:5px;height:5px;border-radius:50%;background:#B9B9C4;display:inline-block;flex:0 0 auto}   /* --rate is only 3.7:1 on the range band */
 .cday.sel.cheap .f{color:#fff}
 .cday:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(197,70,70,.35)}
 </style>
@@ -420,6 +428,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
         </div>
         <div class="dow"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
         <div class="grid" id="cal-grid" role="group" aria-label="Choose your return day, or two days if you are not sure"></div>
+        <p class="callegend"><i></i>No free date change on this day</p>
       </div>
 
       <dl class="rules" id="win-rules"></dl>
@@ -476,7 +485,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
     </div>
     <div class="bottombar" id="pk-bar">
       <div><div class="bb1">Return</div><div class="bb2" id="pk-bb">&#8377;949</div></div>
-      <button class="btn pri" id="b-pk" disabled onclick="toSeat()">Choose seat</button>
+      <button class="btn pri" id="b-pk" disabled onclick="autoSeat()">Select points</button>
     </div>
   </section>
 
@@ -571,8 +580,9 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       <div class="leg" data-ret>
         <div class="legtag" id="rv-legtag">Return &middot; Sun, 10 Aug</div>
         <div class="row"><span class="time">23:55<span class="d">&mdash;</span><span class="arr">08:00</span></span><span class="price" id="rv-ret">&#8377;999</span></div>
-        <div class="subrow"><span class="sub">Nainital &rarr; Delhi &middot; 8h 5m</span><span class="onw">Seat U5</span></div>
+        <div class="subrow"><span class="sub">Nainital &rarr; Delhi &middot; 8h 5m</span><span class="onw" id="rv-seat">Seat U5</span></div>
         <div class="oprow"><div><div class="op">Laxmi Holidays Pvt Ltd</div><div class="cap">Nainital Bus Stand &rarr; ISBT Kashmiri Gate, Gate 4</div></div></div>
+        <button class="linkbtn" id="rv-seatbtn" onclick="openSeatForReview()">Change seat</button>
         <div class="pill"><span aria-hidden="true">&#8635;</span> Can be moved in your window</div><!-- replaces the FlexiTicket badge on return legs; never shown alongside it -->
       </div>
 
@@ -977,11 +987,24 @@ function SEATOF(d){
 }
 const SEAT = new Proxy({}, {get:(_,k)=>{const d=+k; return d>0 ? SEATOF(d) : undefined;}});
 
+// Not every day has a bus that allows a date change. On a real route this is operator
+// inventory; here it is deterministic so the same day always behaves the same way.
+const MOVABLE = d => ((d*13 + 5) % 9) < 7;
+
+// A range books the LAST day the traveller could travel — but only if that day can actually
+// be changed later. Booking a non-movable day would hand them a ticket every screen claims
+// they can move. So: the last MOVABLE day in the range, falling back to the last day if none is.
+function lastMovableIn(a,b){ for(let d=b; d>=a; d--) if(MOVABLE(d)) return d; return 0; }
+function anyMovableIn(a,b){ return lastMovableIn(a,b) !== 0; }
+
 let sel = [];            // [] nothing · [d] one day · [a,b] a range
 let heldDay = 0;         // the day currently booked
 
 const RUPEE = n => '\u20B9'+n.toLocaleString('en-IN');
-const bookedDay = () => sel.length===2 ? sel[1] : sel[0];        // a range books the LAST day
+function bookedDay(){
+  if(sel.length!==2) return sel[0];
+  return lastMovableIn(sel[0],sel[1]) || sel[1];
+}
 function cheapestIn(a,b){ let best=a; for(let d=a;d<=b;d++) if(FARE[d]<FARE[best]) best=d; return best; }
 
 function go(id){
@@ -1029,8 +1052,13 @@ function paintWindow(){
     else {
       inner+='<span class="f">'+RUPEE(FARE[d])+'</span>';
       aria+=', '+RUPEE(FARE[d]);
+      if(!MOVABLE(d)){ cls.push('nomove'); inner+='<i class="nmdot" aria-hidden="true"></i>';
+        aria+=', no free date change on this day'; }
       if(d===cheap){ cls.push('cheap'); aria+=', cheapest in your range'; }
-      if(sel.length===1 && d===sel[0]) cls.push('sel');
+      if(sel.length===1){
+        if(d===sel[0]) cls.push('sel');
+        else cls.push('reach');          // still inside the 7-day cap — extendable
+      }
       if(sel.length===2){
         if(d===sel[0]) cls.push('sel','s1');
         else if(d===sel[1]) cls.push('sel','s2');
@@ -1053,7 +1081,7 @@ function paintWindow(){
   next.disabled = calMonth===MONTHS.length-1;
 
   document.getElementById('q-hint').textContent = sel.length
-    ? 'Pick another day if you might travel earlier.'
+    ? 'Tinted days are still within reach.'
     : 'Pick one day. Pick two if you\u2019re not sure yet.';
 
   const R=document.getElementById('win-rules');
@@ -1061,7 +1089,9 @@ function paintWindow(){
     R.innerHTML = '<dt>Prices shown are today\u2019s</dt><dd>Booking now holds this fare and a seat.</dd>';
   } else if(sel.length===1){
     R.innerHTML = '<dt>We\u2019ll book '+label(sel[0])+' \u00B7 '+RUPEE(FARE[sel[0]])+'</dt>'
-      + '<dd>One date change later, either direction. Only pay the fare difference.</dd>';
+      + '<dd>One date change later, either direction. Only pay the fare difference.</dd>'
+      + '<dt class="prompt">Not sure? Tap a second day</dt>'
+      + '<dd>Anything up to 7 days apart. We\u2019ll book the last day you could travel.</dd>';
   } else {
     const b=sel[1], c=cheapestIn(sel[0],sel[1]), save=FARE[b]-FARE[c];
     R.innerHTML = (save>0
@@ -1109,6 +1139,7 @@ function renderPicked(){
     // The last day needs no label saying it is last — the traveller chose it and it sits at the
     // bottom of the list. What is not obvious is why it is worth picking, so name that instead.
     if(days.length>1 && spread && d===cheap) tags.push('<div class="pill">\u21BB Cheapest</div>');
+    if(!MOVABLE(d)) tags.push('<div class="pill no">No date change</div>');
     const diff = heldDay ? FARE[d]-FARE[heldDay] : 0;
     const right = d===heldDay ? '<span class="onw">Booked</span>'
       : (!heldDay ? ''
@@ -1121,12 +1152,18 @@ function renderPicked(){
   }).join('');
 
   const lead=document.getElementById('pk-lead');
+  const lastMov = sel.length===2 ? lastMovableIn(sel[0],sel[1]) : (MOVABLE(sel[0]) ? sel[0] : 0);
   if(!heldDay){
     lead.innerHTML = '<b>Pick your return day.</b> Two of them are worth knowing about.';
   } else if(days.length===1){
-    lead.innerHTML = 'Your return on <b>'+label(heldDay)+'</b>.';
+    lead.innerHTML = MOVABLE(heldDay)
+      ? 'Your return on <b>'+label(heldDay)+'</b>.'
+      : 'Your return on <b>'+label(heldDay)+'</b>. No bus that day allows a date change.';
   } else if(heldDay===last){
     lead.innerHTML = 'Booking <b>'+label(last)+'</b> \u2014 the last day you could travel, so you never have to change.';
+  } else if(heldDay===lastMov && lastMov!==last){
+    lead.innerHTML = 'Booking <b>'+label(lastMov)+'</b> \u2014 the last day in your range that can be changed later. '
+      + label(last)+' has no bus that allows it.';
   } else {
     lead.innerHTML = 'Booking <b>'+label(heldDay)+'</b>.';
   }
@@ -1136,7 +1173,12 @@ function renderPicked(){
   const note=document.getElementById('pk-note');
   const after = '<dt>Free to switch until you pay</dt>'
     + '<dd>After that, one date change on Laxmi Holidays \u2014 the only operator on this route.</dd>';
-  if(days.length===1){
+  if(heldDay && !MOVABLE(heldDay)){
+    note.innerHTML = '<dt class="crit">This day cannot be changed later</dt>'
+      + '<dd>No operator running on '+label(heldDay)+' allows a date change. Booking it is final.</dd>'
+      + '<dt>Days marked with a dot are the same</dt>'
+      + '<dd>Pick an unmarked day if you want the one date change.</dd>';
+  } else if(days.length===1){
     note.innerHTML = '<dt>One date change after booking</dt>'
       + '<dd>Either direction, on Laxmi Holidays. You pay any difference.</dd>'
       + '<dt class="crit">A cheaper day is not refunded</dt>'
@@ -1164,7 +1206,7 @@ function openWithin(){ renderWithin(); go('s-within'); }
 function renderWithin(){
   const wrap=document.getElementById('wi-list'); if(!wrap) return;
   if(!heldDay){ wrap.innerHTML=''; return; }
-  const days=BOOKABLE.filter(d=>d!==heldDay);   // a reschedule is not limited to the stated range
+  const days=BOOKABLE.filter(d=>d!==heldDay && MOVABLE(d));   // a reschedule is not limited to the stated range
   const held=document.querySelector('#s-within .held');
   if(held) held.innerHTML='<div class="legtag">You have</div>'
     + '<div class="row"><span class="time" style="font-size:16px">'+label(heldDay)+' \u00B7 23:55</span>'
@@ -1203,6 +1245,37 @@ function pickOut(op,fare,dep,arr){
 }
 // entering seat selection from the picked day — carries the fare the bar and the
 // points screen both read, and clears any seat chosen on a previous visit
+// The return seat is assigned rather than asked for — one fewer screen in a flow the 95%
+// guardrail is protecting. "Same seat as the outbound" is not the right default, because the
+// return is usually a different bus and U5 is not the same physical position. Same *kind* of
+// seat is: same deck, same position, then the nearest free seat on that deck.
+function equivalentSeat(){
+  const want = out.seat || 'U5';
+  const deck = want[0], idx = +want.slice(1);
+  const free = d => [].filter.call(
+    document.querySelectorAll('#g-'+(d==='L'?'lower':'upper')+' .seat:not([data-s])'),
+    b=>true).map(b=>b.getAttribute('aria-label').split(',')[0].replace('Seat ',''));
+  const same = free(deck);
+  if(same.includes(want)) return want;                       // the same position is free
+  if(same.length) return same.sort((a,b)=>Math.abs(+a.slice(1)-idx)-Math.abs(+b.slice(1)-idx))[0];
+  const other = free(deck==='L'?'U':'L');
+  return other.length ? other[0] : want;
+}
+function autoSeat(){
+  buildSeats();
+  const nm = equivalentSeat();
+  const btn = [].find.call(document.querySelectorAll('#g-lower .seat,#g-upper .seat'),
+                           b=>b.getAttribute('aria-label').indexOf('Seat '+nm+',')===0);
+  chosen.op='Laxmi Holidays Pvt Ltd'; chosen.fare=FARE[heldDay]; chosen.seat=nm;
+  if(btn) btn.setAttribute('aria-pressed','true');
+  document.getElementById('seat-sub').textContent='Nainital \u2192 Delhi \u00B7 '+chosen.op;
+  document.getElementById('seat-count').textContent='Seat '+nm+' selected';
+  document.getElementById('seat-price').textContent=RUPEE(chosen.fare);
+  document.getElementById('b-seat').disabled=false;
+  document.getElementById('pt-price').textContent=RUPEE(chosen.fare);
+  recalc();
+  go('s-points');
+}
 function toSeat(){
   chosen.seat=null;
   document.querySelectorAll('#g-lower .seat,#g-upper .seat').forEach(b=>b.removeAttribute('aria-pressed'));
@@ -1277,7 +1350,7 @@ let moveDone=false;
 const UNDO_SECS = 60;                 // the operator has not been told yet, so this costs nothing
 let undoLeft = 0, undoTimer = null, undoFrom = null;                       // the single reschedule, once it has been spent
 const changesLeft = () => (moveDone || state==='alreadymoved') ? 0 : 1;
-let seatMode='';        // '' = booking the return · 'move' = choosing a seat for a date change
+let seatMode='';        // '' = booking · 'move' = seat for a date change · 'review' = changing it at trip review
 
 // Which seats are gone on a given day. Deterministic per day, so each day differs and the
 // auto-assigned seat is always one that is actually free.
@@ -1285,6 +1358,15 @@ function bookedOn(day){
   const taken=new Set();
   for(let i=0;i<5;i++) taken.add(((day*7+i*5)%12)+1);
   return taken;
+}
+function openSeatForReview(){
+  seatMode='review';
+  document.getElementById('seat-h1').textContent='Choose your seat';
+  document.getElementById('seat-sub').textContent=label(heldDay)+' \u00B7 Nainital \u2192 Delhi';
+  document.getElementById('seat-note').textContent='Return leg. Your seat on the way out is unchanged.';
+  document.getElementById('seat-back').setAttribute('onclick',"seatMode='';go('s-review')");
+  document.getElementById('b-seat').textContent='Use this seat';
+  go('s-seat');
 }
 function openSeatForMove(){
   seatMode='move';
@@ -1300,6 +1382,12 @@ function openSeatForMove(){
   go('s-seat');
 }
 function seatDone(){
+  if(seatMode==='review'){
+    seatMode='';
+    document.getElementById('seat-back').setAttribute('onclick',"go('s-picked')");
+    document.getElementById('b-seat').textContent='Select points';
+    recalc(); go('s-review'); return;
+  }
   if(seatMode!=='move'){ go('s-points'); return; }
   movedSeat = chosen.seat || movedSeat;
   seatMode='';
@@ -1438,6 +1526,7 @@ function paintReturn(){
   set('bc-legtag','Return \u00B7 '+d);       set('bc-price',f);
   set('mb-rdate',d);                         set('mb-rprice',f);
   set('pay-retlabel','Return \u00B7 '+d);
+  set('rv-seat','Seat '+(chosen.seat||HELD_SEAT));
   set('c-from',d+' \u00B7 23:55');           set('c-fromsub','Seat U5 \u00B7 '+f);
   set('wi-none-b','Your '+d+' booking is unchanged and still valid. Seat U5, '+f+', nothing has been charged.');
   set('wi-err-b','Your '+d+' booking is unchanged. Nothing has been charged.');
@@ -1500,10 +1589,11 @@ function setState(s){
     E('wi-err').hidden     = s!=='checkfail';
     E('c-err').hidden     = s!=='swapfail';
     if(E('b-conf')) E('b-conf').disabled = s==='swapfail';
-    const blocked = s==='alreadymoved' || s==='pastcutoff' || moveDone;
+    const blocked = s==='alreadymoved' || s==='pastcutoff' || moveDone || (heldDay && !MOVABLE(heldDay));
     E('mv-act').hidden = blocked; E('mv-off').hidden = !blocked;
-    if(blocked) E('mv-why').textContent = (s==='alreadymoved'||moveDone)
-      ? 'No changes left \u2014 this ticket is now final.'
+    if(blocked) E('mv-why').textContent =
+        (heldDay && !MOVABLE(heldDay)) ? 'No operator on this day allows a date change.'
+      : (s==='alreadymoved'||moveDone) ? 'No changes left \u2014 this ticket is now final.'
       : 'Changes close 8 hours before departure. That window has passed.';
   }
   // return present / dropped
@@ -1519,10 +1609,11 @@ function setState(s){
   if(E('mb-noret')) E('mb-noret').hidden = !dropped;
   if(dropped){ E('mv-act').hidden = true; E('mv-off').hidden = true;
                E('mb-act').hidden = true; E('mb-off').hidden = true; }
-  else { const bl = s==='alreadymoved' || s==='pastcutoff' || moveDone;
+  else { const bl = s==='alreadymoved' || s==='pastcutoff' || moveDone || (heldDay && !MOVABLE(heldDay));
          E('mb-act').hidden = bl; E('mb-off').hidden = !bl;
-         if(bl) E('mb-why').textContent = (s==='alreadymoved'||moveDone)
-           ? 'No changes left \u2014 this ticket is now final.'
+         if(bl) E('mb-why').textContent =
+             (heldDay && !MOVABLE(heldDay)) ? 'No operator on this day allows a date change.'
+           : (s==='alreadymoved'||moveDone) ? 'No changes left \u2014 this ticket is now final.'
            : 'Changes close 8 hours before departure. That window has passed.'; }
   if(E('tk-sub')) E('tk-sub').textContent = dropped ? 'Delhi → Nainital · one way' : 'Delhi ↔ Nainital';
   const pax=document.getElementById('rv-pax');

@@ -281,7 +281,7 @@ answers to the critique rather than to the research:
 |---|---|---|
 | **v1** | `/` | *Last day.* One date. Move earlier surfaced, later in My Bookings |
 | **v2** | `/v2.html` | *Return window.* Two fields, product books the **cheapest** day in the range |
-| **v3** | `/v3.html` | *Calendar.* One tap for a fixed date, two for a range; books the **last** day and shows the saving. Carries the Idea 9 guard, a seat picker on the move, a visible change balance, and a **60-second undo** on the move |
+| **v3** | `/v3.html` | *Calendar.* One tap for a fixed date, two for a range; books the **last movable** day and shows the saving. Carries the Idea 9 guard, **day-level movability**, an **auto-assigned return seat** changed at Trip review, a visible change balance, and a **60-second undo** on the move |
 
 v1 and v2 are frozen. Only v3 is still being changed. The screens, words and failure cases below
 are v1's; where v3 differs, LOG.md records the decision and the reason.
