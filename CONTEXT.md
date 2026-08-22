@@ -1,6 +1,6 @@
 # RedBus — project context for a fresh chat
 
-**Read this first, then `LOG.md` if you need the full history.** Everything below is current as of
+**Read this first, then `LOG.md` if you need the full history.** Sections 1–13 are how the project works; **sections 14–17 carry the research, the ideas, the design language and the out-of-scope list**, so this file stands alone if the others are not to hand. Everything below is current as of
 2026-08-13. This is a **concept case study**, not shipped work. Nothing here is real RedBus data
 unless it says so.
 
@@ -273,3 +273,148 @@ and that would be the sharpest finding, not a bad session.
 - Keep `artefacts.html` generated from `NOTES.md`. Never retype note text
 - When a document quotes interface copy, changing the copy means changing the document. Quoted
   strings are the cheapest thing to verify automatically
+
+
+---
+
+## 14. The research itself — clusters, jobs, insights, problem
+
+*Headlines are in §5. This is the substance. Full detail: `NOTES.md`, `RESEARCH.md`.*
+
+### The six clusters — labels are written from the user's side
+
+| | Label | Tension underneath |
+|---|---|---|
+| **C1** | User can't commit to a return date that isn't theirs to set | The date they'd have to commit to is owned by someone or something else |
+| **C2** | User avoids booking at all, because every way of staying flexible costs money | Undoing a commitment costs real money, so they avoid taking the position at all |
+| **C3** | User only finds out what waiting cost them after the decision is made | Deferring feels free at the moment of choosing and expensive a week later |
+| **C4** | User has to start the return search from scratch, because nothing is carried forward | The return is a fresh search later, not a thing already in progress |
+| **C5** | User carries the unbooked return around for the whole trip | An open return is not free — it occupies them until it's closed |
+| **C6** | User is guessing which way the fare will move, and acts on the guess | They're making a timing bet with no information, and their beliefs directly contradict each other |
+
+**C6 is marked `THIN`** — four notes, one participant. It was later merged into J3.
+
+### The four final JTBDs
+
+Six cluster JTBDs combined into four. **C1 + C5** are the same job seen twice — the moment they
+can't commit, and the cost of not committing. **C3 + C6** are one job — the timing decision made
+blind. **C2 and C4 stay alone** — C2 is the price of the commitment, C4 is the product's memory.
+
+| | Final JTBD | From |
+|---|---|---|
+| **J1 · Holding a return without owning the date** | When my return depends on something that hasn't resolved yet, I want the return handled without naming a date I don't have, so I can get on with the trip instead of carrying it around with me | C1 + C5 |
+| **J2 · Being wrong cheaply** | When I might be wrong about my return, I want being wrong to cost me very little, so I can decide now instead of waiting | C2 |
+| **J3 · Deciding to wait with the price of waiting visible** | When I'm deciding whether to book the return now or later, I want to know what waiting will cost me, so I'm not making a money decision on a guess | C3 + C6 |
+| **J4 · Resuming instead of restarting** | When I come back to book the return, I want to carry on from where I stopped, so I'm not redoing work I already did | C4 |
+
+
+**All four reduce to one:** *"I want to be wrong about my return date without it costing me much."*
+
+### The four insight statements
+
+*Structure: [segment] struggles with [problem] because [root cause], which means [implication].*
+**Segment and problem come from the notes. Root cause and implication are the designer's
+interpretation** — that distinction is stated on the board and matters in a review.
+
+- **J1** — RedBus has only two states for a return, bought or nothing, and both require a date the
+  traveller doesn't own → the product needs a third state, held by what they *do* know
+- **J2** — the price of being wrong is set by a cancellation ladder and a paid add-on, both priced
+  *after* the decision point → the cost of being wrong must be knowable and small at the moment of
+  committing
+- **J3** — RedBus holds the seat and fare history for every route and shows none of it while the
+  traveller is choosing to wait → the cost of waiting must be visible *while* they decide, as
+  information not urgency
+- **J4** — the return is not an object the product holds; route, operator, seat and boarding point
+  are not carried forward → the return must persist as something already in progress
+
+### The problem statement
+
+> **A traveller who doesn't yet know their return date has no usable way to keep a return
+> on RedBus.**
+>
+> The flexibility already exists — eligible buses allow a free date change, and a cancellation
+> add-on is sold at checkout. But it is offered as a property of a bus, discovered incidentally,
+> and it never enters the moment the return is actually decided. Nothing in the flow asks what
+> the traveller does know about their trip; it asks only for a date.
+>
+> So they leave the session with nothing and repeat the entire search days later, usually for a
+> worse seat at a higher fare.
+>
+> The barrier is not intent, not awareness, and not a missing feature. It is that the product's
+> flexibility is shaped as an attribute rather than as a way to book.
+
+
+**Leaves out:** fare *forecasting* (showing what waiting has cost is in; predicting is out), and
+the *causes* of date uncertainty — weddings, groups, a broken leg.
+
+---
+
+## 15. The sixteen ideas and why fifteen died
+
+Scored on **predictability out of ten — low is better**. The obvious round scored 8–9. Idea 16
+scored 2 and came from a round where every move already used was banned.
+
+| # | Idea | The move underneath | Round | Out of ten |
+|---|---|---|---|---|
+| Idea 1 | Auto-flipped "add your return" card at checkout | collapse two steps into one | obvious | 9 |
+| Idea 2 | Confidence slider, then filter to flexible buses | ask the person to sort themselves | obvious | 8 |
+| Idea 3 | "Book both, save ₹X" | change who pays the cost | obvious | 9 |
+| Idea 4 | Badge return buses with *Free date change* | make the invisible visible | obvious | 9 |
+| Idea 5 | Remind them in two days | remind at a time | obvious | 9 |
+| Idea 6 | Return saved inside the trip, unbooked, no date | give it memory | from prior work | 5 |
+| Idea 7 | Return proposed to the group, books on agreement | change who decides | from prior work | 4 |
+| Idea 8 | Show what waiting costs before they wait | make the cost visible | from prior work | 5 |
+| Idea 9 | Product decides whether to raise the return at all | let the system decide | from prior work | — |
+| Idea 10 | "When shall we remind you?" | remind at a time | from prior work | collapsed |
+| Idea 11 | Book a duration, not a date | change what gets counted | banned-moves | 3 |
+| Idea 12 | Operator and route now, date later | split one moment into two | banned-moves | 3 |
+| Idea 13 | Design for the moment the plan resolves | change when it happens | banned-moves | 2 |
+| Idea 14 | They teach it their rule once | let the person teach it | banned-moves | 4 |
+| Idea 15 | Guaranteed return seat at today's fare | borrow trust from elsewhere | banned-moves | 2 |
+| **Idea 16** | **Book the deadline, not the date. Moving earlier carries no change fee** | **defer the decision** | **banned-moves** | **2** |
+
+**Four were killed by RedBus already shipping them** — screenshots prove it. **Two were killed by
+0% forgot.** Idea 13 lost on scope, not merit, and is the stated "what I'd do next".
+
+`CRITIQUE.md` also ranks every idea on **merit** (high is better) — a different axis. Never quote
+both scores without saying which is which.
+
+---
+
+## 16. Design language — measured, not chosen
+
+From 51 screenshots of the live app, five build-compare-correct rounds.
+
+```css
+--page:#F1F1F6;  --raised:#FFFFFF;  --ink:#1D1D1D;  --muted:#636363;
+--accent:#C54646;  --rate:#458442;  --ratebg:#E0F3D9;  --ratink:#2E5C2A;
+--chip:#E9EAF6;  --warn:#A45729;  --skeleton:#F2F2F7;  --dash:#E6E6E6;
+--line:#E4E4E4;  --edge:#767680;  --t-fast:120ms;  --t-state:180ms;
+--t-cross:280ms;
+```
+
+- **Type:** 20 / 18 / 16 / 14 / 12 only. 17 and 15 were removed and must not come back
+- **Weights:** 400 and 700, with 500 on arrival times as a deliberate redBus behaviour
+- **Spacing:** 4 · 8 · 12 · 16 · 24 · 32. Card gap 16, row gap inside a card 8
+- **Buttons** are pills, radius = height/2, `0 2px 6px rgba(0,0,0,.10)`
+- **Red is action. Amber-brown `#A45729` is warning** — redBus does not use red for errors. This
+  was found by comparing, not by eye, and getting it backwards was a real correction
+- **Contrast floor** 4.5:1 text, 3:1 non-text. Declared exceptions: the `—` between times (1.25:1,
+  decorative, matches the reference) and disabled calendar days (2.79:1, inactive controls)
+- **Targets** 44×44 minimum
+- **Never colour alone** — every state carries a word or a shape too
+
+---
+
+## 17. Out of scope — real problems, do not re-raise them as findings
+
+17 notes were sorted out of scope. They are real and they will come up again in testing; that is
+evidence the sorting was honest, not a distraction. Note it, say "that's on my list", move on.
+
+Boarding-point confusion (n81 n89 n90 n92) · listing-card price not matching seat price (n79 n88) ·
+no written reviews (n80) · bus number arriving by SMS at the last minute (n84 n93) · operator
+cancelling with no alternative (n94) · seat-verification popup failures (n86) · solo-female block
+at checkout (n87) · no photos for government buses (n85).
+
+**7 more notes were "not a problem"** — things that worked, including the reverse-cities button
+(n96) and redBus's boarding clarity (n100). Do not redesign those.
