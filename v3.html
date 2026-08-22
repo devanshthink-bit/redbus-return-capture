@@ -498,7 +498,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
   <!-- ============ SCREEN: Return seat ============ -->
   <section class="screen" id="s-seat">
     <div class="nav">
-      <button class="back" aria-label="Back" id="seat-back" onclick="go('s-picked')">&#8249;</button>
+      <button class="back" aria-label="Back" id="seat-back" onclick="go('s-review')">&#8249;</button>
       <div class="navtxt"><h1 id="seat-h1">Select seats</h1><p id="seat-sub">Nainital &rarr; Delhi</p></div>
       <span style="width:34px"></span>
     </div>
@@ -523,7 +523,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
   <!-- ============ SCREEN: Return points ============ -->
   <section class="screen" id="s-points">
     <div class="nav">
-      <button class="back" aria-label="Back" id="pt-back" onclick="go('s-picked')">&#8249;</button>
+      <button class="back" aria-label="Back" id="pt-back" onclick="go('s-review')">&#8249;</button>
       <div class="navtxt"><h1>Select board &amp; drop points</h1><p>Nainital &rarr; Delhi</p></div>
       <span style="width:34px"></span>
     </div>
@@ -555,7 +555,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
   <!-- ============ SCREEN: Trip review ============ -->
   <section class="screen" id="s-review">
     <div class="nav">
-      <button class="back" aria-label="Back" onclick="go('s-points')">&#8249;</button>
+      <button class="back" aria-label="Back" onclick="go('s-picked')">&#8249;</button>
       <div class="navtxt"><h1>Review your trip</h1><p>Delhi &harr; Nainital &middot; 1 passenger</p></div>
       <span style="width:34px"></span>
     </div>
@@ -1379,7 +1379,7 @@ function ptDone(){
   if(bd){ E('rv-board').textContent=bd.t; E('rv-board').nextElementSibling.textContent=bd.s; }
   if(dr){ E('rv-drop').textContent=dr.t; E('rv-dropwhy').textContent=dr.s; }
   ptMode=''; 
-  document.getElementById('pt-back').setAttribute('onclick',"go('s-picked')");
+  document.getElementById('pt-back').setAttribute('onclick',"go('s-review')");
   document.getElementById('b-pt').textContent='Continue';
   go('s-review');
 }
@@ -1409,7 +1409,7 @@ function openSeatForMove(){
 function seatDone(){
   if(seatMode==='review'){
     seatMode='';
-    document.getElementById('seat-back').setAttribute('onclick',"go('s-picked')");
+    document.getElementById('seat-back').setAttribute('onclick',"go('s-review')");
     document.getElementById('b-seat').textContent='Select points';
     recalc(); go('s-review'); return;
   }
@@ -1418,7 +1418,7 @@ function seatDone(){
   seatMode='';
   document.getElementById('seat-h1').textContent='Select seats';
   document.getElementById('seat-note').textContent='Return leg. Your seat on the way out is unchanged.';
-  document.getElementById('seat-back').setAttribute('onclick',"go('s-picked')");
+  document.getElementById('seat-back').setAttribute('onclick',"go('s-review')");
   document.getElementById('b-seat').textContent='Select points';
   confirmMove(movedTo, '23:55', FARE[movedDay], FARE[movedDay]-FARE[heldDay], movedSeat);
 }

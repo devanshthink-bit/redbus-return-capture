@@ -2239,3 +2239,21 @@ the stacking has gone too far — and points is the one to give back its step, n
 Verified: 21-step click-through completes, changing points at review updates the card (Nainital Bus
 Stand → Mallital), changing the seat still works, 208 combinations, no failures, no target under 44,
 type scale back to 20/18/16/14/12 after the new styles briefly introduced 15/13/10.5.
+
+CRITIQUE · 2026-08-13 · molades-test · Source: user
+Back on Trip review went to the seat screen, which had been removed from the return flow an hour
+earlier. Not one stale target but **seven**: Trip review pointed at `s-points`, and the seat and
+points screens both defaulted to `s-picked` in markup plus three runtime resets that put them back
+there after a review or a move. All of them named screens the flow no longer visits.
+
+Cause: I removed two screens from the path and updated the forward links, not the backward ones.
+The click-through walk only ever presses forward, so 21 green steps proved nothing about Back.
+
+Added a **back-navigation check** to the harness: press Back on every screen and assert where it
+lands, including the two screens that are reachable from two different places — the seat screen
+must return to Trip review when opened from review, and to Move confirm when opened from a move.
+Twelve assertions, all passing.
+
+LEARNED · 2026-08-13 · molades-build
+A forward-only test cannot see a broken Back. Every time a screen leaves the flow, the links
+**into** it are the obvious fix and the links **out of** it are the one that ships broken.
