@@ -89,6 +89,11 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 .bal.none{color:var(--muted);background:#F1F1F1}
 .dlead{font-size:18px;font-weight:700;color:var(--ink);line-height:1.3;margin:0 0 4px}
 #d-what{margin-bottom:16px}
+.ptline{margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+.ptline>span:first-child{display:block;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#8A8A95}
+.ptline b{display:block;font-size:16px;font-weight:700;color:var(--ink);margin-top:2px}
+.ptline .cap{display:block;font-size:14px;color:var(--muted);margin-top:2px}
+.ptacts{display:flex;gap:20px;flex-wrap:wrap}
 .linkbtn{display:block;background:none;border:0;padding:8px 0 0;font-family:inherit;font-size:14px;font-weight:700;color:var(--accent);cursor:pointer;min-height:44px;text-align:left}
 .linkbtn:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(197,70,70,.35);border-radius:4px}   /* state rules go after the base */
 
@@ -485,7 +490,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
     </div>
     <div class="bottombar" id="pk-bar">
       <div><div class="bb1">Return</div><div class="bb2" id="pk-bb">&#8377;949</div></div>
-      <button class="btn pri" id="b-pk" disabled onclick="autoSeat()">Select points</button>
+      <button class="btn pri" id="b-pk" disabled onclick="autoSeat()">Review trip</button>
     </div>
   </section>
 
@@ -518,7 +523,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
   <!-- ============ SCREEN: Return points ============ -->
   <section class="screen" id="s-points">
     <div class="nav">
-      <button class="back" aria-label="Back" onclick="go('s-seat')">&#8249;</button>
+      <button class="back" aria-label="Back" id="pt-back" onclick="go('s-picked')">&#8249;</button>
       <div class="navtxt"><h1>Select board &amp; drop points</h1><p>Nainital &rarr; Delhi</p></div>
       <span style="width:34px"></span>
     </div>
@@ -526,24 +531,24 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
     <div class="wrap">
       <h2 class="q" style="font-size:16px;margin-bottom:8px">Boarding point in Nainital</h2>
       <button class="ptn" data-g="board" onclick="setPt(this,'board')" aria-pressed="true">
-        <div class="pt-t">20:30 &middot; Nainital Bus Stand</div>
+        <div class="pt-t">23:55 &middot; Nainital Bus Stand</div>
         <div class="pt-s">Tallital, near the boat house</div></button>
       <button class="ptn" data-g="board" onclick="setPt(this,'board')" aria-pressed="false">
-        <div class="pt-t">20:50 &middot; Mallital</div>
+        <div class="pt-t">00:15 &middot; Mallital</div>
         <div class="pt-s">Opposite the bus depot</div></button>
 
       <h2 class="q" style="font-size:16px;margin:24px 0 8px">Dropping point in Delhi</h2>
       <button class="ptn" data-g="drop" onclick="setPt(this,'drop')" aria-pressed="true">
-        <div class="pt-t">06:00 &middot; ISBT Kashmiri Gate</div>
+        <div class="pt-t">08:00 &middot; ISBT Kashmiri Gate</div>
         <div class="pt-s">Gate Number 4 &mdash; where you started from</div></button>
       <button class="ptn" data-g="drop" onclick="setPt(this,'drop')" aria-pressed="false">
-        <div class="pt-t">06:40 &middot; Akshardham</div>
+        <div class="pt-t">08:40 &middot; Akshardham</div>
         <div class="pt-s">NH24, near the metro station</div></button>
       <p class="note">We picked Kashmiri Gate because that&rsquo;s where you boarded on the way out.</p>
     </div>
     <div class="bottombar">
       <div><div class="bb1">Return added</div><div class="bb2" id="pt-price">&#8377;999</div></div>
-      <button class="btn pri" onclick="go('s-review')">Continue</button>
+      <button class="btn pri" id="b-pt" onclick="ptDone()">Continue</button>
     </div>
   </section>
 
@@ -581,8 +586,10 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
         <div class="legtag" id="rv-legtag">Return &middot; Sun, 10 Aug</div>
         <div class="row"><span class="time">23:55<span class="d">&mdash;</span><span class="arr">08:00</span></span><span class="price" id="rv-ret">&#8377;999</span></div>
         <div class="subrow"><span class="sub">Nainital &rarr; Delhi &middot; 8h 5m</span><span class="onw" id="rv-seat">Seat U5</span></div>
-        <div class="oprow"><div><div class="op">Laxmi Holidays Pvt Ltd</div><div class="cap">Nainital Bus Stand &rarr; ISBT Kashmiri Gate, Gate 4</div></div></div>
-        <button class="linkbtn" id="rv-seatbtn" onclick="openSeatForReview()">Change seat</button>
+        <div class="oprow"><div><div class="op">Laxmi Holidays Pvt Ltd</div></div></div>
+        <div class="ptline"><span>Boarding</span><b id="rv-board">23:55 &middot; Nainital Bus Stand</b><span class="cap">Tallital, near the boat house</span></div>
+        <div class="ptline"><span>Dropping</span><b id="rv-drop">08:00 &middot; ISBT Kashmiri Gate</b><span class="cap" id="rv-dropwhy">Gate Number 4 &mdash; where you started from</span></div>
+        <div class="ptacts"><button class="linkbtn" id="rv-seatbtn" onclick="openSeatForReview()">Change seat</button><button class="linkbtn" id="rv-ptbtn" onclick="openPointsForReview()">Change points</button></div>
         <div class="pill"><span aria-hidden="true">&#8635;</span> Can be moved in your window</div><!-- replaces the FlexiTicket badge on return legs; never shown alongside it -->
       </div>
 
@@ -1274,7 +1281,7 @@ function autoSeat(){
   document.getElementById('b-seat').disabled=false;
   document.getElementById('pt-price').textContent=RUPEE(chosen.fare);
   recalc();
-  go('s-points');
+  go('s-review');
 }
 function toSeat(){
   chosen.seat=null;
@@ -1359,6 +1366,24 @@ function bookedOn(day){
   for(let i=0;i<5;i++) taken.add(((day*7+i*5)%12)+1);
   return taken;
 }
+function openPointsForReview(){
+  ptMode='review';
+  document.getElementById('pt-back').setAttribute('onclick',"ptMode='';go('s-review')");
+  document.getElementById('b-pt').textContent='Use these points';
+  go('s-points');
+}
+function ptDone(){
+  const pick = g => { const b=document.querySelector('.ptn[data-g="'+g+'"][aria-pressed="true"]');
+    return b ? {t:b.querySelector('.pt-t').textContent, s:b.querySelector('.pt-s').textContent} : null; };
+  const bd=pick('board'), dr=pick('drop'), E=i=>document.getElementById(i);
+  if(bd){ E('rv-board').textContent=bd.t; E('rv-board').nextElementSibling.textContent=bd.s; }
+  if(dr){ E('rv-drop').textContent=dr.t; E('rv-dropwhy').textContent=dr.s; }
+  ptMode=''; 
+  document.getElementById('pt-back').setAttribute('onclick',"go('s-picked')");
+  document.getElementById('b-pt').textContent='Continue';
+  go('s-review');
+}
+let ptMode='';
 function openSeatForReview(){
   seatMode='review';
   document.getElementById('seat-h1').textContent='Choose your seat';

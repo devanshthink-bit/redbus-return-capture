@@ -2207,3 +2207,35 @@ LEARNED · 2026-08-13 · molades-build
 One of the four replacements in this batch silently did nothing, because I matched against copy I
 had already rewritten and did not assert. It cost a full test cycle to find. **Assert on every
 replacement, including the ones that look trivial** — a silent no-op looks exactly like success.
+
+DECISION · 2026-08-13 · molades-build · Source: user
+Applied the seat pattern to boarding and dropping points: both are now defaulted and the screen
+leaves the return flow. **Two screens have come out of the return path today** — the return is now
+pick a day → review → pay.
+
+**Not symmetric with the seat, and the design reflects that.** A seat is low-consequence and easy
+to change. A boarding point is a physical place with a bus to miss, and it is the highest-anxiety
+thing in the whole research pile — n81 Anand lost the boarding spot and a friend, n90 Samarth
+nearly missed a bus over an 800m map error, n89 Sai found a known stop missing, n92 wants a 360°
+image of it.
+
+There is also an asymmetry inside the pair. The **dropping** point is in the home city, where the
+default (where you started from) is safe. The **boarding** point is in the destination city, where
+the traveller is a visitor and may have stayed nowhere near where they were dropped.
+
+So the points did not simply disappear behind a link. Trip review now **names both, with their
+times**, as their own block on the return leg, with *Change points* beside *Change seat*. The
+information is on the screen; only the step is gone.
+
+Fixed while in there: a pre-existing data error nobody had caught. The return departs 23:55 and
+arrives 08:00, but the boarding points said 20:30 / 20:50 and dropping said 06:00 / 06:40 — carried
+over from v1 and wrong in all three builds' fiction. Now 23:55 / 00:15 and 08:00 / 08:40.
+
+**The risk worth naming, because it is real:** day, seat and points are now all defaulted. Each
+default is defensible alone; together they turn Trip review into the actual selection screen. If
+testing shows people scrolling past the boarding point without registering it, that is the signal
+the stacking has gone too far — and points is the one to give back its step, not the seat.
+
+Verified: 21-step click-through completes, changing points at review updates the card (Nainital Bus
+Stand → Mallital), changing the seat still works, 208 combinations, no failures, no target under 44,
+type scale back to 20/18/16/14/12 after the new styles briefly introduced 15/13/10.5.
