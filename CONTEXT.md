@@ -57,6 +57,7 @@ on push. `raw/` (interview transcripts) is gitignored.
 | `BRIEF.md` | The build spec. Constraints, **verified RedBus terms**, 16 ideas + kill log, shapes, screens, states, 21 failure cases, known gaps, stakeholder Q&A |
 | `DESIGN_LANGUAGE.md` | Measured from 51 screenshots. Tokens, type scale, spacing, the attack-pass rules |
 | `TEST_SCRIPT.md` | Usability script — 5 named participants, 3 tasks, 4 must-see moments |
+| `TERMS.md` | Every redBus rule the construct stands on — FlexiTicket, Free Cancellation, reschedule, refunds — quoted verbatim with its source, plus what is still unverified |
 | `DEFENCE.md` | **102 questions** in 15 sections with answers and pushbacks, for stakeholders and interviews |
 | `CRITIQUE.md` | Six attacks written against the chosen idea, each with its defence and where the defence fails. Plus the merit ranking of all ideas |
 | `artefacts.html` | The FigJam-style board — 11 sections, scope card → design brief. **Generated from NOTES.md**, not retyped |
@@ -114,7 +115,7 @@ Sai Srinivas Buddi · Samarth Kumar · Soumya Mishra · Vivek Nandoskar.
 
 ---
 
-## 6. Verified RedBus terms — check `BRIEF.md` before claiming anything about these
+## 6. Verified RedBus terms — `TERMS.md` is the full record; this is the short list
 
 - Rescheduling **once per booking**
 - Once rescheduled, the ticket **cannot be cancelled at all**
@@ -125,6 +126,10 @@ Sai Srinivas Buddi · Samarth Kumar · Soumya Mishra · Vivek Nandoskar.
 - FlexiTicket gives a **minimum 50% refund** at 12h+ (50–100%, operator-dependent) — **not** free cancellation
 - **Free Cancellation** is a **separate paid add-on** (₹160 in the prototype), voided by rescheduling
 - **Still unverified:** whether a date change is same-operator only
+
+`TERMS.md` carries all of this in full — every clause quoted verbatim, the source named for each,
+the seven things still unverified, and the five places where v3 deliberately simplifies the real
+terms. Read it before quoting a number at anyone.
 
 ---
 

@@ -25,6 +25,8 @@ Do not start work, answer a question about the project, or change a file until y
 - `CONTEXT.md` — the handoff. Start here
 - `LOG.md` — full history, oldest first. Every decision and every mistake with its reason
 - `NOTES.md` · `RESEARCH.md` · `BRIEF.md` · `SCOPE.md` — the research and the spec
+- `TERMS.md` — every redBus rule the construct stands on (FlexiTicket, Free Cancellation,
+  reschedule, refunds), each with its source and a verified/unverified flag
 - `DEFENCE.md` — 102 stakeholder/interview questions with answers
 - `CRITIQUE.md` — six attacks on the chosen idea, plus the idea ranking
 - `TEST_SCRIPT.md` — the usability script (sessions not yet run)
