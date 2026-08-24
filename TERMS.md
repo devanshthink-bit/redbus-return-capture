@@ -73,22 +73,15 @@ never says "free".
 **FlexiTicket does not give free cancellation.** It gives *at least half* your money back at 12h+.
 Anyone who says "FlexiTicket already lets you cancel for free" is wrong, and this quote settles it.
 
-### FAQ 3 — how to find one
-
-> "Go to the redBus app/website. Search for buses by entering Source, Destination and date of
-> travel. You will be shown all available buses on your route. Look for buses with 'FlexiTicket' logo."
-
-### FAQ 4 — how to tell if a booking you already made is one
-
-> "You can check for 'FlexiTicket' logo in the My Bookings' section on redBus app / website. You can
-> also check for the same in the ticket details sent to your email ID."
+FAQs 3 and 4 carry no policy — they only explain how to spot the FlexiTicket logo when searching,
+and how to check an existing booking in My Bookings. Screenshots IMG_3885 and IMG_3886 if ever needed.
 
 ---
 
 ## 3. Free Cancellation
 
-Source: the in-app Free Cancellation page, IMG_3887–3899. Primary evidence, including the full
-seven-clause Terms and Conditions and all six FAQs.
+Source: the in-app Free Cancellation page, IMG_3887–3899. Primary evidence. The clauses and FAQs
+that bear on our construct are below; the boilerplate is named and left in the screenshots.
 
 ### What it is
 
@@ -145,22 +138,14 @@ quoted one. If asked, say that.
 - c. **"The free cancellation does not apply to tickets that have been rescheduled."**
 - d. "The free cancellation does not apply to tickets purchased through third-party platforms or agents."
 
-**5. Modifications and Termination**
-- a. "The Company reserves the right to modify, suspend, or terminate the Program, or amend these
-  Terms, at its sole discretion and without prior notice."
-- b. "In the event of termination, the free cancellation will no longer be available for future ticket
-  purchases, but any eligible refunds for already cancelled tickets will be honoured according to these Terms."
+Clauses **5, 6 and 7** are legal boilerplate — redBus can change or end the programme without
+notice, its liability is capped at the refund amount, and using it means you accept the terms.
+Nothing there touches the design. Full text in screenshots IMG_3892 and IMG_3893.
 
-**6. Limitation of Liability**
-- a. "The Company shall not be liable for any loss, damages, or claims arising from the use or non-use
-  of the free cancellation, including but not limited to missed connections, travel disruptions, or
-  any other related expenses."
-- b. "The Company's liability, if any, shall be limited to the refund amount specified under these Terms."
+### The FAQs that carry policy
 
-**7.** "By participating in the Program, Customers acknowledge that they have read, understood, and
-agreed to these Terms and the Company's general terms and conditions for ticket bookings."
-
-### The six FAQs
+FAQ 6 only repeats that the refund goes back to the original payment method, already covered by
+clauses 1b and 3c.
 
 | # | Question | redBus's answer, verbatim |
 |---|---|---|
@@ -169,7 +154,6 @@ agreed to these Terms and the Company's general terms and conditions for ticket 
 | 3 | **What happens if I reschedule?** | **"In case of reschedule, the rescheduled ticket will not be cancellable and the free cancellation amount will not be refunded."** |
 | 4 | Why am I still charged? | "If the ticket is cancelled within 6 or 12 hours of boarding time (as applicable to your booking), then the free cancellation will not be applicable and the customer will be charged cancellation charges." |
 | 5 | Do I get the add-on fee back when I cancel? | "No, on user initiated cancellation free cancellation amount will not be refunded." |
-| 6 | Where does the refund go? | "The complete amount under Free Cancellation will be refunded to the original source of payment. E.g. If the user pays using a credit card, the refund will be credited back to that same credit card. Customers cannot get the refund in any other payment method." |
 
 **FAQ 3 is the most important sentence in this entire file.** It is quoted twice — once in the
 Terms (4c) and once in the FAQ — so it is not a slip. Rescheduling kills the cancellation, and it
@@ -283,8 +267,9 @@ This is the boundary that decides which ideas were ever buildable.
 - "You are solely responsible for being at the designated boarding point reasonably in advance of the
   departure time."
 - "You are responsible for ensuring that your travel date, time and destination are correct prior to
-  requesting/booking bus tickets."
-- You must show a valid, legible boarding ticket.
+  requesting/booking bus tickets." — **the clause our construct pushes hardest against.** redBus's
+  position is that picking the right date is the traveller's problem. Our whole bet is that for a
+  return leg it isn't, because the date isn't knowable yet.
 
 ---
 
