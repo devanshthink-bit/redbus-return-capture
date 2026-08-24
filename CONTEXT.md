@@ -228,6 +228,22 @@ Then inject a `<script>` before `</body>` that writes results into `<pre id="R">
 
 Money must agree across `rv-tot`, `rv-bb`, `pay-tot` and `pay-title` in every state.
 
+**A fifth check, added 24 Aug 2026 after a real bug:** set a value and assert it reaches *every*
+screen. Seat numbers were typed into markup and JS strings in seventeen places, so picking a seat
+changed the seat map and nothing else. The pattern to use, and the reason it works:
+
+- **One accessor per value.** `outSeat()` · `retSeat()` · `DEP_TIME` · `ARR_TIME` · `OPERATOR`.
+  Nothing else may name a seat, a time or the operator.
+- **`data-` attributes over id lists.** `paintSeats()` writes `[data-outseat]` and `[data-retseat]`.
+  A new screen opts in by carrying the attribute — it cannot be forgotten the way an id list can.
+- **Watch where a writer sits relative to an early return.** `paintSeats()` first lived below
+  `paintReturn()`'s `if(!heldDay) return`, so the Skip path never painted the onward seat.
+- **A constant that becomes user-editable stops being a constant.** Every `HELD_SEAT` in the code
+  meant *"the seat you hold"*. That was true until the seat could be chosen, then eleven call sites
+  were silently wrong.
+- **Grep for what the code can actually produce.** The copy said seat `SU4`; the grids only ever
+  build `L1..L12` and `U1..U12`. A name no code path can generate is always a literal.
+
 **Rendering:** `--force-device-scale-factor=1 --window-size=440,960 --screenshot=…`, injecting
 `.dev{display:none!important}` to hide the dev rails. `scrollIntoView` does not work in headless —
 isolate a section by hiding the others instead.
