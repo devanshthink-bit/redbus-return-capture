@@ -1297,7 +1297,7 @@ function autoSeat(){
   const nm = equivalentSeat();
   const btn = [].find.call(document.querySelectorAll('#g-lower .seat,#g-upper .seat'),
                            b=>b.getAttribute('aria-label').indexOf('Seat '+nm+',')===0);
-  chosen.op=OPERATOR; chosen.fare=FARE[heldDay]; chosen.seat=nm;
+  chosen.op=OPERATOR; chosen.fare=FARE[heldDay]; chosen.seat=nm; paintSeats();
   if(btn) btn.setAttribute('aria-pressed','true');
   document.getElementById('seat-sub').textContent='Nainital \u2192 Delhi \u00B7 '+chosen.op;
   document.getElementById('seat-count').textContent='Seat '+nm+' selected';
@@ -1361,6 +1361,7 @@ function toggleOutSeat(b,name){
   document.getElementById('oseat-count').textContent = out.seat?('Seat '+out.seat+' selected'):'No seat selected';
   document.getElementById('oseat-price').innerHTML   = out.seat?('₹'+out.fare.toLocaleString('en-IN')):'&nbsp;';
   document.getElementById('b-oseat').disabled = !out.seat;
+  paintSeats();                     // the seat is named on eight other screens
 }
 function toggleSeat(b,name){
   const already=b.getAttribute('aria-pressed')==='true';
@@ -1370,6 +1371,7 @@ function toggleSeat(b,name){
   document.getElementById('seat-count').textContent = chosen.seat?('Seat '+chosen.seat+' selected'):'No seat selected';
   document.getElementById('seat-price').innerHTML = chosen.seat?('₹'+chosen.fare.toLocaleString('en-IN')):'&nbsp;';
   document.getElementById('b-seat').disabled = !chosen.seat;
+  paintSeats();                     // the seat is named on eight other screens
 }
 function setPt(el,group){
   document.querySelectorAll('.ptn[data-g="'+group+'"]').forEach(p=>p.setAttribute('aria-pressed','false'));
@@ -1565,6 +1567,15 @@ function paintSeats(){
   const de=E('d-outseat'); if(de) de.textContent=label(OUT_DAY)+', seat '+o;
   const er=E('rv-errseat');if(er) er.textContent='Seat '+r+' on the '+DEP_TIME+' Laxmi Holidays bus went '
     +'while you were here. Your onward journey is unaffected.';
+  const pax=E('rv-pax');
+  if(pax){
+    pax.innerHTML = state==='crowded'
+      ? ['Devansh Somvanshi','Priyanka Ramachandran-Iyer','Sai Srinivas Buddi','Harshraj Vamanjoor','Soumya Mishra','Jaimin Gagiya']
+          .map((nm,i)=>'<div class="paxname" style="margin-top:'+(i?10:0)+'px">'+nm+'</div><div class="cap">Seat '+[o+'/'+r,'L2/L3','U6/U8','L1/L1','U2/U2','L5/L6'][i]+'</div>').join('')
+      : '<div class="paxname">Devansh Somvanshi</div><div class="cap">Male, 29 \u00B7 Seat '+(state==='noreturn'?o:o+' / '+r)+'</div>';
+    const nv=document.querySelector('#s-review .navtxt p');
+    if(nv) nv.textContent='Delhi \u2194 Nainital \u00B7 '+PAX()+' passenger'+(PAX()>1?'s':'');
+  }
 }
 
 function paintReturn(){
@@ -1680,14 +1691,6 @@ function setState(s){
            : (s==='alreadymoved'||moveDone) ? 'No changes left \u2014 this ticket is now final.'
            : 'Changes close 8 hours before departure. That window has passed.'; }
   if(E('tk-sub')) E('tk-sub').textContent = dropped ? 'Delhi → Nainital · one way' : 'Delhi ↔ Nainital';
-  const pax=document.getElementById('rv-pax');
-  if(pax){
-    pax.innerHTML = s==='crowded'
-      ? ['Devansh Somvanshi','Priyanka Ramachandran-Iyer','Sai Srinivas Buddi','Harshraj Vamanjoor','Soumya Mishra','Jaimin Gagiya']
-          .map((n,i)=>'<div class="paxname" style="margin-top:'+(i?10:0)+'px">'+n+'</div><div class="cap">Seat '+[outSeat()+'/'+retSeat(),'L2/L3','U6/U8','L1/L1','U2/U2','L5/L6'][i]+'</div>').join('')
-      : '<div class="paxname">Devansh Somvanshi</div><div class="cap">Male, 29 · Seat '+(dropped?outSeat():outSeat()+' / '+retSeat())+'</div>';
-    document.querySelector('#s-review .navtxt p').textContent='Delhi ↔ Nainital · '+PAX()+' passenger'+(PAX()>1?'s':'');
-  }
   recalc();
   renderPicked();
 }
