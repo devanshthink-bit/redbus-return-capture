@@ -1016,7 +1016,12 @@ function bookedDay(){
   if(sel.length!==2) return sel[0];
   return lastMovableIn(sel[0],sel[1]) || sel[1];
 }
-function cheapestIn(a,b){ let best=a; for(let d=a;d<=b;d++) if(FARE[d]<FARE[best]) best=d; return best; }
+// Only days you could actually book count. A sold-out day was being named as the cheapest.
+function cheapestIn(a,b){
+  let best=0;
+  for(let d=a;d<=b;d++) if(SEAT[d] && (!best || FARE[d]<FARE[best])) best=d;
+  return best || a;
+}
 
 // One test for "does this range contain a real money choice?", used by the calendar copy, the
 // picker and the booked-day decision. They used to test it separately and drifted apart: the copy
@@ -1071,14 +1076,20 @@ function paintWindow(){
       aria += d<=OUT_DAY ? ', before your outbound journey' : ', beyond the booking window'; }
     else if(!inRange){ cls.push('off'); dis=' disabled';
       aria += ', more than '+MAX_WINDOW+' days from the day you picked'; }
-    else if(!SEAT[d]){ cls.push('off'); dis=' disabled';
-      inner+='<span class="f">Full</span>'; aria += ', full, no seats left'; }
     else {
-      inner+='<span class="f">'+RUPEE(FARE[d])+'</span>';
-      aria+=', '+RUPEE(FARE[d]);
-      if(!MOVABLE(d)){ cls.push('nomove'); inner+='<i class="nmdot" aria-hidden="true"></i>';
-        aria+=', no free date change on this day'; }
-      if(d===cheap){ cls.push('cheap'); aria+=', cheapest in your range'; }
+      const full = !SEAT[d];
+      if(full){                          // the bus runs, every seat on it is gone
+        cls.push('off'); dis=' disabled';
+        inner+='<span class="f">Full</span>'; aria += ', full, no seats left';
+      } else {
+        inner+='<span class="f">'+RUPEE(FARE[d])+'</span>';
+        aria+=', '+RUPEE(FARE[d]);
+        if(!MOVABLE(d)){ cls.push('nomove'); inner+='<i class="nmdot" aria-hidden="true"></i>';
+          aria+=', no free date change on this day'; }
+        if(d===cheap){ cls.push('cheap'); aria+=', cheapest in your range'; }
+      }
+      // The band shows the window; the day's own styling shows whether you can take it. A sold-out
+      // day inside a chosen range is still inside it, so leaving it out broke the range in two.
       if(sel.length===1){
         if(d===sel[0]) cls.push('sel');
         else cls.push('reach');          // still inside the 7-day cap — extendable
