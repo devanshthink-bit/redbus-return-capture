@@ -741,7 +741,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       <div id="wi-none" hidden>
         <div class="blank">
           <h2>No other days available</h2>
-          <p>Laxmi Holidays isn&rsquo;t running on the other days in your window.</p>
+          <p>There is no other day in your window to move to.</p>
           <p class="long" id="wi-none-b">Your booking is unchanged and still valid.</p>
           <div class="acts">
             <button class="btn pri" style="width:100%" onclick="go('s-ticket')">Keep my current booking</button>
@@ -1242,7 +1242,10 @@ function renderWithin(){
   // outside it are days they have already said are impossible. One tap means no window was
   // given, and then the change is the ordinary FlexiTicket one — any day.
   const inWindow = sel.length===2 ? (d=>d>=sel[0] && d<=sel[1]) : (()=>true);
-  const days=BOOKABLE.filter(d=>d!==heldDay && MOVABLE(d) && inWindow(d));
+  // MOVABLE is deliberately NOT a filter here. It asks whether a day's ticket could be changed
+  // again, and this move spends the only change there is. A bus still runs on those days with
+  // seats free, so hiding them removes real options to protect a change that no longer exists.
+  const days=BOOKABLE.filter(d=>d!==heldDay && inWindow(d));
   const held=document.querySelector('#s-within .held');
   if(held) held.innerHTML='<div class="legtag">You have</div>'
     + '<div class="row"><span class="time" style="font-size:16px">'+label(heldDay)+' \u00B7 '+DEP_TIME+'</span>'
