@@ -431,7 +431,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
         </div>
         <div class="dow"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
         <div class="grid" id="cal-grid" role="group" aria-label="Choose your return day, or two days if you are not sure"></div>
-        <p class="callegend"><i></i>Date change not available</p>
+        <p class="callegend"><i></i>No date change on this day</p>
         <p class="callegend"><b class="fullkey">Full</b>No seats left on this bus</p>
       </div>
 
@@ -466,12 +466,12 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 
       <div id="pk-none" hidden>
         <div class="blank">
-          <h2>No returns in that window can be moved</h2>
+          <h2>No day here can be changed later</h2>
           <p id="pk-none-b">No day from Sat, 9 Aug to Tue, 12 Aug can be changed later.</p>
-          <p class="long">You can still book a return normally, or widen your window.</p>
+          <p class="long">You can still book a return, or pick other days.</p>
           <div class="acts">
             <button class="btn pri" style="width:100%">Show all returns</button>
-            <button class="btn sec" style="width:100%" onclick="go('s-window')">Change my window</button>
+            <button class="btn sec" style="width:100%" onclick="go('s-window')">Pick other days</button>
           </div>
         </div>
       </div>
@@ -479,7 +479,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       <div id="pk-err" hidden>
         <div class="blank">
           <h2>We couldn&rsquo;t check those days</h2>
-          <p>Nothing has been charged and your onward journey is unaffected.</p>
+          <p>Nothing was charged. Your onward trip is not affected.</p>
           <div class="acts">
             <button class="btn pri" style="width:100%" onclick="setState('default')">Try again</button>
             <button class="btn sec" style="width:100%" onclick="skipReturn()">Continue without a return</button>
@@ -564,7 +564,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 
       <!-- error: return seat lost -->
       <div class="legerr" id="rv-err" hidden>
-        <p class="legerr-t">Your return seat was taken</p>
+        <p class="legerr-t">Your return seat is gone</p>
         <p class="legerr-b" id="rv-errseat">Seat U5 is gone &mdash; someone just booked it. Your onward trip is fine.</p>
         <div class="legerr-a">
           <button class="btn pri" onclick="go('s-picked')">Pick another return</button>
@@ -612,8 +612,8 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       <!-- free cancellation, per leg -->
       <div class="leg">
         <div class="legtag">Free Cancellation</div>
-        <label class="addon"><input type="checkbox" id="fc-on" autocomplete="off" onchange="recalc()"><span><b>Onward journey</b><br><span class="cap">100% refund up to 12 hours before departure</span></span><span class="addonp">&#8377;160</span></label>
-        <div class="addon off" data-ret><span><b>Return journey</b><br><span class="cap">Not available on this bus</span></span><span class="addonp">&mdash;</span></div>
+        <label class="addon"><input type="checkbox" id="fc-on" autocomplete="off" onchange="recalc()"><span><b>Onward</b><br><span class="cap">100% refund up to 12 hours before departure</span></span><span class="addonp">&#8377;160</span></label>
+        <div class="addon off" data-ret><span><b>Return</b><br><span class="cap">Not available on this bus</span></span><span class="addonp">&mdash;</span></div>
       </div>
 
       <!-- total -->
@@ -665,7 +665,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
         <span class="chev">&#8250;</span>
       </button>
       <div class="rowact off" id="mv-off" hidden>
-        <span><b>Change day</b><br><span class="cap" id="mv-why">This ticket can&rsquo;t be moved. Contact support if you need to change it.</span></span>
+        <span><b>Change day</b><br><span class="cap" id="mv-why">This ticket can&rsquo;t be changed.</span></span>
       </div>
     </div>
   </section>
@@ -704,7 +704,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
         <span class="chev">&#8250;</span>
       </button>
       <div class="rowact off" id="mb-off" hidden>
-        <span><b>Change day</b><br><span class="cap" id="mb-why">This ticket can&rsquo;t be moved. Contact support if you need to change it.</span></span>
+        <span><b>Change day</b><br><span class="cap" id="mb-why">This ticket can&rsquo;t be changed.</span></span>
       </div>
     </div>
   </section>
@@ -740,7 +740,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
         <div class="blank">
           <h2>No other days to pick</h2>
           <p>There is no other day in your range.</p>
-          <p class="long" id="wi-none-b">Your booking is not changed. You have not been charged.</p>
+          <p class="long" id="wi-none-b">Your booking is safe. Nothing was charged.</p>
           <div class="acts">
             <button class="btn pri" style="width:100%" onclick="go('s-ticket')">Keep my booking</button>
           </div>
@@ -750,7 +750,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       <div id="wi-err" hidden>
         <div class="blank">
           <h2>We couldn&rsquo;t check other days</h2>
-          <p id="wi-err-b">Your booking is unchanged. Nothing has been charged.</p>
+          <p id="wi-err-b">Your booking is safe. Nothing was charged.</p>
           <div class="acts">
             <button class="btn pri" style="width:100%" onclick="setState('default')">Try again</button>
             <button class="btn sec" style="width:100%" onclick="go('s-ticket')">Keep my booking</button>
@@ -770,8 +770,8 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
     <div class="wrap">
 
       <div class="legerr" id="c-err" hidden>
-        <p class="legerr-t">That seat went while you were confirming</p>
-        <p class="legerr-b" id="c-errb"><b>Your booking is untouched.</b> Nothing was charged and nothing was cancelled.</p>
+        <p class="legerr-t">That seat is gone</p>
+        <p class="legerr-b" id="c-errb"><b>Your booking is safe.</b> Nothing was charged.</p>
         <div class="legerr-a"><button class="btn pri" onclick="openWithin()">See other days</button></div>
       </div>
 
@@ -1086,7 +1086,7 @@ function paintWindow(){
         inner+='<span class="f">'+RUPEE(FARE[d])+'</span>';
         aria+=', '+RUPEE(FARE[d]);
         if(!MOVABLE(d)){ cls.push('nomove'); inner+='<i class="nmdot" aria-hidden="true"></i>';
-          aria+=', date change not available'; }
+          aria+=', no date change on this day'; }
         if(d===cheap){ cls.push('cheap'); aria+=', cheapest in your range'; }
       }
       // The band shows the window; the day's own styling shows whether you can take it. A sold-out
@@ -1191,7 +1191,8 @@ function renderPicked(){
     const right = d===heldDay ? '<span class="onw">Booked</span>'
       : (!heldDay ? ''
         : diff>0 ? '<span class="onw diffup">'+RUPEE(diff)+' more</span>'
-                 : '<span class="onw">'+RUPEE(-diff)+' cheaper</span>');
+        : diff<0 ? '<span class="onw">'+RUPEE(-diff)+' cheaper</span>'
+                 : '<span class="onw">Same price</span>');
     return '<button class="card'+(d===heldDay?' sel':'')+'" onclick="choosePick('+d+')" aria-pressed="'+(d===heldDay)+'">'
       + '<div class="row"><span class="time">'+label(d)+' \u00B7 '+DEP_TIME+'</span><span class="price">'+RUPEE(FARE[d])+'</span></div>'
       + '<div class="subrow"><span class="sub">'+OPERATOR+' \u00B7 Seat '+seat+'</span>'+right+'</div>'
@@ -1217,16 +1218,16 @@ function renderPicked(){
   // the trade-off, stated where the choice is made rather than where the loss happens
   // Scannable by the bold lines alone — the same test the terms blocks are held to.
   const note=document.getElementById('pk-note');
-  const after = '<dt>Switching is free until you pay</dt>'
+  const after = '<dt>Changing is free until you pay</dt>'
     + '<dd>After you pay, you get one date change.</dd>';
   if(heldDay && !MOVABLE(heldDay)){
     note.innerHTML = '<dt class="crit">You cannot change this date later</dt>'
-      + '<dd>No bus on '+label(heldDay)+' offers a date change. Booking it is final.</dd>'
-      + '<dt>Days with a grey dot are the same</dt>'
+      + '<dd>No bus on '+label(heldDay)+' offers a date change.</dd>'
+      + '<dt>A grey dot means no date change</dt>'
       + '<dd>Pick a day without a dot to keep your one change.</dd>';
   } else if(days.length===1){
     note.innerHTML = '<dt>You get one date change</dt>'
-      + '<dd>Earlier or later, on '+OPERATOR+'. Pay any price difference.</dd>'
+      + '<dd>Earlier or later. Pay any price difference.</dd>'
       + '<dt class="crit">No refund on a cheaper day</dt>'
       + '<dd>You only pay when the new day costs more.</dd>';
   } else if(spread){
@@ -1252,7 +1253,7 @@ function paintChangeRow(){
   const dropped = s==='noreturn';
   const stuck   = heldDay && !MOVABLE(heldDay);
   const blocked = s==='alreadymoved' || s==='pastcutoff' || moveDone || stuck;
-  const why = stuck ? 'No bus on this day allows a date change.'
+  const why = stuck ? 'No date change on this day.'
     : (s==='alreadymoved'||moveDone) ? 'You have used your one change. This ticket is final.'
     : 'Too late to change. Changes close 8 hours before the bus leaves.';
   ['mv','mb'].forEach(function(k){
@@ -1313,7 +1314,8 @@ function renderWithin(){
     const mine = retSeat(), same = seat===mine;
     const seatTxt = same ? 'Your seat '+mine+' is free' : 'Seat '+mine+' is taken. You get '+seat;
     const right = diff>0 ? '<span class="onw diffup">Pay '+RUPEE(diff)+' more</span>'
-                         : '<span class="onw">'+RUPEE(-diff)+' less \u2014 not refunded</span>';
+                 : diff<0 ? '<span class="onw">'+RUPEE(-diff)+' less \u2014 no refund</span>'
+                          : '<span class="onw">Same price</span>';
     return '<button class="card" onclick="confirmMove(\''+label(d)+'\',\''+DEP_TIME+'\','+FARE[d]+','+diff+',\''+seat+'\')">'
       + '<div class="row"><span class="time">'+label(d)+' \u00B7 '+DEP_TIME+'</span><span class="price">'+RUPEE(FARE[d])+'</span></div>'
       + '<div class="subrow"><span class="sub">'+OPERATOR+' \u00B7 '+seatTxt+'</span>'+right+'</div>'
@@ -1491,7 +1493,7 @@ function openSeatForMove(){
   seatMode='move';
   document.getElementById('seat-h1').textContent='Choose your seat';
   document.getElementById('seat-sub').textContent=label(movedDay)+' \u00B7 Nainital \u2192 Delhi';
-  document.getElementById('seat-note').textContent='Seats free on this day. You keep '+retSeat()+' only if it is still open.';
+  document.getElementById('seat-note').textContent='Pick from the seats open on that day. '+retSeat()+' may be gone.';
   document.getElementById('seat-back').setAttribute('onclick',"seatMode='';go('s-confirm')");
   document.getElementById('b-seat').textContent='Use this seat';
   buildSeats(movedDay);
@@ -1530,7 +1532,8 @@ function confirmMove(date,time,fare,diff,seat){
         : 'Seat '+mine+' is taken that day. You would be in '+movedSeat)
     + '</dd>';
   const up = diff>0;
-  document.getElementById('c-diff').textContent = up ? '₹'+diff : '₹'+Math.abs(diff)+' less — not refunded';
+  document.getElementById('c-diff').textContent =
+      diff>0 ? '₹'+diff : diff<0 ? '₹'+Math.abs(diff)+' less — no refund' : 'Same price';
   document.getElementById('c-payl').textContent = up ? 'You pay now' : 'You pay now';
   document.getElementById('c-pay').textContent  = up ? '₹'+diff : '₹0';
   document.getElementById('d-date').textContent = date;
@@ -1634,8 +1637,8 @@ function paintReturn(){
   set('mb-rdate',d);                         set('mb-rprice',f);
   set('pay-retlabel','Return \u00B7 '+d);
   set('c-from',d+' \u00B7 '+DEP_TIME);           set('c-fromsub','Seat '+retSeat()+' \u00B7 '+f);
-  set('wi-none-b','Your '+d+' booking is safe. Seat '+retSeat()+', '+f+'. Nothing was charged.');
-  set('wi-err-b','Your '+d+' booking is not changed. You have not been charged.');
+  const safe = 'Your '+d+' booking is safe. Nothing was charged.';
+  set('wi-none-b', safe); set('wi-err-b', safe);
   set('bc-window',win);
   const rw=E('rv-window'); if(rw) rw.textContent = sel.length===2
     ? win+'. Earlier or later'
@@ -1645,7 +1648,7 @@ function paintReturn(){
     : 'Any other day, earlier or later') + '. Pay only the price difference.';
   ['mv-sub','mb-sub'].forEach(function(id){ set(id, sub); });
   const ce=E('c-errb'); if(ce) ce.innerHTML='<b>Your '+d+' booking is safe.</b> Seat '+retSeat()+', '+f
-    +'. You have not been charged, and nothing was cancelled.';
+    +'. Nothing was charged.';
 }
 
 // Every rupee figure on Trip review and Pay is derived here and nowhere else.
