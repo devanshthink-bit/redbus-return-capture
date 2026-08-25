@@ -610,15 +610,15 @@ body.testing .dev{display:none!important}
         <div class="ptline"><span>Boarding</span><b id="rv-board">23:55 &middot; Nainital Bus Stand</b><span class="cap">Tallital, near the boat house</span></div>
         <div class="ptline"><span>Dropping</span><b id="rv-drop">08:00 &middot; ISBT Kashmiri Gate</b><span class="cap" id="rv-dropwhy">Gate Number 4 &mdash; where you started</span></div>
         <div class="ptacts"><button class="linkbtn" id="rv-seatbtn" onclick="openSeatForReview()">Change seat</button><button class="linkbtn" id="rv-ptbtn" onclick="openPointsForReview()">Change points</button></div>
-        <div class="pill" data-movepill><span aria-hidden="true">&#8635;</span> You can change this date</div><!-- replaces the FlexiTicket badge on return legs; never shown alongside it -->
-        <p class="pillnote" data-pillnote>One change only. After it, the return cannot be cancelled.</p>
+        <div class="pill" data-movepill><span aria-hidden="true">&#8635;</span> You can change this date once</div><!-- replaces the FlexiTicket badge on return legs; never shown alongside it -->
+        <p class="pillnote" data-pillnote>After that, the return cannot be cancelled.</p>
       </div>
 
       <!-- the terms. plain ink, no fill, no badge, nothing to tap -->
       <div class="terms" data-ret>
         <h3>Changing your return</h3>
         <dl class="rules">
-          <dt>You can change the date once</dt><dd>No fee. Pay only if the new bus costs more</dd>
+          <dt>No fee to change it</dt><dd>Pay only if the new bus costs more</dd>
           <dt>Any day you picked</dt><dd id="rv-window">Sat, 9 &ndash; Tue, 12 Aug. Earlier or later</dd>
           <dt class="crit">You cannot cancel after that</dt><dd>No refund on the return. Your onward trip is not affected</dd>
           <dt>Change it up to 8 hours before</dt><dd>After that the date is fixed</dd>
@@ -913,16 +913,16 @@ body.testing .dev{display:none!important}
         <div class="row"><span class="time">23:55<span class="d">&mdash;</span><span class="arr">08:00</span></span><span class="price" id="bc-price">&#8377;949</span></div>
         <div class="subrow"><span class="sub">Nainital &rarr; Delhi &middot; 8h 5m</span><span class="onw" data-retseat>Seat U5</span></div>
         <div class="oprow"><div><div class="op">Laxmi Holidays Pvt Ltd</div><div class="cap">Nainital Bus Stand &rarr; ISBT Kashmiri Gate, Gate 4</div></div></div>
-        <div class="pill" data-movepill><span aria-hidden="true">&#8635;</span> You can change this date</div>
-        <p class="pillnote" data-pillnote>One change only. After it, the return cannot be cancelled.</p>
+        <div class="pill" data-movepill><span aria-hidden="true">&#8635;</span> You can change this date once</div>
+        <p class="pillnote" data-pillnote>After that, the return cannot be cancelled.</p>
       </div>
 
       <div class="terms" id="bc-terms">
         <h3>Changing your return day</h3>
         <dl class="rules">
           <dt>Open your ticket</dt><dd>Tap <b>Change day</b> and pick another date</dd>
-          <dt>You can change the date once</dt><dd>No fee. Pay only if the new bus costs more</dd>
-          <dt id="bc-window">Sat, 9 &ndash; Tue, 12 Aug</dt><dd>Any day in that range, earlier or later. One change only</dd>
+          <dt>No fee to change it</dt><dd>Pay only if the new bus costs more</dd>
+          <dt id="bc-window">Sat, 9 &ndash; Tue, 12 Aug</dt><dd>Any day in that range, earlier or later</dd>
           <dt class="crit">You cannot cancel after that</dt><dd>No refund on the return</dd>
         </dl>
       </div>
@@ -1303,7 +1303,7 @@ function paintChangeRow(){
     p.classList.toggle('no', !!stuck);
     p.innerHTML = stuck
       ? 'No date change on this day'
-      : '<span aria-hidden="true">\u21BB</span> You can change this date';
+      : '<span aria-hidden="true">\u21BB</span> You can change this date once';
   });
   // the cost of using the badge belongs beside it, not 700px further down
   document.querySelectorAll('[data-pillnote]').forEach(function(p){ p.hidden = !!stuck || dropped; });
