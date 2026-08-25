@@ -244,6 +244,37 @@ changed the seat map and nothing else. The pattern to use, and the reason it wor
 - **Grep for what the code can actually produce.** The copy said seat `SU4`; the grids only ever
   build `L1..L12` and `U1..U12`. A name no code path can generate is always a literal.
 
+**Why that first pass still missed three bugs, and what actually finds them.** Grepping for literals
+finds hardcoded *values*. It cannot see a writer that never runs, a visibility flag that goes stale,
+or a filter with the wrong rule — which were the next three bugs, in that order. Audit by
+**enumerating writers, not values**:
+
+```bash
+# every function that assigns to shared state, and whether it repaints
+# chosen.seat · out.seat · heldDay · sel · moveDone · movedSeat · state
+# any row that repaints via NOTHING is a candidate bug
+```
+
+- **Writers.** List every function assigning to shared state; if it does not call a painter, ask why.
+  This found `pickOut` and `toSeat` after three separate commits of fixing them one at a time.
+- **Visibility.** Any element whose `.hidden` is set from two different functions will go stale.
+  Give each one a single owner — the thing that knows the answer. `wi-list` was set by `setState`
+  when only `renderWithin` knows whether the list is empty.
+- **Filters.** For every filter, say out loud what it protects against, then check that the thing it
+  protects can still happen. The change-day list filtered on `MOVABLE` to protect a second date
+  change, on a screen whose own headline says there is no second date change.
+
+**Verify through the UI, never by setting state.** Set `chosen.seat` in script and everything looks
+right; tap a seat and it does not. Every bug above lived in that gap. The checks that catch them:
+
+- **Click every control** from a clean load (154 of them) and assert the invariants after each
+- **Randomised journeys** — 60 runs picking a random bus, seat, window and day, asserting every
+  displayed value equals its accessor
+- **Sweep the whole input space** where one exists — all 189 windows a traveller can pick
+
+The four checks above these all passed while all three bugs were live. They see *which screen* is
+showing, not whether what is on it is true.
+
 **Rendering:** `--force-device-scale-factor=1 --window-size=440,960 --screenshot=…`, injecting
 `.dev{display:none!important}` to hide the dev rails. `scrollIntoView` does not work in headless —
 isolate a section by hiding the others instead.
