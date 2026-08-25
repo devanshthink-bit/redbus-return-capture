@@ -467,7 +467,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       <div id="pk-none" hidden>
         <div class="blank">
           <h2>No returns in that window can be moved</h2>
-          <p id="pk-none-b">Nothing between Sat, 9 Aug and Tue, 12 Aug can be changed after booking.</p>
+          <p id="pk-none-b">No day from Sat, 9 Aug to Tue, 12 Aug can be changed later.</p>
           <p class="long">You can still book a return normally, or widen your window.</p>
           <div class="acts">
             <button class="btn pri" style="width:100%">Show all returns</button>
@@ -565,7 +565,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       <!-- error: return seat lost -->
       <div class="legerr" id="rv-err" hidden>
         <p class="legerr-t">Your return seat was taken</p>
-        <p class="legerr-b" id="rv-errseat">Seat U5 is gone. Someone booked it while you were here. Your onward trip is not affected.</p>
+        <p class="legerr-b" id="rv-errseat">Seat U5 is gone &mdash; someone just booked it. Your onward trip is fine.</p>
         <div class="legerr-a">
           <button class="btn pri" onclick="go('s-picked')">Pick another return</button>
           <button class="btn sec" onclick="dropReturn()">Continue without a return</button>
@@ -656,7 +656,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       <div class="blank" id="tk-noret" hidden>
         <h2>No return booked</h2>
         <p>You booked this trip one way.</p>
-        <p class="long">If you decide to come back by bus, you can book a return any time.</p>
+        <p class="long">You can book a return any time.</p>
         <div class="acts"><button class="btn pri" style="width:100%" onclick="go('s-window')">Book a return</button></div>
       </div>
 
@@ -1116,9 +1116,13 @@ function paintWindow(){
   prev.disabled = calMonth===0;
   next.disabled = calMonth===MONTHS.length-1;
 
-  document.getElementById('q-hint').textContent = sel.length
-    ? 'You can pick any shaded day.'
-    : 'Pick one day. Pick two if you\u2019re not sure yet.';
+  // Three different moments, three different things to say. It used to say 'pick any shaded day'
+  // for both one and two picks, which is only true for one -- with a range chosen, the shading is
+  // the range itself, not a set of options. The 7-day cap is stated up front, where they decide.
+  document.getElementById('q-hint').textContent =
+      !sel.length   ? 'Pick one day. Not sure? Pick two, up to '+MAX_WINDOW+' days apart.'
+    : sel.length===1? 'Shaded days are within '+MAX_WINDOW+' days of your pick.'   // the prompt to use them is in the rules below, not repeated here
+    :                 'Tap any day to start again.';
 
   const R=document.getElementById('win-rules');
   if(!sel.length){
@@ -1127,7 +1131,7 @@ function paintWindow(){
     R.innerHTML = '<dt>We\u2019ll book '+label(sel[0])+' \u00B7 '+RUPEE(FARE[sel[0]])+'</dt>'
       + '<dd>You can change the date once, later. Pay only the price difference.</dd>'
       + '<dt class="prompt">Not sure? Tap a second day</dt>'
-      + '<dd>Up to 7 days apart. We book the last day, so you always have a seat.</dd>';
+      + '<dd>Up to '+MAX_WINDOW+' days apart. We book your last day.</dd>';
   } else {
     const b=sel[1], c=cheapestIn(sel[0],sel[1]);
     R.innerHTML = (!hasSpread()
@@ -1217,7 +1221,7 @@ function renderPicked(){
     + '<dd>After you pay, you get one date change on '+OPERATOR+'.</dd>';
   if(heldDay && !MOVABLE(heldDay)){
     note.innerHTML = '<dt class="crit">You cannot change this date later</dt>'
-      + '<dd>No bus on '+label(heldDay)+' allows a date change. Once you book, it is final.</dd>'
+      + '<dd>No bus on '+label(heldDay)+' offers a date change. Booking it is final.</dd>'
       + '<dt>Days with a grey dot are the same</dt>'
       + '<dd>Pick a day without a dot to keep your one change.</dd>';
   } else if(days.length===1){
@@ -1320,7 +1324,7 @@ function renderWithin(){
   // applies to you. The per-day cards already say which seat you would get, so that is not repeated.
   if(days.length) wrap.innerHTML += '<dl class="rules note-rules">'
     + '<dt>Your seat may change</dt>'
-    + '<dd>It is saved only for the day you booked. Pick another before you confirm.</dd>'
+    + '<dd>It is saved only for your booked day. Pick another before you confirm.</dd>'
     + '<dt>Only one operator on this route</dt>'
     + '<dd>Your new date will be on '+OPERATOR+' too.</dd>'
     + '</dl>';
@@ -1597,8 +1601,7 @@ function paintSeats(){
   document.querySelectorAll('[data-retseat]').forEach(e=>{ e.textContent='Seat '+r; });
   const bb=E('opt-bb');    if(bb) bb.innerHTML='Laxmi Holidays &middot; Seat '+o;
   const de=E('d-outseat'); if(de) de.textContent=label(OUT_DAY)+', seat '+o;
-  const er=E('rv-errseat');if(er) er.textContent='Seat '+r+' is gone. Someone booked it '
-    +'while you were here. Your onward trip is not affected.';
+  const er=E('rv-errseat');if(er) er.textContent='Seat '+r+' is gone \u2014 someone just booked it. Your onward trip is fine.';
   const pax=E('rv-pax');
   if(pax){
     pax.innerHTML = state==='crowded'
@@ -1631,7 +1634,7 @@ function paintReturn(){
   set('mb-rdate',d);                         set('mb-rprice',f);
   set('pay-retlabel','Return \u00B7 '+d);
   set('c-from',d+' \u00B7 '+DEP_TIME);           set('c-fromsub','Seat '+retSeat()+' \u00B7 '+f);
-  set('wi-none-b','Your '+d+' booking is not changed. Seat '+retSeat()+', '+f+'. You have not been charged.');
+  set('wi-none-b','Your '+d+' booking is safe. Seat '+retSeat()+', '+f+'. Nothing was charged.');
   set('wi-err-b','Your '+d+' booking is not changed. You have not been charged.');
   set('bc-window',win);
   const rw=E('rv-window'); if(rw) rw.textContent = sel.length===2
