@@ -586,7 +586,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
         <div class="ptline"><span>Boarding</span><b id="rv-board">23:55 &middot; Nainital Bus Stand</b><span class="cap">Tallital, near the boat house</span></div>
         <div class="ptline"><span>Dropping</span><b id="rv-drop">08:00 &middot; ISBT Kashmiri Gate</b><span class="cap" id="rv-dropwhy">Gate Number 4 &mdash; where you started from</span></div>
         <div class="ptacts"><button class="linkbtn" id="rv-seatbtn" onclick="openSeatForReview()">Change seat</button><button class="linkbtn" id="rv-ptbtn" onclick="openPointsForReview()">Change points</button></div>
-        <div class="pill"><span aria-hidden="true">&#8635;</span> Can be moved in your window</div><!-- replaces the FlexiTicket badge on return legs; never shown alongside it -->
+        <div class="pill" data-movepill><span aria-hidden="true">&#8635;</span> Can be moved in your window</div><!-- replaces the FlexiTicket badge on return legs; never shown alongside it -->
       </div>
 
       <!-- the terms. plain ink, no fill, no badge, nothing to tap -->
@@ -881,7 +881,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
         <div class="row"><span class="time">23:55<span class="d">&mdash;</span><span class="arr">08:00</span></span><span class="price" id="bc-price">&#8377;949</span></div>
         <div class="subrow"><span class="sub">Nainital &rarr; Delhi &middot; 8h 5m</span><span class="onw" data-retseat>Seat U5</span></div>
         <div class="oprow"><div><div class="op">Laxmi Holidays Pvt Ltd</div><div class="cap">Nainital Bus Stand &rarr; ISBT Kashmiri Gate, Gate 4</div></div></div>
-        <div class="pill"><span aria-hidden="true">&#8635;</span> Can be moved in your window</div>
+        <div class="pill" data-movepill><span aria-hidden="true">&#8635;</span> Can be moved in your window</div>
       </div>
 
       <div class="terms" id="bc-terms">
@@ -1002,7 +1002,8 @@ const MOVABLE = d => ((d*13 + 5) % 9) < 7;
 // A range books the LAST day the traveller could travel — but only if that day can actually
 // be changed later. Booking a non-movable day would hand them a ticket every screen claims
 // they can move. So: the last MOVABLE day in the range, falling back to the last day if none is.
-function lastMovableIn(a,b){ for(let d=b; d>=a; d--) if(MOVABLE(d)) return d; return 0; }
+// "Movable" is not enough to book someone: the bus also has to have a seat left.
+function lastMovableIn(a,b){ for(let d=b; d>=a; d--) if(MOVABLE(d) && SEAT[d]) return d; return 0; }
 function anyMovableIn(a,b){ return lastMovableIn(a,b) !== 0; }
 
 let sel = [];            // [] nothing · [d] one day · [a,b] a range
@@ -1068,6 +1069,7 @@ function paintWindow(){
       aria += d<=OUT_DAY ? ', before your outbound journey' : ', beyond the booking window'; }
     else if(!inRange){ cls.push('off'); dis=' disabled';
       aria += ', more than '+MAX_WINDOW+' days from the day you picked'; }
+    else if(!SEAT[d]){ cls.push('off'); dis=' disabled'; aria += ', no seats left'; }
     else {
       inner+='<span class="f">'+RUPEE(FARE[d])+'</span>';
       aria+=', '+RUPEE(FARE[d]);
@@ -1135,8 +1137,8 @@ function loadWindow(){
   b.disabled=true; b.innerHTML='<span class="spin"></span> Checking';
   setTimeout(()=>{
     b.innerHTML='Continue'; b.disabled=false;
-    heldDay = hasSpread() ? 0 : bookedDay();   // a real money trade-off is the traveller's to make
-    renderPicked(); go('s-picked');
+    setHeldDay(hasSpread() ? 0 : bookedDay());   // a real money trade-off is the traveller's to make
+    go('s-picked');
   }, 800);
 }
 
@@ -1160,14 +1162,21 @@ function renderPicked(){
     // bottom of the list. What is not obvious is why it is worth picking, so name that instead.
     if(days.length>1 && spread && d===cheap) tags.push('<div class="pill">\u21BB Cheapest</div>');
     if(!MOVABLE(d)) tags.push('<div class="pill no">No date change</div>');
+    const seat = SEAT[d];                     // the seat that day actually has, not a seat we hold
     const diff = heldDay ? FARE[d]-FARE[heldDay] : 0;
+    if(!seat){                                // no bus seat left: say so, and do not let it be picked
+      return '<div class="card off" aria-disabled="true">'
+        + '<div class="row"><span class="time">'+label(d)+' \u00B7 '+DEP_TIME+'</span><span class="price">'+RUPEE(FARE[d])+'</span></div>'
+        + '<div class="subrow"><span class="sub">'+OPERATOR+'</span><span class="onw">No seats left</span></div>'
+        + (tags.length?'<div class="pillrow">'+tags.join('')+'</div>':'') + '</div>';
+    }
     const right = d===heldDay ? '<span class="onw">Booked</span>'
       : (!heldDay ? ''
         : diff>0 ? '<span class="onw diffup">'+RUPEE(diff)+' more</span>'
                  : '<span class="onw">'+RUPEE(-diff)+' cheaper</span>');
     return '<button class="card'+(d===heldDay?' sel':'')+'" onclick="choosePick('+d+')" aria-pressed="'+(d===heldDay)+'">'
       + '<div class="row"><span class="time">'+label(d)+' \u00B7 '+DEP_TIME+'</span><span class="price">'+RUPEE(FARE[d])+'</span></div>'
-      + '<div class="subrow"><span class="sub">'+OPERATOR+' \u00B7 Seat '+retSeat()+' free</span>'+right+'</div>'
+      + '<div class="subrow"><span class="sub">'+OPERATOR+' \u00B7 Seat '+seat+'</span>'+right+'</div>'
       + (tags.length?'<div class="pillrow">'+tags.join('')+'</div>':'') + '</button>';
   }).join('');
 
@@ -1235,11 +1244,20 @@ function paintChangeRow(){
     off.hidden = dropped || !blocked;
     if(blocked && w) w.textContent = why;
   });
+  // The badge on the return leg is a promise, so it has to answer to the same fact.
+  document.querySelectorAll('[data-movepill]').forEach(function(p){
+    p.classList.toggle('no', !!stuck);
+    p.innerHTML = stuck
+      ? 'No date change on this day'
+      : '<span aria-hidden="true">\u21BB</span> Can be moved in your window';
+  });
 }
 
-// Picking the booked day changes what half the app says, so repaint from state rather than
-// hand-picking painters -- that is how the Change-day row kept offering a day it could not move.
-function choosePick(d){ heldDay=d; setState(state); }
+// The booked day drives the ticket row, the move badge, the money and every date on screen.
+// Assigning it directly and then choosing which painters to call is how the same bug arrived four
+// separate times. Nothing assigns heldDay any more; everything goes through here.
+function setHeldDay(d){ heldDay = d; setState(state); }
+function choosePick(d){ setHeldDay(d); }
 
 // Changing the booked day after payment — any day in the range, either direction.
 const BOOKABLE = Array.from({length: LAST_BOOKABLE-OUT_DAY}, (_,i)=>OUT_DAY+1+i);
@@ -1514,8 +1532,9 @@ function doMove(){
     b.innerHTML='Confirm move'; b.disabled=false;
     if(document.getElementById('st-sf').getAttribute('aria-pressed')==='true'){ setState('swapfail'); }
     else {
-      moveDone=true; heldDay=movedDay||heldDay;   // the move is final the moment it is confirmed
-      setState(state); recalc(); go('s-done');
+      moveDone=true;
+      setHeldDay(movedDay||heldDay);   // the move is final the moment it is confirmed
+      recalc(); go('s-done');
     }
   },1100);
 }
