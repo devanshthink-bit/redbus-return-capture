@@ -420,7 +420,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
         <b>Delhi &rarr; Nainital &middot; Thu, 7 Aug &middot; 23:55</b>
       </div>
 
-      <h2 class="q">When could you travel back?</h2>
+      <h2 class="q">When can you travel back?</h2>
       <p class="qhint" id="q-hint">Pick one day. Pick two if you&rsquo;re not sure yet.</p>
 
       <div class="cal">
@@ -431,7 +431,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
         </div>
         <div class="dow"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
         <div class="grid" id="cal-grid" role="group" aria-label="Choose your return day, or two days if you are not sure"></div>
-        <p class="callegend"><i></i>No free date change on this day</p>
+        <p class="callegend"><i></i>Date change not available</p>
         <p class="callegend"><b class="fullkey">Full</b>No seats left on this bus</p>
       </div>
 
@@ -503,7 +503,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
     </div>
     <div class="banner" data-only="offline"><span aria-hidden="true">&#8856;</span><span>You&rsquo;re offline. Check your internet connection.</span></div>
     <div class="wrap">
-      <p class="note" style="margin:0 0 12px" id="seat-note">Return leg. Your seat on the way out is unchanged.</p>
+      <p class="note" style="margin:0 0 12px" id="seat-note">This is your return bus. Your onward seat stays the same.</p>
       <div class="deckwrap">
         <div class="deck"><p class="deckt">Lower deck</p><div class="grid" id="g-lower"></div></div>
         <div class="deck"><p class="deckt">Upper deck</p><div class="grid" id="g-upper"></div></div>
@@ -539,11 +539,11 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       <h2 class="q" style="font-size:16px;margin:24px 0 8px">Dropping point in Delhi</h2>
       <button class="ptn" data-g="drop" onclick="setPt(this,'drop')" aria-pressed="true">
         <div class="pt-t">08:00 &middot; ISBT Kashmiri Gate</div>
-        <div class="pt-s">Gate Number 4 &mdash; where you started from</div></button>
+        <div class="pt-s">Gate Number 4 &mdash; where you started</div></button>
       <button class="ptn" data-g="drop" onclick="setPt(this,'drop')" aria-pressed="false">
         <div class="pt-t">08:40 &middot; Akshardham</div>
         <div class="pt-s">NH24, near the metro station</div></button>
-      <p class="note">We picked Kashmiri Gate because that&rsquo;s where you boarded on the way out.</p>
+      <p class="note">You started from Kashmiri Gate, so we picked it for your drop.</p>
     </div>
     <div class="bottombar">
       <div><div class="bb1">Return added</div><div class="bb2" id="pt-price">&#8377;999</div></div>
@@ -565,7 +565,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       <!-- error: return seat lost -->
       <div class="legerr" id="rv-err" hidden>
         <p class="legerr-t">Your return seat was taken</p>
-        <p class="legerr-b" id="rv-errseat">Seat U5 on the 23:55 Laxmi Holidays bus went while you were here. Your onward journey is unaffected.</p>
+        <p class="legerr-b" id="rv-errseat">Seat U5 is gone. Someone booked it while you were here. Your onward trip is not affected.</p>
         <div class="legerr-a">
           <button class="btn pri" onclick="go('s-picked')">Pick another return</button>
           <button class="btn sec" onclick="dropReturn()">Continue without a return</button>
@@ -587,19 +587,19 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
         <div class="subrow"><span class="sub">Nainital &rarr; Delhi &middot; 8h 5m</span><span class="onw" data-retseat>Seat U5</span></div>
         <div class="oprow"><div><div class="op">Laxmi Holidays Pvt Ltd</div></div></div>
         <div class="ptline"><span>Boarding</span><b id="rv-board">23:55 &middot; Nainital Bus Stand</b><span class="cap">Tallital, near the boat house</span></div>
-        <div class="ptline"><span>Dropping</span><b id="rv-drop">08:00 &middot; ISBT Kashmiri Gate</b><span class="cap" id="rv-dropwhy">Gate Number 4 &mdash; where you started from</span></div>
+        <div class="ptline"><span>Dropping</span><b id="rv-drop">08:00 &middot; ISBT Kashmiri Gate</b><span class="cap" id="rv-dropwhy">Gate Number 4 &mdash; where you started</span></div>
         <div class="ptacts"><button class="linkbtn" id="rv-seatbtn" onclick="openSeatForReview()">Change seat</button><button class="linkbtn" id="rv-ptbtn" onclick="openPointsForReview()">Change points</button></div>
-        <div class="pill" data-movepill><span aria-hidden="true">&#8635;</span> Can be moved in your window</div><!-- replaces the FlexiTicket badge on return legs; never shown alongside it -->
+        <div class="pill" data-movepill><span aria-hidden="true">&#8635;</span> You can change this date</div><!-- replaces the FlexiTicket badge on return legs; never shown alongside it -->
       </div>
 
       <!-- the terms. plain ink, no fill, no badge, nothing to tap -->
       <div class="terms" data-ret>
         <h3>Changing your return</h3>
         <dl class="rules">
-          <dt>One change, only the fare difference</dt><dd>No change fee. If the new bus costs more, you pay the difference</dd>
-          <dt>Any day in your window</dt><dd id="rv-window">Sat, 9 &ndash; Tue, 12 Aug. Earlier or later, in one tap</dd>
-          <dt class="crit">No cancelling after</dt><dd>The return becomes non&#8209;refundable. Your onward journey is unaffected</dd>
-          <dt>Until 8 hours before</dt><dd>After that the date is fixed</dd>
+          <dt>You can change the date once</dt><dd>No fee. Pay only if the new bus costs more</dd>
+          <dt>Any day you picked</dt><dd id="rv-window">Sat, 9 &ndash; Tue, 12 Aug. Earlier or later</dd>
+          <dt class="crit">You cannot cancel after that</dt><dd>No refund on the return. Your onward trip is not affected</dd>
+          <dt>Change it up to 8 hours before</dt><dd>After that the date is fixed</dd>
         </dl>
       </div>
 
@@ -613,7 +613,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       <div class="leg">
         <div class="legtag">Free Cancellation</div>
         <label class="addon"><input type="checkbox" id="fc-on" autocomplete="off" onchange="recalc()"><span><b>Onward journey</b><br><span class="cap">100% refund up to 12 hours before departure</span></span><span class="addonp">&#8377;160</span></label>
-        <div class="addon off" data-ret><span><b>Return journey</b><br><span class="cap">Not offered on this bus by the operator</span></span><span class="addonp">&mdash;</span></div>
+        <div class="addon off" data-ret><span><b>Return journey</b><br><span class="cap">Not available on this bus</span></span><span class="addonp">&mdash;</span></div>
       </div>
 
       <!-- total -->
@@ -661,7 +661,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       </div>
 
       <button class="rowact" id="mv-act" onclick="openWithin()">
-        <span><b>Change day</b><br><span class="cap" id="mv-sub">Any day between Sat, 9 Aug and Tue, 12 Aug. Only pay the fare difference.</span><span class="bal" id="mv-bal">1 change left</span></span>
+        <span><b>Change day</b><br><span class="cap" id="mv-sub">Sat, 9 Aug to Tue, 12 Aug. Pay only the price difference.</span><span class="bal" id="mv-bal">1 change left</span></span>
         <span class="chev">&#8250;</span>
       </button>
       <div class="rowact off" id="mv-off" hidden>
@@ -695,12 +695,12 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       </div>
 
       <button class="rowact" onclick="go('s-ticket')">
-        <span><b>View ticket</b><br><span class="cap">Both legs, seats and boarding points</span></span>
+        <span><b>View ticket</b><br><span class="cap">Onward and return, seats and stops</span></span>
         <span class="chev">&#8250;</span>
       </button>
 
       <button class="rowact" id="mb-act" onclick="openWithin()">
-        <span><b>Change day</b><br><span class="cap" id="mb-sub">Any day between Sat, 9 Aug and Tue, 12 Aug. Only pay the fare difference.</span><span class="bal" id="mb-bal">1 change left</span></span>
+        <span><b>Change day</b><br><span class="cap" id="mb-sub">Sat, 9 Aug to Tue, 12 Aug. Pay only the price difference.</span><span class="bal" id="mb-bal">1 change left</span></span>
         <span class="chev">&#8250;</span>
       </button>
       <div class="rowact off" id="mb-off" hidden>
@@ -722,12 +722,12 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
     <div class="wrap">
 
       <div class="held">
-        <div class="legtag">You have</div>
+        <div class="legtag">Your booking</div>
         <div class="row"><span class="time" style="font-size:16px">Sun, 10 Aug &middot; 23:55</span><span class="price" style="font-size:16px">&#8377;949</span></div>
         <div class="cap" style="margin-top:4px">Laxmi Holidays Pvt Ltd &middot; Seat U5</div>
       </div>
 
-      <p class="terms-lead">Changing the day ends cancellation on this ticket, and you can only do it once.</p>
+      <p class="terms-lead">One change only. After it, you cannot cancel this ticket.</p>
 
       <div id="wi-loading" hidden>
         <div class="skelcard"><div class="skel" style="width:45%"></div><div class="skel" style="width:62%;margin-top:12px"></div></div>
@@ -738,11 +738,11 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 
       <div id="wi-none" hidden>
         <div class="blank">
-          <h2>No other days available</h2>
-          <p>There is no other day in your window to move to.</p>
-          <p class="long" id="wi-none-b">Your booking is unchanged and still valid.</p>
+          <h2>No other days to pick</h2>
+          <p>There is no other day in your range.</p>
+          <p class="long" id="wi-none-b">Your booking is not changed. You have not been charged.</p>
           <div class="acts">
-            <button class="btn pri" style="width:100%" onclick="go('s-ticket')">Keep my current booking</button>
+            <button class="btn pri" style="width:100%" onclick="go('s-ticket')">Keep my booking</button>
           </div>
         </div>
       </div>
@@ -753,7 +753,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
           <p id="wi-err-b">Your booking is unchanged. Nothing has been charged.</p>
           <div class="acts">
             <button class="btn pri" style="width:100%" onclick="setState('default')">Try again</button>
-            <button class="btn sec" style="width:100%" onclick="go('s-ticket')">Keep my current booking</button>
+            <button class="btn sec" style="width:100%" onclick="go('s-ticket')">Keep my booking</button>
           </div>
         </div>
       </div>
@@ -764,7 +764,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
   <section class="screen" id="s-confirm">
     <div class="nav">
       <button class="back" aria-label="Back" onclick="abortMove()">&#8249;</button>
-      <div class="navtxt"><h1>Confirm the move</h1></div>
+      <div class="navtxt"><h1>Confirm date change</h1></div>
       <span style="width:34px"></span>
     </div>
     <div class="wrap">
@@ -783,22 +783,22 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 
       <div class="leg">
         <div class="fare"><span>Change fee</span><span>&#8377;0</span></div>
-        <div class="fare"><span>Fare difference</span><span id="c-diff">&#8377;200</span></div>
+        <div class="fare"><span>Price difference</span><span id="c-diff">&#8377;200</span></div>
         <div class="fare tot"><span id="c-payl">You pay now</span><span id="c-pay">&#8377;200</span></div>
       </div>
 
       <div class="terms">
-        <h3>What this ends</h3>
+        <h3>After you change it</h3>
         <dl class="rules">
           <span id="c-seatrule" hidden></span>
-          <dt class="crit">No refund after this</dt><dd>The ticket cannot be cancelled for any reason</dd>
-          <dt>No second change</dt><dd>This uses your one date change</dd>
+          <dt class="crit">You cannot cancel it</dt><dd>No refund, for any reason</dd>
+          <dt>No more changes</dt><dd>This is your one date change</dd>
         </dl>
       </div>
     </div>
     <div class="bottombar">
       <button class="btn sec" id="b-back" onclick="abortMove()">Go back</button>
-      <button class="btn pri" id="b-conf" onclick="doMove()">Confirm move</button>
+      <button class="btn pri" id="b-conf" onclick="doMove()">Confirm change</button>
     </div>
   </section>
 
@@ -806,7 +806,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
   <section class="screen" id="s-done">
     <div class="nav">
       <div style="width:34px"></div>
-      <div class="navtxt"><h1>Return moved</h1></div>
+      <div class="navtxt"><h1>Date changed</h1></div>
       <span style="width:34px"></span>
     </div>
     <div class="wrap">
@@ -817,12 +817,12 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
         <div class="oprow"><div><div class="op">Laxmi Holidays Pvt Ltd</div><div class="cap">Nainital Bus Stand &rarr; ISBT Kashmiri Gate, Gate 4</div></div></div>
       </div>
       <p class="dlead" id="d-lead"></p>
-      <p class="note" id="d-what">Moved from Mon, 11 Aug. You paid &#8377;200.</p>
+      <p class="note" id="d-what">Changed from Mon, 11 Aug. You paid &#8377;200.</p>
       <div class="terms">
-        <h3>What&rsquo;s changed</h3>
+        <h3>What this means</h3>
         <dl class="rules">
-          <dt class="crit" id="d-finalh">This ticket is now final</dt><dd id="d-final">It cannot be cancelled or moved again</dd>
-          <dt>Onward journey unchanged</dt><dd id="d-outseat">Thu, 7 Aug, seat U4</dd>
+          <dt class="crit" id="d-finalh">No more changes</dt><dd id="d-final">You cannot cancel or change this ticket again</dd>
+          <dt>Onward trip is the same</dt><dd id="d-outseat">Thu, 7 Aug, seat U4</dd>
         </dl>
       </div>
       <div class="btns"><button class="btn sec" style="flex:1" onclick="go('s-ticket')">View ticket</button></div>
@@ -884,20 +884,20 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
         <div class="row"><span class="time">23:55<span class="d">&mdash;</span><span class="arr">08:00</span></span><span class="price" id="bc-price">&#8377;949</span></div>
         <div class="subrow"><span class="sub">Nainital &rarr; Delhi &middot; 8h 5m</span><span class="onw" data-retseat>Seat U5</span></div>
         <div class="oprow"><div><div class="op">Laxmi Holidays Pvt Ltd</div><div class="cap">Nainital Bus Stand &rarr; ISBT Kashmiri Gate, Gate 4</div></div></div>
-        <div class="pill" data-movepill><span aria-hidden="true">&#8635;</span> Can be moved in your window</div>
+        <div class="pill" data-movepill><span aria-hidden="true">&#8635;</span> You can change this date</div>
       </div>
 
       <div class="terms" id="bc-terms">
         <h3>Changing your return day</h3>
         <dl class="rules">
-          <dt>Open your ticket</dt><dd>Choose <b>Change day</b> and pick another day in your window</dd>
-          <dt>One change, only the fare difference</dt><dd>No change fee. If the new bus costs more, you pay the difference</dd>
-          <dt id="bc-window">Sat, 9 &ndash; Tue, 12 Aug</dt><dd>Any day in that window, earlier or later. One change in total</dd>
-          <dt class="crit">No cancelling after</dt><dd>The return becomes non&#8209;refundable</dd>
+          <dt>Open your ticket</dt><dd>Tap <b>Change day</b> and pick another date</dd>
+          <dt>You can change the date once</dt><dd>No fee. Pay only if the new bus costs more</dd>
+          <dt id="bc-window">Sat, 9 &ndash; Tue, 12 Aug</dt><dd>Any day in that range, earlier or later. One change only</dd>
+          <dt class="crit">You cannot cancel after that</dt><dd>No refund on the return</dd>
         </dl>
       </div>
 
-      <p class="note">Ticket details have been sent to your email and WhatsApp.</p>
+      <p class="note">Ticket sent to your email and WhatsApp.</p>
 
       <div class="btns">
         <button class="btn pri" style="flex:1" onclick="go('s-ticket')">View ticket</button>
@@ -1086,7 +1086,7 @@ function paintWindow(){
         inner+='<span class="f">'+RUPEE(FARE[d])+'</span>';
         aria+=', '+RUPEE(FARE[d]);
         if(!MOVABLE(d)){ cls.push('nomove'); inner+='<i class="nmdot" aria-hidden="true"></i>';
-          aria+=', no free date change on this day'; }
+          aria+=', date change not available'; }
         if(d===cheap){ cls.push('cheap'); aria+=', cheapest in your range'; }
       }
       // The band shows the window; the day's own styling shows whether you can take it. A sold-out
@@ -1117,31 +1117,30 @@ function paintWindow(){
   next.disabled = calMonth===MONTHS.length-1;
 
   document.getElementById('q-hint').textContent = sel.length
-    ? 'Tinted days are still within reach.'
+    ? 'You can pick any shaded day.'
     : 'Pick one day. Pick two if you\u2019re not sure yet.';
 
   const R=document.getElementById('win-rules');
   if(!sel.length){
-    R.innerHTML = '<dt>Prices shown are today\u2019s</dt><dd>Booking now holds this fare and a seat.</dd>';
+    R.innerHTML = '<dt>Prices can go up</dt><dd>Book now to keep this price and a seat.</dd>';
   } else if(sel.length===1){
     R.innerHTML = '<dt>We\u2019ll book '+label(sel[0])+' \u00B7 '+RUPEE(FARE[sel[0]])+'</dt>'
-      + '<dd>One date change later, either direction. Only pay the fare difference.</dd>'
+      + '<dd>You can change the date once, later. Pay only the price difference.</dd>'
       + '<dt class="prompt">Not sure? Tap a second day</dt>'
-      + '<dd>Anything up to 7 days apart. We\u2019ll book the last day you could travel.</dd>';
+      + '<dd>Up to 7 days apart. We book the last day, so you always have a seat.</dd>';
   } else {
     const b=sel[1], c=cheapestIn(sel[0],sel[1]);
     R.innerHTML = (!hasSpread()
       ? '<dt>We\u2019ll book '+label(b)+' \u00B7 '+RUPEE(FARE[b])+'</dt>'
-      + '<dd>The last day you could travel, so you never have to change. Every day in your range is the same fare.</dd>'
+      + '<dd>Your last day, so you never need to change it. Every day costs the same.</dd>'
       : c===b
       ? '<dt>Next, pick your day</dt>'
-      + '<dd>'+label(b)+' is the last day you could travel and the cheapest, at '+RUPEE(FARE[b])
+      + '<dd>'+label(b)+' is your last day and also the cheapest, at '+RUPEE(FARE[b])
       + '. Earlier days cost more.</dd>'
       : '<dt>Next, pick your day</dt>'
-      + '<dd>'+label(c)+' is cheapest at '+RUPEE(FARE[c])+'. '+label(b)+' is the last day you could '
-      + 'travel, at '+RUPEE(FARE[b])+'.</dd>')
-      + '<dt>One date change later, either direction</dt>'
-      + '<dd>Only pay the fare difference. A lower fare isn\u2019t refunded.</dd>';
+      + '<dd>Cheapest: '+label(c)+' '+RUPEE(FARE[c])+'. Your last day: '+label(b)+' '+RUPEE(FARE[b])+'.</dd>')
+      + '<dt>You can change the date once</dt>'
+      + '<dd>Pay only the price difference. Cheaper days get no money back.</dd>';
   }
   document.getElementById('b-cont').disabled = (!sel.length || offline);
 }
@@ -1198,43 +1197,43 @@ function renderPicked(){
   const lead=document.getElementById('pk-lead');
   const lastMov = sel.length===2 ? lastMovableIn(sel[0],sel[1]) : (MOVABLE(sel[0]) ? sel[0] : 0);
   if(!heldDay){
-    lead.innerHTML = '<b>Pick your return day.</b> Two of them are worth knowing about.';
+    lead.innerHTML = '<b>Pick your return day.</b> Two of them are worth a look.';
   } else if(days.length===1){
     lead.innerHTML = MOVABLE(heldDay)
       ? 'Your return on <b>'+label(heldDay)+'</b>.'
-      : 'Your return on <b>'+label(heldDay)+'</b>. No bus that day allows a date change.';
+      : 'Your return on <b>'+label(heldDay)+'</b>. You cannot change this date later.';
   } else if(heldDay===last){
-    lead.innerHTML = 'Booking <b>'+label(last)+'</b> \u2014 the last day you could travel, so you never have to change.';
+    lead.innerHTML = 'We will book <b>'+label(last)+'</b>, your last day. You never need to change it.';
   } else if(heldDay===lastMov && lastMov!==last){
-    lead.innerHTML = 'Booking <b>'+label(lastMov)+'</b> \u2014 the last day in your range that can be changed later. '
-      + label(last)+' has no bus that allows it.';
+    lead.innerHTML = 'We will book <b>'+label(lastMov)+'</b>. '+label(last)+' cannot be changed later.';
   } else {
-    lead.innerHTML = 'Booking <b>'+label(heldDay)+'</b>.';
+    lead.innerHTML = 'We will book <b>'+label(heldDay)+'</b>.';
   }
 
   // the trade-off, stated where the choice is made rather than where the loss happens
   // Scannable by the bold lines alone — the same test the terms blocks are held to.
   const note=document.getElementById('pk-note');
-  const after = '<dt>Free to switch until you pay</dt>'
-    + '<dd>After that, one date change on Laxmi Holidays \u2014 the only operator on this route.</dd>';
+  const after = '<dt>Switching is free until you pay</dt>'
+    + '<dd>After you pay, you get one date change on '+OPERATOR+'.</dd>';
   if(heldDay && !MOVABLE(heldDay)){
-    note.innerHTML = '<dt class="crit">This day cannot be changed later</dt>'
-      + '<dd>No operator running on '+label(heldDay)+' allows a date change. Booking it is final.</dd>'
-      + '<dt>Days marked with a dot are the same</dt>'
-      + '<dd>Pick an unmarked day if you want the one date change.</dd>';
+    note.innerHTML = '<dt class="crit">You cannot change this date later</dt>'
+      + '<dd>No bus on '+label(heldDay)+' allows a date change. Once you book, it is final.</dd>'
+      + '<dt>Days with a grey dot are the same</dt>'
+      + '<dd>Pick a day without a dot to keep your one change.</dd>';
   } else if(days.length===1){
-    note.innerHTML = '<dt>One date change after booking</dt>'
-      + '<dd>Either direction, on Laxmi Holidays. You pay any difference.</dd>'
-      + '<dt class="crit">A cheaper day is not refunded</dt>'
-      + '<dd>Move to a cheaper day later and the difference is kept.</dd>';
+    note.innerHTML = '<dt>You get one date change</dt>'
+      + '<dd>Earlier or later, on '+OPERATOR+'. Pay any price difference.</dd>'
+      + '<dt class="crit">A cheaper day gets you no money back</dt>'
+      + '<dd>Change to a cheaper day later and you get no money back.</dd>';
   } else if(spread){
+    const save = FARE[last]-FARE[cheap];
     note.innerHTML = '<dt>Cheapest is '+label(cheap)+' \u00B7 '+RUPEE(FARE[cheap])+'</dt>'
-      + '<dd>Pick it now and you keep the difference.</dd>'
-      + '<dt class="crit">A cheaper day later is not refunded</dt>'
-      + '<dd>Book a dearer day, move down after paying, and the difference is kept.</dd>'
+      + '<dd>Pick it now and you save '+RUPEE(save)+'.</dd>'
+      + '<dt class="crit">Changing later never saves money</dt>'
+      + '<dd>Change to a cheaper day later and you get no money back.</dd>'
       + after;
   } else {
-    note.innerHTML = '<dt>Same fare every day</dt><dd>Pick whichever suits you.</dd>' + after;
+    note.innerHTML = '<dt>Every day costs the same</dt><dd>Pick whichever suits you.</dd>' + after;
   }
   document.getElementById('pk-bb').textContent = heldDay ? RUPEE(FARE[heldDay]) : '\u2014';
   document.getElementById('b-pk').disabled = !heldDay;
@@ -1249,9 +1248,9 @@ function paintChangeRow(){
   const dropped = s==='noreturn';
   const stuck   = heldDay && !MOVABLE(heldDay);
   const blocked = s==='alreadymoved' || s==='pastcutoff' || moveDone || stuck;
-  const why = stuck ? 'No operator on this day allows a date change.'
-    : (s==='alreadymoved'||moveDone) ? 'No changes left \u2014 this ticket is now final.'
-    : 'Changes close 8 hours before departure. That window has passed.';
+  const why = stuck ? 'No bus on this day allows a date change.'
+    : (s==='alreadymoved'||moveDone) ? 'You have used your one change. This ticket is final.'
+    : 'Too late to change. Changes close 8 hours before the bus leaves.';
   ['mv','mb'].forEach(function(k){
     const act=E(k+'-act'), off=E(k+'-off'), w=E(k+'-why');
     if(!act||!off) return;
@@ -1264,7 +1263,7 @@ function paintChangeRow(){
     p.classList.toggle('no', !!stuck);
     p.innerHTML = stuck
       ? 'No date change on this day'
-      : '<span aria-hidden="true">\u21BB</span> Can be moved in your window';
+      : '<span aria-hidden="true">\u21BB</span> You can change this date';
   });
 }
 
@@ -1295,7 +1294,7 @@ function renderWithin(){
   // seats free, so hiding them removes real options to protect a change that no longer exists.
   const days=BOOKABLE.filter(d=>d!==heldDay && inWindow(d));
   const held=document.querySelector('#s-within .held');
-  if(held) held.innerHTML='<div class="legtag">You have</div>'
+  if(held) held.innerHTML='<div class="legtag">Your booking</div>'
     + '<div class="row"><span class="time" style="font-size:16px">'+label(heldDay)+' \u00B7 '+DEP_TIME+'</span>'
     + '<span class="price" style="font-size:16px">'+RUPEE(FARE[heldDay])+'</span></div>'
     + '<div class="cap" style="margin-top:4px">'+OPERATOR+' \u00B7 Seat '+retSeat()+'</div>';
@@ -1308,7 +1307,7 @@ function renderWithin(){
         + '<div class="subrow"><span class="sub">'+OPERATOR+'</span><span class="onw">No seats left</span></div></div>';
     }
     const mine = retSeat(), same = seat===mine;
-    const seatTxt = same ? 'Seat '+mine+' free' : 'Seat '+mine+' taken \u2014 we\u2019d put you in '+seat+'';
+    const seatTxt = same ? 'Your seat '+mine+' is free' : 'Seat '+mine+' is taken. You get '+seat;
     const right = diff>0 ? '<span class="onw diffup">Pay '+RUPEE(diff)+' more</span>'
                          : '<span class="onw">'+RUPEE(-diff)+' less \u2014 not refunded</span>';
     return '<button class="card" onclick="confirmMove(\''+label(d)+'\',\''+DEP_TIME+'\','+FARE[d]+','+diff+',\''+seat+'\')">'
@@ -1321,9 +1320,9 @@ function renderWithin(){
   // applies to you. The per-day cards already say which seat you would get, so that is not repeated.
   if(days.length) wrap.innerHTML += '<dl class="rules note-rules">'
     + '<dt>Your seat may change</dt>'
-    + '<dd>It is only held on the day you booked. You can pick a different one before confirming.</dd>'
-    + '<dt>One operator on this route</dt>'
-    + '<dd>'+OPERATOR+'. A date change stays with them.</dd>'
+    + '<dd>It is saved only for the day you booked. Pick another before you confirm.</dd>'
+    + '<dt>Only one operator on this route</dt>'
+    + '<dd>Your new date will be on '+OPERATOR+' too.</dd>'
     + '</dl>';
   withinVisibility(days.length===0);
   return days.length;
@@ -1479,7 +1478,7 @@ function openSeatForReview(){
   seatMode='review';
   document.getElementById('seat-h1').textContent='Choose your seat';
   document.getElementById('seat-sub').textContent=label(heldDay)+' \u00B7 Nainital \u2192 Delhi';
-  document.getElementById('seat-note').textContent='Return leg. Your seat on the way out is unchanged.';
+  document.getElementById('seat-note').textContent='This is your return bus. Your onward seat stays the same.';
   document.getElementById('seat-back').setAttribute('onclick',"seatMode='';go('s-review')");
   document.getElementById('b-seat').textContent='Use this seat';
   go('s-seat');
@@ -1508,7 +1507,7 @@ function seatDone(){
   movedSeat = chosen.seat || movedSeat;
   seatMode='';
   document.getElementById('seat-h1').textContent='Select seats';
-  document.getElementById('seat-note').textContent='Return leg. Your seat on the way out is unchanged.';
+  document.getElementById('seat-note').textContent='This is your return bus. Your onward seat stays the same.';
   document.getElementById('seat-back').setAttribute('onclick',"go('s-review')");
   document.getElementById('b-seat').textContent='Select points';
   confirmMove(movedTo, DEP_TIME, FARE[movedDay], FARE[movedDay]-FARE[heldDay], movedSeat);
@@ -1542,8 +1541,8 @@ function confirmMove(date,time,fare,diff,seat){
                         : shift<0 ? 'Back in Delhi '+day+' later than planned.'
                                   : 'Your return is set.';
   document.getElementById('d-what').innerHTML = up
-    ? 'Moved from '+label(heldDay)+'. You paid ₹'+diff+'.'
-    : 'Moved from '+label(heldDay)+'. The fare was ₹'+Math.abs(diff)+' lower; that difference is not refunded.';
+    ? 'Changed from '+label(heldDay)+'. You paid ₹'+diff+'.'
+    : 'Changed from '+label(heldDay)+'. The new day is ₹'+Math.abs(diff)+' cheaper. You do not get that back.';
   go('s-confirm');
 }
 let moveTimer=null;
@@ -1552,7 +1551,7 @@ function doMove(){
   b.disabled=true; b.innerHTML='<span class="spin"></span> Holding your new seat';
   moveTimer=setTimeout(()=>{
     moveTimer=null;
-    b.innerHTML='Confirm move'; b.disabled=false;
+    b.innerHTML='Confirm change'; b.disabled=false;
     if(document.getElementById('st-sf').getAttribute('aria-pressed')==='true'){ setState('swapfail'); }
     else {
       moveDone=true;
@@ -1565,7 +1564,7 @@ function abortMove(){
   if(moveTimer){                       // in flight — cancel it, nothing was swapped
     clearTimeout(moveTimer); moveTimer=null;
     const b=document.getElementById('b-conf');
-    b.innerHTML='Confirm move'; b.disabled=false;
+    b.innerHTML='Confirm change'; b.disabled=false;
   }
   openWithin();
 }
@@ -1598,8 +1597,8 @@ function paintSeats(){
   document.querySelectorAll('[data-retseat]').forEach(e=>{ e.textContent='Seat '+r; });
   const bb=E('opt-bb');    if(bb) bb.innerHTML='Laxmi Holidays &middot; Seat '+o;
   const de=E('d-outseat'); if(de) de.textContent=label(OUT_DAY)+', seat '+o;
-  const er=E('rv-errseat');if(er) er.textContent='Seat '+r+' on the '+DEP_TIME+' Laxmi Holidays bus went '
-    +'while you were here. Your onward journey is unaffected.';
+  const er=E('rv-errseat');if(er) er.textContent='Seat '+r+' is gone. Someone booked it '
+    +'while you were here. Your onward trip is not affected.';
   const pax=E('rv-pax');
   if(pax){
     pax.innerHTML = state==='crowded'
@@ -1632,18 +1631,18 @@ function paintReturn(){
   set('mb-rdate',d);                         set('mb-rprice',f);
   set('pay-retlabel','Return \u00B7 '+d);
   set('c-from',d+' \u00B7 '+DEP_TIME);           set('c-fromsub','Seat '+retSeat()+' \u00B7 '+f);
-  set('wi-none-b','Your '+d+' booking is unchanged and still valid. Seat '+retSeat()+', '+f+', nothing has been charged.');
-  set('wi-err-b','Your '+d+' booking is unchanged. Nothing has been charged.');
+  set('wi-none-b','Your '+d+' booking is not changed. Seat '+retSeat()+', '+f+'. You have not been charged.');
+  set('wi-err-b','Your '+d+' booking is not changed. You have not been charged.');
   set('bc-window',win);
   const rw=E('rv-window'); if(rw) rw.textContent = sel.length===2
-    ? win+'. Earlier or later, in one tap'
-    : 'Any other day, earlier or later, in one tap';
+    ? win+'. Earlier or later'
+    : 'Any other day, earlier or later';
   const sub = (sel.length===2
-    ? 'Any day between '+label(sel[0])+' and '+label(sel[1])
-    : 'Any other day, earlier or later') + '. Only pay the fare difference.';
+    ? label(sel[0])+' to '+label(sel[1])
+    : 'Any other day, earlier or later') + '. Pay only the price difference.';
   ['mv-sub','mb-sub'].forEach(function(id){ set(id, sub); });
-  const ce=E('c-errb'); if(ce) ce.innerHTML='<b>Your '+d+' booking is untouched.</b> Seat '+retSeat()+', '+f
-    +'. Nothing was charged and nothing was cancelled.';
+  const ce=E('c-errb'); if(ce) ce.innerHTML='<b>Your '+d+' booking is safe.</b> Seat '+retSeat()+', '+f
+    +'. You have not been charged, and nothing was cancelled.';
 }
 
 // Every rupee figure on Trip review and Pay is derived here and nowhere else.
