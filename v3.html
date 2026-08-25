@@ -833,12 +833,18 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
   <!-- ============ SCREEN: Payment ============ -->
   <section class="screen" id="s-pay">
     <div class="nav">
-      <button class="back" aria-label="Back" onclick="go('s-review')">&#8249;</button>
-      <div class="navtxt"><h1 id="pay-title">Pay &#8377;2,598</h1><p>1 passenger</p></div>
+      <button class="back" aria-label="Back" onclick="payBack()">&#8249;</button>
+      <div class="navtxt"><h1 id="pay-title">Pay &#8377;2,598</h1><p id="pay-sub">1 passenger</p></div>
       <span style="width:44px"></span>
     </div>
     <div class="wrap">
-      <div class="leg">
+      <div class="leg" id="pay-change" hidden>
+        <div class="legtag">Paying for</div>
+        <div class="fare"><span id="pc-line">Date change &middot; Sat, 16 Aug</span><span id="pc-diff">&#8377;470</span></div>
+        <div class="fare"><span>Change fee</span><span>&#8377;0</span></div>
+        <div class="fare tot"><span>Total</span><span id="pc-tot">&#8377;470</span></div>
+      </div>
+      <div class="leg" id="pay-book">
         <div class="legtag">Paying for</div>
         <div class="fare"><span>Onward &middot; Thu, 7 Aug</span><span id="pay-out">&#8377;1,599</span></div>
         <div class="fare" data-ret><span id="pay-retlabel">Return &middot; Sun, 10 Aug</span><span id="pay-ret">&#8377;999</span></div>
@@ -1553,19 +1559,41 @@ function confirmMove(date,time,fare,diff,seat){
   go('s-confirm');
 }
 let moveTimer=null;
+// A date change that costs money goes through the same payment screen as the booking did.
+// It used to say 'You pay now Rs470' and then jump straight to the done screen.
+let payMode='booking';
+function paintPay(){
+  const E=id=>document.getElementById(id), owed=FARE[movedDay]-FARE[heldDay];
+  const change = payMode==='change';
+  if(E('pay-book'))   E('pay-book').hidden   = change;
+  if(E('pay-change')) E('pay-change').hidden = !change;
+  if(E('pay-sub'))    E('pay-sub').textContent = change ? 'Return date change' : PAX()+' passenger'+(PAX()>1?'s':'');
+  if(!change) return;                       // recalc owns the booking totals
+  E('pc-line').innerHTML = 'Date change \u00B7 '+movedTo;
+  ['pc-diff','pc-tot','pay-tot','pay-bb'].forEach(id=>{ if(E(id)) E(id).textContent = RUPEE(owed); });
+  E('pay-title').textContent = 'Pay '+RUPEE(owed);
+}
+function payBack(){ go(payMode==='change' ? 's-confirm' : 's-review'); }
+
 function doMove(){
   const b=document.getElementById('b-conf');
   b.disabled=true; b.innerHTML='<span class="spin"></span> Holding your new seat';
   moveTimer=setTimeout(()=>{
     moveTimer=null;
     b.innerHTML='Confirm change'; b.disabled=false;
-    if(document.getElementById('st-sf').getAttribute('aria-pressed')==='true'){ setState('swapfail'); }
-    else {
-      moveDone=true;
-      setHeldDay(movedDay||heldDay);   // the move is final the moment it is confirmed
-      recalc(); go('s-done');
+    if(document.getElementById('st-sf').getAttribute('aria-pressed')==='true'){ setState('swapfail'); return; }
+    if(FARE[movedDay]-FARE[heldDay] > 0){    // owe the difference: pay for it like anything else
+      payMode='change'; paintPay(); go('s-pay');
+    } else {
+      finishMove();                          // same price or cheaper: nothing to pay
     }
   },1100);
+}
+function finishMove(){
+  payMode='booking';
+  moveDone=true;
+  setHeldDay(movedDay||heldDay);
+  recalc(); paintPay(); go('s-done');
 }
 function abortMove(){
   if(moveTimer){                       // in flight — cancel it, nothing was swapped
@@ -1573,6 +1601,7 @@ function abortMove(){
     const b=document.getElementById('b-conf');
     b.innerHTML='Confirm change'; b.disabled=false;
   }
+  payMode='booking'; paintPay(); recalc();   // walking away from a part-paid change resets it
   openWithin();
 }
 function dropReturn(){ setState('noreturn'); }
@@ -1587,7 +1616,8 @@ function skipReturn(){ setState('noreturn'); go('s-review'); }   // Skip leaves 
 function payNow(){
   const b=document.getElementById('b-pay2');
   b.disabled=true; b.innerHTML='<span class="spin"></span> Paying';
-  setTimeout(()=>{ b.innerHTML='Pay now'; b.disabled=false; go('s-done2'); },900);
+  setTimeout(()=>{ b.innerHTML='Pay now'; b.disabled=false;
+    if(payMode==='change') finishMove(); else go('s-done2'); },900);
 }
 let state='default';
 const RUP = n => '₹'+n.toLocaleString('en-IN');
@@ -1669,8 +1699,9 @@ function recalc(){
   if(E('pay-out')) E('pay-out').textContent = RUP(out);
   const first = document.querySelector('#s-review .fare span:last-child');
   if(first) first.textContent = RUP(out);
-  ['rv-tot','rv-bb','pay-tot','pay-bb'].forEach(id=>{ if(E(id)) E(id).textContent = RUP(tot); });
-  if(E('pay-title')) E('pay-title').textContent = 'Pay ' + RUP(tot);
+  const payIds = payMode==='change' ? ['rv-tot','rv-bb'] : ['rv-tot','rv-bb','pay-tot','pay-bb'];
+  payIds.forEach(id=>{ if(E(id)) E(id).textContent = RUP(tot); });
+  if(E('pay-title') && payMode!=='change') E('pay-title').textContent = 'Pay ' + RUP(tot);
   paintReturn();
 }
 
