@@ -1218,7 +1218,28 @@ function renderPicked(){
   const ps=document.getElementById('pk-sub');
   if(ps) ps.textContent='Nainital \u2192 Delhi \u00B7 '+sub;
 }
-function choosePick(d){ heldDay=d; renderPicked(); recalc(); }
+// Who may still change their date. One owner for both Change-day rows -- the ticket's and My
+// Bookings' -- because they answer the same question and used to answer it in two places.
+function paintChangeRow(){
+  const E=id=>document.getElementById(id), s=state;
+  const dropped = s==='noreturn';
+  const stuck   = heldDay && !MOVABLE(heldDay);
+  const blocked = s==='alreadymoved' || s==='pastcutoff' || moveDone || stuck;
+  const why = stuck ? 'No operator on this day allows a date change.'
+    : (s==='alreadymoved'||moveDone) ? 'No changes left \u2014 this ticket is now final.'
+    : 'Changes close 8 hours before departure. That window has passed.';
+  ['mv','mb'].forEach(function(k){
+    const act=E(k+'-act'), off=E(k+'-off'), w=E(k+'-why');
+    if(!act||!off) return;
+    act.hidden = dropped || blocked;
+    off.hidden = dropped || !blocked;
+    if(blocked && w) w.textContent = why;
+  });
+}
+
+// Picking the booked day changes what half the app says, so repaint from state rather than
+// hand-picking painters -- that is how the Change-day row kept offering a day it could not move.
+function choosePick(d){ heldDay=d; setState(state); }
 
 // Changing the booked day after payment — any day in the range, either direction.
 const BOOKABLE = Array.from({length: LAST_BOOKABLE-OUT_DAY}, (_,i)=>OUT_DAY+1+i);
@@ -1632,12 +1653,6 @@ function setState(s){
     E('wi-err').hidden     = s!=='checkfail';
     E('c-err').hidden     = s!=='swapfail';
     if(E('b-conf')) E('b-conf').disabled = s==='swapfail';
-    const blocked = s==='alreadymoved' || s==='pastcutoff' || moveDone || (heldDay && !MOVABLE(heldDay));
-    E('mv-act').hidden = blocked; E('mv-off').hidden = !blocked;
-    if(blocked) E('mv-why').textContent =
-        (heldDay && !MOVABLE(heldDay)) ? 'No operator on this day allows a date change.'
-      : (s==='alreadymoved'||moveDone) ? 'No changes left \u2014 this ticket is now final.'
-      : 'Changes close 8 hours before departure. That window has passed.';
   }
   // return present / dropped
   const dropped = (s==='noreturn');
@@ -1650,14 +1665,7 @@ function setState(s){
   if(E('tk-noret')) E('tk-noret').hidden = !dropped;
   if(E('mb-ret'))   E('mb-ret').hidden   = dropped;
   if(E('mb-noret')) E('mb-noret').hidden = !dropped;
-  if(dropped){ E('mv-act').hidden = true; E('mv-off').hidden = true;
-               E('mb-act').hidden = true; E('mb-off').hidden = true; }
-  else { const bl = s==='alreadymoved' || s==='pastcutoff' || moveDone || (heldDay && !MOVABLE(heldDay));
-         E('mb-act').hidden = bl; E('mb-off').hidden = !bl;
-         if(bl) E('mb-why').textContent =
-             (heldDay && !MOVABLE(heldDay)) ? 'No operator on this day allows a date change.'
-           : (s==='alreadymoved'||moveDone) ? 'No changes left \u2014 this ticket is now final.'
-           : 'Changes close 8 hours before departure. That window has passed.'; }
+  paintChangeRow();
   if(E('tk-sub')) E('tk-sub').textContent = dropped ? 'Delhi → Nainital · one way' : 'Delhi ↔ Nainital';
   recalc();
   renderPicked();
