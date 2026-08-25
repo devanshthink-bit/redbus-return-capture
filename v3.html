@@ -1229,9 +1229,15 @@ function choosePick(d){ heldDay=d; renderPicked(); recalc(); }
 // Changing the booked day after payment — any day in the range, either direction.
 const BOOKABLE = Array.from({length: LAST_BOOKABLE-OUT_DAY}, (_,i)=>OUT_DAY+1+i);
 function openWithin(){ renderWithin(); go('s-within'); }
+function withinVisibility(empty){
+  const s=state, L=document.getElementById('wi-list'), N=document.getElementById('wi-none');
+  if(L) L.hidden = empty || ['loading','nothingearlier','checkfail'].includes(s);
+  if(N) N.hidden = !(s==='nothingearlier' || (empty && s!=='loading' && s!=='checkfail'));
+}
+
 function renderWithin(){
   const wrap=document.getElementById('wi-list'); if(!wrap) return 0;
-  if(!heldDay){ wrap.innerHTML=''; return 0; }
+  if(!heldDay){ wrap.innerHTML=''; withinVisibility(true); return 0; }
   // The window is the promise. They told us the earliest and latest they could travel, so days
   // outside it are days they have already said are impossible. One tap means no window was
   // given, and then the change is the ordinary FlexiTicket one — any day.
@@ -1260,6 +1266,7 @@ function renderWithin(){
       + (same?'':'<div class="pillrow"><div class="pill warnpill">\u21BB Different seat</div></div>') + '</button>';
   }).join('');
   if(days.length) wrap.innerHTML += '<p class="note">Your seat is only held on the day you booked. On any other day you get whatever is free \u2014 <b>you can pick a different one before confirming</b>.<br>Only Laxmi Holidays runs this route. A date change stays with the same operator.</p>';
+  withinVisibility(days.length===0);
   return days.length;
 }
 
@@ -1657,10 +1664,8 @@ function setState(s){
   }
   const E=id=>document.getElementById(id);
   if(E('wi-list')){
-    const empty = renderWithin()===0;
+    renderWithin();                       // sets wi-list / wi-none itself
     E('wi-loading').hidden = s!=='loading';
-    E('wi-list').hidden    = empty || ['loading','nothingearlier','checkfail'].includes(s);
-    E('wi-none').hidden    = !(s==='nothingearlier' || (empty && s!=='loading' && s!=='checkfail'));
     E('wi-err').hidden     = s!=='checkfail';
     E('c-err').hidden     = s!=='swapfail';
     if(E('b-conf')) E('b-conf').disabled = s==='swapfail';
