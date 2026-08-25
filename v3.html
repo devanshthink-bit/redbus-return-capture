@@ -230,6 +230,9 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 .qhint{font-size:14px;color:var(--muted);margin-top:4px;line-height:1.4}
 #win-rules{margin-top:24px}
 .terms-lead{font-size:16px;line-height:1.5;color:var(--ink);margin-bottom:16px}
+/* the lead's second sentence is a separate fact, so it gets its own line -- the same
+   heading-then-muted-line rhythm every block under it already uses */
+.leadsub{display:block;font-size:14px;color:var(--muted);line-height:1.4;margin-top:4px}
 .diffup{color:var(--warn)!important}
 .swap{background:var(--raised);border-radius:12px;padding:16px;margin-bottom:16px}
 .swapleg.was{opacity:.6}
@@ -1229,15 +1232,19 @@ function renderPicked(){
   const lead=document.getElementById('pk-lead');
   const lastMov = sel.length===2 ? lastMovableIn(sel[0],sel[1]) : (MOVABLE(sel[0]) ? sel[0] : 0);
   if(!heldDay){
-    lead.innerHTML = '<b>Pick your return day.</b> Switching is free until you pay.';
+    lead.innerHTML = '<b>Pick your return day.</b>'
+      + '<span class="leadsub">Switching is free until you pay.</span>';
   } else if(days.length===1){
     lead.innerHTML = MOVABLE(heldDay)
       ? 'Your return on <b>'+label(heldDay)+'</b>.'
-      : 'Your return on <b>'+label(heldDay)+'</b>. You cannot change this date later.';
+      : 'Your return on <b>'+label(heldDay)+'</b>.'
+        + '<span class="leadsub">You cannot change this date later.</span>';
   } else if(heldDay===last){
-    lead.innerHTML = 'We will book <b>'+label(last)+'</b>, your last day. You never need to change it.';
+    lead.innerHTML = 'We will book <b>'+label(last)+'</b>, your last day.'
+      + '<span class="leadsub">You never need to change it.</span>';
   } else if(heldDay===lastMov && lastMov!==last){
-    lead.innerHTML = 'We will book <b>'+label(lastMov)+'</b>. '+label(last)+' cannot be changed later.';
+    lead.innerHTML = 'We will book <b>'+label(lastMov)+'</b>.'
+      + '<span class="leadsub">'+label(last)+' cannot be changed later.</span>';
   } else {
     lead.innerHTML = 'We will book <b>'+label(heldDay)+'</b>.';
   }
