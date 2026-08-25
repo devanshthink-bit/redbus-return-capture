@@ -1120,7 +1120,7 @@ function paintWindow(){
   // for both one and two picks, which is only true for one -- with a range chosen, the shading is
   // the range itself, not a set of options. The 7-day cap is stated up front, where they decide.
   document.getElementById('q-hint').textContent =
-      !sel.length   ? 'Pick one day. Not sure? Pick two, up to '+MAX_WINDOW+' days apart.'
+      !sel.length   ? 'Pick your return day. Not sure? Tap two days instead.'
     : sel.length===1? 'Shaded days are within '+MAX_WINDOW+' days of your pick.'   // the prompt to use them is in the rules below, not repeated here
     :                 'Tap any day to start again.';
 
@@ -1129,7 +1129,7 @@ function paintWindow(){
     R.innerHTML = '<dt>Prices can go up</dt><dd>Book now to keep this price and a seat.</dd>';
   } else if(sel.length===1){
     R.innerHTML = '<dt>We\u2019ll book '+label(sel[0])+' \u00B7 '+RUPEE(FARE[sel[0]])+'</dt>'
-      + '<dd>You can change the date once, later. Pay only the price difference.</dd>'
+      + '<dd>You can change the date once after booking. Pay any price difference.</dd>'
       + '<dt class="prompt">Not sure? Tap a second day</dt>'
       + '<dd>Up to '+MAX_WINDOW+' days apart. We book your last day.</dd>';
   } else {
@@ -1144,7 +1144,7 @@ function paintWindow(){
       : '<dt>Next, pick your day</dt>'
       + '<dd>Cheapest: '+label(c)+' '+RUPEE(FARE[c])+'. Your last day: '+label(b)+' '+RUPEE(FARE[b])+'.</dd>')
       + '<dt>You can change the date once</dt>'
-      + '<dd>Pay only the price difference. Cheaper days get no money back.</dd>';
+      + '<dd>Pay the difference if it costs more. No refund if it costs less.</dd>';
   }
   document.getElementById('b-cont').disabled = (!sel.length || offline);
 }
@@ -1218,7 +1218,7 @@ function renderPicked(){
   // Scannable by the bold lines alone — the same test the terms blocks are held to.
   const note=document.getElementById('pk-note');
   const after = '<dt>Switching is free until you pay</dt>'
-    + '<dd>After you pay, you get one date change on '+OPERATOR+'.</dd>';
+    + '<dd>After you pay, you get one date change.</dd>';
   if(heldDay && !MOVABLE(heldDay)){
     note.innerHTML = '<dt class="crit">You cannot change this date later</dt>'
       + '<dd>No bus on '+label(heldDay)+' offers a date change. Booking it is final.</dd>'
@@ -1227,14 +1227,14 @@ function renderPicked(){
   } else if(days.length===1){
     note.innerHTML = '<dt>You get one date change</dt>'
       + '<dd>Earlier or later, on '+OPERATOR+'. Pay any price difference.</dd>'
-      + '<dt class="crit">A cheaper day gets you no money back</dt>'
-      + '<dd>Change to a cheaper day later and you get no money back.</dd>';
+      + '<dt class="crit">No refund on a cheaper day</dt>'
+      + '<dd>You only pay when the new day costs more.</dd>';
   } else if(spread){
     const save = FARE[last]-FARE[cheap];
     note.innerHTML = '<dt>Cheapest is '+label(cheap)+' \u00B7 '+RUPEE(FARE[cheap])+'</dt>'
       + '<dd>Pick it now and you save '+RUPEE(save)+'.</dd>'
-      + '<dt class="crit">Changing later never saves money</dt>'
-      + '<dd>Change to a cheaper day later and you get no money back.</dd>'
+      + '<dt class="crit">No refund on a cheaper day</dt>'
+      + '<dd>You only pay when the new day costs more.</dd>'
       + after;
   } else {
     note.innerHTML = '<dt>Every day costs the same</dt><dd>Pick whichever suits you.</dd>' + after;
