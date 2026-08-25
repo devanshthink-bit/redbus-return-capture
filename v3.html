@@ -1282,6 +1282,7 @@ function pickOut(op,fare,dep,arr){
   document.getElementById('oseat-price').innerHTML='&nbsp;';
   document.getElementById('b-oseat').disabled=true;
   document.querySelectorAll('#og-lower .seat,#og-upper .seat').forEach(b=>b.removeAttribute('aria-pressed'));
+  paintSeats();                     // the old bus's seat is gone; every screen naming it must say so
   go('s-oseat');
 }
 // entering seat selection from the picked day — carries the fare the bar and the
@@ -1323,6 +1324,7 @@ function toSeat(){
   document.getElementById('seat-count').textContent='No seat selected';
   document.getElementById('seat-price').innerHTML='&nbsp;';
   document.getElementById('b-seat').disabled=true;
+  paintSeats();                     // the previous choice is cleared; do not leave it on other screens
   pick(OPERATOR, FARE[heldDay]);
 }
 function pick(op,fare){
