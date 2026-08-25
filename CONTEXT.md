@@ -56,7 +56,7 @@ on push. `raw/` (interview transcripts) is gitignored.
 | `NOTES.md` | **102 atomic notes** n01–n102, sorted 78 in scope / 17 out / 7 not-a-problem, plus the 6 clusters with sub-groups |
 | `BRIEF.md` | The build spec. Constraints, **verified RedBus terms**, 16 ideas + kill log, shapes, screens, states, 21 failure cases, known gaps, stakeholder Q&A |
 | `DESIGN_LANGUAGE.md` | Measured from 51 screenshots. Tokens, type scale, spacing, the attack-pass rules |
-| `TEST_SCRIPT.md` | Usability script — 5 named participants, 3 tasks, 4 must-see moments |
+| `TEST_SCRIPT.md` | Usability script — **tests v3**, 5 named participants, 4 tasks, 4 must-see moments, and what kills v3 |
 | `TERMS.md` | Every redBus rule the construct stands on — FlexiTicket, Free Cancellation, reschedule, refunds — quoted verbatim with its source, plus what is still unverified |
 | `DEFENCE.md` | **102 questions** in 15 sections with answers and pushbacks, for stakeholders and interviews |
 | `CRITIQUE.md` | Six attacks written against the chosen idea, each with its defence and where the defence fails. Plus the merit ranking of all ideas |

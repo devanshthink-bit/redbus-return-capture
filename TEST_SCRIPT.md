@@ -1,24 +1,44 @@
 # Usability script — the return flow
 
-**Build to test:** https://devanshthink-bit.github.io/redbus-return-capture/  — **v1, *Last day***
-**The job:** a traveller who doesn't yet know their return date leaves the session holding a return they can move earlier.
+**Build to test:** https://devanshthink-bit.github.io/redbus-return-capture/v3.html?test — **v3, the calendar**
+**The job:** a traveller who doesn't yet know their return date leaves the session holding a return they can change.
+
+> **Send that URL, with `?test` on the end.** Without it, the participant sees two dark panels
+> listing every screen and every state, and they will tap them. With it, the panels are gone and
+> they see only the app.
+>
+> **You** keep a second tab open on the plain URL, without `?test`, so you can set a state before
+> handing over.
 
 > **Three prototypes exist. Give each participant exactly one.**
-> `/` v1 *Last day* · `/v2.html` *Return window, cheapest booked* · `/v3.html` *Calendar, last day booked*
+> `/` v1 *Last day* · `/v2.html` *Return window, cheapest booked* · `/v3.html` *Calendar*
 >
-> Test **v1**. It is the construct the research, BRIEF and DEFENCE all describe, and it carries the
-> open bet — does *"the last day you can travel"* read as a commitment or a guess. v2 and v3 answer
-> a question that only matters once v1 has been answered. Showing one person two builds measures
-> which came second, and destroys must-see moment 1. If v1 fails, test v3 with **fresh people**.
-**Five people. Thirty minutes each.** Video call is fine — ask them to share their screen.
+> Test **v3**. It is the build that is still changing, it is the one every fix and every document
+> now describes, and it carries the open bet in its cleanest form: **when someone genuinely doesn't
+> know their return date, do they say so?** v1 forced a single date and measured whether people
+> guessed. v3 offers the choice out loud — one day, or two — so the answer is a behaviour you can
+> watch rather than infer.
+>
+> Showing one person two builds measures which came second, and destroys must-see moment 1.
 
-> **Never mention the two dark rails.** The screen list on the left and the state list on the right
-> are *your* controls, not theirs. Say nothing about them. The participant goes through the flow and
-> enters whatever it asks, exactly as they would in the real app.
->
-> If a task needs a particular state — offline, nothing earlier, seat lost — **you** click it,
-> quietly, before you hand over. Telling somebody to try all thirteen states turns a usability test
-> into a feature tour, and every finding evaporates.
+**Five people. Thirty minutes each.**
+
+---
+
+## Setting up the call
+
+**Use a laptop, not a phone.** The prototype works on both, but on a laptop you can see the cursor,
+and hesitation before a click is a finding that a tap doesn't give you. Phone screen-sharing also
+eats five minutes of setup, and it eats most from the least confident participants.
+
+The cost is real: you lose thumb-reach and one-handed use. **Write that down as a limitation of the
+study** rather than pretending it isn't one.
+
+- Google Meet. Ask them to share their **whole screen**, not a tab — you want to see them open the link.
+- **Record, and ask on camera.** *"Is it okay if I record? It's only so I'm not typing while you talk."*
+- **Send the link when you're ready, not before.** If they open it early they'll explore it, and
+  first-run behaviour is the whole point.
+- Keep this script on a second screen or on paper. Don't read it off the screen you're watching.
 
 ---
 
@@ -30,9 +50,9 @@ Go back to the people you already interviewed. Each of these is the right person
 |---|---|
 | **Soumya Mishra** | She booked early once, wanted to push the date, couldn't, and **never booked early again** (n49). She is the exact person this idea exists for. If it doesn't convince her, it doesn't work |
 | **Anand Chauhan** | *"I know there is an option but I just prefer okay this option doesn't exist"* (n07). Your hardest sceptic. He priced flexibility and refused it without reading it |
-| **Samarth Kumar** | Refuses a ₹300 add-on when his plan is fixed (n45). Does a *free* move change that, or is the answer still no? |
+| **Samarth Kumar** | Refuses a ₹300 add-on when his plan is fixed (n45). Does a *free* change move him, or is the answer still no? |
 | **Sai Srinivas Buddi** | Bought the cancellation add-on precisely because he was unsure (n37). Should convert easily — if he doesn't, something is badly wrong |
-| **Vivek Nandoskar** | Peak season, no return seats, waited for a cancellation (n61). The person the "nothing earlier" state is for |
+| **Vivek Nandoskar** | Peak season, no return seats, waited for a cancellation (n61). The person the "no other days" state is for |
 
 **Three is enough to be worth doing. Zero is the only number that isn't.**
 
@@ -56,8 +76,15 @@ and it isn't. If the silence gets long, you may say one thing and nothing else: 
 > "You're going to Nainital on Thursday for a family wedding. You have to be back at work by Tuesday. You genuinely
 > don't know which day you'll leave — it depends how the wedding goes. Book your travel."
 
-**Watching for:** do they use the *Last day* field or skip past it? **Do they enter Tuesday, or do they enter a guess?**
-Do they say anything out loud while choosing the date?
+**Watching for, in order of importance:**
+
+1. **Do they tap one day or two?** This is the whole bet. Someone who is genuinely unsure and taps a
+   single day has told you the range idea didn't land — or that they'd rather guess than admit they
+   don't know.
+2. If they tap two, **which two?** Do they mark the real constraint (Saturday to Tuesday), or do
+   they hedge inside it?
+3. **On the next screen, which day do they pick?** The list shows every day with its fare, flags the
+   cheapest, and names their last day. Cheapest, last, or something else — and do they say why?
 
 **Give Samarth this variant instead** — he is the fixed-plan person (n45), and 39.1% with a fixed
 return date still book separately (n73), so certain travellers are the biggest leak, not a side case:
@@ -65,60 +92,72 @@ return date still book separately (n73), so certain travellers are the biggest l
 > "You're going to Nainital on Thursday for a wedding. You're definitely coming back Tuesday —
 > it's fixed, you have work. Book your travel."
 
-**Watching for:** does the *Last day* wording put him off because he isn't unsure? If a certain
-traveller skips the step, the framing is costing attach in the largest group.
+**Watching for:** does he tap one day and move on cleanly? A certain traveller should find this
+faster than an unsure one. If the calendar slows him down, the flexibility is costing attach in the
+largest group.
 
 ### Task 2 — from C2: not booking is the cheapest way to stay flexible
 
 > "You've picked a return. Before you pay — is there anything you'd want to know?"
 
-**Watching for:** do they read the terms block unprompted? Do they notice *"The ticket becomes non-refundable, including Free Cancellation"*?
-Do they go looking for a *Know more* that doesn't exist?
+**Watching for:** do they read the four rules on **Review your trip** unprompted? Do they notice
+**"You cannot cancel after that"**? Do they go looking for a *Know more* that doesn't exist?
 
 ### Task 3 — from C4: nothing carries the return forward
 
-> "You're in Nainital now. It's Saturday, the wedding finished early, and you've decided to head home tomorrow
-> instead of Tuesday. Do that."
+> "You're in Nainital now. The wedding finished early and you've decided to head home a day or two
+> sooner. Do that."
 
-**Watching for:** do they find *Move earlier*? Do they understand what the fare difference is before confirming?
-Do they hesitate at the confirm screen, and if so, at which line?
+**Watching for:** do they find **Change day**? Do they understand, before confirming, that they'll
+pay the difference — and that a cheaper day gives nothing back? Do they expect a payment screen, and
+are they surprised when one appears?
+
+### Task 4 — the state you set for them
+
+Pick **one** per participant, set it quietly in your own tab before handing over, and don't mention it.
+
+| Give this to | State | What it shows them |
+|---|---|---|
+| Vivek | `nothingearlier` | No other days to pick |
+| Sai | `seatgone` | Their return seat went while they were choosing |
+| Anand | `noguard` | No day in the range can be changed at all |
+| Soumya | `pastcutoff` | Too late to change — inside 8 hours |
+| Samarth | `swapfail` | The seat was lost mid-change |
+
+> "Something has gone differently here. What would you do?"
 
 ---
 
 ## The four must-see moments
 
-**1. Does *"What's the last day you can travel?"* read as a commitment, or as a guess?**
-This is the most important thing in the whole session. If people answer it with *"probably Tuesday"* rather than
-*"I can definitely travel Tuesday"*, the whole construct inverts and starts costing them money.
-Ask afterwards, in their words: **"What did you think that question was asking?"**
+**1. When they don't know the date, do they say so?**
+The most important thing in the session. v3 asks *"When can you travel back?"* and offers **Pick your
+return day. Not sure? Tap two days instead.** If an unsure person still taps one day, the construct has not
+solved the problem — it has just moved the guess one screen later.
+Ask afterwards, in their words: **"What did that first screen think you knew?"**
 
-**2. Do they see that moving ends cancellation — before they confirm, not after?**
-If they only notice on the Move done screen, the terms block failed at its one job.
+**2. Cheapest or last?**
+v3 hands them the money trade-off instead of deciding it. Watch which they take, and listen for the
+reason. If everyone takes the cheapest without noticing it removes their slack, the earlier design —
+booking the last day for them — was right, and v3 gave away something it shouldn't have.
 
-**3. Do they find the later-day path, and does knowing it exists soften the deadline?**
-Moving to a later day is **not** offered on *Last day* — deliberately, so the field is answered as a
-constraint rather than a guess. It is named on *Return buses*, *Trip review*, the ticket and
-*Booking confirmed*, and it now works end to end — My Bookings → Change date → Confirm →
-Return moved. Watch whether they look for it on *Last day*, and whether meeting it later
-makes them say the date they entered was only a guess. **This is the same question as moment 1,
-asked from the other end.**
+**3. Do they see that changing ends cancellation — before they confirm, not after?**
+It is stated on **Review your trip**, on the ticket and on the confirm screen. If they only notice on **Date
+changed**, three placements failed at one job.
 
-**4. Does *Can be moved earlier* clash with *Free date change*?**
-The participant now meets both in one session: redBus's real badge on the outbound bus list, and
-the new label on the return list. **Watch whether they connect them, and whether picking a
-*Free date change* outbound makes them assume the return is covered too.** Ask afterwards:
+**4. Do the two badges clash?**
+They meet both in one session: redBus's real **Free date change** on the outbound bus list, and
+**You can change this date** on the return. Ask afterwards:
 
 > "You saw two different labels about changing dates. What did you think each one meant?"
 
-Show one person two return cards on paper or on screen — one carrying redBus's **FREE DATE CHANGE**
-badge, one carrying **Can be moved earlier**. Ask, without explaining either:
+Show one person the two on paper, without explaining either:
 
 > "What does each of these let you do?"
 
-They describe the same mechanism under different names and different rules — FlexiTicket moves either
-direction, this moves earlier only. The plan is that on return legs the new label **replaces** the
-FlexiTicket badge rather than sitting beside it. **That plan is unverified.** Five minutes, and it
-settles a question that cannot be settled by reasoning.
+They describe the same mechanism under different names and different rules. The plan is that on
+return legs the new label **replaces** the FlexiTicket badge rather than sitting beside it. **That
+plan is unverified.** Five minutes, and it settles a question reasoning cannot.
 
 ---
 
@@ -131,9 +170,12 @@ What they did that I didn't expect:    ______
 What they expected to happen,
   in their own words:                  ______
 What they never noticed:               ______
+One day or two, and why:               ______
+Cheapest or last, and why:             ______
 ```
 
-That last line is the one everybody forgets and it is often the most useful.
+The last three are the ones this build exists to answer. The "never noticed" line is the one
+everybody forgets and it is often the most useful.
 
 **When somebody does something surprising, wait until they've done it, then ask one question:**
 
@@ -147,6 +189,14 @@ their own test. Ask what they did, not what they felt.
 
 ---
 
+## What to say at the end
+
+> Last thing — is there anything you expected to be able to do that you couldn't?
+
+Then stop. Don't defend anything, don't explain what it was meant to do.
+
+---
+
 ## Expect these, and don't chase them
 
 These are on the out-of-scope list from synthesis. **The same people will raise them again** — that isn't a
@@ -157,14 +207,6 @@ distraction, it's evidence the sorting was honest. Note it, say "that's on my li
 - No written reviews shown — Anand (n80)
 - Bus number arriving by SMS at the last minute — Jaimin (n84), Soumya (n93)
 - Operator cancelling the bus with no alternative — Vivek (n94)
-
----
-
-## What to say at the end
-
-> Last thing — is there anything you expected to be able to do that you couldn't?
-
-Then stop. Don't defend anything, don't explain what it was meant to do.
 
 ---
 
@@ -184,3 +226,18 @@ Action:    [blank until fixed, deferred or rejected]
 
 If three findings all say the same thing, the problem is upstream of the screen — say so rather than patching three
 symptoms.
+
+---
+
+## What kills v3
+
+Write these down now, before the sessions, so you can't move the goalposts afterwards.
+
+- **Three or more unsure people tap a single day.** The range is the idea. If they won't use it, the
+  problem was never that the product didn't ask.
+- **Nobody reads the four rules before paying.** Then the non-refundable term is a trap, not a
+  disclosure, and this cannot ship as designed.
+- **They take the cheapest day and are then surprised they can't move.** They didn't understand what
+  the choice cost them, and the choice should not have been theirs.
+- **Samarth is slower than the unsure participants.** The flexibility is taxing the majority to serve
+  a minority.
