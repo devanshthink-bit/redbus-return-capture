@@ -243,7 +243,26 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
  overflow-y:auto;border:1px solid #2E2E33}
 .dev.screens{left:24px}
 .dev.states{right:24px;width:225px}
-@media (max-height:940px){ .dev{top:24px;max-height:calc(100vh - 48px)} }   /* short window: pin to the top instead */
+@media (max-height:940px){
+  .dev{top:24px;max-height:calc(100vh - 48px)}      /* short window: pin to the top instead */
+  /* On a laptop the 874px frame ran past the bottom of the window, putting the action bar below
+     the fold -- the participant had to scroll the page to reach the prototype's own button. The
+     frame now ends where the window does; every screen already scrolls its own content. */
+  .phone{height:calc(100vh - 48px)}
+}
+
+/* Session mode. Open the prototype with ?test on the end and the dev rails are gone, so a
+   participant cannot see -- or tap -- the list of screens and states. */
+body.testing .dev{display:none!important}
+
+/* On a real phone the frame filled 402x874 inside a smaller screen, so it was cut off and the
+   rails sat on top of it. Below 520px the frame simply becomes the screen. */
+@media (max-width:520px){
+  body{padding:0;align-items:stretch}
+  .stage{margin:0;width:100%}
+  .phone{width:100vw;height:100vh;height:100dvh;border-radius:0;box-shadow:none}
+  .dev{display:none}
+}
 .dev b{color:#9A9AA4;font-weight:600;font-size:12px;letter-spacing:.1em;margin-bottom:8px}
 .dev button{background:#27272A;color:#E4E4E7;border:1px solid #3F3F46;border-radius:8px;padding:10px 12px;
  font:inherit;cursor:pointer;text-align:left;transition:background 120ms,border-color 120ms}
@@ -1748,6 +1767,8 @@ function setState(s){
   recalc();
   renderPicked();
 }
+// ?test hides the dev rails for a usability session; without it they stay, for building.
+if(/[?&]test\b/.test(location.search)) document.body.classList.add('testing');
 buildSeats();
 setState('default');
 window.addEventListener('load', recalc);
