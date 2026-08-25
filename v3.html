@@ -81,10 +81,6 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
  border-radius:4px;height:24px;padding:0 12px;margin-top:16px}
 .pill.no{color:var(--muted);background:#F1F1F1}
 .pill.warnpill{color:var(--warn);background:#F6EDE6}
-.undo{background:var(--raised);border:1px solid var(--edge);border-radius:12px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.undo b{font-size:16px;color:var(--ink);display:block}
-.undo .cap{font-size:14px;color:var(--muted)}
-.undobtn{height:44px;flex:0 0 auto;padding:0 20px;border-radius:22px}
 .bal{display:inline-block;margin-top:8px;font-size:12px;font-weight:700;color:var(--ink);background:var(--chip);border-radius:4px;padding:4px 8px}
 .bal.none{color:var(--muted);background:#F1F1F1}
 .dlead{font-size:18px;font-weight:700;color:var(--ink);line-height:1.3;margin:0 0 4px}
@@ -640,7 +636,6 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
       <span style="width:34px"></span>
     </div>
     <div class="wrap">
-      <div class="undo" id="undo-tk" hidden><div><b>Not final yet</b><span class="cap" id="undo-tk-t">Undo this move within 60s</span></div><button class="btn sec undobtn" onclick="undoMove()">Undo</button></div>
       <div class="leg">
         <div class="legtag">Onward &middot; Thu, 7 Aug</div>
         <div class="row"><span class="time">23:55<span class="d">&mdash;</span><span class="arr">08:00</span></span><span class="price">&#8377;1,599</span></div>
@@ -818,7 +813,6 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
         <div class="subrow"><span class="sub">Nainital &rarr; Delhi</span><span class="onw" data-retseat>Seat U5</span></div>
         <div class="oprow"><div><div class="op">Laxmi Holidays Pvt Ltd</div><div class="cap">Nainital Bus Stand &rarr; ISBT Kashmiri Gate, Gate 4</div></div></div>
       </div>
-      <div class="undo" id="undo-done" hidden><div><b>Not final yet</b><span class="cap" id="undo-done-t">Undo this move within 60s</span></div><button class="btn sec undobtn" onclick="undoMove()">Undo</button></div>
       <p class="dlead" id="d-lead"></p>
       <p class="note" id="d-what">Moved from Mon, 11 Aug. You paid &#8377;200.</p>
       <div class="terms">
@@ -1391,8 +1385,6 @@ function setPt(el,group){
 }
 let movedTo='', movedSeat=HELD_SEAT, movedDay=0;
 let moveDone=false;
-const UNDO_SECS = 60;                 // the operator has not been told yet, so this costs nothing
-let undoLeft = 0, undoTimer = null, undoFrom = null;                       // the single reschedule, once it has been spent
 const changesLeft = () => (moveDone || state==='alreadymoved') ? 0 : 1;
 let seatMode='';        // '' = booking · 'move' = seat for a date change · 'review' = changing it at trip review
 
@@ -1501,44 +1493,10 @@ function doMove(){
     b.innerHTML='Confirm move'; b.disabled=false;
     if(document.getElementById('st-sf').getAttribute('aria-pressed')==='true'){ setState('swapfail'); }
     else {
-      undoFrom = {day: heldDay, seat: retSeat()};   // the seat held before this move
-      moveDone=true; heldDay=movedDay||heldDay;
-      startUndo();
+      moveDone=true; heldDay=movedDay||heldDay;   // the move is final the moment it is confirmed
       setState(state); recalc(); go('s-done');
     }
   },1100);
-}
-function startUndo(){
-  clearInterval(undoTimer);
-  undoLeft = UNDO_SECS;
-  paintUndo();
-  undoTimer = setInterval(function(){
-    undoLeft--;
-    if(undoLeft<=0){ clearInterval(undoTimer); undoTimer=null; undoFrom=null; }
-    paintUndo();
-  }, 1000);
-}
-function paintUndo(){
-  const live = undoLeft>0 && !!undoFrom;
-  ['done','tk'].forEach(function(k){
-    const bar=document.getElementById('undo-'+k); if(!bar) return;
-    bar.hidden = !live;
-    const t=document.getElementById('undo-'+k+'-t');
-    if(t && live) t.textContent = 'Undo this move within '+undoLeft+'s';
-  });
-  // while the move can still be taken back, the ticket is not final and must not say it is
-  const fh=document.getElementById('d-finalh'), fd=document.getElementById('d-final');
-  if(fh) fh.textContent = live ? 'This ticket is about to be final' : 'This ticket is now final';
-  if(fd) fd.textContent = live
-    ? 'It becomes final when the undo window closes'
-    : 'It cannot be cancelled or moved again';
-}
-function undoMove(){
-  if(!undoFrom) return;
-  clearInterval(undoTimer); undoTimer=null;
-  heldDay = undoFrom.day; movedSeat = undoFrom.seat;
-  moveDone = false; undoFrom = null; undoLeft = 0;
-  paintUndo(); setState(state); recalc(); go('s-ticket');
 }
 function abortMove(){
   if(moveTimer){                       // in flight — cancel it, nothing was swapped

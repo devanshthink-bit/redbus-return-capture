@@ -139,7 +139,7 @@ terms. Read it before quoting a number at anyone.
 |---|---|---|---|
 | **v1** | The last day you can travel | that day | Move earlier surfaced; later change in My Bookings. **17 screens** |
 | **v2** | Earliest and latest, two fields | the **cheapest** day | One *Change day*, either direction. **16 screens** |
-| **v3** | One calendar — one tap = fixed date, two = range | the **last movable** day, shows the saving | Idea 9 guard · day-level movability · auto-assigned seat and points, changed at review · visible change balance · 60-second undo. **16 screens** |
+| **v3** | One calendar — one tap = fixed date, two = range | the **last movable** day, shows the saving | Idea 9 guard · day-level movability · auto-assigned seat and points, changed at review · visible change balance. **16 screens** |
 
 **v1 and v2 are frozen.** Only v3 is being changed. Do not touch v1 or v2 without being asked —
 he has instructed this explicitly and it has been verified on every commit.
@@ -151,7 +151,7 @@ v3 asks a question people already know how to answer, so it removes less uncerta
 ```
 home → outbound buses → outbound seat → outbound points
      → Return (calendar) → Your return (day list) → Trip review → Pay → Booking confirmed
-Ticket → Change day → Confirm the move → Return moved (with 60s undo)
+Ticket → Change day → Confirm the move → Return moved (final on confirm)
 ```
 The **return seat screen and the return points screen are no longer in the flow** — both are
 defaulted and changed from Trip review via *Change seat* / *Change points*.
@@ -159,7 +159,7 @@ defaulted and changed from Trip review via *Change seat* / *Change points*.
 ### v3 constants
 ```js
 OUT_DAY = 7 · HORIZON = 30 · LAST_BOOKABLE = 37 (6 Sep) · MAX_WINDOW = 7 days
-HELD_SEAT = 'U5' · UNDO_SECS = 60
+HELD_SEAT = 'U5'
 MOVABLE = d => ((d*13 + 5) % 9) < 7      // ~6 of 30 days have no movable bus
 FARE, SEAT are Proxies over generator functions — every date has real data
 ```

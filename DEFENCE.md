@@ -378,7 +378,7 @@ which build you are showing before you start.**
 |---|---|---|---|
 | **v1** `/` | The last day you can travel | that day | Move earlier surfaced; later change in My Bookings |
 | **v2** `/v2.html` | Earliest and latest, two fields | the **cheapest** day in the range | One *Change day*, either direction |
-| **v3** `/v3.html` | One calendar — one tap for a fixed date, two for a range | the **last** day, and shows the saving | Idea 9 guard · seat picker on the move · visible change balance · 60-second undo |
+| **v3** `/v3.html` | One calendar — one tap for a fixed date, two for a range | the **last** day, and shows the saving | Idea 9 guard · seat picker on the move · visible change balance |
 
 ### "Why are there three? Couldn't you get it right first time?"
 
@@ -426,16 +426,13 @@ complete answer, so a traveller with a fixed date never sees wording implying th
 which matters because **39.1% with a fixed return date still book separately** and they are the
 biggest leak, not a side case.
 
-### "You added a seat picker, an undo, a change balance. Isn't that scope creep?"
+### "You added a seat picker and a change balance. Isn't that scope creep?"
 
 Each answers a specific hole someone found:
 - **Seat availability** — every day claimed *"Seat U5 free"*, which the product cannot promise. The
   seat is only held on the booked day.
 - **Change balance** — the single reschedule was the most consequential rule in the construct and
   existed only as prose on three screens. Now it is a countable state.
-- **Undo** — confirming a move was a cliff. It spends the one change and makes the ticket
-  permanently non-refundable, instantly. Sixty seconds costs nothing, because the operator has not
-  been told yet.
 
 ### "The undo is a gimmick. The T&Cs say it's final."
 
@@ -861,7 +858,7 @@ for certain travellers.
 
 They are right, and it is the harshest term in the product. It is RedBus's existing term, not
 something I introduced — but I chose to build on it. I would show them that it appears three times
-before anyone can act, in the warning colour, and ask whether the undo window is enough or whether
+before anyone can act, in the warning colour, and ask whether that is enough or whether
 the term itself needs renegotiating with operators. **That second question is above my pay grade and
 I would say so.**
 
