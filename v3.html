@@ -749,7 +749,6 @@ body.testing .dev{display:none!important}
         <div class="cap" style="margin-top:4px">Laxmi Holidays Pvt Ltd &middot; Seat U5</div>
       </div>
 
-      <p class="terms-lead">One change only. After it, you cannot cancel this ticket.</p>
 
       <div id="wi-loading" hidden>
         <div class="skelcard"><div class="skel" style="width:45%"></div><div class="skel" style="width:62%;margin-top:12px"></div></div>
@@ -1319,9 +1318,11 @@ function choosePick(d){ setHeldDay(d); }
 const BOOKABLE = Array.from({length: LAST_BOOKABLE-OUT_DAY}, (_,i)=>OUT_DAY+1+i);
 function openWithin(){ renderWithin(); go('s-within'); }
 function withinVisibility(empty){
-  const s=state, L=document.getElementById('wi-list'), N=document.getElementById('wi-none');
+  const s=state, L=document.getElementById('wi-list'), N=document.getElementById('wi-none'),
+        T=document.getElementById('wi-note');
   if(L) L.hidden = empty || ['loading','nothingearlier','checkfail'].includes(s);
   if(N) N.hidden = !(s==='nothingearlier' || (empty && s!=='loading' && s!=='checkfail'));
+  if(T) T.hidden = L ? L.hidden : true;   // notes about picking a day go with the days
 }
 
 function renderWithin(){
@@ -1364,11 +1365,14 @@ function renderWithin(){
   // Above the list, not under it: at the bottom this sat 786px down a 697px screen, so nobody
   // reading it had not already made the choice it was meant to inform.
   const note=document.getElementById('wi-note');
+  // Two pairs, in the same shape as every other block in the app. The warning was a loose
+  // paragraph above these; it is the first pair now, and keeps its weight through the crit
+  // colour rather than through being the odd one out.
   if(note) note.innerHTML = days.length
-    ? '<dt>You may get a different seat</dt>'
-      + '<dd>On another day you get whatever is free. Change it before you confirm.</dd>'
-      + '<dt>Only '+OPERATOR+' runs this route</dt>'
-      + '<dd>Your new date will be on the same operator.</dd>'
+    ? '<dt class="crit">One change only</dt>'
+      + '<dd>After it, you cannot cancel this ticket.</dd>'
+      + '<dt>You may get a different seat</dt>'
+      + '<dd>You get whatever is free that day. Change the seat before you confirm.</dd>'
     : '';
   withinVisibility(days.length===0);
   return days.length;
