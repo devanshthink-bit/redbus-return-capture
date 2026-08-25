@@ -36,6 +36,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 .q{font-size:20px;font-weight:700;margin-bottom:12px;line-height:1.25}
 .help{font-size:14px;color:var(--muted);line-height:1.45}
 .note{font-size:12px;color:var(--muted);margin:8px 0 0}
+.note-rules{margin-top:20px;padding-top:18px;border-top:1px solid var(--line)}
 
 /* ---------- field ---------- */
 .field{width:100%;text-align:left;background:var(--raised);border:1px solid var(--edge);border-radius:12px;
@@ -1315,7 +1316,15 @@ function renderWithin(){
       + '<div class="subrow"><span class="sub">'+OPERATOR+' \u00B7 '+seatTxt+'</span>'+right+'</div>'
       + (same?'':'<div class="pillrow"><div class="pill warnpill">\u21BB Different seat</div></div>') + '</button>';
   }).join('');
-  if(days.length) wrap.innerHTML += '<p class="note">Your seat is only held on the day you booked. On any other day you get whatever is free \u2014 <b>you can pick a different one before confirming</b>.<br>Only Laxmi Holidays runs this route. A date change stays with the same operator.</p>';
+  // Two separate facts. They were one grey paragraph with a line break in the middle, which read as
+  // a wall. Same pattern as the terms blocks: a heading you can scan, a line you can read if it
+  // applies to you. The per-day cards already say which seat you would get, so that is not repeated.
+  if(days.length) wrap.innerHTML += '<dl class="rules note-rules">'
+    + '<dt>Your seat may change</dt>'
+    + '<dd>It is only held on the day you booked. You can pick a different one before confirming.</dd>'
+    + '<dt>One operator on this route</dt>'
+    + '<dd>'+OPERATOR+'. A date change stays with them.</dd>'
+    + '</dl>';
   withinVisibility(days.length===0);
   return days.length;
 }
