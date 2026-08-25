@@ -36,7 +36,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 .q{font-size:20px;font-weight:700;margin-bottom:12px;line-height:1.25}
 .help{font-size:14px;color:var(--muted);line-height:1.45}
 .note{font-size:12px;color:var(--muted);margin:8px 0 0}
-.note-rules{margin-top:20px;padding-top:18px;border-top:1px solid var(--line)}
+.note-rules{margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid var(--line)}
 
 /* ---------- field ---------- */
 .field{width:100%;text-align:left;background:var(--raised);border:1px solid var(--edge);border-radius:12px;
@@ -308,6 +308,7 @@ body.testing .dev{display:none!important}
 .callegend{display:flex;align-items:center;gap:7px;margin-top:10px;font-size:12px;color:var(--muted)}
 .callegend i{width:5px;height:5px;border-radius:50%;background:#B9B9C4;display:inline-block;flex:0 0 auto}   /* --rate is only 3.7:1 on the range band */
 .fullkey{font-weight:500;color:#9A9AA4;flex:0 0 auto}
+.pillnote{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.35}
 .cday.sel.cheap .f{color:#fff}
 .cday:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(197,70,70,.35)}
 </style>
@@ -479,8 +480,8 @@ body.testing .dev{display:none!important}
 
       <div id="pk-main">
         <p class="terms-lead" id="pk-lead">We picked <b>Sun, 10 Aug</b> &mdash; the cheapest day in your window.</p>
+        <dl class="rules" id="pk-note" style="margin-bottom:20px"></dl>
         <div id="pk-list"></div>
-        <dl class="rules" id="pk-note" style="margin-top:20px"></dl>
       </div>
 
       <div id="pk-none" hidden>
@@ -609,6 +610,7 @@ body.testing .dev{display:none!important}
         <div class="ptline"><span>Dropping</span><b id="rv-drop">08:00 &middot; ISBT Kashmiri Gate</b><span class="cap" id="rv-dropwhy">Gate Number 4 &mdash; where you started</span></div>
         <div class="ptacts"><button class="linkbtn" id="rv-seatbtn" onclick="openSeatForReview()">Change seat</button><button class="linkbtn" id="rv-ptbtn" onclick="openPointsForReview()">Change points</button></div>
         <div class="pill" data-movepill><span aria-hidden="true">&#8635;</span> You can change this date</div><!-- replaces the FlexiTicket badge on return legs; never shown alongside it -->
+        <p class="pillnote" data-pillnote>One change only. After it, the return cannot be cancelled.</p>
       </div>
 
       <!-- the terms. plain ink, no fill, no badge, nothing to tap -->
@@ -753,6 +755,7 @@ body.testing .dev{display:none!important}
         <div class="skelcard"><div class="skel" style="width:40%"></div><div class="skel" style="width:58%;margin-top:12px"></div></div>
       </div>
 
+      <dl class="rules note-rules" id="wi-note"></dl>
       <div id="wi-list"></div>
 
       <div id="wi-none" hidden>
@@ -910,6 +913,7 @@ body.testing .dev{display:none!important}
         <div class="subrow"><span class="sub">Nainital &rarr; Delhi &middot; 8h 5m</span><span class="onw" data-retseat>Seat U5</span></div>
         <div class="oprow"><div><div class="op">Laxmi Holidays Pvt Ltd</div><div class="cap">Nainital Bus Stand &rarr; ISBT Kashmiri Gate, Gate 4</div></div></div>
         <div class="pill" data-movepill><span aria-hidden="true">&#8635;</span> You can change this date</div>
+        <p class="pillnote" data-pillnote>One change only. After it, the return cannot be cancelled.</p>
       </div>
 
       <div class="terms" id="bc-terms">
@@ -1227,7 +1231,7 @@ function renderPicked(){
   const lead=document.getElementById('pk-lead');
   const lastMov = sel.length===2 ? lastMovableIn(sel[0],sel[1]) : (MOVABLE(sel[0]) ? sel[0] : 0);
   if(!heldDay){
-    lead.innerHTML = '<b>Pick your return day.</b> Two of them are worth a look.';
+    lead.innerHTML = '<b>Pick your return day.</b> Switching is free until you pay.';
   } else if(days.length===1){
     lead.innerHTML = MOVABLE(heldDay)
       ? 'Your return on <b>'+label(heldDay)+'</b>.'
@@ -1245,6 +1249,7 @@ function renderPicked(){
   const note=document.getElementById('pk-note');
   const after = '<dt>Changing is free until you pay</dt>'
     + '<dd>After you pay, you get one date change.</dd>';
+  const spreadNote = heldDay ? after : '';   // before they pick, the lead already says it
   if(heldDay && !MOVABLE(heldDay)){
     note.innerHTML = '<dt class="crit">You cannot change this date later</dt>'
       + '<dd>No bus on '+label(heldDay)+' offers a date change.</dd>'
@@ -1261,7 +1266,7 @@ function renderPicked(){
       + '<dd>Pick it now and you save '+RUPEE(save)+'.</dd>'
       + '<dt class="crit">No refund on a cheaper day</dt>'
       + '<dd>You only pay when the new day costs more.</dd>'
-      + after;
+      + spreadNote;
   } else {
     note.innerHTML = '<dt>Every day costs the same</dt><dd>Pick whichever suits you.</dd>' + after;
   }
@@ -1295,6 +1300,8 @@ function paintChangeRow(){
       ? 'No date change on this day'
       : '<span aria-hidden="true">\u21BB</span> You can change this date';
   });
+  // the cost of using the badge belongs beside it, not 700px further down
+  document.querySelectorAll('[data-pillnote]').forEach(function(p){ p.hidden = !!stuck || dropped; });
 }
 
 // The booked day drives the ticket row, the move badge, the money and every date on screen.
@@ -1349,12 +1356,15 @@ function renderWithin(){
   // Two separate facts. They were one grey paragraph with a line break in the middle, which read as
   // a wall. Same pattern as the terms blocks: a heading you can scan, a line you can read if it
   // applies to you. The per-day cards already say which seat you would get, so that is not repeated.
-  if(days.length) wrap.innerHTML += '<dl class="rules note-rules">'
-    + '<dt>You may get a different seat</dt>'
-    + '<dd>On another day you get whatever is free. Change your seat before you confirm.</dd>'
-    + '<dt>Only one operator on this route</dt>'
-    + '<dd>Your new date will be on '+OPERATOR+' too.</dd>'
-    + '</dl>';
+  // Above the list, not under it: at the bottom this sat 786px down a 697px screen, so nobody
+  // reading it had not already made the choice it was meant to inform.
+  const note=document.getElementById('wi-note');
+  if(note) note.innerHTML = days.length
+    ? '<dt>You may get a different seat</dt>'
+      + '<dd>On another day you get whatever is free. Change it before you confirm.</dd>'
+      + '<dt>Only '+OPERATOR+' runs this route</dt>'
+      + '<dd>Your new date will be on the same operator.</dd>'
+    : '';
   withinVisibility(days.length===0);
   return days.length;
 }
