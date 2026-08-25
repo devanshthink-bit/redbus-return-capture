@@ -1131,7 +1131,7 @@ function paintWindow(){
     R.innerHTML = '<dt>We\u2019ll book '+label(sel[0])+' \u00B7 '+RUPEE(FARE[sel[0]])+'</dt>'
       + '<dd>You can change the date once after booking. Pay any price difference.</dd>'
       + '<dt class="prompt">Not sure? Tap a second day</dt>'
-      + '<dd>Up to '+MAX_WINDOW+' days apart. We book your last day.</dd>';
+      + '<dd>Up to '+MAX_WINDOW+' days apart. You choose the day next.</dd>';
   } else {
     const b=sel[1], c=cheapestIn(sel[0],sel[1]);
     R.innerHTML = (!hasSpread()
