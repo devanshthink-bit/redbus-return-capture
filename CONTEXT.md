@@ -483,7 +483,7 @@ stakeholder presentation. This is a separate deliverable from `v3.html`; the pro
 | Page | Holds |
 |---|---|
 | `Hi-Fi UI` | One section, "Screens". Frames only, every element an instance. Nothing else lives here |
-| `🧩 Components` | Six sections: Icons · Tab icons · Artwork · App chrome · Cards and rows · Controls and chips · Seat map |
+| `🧩 Components` | Eleven sections, one column, bucketed by the name prefix: Icons · Tab bar icons · Logos · Artwork · App chrome · Buttons · Chips, badges and controls · Rows · Cards · Seat map · Calendar |
 | `🎨 Foundations` | Colour, type, elevation and spacing/radius specimens, generated from the real variables |
 
 **Tokens.** `1. Primitives` (colour ramps, `space/*`, `radius/*`, `size/*`) is hidden from publishing.
@@ -684,6 +684,31 @@ the first place.
 The measurement that nearly misled: a "find the pale run" scan reported the pill touching the
 card's right edge. It was the hot-air balloon, which is also pale, sitting immediately to its
 right. Reading the actual colours row by row separated them — pill `#E6EFF6`, balloon `#B6E1EF`.
+
+### The Components page was sections stacked on top of each other
+
+Devansh: *"Components page is too chaotic, make it look organised and less cluttered."*
+
+The sections were literally overlapping — Tab icons started 56pt above where Icons ended,
+App chrome sat inside Artwork, and Controls, Seat map and Calendar were all buried inside
+Cards and rows. Each section had been placed by hand as it was created, so nothing accounted
+for what came before it.
+
+Rebuilt mechanically, which is the only way it stays tidy as components get added:
+
+- **Bucket by the name prefix.** `Icon /`, `Tab Icon /`, `Logo /`, `Art /`, `Button /`,
+  `Chip /`, `Row /`, `Card /`, `Seat /`, `Calendar /`, `Nav /`. The naming convention was
+  already doing the work; nothing had been reading it. Eleven sections, 87 components.
+- **Wrapped grid inside each section** — 48pt side padding, 88 above (clear of the section
+  label), 40 between columns, 56 between rows, wrapping at 1360.
+- **One column.** Every section the same width, stacked top to bottom with a 96pt gutter, each
+  one's y derived from the height of the one above. Asserted zero overlaps afterwards.
+
+Three components were filed by shape rather than by job and got moved: `Rating badge` and
+`Category Tile` to *Chips, badges and controls*, `Search / Row` to *App chrome*.
+
+Sorting inside a section is alphabetical, not by size. It leaves ragged rows where a 24pt icon
+sits beside a 358pt card, but a library is for finding things.
 
 ### Screens 13 and 14 — the confirm and the payoff
 
