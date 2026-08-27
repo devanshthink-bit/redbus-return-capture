@@ -606,6 +606,43 @@ the ticket and booking cards whose artwork bleeds to the radius, and the screen 
 **The lesson:** when something looks flat, measure the pixels either side of the edge before
 adjusting the shadow. The shadow was fine in the style; it was being clipped.
 
+### Turning clipping off un-rounds every card whose artwork reaches the edge
+
+Devansh, on the next pass: *"It's getting cut from the top, and Change Day should be part of
+the card."*
+
+The first half was a consequence of the shadow fix. A card whose top child is a full-bleed
+illustration relied on the **card's** `clipsContent` to round that artwork. Setting
+`clipsContent = false` to free the shadow also stopped the rounding, so the artwork ran square
+into the card's own 16pt corner and the card read as sliced off. Measured proof: at the card's
+left edge the sky colour `#8FCFEB` started at full strength on the first row of the band, with no
+corner curve at all.
+
+Fix: round the **child**, not the parent. Give the bleeding child the parent's radius on the two
+corners it touches, zero on the other two, and `clipsContent = true` on the child alone. The
+parent stays unclipped, so the shadow still shows.
+
+An audit of the whole file found 14 of these and fixed 11 — `Card / Bus` → `tripReward` (bottom),
+`Card / Ticket` → `Journey` (top), and both boarding-point cards at top and bottom. The three
+skipped were text inside a rating badge, where a 6pt radius makes no visible difference.
+
+**The rule:** any pair of `clipsContent` and corner radius is a single decision. Change one and
+re-check every full-bleed child underneath it.
+
+### Change day belongs inside the booking card
+
+The second half of the same message. A separate *Change day* card sitting under the booking card
+read as a loose row, and the gap between the two looked like a seam.
+
+It is now a section of `Card / Booking` itself: a second divider, then title, one line of detail,
+and the balance badge, with a chevron on the right — all behind a `Show change day` boolean, with
+`Change title` / `Change detail` / `Change balance` as text properties. The standalone
+`Row / Action` component stays in use on **11 · Ticket details**, where stacked single-purpose
+rows are the real app's own pattern.
+
+The reason is not tidiness. Change day is a property of that booking, so it has to live inside
+the booking's own boundary — otherwise it reads as a general menu item that happens to sit nearby.
+
 ### Cropping artwork: check what else was on screen
 
 Four bugs came out of one review, and one of them was a cropping mistake worth naming.
