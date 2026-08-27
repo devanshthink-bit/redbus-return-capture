@@ -526,3 +526,31 @@ inside it.
 3. **`resetOverrides()` also drops text and swap overrides** — re-apply them in the same script.
 4. Cropped artwork from the screenshots is the honest way to carry redBus's own marketing creative and
    brand glyphs. Monochrome glyphs are un-mixed to transparent PNGs so they sit on any surface.
+
+### The return calendar in hi-fi (screen 05)
+
+Built as two frames — `05 · Return · pick your days` (nothing chosen) and
+`05a · Return · window chosen` (scrolled, so the rules land above the action bar).
+
+The calendar borrows redBus's own date picker: MON-first weekday header with its rule beneath,
+a left-aligned bold month label, red weekend numbers, struck-through unavailable days, and the
+dark selection chip. The new feature is layered inside that chrome — a fare under every bookable
+day, the `Out` marker on the outbound, `Full` where the bus is sold out, the small dot for days
+whose bus allows no date change, and the range band with red end-caps.
+
+**The weekday mapping was corrected.** v3's `DOW` puts 1 Aug 2026 on a Friday; the real 2026
+calendar — and every redBus screenshot — puts it on a **Saturday**, which makes the outbound
+**Fri 7 Aug**. The hi-fi screens use the real calendar. Any v3 label that names a weekday
+(`Sat 9 – Tue 12 Aug`, `Sun, 10 Aug`) is a day out and must be recomputed, not copied.
+
+**The worked example the hi-fi screens use, and the remaining screens must match:**
+
+| | |
+|---|---|
+| Window chosen | **Mon 17 – Sat 22 Aug** (6 days, inside the 7-day cap) |
+| Cheapest in it | **Tue 18 Aug · ₹880** |
+| Last day | **Sat 22 Aug · ₹1,320** |
+| No date change | 21 Aug (and 12, 14, 30 elsewhere in the month) |
+| Sold out | 13 and 23 Aug |
+
+Fares come from v3's `FAREOF` evaluated against the real weekday, so weekends still carry the peak.
