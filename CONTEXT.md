@@ -552,6 +552,28 @@ lives before they need it (*Open your ticket · Tap Change day and pick another 
 arrow markers and the connecting rule, duration centred between the stops, white footer with the
 operator, passenger and the seat badge. Twelve text properties, used for both legs.
 
+### The ticket and Change day (screens 10 and 11)
+
+`10 · Your ticket` is both legs plus one row: **Change day**, carrying the window in plain words
+(*Mon, 17 Aug to Sat, 22 Aug. Pay only the price difference.*) and the balance badge *1 change left*.
+The control the whole idea depends on is a single row on the ticket, not a menu.
+
+`11 · Change day` keeps the current booking pinned at the top so the thing being given up stays
+visible while the alternatives are read. Above the list, two rules in the app's usual shape:
+**One change only** in warning colour with *After it, you cannot cancel this ticket*, then
+*You may get a different seat*.
+
+Two decisions from v3 that the screens must preserve:
+
+- **Non-movable days are not filtered out of this list.** Movability asks whether a day's ticket
+  could be changed *again*, and this move spends the only change there is. A bus still runs those
+  days with seats free, so hiding them would remove real options to protect something already gone.
+- **Every alternative names the seat it would give you**, and a day that cannot keep your seat
+  carries an amber `Different seat` tag rather than a surprise at confirmation.
+
+With the last day booked, every alternative is cheaper — and each says *₹N less — no refund*. That
+is the cost of the flexibility, stated on the screen where it is spent.
+
 ### Cropping artwork: check what else was on screen
 
 Four bugs came out of one review, and one of them was a cropping mistake worth naming.
