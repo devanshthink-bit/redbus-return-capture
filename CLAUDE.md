@@ -7,7 +7,7 @@ the verification harness, and the rules learned from real bugs.
 
 Do not start work, answer a question about the project, or change a file until you have read it.
 
-## The five things that will bite you if you skip it
+## The six things that will bite you if you skip it
 
 1. **v1 (`index.html` / `prototype.html`) and v2 (`v2.html`) are frozen.** Only `v3.html`
    changes. Verify on every commit that v1 and v2 are untouched.
@@ -19,6 +19,12 @@ Do not start work, answer a question about the project, or change a file until y
    handler. Run all four checks in `CONTEXT.md` §10 before saying anything works.
 5. **Plain language, always.** Short sentences, everyday words, full substance. This is a
    standing correction from the user, not a preference.
+6. **Log the decision even when no skill asked you to.** Every entry in `LOG.md` was written
+   inside a molades skill. When the work became direct requests instead, nothing prompted the
+   entry and **twelve days went unlogged — fifty-two commits, including removing the undo,
+   capping the change list to the window, and the redDeal finding.** A reader of the log would
+   have thought the project still had a working undo. The skills are not the trigger; the
+   decision is.
 
 ## Where things are
 
@@ -27,14 +33,37 @@ Do not start work, answer a question about the project, or change a file until y
 - `NOTES.md` · `RESEARCH.md` · `BRIEF.md` · `SCOPE.md` — the research and the spec
 - `TERMS.md` — every redBus rule the construct stands on (FlexiTicket, Free Cancellation,
   reschedule, refunds), each with its source and a verified/unverified flag
-- `DEFENCE.md` — 102 stakeholder/interview questions with answers
-- `CRITIQUE.md` — six attacks on the chosen idea, plus the idea ranking
-- `TEST_SCRIPT.md` — the usability script (sessions not yet run)
+- `DEFENCE.md` — 105 stakeholder/interview questions with answers
+- `CRITIQUE.md` — eight attacks on the chosen idea, plus the idea ranking
+- `TEST_SCRIPT.md` — the usability script. **Tests v3**, at `v3.html?test`. Sessions not yet run
 - `artefacts.html` — the board, generated from `NOTES.md`. Never retype note text
 - `v3.html` — the live prototype being changed
 
 Repo is public and auto-deploys to GitHub Pages on push. Deploys take 45–90 seconds; verify with
 `curl` + `md5` before telling the user it is live.
+
+## Log it, and what counts
+
+Append to `LOG.md` in the same session, oldest-first, in the existing format:
+
+```
+DECISION | CHANGE | CRITIQUE | LEARNED | NOTE  ·  YYYY-MM-DD  ·  molades-<skill>  [· Source: user]
+```
+
+Write one when any of these happen, whether or not a skill is running:
+
+- **A decision, and especially a reversal.** A feature built and later cut is more interesting
+  than either state on its own — record why it went, not just that it did
+- **A user correction that changed the work.** Their wording, not your paraphrase
+- **A bug whose cause is worth remembering.** The class, not the instance
+- **A fact about redBus you had to go and verify**
+
+Not every commit. A commit that fixes a typo is not a decision. If you cannot say what someone
+would learn from the entry, do not write it.
+
+If the reason for something is the user's to give and they have not given it, leave a marked
+blank rather than inventing one. There is one in `LOG.md` and one in `DEFENCE.md` for why the
+undo was cut.
 
 ## After any structural change
 
