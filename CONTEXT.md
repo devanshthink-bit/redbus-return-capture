@@ -492,6 +492,23 @@ Screens only ever use semantic tokens. Type and elevation are shared styles, nev
 
 **Screens done:** 01 Home · 02 Outbound bus list · 03 Outbound seat map. All iPhone 14, 390×844.
 
+### Your return, the day list (screen 06)
+
+Two frames — `06 · Your return · pick a day` and `06a · Your return · last day chosen`.
+
+**Nothing is pre-selected in 06.** That is the §8 decision made visible: when the fares differ, the
+product has no advantage on the only thing that decides it, so it does not choose. The lead reads
+*Pick your return day* with *Switching is free until you pay* underneath, and Review trip is off.
+
+**06a books the last day, and shows what that costs.** Every other card carries what it would have
+saved — ₹200, ₹440, ₹410, ₹380, ₹30 cheaper — against a booked Sat 22 Aug. The trade-off is stated
+where the choice is made rather than where the loss lands, and the traveller still picks the deadline
+because the rules underneath say why: they never need to change it.
+
+Tags are green for Cheapest (money-positive, matching the wallet strip and the rating badge) and
+grey for No date change. `Card / Return day` carries When, Price, Operator and Note as text
+properties with booleans for the note and the tag row.
+
 ### Cropping artwork: check what else was on screen
 
 Four bugs came out of one review, and one of them was a cropping mistake worth naming.
