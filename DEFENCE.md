@@ -400,8 +400,10 @@ day so the traveller starts at the best price.
 Because v2 traded one harm for a worse one. Booking the **cheapest** day puts people on a day they
 may not be able to make — which forces them to spend their **single** reschedule. And spending it
 is the expensive, irreversible move: it costs the fare difference *and* kills cancellation forever.
-v3 books the **last** day, so most people never need to change at all, and shows the saving instead:
-*"Sun, 10 Aug is ₹100 cheaper. Switch to it free before you pay."*
+v3 does not book either one. It **shows the choice and makes the traveller take it** — every day in
+the range with its fare, the cheapest flagged, and their last day named. Deciding for them was the
+mistake both earlier versions made in opposite directions. What it does decide is the default when
+there is nothing to decide: if every day costs the same, it books the last one.
 
 **Say this plainly:** I was wrong in v2, and building it is how I found out. Optimising the fare
 looked right in a spreadsheet and was wrong once I traced what it did to the one reschedule.
@@ -434,12 +436,58 @@ Each answers a specific hole someone found:
 - **Change balance** — the single reschedule was the most consequential rule in the construct and
   existed only as prose on three screens. Now it is a countable state.
 
-### "The undo is a gimmick. The T&Cs say it's final."
+### "The change is instant and irreversible. Where is the safety net?"
 
-It is final **once submitted**. RedBus controls when that happens, and the platform already holds a
-seat for about seven minutes in-session. This is undo-send, not a promise I cannot keep. And the
-screen tells the truth while the window is open: the rule reads *"This ticket is about to be final /
-It becomes final when the undo window closes"*, and flips only when it actually is.
+There are three, and none of them is an undo. **A sixty-second undo was built and then removed** —
+say that before they find the older screenshots.
+
+1. **The confirm screen states the cost before anything happens**, under *After you change it*:
+   you cannot cancel it, no refund for any reason, and this is your one date change.
+2. **A dearer day goes through payment.** Paying is a second deliberate act on a separate screen,
+   and nothing is committed until it completes — back out and the original booking is untouched.
+3. **The terms are on Review your trip before the first payment**, so nobody meets the rule for the
+   first time at the moment they spend it.
+
+**The honest gap:** a same-price or cheaper day skips payment, so it commits on one tap from the
+confirm screen. That is the least protected path in the product.
+
+> **[Add your own reason for cutting the undo here.]** Two defensible ones: it was theatre on a
+> screen people leave immediately, or undo-send only works if redBus has not yet told the operator
+> and that window was never verified. Pick the one that is true — they defend very differently.
+
+### "These flexibility features already exist. You have redesigned around them, not solved anything."
+
+They exist **inconsistently**, and inconsistent is the same as absent to anyone deciding whether to
+rely on something.
+
+| Mechanism | Coverage |
+|---|---|
+| FlexiTicket free date change | Select operators only |
+| Ordinary reschedule | Select operators only |
+| Free Cancellation | Where offered on the booking |
+| Return trip redDeal | A few buses in a list |
+
+Not one of them is dependable across a search. That is what produces Anand: *"I know there is an
+option but I just prefer okay this option doesn't exist"* (n07). That is not ignorance, it is a
+rational response to a feature that is there one search and gone the next.
+
+So the answer is not awareness. It is that the product never tells you, at the moment you are
+deciding, whether the thing you would be relying on is actually there for **this** bus on **this**
+day. v3 does: the guard on the outbound list, the grey dot on days that cannot be changed, and the
+rule that a day which cannot be moved is never sold as one that can.
+
+### "There is already a discount for booking the return. Why not just raise it?"
+
+Some operators run a **Return trip redDeal, 5–25% off the return** — on a few buses, not as redBus
+policy. Do not describe it as redBus discounting return trips; it is an operator promotion carried
+by redBus.
+
+It is the control experiment for this whole project. The discount is live **today**, and **39.1% of
+people with a fixed return date still book separately** (n73), and Soumya stopped booking early
+altogether (n49). A discount cannot buy a commitment somebody is not able to make. Raising it buys
+more of the people who were already going to book.
+
+Soumya would have paid **more**, not less, for the ability to move the date.
 
 ### "Why cap the window at seven days?"
 
@@ -486,7 +534,7 @@ Because *"no change fee"* is a denial of one charge that reads as a denial of al
 own terms require the fare difference. Leading with *free* is technically true and practically
 misleading — and it is the wording that would produce a ₹451 surprise at the moment of use.
 
-### "Why does the return badge say *Can be moved earlier* and not *Free date change*?"
+### "Why does the return badge say *You can change this date once* and not *Free date change*?"
 
 Because your problem statement says the flexibility today is *"offered as a property of a bus,
 discovered incidentally."* Putting RedBus's own badge on the return list turns the return back into
@@ -646,6 +694,25 @@ Never a dead end. That state is built and is in the prototype.
 **Answer.** Moves are all-or-nothing. If five seats are booked and only three are free earlier,
 the move isn't offered. A partial move splits the group, which is the exact failure this project
 exists to prevent — one interviewee lived it. **Specified, not built.**
+
+### "Your Change day list only shows days inside their window. You have made it more restrictive than redBus."
+
+**Correct, and it was deliberate.** redBus's own reschedule lets you move to any date. v3 shows only
+the days between the two the traveller picked.
+
+The reason: those two days are not a preference, they are a statement — *the earliest and the latest
+I could travel*. Days outside are days they have already told us are impossible. Offering the 8th to
+somebody who said they cannot leave before the 15th is not generosity, it is noise on the screen
+where they are spending a resource they only get once.
+
+**The cost is real and I will not pretend otherwise.** If the wedding runs three days past their
+window, this flow gives them nothing. In a shipped product the answer is that we do not replace
+redBus's reschedule, we sit in front of it — the existing flow stays as the escape hatch. **In the
+prototype there is no escape hatch, and that is a gap, not a decision.**
+
+**The thing to watch in testing:** whether anyone tries to pick a day outside their own window. If
+they do, the window was read as a preference rather than a constraint, and the whole framing is
+wrong — not just this screen.
 
 ### "What if the fare difference is huge?"
 
@@ -879,8 +946,8 @@ the one I cannot test without data I do not have.**
 
 They are stuck, and I do not hide it. They have spent their one reschedule, and the ticket is now
 non-refundable. This is the sharpest attack on the whole construct: it selects for uncertain
-travellers and leaves the twice-uncertain ones worse off than if they had never used it. The undo
-covers the first minute. It does nothing for next week.
+travellers and leaves the twice-uncertain ones worse off than if they had never used it. Nothing
+in the product covers it, and nothing could — the rule is redBus's, not mine.
 
 ### "Someone books the deadline and the bus is cancelled by the operator."
 
@@ -897,8 +964,8 @@ a one-day booking into a ticket that could not be changed at all.
 ### "Show me you'd change your mind. What has this session made you rethink?"
 
 The single reschedule is a scarcer resource than I treated it as. Everything I have added since —
-the undo, the visible balance, booking the safe day rather than the cheap one — is me responding to
-the same realisation: I was designing as though the change were free, and it is the most expensive
+the visible balance, the payment step on a dearer change, booking the safe day rather than the
+cheap one — is me responding to the same realisation: I was designing as though the change were free, and it is the most expensive
 thing in the product.
 
 ---

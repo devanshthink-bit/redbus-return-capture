@@ -172,6 +172,45 @@ This defence holds.
 
 ---
 
+## 7. It is narrower than the thing it is built on
+
+**The attack.** redBus's own reschedule lets you move to any date. v3's Change day shows only the
+days between the two the traveller picked. A design that exists to give people room has quietly
+taken some away — and it did it to the exact person it claims to serve, the one whose plans moved
+further than they expected.
+
+**The defence.** The two days are a statement, not a preference: *the earliest and the latest I
+could travel*. Days outside are days the traveller has already said are impossible, and putting them
+on the screen where somebody spends a once-only resource is noise. In a shipped product the existing
+reschedule stays underneath as the escape hatch.
+
+**Where the defence fails.** The prototype has no escape hatch, so as built the restriction is
+total. And the framing only holds if travellers read the second tap as a hard constraint. If they
+read it as *roughly when I think I will come back*, the product has hardened a guess into a cage —
+which is the same failure mode as v1's *last day* field, moved one screen later. **This is the thing
+to watch in the sessions:** does anyone try to pick a day outside their own window?
+
+---
+
+## 8. Nothing about the return is dependable, and the design cannot fix that
+
+**The attack.** Every return-side mechanism on redBus is operator-dependent: FlexiTicket on select
+operators, reschedule on select operators, Free Cancellation where offered, and the Return trip
+redDeal on a few buses in a list. v3 handles this honestly — the guard, the grey dot, the rule that
+an unmovable day is never sold as movable. But handling it honestly means the promise is *sometimes*.
+A traveller who learns the feature on one route and does not find it on the next has been taught
+the same lesson Anand already learned: assume it is not there.
+
+**The defence.** Naming the patchiness is better than hiding it, and it is why the guard exists at
+all. Nothing in the design pretends coverage it does not have.
+
+**Where the defence fails.** Honest and useful are different things. A feature you cannot rely on
+does not change booking behaviour, however clearly its absence is signposted — and behaviour change
+is the entire point. Fixing this needs operator supply, which is not a design problem, and the case
+study should say so rather than implying a screen can solve it.
+
+---
+
 ## The alternatives, and why they lost
 
 Sixteen ideas were generated and scored on how predictable they were. The ones that matter:
