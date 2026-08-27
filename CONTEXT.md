@@ -492,6 +492,30 @@ Screens only ever use semantic tokens. Type and elevation are shared styles, nev
 
 **Screens done:** 01 Home · 02 Outbound bus list · 03 Outbound seat map. All iPhone 14, 390×844.
 
+### Cropping artwork: check what else was on screen
+
+Four bugs came out of one review, and one of them was a cropping mistake worth naming.
+
+**A crop carries whatever was floating over it.** The tripReward strip cropped from `IMG_4553`
+had the bottom half of the Ask Ray pill baked into it, so every bus card showed a ghost half-button.
+Fixed by re-cropping from `IMG_4554`, where nothing overlapped. **Before uploading any crop, test the
+region for pixels that belong to a floating element** — a colour test for the Ask Ray purple would
+have caught it in a second.
+
+**Crop separable things separately.** The three promo banners were cropped as one flat image, so the
+8pt gaps between them read as a single joined block. They are now three components in a row with a
+real `itemSpacing`, which also lets the last one clip properly at the scroll edge.
+
+**Tinted cells need gaps.** The calendar day cells were flush at gap 0, so tinted days merged into a
+slab. They now sit at gap 4, and the chosen window's band is a separate continuous rounded rect
+behind them — individual days read as individually tappable, a committed range reads as one span.
+
+**Paired buttons are equal width.** Skip and Continue were 144/202 from a `layoutGrow` ratio;
+`layoutGrow` only takes integers, so both are `FILL` with grow 1.
+
+Chip borders were reported missing on the right and are not: 1px `#B0B0B0` on both edges, matching
+the app. That one was zoom aliasing — measure before changing anything.
+
 ### The rule for what goes on a screen
 
 **The UI comes from the real app. The prototype supplies only the logic of the new feature.**
