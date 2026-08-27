@@ -585,6 +585,27 @@ Two decisions from v3 that the screens must preserve:
 With the last day booked, every alternative is cheaper — and each says *₹N less — no refund*. That
 is the cost of the flexibility, stated on the screen where it is spent.
 
+### Auto-layout frames clip shadows by default
+
+Devansh: *"It doesn't look like a card."* He was right, and it was not the booking card — it was
+every card on every screen.
+
+`figma.createAutoLayout()` returns a FrameNode, and **FrameNode defaults to `clipsContent = true`**.
+A content wrapper with 16pt padding therefore clips each child card's shadow exactly at the card's
+own edge, so the side shadows vanish and only the bottom one survives. Every card in the file was
+sitting on white with no visible boundary.
+
+Fix: `clipsContent = false` on every container that is not deliberately a scroller. 791 frames.
+Keep it true only where content must be cut — the category strip, promo strip, chip rows, deck row,
+the ticket and booking cards whose artwork bleeds to the radius, and the screen frame itself.
+
+`Elevation/Card` was also far too tight. The real card's shadow reaches ~16pt from the edge:
+`#F5F5F5` right at the boundary fading to `#FCFCFC`. Two stacked shadows —
+`0 2 6 rgba(0,0,0,.05)` and `0 8 24 rgba(0,0,0,.07)` — reproduce that falloff to within a shade.
+
+**The lesson:** when something looks flat, measure the pixels either side of the edge before
+adjusting the shadow. The shadow was fine in the style; it was being clipped.
+
 ### Cropping artwork: check what else was on screen
 
 Four bugs came out of one review, and one of them was a cropping mistake worth naming.
