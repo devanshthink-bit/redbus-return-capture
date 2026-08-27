@@ -527,6 +527,18 @@ is the honest consequence of taking the date change — not a hidden one.
 
 Money for the worked example: onward ₹1,599, return ₹1,320, total **₹2,919**.
 
+### Pay (screen 08)
+
+A replication, not a design. The Pay screen exists in the real app, carries no part of the new
+feature, and so is rebuilt exactly: the amount in the nav title with the seat-hold countdown chip
+beside it, Review booking with View details, the two legs, the Trip info / Cancellation policy /
+Passengers chips, the trust row, the redBus wallet card and the UPI method list.
+
+**There is no bottom Pay bar**, because the real app has none — the total lives in the nav title and
+payment starts when a method is chosen. The prototype's own bottom bar was dropped for that reason.
+
+Amounts are ours: `Pay ₹2,919`, wallet ₹100.
+
 ### Cropping artwork: check what else was on screen
 
 Four bugs came out of one review, and one of them was a cropping mistake worth naming.
