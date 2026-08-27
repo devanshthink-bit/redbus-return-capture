@@ -509,6 +509,24 @@ Tags are green for Cheapest (money-positive, matching the wallet strip and the r
 grey for No date change. `Card / Return day` carries When, Price, Operator and Note as text
 properties with booleans for the note and the tag row.
 
+### Trip review (screen 07)
+
+Two frames — `07` for the two legs, `07a` scrolled to the terms, passenger, add-ons and total.
+
+The return leg carries what the onward one does not: its boarding and dropping points, Change seat
+and Change points, the `You can change this date once` pill, and the line that follows it —
+*After that, the return cannot be cancelled.* The pill replaces the FlexiTicket badge on return legs
+and is never shown alongside it.
+
+The terms card is the §8 rules list: no fee to change, any day you picked, **you cannot cancel after
+that** in warning colour, change up to 8 hours before. Read the bold lines alone and every rule is
+there.
+
+Free Cancellation is offered on the onward leg at ₹160 and shown as unavailable on the return, which
+is the honest consequence of taking the date change — not a hidden one.
+
+Money for the worked example: onward ₹1,599, return ₹1,320, total **₹2,919**.
+
 ### Cropping artwork: check what else was on screen
 
 Four bugs came out of one review, and one of them was a cropping mistake worth naming.
