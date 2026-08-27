@@ -470,3 +470,59 @@ at checkout (n87) · no photos for government buses (n85).
 
 **7 more notes were "not a problem"** — things that worked, including the reverse-cities button
 (n96) and redBus's boarding clarity (n100). Do not redesign those.
+
+---
+
+## 18. The hi-fi Figma build — started 2026-08-27
+
+The prototype screens rebuilt pixel-exact in Figma, styled to the **real redBus iOS app**, for
+stakeholder presentation. This is a separate deliverable from `v3.html`; the prototype is unchanged.
+
+**File:** `t9srahcEB1ioKyytu0sEMs` — three pages, and they stay separate:
+
+| Page | Holds |
+|---|---|
+| `Hi-Fi UI` | One section, "Screens". Frames only, every element an instance. Nothing else lives here |
+| `🧩 Components` | Six sections: Icons · Tab icons · Artwork · App chrome · Cards and rows · Controls and chips · Seat map |
+| `🎨 Foundations` | Colour, type, elevation and spacing/radius specimens, generated from the real variables |
+
+**Tokens.** `1. Primitives` (colour ramps, `space/*`, `radius/*`, `size/*`) is hidden from publishing.
+`2. Semantic` aliases every one of them — `surface/*`, `text/*`, `icon/*`, `border/*`, `seat/*`.
+Screens only ever use semantic tokens. Type and elevation are shared styles, never loose values.
+
+**Screens done:** 01 Home · 02 Outbound bus list · 03 Outbound seat map. All iPhone 14, 390×844.
+
+### The rule for what goes on a screen
+
+**The UI comes from the real app. The prototype supplies only the logic of the new feature.**
+Devansh set this on 2026-08-27 after the first three screens drifted toward v3's simplified content.
+
+So on a screen the new feature does not touch — the bus list, the seat map, the boarding points —
+everything is a replication: the app's own filter chips, fares, operators, promo strips, seat
+prices, point copy. v3's fares and chip labels were reverted. The prototype decides *behaviour*:
+which seat is chosen, which point is selected, what a screen does next.
+
+The new-feature screens (the return calendar onward) keep the app's chrome and get v3's logic
+inside it.
+
+### What the screenshots actually told us
+
+- **The real app is set in Inter**, not Roboto. Settled by pixel-correlating a real string against
+  ten candidate families; Inter Bold won by a wide margin.
+- Source screenshots are iPhone 16 Pro at 3x (1206×2622) — **divide by 3 for points, safe-area top 59**.
+  Screens here use the iPhone 14 safe area of 47, so a source `y` maps to `y − 12`.
+- Rendered type in the screenshots measures **3–5% wider** than Inter at round sizes. Layout boxes match
+  exactly, so the round sizes are the design intent and the build uses integers.
+
+### Rules learned the hard way here
+
+1. **Solve type size from the width of a whole string, never from letter height.** Ink height is thrown
+   off by tall glyphs — an arrow in the nav title made 16pt measure as 18pt, and the same mistake put
+   the filter chips a step small. Width-solving lands on round numbers every time.
+2. **A nested instance inside an instance cannot be moved or resized.** Position and size overrides are
+   both refused. Any swappable slot has to be an auto-layout container that does the aligning, and every
+   component that can be swapped in has to be an **auto-layout** frame so `HUG` resolves to its own size.
+   A plain fixed frame silently inherits the slot's size instead.
+3. **`resetOverrides()` also drops text and swap overrides** — re-apply them in the same script.
+4. Cropped artwork from the screenshots is the honest way to carry redBus's own marketing creative and
+   brand glyphs. Monochrome glyphs are un-mixed to transparent PNGs so they sit on any surface.
