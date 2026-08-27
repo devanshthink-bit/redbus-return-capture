@@ -528,7 +528,7 @@ Because the whole problem is that the flexibility is discovered incidentally. If
 tap to be read, this screen has failed at the exact thing the project exists to fix. The rule I held
 them to: **read only the bold lines and you must have every rule.**
 
-### "Why 'Only pay the fare difference' instead of 'No change fee'?"
+### "Why name the charge that remains instead of saying 'No change fee'?"
 
 Because *"no change fee"* is a denial of one charge that reads as a denial of all of them. RedBus's
 own terms require the fare difference. Leading with *free* is technically true and practically
