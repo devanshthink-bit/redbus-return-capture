@@ -552,11 +552,22 @@ lives before they need it (*Open your ticket · Tap Change day and pick another 
 arrow markers and the connecting rule, duration centred between the stops, white footer with the
 operator, passenger and the seat badge. Twelve text properties, used for both legs.
 
-### The ticket and Change day (screens 10 and 11)
+### Where the change control lives (screens 10, 11, 12)
 
-`10 · Your ticket` is both legs plus one row: **Change day**, carrying the window in plain words
-(*Mon, 17 Aug to Sat, 22 Aug. Pay only the price difference.*) and the balance badge *1 change left*.
-The control the whole idea depends on is a single row on the ticket, not a menu.
+**Corrected on review.** The first attempt invented a "Your ticket" screen from v3's simplified
+markup. The real flow is: *View ticket* opens **My Bookings**, and tapping a booking card opens
+**Ticket details**. Both are real app screens, so both are replications — and **the Change day row
+appears on both**: attached under the booking card in the list, and again inside the ticket.
+
+`10 · My Bookings` — the app's booking card with its illustrated header (sky-to-hills gradient, the
+translucent Boarding point chip, the scenery), the white body, and the footer with passenger count
+and *In 8 days*. Our Change day row sits directly beneath it, inside the same visual group.
+
+`11 · Ticket details` — the app's screen: close / support / share, the green Seat Guarantee banner,
+the red ticket card with its perforated tear-off and *Ticket details* link, the tracking note,
+*Change trip details*, then **Change day**, then Add to Apple Wallet.
+
+`12 · Change day` is the picker itself.
 
 `11 · Change day` keeps the current booking pinned at the top so the thing being given up stays
 visible while the alternatives are read. Above the list, two rules in the app's usual shape:
