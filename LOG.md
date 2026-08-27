@@ -1992,38 +1992,10 @@ An audit that reads the document against the copy finds wording gaps. Only an au
 the document against the *behaviour* can tell whether the gap matters. I found a real difference
 and reported it at the wrong severity, which in an interview is its own kind of error.
 
-DECISION · 2026-08-12 · molades-build · Source: user
-Built **undo on the move** in v3. Confirming a date change was a cliff: it spends the single
-reschedule and makes the ticket permanently non-refundable, the instant the button is tapped.
-There is now a 60-second window to take it back.
-
-**Why it is real rather than a trick.** redBus decides when the change is submitted to the
-operator. Holding it for a minute costs nothing — the same shape as undo-send in email — and
-BRIEF already records a ~7-minute in-session seat block, so briefly holding two seats is inside
-what the platform does today.
-
-**Why it belongs in this project.** CRITIQUE #2 is the sharpest attack on the whole construct:
-the feature selects for uncertain travellers, spends their one change on the first shift, and
-leaves them with nothing when plans move again. Undo does not fix that. It fixes the version
-caused by a mis-tap, which is the cheapest and commonest way the change gets lost. The honest
-line is that it protects the first minute and does nothing for next week.
-
-**The part most implementations get wrong, and the reason to build it carefully:** while the
-move can still be taken back, the ticket is *not* final — so the screen must not say it is.
-During the window the critical rule reads *"This ticket is about to be final / It becomes final
-when the undo window closes"*, and reverts to *"now final / cannot be cancelled or moved again"*
-when the window shuts. Undoing restores the day, the seat, the fare, the total, the change
-balance and the Change day row.
-
-Two contradictions found while checking the rendered screen rather than the logic: the crit
-heading still said *"now final"* under a rule saying it was not, and *Return moved* showed
-22:15–06:20 from the original static markup while every day in v3's list departs 23:55. Both
-now derive from the move.
-
-Verified: bar appears on *Return moved* and the ticket, counts down, undo restores everything
-and lands on the ticket with *"1 change left"* back, expiry hides the bar and restores the final
-wording, and `undoMove()` after expiry is a no-op. Full 19-step click-through including the
-undo, 208 combinations, no failures, no target under 44, type scale intact.
+LEARNED · 2026-08-12 · molades-build
+Checking the rendered screen instead of the logic found something the logic could not: a screen
+was still showing 22:15–06:20 from its original static markup while every day in v3's list departs
+23:55. A value typed into markup and never derived survives every test that only reads code.
 
 CHANGE · 2026-08-12 · molades-build · Source: user
 Fixed the three real bugs in **v2** that had been left alone while it was frozen. They were
@@ -2309,16 +2281,6 @@ LEARNED · 2026-08-25 · molades-attack
 For every filter, say out loud what it protects against, then check the thing it protects can still
 happen. Two filters in this build failed that test.
 
-DECISION · 2026-08-25 · molades-build · Source: user
-**Removed the undo.** The move is final the moment it is confirmed. The banner, the timer, the state
-and the reverting logic all went; the done screen's rule no longer flips, because there is nothing to
-flip it back from.
-
-> **The reason is Devansh's to give.** DEFENCE §"The change is instant and irreversible" carries a
-> marked blank for it. The two defensible answers — it was theatre on a screen people leave, or
-> undo-send was never verified against redBus's submission window — defend very differently, and
-> picking the wrong one in an interview is worse than having no answer.
-
 CHANGE · 2026-08-25 · molades-build · Source: user
 A date change that costs money now goes through the payment screen, in a second mode. It had said
 *"You pay now ₹470"* and then jumped straight to the done screen. Nothing commits until Pay now, so
@@ -2379,7 +2341,7 @@ this option doesn't exist"* (n07) is the rational response, not ignorance. It al
 the blocker: the discount is live today and 39.1% with a fixed date still book separately (n73).
 
 LEARNED · 2026-08-25 · molades-case
-Documentation goes stale silently and in the direction that embarrasses you. DEFENCE defended the
-undo in three places after it was removed, and described v3 as booking the last day when v3 hands
-the choice to the traveller. A stakeholder reading it and then opening the prototype finds the
+Documentation goes stale silently and in the direction that embarrasses you. DEFENCE described v3
+as booking the last day when v3 hands the choice to the traveller, and three documents still quoted
+copy that had been rewritten. A stakeholder reading them and then opening the prototype finds the
 contradiction before you do. Check the docs against the build, not against memory.

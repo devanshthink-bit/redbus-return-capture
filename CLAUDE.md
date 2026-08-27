@@ -21,9 +21,9 @@ Do not start work, answer a question about the project, or change a file until y
    standing correction from the user, not a preference.
 6. **Log the decision even when no skill asked you to.** Every entry in `LOG.md` was written
    inside a molades skill. When the work became direct requests instead, nothing prompted the
-   entry and **twelve days went unlogged — fifty-two commits, including removing the undo,
-   capping the change list to the window, and the redDeal finding.** A reader of the log would
-   have thought the project still had a working undo. The skills are not the trigger; the
+   entry and **twelve days went unlogged — fifty-two commits, including capping the change list
+   to the window, adding the payment step to a date change, and the redDeal finding.** A reader
+   of the log would have had no record of any of it. The skills are not the trigger; the
    decision is.
 
 ## Where things are
@@ -62,8 +62,7 @@ Not every commit. A commit that fixes a typo is not a decision. If you cannot sa
 would learn from the entry, do not write it.
 
 If the reason for something is the user's to give and they have not given it, leave a marked
-blank rather than inventing one. There is one in `LOG.md` and one in `DEFENCE.md` for why the
-undo was cut.
+blank rather than inventing one. Never fill one in on their behalf.
 
 ## After any structural change
 

@@ -438,8 +438,7 @@ Each answers a specific hole someone found:
 
 ### "The change is instant and irreversible. Where is the safety net?"
 
-There are three, and none of them is an undo. **A sixty-second undo was built and then removed** —
-say that before they find the older screenshots.
+There are three, and the design is deliberate: the protection sits **before** the act, not after it.
 
 1. **The confirm screen states the cost before anything happens**, under *After you change it*:
    you cannot cancel it, no refund for any reason, and this is your one date change.
@@ -451,9 +450,9 @@ say that before they find the older screenshots.
 **The honest gap:** a same-price or cheaper day skips payment, so it commits on one tap from the
 confirm screen. That is the least protected path in the product.
 
-> **[Add your own reason for cutting the undo here.]** Two defensible ones: it was theatre on a
-> screen people leave immediately, or undo-send only works if redBus has not yet told the operator
-> and that window was never verified. Pick the one that is true — they defend very differently.
+**Pushback: "Why not a short window to take it back?"** It would only be real if redBus has not
+yet sent the change to the operator, and that window is not something I could verify. A safety net
+I cannot prove exists is worse than none, because people would rely on it.
 
 ### "These flexibility features already exist. You have redesigned around them, not solved anything."
 
