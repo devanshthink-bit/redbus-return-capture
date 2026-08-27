@@ -643,6 +643,36 @@ rows are the real app's own pattern.
 The reason is not tidiness. Change day is a property of that booking, so it has to live inside
 the booking's own boundary — otherwise it reads as a general menu item that happens to sit nearby.
 
+### Screens 13 and 14 — the confirm and the payoff
+
+**13 · Confirm the move.** Three cards and a two-button bar.
+
+The first card is the swap itself: *From* Sat, 22 Aug · 23:55 · Seat U2 · ₹1,320, greyed out,
+then a down arrow, then *To* Tue, 18 Aug · 23:55 · Seat U2 · ₹880 in full black, with a
+**Change seat** text action under it. The old trip is grey and the new one is black, so which
+way the change runs is readable without reading a word.
+
+The second card is the money, and it is the reason this screen exists. Change fee **₹0**.
+Price difference **₹440 less — no refund**. You pay now **₹0**. The user is moving to the
+cheapest day in the window, so the honest line is that they hand back ₹440 for the privilege.
+Putting it directly above the confirm button is the whole point — it is the last screen where
+walking away is free.
+
+The third card, *After you change it*, carries the two rules in the order of severity:
+**You cannot cancel it** in red, and **No more changes**.
+
+**14 · Return moved.** The relief lands first: a green band reading *Back in Delhi 4 days
+earlier*, with the plain follow-up that nothing else about the trip moved. Under it the new
+return leg, then the money again — *Changed from Sat, 22 Aug. The new day is ₹440 cheaper. You
+do not get that back.* — then *What this means*, then **View ticket**.
+
+This is the only green on any screen in the file. §8 says nothing celebratory at payment and
+delight at relief; this is where that budget gets spent, once.
+
+The two screens repeat the same ₹440 sentence on purpose. Before the change it is a warning;
+after it, it is a receipt. Saying it only once would let someone finish the flow without ever
+having read it.
+
 ### Cropping artwork: check what else was on screen
 
 Four bugs came out of one review, and one of them was a cropping mistake worth naming.
