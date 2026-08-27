@@ -656,6 +656,35 @@ section on `Card / Booking`.
 The pill on **07 / 07a** was left alone. That one already sits inside `Card / Leg`, in its own
 *Return extras* section.
 
+### The Boarding point pill was baked into the artwork, at the wrong offsets
+
+Devansh: *"boarding point tag is not aligned."* He was comparing against the real card, where the
+pill sits 16pt down from the card's top edge and 16pt in from its right. Mine was flush against
+both.
+
+The cause: there was no pill node. The pill is part of the illustration, and my crop of that
+illustration had started too far right and too far down, so the pill's own margins were cropped
+away. The band was also 110pt tall where the real one is 118.
+
+The fix was to stop cropping in pieces. The band is now **one exact crop** of the real card's
+illustration — source `IMG_4988`, pixels `(48, 464)` to `(1157, 830)`, placed at 358 × 118. The
+whole thing lands where it should because it is the whole thing.
+
+The obstacle was the baked *09:30 / Sat, 05 Sep* text, which had to come out so the live time
+could sit there instead. That was easy once measured: **the sky is a pure vertical gradient.**
+Sampling four rows across the full card width showed no horizontal variation at all
+(`#AADCDC` at x=50 and x=400 on the same row). So each row of the text block could be refilled
+with that row's own colour taken from a clean column. Zero dark pixels left, no seam, and no
+hand-made gradient underneath any more — the band's fill is now empty and the crop is the sky.
+
+**The rule:** when artwork has furniture baked into it, crop the whole element and repair what
+you must, rather than cropping around the furniture. Cropping around it is what moved the pill in
+the first place.
+
+The measurement that nearly misled: a "find the pale run" scan reported the pill touching the
+card's right edge. It was the hot-air balloon, which is also pale, sitting immediately to its
+right. Reading the actual colours row by row separated them — pill `#E6EFF6`, balloon `#B6E1EF`.
+
 ### Screens 13 and 14 — the confirm and the payoff
 
 **13 · Confirm the move.** Three cards and a two-button bar.
