@@ -147,7 +147,7 @@ changed**, three placements failed at one job.
 
 **4. Do the two badges clash?**
 They meet both in one session: redBus's real **Free date change** on the outbound bus list, and
-**You can change this date** on the return. Ask afterwards:
+**You can change this date once** on the return. Ask afterwards:
 
 > "You saw two different labels about changing dates. What did you think each one meant?"
 

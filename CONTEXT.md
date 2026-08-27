@@ -139,7 +139,7 @@ terms. Read it before quoting a number at anyone.
 |---|---|---|---|
 | **v1** | The last day you can travel | that day | Move earlier surfaced; later change in My Bookings. **17 screens** |
 | **v2** | Earliest and latest, two fields | the **cheapest** day | One *Change day*, either direction. **16 screens** |
-| **v3** | One calendar — one tap = fixed date, two = range | the **last movable** day, shows the saving | Idea 9 guard · day-level movability · auto-assigned seat and points, changed at review · visible change balance. **16 screens** |
+| **v3** | One calendar — one tap = fixed date, two = range | **the traveller picks**, from a list with the cheapest flagged and their last day named | Idea 9 guard · day-level movability · auto-assigned seat and points, changed at review · visible change balance · the change pays through the normal payment screen. **16 screens** |
 
 **v1 and v2 are frozen.** Only v3 is being changed. Do not touch v1 or v2 without being asked —
 he has instructed this explicitly and it has been verified on every commit.
@@ -150,11 +150,14 @@ v3 asks a question people already know how to answer, so it removes less uncerta
 ### v3 flow as it now stands
 ```
 home → outbound buses → outbound seat → outbound points
-     → Return (calendar) → Your return (day list) → Trip review → Pay → Booking confirmed
-Ticket → Change day → Confirm the move → Return moved (final on confirm)
+     → Return (calendar) → Your return (day list) → Review your trip → Pay → Booking confirmed
+Ticket → Change day → Confirm date change → Pay the difference → Date changed
+                                          └ same price or cheaper: no payment step
 ```
 The **return seat screen and the return points screen are no longer in the flow** — both are
-defaulted and changed from Trip review via *Change seat* / *Change points*.
+defaulted and changed from Review your trip via *Change seat* / *Change points*.
+
+**Session URL:** `v3.html?test` hides the two dev rails. Without the flag they stay, for building.
 
 ### v3 constants
 ```js
@@ -175,7 +178,7 @@ never appears at all.
 
 ## 8. Design decisions and their reasons — do not undo these by accident
 
-- **"Only pay the fare difference"**, never *"No change fee"*. A denial of one charge reads as a denial of all of them
+- **Name the charge that remains, never deny one charge alone.** A denial of one reads as a denial of all. Currently *"Pay only the price difference"* / *"No fee to change it"*
 - **The Last day screen never mentions the later-day path.** Its one job is to get a constraint, not a guess. Later is named on four screens after it
 - **The return step is skippable with a real Skip** that goes somewhere different. The guardrail depends on it
 - **Terms are a rules list, never prose, never behind a *Know more*.** Test: read only the bold lines and you have every rule
@@ -184,7 +187,7 @@ never appears at all.
 - **No pre-selection on the day list when fares differ** — the product has no advantage on the only thing that decides it. But the **seat and points do have defaults**, because a defensible default exists and a wrong one is free to fix
 - **Nothing celebratory at payment.** Delight belongs at relief
 - **"Back in Delhi"**, never *"home"* — the product knows where they departed from, not where they live
-- Badge is **"Can be moved earlier"**, not RedBus's *Free date change* — different things, and *free* is the false cost signal
+- Badge is **"You can change this date once"**, not RedBus's *Free date change* — different things, and *free* is the false cost signal. The limit lives in the badge so nothing under it repeats it
 
 ---
 
@@ -291,7 +294,7 @@ isolate a section by hiding the others instead.
 - **Same-operator-only unverified.** If wrong, the return list must be rebuilt around operator eligibility from the first screen
 - **Group all-or-nothing moves** — specified in BRIEF, not built
 - **One-bus-a-day routes** and **overnight date semantics** — not addressed
-- **Badge naming unresolved** — *Can be moved earlier* vs *Free date change*. There is a paper test in TEST_SCRIPT.md
+- **Badge naming unresolved** — *You can change this date once* vs RedBus's *Free date change*. There is a paper test in TEST_SCRIPT.md
 - **Cannibalisation not modelled** — Free Cancellation attach could fall
 - **v2 has three bugs, deliberately left** — the ₹0 fare was fixed, but check LOG before touching it
 
@@ -710,9 +713,68 @@ Three components were filed by shape rather than by job and got moved: `Rating b
 Sorting inside a section is alphabetical, not by size. It leaves ragged rows where a 24pt icon
 sits beside a 358pt card, but a library is for finding things.
 
+## 19 · Long scrolling screens
+
+The single-viewport screens were only ever the top of each page. For the prototype to feel like
+the app, each screen becomes one tall frame you can actually scroll. **01 · Home** is the first,
+rebuilt to 390 × 3441 from `Picsew_Home.HEIC` — a stitched capture of the whole home page,
+1080 × 9409.
+
+### The scale, and why it is not 3x
+
+The stitched file is 1080 wide where the single screenshots are 1206. Picsew resized it. So the
+usual "divide by 3" does not apply here: this capture is **2.769 px per device point**, and a
+source pixel maps to my 390pt frame at **× 0.3611**.
+
+That is still comfortably above 2x, so nothing placed from it is soft. But two things follow:
+
+- Where the same content exists in a 1206-wide original, crop from the original.
+- Never convert an absolute y. The capture is an iPhone 16 Pro, whose status bar is 62pt against
+  the iPhone 14's 47. Every offset in this build is measured **relative to a landmark** — almost
+  always the bottom of the top gradient block at source y 1768 — and never from the top of the
+  image.
+
+### Finding the sections without guessing
+
+One scan does it: a row is "clean" if every 8th pixel across the full width is whiter than 250.
+Runs of not-clean rows, merged when separated by less than 26px, are the sections. Fifteen bands
+came out, and the gaps between them are the real spacing. Nothing was eyeballed.
+
+### What is a layer and what is a crop
+
+Structure and type are real: the sticky header, the whole search card, the Offers header and
+chips, every section heading (all `Title/L`, matching the app), the pager pill, the tab bar.
+
+The marketing blocks are crops, because they are artwork: the festive banner, the offer cards,
+the wallet card, Previously Viewed, Book trains, Coupon Creator, the gift banner, Hotels,
+Previously Booked, Government Buses, What's new. Rebuilding a gradient-stroked festival chip or a
+hotel photograph as vectors would be slower and less accurate than the pixels already are.
+
+### Two sheets, nine crops, two uploads
+
+`upload_assets` returns **one** submit URL per call, so nine crops would be nine round trips.
+Instead the crops were packed into two vertical sheets (3180px and 2429px — both under Figma's
+4096 downsample threshold) and each block draws its own band out with
+`scaleMode: "CROP"` and `imageTransform: [[1,0,0],[0, h, y0]]`, where `y0` and `h` are the band's
+normalised position in the sheet. Two uploads, nine exact placements.
+
+### The top block
+
+The whole search area sits on one continuous gradient that runs from near-white to deep red and
+ends in a 24pt rounded corner under the festive artwork. It is built as two pieces: the gradient
+above the button is a **single source column stretched to full width** — the sky there is
+horizontally uniform, so a column is the whole truth — and the artwork below is a full-width crop.
+
+### Still to do by hand
+
+`scrollBehavior` is not exposed in this plugin API, so **Fixed position when scrolling** has to be
+ticked in Figma for the tab bar and the sticky header. The frame itself is already set to scroll
+vertically.
+
 ### Screens 13 and 14 — the confirm and the payoff
 
-**13 · Confirm the move.** Three cards and a two-button bar.
+**13 · Confirm date change.** Three cards and a two-button bar. A dearer day goes on to the
+payment screen from here; a same-price or cheaper one completes on Confirm change.
 
 The first card is the swap itself: *From* Sat, 22 Aug · 23:55 · Seat U2 · ₹1,320, greyed out,
 then a down arrow, then *To* Tue, 18 Aug · 23:55 · Seat U2 · ₹880 in full black, with a
@@ -728,7 +790,7 @@ walking away is free.
 The third card, *After you change it*, carries the two rules in the order of severity:
 **You cannot cancel it** in red, and **No more changes**.
 
-**14 · Return moved.** The relief lands first: a green band reading *Back in Delhi 4 days
+**14 · Date changed.** The relief lands first: a green band reading *Back in Delhi 4 days
 earlier*, with the plain follow-up that nothing else about the trip moved. Under it the new
 return leg, then the money again — *Changed from Sat, 22 Aug. The new day is ₹440 cheaper. You
 do not get that back.* — then *What this means*, then **View ticket**.

@@ -2257,3 +2257,129 @@ Twelve assertions, all passing.
 LEARNED · 2026-08-13 · molades-build
 A forward-only test cannot see a broken Back. Every time a screen leaves the flow, the links
 **into** it are the obvious fix and the links **out of** it are the one that ships broken.
+
+---
+
+CHANGE · 2026-08-24 · molades-build · Source: user
+Wrote **TERMS.md**. Every redBus rule the construct stands on — FlexiTicket, Free Cancellation,
+ordinary reschedule, refunds — quoted verbatim from 19 in-app screenshots and redBus's own pages,
+each with its source and a verified or unverified flag. Third-party numbers are marked do-not-quote.
+
+The rule the whole design rests on turns out to be stated **three separate times** by redBus: T&C
+clause 4c, Free Cancellation FAQ 3, and the general terms. Move the date and the ticket is final,
+no refund, and the money spent on Free Cancellation is gone with it. It is not a footnote.
+
+LEARNED · 2026-08-24 · molades-attack
+Grepping for hardcoded values finds hardcoded values. It cannot see a writer that never runs, a
+visibility flag that goes stale, or a filter with the wrong rule — which were the next three bugs,
+in that order. Audit by enumerating **writers**, not values: list every function that assigns to
+shared state and ask whether it repaints. That one query found the two I had missed after three
+separate commits of fixing them one at a time.
+
+LEARNED · 2026-08-24 · molades-attack
+"Does this function call a painter?" is the wrong question. `choosePick` called three and was still
+wrong, because none of them owned the output that broke. The question is whether it calls the
+painter that **owns** that output. Every output needs exactly one owner; two writers for one element
+is drift waiting to happen.
+
+CHANGE · 2026-08-24 · molades-build
+Every seat, time and operator name now derives from one accessor. Seat numbers had been typed into
+markup and JS in seventeen places, so picking a seat changed the seat map and nothing else. `data-`
+attributes drive the writer, so a new screen opts in by carrying the attribute rather than by
+someone remembering to extend a list of ids.
+
+The copy also said seat `SU4`, a name the grids can never produce — they only build `L1..L12` and
+`U1..U12`. A name no code path can generate is always a literal.
+
+CRITIQUE · 2026-08-25 · molades-attack · Source: user
+The change-day list ignored the window the traveller had given and offered days before it. The
+window is not a preference — it is the earliest and latest they said they could travel, so days
+outside are days they have already called impossible. Now capped to the window.
+
+Action: this makes v3 **narrower than redBus's own reschedule**, which allows any date. Defended in
+DEFENCE §8 and attacked in CRITIQUE 7 rather than hidden. The prototype has no escape hatch, and
+that is a gap, not a decision.
+
+CRITIQUE · 2026-08-25 · molades-attack · Source: user
+The same list filtered on MOVABLE, hiding days whose own ticket could not be changed again — on a
+screen whose headline says this is your only change. It was protecting a second change that does not
+exist. Two bookable days with free seats were hidden for a reason that can never apply.
+
+LEARNED · 2026-08-25 · molades-attack
+For every filter, say out loud what it protects against, then check the thing it protects can still
+happen. Two filters in this build failed that test.
+
+DECISION · 2026-08-25 · molades-build · Source: user
+**Removed the undo.** The move is final the moment it is confirmed. The banner, the timer, the state
+and the reverting logic all went; the done screen's rule no longer flips, because there is nothing to
+flip it back from.
+
+> **The reason is Devansh's to give.** DEFENCE §"The change is instant and irreversible" carries a
+> marked blank for it. The two defensible answers — it was theatre on a screen people leave, or
+> undo-send was never verified against redBus's submission window — defend very differently, and
+> picking the wrong one in an interview is worse than having no answer.
+
+CHANGE · 2026-08-25 · molades-build · Source: user
+A date change that costs money now goes through the payment screen, in a second mode. It had said
+*"You pay now ₹470"* and then jumped straight to the done screen. Nothing commits until Pay now, so
+backing out leaves the original booking untouched. A same-price or cheaper day skips payment.
+
+CHANGE · 2026-08-25 · molades-language · Source: user
+Rewrote every screen in plain words. The build had been contradicting itself on the core verb — the
+entry point said *Change day*, the confirm screen said *Confirm the move*, the result said *Return
+moved*. redBus calls it a date change, so everything does now.
+
+Jargon out: leg, fare difference, either direction, in one tap, non-refundable, tinted, dearer,
+window as a noun. Longest line on any screen in any state went from 23 words to 14.
+
+LEARNED · 2026-08-25 · molades-language · Source: user
+Three separate copy failures, each found by the user and each invisible to a word-count check:
+a sentence carrying three numbers (1, 2 and 7) that the reader has to hold at once; an abstraction
+("saves money") where a plain statement belongs; and a heading repeating its own body in different
+words. Added checks for the last two.
+
+CRITIQUE · 2026-08-25 · molades-attack · Source: user
+Notes at the bottom of a list are not "sometimes missed" — measured, they were never on screen.
+Pick-your-day put its guidance 810px down a 624px window. Both blocks moved above the list.
+
+The same measurement found worse: on Review your trip the terms began at 578px in a 624px window,
+and Pay now sits in a sticky bar. A traveller could pay having never seen the harshest term in the
+product, while the badge promising the good news was visible throughout. The cost now sits under
+the badge.
+
+LEARNED · 2026-08-25 · molades-attack
+Put the fact where the decision is made. If it cannot go there, it does not belong on the screen.
+A warning in a footer is a warning nobody reads.
+
+CHANGE · 2026-08-25 · molades-test · Source: user
+Made the prototype safe to hand to a participant. `?test` hides the dev rails; without it they stay,
+for building. Below 520px the phone frame becomes the screen. On a laptop the frame now ends where
+the window does — at 1280x800 the Continue button had been at y=886 in a 713px viewport, so the
+participant would have had to scroll the page to reach the prototype's own button, and that would
+have been written down as "could not find Continue".
+
+DECISION · 2026-08-25 · molades-test · Source: user
+**TEST_SCRIPT now tests v3, not v1.** v1 forced a single date and measured whether people guessed;
+v3 offers one day or two, so the answer is a behaviour you can watch. Task 1 watches one-tap versus
+two-tap first and the cheapest-or-last choice second. Task 4 is new: one error state per
+participant, matched to what each of them actually hit in their own interview.
+
+Consequence to state plainly: **v1 now goes untested.** The honest answer to "how do you know the
+calendar beat the single-date field" is that you do not — v3 was chosen on reasoning and tested.
+
+NOTE · 2026-08-25 · molades-landscape · Source: user
+Found on the live outbound list: **"Return Trip redDeal: Min. 10.0% off on return ticket."** An
+operator promotion carried by redBus, 5–25%, on a few buses — not a platform policy. I first wrote
+it up as "redBus already funds return attach", which overstates it; corrected.
+
+What survives is stronger. It completes a pattern: FlexiTicket, reschedule, Free Cancellation and
+the redDeal are all operator-dependent and patchy. **Nothing about the return is dependable**, which
+is what teaches people to stop looking — Anand's *"I know there is an option but I just prefer okay
+this option doesn't exist"* (n07) is the rational response, not ignorance. It also shows price is not
+the blocker: the discount is live today and 39.1% with a fixed date still book separately (n73).
+
+LEARNED · 2026-08-25 · molades-case
+Documentation goes stale silently and in the direction that embarrasses you. DEFENCE defended the
+undo in three places after it was removed, and described v3 as booking the last day when v3 hands
+the choice to the traveller. A stakeholder reading it and then opening the prototype finds the
+contradiction before you do. Check the docs against the build, not against memory.

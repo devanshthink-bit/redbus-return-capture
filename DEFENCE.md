@@ -573,7 +573,7 @@ not "is there a default" but "can the product justify one."**
 ### "Why is the change balance visible?"
 
 The single reschedule was the scarcest thing in the whole construct and lived only as prose on three
-screens. Making it countable — *"1 change left"*, then *"No changes left"* — means the traveller
+screens. Making it countable — *"1 change left"*, then *"You have used your one change"* — means the traveller
 does not have to remember the rule; the product carries it. It also makes the cost of moving real
 **before** they tap, not on the confirm screen after they have chosen a day.
 
@@ -686,7 +686,7 @@ omission.
 ### "And if movable operators exist but none run on the chosen day?"
 
 **Answer.** That one isn't knowable until the date is entered, so the step appears and then shows
-*"No returns that day can be moved"* with two ways out — Show all returns, or Choose another day.
+*"No day here can be changed later"* with two ways out — Show all returns, or Choose another day.
 Never a dead end. That state is built and is in the prototype.
 
 ### "What about groups?"
@@ -986,7 +986,7 @@ Four things I have written into the script as must-see moments:
 1. Do they answer *"the last day you can travel"* as a commitment or a guess? *(the whole construct)*
 2. Do they see that moving ends cancellation **before** confirming, or only after?
 3. Do they look for a later-day change on the entry screen — and does knowing it exists soften the deadline?
-4. Do *Can be moved earlier* and *Free date change* read as the same thing?
+4. Do *You can change this date once* and *Free date change* read as the same thing?
 
 ### "Why five people? Why not twenty?"
 
@@ -1031,7 +1031,7 @@ Say them plainly, early, without apology. Each one, followed by what you'd do ab
 | **Group all-or-nothing not built** | Specified, not built |
 | **One-bus-a-day routes** | "Earlier" means a 24-hour jump. Not addressed |
 | **Overnight date semantics** | A "Monday" bus leaving at 23:00 Sunday. Rule not decided |
-| **Badge naming unresolved** | *Can be moved earlier* vs RedBus's *Free date change*. There's a paper test for it in the script; I haven't run it |
+| **Badge naming unresolved** | *You can change this date once* vs RedBus's *Free date change*. There's a paper test for it in the script; I haven't run it |
 | **Cannibalisation not modelled** | Free Cancellation attach could fall. Named as a counter-metric, not measured |
 
 ---

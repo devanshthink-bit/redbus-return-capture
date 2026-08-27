@@ -59,7 +59,7 @@ It is a property of the bus. You find it by the logo on the bus card when you se
 > bus operator's policy."
 
 **Read this twice.** *Free* means the **fee** is zero. It does not mean the trip is free. If the new
-day costs more, you pay the gap. This is why our copy says **"Only pay the fare difference"** and
+day costs more, you pay the gap. This is why our copy says **"Pay only the price difference"** and
 never says "free".
 
 ### FAQ 2 — the refund, which is not a free cancellation
@@ -252,10 +252,10 @@ Add the one-per-booking rule and you get the four hard limits the product must r
 
 | Rule | Where it shows up in v3 |
 |---|---|
-| One change | The "1 change left" balance, and "No changes left — this ticket is now final" |
-| No cancellation after | "Changing the day ends cancellation on this ticket, and you can only do it once" |
+| One change | The "1 change left" balance, the badge "You can change this date once", and "You have used your one change. This ticket is final" |
+| No cancellation after | "One change only / After it, you cannot cancel this ticket", and "After that, the return cannot be cancelled" beside the badge on Review your trip |
 | Cheaper is not refunded | "₹___ less — not refunded", on both the confirm screen and the done screen |
-| 8-hour cut-off | "Changes close 8 hours before departure. That window has passed." |
+| 8-hour cut-off | "Too late to change. Changes close 8 hours before the bus leaves." |
 | Select operators only | The `MOVABLE(day)` guard — days no operator will move are never offered |
 
 ---
@@ -322,7 +322,7 @@ Say these before anyone finds them. Every one is deliberate.
 |---|---|---|
 | Free Cancellation: "100% refund up to 12 hours before departure" | "6 or 12 hours, as applicable to your booking" | 12h is the conservative half. A prototype with one route can't show a variable cut-off, and picking the safer number never over-promises |
 | Free Cancellation costs ₹160 | Price is not published; it varies | A realistic placeholder. Never present ₹160 as a quoted figure |
-| "Only pay the fare difference" | "the 'date change fee' is zero. You will, however, be required to pay the fare difference (if any)" | Same meaning, plainer words. This wording exists *because* "no change fee" made people think nothing was payable |
+| "Pay only the price difference" | "the 'date change fee' is zero. You will, however, be required to pay the fare difference (if any)" | Same meaning, plainer words. This wording exists *because* "no change fee" made people think nothing was payable |
 | One operator on the route (Laxmi Holidays) | Real routes have many | Deliberate. It makes the same-operator constraint visible instead of hiding it |
 | Free Cancellation offered on the onward leg only | Offered wherever the operator supports it | Keeps the return leg's terms clean, and mirrors the real thing where availability is patchy |
 
