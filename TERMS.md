@@ -163,6 +163,28 @@ not after.
 
 ---
 
+## 3a. Return trip redDeal — redBus already pays for return attach
+
+Seen on the outbound bus list, 25 Aug 2026: **"Return Trip redDeal: Min. 10.0% off on return ticket."**
+
+- redDeals are **operator-funded** discounts sold only through redBus. A *Return trip offer* is one
+  of several types, alongside early bird, last minute and festive offers.
+- The range is **5% to 25%**, applied at checkout, **on top of** any other discount.
+
+**Why this matters to the construct, and it is not a threat to it.** redBus already spends money to
+get travellers to book the return in the same session. That settles the business question before it
+is asked: return attach is a goal they already fund.
+
+It also shows the money lever is not the blocker. The redDeal exists today, and **39.1% of people
+with a fixed return date still book separately** (n73), and Soumya stopped booking early altogether
+(n49). A discount cannot buy a commitment somebody is not able to make. The barrier is the unknown
+date, which is what this design addresses.
+
+**[unconfirmed]** Whether the return redDeal survives a date change, and whether it requires the same
+operator. Both matter if this ever ships. Not verified.
+
+---
+
 ## 4. Ordinary reschedule — the date change outside FlexiTicket
 
 Source: redBus's published Terms and Conditions. Primary, though I could not load the page
