@@ -805,9 +805,25 @@ Two repairs, chosen per background:
   tripReward strip. The cards repeat every 411px, so each covered column was taken from the
   neighbouring card at the same relative position. Exact, because the strips are identical.
 
-Two things the button destroyed are gone for good and are worth knowing about: the **PRIMODAY**
-code inside the dashed box on the Primo Wednesdays panel, and the **View all buses** label. Both
-need re-adding as real text on top of the crop.
+### The per-row repair rule that actually worked
+
+The first two attempts both failed, and the reason is worth keeping.
+
+A **vertical** blend smeared, because the sample rows above and below were still inside the
+button's glow — it blended the button with itself. A **horizontal shift-copy** then pulled its
+source from inside the very region being repaired.
+
+What works is one rule applied row by row, inside a box 112px above and below the button's centre:
+read the clean pixel 6px outside each edge, and if **both are near-white, fill the row flat white**;
+otherwise **interpolate between them**. That covers every case on this page — the flat white
+coupon, the flat white *View all buses* pill, the left-to-right gradient of the Primo Wednesdays
+band, the yellow ray field, the page grey — without needing to know which is which. *Get free
+tickets* still uses the card-pitch copy, because there the button covered patterned content.
+
+Two elements the button had destroyed outright were rebuilt as **real layers** on top of the
+repaired crop rather than painted back in: the dashed *Use code / PRIMODAY* box with its copy
+icon, and the *View all buses* label. Real text is the better answer anyway — it stays crisp at
+any zoom.
 
 ### Known gaps on this screen
 
