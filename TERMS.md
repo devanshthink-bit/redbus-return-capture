@@ -171,14 +171,33 @@ Seen on the outbound bus list, 25 Aug 2026: **"Return Trip redDeal: Min. 10.0% o
   of several types, alongside early bird, last minute and festive offers.
 - The range is **5% to 25%**, applied at checkout, **on top of** any other discount.
 
-**Why this matters to the construct, and it is not a threat to it.** redBus already spends money to
-get travellers to book the return in the same session. That settles the business question before it
-is asked: return attach is a goal they already fund.
+**It is on a few buses, not all of them.** Seen on one operator in a list of many. It is an
+operator's promotion carried by redBus, not a platform-wide policy, so do not describe it as
+"redBus discounts return trips" — say some operators do.
 
-It also shows the money lever is not the blocker. The redDeal exists today, and **39.1% of people
-with a fixed return date still book separately** (n73), and Soumya stopped booking early altogether
-(n49). A discount cannot buy a commitment somebody is not able to make. The barrier is the unknown
-date, which is what this design addresses.
+**Why it matters, and it is not a threat to the construct.**
+
+**1. Price is not the blocker.** The discount exists today on some buses, and **39.1% of people with
+a fixed return date still book separately** (n73), and Soumya stopped booking early altogether (n49).
+A discount cannot buy a commitment somebody is not able to make.
+
+**2. It completes a pattern, and the pattern is the real finding.** Every return-side mechanism on
+redBus is operator-dependent and patchy:
+
+| Mechanism | Coverage |
+|---|---|
+| FlexiTicket free date change | Select operators only |
+| Ordinary reschedule | Select operators only |
+| Free Cancellation | Where offered on the booking |
+| Return trip redDeal | A few buses in a list |
+
+Nothing about the return is dependable. That is what teaches people to stop looking — it is
+exactly Anand's *"I know there is an option but I just prefer okay this option doesn't exist"*
+(n07). You cannot build a habit on a feature that is there one search and gone the next.
+
+**The construct already answers this** rather than ignoring it: the guard on the outbound list, the
+day-level movability dot, and the rule that a day which cannot be changed is never sold as one that
+can. Patchy coverage is designed for, not assumed away.
 
 **[unconfirmed]** Whether the return redDeal survives a date change, and whether it requires the same
 operator. Both matter if this ever ships. Not verified.
