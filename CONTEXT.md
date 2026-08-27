@@ -643,6 +643,19 @@ rows are the real app's own pattern.
 The reason is not tidiness. Change day is a property of that booking, so it has to live inside
 the booking's own boundary — otherwise it reads as a general menu item that happens to sit nearby.
 
+The same correction applies to **09 / 09a**. The *You can change this date once* pill and its
+*After that, the return cannot be cancelled* line were floating between the return ticket and the
+rules card, which read as page furniture. They are now a section of `Card / Ticket` itself,
+behind a `Show change note` boolean, sitting above the tear-off edge. Same principle: the promise
+belongs to that ticket, so it lives inside that ticket's boundary.
+
+The pill's lavender background went with it. Inside a card it does not need to shout for its own
+space, so it is now an hourglass, a bold line, and a grey line under it — matching the Change day
+section on `Card / Booking`.
+
+The pill on **07 / 07a** was left alone. That one already sits inside `Card / Leg`, in its own
+*Return extras* section.
+
 ### Screens 13 and 14 — the confirm and the payoff
 
 **13 · Confirm the move.** Three cards and a two-button bar.
