@@ -539,6 +539,19 @@ payment starts when a method is chosen. The prototype's own bottom bar was dropp
 
 Amounts are ours: `Pay ₹2,919`, wallet ₹100.
 
+### Booking confirmed (screen 09)
+
+Two frames — `09` for the two tickets, `09a` scrolled to what can still be changed.
+
+Deliberately unceremonious, per the §8 decision that nothing celebratory belongs at payment:
+delight is saved for the relief of moving the day. So this screen states facts — the trip dates,
+both tickets, and a rules card headed *Changing your return day* that tells them where the control
+lives before they need it (*Open your ticket · Tap Change day and pick another date*).
+
+`Card / Ticket` is the redBus ticket card rebuilt from the real one: red journey block with the
+arrow markers and the connecting rule, duration centred between the stops, white footer with the
+operator, passenger and the seat badge. Twelve text properties, used for both legs.
+
 ### Cropping artwork: check what else was on screen
 
 Four bugs came out of one review, and one of them was a cropping mistake worth naming.
