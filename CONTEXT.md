@@ -771,6 +771,49 @@ horizontally uniform, so a column is the whole truth — and the artwork below i
 ticked in Figma for the tab bar and the sticky header. The frame itself is already set to scroll
 vertically.
 
+### 02 · Bus list — 390 x 4957, and why the cards are not crops
+
+`Picsew_BusListing.HEIC` is 1080 x 13855. The obstacle was Devansh's own note: the **Ask Ray**
+button is floating, so the stitch repeats it eight times, sitting on top of whatever happened to
+be under it.
+
+The answer was not to erase it eight times. It was to stop cropping the list at all. A bus list is
+structured data, not artwork, so all **fourteen cards are real `Card / Bus` instances** — and a
+floating button that was never a layer simply never appears.
+
+That meant extending the component, which it needed anyway. New properties: `Show ribbon` /
+`Ribbon` for the yellow *Try new 10% OFF* tag, `Show was price` / `Was price` for the struck-out
+fare, `Show toilet` and `Show date change` for the amenity chips, and `Show offer` / `Offer` for
+the lavender *Min. 10% OFF on 3 or more seats* strip. Rating tone (green `#468443` on `#DFF3D8`,
+amber `#BC872D` on `#F4E7DF`) is set per instance rather than as a variant, so nothing already
+using the component broke.
+
+**The empty-row trap.** An auto-layout row with every child hidden still occupies its own gap.
+Three cards have no amenities at all and each carried a phantom band of whitespace. The row itself
+has to be hidden, not just its contents.
+
+### Painting the Ask Ray out of the four interstitials
+
+The interstitials between the cards *are* artwork, and three of them had a button sitting on them.
+Two repairs, chosen per background:
+
+- **Horizontal interpolation** between the clean pixels either side of the button, row by row.
+  The backgrounds there are flat white, or a left-to-right linear gradient, so interpolating
+  across reproduces them exactly. A vertical blend was tried first and smeared badly — the sample
+  rows were still inside the button's glow, so it blended the button with itself.
+- **Copy by card pitch** for *Get free tickets*, where the button covered one operator card's
+  tripReward strip. The cards repeat every 411px, so each covered column was taken from the
+  neighbouring card at the same relative position. Exact, because the strips are identical.
+
+Two things the button destroyed are gone for good and are worth knowing about: the **PRIMODAY**
+code inside the dashed box on the Primo Wednesdays panel, and the **View all buses** label. Both
+need re-adding as real text on top of the crop.
+
+### Known gaps on this screen
+
+The gold pill and trophy behind *zingbus plus*, and the amber tint on a low `(2 Single)` count.
+Both are small operator-specific flourishes, not structure.
+
 ### Screens 13 and 14 — the confirm and the payoff
 
 **13 · Confirm date change.** Three cards and a two-button bar. A dearer day goes on to the
