@@ -2345,3 +2345,46 @@ Documentation goes stale silently and in the direction that embarrasses you. DEF
 as booking the last day when v3 hands the choice to the traveller, and three documents still quoted
 copy that had been rewritten. A stakeholder reading them and then opening the prototype finds the
 contradiction before you do. Check the docs against the build, not against memory.
+
+DECISION · 2026-08-28 · (no skill) · Source: user
+**Screenshot crops come out of the Figma screens; only real photographs and illustrations stay.**
+The user is going to build a coded working prototype from these screens and run it on several
+phones. That settles a question that had been left open. A crop cannot be tapped, so a seat or a
+tab inside one needs an invisible box at a guessed coordinate — and those coordinates are exactly
+what moves when the screen is 430pt wide instead of 390. A crop also cannot reflow, cannot be read
+by a screen reader, ignores the phone's font-size setting, and is heavy: 02d alone was four
+390x1123 slabs.
+
+The audit that decided the order: every screen on the path a person actually walks — seat map,
+boarding points, the whole return construct, review, pay, confirmed, change day — was already
+0-7% image. The crops were all on *browsing* surfaces: 02d 99%, Home 78%, bus list 29%, 02c 14%.
+So the work is real but it is not on the critical path, which is why it had gone unnoticed.
+
+Kept as images, deliberately: photographs of the bus, and illustrated marketing artwork (the Primo
+bus, the promo banners). redBus ships those as artwork too. Rebuilding them as vectors would be
+work with no payoff.
+
+CHANGE · 2026-08-28 · (no skill) · Source: user
+02d rebuilt from four image slabs into twelve real sections. New components, all on the Components
+page: `Row / Policy`, `Row / Stop` (Rail = First/Middle/Last/Only), `Row / Cancellation`
+(State = Header/Default/Highlighted), `Row / Rating bar`, `Chip / Feature`, `Chip / Praise`,
+`Art / Laurel` (+ mirrored), `Art / Sunburst`, and 17 line icons drawn as vectors.
+02d went from 99% image to 5%: two bus photographs, the Primo illustration, three small marks.
+
+LEARNED · 2026-08-28 · (no skill)
+**24 of the `Icon / *` and all `Tab Icon / *` components were PNG fills, not vectors.** They had
+been built early from screenshot crops and nobody looked inside them again. It surfaced only when
+recolouring a chevron blue turned it into a solid blue square — the "icon" had no vector to
+recolour, so the fill landed on the frame. Chevron Down and Chevron Left are now vectors; the rest
+are still images. The class of mistake: a component's *name* says what it is, its *contents* say
+what it will do. Check contents before trusting a component to behave like one.
+
+LEARNED · 2026-08-28 · (no skill)
+Three Plugin API traps, each of which produced a wrong screen that looked plausible:
+- `addComponentProperty(name, 'INSTANCE_SWAP', default)` wants the component's **node id**, not its
+  `key`. The key is accepted by the type checker and rejected at runtime with an unhelpful message.
+- **A child's width cannot be overridden inside an instance.** The five rating bars all rendered at
+  76%. Drive a variable length with the parent's **padding** instead — padding overrides fine.
+- `figma.createAutoLayout()` returns a frame with a **default white fill**. Table cells painted
+  white over the row tint, so the header and the highlighted row both looked plain until the cell
+  fills were cleared.
