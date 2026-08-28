@@ -830,6 +830,49 @@ any zoom.
 The gold pill and trophy behind *zingbus plus*, and the amber tint on a low `(2 Single)` count.
 Both are small operator-specific flourishes, not structure.
 
+### 02c and 02d — the seat map and its bottom sheet
+
+Two more captures, two more long frames, slotted between 02 and 03 and named so the canvas still
+reads in order.
+
+- **02c · Seat map · sheet collapsed** — 390 × 1510. Real status bar and `Nav / Top Bar`
+  ("Select seats"), then one crop of the two decks and the *Know your seat types* legend, with the
+  collapsed sheet as a fixed overlay.
+- **02d · Seat map · sheet full** — 390 × 4540. Real status bar, then the whole sheet in four
+  crops: cancellation and refund policy, date change, other policies, bus route, boarding and
+  dropping points, rest stop, bus features, ratings and reviews.
+
+Each uploaded sheet has to stay under **4096px**, which is what decided the packing: the collapsed
+content alone is 3844px, so it takes a sheet to itself, and the sheet-full capture splits into four
+bands of 3110px. Five uploads in all.
+
+### Rebuilding an icon the button had eaten
+
+The round Ask Ray appears three times in the collapsed capture. Two were routine — one over the
+seat grid, repaired by copying from **one seat-row pitch above** (236px), and one over flat
+background. The third sat on the *Booked by female passenger* sleeper icon in the legend, and no
+copy source existed: the icon appears exactly once, and its own centre column was under the button,
+so mirroring had nothing to mirror from.
+
+It was reconstructed instead. A "booked" icon is its "available" twin blended toward the table
+background. The **female seater** pair is fully visible in both rows, so the blend factor could be
+solved from it by least squares — **f = 0.266** over 3858 pixels — and then applied to the
+*available* female sleeper to synthesise the booked one.
+
+Order matters: repair the region first, paste the rebuilt icon last. Doing it the other way round
+makes the repair sample its edge pixels *from inside the icon*, and it bleeds pink across the row.
+
+### Fixed overlays belong at the viewport bottom, not the frame bottom
+
+A correction that applies to every long screen. A tab bar, a floating button or a bottom sheet
+marked *Fixed position when scrolling* keeps its **y offset from the frame's top**, and the
+prototype viewport is 844pt tall — so it must sit at `844 − height − inset`, not at
+`frameHeight − height − inset`. Home's tab bar is back at **757**, the bus list's Ask Ray at
+**705**, and the collapsed sheet at **684**.
+
+On the static canvas this looks wrong — the tab bar floats near the top of a 3441pt frame. In the
+prototype it is the only thing that is right.
+
 ### Screens 13 and 14 — the confirm and the payoff
 
 **13 · Confirm date change.** Three cards and a two-button bar. A dearer day goes on to the
