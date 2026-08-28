@@ -1038,6 +1038,17 @@ exactly in that gap, which pushed the detected card top 25px down. When one valu
 disagrees with every other by a factor of two, trust the series — the outlier is usually the
 measurement, not the design.
 
+**The white box behind Primo.** `Art / Primo` was cropped off a white bus card, so its own
+background is white — fine on a white card, a white rectangle on the navy banner. The app does not
+reuse that asset either: on navy it draws a **white** wordmark, not the navy one.
+
+So there are two Primo assets, and now there are two in the file: `Art / Primo` and
+**`Art / Primo · on navy`**, cropped from the review capture with its navy background left in and
+the banner's fill set to the crop's exact `#1B3874`. It blends with no edge at all.
+
+**The rule:** a cropped asset carries the surface it was cropped from. Before reusing one on a
+different background, check what the app itself does there — it usually ships a second version.
+
 ### Screens 13 and 14 — the confirm and the payoff
 
 **13 · Confirm date change.** Three cards and a two-button bar. A dearer day goes on to the
