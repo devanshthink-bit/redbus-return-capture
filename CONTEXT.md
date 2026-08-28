@@ -1049,6 +1049,41 @@ the banner's fill set to the crop's exact `#1B3874`. It blends with no edge at a
 **The rule:** a cropped asset carries the surface it was cropped from. Before reusing one on a
 different background, check what the app itself does there — it usually ships a second version.
 
+### Sweeping the rest of the flow
+
+Devansh: *"in all these screens also, if smth isnt matching real redbus UI change them, also if u
+have designed long scrollview screen separately by splitting in different screens, make them long
+scrollview screen."*
+
+**Three fake scroll positions.** 09a was 09 with its content moved to `y = −354`; 05a and 05b were
+05 at `−58`; 06a was 06 at `−191`. That is a screenshot of a scroll, not a screen. 09a is deleted
+outright — it was the *same state*, only scrolled. The others are genuinely different **selection**
+states, so they stay, but every one is now a full-length frame with its content in flow:
+
+| | was | now |
+|---|---|---|
+| 05 · pick your days | 844 | 846 |
+| 05a · window chosen | 844 | 947 |
+| 05b · one day picked | 844 | 927 |
+| 06 · pick a day | 844 | 1009 |
+| 06a · last day chosen | 844 | 1070 |
+| 09 · Booking confirmed | 844 ×2 | 1248 |
+| 12 · Change day | 844 | 1045 |
+
+**The bottom bar was not redBus's.** I had been pairing an outlined *Skip* / *Go back* button beside
+the red one. The app never does that: every bottom bar in every capture is **one red pill**, with at
+most an information block to its left — *Total ₹2,919*, *Return ₹1,320*, *Amount*. So the secondary
+button became a text link on 05, 05a, 05b and 13, with the red pill filling the rest of the bar.
+06 and 06a already had the info-block form and were left alone.
+
+**The calendar card** was flat on the page background; every white card in the app carries the soft
+shadow, so it now uses `Elevation/Card`. The tinted panels stay flat — that is also what the app
+does with its *Bought by…* and wallet strips.
+
+**Not converted, and why:** 08 · Pay, 10 · My Bookings and 11 · Ticket details are built from single
+screenshots. There is no stitched capture of them, so I have no evidence for what is below the fold
+and will not invent it. They need a Picsew capture each.
+
 ### Screens 13 and 14 — the confirm and the payoff
 
 **13 · Confirm date change.** Three cards and a two-button bar. A dearer day goes on to the
