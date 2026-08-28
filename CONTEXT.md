@@ -881,6 +881,35 @@ The round **Ask Ray** on 02c is an instance of the existing `Button / Ask Ray FA
 with a 20pt inset and `horizontal: MAX`, clear of the sheet. It was painted out of the capture
 eight times over; there is exactly one of it in the file.
 
+### Picsew leaves a stitch seam, and it is not a shadow
+
+Devansh: *"Where are these black shadows coming in the UI?"*
+
+Two separate faults, both in the seat map, and both mine to catch before shipping.
+
+**1. A stitch seam.** Picsew joins its sub-screenshots with a soft dark band where iOS had drawn a
+scroll shadow. On the collapsed capture it sits at source rows 1820–1990, dimming an otherwise
+plain white seat card from 251 down to 234, evenly across the full width.
+
+Finding it needs the right signal. Row brightness alone flags every legitimate grey section and
+every card shadow. What identifies a seam is that the row's **white level** dips smoothly below the
+local baseline *while the row is still mostly white* — a darkening laid over unchanged content.
+The fix follows from the cause: it is a black overlay at some alpha, so dividing each row by
+`white_level / baseline` restores it exactly. One confirmed seam on 02c; the similar-looking dip on
+the full sheet turned out to be a genuinely tinted table row, and was left alone.
+
+**2. My own repair box was too small.** The Ask Ray glow reaches much further than the button.
+Measured by warmth (`R − B` averaged across the row), the solid button spans 115px but its
+influence runs from 1635 to 1810 vertically and 842 to 1048 horizontally. My box had been ±82px,
+so it cleaned the button and left a rectangle of pink haze around it — the exact shape of the box.
+
+**The rule:** size a repair box by measuring where the artefact's influence actually ends, not by
+where its solid edge is. `R − B` per row is a good detector for a coloured glow on neutral content,
+because the content itself has none.
+
+Order matters here too: **de-seam first, then repair the button.** The seat repair copies from one
+row-pitch above, so if the seam is still present that copy imports it into a clean area.
+
 ### Screens 13 and 14 — the confirm and the payoff
 
 **13 · Confirm date change.** Three cards and a two-button bar. A dearer day goes on to the
