@@ -1084,6 +1084,31 @@ does with its *Bought by…* and wallet strips.
 screenshots. There is no stitched capture of them, so I have no evidence for what is below the fold
 and will not invent it. They need a Picsew capture each.
 
+### A fixed bar needs clearance, or it eats the last card
+
+Devansh: *"Why screens are getting cut from the bottom?"*
+
+Making the screens scroll exposed a bug that the 844pt frames had been hiding. A bottom bar pinned
+with `y = frameHeight − barHeight` sits **on top of** the final stretch of content, and because the
+content ended exactly at the frame's edge, the last card was always underneath it. On a real phone
+you would scroll past it; in a frame sized to its content there is nothing left to scroll.
+
+The fix is the one every mobile layout needs: the scrolling content carries **bottom padding equal
+to the height of the chrome that floats over it**, plus a little. Applied across the file — 111pt
+where a 99pt action bar sits, 78pt under a tab bar, 130pt under the review screen's taller pay bar,
+245–250pt under a bottom sheet.
+
+Two more caught in the same pass: **08 · Pay** overflowed its frame by 26pt and **11 · Ticket
+details** by 31, so *Add to Apple Wallet* was sliced in half. Both frames now fit their content.
+
+Two rules worth keeping:
+
+- **A floating action button is not chrome.** The Ask Ray FAB is meant to sit over the content, so
+  it gets no clearance. Bars, sheets and tab bars do.
+- **Never let a frame fall below 844.** Padding 04 · Boarding points to clear its bar shrank it to
+  648 — correct arithmetic, wrong result, because a screen shorter than the device stops looking
+  like a screen. Every frame is held to at least the viewport.
+
 ### Screens 13 and 14 — the confirm and the payoff
 
 **13 · Confirm date change.** Three cards and a two-button bar. A dearer day goes on to the
