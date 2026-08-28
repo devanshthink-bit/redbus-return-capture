@@ -1026,6 +1026,18 @@ The two places the construct appears on this screen are therefore the *only* two
 second leg in the journey block (with ONWARD / RETURN tags, which the app has no need for at one
 leg) and the Free date change card.
 
+**Change seat / Change points** belong to the construct too, and were lost in the rebuild. They are
+back, on the **return leg only** — the onward seat and points are picked in the normal flow, but the
+return's are not otherwise reachable from here. They are now in the app's own link blue `#1B1BD1`,
+the colour it uses for *View details*, *Terms & Conditions* and *View full coverage details*. My
+invented screen had them in red; red on this page belongs to *Pay now*.
+
+**A measuring lesson.** The gap above Free Cancellation came out at 59pt against ~30 everywhere
+else, and Devansh spotted it immediately. The band scan had been thrown by a Picsew seam sitting
+exactly in that gap, which pushed the detected card top 25px down. When one value in a series
+disagrees with every other by a factor of two, trust the series — the outlier is usually the
+measurement, not the design.
+
 ### Screens 13 and 14 — the confirm and the payoff
 
 **13 · Confirm date change.** Three cards and a two-button bar. A dearer day goes on to the
