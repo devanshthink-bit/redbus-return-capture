@@ -1226,3 +1226,54 @@ calendar — and every redBus screenshot — puts it on a **Saturday**, which ma
 | Sold out | 13 and 23 Aug |
 
 Fares come from v3's `FAREOF` evaluated against the real weekday, so weekends still carry the peak.
+
+## 20 · No crops in functional UI — the rule and what it costs
+
+Settled 2026-08-28, after the user said the Figma screens are going to become a **coded working
+prototype run on real phones** (entering locations, picking seats, paying).
+
+**The rule.** Anything a person touches, or that has to reflow, is built from components. Only
+genuine photographs and illustrated marketing artwork stay as images — because redBus ships those
+as artwork too.
+
+**Why a crop breaks on a real phone,** in the order the failures actually bite:
+
+1. A 390pt crop on a 430pt phone stretches (soft text) or leaves a gap. Real UI reflows.
+2. Nothing inside a crop is tappable. Making it tappable means invisible boxes at guessed
+   coordinates — and those coordinates are the first thing to move when the width changes.
+3. Weight. Four full-width slabs at 3x is megabytes before the first card paints.
+4. Text in an image ignores the phone's font-size setting and is invisible to a screen reader.
+
+**Where the crops were.** Every screen on the walked path was already clean (0–7%). The crops were
+all on browsing surfaces: 02d 99%, Home 78%, bus list 29%, 02c 14%.
+
+### Still to convert
+- `02c` — the collapsed sheet's operator header and tabs (the tabs must be tappable anyway; 02c and
+  02d are the same sheet in two states, so they should share components)
+- `01 · Home` — the marketing rail: rebuild cards, headings and buttons, keep the illustrations
+- `02 · Outbound bus list` — the promo blocks between cards, same treatment
+- **The icon components themselves** — 24 `Icon / *` and all `Tab Icon / *` are PNG fills. Chevron
+  Down and Chevron Left are now vectors; the rest are not. Payment logos legitimately stay images.
+
+### What 02d is made of now
+Twelve sections: sheet header · Highlights · Cancellation and refund policy · Date change policy ·
+Other policies · Bus route · Boarding points · Dropping point · Rest stop · Bus features ·
+Ratings & reviews · This is a Primo. 4698pt (source 4553; 3% over, from slightly looser rows).
+
+New components, all on the Components page:
+`Row / Policy` · `Row / Stop` (Rail = First/Middle/Last/Only) · `Row / Cancellation`
+(State = Header/Default/Highlighted) · `Row / Rating bar` · `Chip / Feature` · `Chip / Praise` ·
+`Art / Laurel` and `Art / Laurel · mirrored` · `Art / Sunburst` · 17 vector line icons.
+
+Images kept on 02d: two bus photographs, the Primo bus illustration, three small marks.
+
+### Plugin API traps that produced plausible-looking wrong screens
+- `addComponentProperty(name,'INSTANCE_SWAP',default)` wants the component's **node id**, not its
+  `key`. Passing the key fails at runtime with a message that names neither.
+- **A child's width cannot be overridden inside an instance.** All five rating bars rendered at 76%
+  until the length was driven by the parent's **padding**, which does override.
+- `figma.createAutoLayout()` returns a frame with a **default white fill** — table cells painted
+  white over the row tint until the fills were cleared. This is the second time that default has
+  cost real time; the first was the 100x100 spacer frames on the review screen.
+- A component's name tells you nothing about its contents. The "icons" that were PNGs only gave
+  themselves away when recolouring one turned it into a solid blue square.
