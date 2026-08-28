@@ -2404,3 +2404,44 @@ Two things only came to light by opening them:
 
 Payment logos and Apple Wallet stay as images — they are brand assets and redrawing them would be
 both wrong and pointless.
+
+CHANGE · 2026-08-28 · (no skill) · Source: user
+**The marketing rails are real UI now.** 02c's collapsed sheet, and on Home: the Offers carousel,
+Wallet, Previously Viewed, Book trains, Coupon creator, Gift, Hotels, Previously Booked and
+Government Buses. On the bus list: Primo Wednesdays, Book top-rated buses, Travel plans might
+change, Get free tickets, and both `Art / tripReward strip` components. Plus the Seat Guarantee
+band on the ticket.
+
+Home went 78% → 17% image, the bus list 29% → 6%, 02c 13% → 1%. **The file is now 4% image
+overall.** What is left is what should be: photographs, the illustrated banners, the operator
+crests, the payment logos, and two landscape scenes.
+
+One find worth keeping: **Home's search block was never an image.** It had real UI — From, To,
+swap, date, the women's-booking toggle, the search button — with a screenshot of itself sitting
+*behind* it as a frame fill, left over from the long-scroll conversion. Deleting the fill changed
+nothing visually. Check for redundancy before rebuilding: I nearly rebuilt a working search form.
+
+Also: `Card / Bus` already had `Show ribbon`, `Show was price` and `Show offer` properties, added
+weeks ago for the bus list. The top-rated carousel needed exactly those three and nothing new.
+
+LEARNED · 2026-08-28 · (no skill)
+**`node.x` lies after a node has been squashed by constraint-driven resizing.** A date card read
+`x = 0` while its `absoluteBoundingBox.x` was 159pt to the left, so it rendered outside its own
+parent and looked simply absent. The cause: it was created inside an auto-layout row while it was
+the only child (so it was full-width), given `constraints: STRETCH`, and then the second child
+arrived and halved the row — the constraint baked a scale into `relativeTransform` that setting
+`.x` and `.resize()` no longer undid. Fix: assign `relativeTransform = [[1,0,x],[0,1,y]]`
+directly. Guard: place absolutely-positioned children *after* their parent's siblings exist.
+
+LEARNED · 2026-08-28 · (no skill)
+**A gradient paint works as a fill but silently does nothing as a stroke** through this API. A
+white card with a gradient border on a near-white panel is then invisible, and reads as a missing
+element rather than a missing border. Use a solid stroke.
+
+LEARNED · 2026-08-28 · (no skill)
+Cropped artwork carries its own background, and against a rebuilt gradient the seam shows as a
+pale rectangle. Cutting an alpha channel works better than colour-matching: estimate the
+background from the crop's own edge columns, mask on `|pixel − background| > threshold`, keep
+components above a size floor, and feather the alpha across the threshold. Avoid `fill_holes` on
+the whole mask — it fills the space *between* letters and produces exactly the halo you were
+trying to remove.

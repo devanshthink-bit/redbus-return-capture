@@ -1247,11 +1247,17 @@ as artwork too.
 **Where the crops were.** Every screen on the walked path was already clean (0–7%). The crops were
 all on browsing surfaces: 02d 99%, Home 78%, bus list 29%, 02c 14%.
 
-### Still to convert
-- `02c` — the collapsed sheet's operator header and tabs (the tabs must be tappable anyway; 02c and
-  02d are the same sheet in two states, so they should share components)
-- `01 · Home` — the marketing rail: rebuild cards, headings and buttons, keep the illustrations
-- `02 · Outbound bus list` — the promo blocks between cards, same treatment
+### Converted (all done 2026-08-28)
+`02d` · `02c` · every icon component · Home's whole marketing rail · the bus list's four promo
+blocks · both `Art / tripReward strip` components · the Seat Guarantee band.
+
+**The file is 4% image overall.** Home 78% → 17%, bus list 29% → 6%, 02d 99% → 5%, 02c 13% → 1%.
+Ten screens contain no images at all.
+
+What stays an image, deliberately: photographs (bus interiors, hotel rooms), illustrated marketing
+artwork (Primo bus, promo cards, festive banner, What's new creatives, coupon logotype, gift box,
+category tiles), the two landscape scenes, operator crests, brand marks (redBus, tripReward,
+Primo) and payment logos including Apple Wallet.
 - ~~The icon components themselves~~ — **done 2026-08-28.** Every `Icon / *`, every `Tab Icon / *`,
   `Button / Close · Share · Support` and `Art / Steering wheel` are now vectors. Ten screens are
   completely image-free. Payment logos and Apple Wallet stay images: they are brand assets.
