@@ -1001,8 +1001,30 @@ tall, and the screen came out **4012pt against the real 2510**. Collapsing them 
 3010 — and 3010 minus our own 429pt card is 2581, within 3% of the real page. A layout that is
 uniformly too tall is usually one wrong default, not a hundred wrong paddings.
 
-**07a** is the same screen with the fare breakdown open behind the bar's `+` — Onward ₹1,599,
-Return ₹1,320, Total ₹2,919.
+### The standing rule: only the new thing is ours
+
+Devansh, on the first pass at this screen: *"why u made it twice?? and why is heading etc is not
+per real app screen? only new feature is our's everything else shud be exactly like redbus already
+has in UI. since we are not making changes to existing UI."*
+
+Two mistakes, and the second is the one that matters.
+
+I had built **07 and 07a** as two near-identical 3,000pt screens. The fare breakdown is a *state* of
+one screen, not a second screen. 07a is gone.
+
+And I had renamed the page. The app calls it **"Passenger Information"** with the subtitle
+**"Delhi → Nainital"**; I had written "Review your trip" and "Delhi ↔ Nainital · 1 passenger"
+because that is what my invented version said. Restored.
+
+**The rule from here on:** every label, heading and control that redBus already ships is copied
+exactly — "Bought by 1,19,417+ people in the last month", "Only for ₹180 per passenger",
+"Don't add Trip Guarantee", all of it verbatim. What may differ is **our feature** and **our data**
+(operator, dates, seats, fares, and figures derived from them such as the Trip Guarantee refund).
+Nothing else. We are not redesigning redBus; we are adding one thing to it.
+
+The two places the construct appears on this screen are therefore the *only* two deviations: the
+second leg in the journey block (with ONWARD / RETURN tags, which the app has no need for at one
+leg) and the Free date change card.
 
 ### Screens 13 and 14 — the confirm and the payoff
 
