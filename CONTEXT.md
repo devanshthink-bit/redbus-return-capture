@@ -910,6 +910,31 @@ because the content itself has none.
 Order matters here too: **de-seam first, then repair the button.** The seat repair copies from one
 row-pitch above, so if the seam is still present that copy imports it into a clean area.
 
+### The collapsed sheet: a cropped edge, and corners that were pixels
+
+Devansh: *"Bottom sheet is cut from the bottom, and its edges are not matching… Corner radius as
+well as shadows are not matching."* Three faults, all mine.
+
+**The crop started 26px too low.** The sheet's top edge is at source row **4148**, not 4174. I had
+cut into the sheet itself, losing the top of its own rounded corners.
+
+**The corners and shadow were baked in, so they could not work.** A crop is a rectangle. Its
+corners carried the captured page background, which then sat over the *live* seat map instead of
+letting it show through — exactly the "edges not matching" effect. Corners and shadow have to be
+properties of the frame, not pixels in the image: measured from the capture, the radius is **16pt**
+(43px inset on the top row, flattening the way iOS corner smoothing does), and the shadow reaches
+about 11pt above the edge, darkening the page background from `#F1F0F6` to `#E1E1E1` at the seam.
+Rebuilt as `0 −3 16 rgba(0,0,0,.10)` over `0 −1 4 rgba(0,0,0,.06)` with `cornerSmoothing 0.6`.
+
+**Picsew had trimmed the bottom off.** The capture ends mid-glyph through the tab labels — no home
+indicator, no padding, just a cut. The tabs row was taken from the **other** capture instead: the
+full sheet has the identical row at source 992–1113, and the Highlights pill starts at x=44 in one
+and x=45 in the other, so the two align without any scaling. Splice at the pill's top edge, then
+add 94px for the home indicator. The sheet is 232.5pt, not 159.6.
+
+**The rule:** when a capture ends at content rather than at whitespace, assume it was trimmed, and
+look for the same element in another capture of the same device before accepting the cut.
+
 ### Screens 13 and 14 — the confirm and the payoff
 
 **13 · Confirm date change.** Three cards and a two-button bar. A dearer day goes on to the
