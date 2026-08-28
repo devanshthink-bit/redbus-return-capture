@@ -972,6 +972,38 @@ map cannot drift apart.
 The first attempt clipped every seater, because the arms were 28.2pt wide inside a frame resized to
 25.3. Set `constraints: SCALE` on the shapes inside a component that will be resized.
 
+### 07 · Review your trip, rebuilt on the real screen
+
+`Picsew_TripReview.HEIC` (1080 × 6952 → 2510pt) is the app's **Passenger Information** page, and my
+07 had been an invention. It is now the real structure, entirely in components — no crops at all,
+because every part of it is either type or a control.
+
+Top to bottom: the navy **Primo** banner, a journey block, then **Contact Details**, **Passenger
+details**, **Free Cancellation**, **Trip Guarantee**, **Travel Insurance**, **GST**, the terms
+footer, and a pinned pay bar.
+
+**Where the return construct goes.** Two places, both chosen so it reads as part of the page rather
+than bolted on:
+
+- The **journey block carries both legs** — ONWARD and RETURN in the same grammar, separated by a
+  rule. The app draws one leg; ours draws two, and nothing else about it changes.
+- A **Free date change** card sits directly after Free Cancellation. That is the right neighbour:
+  Free Cancellation, Trip Guarantee and Travel Insurance are all *what protection do you have*
+  cards, and the one change on the return is exactly that. It borrows the whole shell — green
+  eligibility strip, title with price line and a round icon, the bordered promise box (**One
+  change** in the same green as **100% refund**), the explanation with *View details* — and then
+  swaps the two Add/Don't-add radios for the two rules, because ours is not a choice. It is already
+  included, and the only thing left to say is what it costs you.
+
+**The bug that cost the most time:** `figma.createAutoLayout()` returns a frame sized **100 × 100**.
+Seventeen one-line `spacer` frames used to push content apart were each forcing their row to 100pt
+tall, and the screen came out **4012pt against the real 2510**. Collapsing them to 1pt brought it to
+3010 — and 3010 minus our own 429pt card is 2581, within 3% of the real page. A layout that is
+uniformly too tall is usually one wrong default, not a hundred wrong paddings.
+
+**07a** is the same screen with the fare breakdown open behind the bar's `+` — Onward ₹1,599,
+Return ₹1,320, Total ₹2,919.
+
 ### Screens 13 and 14 — the confirm and the payoff
 
 **13 · Confirm date change.** Three cards and a two-button bar. A dearer day goes on to the
