@@ -1252,8 +1252,11 @@ all on browsing surfaces: 02d 99%, Home 78%, bus list 29%, 02c 14%.
   02d are the same sheet in two states, so they should share components)
 - `01 · Home` — the marketing rail: rebuild cards, headings and buttons, keep the illustrations
 - `02 · Outbound bus list` — the promo blocks between cards, same treatment
-- **The icon components themselves** — 24 `Icon / *` and all `Tab Icon / *` are PNG fills. Chevron
-  Down and Chevron Left are now vectors; the rest are not. Payment logos legitimately stay images.
+- ~~The icon components themselves~~ — **done 2026-08-28.** Every `Icon / *`, every `Tab Icon / *`,
+  `Button / Close · Share · Support` and `Art / Steering wheel` are now vectors. Ten screens are
+  completely image-free. Payment logos and Apple Wallet stay images: they are brand assets.
+  Note the round chrome buttons had *opaque white plates* baked into their PNGs — they never
+  composited properly on a coloured background, and nobody had noticed.
 
 ### What 02d is made of now
 Twelve sections: sheet header · Highlights · Cancellation and refund policy · Date change policy ·

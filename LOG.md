@@ -2388,3 +2388,19 @@ Three Plugin API traps, each of which produced a wrong screen that looked plausi
 - `figma.createAutoLayout()` returns a frame with a **default white fill**. Table cells painted
   white over the row tint, so the header and the highlighted row both looked plain until the cell
   fills were cleared.
+
+CHANGE · 2026-08-28 · (no skill) · Source: user
+**Every icon in the file is now a vector.** 12 `Icon / *`, all 10 `Tab Icon / *`, the three round
+chrome buttons on the ticket screen, and the steering wheel — 26 components, all previously PNG
+crops. Ten screens are now completely image-free; Home dropped from 25 image nodes to 17 and the
+bus list from 44 to 17 (what remains on those two is the marketing artwork, which stays).
+
+Two things only came to light by opening them:
+- The round buttons had **opaque white plates** baked into the PNG. On the ticket screen they sit on
+  a grey page, so they had always been white squares with rounded artwork inside, not circles. Nobody
+  had noticed because at 44pt on a light background it nearly reads.
+- The icons were soft. `Star Outline` and `Hourglass` were visibly blurred at 1x, and would have
+  been worse on a 3x phone.
+
+Payment logos and Apple Wallet stay as images — they are brand assets and redrawing them would be
+both wrong and pointless.
