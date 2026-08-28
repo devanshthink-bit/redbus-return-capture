@@ -935,6 +935,43 @@ add 94px for the home indicator. The sheet is 232.5pt, not 159.6.
 **The rule:** when a capture ends at content rather than at whitespace, assume it was trimmed, and
 look for the same element in another capture of the same device before accepting the cut.
 
+### Crops are a backdrop, not a screen — the seat map is components now
+
+Devansh: *"Why did you start using images? I want everything to be clickable. In the prototype, I
+will be tapping on the seat and selecting it. Don't use images!"*
+
+Right, and it changes the rule for the whole build. **A crop is only acceptable where the pixels
+are the content** — a photograph, an illustration, a marketing banner. Anything a finger lands on
+has to be a component.
+
+02c's seat map is rebuilt: **42 seats**, every one an instance, laid out from a grid read out of the
+capture rather than typed by eye. Connected-component analysis on the green outlines and the grey
+fills found each seat's box, and the sizes separate the two types cleanly — sleepers 86 × 187px,
+seaters 70 × 69px. Six columns at x = 13, 97, 141 within each deck card, row pitch 236px for
+sleepers and 118px for seaters. Prices follow the column: left singles ₹1,699, right sleepers
+₹1,499, seaters ₹1,299.
+
+The neat part: one `itemSpacing` of **0.7pt** holds the whole grid together. A seater cell is
+41.9pt and a sleeper cell 84.5pt, and 41.9 + 0.7 lands exactly on the next sleeper's top in the
+mixed columns. The pitch that looked like two different rhythms is one.
+
+### The seat components were images too
+
+Both had to be rebuilt as real geometry, not just re-placed:
+
+- `Seat / Seater` was an **image fill** in every variant. It is now two stroked rounded rects — an
+  arms/base "U" and an inset back — which is what the app's armchair glyph actually is.
+- `Seat / Sleeper` had no glyph on its booked state. The app draws booked seats with a lavender
+  `#C5C9E5` border on `#E6E6E6` and a person mark.
+
+Both sets now carry the six states the legend names: Available, Booked, Women only, Booked female,
+Men only, Booked male. The legend itself is a real table using those instances, so the key and the
+map cannot drift apart.
+
+**The trap:** resizing an instance does not move its children unless their constraints say so.
+The first attempt clipped every seater, because the arms were 28.2pt wide inside a frame resized to
+25.3. Set `constraints: SCALE` on the shapes inside a component that will be resized.
+
 ### Screens 13 and 14 — the confirm and the payoff
 
 **13 · Confirm date change.** Three cards and a two-button bar. A dearer day goes on to the
