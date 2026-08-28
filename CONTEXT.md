@@ -862,16 +862,24 @@ solved from it by least squares — **f = 0.266** over 3858 pixels — and then 
 Order matters: repair the region first, paste the rebuilt icon last. Doing it the other way round
 makes the repair sample its edge pixels *from inside the icon*, and it bleeds pink across the row.
 
-### Fixed overlays belong at the viewport bottom, not the frame bottom
+### Fixed overlays: frame bottom, with a Bottom constraint
 
-A correction that applies to every long screen. A tab bar, a floating button or a bottom sheet
-marked *Fixed position when scrolling* keeps its **y offset from the frame's top**, and the
-prototype viewport is 844pt tall — so it must sit at `844 − height − inset`, not at
-`frameHeight − height − inset`. Home's tab bar is back at **757**, the bus list's Ask Ray at
-**705**, and the collapsed sheet at **684**.
+I got this wrong once and Devansh caught it: *"the bottom sheet is at the bottom, where you are
+showing it in the middle."*
 
-On the static canvas this looks wrong — the tab bar floats near the top of a 3441pt frame. In the
-prototype it is the only thing that is right.
+I had moved every overlay to `844 − height − inset`, reasoning that a fixed element keeps its
+offset from the frame's top. That is not how Figma resolves it. A fixed element is pinned by its
+**constraints**, so an overlay with `vertical: MAX` sits on the **frame's bottom edge** and Figma
+pins it to the bottom of the viewport when scrolling.
+
+Which means the placement that reads correctly on the static canvas is also the correct one for
+the prototype — there is no trade-off. Home's tab bar sits at `frameHeight − 66 − 21`, the bus
+list's Ask Ray at `frameHeight − 43 − 96`, and the collapsed sheet flush on the frame's bottom
+edge, all with `vertical: MAX`.
+
+The round **Ask Ray** on 02c is an instance of the existing `Button / Ask Ray FAB`, bottom-right
+with a 20pt inset and `horizontal: MAX`, clear of the sheet. It was painted out of the capture
+eight times over; there is exactly one of it in the file.
 
 ### Screens 13 and 14 — the confirm and the payoff
 
