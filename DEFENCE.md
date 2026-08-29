@@ -90,31 +90,64 @@ leak with a number on it — 26.1% to competitors.
 
 ### "Why not just use FlexiTicket? Why not put it in the return flow?"
 
-*Why they ask:* this is the single most likely question. It is the one that decides whether the
-idea is real.
+*Why they ask:* this is the single most likely question, and the one that decides whether the idea
+is real. **Learn the four beats. Do not improvise this one.**
 
-**Answer, in this order.**
+**Beat 1 — concede completely, first sentence.**
 
-First: **it is FlexiTicket.** Say that immediately. Do not let them think you missed it. This is
-not a new capability — it is a new way of asking for the same one.
+> *"It is FlexiTicket. I have not added a capability. I changed the question."*
 
-Second: what changes is the question. Today the field says *Date of journey*. That makes booking
-a day you don't plan to travel on unthinkable. So the flexibility is unreachable no matter how
-big you make the badge. FlexiTicket answers *"what if my plans change?"* — a hypothetical.
-*Last day* answers *"I don't know when I'm coming back"* — a fact they are holding right now.
+Never let them think you missed it. Everything after this is easier once they know you know.
 
-Third, the evidence that visibility is not the fix: 39.1% did not know FlexiTicket or the
-cancellation add-on existed. But Anand knew and refused anyway — *"I know there is an option but
-I just prefer okay this option doesn't exist."* A visibility fix reaches the first group and
-misses the second entirely.
+**Beat 2 — the distinction the whole thing rests on.**
+
+FlexiTicket is a **safety net for a booking you have already decided to make**. The problem is
+people not making it.
+
+To reach FlexiTicket you must first enter a date. The field says **Date of journey**. Someone who
+does not know their date cannot get to the net at all — **you cannot use a safety net for a jump
+you have not taken.** Making the badge bigger does not help, because the badge is on the far side of
+a field they cannot fill.
+
+And Free Cancellation is not the answer either, it is the tax: it is a **paid add-on**, so today the
+price of not knowing your return date is money — and you still have to enter a date to buy it.
+
+**Beat 3 — the number that ends it.**
+
+> **39.1% of people with a *fixed* return date still book it separately** (n73).
+
+Those people do not need flexibility. They know their date. And they still do not book the return.
+If FlexiTicket solved this, that number would be near zero. It is not, because the product never
+asks them at the moment they could answer.
+
+The second number stops the "make it more visible" retreat: 39.1% did not know FlexiTicket existed
+(n76), **but Anand did know and refused anyway** — *"I know there is an option but I just prefer
+okay this option doesn't exist"* (n07). Visibility reaches the first group and misses the second
+entirely.
+
+**Beat 4 — so what actually changed.**
+
+The question. *Date of journey* is unanswerable without a date. *When can you travel back?* is
+answerable with a range, or with a constraint they are already holding — **not before Saturday, not
+after Tuesday**. Same mechanism underneath, asked in a form the traveller can answer.
+
+**Pushback: "So it clashes with FlexiTicket."**
+
+It does not clash, it **uses** it. The change this books is a FlexiTicket change, on FlexiTicket's
+terms: fee zero, fare difference payable, once per booking, no cancellation afterwards. The label
+differs on the return leg because the **decision** is different, not the mechanism.
 
 **Pushback: "That's a copy change, not a design."**
 
-This is the sharpest version and it deserves a real answer, not a defence. Say: the field label
-is the smallest part. What changed is what the product asks for, and that cascades — the return
-list can now be filtered to movable buses, the terms have to be collapsed into one decision
-instead of six, and the ticket needs a move path that didn't exist. If it were only a label, the
-other eleven screens wouldn't have had to change.
+The sharpest version, and it deserves an answer rather than a defence. The field label is the
+smallest part. What changed is what the product asks for, and that cascades: the day list has to
+carry fares and movability, the terms collapse into one decision instead of six, the booked day
+needs a guard so an unchangeable day is never sold as changeable, and the ticket needs a change path
+that did not exist. **If it were only a label, the other eleven screens would not have had to change.**
+
+**Where it dies, and say so before they ask.** If participants happily type a guess into *Date of
+journey* and feel fine about it, there is no problem to solve and this is decoration. That is
+must-see moment 1 in the test script and it is the kill condition, not a risk.
 
 ### "Why not just make the existing badge bigger?"
 
