@@ -2462,3 +2462,26 @@ The lesson is the measurement, not the fix: I had checked the frame's geometry a
 so I trusted it. **When a block looks wrong and its geometry is right, the crop is the suspect.**
 Read the pixels at the edges of the source before cropping — `im[y, 0]` and `im[y, W-1]` on a few
 rows would have shown the banner runs to both edges in seconds.
+
+CHANGE · 2026-08-28 · (no skill) · Source: user
+**"Still not the same and it's cut now."** Correcting the previous entry: the festive banner is
+**not full-bleed**. It is a rounded rectangle spanning the full width, with a large corner radius —
+about 25pt at the top and 36pt at the bottom. And its real height is **126pt**, not the 94pt I had
+just cropped, so my "fix" sliced the bottom off the flower.
+
+Both errors came from the same bad habit: **measuring a single column instead of the whole row.**
+I scanned `im[y, 8]` for the bottom edge, hit a light pixel inside the artwork at y=1715, and
+called that the end. The band actually runs to 1767. Scanning the fraction of non-white pixels
+across the entire row shows the edge immediately and unambiguously.
+
+The corner radius is recoverable from the same scan: measure the horizontal inset at two known
+depths near the corner and solve `inset = R − √(R² − (R−t)²)`. Two readings gave R ≈ 101px ≈ 36pt.
+
+Built as an RGBA crop with the rounded-corner alpha baked in, so the shape survives resizing and
+the top corners let the block's gradient through exactly as they do in the app.
+
+LEARNED · 2026-08-28 · (no skill)
+Twice in a row I reported a fix as correct after checking it against the same faulty measurement
+that produced the bug. **Verify against the source image rendered at the target size, side by
+side — not against the numbers you derived from it.** Rendering the real capture's banner region
+scaled to 390pt took one command and would have caught both errors before showing the user.
