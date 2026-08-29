@@ -248,6 +248,42 @@ If they say *as many as I like*, the mentor's traveller exists **and is misinfor
 product created the misconception. That is a more valuable finding than my design, and I would
 report it as one.
 
+### "Both let you book now. Why would anyone choose yours over booking now with FlexiTicket — and why put two competing features in one product?"
+
+**They are not two features at the same level, and that answers both halves.**
+
+FlexiTicket is a **property of a bus** — an operator's policy, surfaced as a badge. There is no
+"book with FlexiTicket" journey to choose instead. You book a bus that happens to carry it. This is
+**the return booking flow**. One is the mechanism; the other is the flow that uses it. The change
+this books *is* a FlexiTicket change.
+
+**So the real comparison is today's return flow against this one:**
+
+| | Today | This |
+|---|---|---|
+| To search at all | Name a date you may not have | Say the earliest and latest you could travel |
+| Choosing a day | A blank field | Every day in your range with its fare, cheapest flagged, your last day named |
+| Is it changeable? | Luck. You may have to choose between **the bus you want** and **the flexibility** | Guaranteed, or the day is marked as not |
+| Terms | Found afterwards | On the screen before you pay |
+
+**That third row is the substantive one.** Today, wanting a changeable return means filtering to
+FlexiTicket buses and taking whatever is left — the badge is on the bus, not on the day. Here the
+guard runs first: a day no operator will move is never sold as one they will.
+
+**Why they do not compete: they are on different legs.** The construct's badge appears on the
+**return** leg only — Review your trip and Booking confirmed. The outbound bus list carries
+RedBus's own *Free date change*. **No screen carries both.** That is deliberate, and it follows from
+the problem: on the outbound you know your date, so a badge is enough; on the return you may not, so
+the question has to change. Two legs, two different problems, one mechanism underneath.
+
+**Concede this, because it is true.** For a traveller who is **certain** of their return date, this
+adds little over today's flow — it is a better date picker and no more. The value sits in the group
+who cannot name a date, and in the **39.1% who have a fixed date and still book separately** (n73)
+because nothing ever asked them at the moment they could answer.
+
+**On confusing the user** — that risk is real, it is my top unresolved item, and it is a paper test
+in the script rather than an argument: show one person both labels and ask what each lets them do.
+
 ### "Why not just make the existing badge bigger?"
 
 **Answer.** That was Idea 4. I killed it because it already ships twice — as a filter chip and
