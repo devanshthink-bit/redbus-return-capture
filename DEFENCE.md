@@ -156,6 +156,56 @@ is decoration. That is must-see moment 1, and it is the kill condition rather th
 the home screen, and it is the reason the flexibility is unreachable today: you must name a date
 before you can reach a feature that exists to protect you from naming the wrong one.
 
+### "People just enter any date, because they know FlexiTicket lets them change it later. Yours does the same thing. What is different for the user?"
+
+*This is the strongest form of the question, and it is the kill condition stated as a fact. Do not
+argue with the behaviour — argue with what the person believes while doing it.*
+
+**First: if that is what they are doing, they are wrong about FlexiTicket, and the product is
+letting them be wrong.** *"I will change it later to whatever day"* is not what FlexiTicket gives.
+RedBus's own terms:
+
+> **"Rescheduling a ticket can be availed only once per booking."**
+>
+> **"Once the travel date change option is availed, the ticket cannot be further cancelled."**
+
+So the confident traveller in that story is walking into a trap:
+
+1. Books a random Tuesday, relaxed, because it feels changeable
+2. Plans firm up — they need Saturday. They spend the change
+3. **The ticket is now non-refundable forever.** Not reduced. Gone
+4. Plans move once more, which is the whole reason they were unsure, and they have nothing
+
+**Second, they pay for it twice.** Moving to Saturday costs the fare difference, and fares rise as
+departure approaches — so the change they were relying on is the one most likely to cost money. Had
+they said *Saturday to Tuesday* up front, they would have seen every fare in that range and could
+have taken the cheap one. The random-date traveller pays the difference **and** spends their only
+change. The construct's traveller usually keeps both.
+
+**So the difference is not the capability. It is what the traveller knows while using it.** Today
+the product implies unlimited flexibility and states the limit nowhere the traveller looks. This
+says it before they commit: *one change only, after it you cannot cancel*, and *1 change left* on
+the ticket afterwards.
+
+**Third, the research says that confident traveller is rare.** If people were comfortably booking
+random dates and changing later, the return attach problem would not exist. It does:
+
+- **39.1% with a *fixed* return date still book separately** (n73). They have nothing to be unsure
+  about and still do not book
+- **Soumya tried exactly that model.** Booked early, wanted to move the date, could not — *"we
+  regretted it"* — and never booked early again (n49)
+- **Anand knew the option existed and refused it** (n07)
+
+**Finally, concede the shape of it, because this is settleable and not by argument.** If in the
+sessions people tap a single day and say *"I will just change it later"*, that is a real finding.
+Ask one follow-up:
+
+> **"How many times can you change it?"**
+
+If they say *as many as I like*, the mentor's traveller exists **and is misinformed** — and the
+product created the misconception. That is a more valuable finding than my design, and I would
+report it as one.
+
 ### "Why not just make the existing badge bigger?"
 
 **Answer.** That was Idea 4. I killed it because it already ships twice — as a filter chip and
