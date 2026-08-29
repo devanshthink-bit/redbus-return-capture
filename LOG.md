@@ -2485,3 +2485,25 @@ Twice in a row I reported a fix as correct after checking it against the same fa
 that produced the bug. **Verify against the source image rendered at the target size, side by
 side — not against the numbers you derived from it.** Rendering the real capture's banner region
 scaled to 390pt took one command and would have caught both errors before showing the user.
+
+CHANGE · 2026-08-28 · (no skill) · Source: user
+Third pass on the festive banner, and this time checked against the source rendered side by side
+before saying anything. Two remaining faults, both mine:
+
+- **The banner has no rounded top corners.** I had added a 25pt top radius on the strength of
+  reading `#FCF1EE` at `x=0` near the top and calling it white. It is not white — it is the pale
+  pink of the gradient, and my "is this white" threshold of 249 counted it as background. Counting
+  how many pixels at each row edge exceed a *strict* white threshold returns zero for every row:
+  the banner is flush to both edges, square across the top, rounded only at the bottom.
+- **The seam under the Search button was the gradient, not the crop.** The block gradient ran its
+  last stop to the bottom of the *block*, but the banner covers the final 126pt of that block, so
+  the visible gradient stopped at 75% of its ramp — several shades too light where the banner
+  begins. Placing the final stop at `(blockHeight − bannerHeight) / blockHeight` makes the pink
+  flow continuously from behind the button into the artwork, which is what the app does.
+
+LEARNED · 2026-08-28 · (no skill)
+**A near-white threshold cannot distinguish a pale tint from the page.** Three wrong readings on
+this one banner all trace to it: the phantom top corners, the bottom edge found 60px too high, and
+the original white gutters. When the design uses tints this light, threshold against the *neighbouring*
+colour, not against white — or count edge pixels at a strict cutoff and require the count to be
+zero, which has no grey zone to get wrong.
