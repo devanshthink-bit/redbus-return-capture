@@ -145,11 +145,24 @@ booking the last day for them — was right, and v3 gave away something it shoul
 It is stated on **Review your trip**, on the ticket and on the confirm screen. If they only notice on **Date
 changed**, three placements failed at one job.
 
-**4. Do the two badges clash?**
-They meet both in one session: redBus's real **Free date change** on the outbound bus list, and
-**You can change this date once** on the return. Ask afterwards:
+**4. Do the labels clash?**
+A participant meets **four** in one session, and the polarity flips between them:
 
-> "You saw two different labels about changing dates. What did you think each one meant?"
+| Screen | Label |
+|---|---|
+| Outbound list | ↻ **Free date change** — redBus's own badge, marks the good |
+| Outbound list | "This operator doesn't allow date changes" — ours, marks the bad |
+| Pick your return day | **No date change** — ours, marks the bad only; 5 of 7 cards are unmarked |
+| Review and ticket | ↻ **You can change this date once** — ours, marks the good |
+
+**The specific confusion to watch for**, and it is the likeliest failure here: someone picks a
+**Free date change** outbound bus, then sees **No date change** on a return day and says something
+like *"but I chose the free date change one"*. That is them carrying the outbound bus's property
+across to the return leg. If two of five do it, the two-badge plan is wrong.
+
+Ask afterwards:
+
+> "You saw a few different labels about changing dates. What did you think each one meant?"
 
 Show one person the two on paper, without explaining either:
 
