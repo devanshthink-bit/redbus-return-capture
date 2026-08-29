@@ -78,6 +78,48 @@ booked the return separately: 39.1% found their preferred seat gone, 30.4% found
 gone up, and **26.1% booked the return on a different app**. That last number is the business
 problem. The traveller is fine. RedBus loses the leg.
 
+### "Then why book the return now at all? They can book it later and use FlexiTicket then."
+
+*This is the deepest version, because it questions the whole point of booking early. It rests on
+one assumption, and the assumption is wrong.*
+
+**The assumption: that what the traveller loses by waiting is flexibility.** It is not. FlexiTicket
+is still there next week. What they lose by waiting is **price and seat**, and FlexiTicket protects
+neither.
+
+> **FlexiTicket protects your date. Only booking early protects your price and your seat.**
+> Today you cannot book early without knowing your date — so you have to choose one.
+> This lets you have both.
+
+**Booking later and buying flexibility then is insurance bought after the risk has passed.** By the
+time you know your date, the thing FlexiTicket protects you from has already resolved. You paid
+attention to the wrong exposure.
+
+**And waiting has a measured cost.** Of the people who booked the return separately:
+
+| | |
+|---|---|
+| **39.1%** | found their preferred seat gone (n74) |
+| **30.4%** | found the price had gone up (n74) |
+| **26.1%** | booked the return on a different app |
+
+Only a minority get away with it. Vivek is the extreme case: peak season, **no return seats at all**,
+waiting for a cancellation (n61).
+
+**Put the two together and the trade is plain.** Book now with this: today's fare, today's seat, and
+you can still move the day for no fee. Book later with FlexiTicket: whatever seat is left, at
+whatever it now costs, plus a flexibility you no longer need.
+
+**The business half of the answer, since a mentor is usually asking about that too.** That 26.1%
+does not book later on redBus. They book later **somewhere else**. Waiting is not a delayed sale,
+it is a lost one, and no amount of FlexiTicket on a bus the traveller never returns to see will fix
+that.
+
+**What would make me wrong.** If participants say waiting costs them nothing — that they always
+find a seat, that prices do not move on their routes — then the trade I am describing is not real
+for them and the case for booking early collapses with it. n74 says otherwise for two thirds of
+people, but n74 is a survey and the sessions are the check.
+
 ### "Why this problem and not a bigger one?"
 
 **Answer.** Because it sits at the exact moment the product already has the person's attention,
