@@ -2507,3 +2507,29 @@ this one banner all trace to it: the phantom top corners, the bottom edge found 
 the original white gutters. When the design uses tints this light, threshold against the *neighbouring*
 colour, not against white — or count edge pixels at a strict cutoff and require the count to be
 zero, which has no grey zone to get wrong.
+
+CHANGE · 2026-08-28 · (no skill) · Source: user
+**"Corners are not clean."** A pale pink crescent hugged the banner's bottom corners. Three causes,
+peeled off one at a time:
+
+1. **The corner radius was wrong.** I had solved R ≈ 36pt from inset-versus-depth readings taken
+   with the same near-white threshold that had already misled me twice. Reading the arc off a
+   magnified crop instead gives **R ≈ 28pt**. The mask was cutting outside the artwork, keeping a
+   ring of the capture's own corner.
+2. **I feathered the alpha.** A gaussian edge on a 1080px image that Figma then downsamples to
+   390pt gets softened twice, and the half-transparent red over white reads as a pink rim. The
+   real edge in the capture is **one pixel** — hard. Now: a hard 0/255 mask, eroded 1px to drop the
+   blended edge pixels, and the downscale does the antialiasing.
+3. **The last one was not the image at all.** The gradient sat on the *Top block*, which extends
+   behind the banner, so its final stop painted pale pink underneath — and the newly transparent
+   corners revealed it. Moving the gradient onto the Search section, which ends exactly where the
+   banner begins, puts white behind the corners.
+
+LEARNED · 2026-08-28 · (no skill)
+**Cutting a hole in a child shows you the parent's fill.** Obvious stated plainly, and I lost two
+rounds to it: I kept re-cutting the image because the artefact moved when I changed the image, so
+it looked like the image's fault. It was the background showing through. When a transparent edge
+is the wrong colour, check what is painted behind it before touching the mask again.
+
+Corollary for the alpha itself: **never feather a mask that the renderer will downsample.** Hard
+edges plus a 1px erosion beat any hand-rolled feather.
