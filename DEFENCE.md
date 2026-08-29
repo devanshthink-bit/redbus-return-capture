@@ -49,6 +49,18 @@ questions are a test of whether you know your own weak points, not a request for
 > **the full FlexiTicket cross-examination (2A) — the one that got me live** ·
 > *"This is a pretty generic solution."* (10) · *"Have you tested it?"* (12).
 
+> ### The one line to have ready
+>
+> Every FlexiTicket question is the same question, and this settles all of them:
+>
+> **FlexiTicket is a property of a bus — an operator's policy shown as a badge. There is no
+> *"book with FlexiTicket"* journey to choose instead; you book a bus that happens to carry it.
+> This is the return booking flow. One is the mechanism, the other is the flow that uses it —
+> and the change this books *is* a FlexiTicket change.**
+>
+> Say it and the framing shifts from *"two features competing"* to *"a flow and the thing it runs
+> on"*, which is not an argument they can win. Everything else in §2 is detail underneath it.
+
 ---
 
 ## 1. The problem
@@ -138,6 +150,10 @@ is real. **Learn the four beats. Do not improvise this one.**
 **Beat 1 — concede completely, first sentence.**
 
 > *"It is FlexiTicket. I have not added a capability. I changed the question."*
+
+If they press on why it exists as a separate thing at all, go straight to the framing line:
+**FlexiTicket is a property of a bus; this is the flow that uses it.** Full version at
+*"Both let you book now…"* later in this section.
 
 Never let them think you missed it. Everything after this is easier once they know you know.
 
