@@ -2445,3 +2445,20 @@ background from the crop's own edge columns, mask on `|pixel − background| > t
 components above a size floor, and feather the alpha across the threshold. Avoid `fill_holes` on
 the whole mask — it fills the space *between* letters and produces exactly the halo you were
 trying to remove.
+
+CHANGE · 2026-08-28 · (no skill) · Source: user
+**"It doesn't match the real app screen design."** The festive banner under the search block sat
+inset, with white gutters down both sides and a rounded bottom. The real one is **full-bleed, edge
+to edge**, and the pink above it is not a separate flat panel — the search area and the banner are
+one continuous vertical gradient, pale pink at the top deepening to red, cut off hard at the
+bottom.
+
+The cause was the crop, not the layout: the frame was already 390 wide at x=0 with no radius, but
+the *image inside it* had the white margins baked in. Re-cropped full-bleed and replaced the
+Search section's flat fill with a gradient on the parent block, so the two blend the way they do
+in the app.
+
+The lesson is the measurement, not the fix: I had checked the frame's geometry and it was correct,
+so I trusted it. **When a block looks wrong and its geometry is right, the crop is the suspect.**
+Read the pixels at the edges of the source before cropping — `im[y, 0]` and `im[y, W-1]` on a few
+rows would have shown the banner runs to both edges in seconds.
