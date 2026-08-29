@@ -33,7 +33,7 @@ Do not start work, answer a question about the project, or change a file until y
 - `NOTES.md` · `RESEARCH.md` · `BRIEF.md` · `SCOPE.md` — the research and the spec
 - `TERMS.md` — every redBus rule the construct stands on (FlexiTicket, Free Cancellation,
   reschedule, refunds), each with its source and a verified/unverified flag
-- `DEFENCE.md` — 106 stakeholder/interview questions with answers
+- `DEFENCE.md` — 107 stakeholder/interview questions with answers
 - `CRITIQUE.md` — eight attacks on the chosen idea, plus the idea ranking
 - `TEST_SCRIPT.md` — the usability script. **Tests v3**, at `v3.html?test`. Sessions not yet run
 - `artefacts.html` — the board, generated from `NOTES.md`. Never retype note text

@@ -580,6 +580,39 @@ does against the deadline**. Two names for two things is defensible; two synonym
 it is on the test script as a paper task, because that is settleable by five minutes with a
 participant and not by argument.
 
+### "Your labels contradict each other. The outbound marks the good news, the return marks the bad."
+
+A participant meets four in one session, and the polarity does flip:
+
+| Screen | Label | Whose |
+|---|---|---|
+| Outbound list | ↻ **Free date change** | RedBus's own badge — marks the good |
+| Outbound list | "This operator doesn't allow date changes" | Mine, the Idea 9 guard — marks the bad |
+| Pick your return day | **No date change**, on 2 of 7 cards | Mine — marks the bad only |
+| Review and ticket | ↻ **You can change this date once** | Mine — marks the good |
+
+**One rule produces all of it: mark the exception.** The base rate is what flips, not the principle.
+On RedBus's outbound list most buses do **not** carry FlexiTicket, so they badge the few that do.
+On the return day list **80% of days are changeable**, so I mark the few that are not. Marking the
+majority in either place would be noise on five cards out of seven.
+
+**A second rule, and it is why the booked leg reads positive:** in a list you are choosing from,
+flag what would disqualify an option. On the booking you already hold, state what you have. A list
+answers *which*; a ticket answers *what do I have*.
+
+**The clash I do not control.** RedBus's positive badge sits two screens from my negative one, and
+reproducing their list faithfully is what makes the case study honest about the starting point.
+Changing their screen to match mine would be redesigning the thing I am measuring against.
+
+**The failure I expect, and it is likelier than the naming clash:** somebody picks a *Free date
+change* outbound bus, sees *No date change* on a return day, and says *"but I chose the free date
+change one"* — carrying the outbound **bus's** property across to the return **leg**.
+
+**If two of five do that, the fix is ready:** scope the chip so it can only mean the day —
+*No date change* becomes *This day can't be changed*. Then nothing on that screen can be read as a
+property of a bus. It is deliberately not applied yet: fix it now and a clean session tells you
+nothing, because you never learn whether the confusion was there.
+
 ### "Why doesn't *Last day* mention that a later change is possible?"
 
 That screen has one job: get a **constraint**, not a guess. Offering the escape hatch while asking
