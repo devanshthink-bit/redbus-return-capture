@@ -488,6 +488,40 @@ more of the people who were already going to book.
 
 Soumya would have paid **more**, not less, for the ability to move the date.
 
+### "Why not just show FlexiTicket-eligible buses inside the window? Then every day is changeable."
+
+It would make the promise clean. It costs more than it saves, for four reasons.
+
+**1. redBus already ships it, as an opt-in.** There is a **FREE DATE CHANGE** filter chip in the
+live app today. The platform has already decided this belongs to the traveller. Turning it on for
+everybody takes away a choice that exists.
+
+**2. The largest group does not want it.** 39.1% of people with a **fixed** return date still book
+separately (n73) — that is the biggest leak, not a side case. For a certain traveller, filtering to
+flexi buses means fewer buses and possibly a higher fare, for a feature they will never use. It
+taxes the majority to serve the minority.
+
+**3. It hides cheaper days without saying so.** The cheapest day in a window is often a non-flexi
+day. Filtering it out means the product quietly made someone pay more to protect an option they may
+not use — and never told them. That is the opposite of everything else on that screen, which names
+the cost of each choice.
+
+**4. It shrinks supply, which is the goal running backwards.** On a route where few operators offer
+it, the filter can leave two buses instead of twenty. Fewer options is lower attach, and attach is
+what this project exists to raise. Hiding operator inventory is also a commercial decision with
+revenue consequences, not a design one.
+
+**What the guard does instead.** `MOVABLE` encodes exactly the same fact a filter would — does a bus
+that day allow a date change. The only difference is treatment: a filter **hides** those days, the
+guard **shows them and marks them**. Showing lets the traveller see the real trade-off — cheaper but
+fixed, or dearer but changeable — rather than a shorter list with no explanation.
+
+**Where this is weak, and say it first.** On a route with patchy coverage the calendar fills with
+grey dots and the promise starts to look hollow. The `noguard` state covers total absence — no day
+in the range can be changed, and the product says so and stops. **The middle case, say a third of
+days movable, is untested and would be an unpleasant screen.** That is a coverage problem, not a
+layout one, and it is fixed with operator supply rather than with a filter.
+
 ### "Why cap the window at seven days?"
 
 The binding constraint is **one reschedule**. The wider the window, the further the booked day sits
