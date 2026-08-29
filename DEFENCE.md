@@ -145,9 +145,16 @@ carry fares and movability, the terms collapse into one decision instead of six,
 needs a guard so an unchangeable day is never sold as changeable, and the ticket needs a change path
 that did not exist. **If it were only a label, the other eleven screens would not have had to change.**
 
-**Where it dies, and say so before they ask.** If participants happily type a guess into *Date of
-journey* and feel fine about it, there is no problem to solve and this is decoration. That is
-must-see moment 1 in the test script and it is the kill condition, not a risk.
+**Where it dies, and say so before they ask.** v3 has no return date field to guess into — the
+return step is the calendar, and it offers **one day, or two**. So the kill condition is a tap, not
+a typed date: **an unsure traveller who still taps a single day.** The screen has just told them
+they can say "somewhere between these two" and they have chosen to name one instead. If they do
+that and feel fine about it, being asked for a date they do not have was never the block, and this
+is decoration. That is must-see moment 1, and it is the kill condition rather than a risk.
+
+*Date of journey* still matters, but as **evidence, not as the test**. It is redBus's own field, on
+the home screen, and it is the reason the flexibility is unreachable today: you must name a date
+before you can reach a feature that exists to protect you from naming the wrong one.
 
 ### "Why not just make the existing badge bigger?"
 
