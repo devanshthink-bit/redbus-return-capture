@@ -161,7 +161,7 @@ defaulted and changed from Review your trip via *Change seat* / *Change points*.
 
 ### v3 constants
 ```js
-OUT_DAY = 7 (Thu 7 Sep) · HORIZON = 30 · LAST_BOOKABLE = 37 (Sat 7 Oct) · MAX_WINDOW = 7 days
+OUT_DAY = 10 (Thu 10 Sep) · HORIZON = 30 · LAST_BOOKABLE = 40 (Sat 10 Oct) · MAX_WINDOW = 7 days
 HELD_SEAT = 'U5'
 MOVABLE = d => ((d*13 + 5) % 9) < 7      // ~6 of 30 days have no movable bus
 FARE, SEAT are Proxies over generator functions — every date has real data
@@ -1210,21 +1210,14 @@ dark selection chip. The new feature is layered inside that chrome — a fare un
 day, the `Out` marker on the outbound, `Full` where the bus is sold out, the small dot for days
 whose bus allows no date change, and the range band with red end-caps.
 
-**The weekday mapping, and it moved again.** v3 was shifted from August to September on
-2026-08-28, so the scenario now runs **Thu 7 Sep → Sat 7 Oct**. v3's `DOW` still puts day 1 on a
-Friday, so in the prototype 1 Sep is a Friday and the outbound is **Thu 7 Sep**. The real 2026
-calendar puts **1 Sep on a Tuesday**, which makes 7 Sep a **Monday** — the prototype is now
-**three days out**, not one.
+**The weekday mapping is real, as of 2026-08-28.** v3 runs **Thu 10 Sep 2026 → Sat 10 Oct 2026**
+and every weekday matches the real calendar. `DOW` starts on Tuesday because 1 Sep 2026 is a
+Tuesday, and `OUT_DAY` is **10** because 10 Sep 2026 is a real Thursday — which keeps
+`TEST_SCRIPT` task 1, *"going to Nainital on Thursday"*, true.
 
-**So any v3 label that names a weekday must be recomputed for the hi-fi, never copied.** Two ways
-to close it, and it is a decision rather than a fix:
-
-- **Keep the fiction.** `TEST_SCRIPT` task 1 says *"going to Nainital on Thursday"*, and Thu 7 Sep
-  only exists in the prototype's calendar. Cheapest, but the hi-fi and v3 disagree on weekdays.
-- **Make v3 real.** Set `DOW` to start on Tuesday and `OUT_DAY` to **10** — 10 Sep 2026 is a real
-  Thursday, so the scenario stays a Thursday departure and every weekday becomes correct. The fare,
-  movability and seat data all key off the day index, so the numbers move to different days but stay
-  internally consistent.
+**So v3 labels can now be copied into the hi-fi rather than recomputed.** The one-day and
+three-day offsets that earlier notes warned about are gone. Verified across every screen and
+state: 32 distinct dates, none with the wrong weekday for 2026.
 
 **The worked example the hi-fi screens use, and the remaining screens must match:**
 
