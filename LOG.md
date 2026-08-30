@@ -2570,3 +2570,29 @@ Two related things left alone, on purpose, because they were not what the user r
   flush. Fixing it means restructuring `Card / Bus`, which many instances depend on.
 - `Art / tripReward strip · compact` (76:285) is still at 14pt. I have not found the real screen it
   came from, so I have nothing to measure it against.
+
+CHANGE · 2026-08-30 · (no skill) · Source: user
+The tripReward strip was **doubled** on two cards — two logotypes a few pixels apart, and *Take 3
+trips with Laxmi Holidays* printed over *Take 4 trips with zingbus*.
+
+It was not two layers. Both zingbus cards' strip instances carried an **image fill override** — a
+crop of the original screenshot, left behind when the strip was rebuilt as components — painted
+under the real gradient, text and logotype. The component itself was clean, which is why the first
+pass missed it: I checked `Art / tripReward strip` and one instance, and that one instance happened
+to be a Laxmi card.
+
+Cleared both overrides back to the component's gradient. Their copy still read *Laxmi Holidays* on a
+zingbus card, so it now names the operator the card names: *Take 4 trips with zingbus plus*. Swept
+the whole page — no node still uses that image, and no instance anywhere overrides a non-image
+component fill with an image.
+
+LEARNED · 2026-08-30 · (no skill)
+**An override is invisible from the component, and a clean component proves nothing about its
+instances.** I verified the fix by reading `74:273` and rendering one card, and reported it fixed.
+Two of the seven instances were still broken.
+
+The check that would have caught it, and now belongs in the routine after any component-level fix:
+walk **every instance** and compare its fill type against its main component's. One query does it —
+`page.query('*')`, filter to instances whose fills carry an `IMAGE` where the main component's do
+not. Same shape as the older rule about the state matrix not seeing a dead handler: **verifying the
+source does not verify the copies.**
