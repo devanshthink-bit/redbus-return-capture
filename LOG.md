@@ -2533,3 +2533,40 @@ is the wrong colour, check what is painted behind it before touching the mask ag
 
 Corollary for the alpha itself: **never feather a mask that the renderer will downsample.** Hard
 edges plus a 1px erosion beat any hand-rolled feather.
+
+CHANGE · 2026-08-30 · (no skill) · Source: user
+**"Broken UI in 02 · Outbound bus list."** The tripReward strip's line was wrapping to three lines
+and spilling out of the strip, over the bottom of the card.
+
+The cause was a width the component had never been tested at. The strip's copy — *Take 3 trips with
+Laxmi Holidays / to **get a free ticket*** — was set at **14pt**, and at 14pt the first line needs
+about 207pt. In a 390pt screen the card is 358 wide, which leaves the text exactly **206pt**. One
+point short, so it wrapped.
+
+Measured off the real capture (IMG_4554, iPhone 16 Pro, 402pt at 3×) the strip is:
+
+- type **13pt**, line height **17** (cap height 28px ÷ 0.727 em = 38.5px = 12.8pt; baselines 51px apart)
+- strip height **54pt** (162px), not 50.67
+- logotype **96 × 21.3pt** visible ink, 10pt in from the strip's left edge — ours was 108 × 23
+
+All four corrected on `Art / tripReward strip` (74:273). At 13pt the line needs ~192pt against 206
+available, so it fits with room. Verified: no text overflows its strip on any of the seven instances
+in the file, and the rendered card matches the capture.
+
+LEARNED · 2026-08-30 · (no skill)
+**A component authored at the source device's width breaks when instanced at the project's width.**
+The real app was captured on a 402pt phone, where the card is 370 wide. Our frames are 390, where the
+card is 358. I built the strip at 370 and it fit; every instance lives at 358 and it did not. Nothing
+warns you — auto-layout simply wraps, and a wrap looks like a copy problem rather than a geometry one.
+
+The rule: **when a measurement comes off a capture, convert it to the project's width before building
+with it, and check the tightest line at the narrowest width the component will ever be instanced at.**
+The tell here was a text child that read 218 wide in the component and 206 in the instance.
+
+NOTE · 2026-08-30 · (no skill)
+Two related things left alone, on purpose, because they were not what the user reported:
+
+- In the real app the strip is **inset 4pt** from the card's left, right and bottom edges. Ours is
+  flush. Fixing it means restructuring `Card / Bus`, which many instances depend on.
+- `Art / tripReward strip · compact` (76:285) is still at 14pt. I have not found the real screen it
+  came from, so I have nothing to measure it against.
