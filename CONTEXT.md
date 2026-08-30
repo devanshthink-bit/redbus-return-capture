@@ -1210,6 +1210,11 @@ dark selection chip. The new feature is layered inside that chrome — a fare un
 day, the `Out` marker on the outbound, `Full` where the bus is sold out, the small dot for days
 whose bus allows no date change, and the range band with red end-caps.
 
+**v1 and v2 use a fictional calendar; v3 does not.** v1 labels 8 Aug 2026 as a Friday when it is
+really a Saturday, and v2 inherits the same mapping. Both are frozen, so their labels stay as they
+are — but any document quoting a v1 screen (CRITIQUE 1 does) is quoting a fictional weekday, and
+that is correct rather than a bug. **Only v3 can be checked against a real calendar.**
+
 **The weekday mapping is real, as of 2026-08-28.** v3 runs **Thu 10 Sep 2026 → Sat 10 Oct 2026**
 and every weekday matches the real calendar. `DOW` starts on Tuesday because 1 Sep 2026 is a
 Tuesday, and `OUT_DAY` is **10** because 10 Sep 2026 is a real Thursday — which keeps
@@ -1218,6 +1223,21 @@ Tuesday, and `OUT_DAY` is **10** because 10 Sep 2026 is a real Thursday — whic
 **So v3 labels can now be copied into the hi-fi rather than recomputed.** The one-day and
 three-day offsets that earlier notes warned about are gone. Verified across every screen and
 state: 32 distinct dates, none with the wrong weekday for 2026.
+
+> **This example predates the calendar change of 2026-08-28 and is now on the wrong month.** It
+> uses real August 2026 dates; v3 now runs **Thu 10 Sep → Sat 10 Oct 2026**, also real. Recompute
+> it from the build rather than shifting it by hand — the fares, sold-out days and no-date-change
+> days are keyed to the day index, so they land on different dates.
+>
+> **What v3 says today**, for whoever redoes it:
+>
+> | | |
+> |---|---|
+> | Outbound | **Thu 10 Sep** |
+> | Bookable to | **Sat 10 Oct** |
+> | Sold out (*Full*) | 13 Sep · 23 Sep · 3 Oct |
+> | No date change (dot) | 12 Sep · 14 Sep · 21 Sep · 30 Sep · 2 Oct · 9 Oct |
+> | A 6-day window, as an example | **Thu 17 – Tue 22 Sep** · cheapest **Mon 21 Sep ₹970** · last day **Tue 22 Sep ₹1,000** |
 
 **The worked example the hi-fi screens use, and the remaining screens must match:**
 

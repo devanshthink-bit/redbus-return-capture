@@ -1,5 +1,12 @@
 # BRIEF
 
+> **What this file is, and is not.** BRIEF is the spec **as it was written**, with dated decision
+> records inside it. It is not a description of the build as it now stands — **`CONTEXT.md` is**.
+> Copy quoted here may since have been rewritten, and screens named here may since have been
+> renamed; both are deliberate history rather than drift. Check any wording against `v3.html`
+> before quoting it at anyone.
+
+
 **Project:** RedBus — the return decision inside the outbound booking session
 **Date:** 2026-08-03
 
@@ -413,7 +420,7 @@ entry point. This is one decision inside an existing purchase, not a destination
 **For:** saying the last day they could travel.
 
 **Entered from** the outbound boarding-points screen. A context strip at the top restates the
-journey they have just chosen — *Onward journey · Delhi → Nainital · Thu, 7 Aug · 23:55* — so the
+journey they have just chosen — *Onward journey · Delhi → Nainital · Thu, 10 Sep · 23:55* — so the
 screen never appears without the trip it belongs to.
 
 1. The field — label *"The last day I can travel is"* above the date. **Component**, holds the date.
