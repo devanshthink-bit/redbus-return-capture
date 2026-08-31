@@ -525,8 +525,17 @@ The terms card is the §8 rules list: no fee to change, any day you picked, **yo
 that** in warning colour, change up to 8 hours before. Read the bold lines alone and every rule is
 there.
 
-Free Cancellation is offered on the onward leg at ₹160 and shown as unavailable on the return, which
-is the honest consequence of taking the date change — not a hidden one.
+Free Cancellation is offered on the onward leg at ₹160 and shown as unavailable on the return, with
+the reason on the row — **the operator does not offer it on that bus** (decision of 3 Aug). The row is
+shown rather than hidden, because hiding it would leave the traveller assuming they have cover they
+do not.
+
+**It is not the same fact as the date change, and the two must not be merged.** Free Cancellation is
+the paid add-on that returns 100%. *Ordinary* cancellation always exists and returns part of the fare
+— at least 50% at 12h+ on a FlexiTicket bus (TERMS §2) — and that is what using the date change
+destroys (TERMS 4c and FAQ 3). An earlier version of this section said Free Cancellation was
+unavailable *because of* the date change. That was wrong, and it contradicted both LOG.md and the
+build.
 
 Money for the worked example: onward ₹1,599, return ₹1,320, total **₹2,919**.
 

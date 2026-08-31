@@ -2684,3 +2684,40 @@ A second, smaller lesson in the same bug: **a function that reads the DOM cannot
 hypothetical.** `equivalentSeat()` could only answer for whatever grid happened to be rendered, so
 the list could not have called it even if someone had wanted to — which is very likely why the fake
 table was written in the first place. Making the rule pure removed the reason the duplicate existed.
+
+DECISION · 2026-08-30 · (no skill) · Source: user
+**"The return is not cancellable anyway, so why write 'After that, the return cannot be
+cancelled'?"** Checked it against TERMS rather than against the copy. The premise is not right, but
+the confusion behind it is.
+
+The return *is* cancellable, until the date change is used. Before it, the return is an ordinary
+ticket: cancel and part of the fare comes back — operator charges apply, and a FlexiTicket bus
+promises **at least 50% at 12h or more before departure** (TERMS §2, primary evidence). After it,
+nothing: *"the rescheduled ticket will not be cancellable"*, stated twice in redBus's own terms
+(4c and FAQ 3). At least half the money against none. The line names a real loss.
+
+**Why it reads as empty is a word collision.** The only other cancellation word on the screen is the
+Free Cancellation row — *"Return · Not available on this bus"*. Read together, the two say the
+return was never cancellable. They are different products: Free Cancellation is the paid add-on
+returning 100%, not offered on that bus by that operator; ordinary cancellation always exists,
+returns part, and is what the date change destroys.
+
+Offered three ways to close it. **The user chose to leave the build copy alone.** Their call, and
+the reason for it is theirs to give — [reason not given]. No change to `v3.html`.
+
+CHANGE · 2026-08-30 · (no skill)
+`CONTEXT.md` §Trip review said Free Cancellation is unavailable on the return "which is the honest
+consequence of taking the date change". **Wrong, and it contradicted both LOG.md and the build**,
+which say the operator does not offer it on that bus (decision of 3 Aug). Corrected, and the section
+now states plainly that the add-on and ordinary cancellation are different facts that must not be
+merged — because merging them is exactly the misreading the screen invites.
+
+LEARNED · 2026-08-30 · (no skill)
+**A summary drifts by explaining, not by going stale.** The CONTEXT line was not out of date; the
+build had not changed under it. Someone — me — reached for a tidier reason than the recorded one,
+and the tidier reason happened to be the same wrong inference the screen already invites a traveller
+to make. LOG.md was right the whole time because it records *why* at the moment of deciding, and
+nothing later can re-explain it.
+
+So: **when CONTEXT and LOG disagree about a reason, LOG wins and CONTEXT is the bug** — CONTEXT is
+written after the fact and is the only one of the two that can be improved into being wrong.
