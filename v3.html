@@ -1020,11 +1020,24 @@ const OUT_SEAT_DEFAULT = 'U4';   // the grids only ever produce L1..L12 / U1..U1
 // After a move the booked return seat is the one moved into, not the one originally held.
 const outSeat = () => out.seat || OUT_SEAT_DEFAULT;
 const retSeat = () => moveDone ? movedSeat : (chosen.seat || HELD_SEAT);
+// The seat you are given on a given day. Same kind as your outbound seat -- same deck, nearest
+// free position -- falling back to the other deck. null when that bus has nothing left.
+// ONE writer. The day list names this, buildSeats() keeps it free on the map, and the auto-assign
+// at review takes it. Before, the list ran this rule and the assignment ran equivalentSeat() off a
+// generic grid, so three days in a seven-day window named a seat the traveller never got.
+// Occupancy matches buildSeats()'s day mode exactly: a seat is gone if it is women-only or booked
+// that day. The base deck's own 'booked' marks are the generic bus and do not apply to a day.
+function dayTaken(day){ const t=bookedOn(day); return i => LOWER[i]==='female' || t.has(i+1); }
 function SEATOF(d){
-  const r = (d*13) % 10;
-  if(r < 5) return retSeat();          // whichever seat you hold is still free that day
-  if(r < 9) return ['L3','U2','L1','U8'][r-5];
-  return null;                          // nothing left on that bus
+  if((d*13) % 10 === 9) return null;               // nothing left on that bus
+  const gone = dayTaken(d);
+  const free = deck => LOWER.map((_,i)=>i).filter(i=>!gone(i)).map(i=>deck+(i+1));
+  const want = outSeat(), deck = want[0], idx = +want.slice(1);
+  const same = free(deck);
+  if(same.includes(want)) return want;                       // your own position is free that day
+  if(same.length) return same.sort((a,b)=>Math.abs(+a.slice(1)-idx)-Math.abs(+b.slice(1)-idx))[0];
+  const other = free(deck==='L'?'U':'L');
+  return other.length ? other[0] : null;
 }
 const SEAT = new Proxy({}, {get:(_,k)=>{const d=+k; return d>0 ? SEATOF(d) : undefined;}});
 
@@ -1396,22 +1409,11 @@ function pickOut(op,fare,dep,arr){
 // The return seat is assigned rather than asked for — one fewer screen in a flow the 95%
 // guardrail is protecting. "Same seat as the outbound" is not the right default, because the
 // return is usually a different bus and U5 is not the same physical position. Same *kind* of
-// seat is: same deck, same position, then the nearest free seat on that deck.
-function equivalentSeat(){
-  const want = outSeat();
-  const deck = want[0], idx = +want.slice(1);
-  const free = d => [].filter.call(
-    document.querySelectorAll('#g-'+(d==='L'?'lower':'upper')+' .seat:not([data-s])'),
-    b=>true).map(b=>b.getAttribute('aria-label').split(',')[0].replace('Seat ',''));
-  const same = free(deck);
-  if(same.includes(want)) return want;                       // the same position is free
-  if(same.length) return same.sort((a,b)=>Math.abs(+a.slice(1)-idx)-Math.abs(+b.slice(1)-idx))[0];
-  const other = free(deck==='L'?'U':'L');
-  return other.length ? other[0] : want;
-}
+// seat is: same deck, same position, then the nearest free seat on that deck. That rule lives in
+// SEATOF(), so the seat named on the day list is the seat handed over here.
 function autoSeat(){
-  buildSeats();
-  const nm = equivalentSeat();
+  buildSeats(heldDay);              // the picked day's own occupancy, not a generic bus
+  const nm = SEAT[heldDay];
   const btn = [].find.call(document.querySelectorAll('#g-lower .seat,#g-upper .seat'),
                            b=>b.getAttribute('aria-label').indexOf('Seat '+nm+',')===0);
   chosen.op=OPERATOR; chosen.fare=FARE[heldDay]; chosen.seat=nm; paintSeats();

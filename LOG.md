@@ -2635,3 +2635,52 @@ The check that generalises: **for every flag that hides content, find the contro
 undo it, and assert the flag is off after that control runs.** A click-through catches this the
 moment it asserts on content rather than only on which screen it landed. Mine asserted screen ids,
 so it walked the broken journey happily.
+
+CHANGE · 2026-08-30 · (no skill) · Source: user
+**"Random seats were coming on the date selection screen. Why?"** They were not random, they were
+*wrong*. The return day list named a seat per day that the flow would never hand over.
+
+Two rules where there should have been one. The list read `SEATOF(d)` — a fake: your held seat on
+about half the days, otherwise one of a fixed table `L3 / U2 / L1 / U8`. The assignment at review
+ran `equivalentSeat()`, which read the **seat map's DOM** and was called after `buildSeats()` with
+**no day argument**, so it scored a generic bus and returned the same seat every time. Driven over
+the traveller's own window, Fri 11 – Thu 17:
+
+| Day | list said | actually got |
+|---|---|---|
+| Sat 12 | U2 | U4 |
+| Tue 15 | L3 | U4 |
+| Wed 16 | U8 | U4 |
+
+Three days in six named a seat that did not exist for them.
+
+The user's memory was right but belongs to another screen: *"Your seat U4 is free"* / *"Seat U4 is
+taken. You get U2"* and the **Different seat** pill are `renderWithin()`, the **Change day** list.
+They are correct there, because you already hold a seat and "do I keep it?" has an answer. On the
+return day list you hold no return seat yet, so that copy has nothing to compare against.
+
+Asked which way to take it, and the user chose to **name the seat you would actually get**. So
+`SEATOF(d)` is now the rule rather than a table: same kind as the outbound seat — same deck,
+nearest free position, falling back to the other deck — against that day's own occupancy, sharing
+`dayTaken(day)` with the seat map so the two cannot drift. `autoSeat()` calls `buildSeats(heldDay)`
+and takes `SEAT[heldDay]`. `equivalentSeat()` is gone; it was the same rule reading the DOM.
+
+Verified: across every bookable day the list, the seat map and Trip review name one seat, and it is
+the seat on the ticket. Change the outbound seat and the return follows — L1 outbound gives L1/L2,
+U7 gives U7. All four §10 checks pass, plus the add-a-return-later flow from yesterday.
+
+LEARNED · 2026-08-30 · (no skill)
+**Two rules for one value do not look like a bug — they look like variety.** The §5 rule already
+said one accessor per value, and the seat had `outSeat()` and `retSeat()` for exactly that reason.
+It still broke, because the *day list* and the *assignment* each derived a seat by their own route
+and neither ever named a literal. Grepping for hardcoded seats finds nothing here.
+
+The tell was cheap and I should reach for it first: **set a value and follow it to the end of the
+flow.** One loop over seven days comparing what the row promised with what the ticket carried found
+it in a single run. The generalisation of the fifth §10 check: not only *does the value reach every
+screen*, but *does every screen that predicts a value agree with the one that assigns it.*
+
+A second, smaller lesson in the same bug: **a function that reads the DOM cannot be evaluated for a
+hypothetical.** `equivalentSeat()` could only answer for whatever grid happened to be rendered, so
+the list could not have called it even if someone had wanted to — which is very likely why the fake
+table was written in the first place. Making the rule pure removed the reason the duplicate existed.
