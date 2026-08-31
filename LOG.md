@@ -2596,3 +2596,42 @@ walk **every instance** and compare its fill type against its main component's. 
 `page.query('*')`, filter to instances whose fills carry an `IMAGE` where the main component's do
 not. Same shape as the older rule about the state matrix not seeing a dead handler: **verifying the
 source does not verify the copies.**
+
+CHANGE · 2026-08-30 · (no skill) · Source: user
+**Booking the return later was broken end to end.** Skip the return, book the onward, then come
+back to the ticket and tap **Book a return**: the review screen showed only the onward leg, the
+Free Cancellation add-on was offered on a leg already paid for, the confirmation said *one way*, and
+the ticket you landed on still said **No return booked** with the same button on it.
+
+One cause for all four. `state === 'noreturn'` is the flag that hides every return-leg element on
+review, pay, confirmation, the ticket and My Bookings. The ticket's button ran `go('s-window')` —
+it **navigated without clearing the flag**, so the entire return flow ran with the return hidden.
+
+The second half is a case the prototype never had: the onward leg is already booked and paid. So
+the fix is a `retOnly` flag, set when the return is added from the ticket, that also:
+
+- drops the onward fare and its Free Cancellation from the total — review and Pay now bill the
+  return alone, and the onward line reads **Paid** instead of ₹1,599
+- hides the Free Cancellation block entirely, because the only leg it applies to is already paid
+- titles the confirmation **Return booked**, since that is what happened
+- clears on `afterOutbound()`, so an ordinary two-leg booking is untouched
+
+Backing out — **Skip**, or *Continue without a return* after a lost seat — now returns to the
+ticket with the onward booking exactly as it was, instead of dropping into a review of a trip that
+is already paid for.
+
+Verified all four checks in §10: 208 state × screen combinations with no errors and exactly one
+screen visible, money agreeing across `rv-tot` / `rv-bb` / `pay-tot` / `pay-title` in every state, a
+real `.click()` walk of the whole add-a-return journey, and Back from every screen on it. Plus the
+ordinary first booking with Free Cancellation ticked still totals ₹2,789.
+
+LEARNED · 2026-08-30 · (no skill)
+**A flag that means "this screen is missing something" will follow the user into a flow whose whole
+purpose is to stop it being missing.** `noreturn` was written for one job — draw the one-way state —
+and it did that correctly on all five screens. Nothing was wrong with it. What was missing is that
+the only route *out* of the state did not clear it.
+
+The check that generalises: **for every flag that hides content, find the control whose job is to
+undo it, and assert the flag is off after that control runs.** A click-through catches this the
+moment it asserts on content rather than only on which screen it landed. Mine asserted screen ids,
+so it walked the broken journey happily.

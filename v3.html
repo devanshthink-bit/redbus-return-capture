@@ -632,7 +632,7 @@ body.testing .dev{display:none!important}
       </div>
 
       <!-- free cancellation, per leg -->
-      <div class="leg">
+      <div class="leg" id="rv-fcblock">
         <div class="legtag">Free Cancellation</div>
         <label class="addon"><input type="checkbox" id="fc-on" autocomplete="off" onchange="recalc()"><span><b>Onward</b><br><span class="cap">100% refund up to 12 hours before departure</span></span><span class="addonp">&#8377;160</span></label>
         <div class="addon off" data-ret><span><b>Return</b><br><span class="cap">Not available on this bus</span></span><span class="addonp">&mdash;</span></div>
@@ -640,7 +640,7 @@ body.testing .dev{display:none!important}
 
       <!-- total -->
       <div class="leg">
-        <div class="fare"><span>Onward</span><span>&#8377;1,599</span></div>
+        <div class="fare"><span>Onward</span><span id="rv-f1">&#8377;1,599</span></div>
         <div class="fare" data-ret><span>Return</span><span id="rv-f2">&#8377;999</span></div>
         <div class="fare" id="rv-fc" hidden><span>Free Cancellation &middot; onward</span><span id="rv-fcv">&#8377;160</span></div>
         <div class="fare tot"><span>Total</span><span id="rv-tot">&#8377;2,598</span></div>
@@ -679,7 +679,7 @@ body.testing .dev{display:none!important}
         <h2>No return booked</h2>
         <p>You booked this trip one way.</p>
         <p class="long">You can book a return any time.</p>
-        <div class="acts"><button class="btn pri" style="width:100%" onclick="go('s-window')">Book a return</button></div>
+        <div class="acts"><button class="btn pri" style="width:100%" onclick="bookReturnLater()">Book a return</button></div>
       </div>
 
       <button class="rowact" id="mv-act" onclick="openWithin()">
@@ -868,7 +868,7 @@ body.testing .dev{display:none!important}
       </div>
       <div class="leg" id="pay-book">
         <div class="legtag">Paying for</div>
-        <div class="fare"><span>Onward &middot; Thu, 10 Sep</span><span id="pay-out">&#8377;1,599</span></div>
+        <div class="fare" id="pay-outrow"><span>Onward &middot; Thu, 10 Sep</span><span id="pay-out">&#8377;1,599</span></div>
         <div class="fare" data-ret><span id="pay-retlabel">Return &middot; Thu, 10 Sep</span><span id="pay-ret">&#8377;999</span></div>
         <div class="fare" id="pay-fc" hidden><span>Free Cancellation &middot; onward</span><span id="pay-fcv">&#8377;160</span></div>
         <div class="fare tot"><span>Total</span><span id="pay-tot">&#8377;2,598</span></div>
@@ -895,7 +895,7 @@ body.testing .dev{display:none!important}
   <section class="screen" id="s-done2">
     <div class="nav">
       <div style="width:44px"></div>
-      <div class="navtxt"><h1>Booking confirmed</h1><p id="bc-sub">Delhi &harr; Nainital &middot; 1 passenger</p></div>
+      <div class="navtxt"><h1 id="bc-title">Booking confirmed</h1><p id="bc-sub">Delhi &harr; Nainital &middot; 1 passenger</p></div>
       <span style="width:44px"></span>
     </div>
     <div class="wrap">
@@ -1643,20 +1643,43 @@ function abortMove(){
   payMode='booking'; paintPay(); recalc();   // walking away from a part-paid change resets it
   openWithin();
 }
-function dropReturn(){ setState('noreturn'); }
+// Adding a return later, from the ticket. The onward leg is already booked and paid, so the
+// flow that follows is the ordinary return flow with two differences: the "no return" flag has
+// to come off before it starts, and the onward leg must not be charged a second time.
+// Leaving the flag on left the return hidden on review, pay, confirmation and the ticket itself.
+let retOnly=false;
+function bookReturnLater(){
+  retOnly=true;
+  const fc=document.getElementById('fc-on'); if(fc) fc.checked=false;   // already paid, or declined, at booking
+  setState('default');
+  go('s-window');
+}
+// Backing out of adding a return leaves the onward booking exactly as it was.
+function abandonReturn(){ retOnly=false; setState('noreturn'); go('s-ticket'); }
+function dropReturn(){ if(retOnly) return abandonReturn(); setState('noreturn'); }
 // Idea 9 — the guard. If no operator on this route allows a date change, the promise
 // cannot be kept, so the return step never appears and today's flow runs unchanged.
 const ROUTE_HAS_MOVABLE = () => state!=='noguard';
 function afterOutbound(){
+  retOnly=false;                       // a fresh booking pays for both legs
+  const t=document.getElementById('bc-title'); if(t) t.textContent='Booking confirmed';
   if(ROUTE_HAS_MOVABLE()) return go('s-window');
   setState('noreturn'); go('s-review');
 }
-function skipReturn(){ setState('noreturn'); go('s-review'); }   // Skip leaves the return out and goes straight to review
+function skipReturn(){
+  if(retOnly) return abandonReturn();
+  setState('noreturn'); go('s-review');
+}   // Skip leaves the return out and goes straight to review
 function payNow(){
   const b=document.getElementById('b-pay2');
   b.disabled=true; b.innerHTML='<span class="spin"></span> Paying';
   setTimeout(()=>{ b.innerHTML='Pay now'; b.disabled=false;
-    if(payMode==='change') finishMove(); else go('s-done2'); },900);
+    if(payMode==='change') return finishMove();
+    if(retOnly){                                  // the trip is whole again from here on
+      document.getElementById('bc-title').textContent='Return booked';
+      retOnly=false; setState(state);
+    }
+    go('s-done2'); },900);
 }
 let state='default';
 const RUP = n => '₹'+n.toLocaleString('en-IN');
@@ -1724,9 +1747,9 @@ function paintReturn(){
 function recalc(){
   const E=id=>document.getElementById(id);
   const mult = PAX();
-  const out  = 1599*mult;
+  const out  = retOnly ? 0 : 1599*mult;                             // adding a return: the onward is already paid
   const ret  = (state==='noreturn' ? 0 : (FARE[heldDay]||0))*mult;      // a dropped return contributes nothing
-  const fc   = (E('fc-on') && E('fc-on').checked) ? 160*mult : 0;   // onward only — the operator doesn't offer it on the return
+  const fc   = (!retOnly && E('fc-on') && E('fc-on').checked) ? 160*mult : 0;   // onward only — the operator doesn't offer it on the return
   const tot  = out + ret + fc;
 
   if(E('rv-fc')) E('rv-fc').hidden = !fc;
@@ -1736,8 +1759,7 @@ function recalc(){
   if(E('rv-f2')) E('rv-f2').textContent = RUP(ret);
   if(E('pay-ret')) E('pay-ret').textContent = RUP(ret);
   if(E('pay-out')) E('pay-out').textContent = RUP(out);
-  const first = document.querySelector('#s-review .fare span:last-child');
-  if(first) first.textContent = RUP(out);
+  if(E('rv-f1')) E('rv-f1').textContent = retOnly ? 'Paid' : RUP(out);
   const payIds = payMode==='change' ? ['rv-tot','rv-bb'] : ['rv-tot','rv-bb','pay-tot','pay-bb'];
   payIds.forEach(id=>{ if(E(id)) E(id).textContent = RUP(tot); });
   if(E('pay-title') && payMode!=='change') E('pay-title').textContent = 'Pay ' + RUP(tot);
@@ -1779,6 +1801,10 @@ function setState(s){
   if(E('bc-terms')) E('bc-terms').hidden = dropped;
   if(E('bc-sub'))   E('bc-sub').textContent = dropped ? 'Delhi → Nainital · one way · 1 passenger' : 'Delhi ↔ Nainital · 1 passenger';
   document.querySelectorAll('#s-pay [data-ret]').forEach(el=>el.hidden = dropped);
+  // adding a return to a booked trip: the onward is paid, so it is not billed and its
+  // Free Cancellation is not on offer a second time
+  if(E('rv-fcblock')) E('rv-fcblock').hidden = retOnly;
+  if(E('pay-outrow')) E('pay-outrow').hidden = retOnly;
   if(E('tk-noret')) E('tk-noret').hidden = !dropped;
   if(E('mb-ret'))   E('mb-ret').hidden   = dropped;
   if(E('mb-noret')) E('mb-noret').hidden = !dropped;
