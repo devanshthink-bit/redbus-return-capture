@@ -358,6 +358,14 @@ Say these before anyone finds them. Every one is deliberate.
 1. ~~**Is a date change same-operator only?**~~ **CLOSED 2026-09-02** — confirmed same operator *and*
    same route, from the live flow on a real booking. See §4. Confirmed exactly the way this list said
    to: by making a real booking and opening the reschedule flow.
+1b. **Which price does the fare difference use — the one shown when you booked, or the live price of
+   the new day at the moment you change?** redBus's terms say only *"you will be required to pay the
+   fare difference (if any)"* and *"if the fare of the rescheduled ticket is lower than the current
+   fare, the fare difference shall not be refunded"*. *Current fare* is ambiguous and neither line
+   prices the **new** day. **Working assumption: the live price** — redBus is an aggregator with no
+   inventory and no persistent holds, so it cannot honour a price captured weeks earlier. Inference,
+   not evidence. Settle it the way §9 #1 was settled: book, note the price for a future date, wait for
+   that date to move, then open the change flow and see which number it uses.
 1a. **Does a FlexiTicket ticket actually end the flow with a zero fee?** The screen says "Free date
    change" at the top and "Date change fee will be applicable" in the third bullet. See §4a.
 2. **What is Free Cancellation actually priced at,** and does it scale with fare? Not published.

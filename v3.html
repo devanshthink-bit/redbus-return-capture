@@ -1253,7 +1253,11 @@ function paintWindow(){
 
   const R=document.getElementById('win-rules');
   if(!sel.length){
-    R.innerHTML = '<dt>Prices can go up</dt><dd>Book now to keep this price and a seat.</dd>';
+    // "Keep this price" was true of the ticket and false of the flexibility. A date change is
+    // repriced at the new day's live fare -- redBus holds no price it captured weeks ago -- and this
+    // construct exists to be changed, so the lock this line implied is the one thing it cannot give.
+    R.innerHTML = '<dt>Prices can go up</dt>'
+      + '<dd>Book now and this day stays at this price. Change the day later and you pay that day\u2019s price then.</dd>';
   } else if(sel.length===1){
     R.innerHTML = '<dt>We\u2019ll book '+label(sel[0])+' \u00B7 '+RUPEE(FARE[sel[0]])+'</dt>'
       + '<dd>You can change the date once after booking, to any date. Pay any price difference.</dd>'

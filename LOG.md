@@ -3109,3 +3109,31 @@ The tell was visible on screen for anyone reading it — the pill said *your onw
 the return. **When a label sounds wrong for the screen it is on, suspect the calculation, not the
 copy.** This is the second time today: the seat pill and now this one both had a wrong number behind
 a wrong word.
+
+CHANGE · 2026-09-02 · (no skill) · Source: user
+**"If the change uses the live price, isn't 'Book now to keep this price and a seat' misleading? It
+signals we are holding the price."** Yes. It was true of the ticket and false of the flexibility.
+
+Booking does lock the fare **for the day you booked**. But a date change is repriced at the new day's
+live fare — redBus holds no price it captured weeks earlier — and this construct exists to be
+changed. So the lock the line implied is the one thing it cannot give, on the screen that sells the
+changing.
+
+Now: *"Book now and this day stays at this price. Change the day later and you pay that day's price
+then."* Both facts, neither implying the other. Idea 8's job — the cost of waiting — survives intact;
+it was never the part that was wrong.
+
+Recorded the pricing basis in `TERMS.md` §9 as open item 1b, with the working assumption (live price)
+marked as inference rather than evidence, and the same one-booking test that settled the
+same-operator rule.
+
+LEARNED · 2026-09-02 · (no skill)
+**Copy written for one screen keeps its promise when the product around it changes.** *"Keep this
+price"* was written on 3 Aug for Idea 8, where the only comparison was book-now versus book-later.
+It was true then. Everything built since — the window, the day list, the change flow — turned the
+ticket into something the traveller is expected to move, and a moved ticket is repriced. The line
+never changed, so it quietly became a promise the product breaks.
+
+**When a new mechanism lands, re-read the copy that was true before it.** Nothing flags this: the
+words still parse, the screen still renders, and the contradiction only exists across two screens
+built a month apart.
