@@ -537,6 +537,14 @@ The terms card is the §8 rules list: no fee to change, any day you picked, **yo
 that** in warning colour, change up to 8 hours before. Read the bold lines alone and every rule is
 there.
 
+**On a day with no date change the card is a different card, not the same one with a rule crossed
+out.** `paintChangeRow()` rebuilds it: *This date cannot be changed · No bus on Mon, 14 Sep offers a
+date change*, then the way out — pick a day without a grey dot, before payment. The confirmation
+screen's card gets the same head and a different second rule, because once it is booked there is no
+day left to pick: *Your ticket has no Change day*. Both cards answer to the same `stuck` flag as the
+badge above them, which is the point — they used to promise the fee, the window and the 8-hour
+cut-off for a change the ticket could not have, directly under a grey badge saying so.
+
 Free Cancellation is offered on the onward leg at ₹160 and shown as unavailable on the return, with
 the reason on the row — **the operator does not offer it on that bus** (decision of 3 Aug). The row is
 shown rather than hidden, because hiding it would leave the traveller assuming they have cover they

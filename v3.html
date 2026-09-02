@@ -615,7 +615,7 @@ body.testing .dev{display:none!important}
       </div>
 
       <!-- the terms. plain ink, no fill, no badge, nothing to tap -->
-      <div class="terms" data-ret>
+      <div class="terms" data-ret id="rv-terms">
         <h3>Changing your return</h3>
         <dl class="rules">
           <dt>No fee to change it</dt><dd>Pay only if the new bus costs more</dd>
@@ -1251,11 +1251,13 @@ function renderPicked(){
   if(!heldDay){
     lead.innerHTML = '<b>Pick your return day.</b>'
       + '<span class="leadsub">Switching is free until you pay.</span>';
+  } else if(!MOVABLE(heldDay)){
+    // Outranks every other thing the lead could say. It used to be checked only on the single-day
+    // branch, so picking a non-movable day inside a range said nothing at all.
+    lead.innerHTML = (days.length===1 ? 'Your return on <b>' : 'We will book <b>')+label(heldDay)+'</b>.'
+      + '<span class="leadsub">You cannot change this date later.</span>';
   } else if(days.length===1){
-    lead.innerHTML = MOVABLE(heldDay)
-      ? 'Your return on <b>'+label(heldDay)+'</b>.'
-      : 'Your return on <b>'+label(heldDay)+'</b>.'
-        + '<span class="leadsub">You cannot change this date later.</span>';
+    lead.innerHTML = 'Your return on <b>'+label(heldDay)+'</b>.';
   } else if(heldDay===last){
     lead.innerHTML = 'We will book <b>'+label(last)+'</b>, your last day.'
       + '<span class="leadsub">You never need to change it.</span>';
@@ -1324,6 +1326,44 @@ function paintChangeRow(){
   });
   // the cost of using the badge belongs beside it, not 700px further down
   document.querySelectorAll('[data-pillnote]').forEach(function(p){ p.hidden = !!stuck || dropped; });
+
+  // The terms cards make the same promise the badge does, so they answer to the same fact. On a day
+  // with no date change they used to keep listing the fee, the window and the 8-hour cut-off for a
+  // change this ticket cannot have -- three rules contradicting the grey pill directly above them,
+  // on the last screen before the money leaves. Rebuilt rather than patched, because the movable
+  // and non-movable cards are different rules, not the same rules with one crossed out.
+  const day = heldDay ? label(heldDay) : 'that day';
+  const cards = [
+    ['rv-terms', 'Changing your return',
+      '<dt>No fee to change it</dt><dd>Pay only if the new bus costs more</dd>'
+      + '<dt>Any day you picked</dt><dd id="rv-window">'
+        + ((E('rv-window') && E('rv-window').textContent) || 'Any other day, earlier or later') + '</dd>'
+      + '<dt class="crit">You cannot cancel after that</dt><dd>No refund on the return. Your onward trip is not affected</dd>'
+      + '<dt>Change it up to 8 hours before</dt><dd>After that the date is fixed</dd>'],
+    ['bc-terms', 'Changing your return day',
+      '<dt>Open your ticket</dt><dd>Tap <b>Change day</b> and pick another date</dd>'
+      + '<dt>No fee to change it</dt><dd>Pay only if the new bus costs more</dd>'
+      + '<dt id="bc-window">'
+        + ((E('bc-window') && E('bc-window').textContent) || 'Any day you picked') + '</dt><dd>Any day in that range, earlier or later</dd>'
+      + '<dt class="crit">You cannot cancel after that</dt><dd>No refund on the return</dd>']
+  ];
+  // The way out differs by screen. Before paying they can still pick another day; once it is booked
+  // they cannot, so telling them to would be the confirmation screen offering a door that is shut.
+  const stuckHead = '<dt class="crit">This date cannot be changed</dt>'
+    + '<dd>No bus on ' + day + ' offers a date change.</dd>';
+  const stuckRules = {
+    'rv-terms': stuckHead
+      + '<dt>Pick a day without a grey dot to keep your change</dt>'
+      + '<dd>Every other day in your window can be moved once.</dd>',
+    'bc-terms': stuckHead
+      + '<dt>Your ticket has no Change day</dt>'
+      + '<dd>The date is fixed. Nothing else about the trip is affected.</dd>'
+  };
+  cards.forEach(function(c){
+    const el = E(c[0]); if(!el) return;
+    el.querySelector('h3').textContent = stuck ? 'Your return day' : c[1];
+    el.querySelector('.rules').innerHTML = stuck ? stuckRules[c[0]] : c[2];
+  });
 }
 
 // The booked day drives the ticket row, the move badge, the money and every date on screen.

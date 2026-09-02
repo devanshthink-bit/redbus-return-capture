@@ -2754,3 +2754,60 @@ The general form: **when a value stops being decorative, check whether the scree
 Anything that varies row to row is making a claim, and a claim with no reason beside it is the next
 bug report. The counter-test is the one that keeps this from becoming "explain everything": ask
 whether the value varies at all. The points do not, so they say nothing and belong elsewhere.
+
+CRITIQUE · 2026-08-30 · (no skill) · Source: user
+**"If the user picks a day where the date change is not available, can we show a prompt or popup —
+it is irreversible and can cost them money if they book without seeing the pill."** The instinct was
+right and it found something, but not a missing dialog. Walking the flow with Mon 14 held — the day
+in their screenshot, which carries **No date change** — turned up two defects.
+
+**1 · Trip review contradicted itself, on the last screen before payment.** The badge on the return
+leg correctly read *No date change on this day*. The terms card directly beneath it still listed
+*No fee to change it*, *Any day you picked · Fri 11 – Thu 17*, and *Change it up to 8 hours before* —
+three rules describing a change this ticket cannot have. `paintChangeRow()` already computed `stuck`
+and already flipped the badge; the terms cards were never wired to it. Same on the confirmation
+screen.
+
+**2 · The lead line said nothing.** `renderPicked()` only checked `MOVABLE` on the single-day branch,
+so picking a non-movable day *inside a range* — the ordinary case — fell through to a plain
+*"We will book Mon, 14 Sep."*
+
+Both fixed. The non-movable case now outranks every other thing the lead can say, and both terms
+cards are rebuilt rather than patched, because the two states are different rules, not the same rules
+with one crossed out. The way out differs by screen: before payment, *pick a day without a grey dot*;
+after it, *your ticket has no Change day* — telling a booked traveller to pick another day would be
+the confirmation screen offering a door that is shut.
+
+DECISION · 2026-08-30 · (no skill) · Source: user
+**No confirmation dialog.** Three reasons, in order of weight:
+
+1. **BRIEF says so, and it is the guardrail.** Constraint 4: *"Nothing blocking, nothing
+   modal-and-mandatory, no required step"*, and the cost written down when Shape 1 was chosen: *"the
+   step must be genuinely skippable... No blocking, no modal that must be dismissed."* The return
+   step sits **inside** checkout — the outbound is not paid for until after it — so a blocking modal
+   here can breach the 95% outbound-completion guardrail. That is the one number this project is not
+   allowed to move.
+2. **Picking a day is not the irreversible act.** The screen's own lead says *switching is free until
+   you pay*. A confirm on tapping a day would interrupt a reversible action; the money leaves at
+   **Pay**, and that is where the fact now sits — a grey badge and a critical rule, both in view above
+   the button.
+3. **The pattern is already rejected in this project, on evidence.** LOG 3 Aug rejected a toast for
+   *"cannot be cancelled after this"*: a dismissible message for an irreversible consequence is the
+   pattern behind the App Store review in RESEARCH.md.
+
+The non-movable day is now stated seven times and never contradicted: the calendar dot and legend, a
+range booking the last **movable** day rather than the last day, the grey row pill, the lead line, the
+picked-screen note, the review badge and terms, and a ticket with no Change day row at all.
+
+LEARNED · 2026-08-30 · (no skill)
+**"Should we add a warning?" is worth answering as "is the warning we have being contradicted?"**
+The user asked for a popup because they did not trust the pill to be seen. The real problem was that
+a traveller who read every word carefully would still be told, on the payment screen, that the date
+could be changed. Adding a dialog on top of that would have buried a contradiction under an
+interruption — and the guardrail would have paid for it.
+
+The structural half: `paintChangeRow()` owned `stuck` and flipped the badge, and the terms cards were
+left as static markup that happened to be right in the common case. **A fact with one writer and two
+readers, where only one reader was ever wired up, looks correct until you visit the uncommon state.**
+The state matrix cannot catch it — `MOVABLE` is a property of the held day, not one of the thirteen
+dev states.
