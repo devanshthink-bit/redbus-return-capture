@@ -734,11 +734,11 @@ body.testing .dev{display:none!important}
       </div>
 
       <button class="rowact" id="mv-act" onclick="openWithin()">
-        <span><b>Change day</b><br><span class="cap" id="mv-sub">Wed, 9 Sep to Sat, 12 Sep. Pay only the price difference.</span><span class="bal" id="mv-bal">1 change left</span></span>
+        <span><b>Change your return day</b><br><span class="cap" id="mv-sub">Wed, 9 Sep to Sat, 12 Sep. Pay only the price difference.</span><span class="bal" id="mv-bal">1 change left</span></span>
         <span class="chev">&#8250;</span>
       </button>
       <div class="rowact off" id="mv-off" hidden>
-        <span><b>Change day</b><br><span class="cap" id="mv-why">This ticket can&rsquo;t be changed.</span></span>
+        <span><b>Change your return day</b><br><span class="cap" id="mv-why">This ticket can&rsquo;t be changed.</span></span>
       </div>
     </div>
   </section>
@@ -773,11 +773,11 @@ body.testing .dev{display:none!important}
       </button>
 
       <button class="rowact" id="mb-act" onclick="openWithin()">
-        <span><b>Change day</b><br><span class="cap" id="mb-sub">Wed, 9 Sep to Sat, 12 Sep. Pay only the price difference.</span><span class="bal" id="mb-bal">1 change left</span></span>
+        <span><b>Change your return day</b><br><span class="cap" id="mb-sub">Wed, 9 Sep to Sat, 12 Sep. Pay only the price difference.</span><span class="bal" id="mb-bal">1 change left</span></span>
         <span class="chev">&#8250;</span>
       </button>
       <div class="rowact off" id="mb-off" hidden>
-        <span><b>Change day</b><br><span class="cap" id="mb-why">This ticket can&rsquo;t be changed.</span></span>
+        <span><b>Change your return day</b><br><span class="cap" id="mb-why">This ticket can&rsquo;t be changed.</span></span>
       </div>
     </div>
   </section>
@@ -980,7 +980,7 @@ body.testing .dev{display:none!important}
       <div class="terms" id="bc-terms">
         <h3>Changing your return day</h3>
         <dl class="rules">
-          <dt>Open your ticket</dt><dd>Tap <b>Change day</b> and pick another date</dd>
+          <dt>Open your ticket</dt><dd>Tap <b>Change your return day</b> and pick another date</dd>
           <dt>No fee to change it</dt><dd>Pay only if the new bus costs more</dd>
           <dt id="bc-window">Change to any date</dt><dd>Earlier or later. Your week only picked the day we booked</dd>
           <dt class="crit">You cannot cancel after that</dt><dd>No refund on the return</dd>
@@ -1265,8 +1265,11 @@ function paintWindow(){
         cls.push('off'); dis=' disabled';
         inner+='<span class="f">Full</span>'; aria += ', full, no seats left';
       } else {
-        inner+='<span class="f">'+RUPEE(FARE[d])+'</span>';
-        aria+=', '+RUPEE(FARE[d]);
+        // Same rule as the day list: a day costs what its cheapest bus costs. Pricing it at the
+        // default bus put the two screens up to ₹230 apart on the same day, one tap from each other.
+        const many = busesOn(d).length>1;
+        inner+='<span class="f">'+(many?'<span class="from">from </span>':'')+RUPEE(minFareOn(d))+'</span>';
+        aria+=', '+(many?'from ':'')+RUPEE(minFareOn(d));
         if(!MOVABLE(d)){ cls.push('nomove'); inner+='<i class="nmdot" aria-hidden="true"></i>';
           aria+=', no bus that day can change its date'; }
         if(d===cheap){ cls.push('cheap'); aria+=', cheapest in your range'; }
@@ -1314,7 +1317,7 @@ function paintWindow(){
     R.innerHTML = '<dt>Prices can go up</dt>'
       + '<dd>Book now and this day stays at this price. Change the day later and you pay that day\u2019s price then.</dd>';
   } else if(sel.length===1){
-    R.innerHTML = '<dt>We\u2019ll book '+label(sel[0])+' \u00B7 '+RUPEE(FARE[sel[0]])+'</dt>'
+    R.innerHTML = '<dt>We\u2019ll book '+label(sel[0])+' \u00B7 '+(busesOn(sel[0]).length>1?'from ':'')+RUPEE(minFareOn(sel[0]))+'</dt>'
       + '<dd>'+(function(){
           const bs=allBusesOn(sel[0]), mv=bs.filter(function(i){return RET_BUSES[i].movable;}).length;
           if(mv===bs.length) return 'You can change the date once after booking, to any date. Pay any price difference.';
@@ -1328,14 +1331,14 @@ function paintWindow(){
   } else {
     const b=sel[1], c=cheapestIn(sel[0],sel[1]);
     R.innerHTML = (!hasSpread()
-      ? '<dt>We\u2019ll book '+label(b)+' \u00B7 '+RUPEE(FARE[b])+'</dt>'
+      ? '<dt>We\u2019ll book '+label(b)+' \u00B7 '+(busesOn(b).length>1?'from ':'')+RUPEE(minFareOn(b))+'</dt>'
       + '<dd>Your last day, so you never need to change it. Every day costs the same.</dd>'
       : c===b
       ? '<dt>Next, pick your day</dt>'
-      + '<dd>'+label(b)+' is your last day and also the cheapest, at '+RUPEE(FARE[b])
+      + '<dd>'+label(b)+' is your last day and also the cheapest, at '+RUPEE(minFareOn(b))
       + '. Earlier days cost more.</dd>'
       : '<dt>Next, pick your day</dt>'
-      + '<dd>Cheapest: '+label(c)+' '+RUPEE(FARE[c])+'. Your last day: '+label(b)+' '+RUPEE(FARE[b])+'.</dd>')
+      + '<dd>Cheapest: '+label(c)+' '+RUPEE(minFareOn(c))+'. Your last day: '+label(b)+' '+RUPEE(minFareOn(b))+'.</dd>')
       + '<dt>You can change the date once, to any date</dt>'
       + '<dd>Not just this week. Pay the difference if it costs more. No refund if it costs less.</dd>';
   }
@@ -1464,8 +1467,8 @@ function renderPicked(){
       + '<dt class="crit">No refund on a cheaper day</dt>'
       + '<dd>You only pay when the new day costs more.</dd>';
   } else if(spread){
-    const save = FARE[last]-FARE[cheap];
-    note.innerHTML = '<dt>Cheapest is '+label(cheap)+' \u00B7 '+RUPEE(FARE[cheap])+'</dt>'
+    const save = minFareOn(last)-minFareOn(cheap);
+    note.innerHTML = '<dt>Cheapest is '+label(cheap)+' \u00B7 '+RUPEE(minFareOn(cheap))+'</dt>'
       + '<dd>Pick it now and you save '+RUPEE(save)+'.</dd>'
       + '<dt class="crit">No refund on a cheaper day</dt>'
       + '<dd>You only pay when the new day costs more.</dd>'
@@ -1524,7 +1527,7 @@ function paintChangeRow(){
       + '<dt class="crit">You cannot cancel after that</dt><dd>No refund on the return. Your onward trip is not affected</dd>'
       + '<dt>Change it up to 8 hours before</dt><dd>After that the date is fixed</dd>'],
     ['bc-terms', 'Changing your return day',
-      '<dt>Open your ticket</dt><dd>Tap <b>Change day</b> and pick another date</dd>'
+      '<dt>Open your ticket</dt><dd>Tap <b>Change your return day</b> and pick another date</dd>'
       + '<dt>No fee to change it</dt><dd>Pay only if the new bus costs more</dd>'
       + '<dt id="bc-window">Change to any date</dt>'
         + '<dd>Earlier or later. Your week only picked the day we booked</dd>'
@@ -2119,9 +2122,9 @@ function paintReturn(){
   const rw=E('rv-window'); if(rw) rw.textContent = sel.length===2
     ? 'Earlier or later. Your week only picked the day we book.'
     : 'Earlier or later.';
-  const sub = (sel.length===2
-    ? label(sel[0])+' to '+label(sel[1])
-    : 'Any other day, earlier or later') + '. Pay only the price difference.';
+  // The window stopped capping the change, so naming it here promised less than the product gives:
+  // the calendar offers every day, most of them outside the window the traveller gave.
+  const sub = 'Any date, earlier or later. Pay only the price difference.';
   ['mv-sub','mb-sub'].forEach(function(id){ set(id, sub); });
   const ce=E('c-errb'); if(ce) ce.innerHTML='<b>Your '+d+' booking is safe.</b> Seat '+retSeat()+', '+f
     +'. Nothing was charged.';

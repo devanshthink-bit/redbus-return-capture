@@ -3754,3 +3754,45 @@ screen that follows.** One line, and it converts a missing option into a fact ab
 Smaller, and it will happen again: **copy that interpolates a name can collide with the words around
 it.** *Bus bus* only appears for two of three operators, so a single test would have missed it — the
 check is to render the line for every value the interpolation can take.
+
+CHANGE · 2026-09-02 · (no skill) · Source: user
+**Walked the whole construct as a traveller, from Home, and found six things.** Two were factual
+errors — the product stating a number and a range that were not true. Both fixed.
+
+**1 · The calendar and the day list priced the same day differently.** The calendar used the day's
+*default* bus, the day list its *floor*. Mon 14 read **₹1,030** on the calendar and **from ₹800** one
+tap later. **16 of 17 priced days disagreed, by up to ₹230.** The calendar's summary line —
+*"Cheapest: Mon, 14 Sep ₹1,030"* — was computed the same way, so it named a figure that appeared
+nowhere else on any screen.
+
+This is the day-list fix from last week, never carried one screen back. The calendar now uses
+`minFareOn()` for the cells, the *We'll book* line, the *Cheapest / Your last day* summary and the
+saving, and marks them *from* where the day runs more than one bus. Verified: zero disagreements
+across every priced day.
+
+**2 · The ticket promised less than the product gives.** The Change day row read *"Fri, 11 Sep to Thu,
+17 Sep"* — the window the traveller gave. Tapping it opens a calendar offering **15 days, 11 of them
+outside that range**. Left over from when the window capped the change; we removed the cap and never
+updated the row. It now reads *"Any date, earlier or later."*
+
+**And renamed while I was in there:** the ticket shows an Onward leg and a Return leg, then a single
+row called **Change day**, which changes the return and never said so. It is **Change your return
+day** now, on the ticket, on My Bookings, on both disabled twins and in the two places the
+confirmation refers to it by name.
+
+Verified after: 234 combinations, 13 states, money agreeing, no broken text, no dead buttons.
+
+LEARNED · 2026-09-02 · (no skill)
+**Walking the product as a user found things no check I own could see.** Both defects were *agreement*
+failures between screens the traveller sees seconds apart, and every assertion I run is scoped to one
+screen. The state matrix, the money check, the click-through and the text scan all passed on a build
+where the same day carried two prices ₹230 apart.
+
+**The missing check is the traveller's own: carry one value forward and compare it to itself.** I have
+written this down twice this week — for seats, then for times — and both times implemented it as a
+data-attribute painter, which only works for values that are *printed from one source*. A price that
+each screen *computes* needs the comparison done screen to screen, not writer to writer.
+
+Second, smaller and repeated: **removing a constraint leaves its description behind.** The window
+stopped capping changes days ago; the ticket kept advertising it. Same shape as the *this day* copy
+after movability moved to the bus. Grep the removed concept, not just the removed code.
