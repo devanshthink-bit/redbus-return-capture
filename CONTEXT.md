@@ -508,10 +508,11 @@ rendered a list of one — repeating the header, with *Booked* on a trip nobody 
 calendar now goes straight to Trip review, and carries the *No refund on a cheaper day* rule that used
 to live here.
 
-**Both CTAs in the return flow name the screen they open, never "Continue".** On the calendar: *Pick a
-day* while nothing is selected and the button is off, *Pick your day* for a range, *Choose your bus*
-for a single day that runs several, *Review trip* for one that runs one. The picked screen follows the
-same rule.
+**The calendar's button stays *Continue*.** Naming the next screen was tried and reverted: the button
+sits directly under a tap the traveller has just made, so *Pick your day* right after picking days
+reads as though the tap did not register. On the day list, where the button is not answering a tap, it
+does name the screen — *Choose your bus*, or *Review trip* on a day that runs one — and holds *Choose
+your bus* while disabled rather than switching to an instruction.
 
 **The button names the screen it opens** — *Choose your bus* on a day that runs several, *Review trip*
 on a day that runs one. It said *Review trip* on both from the moment the bus screen was added.

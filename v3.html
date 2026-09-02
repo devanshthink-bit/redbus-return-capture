@@ -1318,9 +1318,7 @@ function paintWindow(){
   }
   const cont=document.getElementById('b-cont');
   cont.disabled = (!sel.length || offline);
-  cont.textContent = !sel.length ? 'Pick a day'
-    : sel.length===2 ? 'Pick your day'
-    : busesOn(sel[0]).length>1 ? 'Choose your bus' : 'Review trip';
+  cont.textContent = 'Continue';
 }
 
 function loadWindow(){
@@ -1434,9 +1432,9 @@ function renderPicked(){
   document.getElementById('pk-bb').textContent = heldDay ? RUPEE(minFareOn(heldDay)) : '\u2014';
   const bpk=document.getElementById('b-pk');
   bpk.disabled = !heldDay;
-  // With no day picked there is no next screen to name, so the button names the blocker instead.
-  bpk.textContent = !heldDay ? 'Pick a day'
-    : busesOn(heldDay).length>1 ? 'Choose your bus' : 'Review trip';
+  // Disabled holds the label it will most often take, rather than switching to an instruction the
+  // traveller has already followed.
+  bpk.textContent = (!heldDay || busesOn(heldDay).length>1) ? 'Choose your bus' : 'Review trip';
   const sub = sel.length===2 ? label(sel[0])+' \u2013 '+label(sel[1]) : label(sel[0]);
   const ps=document.getElementById('pk-sub');
   if(ps) ps.textContent='Nainital \u2192 Delhi \u00B7 '+sub;

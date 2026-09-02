@@ -3544,3 +3544,29 @@ tell you anything.
 Three CTA fixes in a row now, each found by the user looking at a screen rather than by any check I
 run. **The state matrix walks screens and the click-through walks routes; neither reads a word.** The
 missing check is cheap and I should add it: for every button, name the screen it opens and compare.
+
+DECISION · 2026-09-02 · (no skill) · Source: user
+**Reverted the calendar CTA to *Continue*, an hour after naming its four destinations.** The user:
+*"pick a day is confusing since user has already picked a date or a window."*
+
+Right, and it is the opposite failure to the one I was fixing. The calendar's button sits directly
+under a tap they have just made. *Pick your day*, appearing the instant they finish picking days, reads
+as if the tap did not register. Naming the next screen is a good rule where the button is the *first*
+thing you do on the screen; on the calendar the button is the *last* thing, and there the traveller
+wants confirmation that they are done, not a new instruction.
+
+The day list keeps its named labels — there the button is not answering a tap — and its disabled state
+now holds **Choose your bus** rather than switching to *Pick a day*, for the same reason: an
+instruction the traveller has already followed reads as a rejection.
+
+Verified: Continue in all three calendar states, *Checking* on the spinner, and the day list reading
+Choose your bus / Review trip. 234 combinations, money agreeing.
+
+LEARNED · 2026-09-02 · (no skill)
+**Where a button sits in the sequence decides whether naming the next screen helps or insults.** I had
+generalised "name the destination" from the day-list fix and applied it one screen up without asking
+what the button was *for* there. On the calendar it acknowledges input; on the day list it starts the
+next step. Same rule, opposite result.
+
+That is three times today a correct fix has been generalised one step too far — the same-operator
+rule, the window cap, and now this. **A rule learned on one screen is a hypothesis on the next.**
