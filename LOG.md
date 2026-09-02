@@ -3519,3 +3519,28 @@ is inserted; the label I then wrote had a wrong third state from the first line.
 
 **When a label depends on state, enumerate the states before writing the expression.** Here there were
 three — none, one, several — and the empty one is the state a disabled button is always in.
+
+CHANGE · 2026-09-02 · (no skill) · Source: user
+**"For this CTA, can we show something better than Continue?"** Yes — the calendar's button has four
+destinations and *Continue* named none of them:
+
+- nothing selected, button off → **Pick a day**
+- a range → **Pick your day** (the day list, and the lead line above already says *Next, pick your day*)
+- one day that runs several buses → **Choose your bus**
+- one day that runs one → **Review trip**
+
+The spinner label had to be handled too: it swaps to *Checking* and used to restore a hardcoded
+*Continue*. It now repaints, so it comes back as whichever of the four is current.
+
+Verified all four, plus the spinner restoring the right one and the single-day path landing on the bus
+screen it named. 234 combinations, money agreeing.
+
+LEARNED · 2026-09-02 · (no skill)
+**"Continue" is the label you write when you have not decided what the next screen is** — and it stays
+correct forever, because it never claimed anything. Both CTAs in this flow said it, or defaulted to it,
+through every structural change today. That is not a virtue: a button that cannot be wrong also cannot
+tell you anything.
+
+Three CTA fixes in a row now, each found by the user looking at a screen rather than by any check I
+run. **The state matrix walks screens and the click-through walks routes; neither reads a word.** The
+missing check is cheap and I should add it: for every button, name the screen it opens and compare.

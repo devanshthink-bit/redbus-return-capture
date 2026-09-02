@@ -1316,7 +1316,11 @@ function paintWindow(){
       + '<dt>You can change the date once, to any date</dt>'
       + '<dd>Not just this week. Pay the difference if it costs more. No refund if it costs less.</dd>';
   }
-  document.getElementById('b-cont').disabled = (!sel.length || offline);
+  const cont=document.getElementById('b-cont');
+  cont.disabled = (!sel.length || offline);
+  cont.textContent = !sel.length ? 'Pick a day'
+    : sel.length===2 ? 'Pick your day'
+    : busesOn(sel[0]).length>1 ? 'Choose your bus' : 'Review trip';
 }
 
 function loadWindow(){
@@ -1324,7 +1328,7 @@ function loadWindow(){
   const b=document.getElementById('b-cont');
   b.disabled=true; b.innerHTML='<span class="spin"></span> Checking';
   setTimeout(()=>{
-    b.innerHTML='Continue'; b.disabled=false;
+    paintWindow();                    // restores the label the button had before the spinner
     setHeldDay(hasSpread() ? 0 : bookedDay());   // a real money trade-off is the traveller's to make
     // one day is not a choice of DAY, but that day may run several buses -- and then the bus is the
     // only decision left, so it gets its own screen rather than a default the traveller never sees

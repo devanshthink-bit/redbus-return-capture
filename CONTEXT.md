@@ -508,6 +508,11 @@ rendered a list of one — repeating the header, with *Booked* on a trip nobody 
 calendar now goes straight to Trip review, and carries the *No refund on a cheaper day* rule that used
 to live here.
 
+**Both CTAs in the return flow name the screen they open, never "Continue".** On the calendar: *Pick a
+day* while nothing is selected and the button is off, *Pick your day* for a range, *Choose your bus*
+for a single day that runs several, *Review trip* for one that runs one. The picked screen follows the
+same rule.
+
 **The button names the screen it opens** — *Choose your bus* on a day that runs several, *Review trip*
 on a day that runs one. It said *Review trip* on both from the moment the bus screen was added.
 
