@@ -4089,3 +4089,36 @@ the root says the true thing.
 off the bottom of a laptop, so its cap was "as big as fits". On a tall screen that is far too big —
 a mock has a size that reads correctly, and it is smaller than the space available.
 
+CHANGE · 2026-09-03 · (no skill) · Source: user
+**"on changing versions this section is moving up down. also tabs are getting cut from right."**
+Three separate causes, all in the panel.
+
+**The rows were clipped.** `.panel` has `overflow-y:auto`, which makes it a scrollport — and a
+scrollport clips on *both* axes whatever the other value says. The screen rows hang 10px either side
+on a negative margin, so both ends were being cut. Ten pixels of padding on the panel puts them
+inside the padding box, which is where the scrollport's edge actually is.
+
+**The whole panel slid.** It was centred against the phone, so every version that changed its height
+moved it. Pinned to the top now; the phone stays centred against whichever column is taller.
+
+**The swatches still moved by 4px.** The version note is two lines for v1 and v3, three for v2 — the
+`min-height` was reserving two. But even with that fixed there was a 4px shift, and the cause was the
+grid: the screen list spans both rows, and an item spanning `auto` rows has its extra height shared
+back into row 1. Making the second row `1fr` stops that — a spanning item does not size a track that
+sits next to a flexible one.
+
+Verified across all four version transitions: the panel top and the swatch block both hold at the
+same pixel, no row is clipped at either end, no horizontal overflow. Single column below 1240 and the
+375px breakpoint both unchanged; v1, v2 and prototype.html byte-identical.
+
+LEARNED · 2026-09-03 · (no skill)
+**`overflow-y:auto` is not one-axis.** Setting it on a box silently makes the other axis clip too, so
+any negative margin, focus ring or shadow that reaches outside gets cut with no warning. If content is
+meant to hang outside, the box needs padding to hang into.
+
+**Centring something makes its position a function of its height.** Anything whose content changes
+should be pinned on the edge it is measured from, or it will move every time the content does.
+
+**A grid item that spans rows sizes them.** Its excess height is distributed back into the tracks it
+crosses, which moves everything else in those tracks. One `1fr` takes it out of the calculation.
+

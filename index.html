@@ -45,8 +45,11 @@ body{
  padding:28px 40px;overflow-x:auto;overflow-y:hidden;position:relative}
 /* The two columns sit at the ends of a capped, full-width row rather than huddling in the
    middle of the window. gap is the floor; space-between opens them out beyond it. */
-.layout{width:100%;max-width:1280px;display:flex;align-items:center;
+.layout{width:100%;max-width:1280px;display:flex;align-items:flex-start;
  justify-content:space-between;gap:clamp(40px,5vw,120px)}
+/* The panel is pinned to the top: centred, it slid up and down as the version changed its
+   height. The phone stays centred against whichever of the two is taller. */
+.devicewrap{align-self:center}
 body.testing .layout{justify-content:center}
 .stage::-webkit-scrollbar{height:6px}
 .stage::-webkit-scrollbar-thumb{background:#DEDEE6;border-radius:3px}
@@ -58,7 +61,8 @@ body.testing .layout{justify-content:center}
 
 /* ---------- left panel: sits straight on the gradient, no card ---------- */
 .panel{flex:0 0 auto;width:clamp(340px,25vw,400px);max-height:calc(100vh - 92px);
- overflow-y:auto;scrollbar-width:none;padding-right:6px}
+ overflow-y:auto;scrollbar-width:none;
+ padding:0 10px}   /* the rails hang 10px either side; overflow-y:auto would clip them without this */
 /* Wide enough for two: the writing goes left, the screen list goes right. It stops the
    composition huddling in the middle of a big window, and the whole panel fits without
    scrolling. Below this it is one column again and scrolls.
@@ -67,7 +71,11 @@ body.testing .layout{justify-content:center}
 .panel{display:grid;grid-template-columns:1fr;row-gap:26px}
 @media (min-width:1240px){
   .panel{grid-template-columns:340px 340px;column-gap:44px;row-gap:26px;
-   align-items:start;width:auto;padding-right:0}
+   align-items:start;width:auto;
+   /* the second row must be flexible: b spans both rows, and across an `auto` row its extra
+      height is shared out into row 1, which moved the swatches every time the version changed
+      the length of the screen list. A spanning item does not size a track next to an fr. */
+   grid-template-rows:auto 1fr}
   .pcol.a{grid-column:1;grid-row:1}
   .pcol.b{grid-column:2;grid-row:1 / span 2}
   .pcol.c{grid-column:1;grid-row:2}
@@ -94,7 +102,8 @@ body.testing .layout{justify-content:center}
 .vers button:focus-visible{outline:0;box-shadow:0 0 0 2px rgba(216,78,85,.45)}
 .vers button[aria-pressed="true"]{background:var(--s-red);color:#fff;
  box-shadow:0 1px 2px rgba(178,49,56,.28),0 4px 12px -4px rgba(178,49,56,.45)}
-.vnote{font-size:13px;line-height:1.5;color:var(--s-mute);margin-top:10px;min-height:39px}
+.vnote{font-size:13px;line-height:1.5;color:var(--s-mute);margin-top:10px;
+ min-height:59px}   /* three lines: the longest of the three notes. Stops the swatches jumping */
 .vnote b{color:var(--s-ink);font-weight:600}
 
 /* sampled tokens */
