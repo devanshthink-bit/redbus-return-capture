@@ -3722,3 +3722,35 @@ This is the third unreachable-case bug today: no bookable day was non-movable, n
 could offer a bus choice, and before that a filter that never fired. **The check they share: for every
 branch that depends on the data, count how many cases the data actually produces.** Zero is a bug even
 when the code is correct.
+
+CHANGE · 2026-09-02 · (no skill) · Source: user
+**"When only one bus is available and we skip the choice screen, can we say so? Otherwise he is
+confused why he is sent straight to review and cannot pick another bus."** Right — skipping a screen
+is invisible, and an absent choice looks like a removed one.
+
+Two places now say it:
+
+- **Confirm**, in the change flow: *The only RS Yadav Smart Bus service that day.* It appears only
+  where that operator runs exactly one bus that day, and disappears the moment a list was offered.
+- **The booking day list**: a one-bus row reads *Laxmi Holidays Pvt Ltd · only bus that day* where a
+  multi-bus row reads *4 buses · tap to see them*.
+
+**One copy bug caught in testing:** the first wording was *"The only RS Yadav Smart Bus bus that day"*.
+Two of the three operator names end in *Bus*. It is *service* now.
+
+Verified across all three operators: the one-bus case names it, the multi-bus case does not claim it,
+and no screen in any state renders a doubled noun. 234 combinations, 13 states, money agreeing, no
+dead buttons.
+
+LEARNED · 2026-09-02 · (no skill)
+**Skipping a screen needs to leave a trace.** Every "skip it when there is only one" rule I added today
+— the day list for one day, the bus screen for one bus, the confirm shortcut — was right, and each one
+removed a screen without saying why it was gone. The traveller cannot tell a shortcut from a
+restriction; both look like *I was not asked*.
+
+**Whenever a screen is skipped because a choice is degenerate, say what made it degenerate on the
+screen that follows.** One line, and it converts a missing option into a fact about the day.
+
+Smaller, and it will happen again: **copy that interpolates a name can collide with the words around
+it.** *Bus bus* only appears for two of three operators, so a single test would have missed it — the
+check is to render the line for every value the interpolation can take.

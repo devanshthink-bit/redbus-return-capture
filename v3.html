@@ -860,7 +860,7 @@ body.testing .dev{display:none!important}
       <div class="swap">
         <div class="swapleg was"><div class="legtag">From</div><div class="swapd" id="c-from">Thu, 10 Sep &middot; 23:55</div><div class="cap" id="c-fromsub">Seat U5 &middot; &#8377;949</div></div>
         <div class="swaparrow" aria-hidden="true">&darr;</div>
-        <div class="swapleg"><div class="legtag">To</div><div class="swapd" id="c-to">Wed, 9 Sep &middot; 22:15</div><div class="cap" id="c-tosub">Seat U5 &middot; &#8377;1,199</div><button class="linkbtn" id="c-seatbtn" onclick="openSeatForMove()">Change seat</button></div>
+        <div class="swapleg"><div class="legtag">To</div><div class="swapd" id="c-to">Wed, 9 Sep &middot; 22:15</div><div class="cap" id="c-tosub">Seat U5 &middot; &#8377;1,199</div><div class="cap" id="c-only" hidden>The only bus that day.</div><button class="linkbtn" id="c-seatbtn" onclick="openSeatForMove()">Change seat</button></div>
       </div>
 
       <div class="leg">
@@ -1420,7 +1420,8 @@ function renderPicked(){
       + '<div class="row"><span class="time">'+label(d)+(many?'':' \u00B7 '+depOn(d))+'</span>'
       + '<span class="price">'+(many&&!open?'<span class="from">from </span>':'')+RUPEE(open?FARE[d]:low)+'</span></div>'
       + '<div class="subrow"><span class="sub">'
-      + (many ? busesOn(d).length+' buses'+(open?'':' \u00B7 tap to see them') : opOn(d)+' \u00B7 '+depOn(d))+'</span>'+right+'</div>'
+      + (many ? busesOn(d).length+' buses'+(open?'':' \u00B7 tap to see them')
+              : opOn(d)+' \u00B7 only bus that day')+'</span>'+right+'</div>'
       + (tags.length?'<div class="pillrow">'+tags.join('')+'</div>':'') + '</button>' + buses + '</div>';
   }).join('');
 
@@ -1919,6 +1920,10 @@ function confirmMove(date,time,fare,diff,seat){
   document.getElementById('c-to').textContent = date+' · '+time;
   const mine = retSeat(), sameSeat = movedSeat===mine;
   document.getElementById('c-tosub').textContent = 'Seat '+movedSeat+' · ₹'+fare.toLocaleString('en-IN');
+  const only=document.getElementById('c-only');
+  if(only){ only.hidden = !movedDay || busesOn(movedDay).length!==1;
+    // "service", not "bus" -- two of the three operator names already end in Bus
+    only.textContent = 'The only '+retOp()+' service that day.'; }
   const sr=document.getElementById('c-seatrule');
   sr.hidden = sameSeat;
   if(!sameSeat) sr.innerHTML = '<dt>Different seat</dt><dd>'

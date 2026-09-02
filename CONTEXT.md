@@ -678,6 +678,11 @@ shows. So the booking bus list carries a grey **No date change** tag, the defaul
 service, `MOVABLE(d)` asks whether *any* bus that day allows it, and `heldMovable()` asks about the
 one they are actually on.
 
+**A day with one bus says so.** The choice screen is skipped there, and skipping it silently read as
+the choice having been taken away. The confirm card carries *The only RS Yadav Smart Bus service that
+day*, and a one-bus row on the booking list reads *Laxmi Holidays Pvt Ltd · only bus that day* in place
+of the bus count. ("Service", not "bus" — two of the three operator names already end in *Bus*.)
+
 **In the change flow the calendar marks days the operator does not run as `None`**, disabled, and the
 note names the operator. Scope decides what is *offered*; `closestBusOn()` falls back to the full list
 when the scoped set is empty, because the fare and the times still have to resolve on those days.
