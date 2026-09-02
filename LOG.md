@@ -3693,3 +3693,32 @@ handler.** Cheap, total, and it found the one dead control in a build I had just
 Second: **an error state must be cleared by the action that resolves it.** *Pick another return*
 resolves a lost seat by definition — the seat is being replaced — so the flag had no business
 surviving the tap. Worth checking each error's escape hatch against the flag it is meant to clear.
+
+CHANGE · 2026-09-02 · (no skill) · Source: user
+**"After choosing the date there can be multiple buses of the same operator at different times, but we
+are not showing them."** The flow does show them. The data made it nearly impossible.
+
+Counted it: **Laxmi ran three services, RS Yadav one, International Tourist Centre one.** A date change
+stays on the booked operator, so a bus list can only appear where that operator runs two or more on the
+new day — which meant a traveller booked on RS Yadav or ITC could **never** see one, on any day. Two of
+three operators, and the screenshot was an RS Yadav booking.
+
+Seven services now, every operator with at least two: Laxmi 20:30 / 22:15 / 23:55, RS Yadav 21:15 /
+23:40, ITC 19:45 / 23:10. `BUS_SETS` rebuilt so each operator has 8–16 days running two or more, and
+one set is ITC-only so the non-movable *day* case stays reachable.
+
+Verified by booking on each operator in turn and walking its change calendar until a bus list appears:
+Laxmi finds three on the 16th, RS Yadav finds two, ITC correctly offers no date change at all. Every
+row in each list is the booked operator. Plus the full suite: 13 states, 702 cells, no broken text, no
+dead buttons, money agreeing, model invariants clean.
+
+LEARNED · 2026-09-02 · (no skill)
+**A rule and the data have to be designed together, or the rule silently has no cases.** Same-operator
+scoping was correct code. Single-service operators made it unreachable for two thirds of travellers,
+and every check I run passed — the screens were right, the money was right, the flow was right, and the
+branch simply never executed.
+
+This is the third unreachable-case bug today: no bookable day was non-movable, no operator except one
+could offer a bus choice, and before that a filter that never fired. **The check they share: for every
+branch that depends on the data, count how many cases the data actually produces.** Zero is a bug even
+when the code is correct.

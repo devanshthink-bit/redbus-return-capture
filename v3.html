@@ -1091,18 +1091,27 @@ const DEP_TIME='23:55', ARR_TIME='08:00';   // the outbound service
 // where it belongs, in the change flow, and nowhere else.
 // 'movable' is a property of the operator's bus, not of the day. The cheapest service here does not
 // allow a date change, which is the real trade-off the outbound list already shows.
+// Every operator runs more than one service, because a date change stays on the booked operator --
+// so an operator with a single service could never offer a choice on the new day, and a traveller
+// booked on one would never see the bus list at all. Two of three were single-service.
 const RET_BUSES = [
+  {op:'International Tourist Centre',  dep:'19:45', arr:'03:50', delta:-230, movable:false, fc:null},
   {op:'Laxmi Holidays Pvt Ltd',        dep:'20:30', arr:'04:35', delta: -90, movable:true,  fc:60},
   {op:'RS Yadav Smart Bus',            dep:'21:15', arr:'05:40', delta:-150, movable:true,  fc:null},
   {op:'Laxmi Holidays Pvt Ltd',        dep:'22:15', arr:'06:20', delta: -40, movable:true,  fc:null},
   {op:'International Tourist Centre',  dep:'23:10', arr:'07:20', delta:-200, movable:false, fc:60},
+  {op:'RS Yadav Smart Bus',            dep:'23:40', arr:'07:45', delta:-110, movable:true,  fc:60},
   {op:'Laxmi Holidays Pvt Ltd',        dep:'23:55', arr:'08:00', delta:   0, movable:true,  fc:60}
 ];
 // Which of them run on a given day. Deterministic, always at least one, and not always the same one.
-// [3] alone is the day where only International Tourist Centre runs -- the one operator that offers
-// no date change. Without it no bookable day was ever non-movable, and the calendar dot, its legend
-// and every day-level "cannot be changed" line were unreachable.
-const BUS_SETS = [[4],[2,4],[0,1,2,3,4],[0,2,3],[3],[1,2],[0,3,4],[1,3,4],[0,1,2,4]];
+// [0,4] is the day where only International Tourist Centre runs -- the one operator that offers no
+// date change -- so the calendar dot, its legend and every day-level "cannot be changed" line stay
+// reachable. Every other set gives at least one operator two services, so a change always has a
+// bus list to show where that operator runs more than once.
+const BUS_SETS = [
+  [6], [3,6], [0,1,2,3,4,5,6], [1,3,4], [0,4], [2,3,5],
+  [1,4,5,6], [2,5], [0,1,3,6], [1,2,3,5,6], [0,2,4,6]
+];
 const allBusesOn = d => BUS_SETS[(d*7) % BUS_SETS.length];
 // Booking sees everything; a date change sees only the operator the ticket is already on.
 let busScope = null;                       // null = every operator
