@@ -3083,3 +3083,29 @@ it was whichever bus the default happened to land on. Nobody reading the screen 
 **When one number stands for many, say which one it is:** cheapest, typical, or the one you would
 get. Here it is the cheapest, and it is the only one of the three that can never be wrong — the
 traveller can always reach it.
+
+CHANGE · 2026-09-02 · (no skill) · Source: user
+**"In the date change flow we show 'Closest to your onward'. It should be closest to the return they
+booked — the onward doesn't matter, it's the return that's changing."** Right, and the label was the
+smaller half: the **calculation** was also scoring against the onward departure.
+
+`defaultBusOn(d)` anchors on `out.dep`, which is correct for booking — there is no return yet, and
+someone who took a night bus out wants a night bus back. Reused unchanged in the change flow, it
+ranked services against a leg that is not moving.
+
+Split into `closestBusOn(day, to)`, with `defaultBusOn` now a one-line application of it. The change
+flow passes `retDep()` and the tag reads **Same time as now**, falling back to **Closest to your
+time** when that service does not run that day.
+
+Verified with a traveller holding a **22:15** return while the onward is **23:55** — the tag follows
+22:15. The booking flow's *Closest to your onward* is unchanged. 234 combinations, money agreeing.
+
+LEARNED · 2026-09-02 · (no skill)
+**A reused rule carries its reference point with it, and the label is what gives it away.** The rule
+"nearest departure to the one you have" is right in both flows. What is not shared is *which one you
+have*. I reused the function whole, so the change flow silently inherited the onward as its anchor.
+
+The tell was visible on screen for anyone reading it — the pill said *your onward* on a screen about
+the return. **When a label sounds wrong for the screen it is on, suspect the calculation, not the
+copy.** This is the second time today: the seat pill and now this one both had a wrong number behind
+a wrong word.

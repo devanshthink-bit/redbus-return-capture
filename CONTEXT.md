@@ -599,6 +599,13 @@ get. That is more than redBus's own calendar shows, which carries dates and noth
 - **No week tint.** The window is not a fence any more, so highlighting it on the change calendar
   implied a preference the product does not have.
 
+**The two flows anchor on different things, and that is the point.** Booking has no return yet, so
+*Change bus* marks the service **closest to the onward departure** — someone who took a night bus out
+wants a night bus back. A date change already has a return, so the bus list there marks **Same time as
+now**, or **Closest to your time** when that service does not run. `closestBusOn(day, to)` is the
+shared rule; only the reference point differs. Anchoring the change flow on the onward was both a
+wrong label and a wrong calculation.
+
 `movedFare()` is the one accessor for what the move costs. Confirm and Pay each used to recompute it
 from the day's *default* bus, so moving to a cheaper service showed ₹140 on one screen and ₹230 on
 the next.

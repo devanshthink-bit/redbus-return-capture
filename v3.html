@@ -1079,14 +1079,17 @@ const busesOn = d => BUS_SETS[(d*7) % BUS_SETS.length];
 const mins = t => +t.slice(0,2)*60 + +t.slice(3);
 // The default is the service closest to the outbound departure. Someone who took a night bus out
 // wants a night bus back -- the same "same kind as the onward" rule the seat already follows.
-function defaultBusOn(d){
-  const want = mins(out.dep);
+function closestBusOn(d, to){
+  const want = mins(to);
   return busesOn(d).slice().sort(function(a,b){
     const da = Math.min(Math.abs(mins(RET_BUSES[a].dep)-want), 1440-Math.abs(mins(RET_BUSES[a].dep)-want));
     const db = Math.min(Math.abs(mins(RET_BUSES[b].dep)-want), 1440-Math.abs(mins(RET_BUSES[b].dep)-want));
     return da-db;
   })[0];
 }
+// Booking anchors on the onward departure. A date change anchors on the return they already hold --
+// the onward is not what is moving. Same rule, different reference point.
+const defaultBusOn = d => closestBusOn(d, out.dep);
 // One writer for the return bus, the way outSeat()/retSeat() are the one writer for the seat.
 // retBus is only ever set for the booked day; every other day shows its own default.
 let retBus = null;
@@ -1529,7 +1532,7 @@ function tapMoveDay(d){ moveDay=d; renderMoveBuses(); go('s-wibus'); }
 // one row per day could only ever offer one of them.
 function renderMoveBuses(){
   const wrap=document.getElementById('wb-list'); if(!wrap||!moveDay) return;
-  const seat=SEAT[moveDay], list=busesOn(moveDay), def=defaultBusOn(moveDay);
+  const seat=SEAT[moveDay], list=busesOn(moveDay), now=retDep(), def=closestBusOn(moveDay, now);
   document.getElementById('wb-sub').textContent = 'Nainital \u2192 Delhi \u00B7 '+label(moveDay);
   document.getElementById('wb-held').innerHTML = '<div class="legtag">Your booking</div>'
     + '<div class="row"><span class="time" style="font-size:16px">'+label(heldDay)+' \u00B7 '+retDep()+'</span>'
@@ -1542,7 +1545,8 @@ function renderMoveBuses(){
                  : diff<0 ? '<span class="onw">'+RUPEE(-diff)+' less \u2014 no refund</span>'
                           : '<span class="onw">Same price</span>';
     const tags=[];
-    if(i===def) tags.push('<div class="pill">Closest to your onward</div>');
+    if(b.dep===now) tags.push('<div class="pill">Same time as now</div>');
+    else if(i===def) tags.push('<div class="pill">Closest to your time</div>');
     if(!same) tags.push('<div class="pill warnpill">\u21BB Different seat</div>');
     return '<button class="card" onclick="confirmMove(\''+label(moveDay)+'\',\''+b.dep+'\','+f+','+diff+',\''+seat+'\')">'
       + '<div class="row"><span class="time">'+b.dep+'<span class="d">\u2014</span><span class="arr">'+b.arr+'</span></span>'
