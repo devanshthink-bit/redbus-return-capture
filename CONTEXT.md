@@ -647,6 +647,13 @@ one they are actually on.
 note names the operator. Scope decides what is *offered*; `closestBusOn()` falls back to the full list
 when the scoped set is empty, because the fare and the times still have to resolve on those days.
 
+**The two bus screens compare against different things, and one of them compares against nothing.**
+Booking has no ticket yet, so there is nothing to be cheaper *than* — that screen prices each bus and
+tags the **Cheapest** one (only when the fares actually differ) and the one **Closest to your
+onward**. The change screen does have a ticket, so it keeps *Pay ₹230 more* / *₹90 less — no refund*
+against what they hold. The booking screen used to run the change screen's comparison against the
+default bus — a bus the traveller never picked and which is named nowhere.
+
 `retOp()` is the one writer for the operator name, painted through `[data-retop]` — it was a literal on
 four screens.
 

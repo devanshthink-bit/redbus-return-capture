@@ -3290,3 +3290,32 @@ this value appear** the moment the model changed. The sweep is cheap: every scre
 a time or an operator had to be revisited when any of those stopped being a property of the day.
 
 **When a value gains a dimension, list every screen that reads it before fixing any of them.**
+
+CHANGE · 2026-09-02 · (no skill) · Source: user
+**"What does 'Same price' mean here? Same price to what?"** To the default bus — which the traveller
+never picked and which is named nowhere on the screen. On the booking bus list nothing is booked yet,
+so there is nothing for a bus to be cheaper *than*, and *₹90 cheaper* / *₹200 cheaper* / *Same price*
+were all measured from a hidden reference.
+
+The comparison was correct code borrowed from the change screen, where it is meaningful: there a
+ticket exists, so *Pay ₹230 more* and *₹90 less — no refund* are differences from what they hold.
+Reused on a screen with no ticket, it became a difference from nothing.
+
+Booking now prices each bus and tags the **Cheapest** one — only when the fares actually differ, the
+same rule the day list's Cheapest pill follows — alongside **Closest to your onward** and the grey
+**No date change**. The change screen is untouched.
+
+Verified: on Fri 11 the booking list shows three buses with no comparison and the ₹1,060 one tagged
+Cheapest and No date change together, which is the real trade-off; the change list still reads *Pay
+₹230 more* against a held ₹940. 234 combinations, money agreeing.
+
+LEARNED · 2026-09-02 · (no skill)
+**A relative number needs a reference the reader can see on the same screen.** *Same price* is not
+wrong the way a miscalculated figure is wrong — it is unanswerable, and the reader cannot even tell
+what question it answers. Absolute prices need no reference; the moment a number becomes a
+*difference*, the thing it differs from has to be named and visible.
+
+The pattern behind it is one I have hit all day: **code that was right on one screen carries its
+assumptions to the next.** The seat rule brought the onward anchor into the change flow. The
+same-operator rule came from the change flow into booking. Now the change flow's price comparison went
+the same way. Each time the transplant looked identical and the context underneath it was not.

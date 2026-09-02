@@ -1755,14 +1755,17 @@ const busBack = () => busFrom==='book' ? backToDays() : go('s-review');
 function renderBus(){
   const wrap=document.getElementById('bus-list'); if(!wrap) return;
   const list=busesOn(heldDay), def=defaultBusOn(heldDay);
+  const fares=list.map(i=>fareOfBus(heldDay,i));
+  const low=Math.min.apply(null,fares), spread=low!==Math.max.apply(null,fares);
   wrap.innerHTML = list.map(function(i){
-    const b=RET_BUSES[i], f=fareOfBus(heldDay,i), diff=f-fareOfBus(heldDay,def);
+    const b=RET_BUSES[i], f=fareOfBus(heldDay,i);
     const tags=[];
     if(!b.movable) tags.push('<div class="pill no">No date change</div>');
+    if(spread && f===low) tags.push('<div class="pill">Cheapest</div>');
     if(i===def) tags.push('<div class="pill">Closest to your onward</div>');
-    const right = diff>0 ? '<span class="onw diffup">\u20B9'+diff+' more</span>'
-                : diff<0 ? '<span class="onw">\u20B9'+Math.abs(diff)+' cheaper</span>'
-                         : '<span class="onw">Same price</span>';
+    // Nothing is booked yet, so there is nothing to be cheaper THAN. The old line compared every bus
+    // to the default one -- a bus the traveller never picked and cannot see named anywhere.
+    const right = '';
     return '<button class="card'+(i===busPick?' sel':'')+'" onclick="busPick='+i+';renderBus()" aria-pressed="'+(i===busPick)+'">'
       + '<div class="row"><span class="time">'+b.dep+'<span class="d">\u2014</span><span class="arr">'+b.arr+'</span></span>'
       + '<span class="price">'+RUPEE(f)+'</span></div>'
