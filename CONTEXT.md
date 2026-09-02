@@ -659,10 +659,18 @@ the next.
 ### Operators — the first booking sees them all
 
 **The same-operator rule binds the date change, not the booking** (`TERMS.md` §4, verified 2 Sep). A
-first return booking is an ordinary search, so `Choose your bus` lists **every operator on the route**:
+first return booking is an ordinary search, so the day's bus rows list **every operator on the route**:
 Laxmi Holidays, RS Yadav Smart Bus, International Tourist Centre. `busScope` applies the restriction,
 and it is set in exactly one place — `openWithin()` — and cleared on `afterOutbound()`, `abortMove()`,
 `backToDays()` and when a move completes.
+
+**Every operator runs more than one service, and that is a requirement rather than flavour.** A date
+change stays on the booked operator, so an operator with a single service can never offer a choice on
+the new day — a traveller booked on it would never see a bus list at all, which is exactly what
+happened when Laxmi had three services and the other two had one each. Seven now: Laxmi at 20:30,
+22:15 and 23:55; RS Yadav at 21:15 and 23:40; International Tourist Centre at 19:45 and 23:10. Each
+runs two or more on 8–16 days, and one `BUS_SETS` entry is ITC-only so the non-movable *day* case
+stays reachable.
 
 **`movable` is a property of the bus, not the day.** International Tourist Centre is the cheapest
 service on the route and does not allow a date change — the same trade-off the outbound list already
