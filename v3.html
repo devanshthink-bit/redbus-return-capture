@@ -504,7 +504,7 @@ body.testing .dev{display:none!important}
           <p id="pk-none-b">No day from Wed, 9 Sep to Sat, 12 Sep can be changed later.</p>
           <p class="long">You can still book a return, or pick other days.</p>
           <div class="acts">
-            <button class="btn pri" style="width:100%">Show all returns</button>
+            <button class="btn pri" style="width:100%" onclick="showAllReturns()">Show all returns</button>
             <button class="btn sec" style="width:100%" onclick="go('s-window')">Pick other days</button>
           </div>
         </div>
@@ -637,7 +637,7 @@ body.testing .dev{display:none!important}
         <p class="legerr-t">Your return seat is gone</p>
         <p class="legerr-b" id="rv-errseat">Seat U5 is gone &mdash; someone just booked it. Your onward trip is fine.</p>
         <div class="legerr-a">
-          <button class="btn pri" onclick="backToDays()">Pick another return</button>
+          <button class="btn pri" onclick="pickAnotherReturn()">Pick another return</button>
           <button class="btn sec" onclick="dropReturn()">Continue without a return</button>
         </div>
       </div>
@@ -1549,11 +1549,17 @@ function paintChangeRow(){
 // separate times. Nothing assigns heldDay any more; everything goes through here.
 function setHeldDay(d){ heldDay = d; retBus = d ? defaultBusOn(d) : null; setState(state); }
 function choosePick(d){ setHeldDay(d); }
+// The empty state is "no day here can be changed later". Showing them anyway is the whole point of the
+// primary button -- a return that cannot be moved is still a return, and the terms say so on review.
+function showAllReturns(){ setState('default'); }
 function pickBus(d,i){ if(d!==heldDay) heldDay=d; retBus=i; setState(state); }
 
 // Changing the booked day after payment — any day in the range, either direction.
 const BOOKABLE = Array.from({length: LAST_BOOKABLE-OUT_DAY}, (_,i)=>OUT_DAY+1+i);
 const backToDays = () => { busScope=null; go(sel.length===1 ? 's-window' : 's-picked'); };
+// The lost seat belongs to the return they are leaving behind. Carrying the error forward left Pay
+// disabled and the warning on screen for a seat they were no longer taking.
+function pickAnotherReturn(){ if(state==='seatgone') setState('default'); backToDays(); }
 function openWithin(){
   moveDay=0;
   busScope = retOp();                 // TERMS §4: a date change stays on the same operator

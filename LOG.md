@@ -3654,3 +3654,42 @@ against the others across the whole domain; if two always agree, one is redundan
 **And the second door.** The `noreturn` bug was fixed once, from the ticket, and shipped with the other
 entry still broken. Fixing a state bug at one entry point proves nothing about the others. **List every
 place that sets a flag and every place that should clear it, and check the matrix, not the path.**
+
+CHANGE · 2026-09-02 · (no skill) · Source: user
+**Checked all thirteen dev states against their own signature**, not just that they render. Twelve
+passed. `noguard` needed a different test — it is a flow guard, not a paint state — and passes too:
+Idea 9 skips the return step entirely, review shows the onward alone at ₹1,599, and the ticket carries
+no Change day row.
+
+Then checked what every error state's own escape button does. Two defects:
+
+**1 · "Show all returns" had no handler at all.** The primary action on *No day here can be changed
+later* was a dead button. Every check I run missed it for the same reason: the state matrix paints
+screens and never clicks, and the click-through asserts *which screen it lands on* — and a dead button
+lands you exactly where you were. This is the failure `CONTEXT.md` §10 names in writing — *"the state
+matrix cannot see a dead handler"* — and it had been sitting in the build regardless.
+
+It now clears the filter and lists every day in the window, which is what the label promises: a return
+that cannot be moved later is still a return, and review states that in its terms.
+
+**2 · "Pick another return" carried the seat-gone error with it.** The traveller goes back to pick a
+different return, and the error about the seat they are no longer taking stayed armed — so returning to
+review showed the warning again with Pay still disabled. It now clears on the way out. *Continue
+without a return* is unchanged.
+
+Swept every button in the build for a missing handler afterwards: none left.
+
+Verified: all thirteen states pass their own assertion, 234 combinations, money agreeing, no dead
+buttons, and both recoveries land on a working screen in a clean state.
+
+LEARNED · 2026-09-02 · (no skill)
+**A dead button is invisible to every check that asks "where did I land".** It lands you where you
+were, which is a valid screen, so the click-through passes. §10 has warned about this since August and
+I have been running the check it prescribes without ever running the one that catches it.
+
+The one that catches it takes four lines: **walk every button in the DOM and assert it has a
+handler.** Cheap, total, and it found the one dead control in a build I had just declared clean.
+
+Second: **an error state must be cleared by the action that resolves it.** *Pick another return*
+resolves a lost seat by definition — the seat is being replaced — so the flag had no business
+surviving the tap. Worth checking each error's escape hatch against the flag it is meant to clear.
