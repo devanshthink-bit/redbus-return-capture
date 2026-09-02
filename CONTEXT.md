@@ -508,6 +508,13 @@ rendered a list of one — repeating the header, with *Booked* on a trip nobody 
 calendar now goes straight to Trip review, and carries the *No refund on a cheaper day* rule that used
 to live here.
 
+**With a range, each row is a day, priced at that day's floor** — *from ₹970 · 4 buses · pick one
+next*. It used to show whichever bus happened to be the default, which ran up to **₹200 above** the
+day's cheapest, and the *Cheapest* pill ranked days on that same wrong figure. `minFareOn(d)` is the
+one accessor; `cheapestIn()` and `hasSpread()` read it too. Tapping **Review trip** then opens
+**Choose your bus**, so the fare the row promised is one the traveller can actually take. A day with a
+single bus keeps naming its operator and time inline and goes straight to review.
+
 **Unless that day runs several buses** — then the bus *is* the only decision left, so **Choose your
 bus** appears in place of the day list, with **Review trip** on the button. A one-bus day still goes
 straight to review. The same rule runs in the change flow: tapping a day with one bus goes straight to

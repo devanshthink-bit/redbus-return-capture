@@ -3255,3 +3255,38 @@ to* is the same question that fixed the week's cap this morning, and it found a 
 **A filter must never be in the path a value is computed from.** `busScope` was written to decide what
 the traveller is offered, and it silently became an input to `FAREOF` through two hops of default
 resolution. The crash was the lucky version of that bug; the quiet version prices a ticket wrong.
+
+CHANGE · 2026-09-02 · (no skill) · Source: user
+**"If the user selects a window and there are multiple buses each date, how are we showing them?"**
+We were not. The day list showed one row per day at that day's **default** bus — and once every
+operator was on the route, the default sat up to **₹200 above** the day's cheapest.
+
+That is worse than the same hole in the other two flows, because the day list exists to make a money
+comparison between days, and the money was wrong. Thu 17 read ₹1,120 with a ₹970 bus on it; Sat 19
+read ₹1,230 with ₹1,030 available. The **Cheapest** pill ranked days on the same wrong number — it
+happened to be right on the range I tested, by luck, not by rule.
+
+Fixed with `minFareOn(d)`, the one accessor for what a day costs at its floor. `cheapestIn()` and
+`hasSpread()` read it too, so the pill and the copy rank days on the same figure the rows show. Rows
+now read *from ₹970 · 4 buses · pick one next*, and **Review trip** opens **Choose your bus** so the
+fare the row promised is reachable. A single-bus day still names its operator and time inline and goes
+straight to review.
+
+All three entry points into the bus screen now behave the same way — range, single date, and Change
+bus from review — and Back returns to whichever of the three the traveller came from.
+
+Verified: every row's price equals its day's true floor; picking the cheapest bus on a day carries
+that fare into review; 234 combinations, money agreeing, and the full range journey through the bus
+screen to a completed move.
+
+LEARNED · 2026-09-02 · (no skill)
+**Fixing a model in one flow leaves the other flows quietly wrong, and the third time is not a
+coincidence.** Multiple buses a day broke the change flow, then the single-date booking flow, then the
+range booking flow — three separate sessions of the same defect, each found by the user rather than by
+me.
+
+What I did each time was patch the screen in front of me. What I did not do was ask **where else does
+this value appear** the moment the model changed. The sweep is cheap: every screen that shows a fare,
+a time or an operator had to be revisited when any of those stopped being a property of the day.
+
+**When a value gains a dimension, list every screen that reads it before fixing any of them.**

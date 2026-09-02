@@ -167,6 +167,7 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 .bottombar{flex:0 0 auto;background:var(--raised);border-top:1px solid var(--line);
  padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .bb1{font-size:14px;color:var(--muted)} .bb2{font-size:18px;font-weight:700}
+.from{font-size:12px;font-weight:400;color:var(--muted)}
 .bottombar.col{display:block}
 .bottombar.col .barrow{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .barnote{font-size:12px;color:var(--muted);margin-bottom:10px}
@@ -515,7 +516,7 @@ body.testing .dev{display:none!important}
       <p class="barnote">Bus, seat and stops change on the next screen. The date can change later, to any day.</p>
       <div class="barrow">
         <div><div class="bb1">Return</div><div class="bb2" id="pk-bb">&#8377;949</div></div>
-        <button class="btn pri" id="b-pk" disabled onclick="autoSeat()">Review trip</button>
+        <button class="btn pri" id="b-pk" disabled onclick="autoSeat(busesOn(heldDay).length>1?'book':null)">Review trip</button>
       </div>
     </div>
   </section>
@@ -1060,6 +1061,11 @@ function FAREOF(d){
   return f + RET_BUSES[busOn(d)].delta;      // the fare belongs to a bus, not to a day
 }
 const fareOfBus = (d,i) => FAREOF(d) - RET_BUSES[busOn(d)].delta + RET_BUSES[i].delta;
+// What a day costs at its cheapest. The day list compares days, so it has to compare the same thing
+// on each -- the default bus's fare was up to ₹200 above the day's real floor, and the Cheapest pill
+// was ranking days on it.
+const minFareOn = d => { const l=busesOn(d); const p=l.length?l:allBusesOn(d);
+  return Math.min.apply(null, p.map(i=>fareOfBus(d,i))); };
 const FARE = new Proxy({}, {get:(_,k)=>{const d=+k; return d>0 ? FAREOF(d) : undefined;}});
 
 // Which seat you would get on a given day: your own if it is still free, otherwise what is.
@@ -1169,9 +1175,9 @@ function bookedDay(){
   return lastMovableIn(sel[0],sel[1]) || sel[1];
 }
 // Only days you could actually book count. A sold-out day was being named as the cheapest.
-function cheapestIn(a,b){
+function cheapestIn(a,b){   // by each day's floor, not by whichever bus happens to be the default
   let best=0;
-  for(let d=a;d<=b;d++) if(SEAT[d] && (!best || FARE[d]<FARE[best])) best=d;
+  for(let d=a;d<=b;d++) if(SEAT[d] && (!best || minFareOn(d)<minFareOn(best))) best=d;
   return best || a;
 }
 
@@ -1182,7 +1188,7 @@ function cheapestIn(a,b){
 // cost the same while the fares differed by hundreds.
 function hasSpread(){
   if(sel.length!==2) return false;
-  const fs = Array.from({length: sel[1]-sel[0]+1}, (_,i)=>FARE[sel[0]+i]);
+  const fs = Array.from({length: sel[1]-sel[0]+1}, (_,i)=>minFareOn(sel[0]+i));
   return Math.max.apply(null,fs) !== Math.min.apply(null,fs);
 }
 
@@ -1341,25 +1347,28 @@ function renderPicked(){
     if(days.length>1 && spread && d===cheap) tags.push('<div class="pill">\u21BB Cheapest</div>');
     if(!MOVABLE(d)) tags.push('<div class="pill no">No date change</div>');
     const seat = SEAT[d];                     // the seat that day actually has, not a seat we hold
-    const diff = heldDay ? FARE[d]-FARE[heldDay] : 0;
+    const low = minFareOn(d), many = busesOn(d).length>1;
+    const diff = heldDay ? low-minFareOn(heldDay) : 0;
     if(!seat){                                // no bus seat left: say so, and do not let it be picked
       return '<div class="card off" aria-disabled="true">'
-        + '<div class="row"><span class="time">'+label(d)+' \u00B7 '+depOn(d)+'</span><span class="price">'+RUPEE(FARE[d])+'</span></div>'
+        + '<div class="row"><span class="time">'+label(d)+' \u00B7 '+depOn(d)+'</span><span class="price">'+RUPEE(minFareOn(d))+'</span></div>'
         + '<div class="subrow"><span class="sub">'+opOn(d)+'</span><span class="onw">No seats left</span></div>'
         + (tags.length?'<div class="pillrow">'+tags.join('')+'</div>':'') + '</div>';
     }
     // The seat rule anchors on the onward seat, so a row that does not match it needs the reason
     // beside it. Without this the list just showed a different number on some days and not others.
     // Same label the Change day list uses, in the same demoted colour — losing the refund outranks it.
-    if(seat !== outSeat()) tags.push('<div class="pill warnpill">\u21BB Different seat \u2014 '+outSeat()+' taken</div>');
+    if(!many && seat !== outSeat()) tags.push('<div class="pill warnpill">\u21BB Different seat \u2014 '+outSeat()+' taken</div>');
     const right = d===heldDay ? '<span class="onw">Your pick</span>'
       : (!heldDay ? ''
         : diff>0 ? '<span class="onw diffup">'+RUPEE(diff)+' more</span>'
         : diff<0 ? '<span class="onw">'+RUPEE(-diff)+' cheaper</span>'
                  : '<span class="onw">Same price</span>');
     return '<button class="card'+(d===heldDay?' sel':'')+'" onclick="choosePick('+d+')" aria-pressed="'+(d===heldDay)+'">'
-      + '<div class="row"><span class="time">'+label(d)+' \u00B7 '+depOn(d)+'</span><span class="price">'+RUPEE(FARE[d])+'</span></div>'
-      + '<div class="subrow"><span class="sub">'+opOn(d)+' \u00B7 Seat '+seat+'</span>'+right+'</div>'
+      + '<div class="row"><span class="time">'+label(d)+(many?'':' \u00B7 '+depOn(d))+'</span>'
+      + '<span class="price">'+(many?'<span class="from">from </span>':'')+RUPEE(low)+'</span></div>'
+      + '<div class="subrow"><span class="sub">'
+      + (many ? busesOn(d).length+' buses \u00B7 pick one next' : opOn(d)+' \u00B7 '+depOn(d))+'</span>'+right+'</div>'
       + (tags.length?'<div class="pillrow">'+tags.join('')+'</div>':'') + '</button>';
   }).join('');
 
@@ -1411,7 +1420,7 @@ function renderPicked(){
   } else {
     note.innerHTML = '<dt>Every day costs the same</dt><dd>Pick whichever suits you.</dd>' + after;
   }
-  document.getElementById('pk-bb').textContent = heldDay ? RUPEE(FARE[heldDay]) : '\u2014';
+  document.getElementById('pk-bb').textContent = heldDay ? RUPEE(minFareOn(heldDay)) : '\u2014';
   document.getElementById('b-pk').disabled = !heldDay;
   const sub = sel.length===2 ? label(sel[0])+' \u2013 '+label(sel[1]) : label(sel[0]);
   const ps=document.getElementById('pk-sub');
@@ -1742,7 +1751,7 @@ function bookedOn(day){
 // list stays a list of days instead of turning back into a list of buses.
 let busPick = null, busFrom = 'review';
 function openBus(from){ busFrom = from || 'review'; busPick = busOn(heldDay); renderBus(); go('s-bus'); }
-const busBack = () => go(busFrom==='book' ? 's-window' : 's-review');
+const busBack = () => busFrom==='book' ? backToDays() : go('s-review');
 function renderBus(){
   const wrap=document.getElementById('bus-list'); if(!wrap) return;
   const list=busesOn(heldDay), def=defaultBusOn(heldDay);
