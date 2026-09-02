@@ -3570,3 +3570,38 @@ next step. Same rule, opposite result.
 
 That is three times today a correct fix has been generalised one step too far — the same-operator
 rule, the window cap, and now this. **A rule learned on one screen is a hypothesis on the next.**
+
+DECISION · 2026-09-02 · (no skill) · Source: user
+**"Can we do this in one screen? Two screens is still friction."** Yes. The day list and Choose your
+bus are now one screen: **day rows open in place.**
+
+Tap a day and its buses appear inside that day's own card, the default already selected, with the card
+header and the bottom bar both naming that bus's fare. Picking another bus is a tap inside the card,
+not a navigation. A single date arrives with its one card already open, so the two entry paths finally
+use the same screen. A day running one bus shows no bus rows at all.
+
+**Why the accordion rather than a flat list of every bus on every day.** Flat would be ~20 rows and
+would lose the day-level comparison, which is the decision this screen exists for. Opening in place
+keeps the days scannable — *from ₹830 · 5 buses* — and reveals the buses only for the day being
+considered.
+
+**One inconsistency found while building it,** and worth recording because it is the same class as
+everything else this week: on opening a day the card header showed the *default* bus's fare while the
+bar showed the day's *floor*, because no bus was selected yet. `setHeldDay()` now pins the day's
+default bus, so a bus is always chosen once a day is open and all three figures agree.
+
+The separate bus screen survives as **Change bus** from review, and in the change flow where the day
+comes from a calendar rather than a list.
+
+Verified: header, bar and highlighted row agree in every state tested; the range path, the single-date
+path and the one-bus day all land correctly; a full journey through review, pay, ticket; Change bus
+from review unchanged; no target under 44px; 234 combinations, money agreeing.
+
+LEARNED · 2026-09-02 · (no skill)
+**A screen per decision is a habit, not a rule.** Day and bus became two screens because they arrived
+as two problems on two different days, and each time the answer was "add the screen the model now
+needs". Nobody asked whether the two choices belong in the same view — they do, because the traveller
+is comparing across both at once: *is Monday's cheap bus worth a day earlier?*
+
+**When two consecutive screens are both lists, check whether the second is a property of a row in the
+first.** If it is, it can open in place, and the navigation between them was never carrying anything.

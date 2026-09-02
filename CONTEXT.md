@@ -514,9 +514,6 @@ reads as though the tap did not register. On the day list, where the button is n
 does name the screen — *Choose your bus*, or *Review trip* on a day that runs one — and holds *Choose
 your bus* while disabled rather than switching to an instruction.
 
-**The button names the screen it opens** — *Choose your bus* on a day that runs several, *Review trip*
-on a day that runs one. It said *Review trip* on both from the moment the bus screen was added.
-
 **With a range, each row is a day, priced at that day's floor** — *from ₹970 · 4 buses · pick one
 next*. It used to show whichever bus happened to be the default, which ran up to **₹200 above** the
 day's cheapest, and the *Cheapest* pill ranked days on that same wrong figure. `minFareOn(d)` is the
@@ -524,10 +521,14 @@ one accessor; `cheapestIn()` and `hasSpread()` read it too. Tapping **Review tri
 **Choose your bus**, so the fare the row promised is one the traveller can actually take. A day with a
 single bus keeps naming its operator and time inline and goes straight to review.
 
-**Unless that day runs several buses** — then the bus *is* the only decision left, so **Choose your
-bus** appears in place of the day list, with **Review trip** on the button. A one-bus day still goes
-straight to review. The same rule runs in the change flow: tapping a day with one bus goes straight to
-Confirm rather than showing a list of one. Back from review, and *Pick another return* after a lost seat, both return to whichever
+**One day and one bus are chosen on the same screen.** The day rows open in place: tap a day and its
+buses appear inside its own card, the default one selected, the card header and the bottom bar both
+naming that bus's fare. Picking another bus is a tap inside the card. A single date arrives with its
+one card already open, so both paths use one screen. A day running one bus shows no bus rows at all.
+
+This replaced a separate **Choose your bus** step, which was a navigation for a choice that fits in a
+glance. That screen survives only as **Change bus** from review, and in the change flow, where the day
+comes from a calendar rather than a list. Back from review, and *Pick another return* after a lost seat, both return to whichever
 screen the traveller actually came from (`backToDays()`). On a range the picked row reads **Your
 pick**, not *Booked*.
 

@@ -168,6 +168,15 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
  padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .bb1{font-size:14px;color:var(--muted)} .bb2{font-size:18px;font-weight:700}
 .from{font-size:12px;font-weight:400;color:var(--muted)}
+.dayhead{display:block;width:100%;text-align:left;background:none;border:0;padding:0;cursor:pointer}
+.buses{margin-top:12px;border-top:1px solid var(--line);padding-top:4px}
+.busrow{display:flex;width:100%;align-items:flex-start;justify-content:space-between;gap:12px;
+ background:none;border:0;border-radius:10px;padding:10px 8px;margin-top:4px;text-align:left;cursor:pointer}
+.busrow:hover{background:#FAFAFB}
+.busrow.sel{background:var(--chip)}
+.bt{font-size:14px;line-height:1.5}
+.bf{font-size:16px;font-weight:700;white-space:nowrap}
+.busrow .pill{display:inline-flex;margin-top:6px}
 .bottombar.col{display:block}
 .bottombar.col .barrow{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .barnote{font-size:12px;color:var(--muted);margin-bottom:10px}
@@ -516,7 +525,7 @@ body.testing .dev{display:none!important}
       <p class="barnote">You choose the bus, seat and stops before you pay. The date can change later, to any day.</p>
       <div class="barrow">
         <div><div class="bb1">Return</div><div class="bb2" id="pk-bb">&#8377;949</div></div>
-        <button class="btn pri" id="b-pk" disabled onclick="autoSeat(busesOn(heldDay).length>1?'book':null)">Review trip</button>
+        <button class="btn pri" id="b-pk" disabled onclick="autoSeat()">Review trip</button>
       </div>
     </div>
   </section>
@@ -1327,10 +1336,10 @@ function loadWindow(){
   b.disabled=true; b.innerHTML='<span class="spin"></span> Checking';
   setTimeout(()=>{
     paintWindow();                    // restores the label the button had before the spinner
-    setHeldDay(hasSpread() ? 0 : bookedDay());   // a real money trade-off is the traveller's to make
-    // one day is not a choice of DAY, but that day may run several buses -- and then the bus is the
-    // only decision left, so it gets its own screen rather than a default the traveller never sees
-    if(sel.length===1) return autoSeat(busesOn(heldDay).length>1 ? 'book' : null);
+    setHeldDay(sel.length===1 ? sel[0] : (hasSpread() ? 0 : bookedDay()));   // a real money trade-off is the traveller's to make
+    // Both paths land on the same screen now. One day shows one card, already open on its buses;
+    // a range shows the days with the picked one open. The bus is chosen in place, so the separate
+    // Choose your bus step is gone from booking -- it survives only as Change bus from review.
     go('s-picked');
   }, 800);
 }
@@ -1368,17 +1377,33 @@ function renderPicked(){
     // beside it. Without this the list just showed a different number on some days and not others.
     // Same label the Change day list uses, in the same demoted colour — losing the refund outranks it.
     if(!many && seat !== outSeat()) tags.push('<div class="pill warnpill">\u21BB Different seat \u2014 '+outSeat()+' taken</div>');
-    const right = d===heldDay ? '<span class="onw">Your pick</span>'
+    const open = d===heldDay;
+    const right = open ? '<span class="onw">Your pick</span>'
       : (!heldDay ? ''
         : diff>0 ? '<span class="onw diffup">'+RUPEE(diff)+' more</span>'
         : diff<0 ? '<span class="onw">'+RUPEE(-diff)+' cheaper</span>'
                  : '<span class="onw">Same price</span>');
-    return '<button class="card'+(d===heldDay?' sel':'')+'" onclick="choosePick('+d+')" aria-pressed="'+(d===heldDay)+'">'
+    // The day and the bus were two screens, which is a navigation for a choice the traveller can see
+    // in one glance. The day opens in place instead: the list stays scannable by day, and the buses
+    // for the open day sit inside its own card.
+    const buses = (open && many) ? '<div class="buses">'
+      + busesOn(d).map(function(i){
+          const b=RET_BUSES[i], f=fareOfBus(d,i), on=(i===busOn(d));
+          const bt=[];
+          if(!b.movable) bt.push('<span class="pill no">No date change</span>');
+          if(b.fc) bt.push('<span class="pill">Free Cancellation</span>');
+          return '<button class="busrow'+(on?' sel':'')+'" aria-pressed="'+on+'" onclick="event.stopPropagation();pickBus('+d+','+i+')">'
+            + '<span class="bt"><b>'+b.dep+'</b> \u2014 '+b.arr+'<br><span class="cap">'+b.op+'</span>'
+            + (bt.length?'<br>'+bt.join(' '):'')+'</span>'
+            + '<span class="bf">'+RUPEE(f)+'</span></button>';
+        }).join('') + '</div>' : '';
+    return '<div class="card'+(open?' sel':'')+'">'
+      + '<button class="dayhead" onclick="choosePick('+d+')" aria-expanded="'+open+'">'
       + '<div class="row"><span class="time">'+label(d)+(many?'':' \u00B7 '+depOn(d))+'</span>'
-      + '<span class="price">'+(many?'<span class="from">from </span>':'')+RUPEE(low)+'</span></div>'
+      + '<span class="price">'+(many&&!open?'<span class="from">from </span>':'')+RUPEE(open?FARE[d]:low)+'</span></div>'
       + '<div class="subrow"><span class="sub">'
-      + (many ? busesOn(d).length+' buses \u00B7 pick one next' : opOn(d)+' \u00B7 '+depOn(d))+'</span>'+right+'</div>'
-      + (tags.length?'<div class="pillrow">'+tags.join('')+'</div>':'') + '</button>';
+      + (many ? busesOn(d).length+' buses'+(open?'':' \u00B7 tap to see them') : opOn(d)+' \u00B7 '+depOn(d))+'</span>'+right+'</div>'
+      + (tags.length?'<div class="pillrow">'+tags.join('')+'</div>':'') + '</button>' + buses + '</div>';
   }).join('');
 
   const lead=document.getElementById('pk-lead');
@@ -1429,12 +1454,12 @@ function renderPicked(){
   } else {
     note.innerHTML = '<dt>Every day costs the same</dt><dd>Pick whichever suits you.</dd>' + after;
   }
-  document.getElementById('pk-bb').textContent = heldDay ? RUPEE(minFareOn(heldDay)) : '\u2014';
+  document.getElementById('pk-bb').textContent = heldDay ? RUPEE(FARE[heldDay]) : '\u2014';
   const bpk=document.getElementById('b-pk');
   bpk.disabled = !heldDay;
   // Disabled holds the label it will most often take, rather than switching to an instruction the
   // traveller has already followed.
-  bpk.textContent = (!heldDay || busesOn(heldDay).length>1) ? 'Choose your bus' : 'Review trip';
+  bpk.textContent = 'Review trip';
   const sub = sel.length===2 ? label(sel[0])+' \u2013 '+label(sel[1]) : label(sel[0]);
   const ps=document.getElementById('pk-sub');
   if(ps) ps.textContent='Nainital \u2192 Delhi \u00B7 '+sub;
@@ -1513,8 +1538,9 @@ function paintChangeRow(){
 // The booked day drives the ticket row, the move badge, the money and every date on screen.
 // Assigning it directly and then choosing which painters to call is how the same bug arrived four
 // separate times. Nothing assigns heldDay any more; everything goes through here.
-function setHeldDay(d){ heldDay = d; retBus = null; setState(state); }   // a new day, a new bus list
+function setHeldDay(d){ heldDay = d; retBus = d ? defaultBusOn(d) : null; setState(state); }
 function choosePick(d){ setHeldDay(d); }
+function pickBus(d,i){ if(d!==heldDay) heldDay=d; retBus=i; setState(state); }
 
 // Changing the booked day after payment — any day in the range, either direction.
 const BOOKABLE = Array.from({length: LAST_BOOKABLE-OUT_DAY}, (_,i)=>OUT_DAY+1+i);
