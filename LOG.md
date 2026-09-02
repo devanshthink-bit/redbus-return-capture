@@ -2919,3 +2919,26 @@ and a number (85%) that a previous conversation had specifically lacked.
 
 Worth remembering when the next item goes on an unverified list: **name the single action that would
 settle it, and ask whether anyone has actually tried.**
+
+CRITIQUE · 2026-09-02 · (no skill) · Source: user
+**I called a non-bug a bug, and the user caught it.** I reported that picking an outbound operator
+whose card says *"This operator doesn't allow date changes"* still opens the return step with the
+full promise, and called it a defect. The user: *"how should onward ticket operator and date change
+affect return ticket operator or date change? both are separate right?"*
+
+Correct. They are two tickets on two buses. The return's date change depends on the **return** bus's
+operator. The outbound pill is an attribute of the outbound ticket and says nothing about the return.
+The current behaviour is right and no change was made.
+
+**Where my reading went wrong.** I read `ROUTE_HAS_MOVABLE` as *"did the traveller pick an eligible
+bus"*. It means *"does this return route have any eligible bus"* — route-level, on the return side,
+which is exactly Idea 9 as designed.
+
+LEARNED · 2026-09-02 · (no skill)
+**Two facts sharing a word are not the same fact, and I keep making this mistake in this project.**
+Last week it was *Free Cancellation* versus ordinary cancellation. This time it was the outbound
+ticket's *date change* versus the return ticket's *date change* — same words, same badge, different
+tickets. Both times the wrong reading was the tidier one.
+
+The check that catches it: **before calling something a contradiction, name which object each claim
+is about.** If the objects differ, there is no contradiction, and the tidier story is the wrong one.
