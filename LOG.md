@@ -3849,3 +3849,40 @@ input the derivation needs (`baseFare`) so the two questions stop depending on e
 arrangements shipped this week. The first was wrong because two screens disagreed. The second was
 wrong because the screen disagreed with itself one tap later. Only the third — price what you will
 actually be booked onto — makes the number mean the same thing everywhere it appears.
+
+DECISION · 2026-09-02 · (no skill) · Source: user
+**"No need to preselect any, let the user select. And in the date row, from-cheapest-price was
+better."** Both taken, and together they solve the jump better than my own answer did.
+
+The day row is priced at its **floor** again — *from ₹800 · 4 buses* — and **nothing is preselected**.
+Opening a day shows its buses with none highlighted, the bar reading `—`, and **Review trip** disabled
+until the traveller picks one. The header and the bar then both take that bus's fare.
+
+**Why this beats what I built an hour ago.** I had removed the jump by preselecting the cheapest
+changeable bus, so the row price and the bar always matched. That worked, but it made two decisions on
+the traveller's behalf — which bus, and that price beats time — and it hid the day's real floor behind
+a higher headline. Not preselecting removes the jump for a better reason: **no number changes without
+the traveller's own tap.** *from ₹800* is honest because *from* says it is a floor, and it is only
+replaced once they choose.
+
+`defaultBusOn` reverts to *nearest the onward departure, preferring one that keeps the date change*.
+It is now a **tag** and the change flow's starting point, not a booking — which restores the 30 Aug
+decision I had reversed an hour earlier.
+
+A one-bus day has nothing to pick, so it takes its own bus and the button is live at once.
+
+Verified: calendar and day rows both read *from* the floor and agree; opening a day selects nothing,
+bar `—`, CTA off; picking sets header, bar and CTA together; a one-bus day is immediately bookable; the
+full journey through review, pay, ticket and change day; 234 combinations, 13 states, money agreeing.
+
+LEARNED · 2026-09-02 · (no skill)
+**I removed a jump by removing the traveller's choice, and did not notice I had.** The brief was
+*"the row says ₹800 and the bar says ₹1,030"*. I fixed the disagreement by picking a bus for them so
+the two numbers would match. The user's answer fixes it by making the second number wait for their tap.
+
+Same symptom, opposite instinct: **when two values disagree, ask whether one of them should exist yet.**
+A total before a choice is a guess, and a guess is what has to be reconciled. Removing it removed the
+problem instead of resolving it.
+
+Three pricing arrangements shipped in one day. That is the cost of treating a disagreement as an
+arithmetic problem rather than asking what the number is for.

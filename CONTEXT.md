@@ -513,19 +513,19 @@ sits directly under a tap the traveller has just made, so *Pick your day* right 
 reads as though the tap did not register. The day list's button is **Review trip** in every state,
 because that is now the only screen it opens.
 
-**A day is priced at the cheapest bus that keeps the date change, and that is the bus it opens on.**
-The calendar cell, the day row, the open card and the bottom bar are one number, so tapping a day
-never raises the price. Cheaper buses that cannot be moved stay in the list, tagged **Cheapest** and
-**No date change** — available, not advertised.
+**A day is priced at its floor — *from ₹800* — and no bus is preselected.** Opening a day shows its
+buses with none highlighted, the bottom bar reading `—` and **Review trip** disabled until the
+traveller picks one. Then the card header and the bar both switch to that bus's fare.
 
-The reasoning: this flow exists to sell flexibility, so the headline price should be the price of the
-flexible option. A bus without a date change is a different deal, not the same day for less.
+That is what removes the jump: no number changes without the traveller's own tap, so *from ₹800* is
+never quietly replaced by ₹1,030. The floor is honest because *from* says it is a floor. A day running
+one bus has nothing to pick, so it takes its own bus and the button is live immediately.
 
-**The cost, stated:** the default is no longer the service closest to the onward departure — that is a
-tag now, one tap away. Someone who took a 23:55 bus out may be defaulted onto a 21:15 back. Two
-earlier arrangements were tried and rejected: pricing at the default bus (the calendar and the list
-disagreed by up to ₹230 on the same day) and pricing at the true floor (tapping a day raised the price
-on every multi-bus day, and the floor usually belonged to a bus with no date change).
+**Rejected on the way here**, both shipped and both wrong: pricing at the *default* bus (the calendar
+and the day list then disagreed by up to ₹230 on the same day) and pricing at the cheapest *changeable*
+bus while preselecting it (no jump, but it preselected for the traveller and hid the real floor).
+`defaultBusOn` survives as the **Closest to your onward** tag and as the change flow's starting point,
+not as a booking.
 
 **A closed row is priced at that day's floor** — *from ₹830 · 5 buses · tap to see them*. It used to
 show whichever bus happened to be the default, which ran up to **₹200 above** the day's cheapest, and
