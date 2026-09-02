@@ -3499,3 +3499,23 @@ buttons in front of it said. The routing was right each time; the words were sta
 
 **When a screen is inserted, re-read the labels of everything that now lands one step earlier** — the
 button, and any copy promising what happens "next". Both were wrong here, and both still rendered.
+
+CHANGE · 2026-09-02 · (no skill) · Source: user
+**"When disabled, it still shows Review trip."** With no day picked there is no next screen to name,
+and the fallback in the label I wrote an hour ago quietly resolved to *Review trip* — a promise about a
+screen the button could not open.
+
+Disabled now reads **Pick a day**: it names the blocker instead of a destination. The bar is already in
+its empty state beside it, with `—` for the fare.
+
+Verified all three: no day → *Pick a day*, disabled; a 3-bus day → *Choose your bus*; a 1-bus day →
+*Review trip*. 234 combinations, money agreeing.
+
+LEARNED · 2026-09-02 · (no skill)
+**A ternary has two branches and three states.** `heldDay && buses>1 ? A : B` reads as *"A when there
+are several, otherwise B"*, and silently also means *"B when nothing is picked"* — a case the author
+never considered and the syntax never mentions. My previous entry said to re-read labels when a screen
+is inserted; the label I then wrote had a wrong third state from the first line.
+
+**When a label depends on state, enumerate the states before writing the expression.** Here there were
+three — none, one, several — and the empty one is the state a disabled button is always in.
