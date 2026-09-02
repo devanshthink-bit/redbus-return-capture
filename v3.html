@@ -675,7 +675,8 @@ body.testing .dev{display:none!important}
       <div class="leg" id="rv-fcblock">
         <div class="legtag">Free Cancellation</div>
         <label class="addon"><input type="checkbox" id="fc-on" autocomplete="off" onchange="recalc()"><span><b>Onward</b><br><span class="cap">100% refund up to 12 hours before departure</span></span><span class="addonp">&#8377;160</span></label>
-        <div class="addon off" data-ret><span><b>Return</b><br><span class="cap">Not available on this bus</span></span><span class="addonp">&mdash;</span></div>
+        <label class="addon" data-ret id="fc-ret-on" hidden><input type="checkbox" id="fc-ret" autocomplete="off" onchange="recalc()"><span><b>Return</b><br><span class="cap" id="fc-retcap">100% refund up to 12 hours before departure</span></span><span class="addonp" id="fc-retp">&#8377;160</span></label>
+        <div class="addon off" data-ret id="fc-ret-off"><span><b>Return</b><br><span class="cap" id="fc-offcap">Not offered on this bus</span></span><span class="addonp">&mdash;</span></div>
       </div>
 
       <!-- total -->
@@ -683,6 +684,7 @@ body.testing .dev{display:none!important}
         <div class="fare"><span>Onward</span><span id="rv-f1">&#8377;1,599</span></div>
         <div class="fare" data-ret><span>Return</span><span id="rv-f2">&#8377;999</span></div>
         <div class="fare" id="rv-fc" hidden><span>Free Cancellation &middot; onward</span><span id="rv-fcv">&#8377;160</span></div>
+        <div class="fare" id="rv-fcr" hidden><span>Free Cancellation &middot; return</span><span id="rv-fcrv">&#8377;160</span></div>
         <div class="fare tot"><span>Total</span><span id="rv-tot">&#8377;2,598</span></div>
       </div>
     </div>
@@ -920,6 +922,7 @@ body.testing .dev{display:none!important}
         <div class="fare" id="pay-outrow"><span>Onward &middot; Thu, 10 Sep</span><span id="pay-out">&#8377;1,599</span></div>
         <div class="fare" data-ret><span id="pay-retlabel">Return &middot; Thu, 10 Sep</span><span id="pay-ret">&#8377;999</span></div>
         <div class="fare" id="pay-fc" hidden><span>Free Cancellation &middot; onward</span><span id="pay-fcv">&#8377;160</span></div>
+        <div class="fare" id="pay-fcr" hidden><span>Free Cancellation &middot; return</span><span id="pay-fcrv">&#8377;160</span></div>
         <div class="fare tot"><span>Total</span><span id="pay-tot">&#8377;2,598</span></div>
       </div>
       <div class="leg">
@@ -1080,11 +1083,11 @@ const DEP_TIME='23:55', ARR_TIME='08:00';   // the outbound service
 // 'movable' is a property of the operator's bus, not of the day. The cheapest service here does not
 // allow a date change, which is the real trade-off the outbound list already shows.
 const RET_BUSES = [
-  {op:'Laxmi Holidays Pvt Ltd',        dep:'20:30', arr:'04:35', delta: -90, movable:true},
-  {op:'RS Yadav Smart Bus',            dep:'21:15', arr:'05:40', delta:-150, movable:true},
-  {op:'Laxmi Holidays Pvt Ltd',        dep:'22:15', arr:'06:20', delta: -40, movable:true},
-  {op:'International Tourist Centre',  dep:'23:10', arr:'07:20', delta:-200, movable:false},
-  {op:'Laxmi Holidays Pvt Ltd',        dep:'23:55', arr:'08:00', delta:   0, movable:true}
+  {op:'Laxmi Holidays Pvt Ltd',        dep:'20:30', arr:'04:35', delta: -90, movable:true,  fc:140},
+  {op:'RS Yadav Smart Bus',            dep:'21:15', arr:'05:40', delta:-150, movable:true,  fc:null},
+  {op:'Laxmi Holidays Pvt Ltd',        dep:'22:15', arr:'06:20', delta: -40, movable:true,  fc:null},
+  {op:'International Tourist Centre',  dep:'23:10', arr:'07:20', delta:-200, movable:false, fc:120},
+  {op:'Laxmi Holidays Pvt Ltd',        dep:'23:55', arr:'08:00', delta:   0, movable:true,  fc:160}
 ];
 // Which of them run on a given day. Deterministic, always at least one, and not always the same one.
 const BUS_SETS = [[4],[2,4],[0,1,2,3,4],[0,2,3],[1,2],[0,3,4],[1,3,4],[0,1,2,4]];
@@ -1158,6 +1161,8 @@ const SEAT = new Proxy({}, {get:(_,k)=>{const d=+k; return d>0 ? SEATOF(d) : und
 const MOVABLE = d => allBusesOn(d).some(i => RET_BUSES[i].movable && !!SEATOF(d));
 // whether the ticket they hold can be moved -- a property of the bus they are on
 const heldMovable = () => heldDay ? !!(RET_BUSES[busOn(heldDay)]||{}).movable : true;
+// What Free Cancellation costs on the return they are on, or null where that operator does not sell it
+const retFC = () => heldDay ? (RET_BUSES[busOn(heldDay)]||{}).fc || null : null;
 
 // A range books the LAST day the traveller could travel — but only if that day can actually
 // be changed later. Booking a non-movable day would hand them a ticket every screen claims
@@ -1770,6 +1775,7 @@ function renderBus(){
     const tags=[];
     if(!b.movable) tags.push('<div class="pill no">No date change</div>');
     if(spread && f===low) tags.push('<div class="pill">Cheapest</div>');
+    if(b.fc) tags.push('<div class="pill">Free Cancellation '+RUPEE(b.fc)+'</div>');
     if(i===def) tags.push('<div class="pill">Closest to your onward</div>');
     // Nothing is booked yet, so there is nothing to be cheaper THAN. The old line compared every bus
     // to the default one -- a bus the traveller never picked and cannot see named anywhere.
@@ -2076,13 +2082,36 @@ function recalc(){
   const mult = PAX();
   const out  = retOnly ? 0 : 1599*mult;                             // adding a return: the onward is already paid
   const ret  = (state==='noreturn' ? 0 : (FARE[heldDay]||0))*mult;      // a dropped return contributes nothing
-  const fc   = (!retOnly && E('fc-on') && E('fc-on').checked) ? 160*mult : 0;   // onward only — the operator doesn't offer it on the return
-  const tot  = out + ret + fc;
+  const fc   = (!retOnly && E('fc-on') && E('fc-on').checked) ? 160*mult : 0;
+  // Free Cancellation on the return is sold by the operator, so it exists on some buses and not
+  // others. Where it exists it can still be voided -- a date change destroys it (TERMS 4c, FAQ 3) --
+  // so the row says that, on the buses where there is a date change to use.
+  const rfcP = retFC();
+  const rfc  = (state!=='noreturn' && rfcP && E('fc-ret') && E('fc-ret').checked) ? rfcP*mult : 0;
+  const tot  = out + ret + fc + rfc;
 
   if(E('rv-fc')) E('rv-fc').hidden = !fc;
   if(E('pay-fc')) E('pay-fc').hidden = !fc;
   if(E('rv-fcv')) E('rv-fcv').textContent = RUP(fc);
   if(E('pay-fcv')) E('pay-fcv').textContent = RUP(fc);
+  if(E('rv-fcr')) E('rv-fcr').hidden = !rfc;
+  if(E('pay-fcr')) E('pay-fcr').hidden = !rfc;
+  if(E('rv-fcrv')) E('rv-fcrv').textContent = RUP(rfc);
+  if(E('pay-fcrv')) E('pay-fcrv').textContent = RUP(rfc);
+  const on=E('fc-ret-on'), off=E('fc-ret-off'), dropped = state==='noreturn';
+  if(on && off){
+    on.hidden  = dropped || !rfcP;
+    off.hidden = dropped || !!rfcP;
+    if(rfcP){
+      E('fc-retp').textContent = RUP(rfcP*mult);
+      E('fc-retcap').textContent = heldMovable()
+        ? '100% refund up to 12 hours before. Lost if you change the date.'
+        : '100% refund up to 12 hours before departure';
+    } else if(heldDay){
+      E('fc-offcap').textContent = retOp()+' does not offer it';
+      if(E('fc-ret')) E('fc-ret').checked = false;   // never leave a hidden box ticked
+    }
+  }
   if(E('rv-f2')) E('rv-f2').textContent = RUP(ret);
   if(E('pay-ret')) E('pay-ret').textContent = RUP(ret);
   if(E('pay-out')) E('pay-out').textContent = RUP(out);

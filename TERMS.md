@@ -107,8 +107,19 @@ FAQ 1 gives it away:
 > Cancellation section on the cust info screen."
 
 The word is *purchase*. redBus does not publish a fixed price — it varies by route, operator and
-fare. `v3.html` prices it at **₹160 on the onward leg only**, which is a realistic figure, not a
-quoted one. If asked, say that.
+fare. **All Free Cancellation prices in `v3.html` are realistic figures, not quoted ones.** If asked,
+say that.
+
+**"Offered where it is offered" is the whole rule, and it cuts both ways.** Nothing in redBus's terms
+says Free Cancellation is unavailable on a return leg — it is sold per booking, per operator. v3 showed
+it greyed out on *every* return, which read as a rule and was an assumption. It is now a property of
+the bus, like the date change: ₹140 on the 20:30, ₹160 on the 23:55, ₹120 on the 23:10, and not sold
+at all on the 21:15 or 22:15.
+
+**The interaction in §5 then becomes visible where it is bought.** On a bus that offers both, the row
+reads *"Lost if you change the date"* — FAQ 3, at the moment of purchase rather than in an FAQ. On the
+23:10, which offers no date change, there is nothing to void it, so the caveat does not appear. That is
+the cheapest bus on the route: no date change, but a refund you keep.
 
 ### The full Terms and Conditions, as printed in the app
 

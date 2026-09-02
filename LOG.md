@@ -3360,3 +3360,39 @@ stated.
 Second, smaller: **a partial repaint is a bug waiting for a state change.** `recalc()` was enough while
 the bus could not change after the seat was assigned. The moment Change bus existed, the set of things
 that must repaint grew, and the call site did not.
+
+DECISION · 2026-09-02 · (no skill) · Source: user
+**"For the return we always show Free Cancellation greyed out — is that in terms?"** No. It was an
+assumption that had hardened into a rule, and the operator model had just made it visibly wrong: the
+row said *"Not available on this bus"* — an operator-level fact — on every return bus regardless of
+which one was picked. Same shape as the movability bug, one screen over.
+
+Terms say only that Free Cancellation is **purchased**, priced per route, operator and fare, and
+offered *where it is offered*. Nothing says a return never has it.
+
+It is now a property of the bus: ₹140 on the 20:30, ₹160 on the 23:55, ₹120 on the 23:10, not sold on
+the 21:15 or 22:15. Where it is not sold, the row stays greyed with the operator named — the 3 Aug
+reasoning holds, hiding it would let someone assume cover they do not have.
+
+**And it made TERMS §5 visible where it matters.** On a bus offering both, the row reads *"100% refund
+up to 12 hours before. Lost if you change the date."* — FAQ 3, at the moment of purchase instead of in
+an FAQ. On the 23:10 there is no date change to void it, so the caveat does not appear. The cheapest
+bus on the route is now the one where the refund is safe and the date is fixed; the dearest is where
+the date is flexible and the refund is at risk. That is a real choice, and it is the one redBus's own
+two products actually force.
+
+Both facts are tagged on the bus card, so the trade-off is visible before choosing rather than after.
+
+Verified: ₹1,599 + ₹1,030 + ₹160 + ₹160 = ₹2,949 agreeing across review, its bar, Pay and the Pay
+title; switching to a bus without it drops the row, the line and the money, and never leaves a hidden
+checkbox ticked; dropping the return removes both rows. 234 combinations.
+
+LEARNED · 2026-09-02 · (no skill)
+**An assumption stated once as a fact becomes a rule nobody re-reads.** *"Not available on this bus"*
+was written on 3 Aug as a plausible stand-in, and for a month every reader — me included — treated it
+as something TERMS said. The user asked the one question that dissolves this class of error: **is that
+in terms?**
+
+The tell was available all along: the sentence names an *operator* fact but was rendered
+unconditionally. **A claim about one instance, shown on every instance, is either a rule or a bug —
+and if it were a rule it would not be phrased about the instance.**

@@ -587,10 +587,16 @@ day left to pick: *Your ticket has no Change day*. Both cards answer to the same
 badge above them, which is the point — they used to promise the fee, the window and the 8-hour
 cut-off for a change the ticket could not have, directly under a grey badge saying so.
 
-Free Cancellation is offered on the onward leg at ₹160 and shown as unavailable on the return, with
-the reason on the row — **the operator does not offer it on that bus** (decision of 3 Aug). The row is
-shown rather than hidden, because hiding it would leave the traveller assuming they have cover they
-do not.
+Free Cancellation is offered on the onward leg at ₹160, and on the return **wherever that operator
+sells it** — ₹140 on the 20:30, ₹160 on the 23:55, ₹120 on the 23:10, not at all on the 21:15 or
+22:15. Where it is not sold the row is shown greyed with the operator named, rather than hidden,
+because hiding it would leave the traveller assuming they have cover they do not (decision of 3 Aug).
+
+**On a bus that offers both, the row says what buying it costs you:** *"Lost if you change the date."*
+That is TERMS FAQ 3 stated at the moment of purchase. On the 23:10, which offers no date change, there
+is nothing to void it and the caveat does not appear — so the cheapest bus on the route is the one
+where the refund is safe and the date is not. Both tags sit on the bus card, so the trade-off is
+visible before the bus is chosen, not after.
 
 **It is not the same fact as the date change, and the two must not be merged.** Free Cancellation is
 the paid add-on that returns 100%. *Ordinary* cancellation always exists and returns part of the fare
