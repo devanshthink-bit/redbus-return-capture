@@ -3217,3 +3217,41 @@ never written down as a job.
 **Before deleting a screen, list what passes through it, not just what it decides.** And the
 degenerate-case check I had just written down as a lesson applied immediately to its own fix: the
 replacement screen needed the same *what does this look like with one item* question, one hour later.
+
+DECISION · 2026-09-02 · (no skill) · Source: user
+**"The same-operator constraint only applies to the date change. Why is it in the first return
+booking? Shouldn't we show all operators' buses?"** Right. The rule verified this morning
+(`TERMS.md` §4) binds the **change**, and I had applied it to the whole return leg — the route carried
+one operator end to end, which was a stand-in from before the rule was even confirmed.
+
+**The booking now sees every operator.** Five services on the route: Laxmi Holidays at 20:30, 22:15
+and 23:55, RS Yadav Smart Bus at 21:15, International Tourist Centre at 23:10. `busScope` restricts
+the list, set in exactly one place — `openWithin()` — and cleared on `afterOutbound()`, `abortMove()`,
+`backToDays()` and when a move completes.
+
+**And it made `movable` honest.** It was `MOVABLE(d)`, a function of the day, which was never true of
+anything — a date change is offered by an operator. International Tourist Centre is now the cheapest
+bus on the route and allows no date change, which is the real trade-off redBus's own outbound list
+shows. `MOVABLE(d)` asks whether any bus that day allows it; `heldMovable()` asks about the one they
+booked.
+
+Two bugs found while testing, both worth the entry:
+1. **The change calendar offered days the booked operator does not run**, then opened an empty bus
+   screen. Those days are now disabled and marked **None**.
+2. **Scoping emptied the pool the fares are read from**, and every price on such a day became
+   `undefined` — a hard crash. `closestBusOn()` now falls back to the full list: scope decides what is
+   *offered*, never what a price is *computed* from.
+
+Verified: booking on RS Yadav names it on review, pay, the ticket, the confirmation and My Bookings;
+the change flow then offers RS Yadav only, on the 9 days it runs, with 10 marked None. 234
+combinations, money agreeing, and the ordinary Laxmi journey through a completed move unchanged.
+
+LEARNED · 2026-09-02 · (no skill)
+**A rule applied one layer too wide looks like a simplification until the layer is named.** One
+operator per route was never a decision — it was what the model happened to be before the rule was
+verified, and verifying the rule made it look deliberate. The user asking *which object does this bind
+to* is the same question that fixed the week's cap this morning, and it found a second thing today.
+
+**A filter must never be in the path a value is computed from.** `busScope` was written to decide what
+the traveller is offered, and it silently became an input to `FAREOF` through two hops of default
+resolution. The crash was the lucky version of that bug; the quiet version prices a ticket wrong.

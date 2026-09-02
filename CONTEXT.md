@@ -622,6 +622,27 @@ wrong label and a wrong calculation.
 from the day's *default* bus, so moving to a cheaper service showed ₹140 on one screen and ₹230 on
 the next.
 
+### Operators — the first booking sees them all
+
+**The same-operator rule binds the date change, not the booking** (`TERMS.md` §4, verified 2 Sep). A
+first return booking is an ordinary search, so `Choose your bus` lists **every operator on the route**:
+Laxmi Holidays, RS Yadav Smart Bus, International Tourist Centre. `busScope` applies the restriction,
+and it is set in exactly one place — `openWithin()` — and cleared on `afterOutbound()`, `abortMove()`,
+`backToDays()` and when a move completes.
+
+**`movable` is a property of the bus, not the day.** International Tourist Centre is the cheapest
+service on the route and does not allow a date change — the same trade-off the outbound list already
+shows. So the booking bus list carries a grey **No date change** tag, the default prefers a movable
+service, `MOVABLE(d)` asks whether *any* bus that day allows it, and `heldMovable()` asks about the
+one they are actually on.
+
+**In the change flow the calendar marks days the operator does not run as `None`**, disabled, and the
+note names the operator. Scope decides what is *offered*; `closestBusOn()` falls back to the full list
+when the scoped set is empty, because the fare and the times still have to resolve on those days.
+
+`retOp()` is the one writer for the operator name, painted through `[data-retop]` — it was a literal on
+four screens.
+
 ### Change bus (screen 07b)
 
 **One operator does not mean one bus a day.** `TERMS.md` §4 records the unverified same-operator
