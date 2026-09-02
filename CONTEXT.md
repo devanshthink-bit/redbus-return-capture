@@ -513,6 +513,11 @@ sits directly under a tap the traveller has just made, so *Pick your day* right 
 reads as though the tap did not register. The day list's button is **Review trip** in every state,
 because that is now the only screen it opens.
 
+**The calendar prices a day the same way the day list does** — at its floor, marked *from* when the
+day runs more than one bus. It used to price the default bus, which put the two screens up to **₹230
+apart on the same day**, one tap from each other, and made *"Cheapest: Mon, 14 Sep ₹1,030"* a figure
+that appeared nowhere else.
+
 **A closed row is priced at that day's floor** — *from ₹830 · 5 buses · tap to see them*. It used to
 show whichever bus happened to be the default, which ran up to **₹200 above** the day's cheapest, and
 the *Cheapest* pill ranked days on that same wrong figure. `minFareOn(d)` is the one accessor;
@@ -622,6 +627,10 @@ Money for the worked example: onward ₹1,599, return ₹1,320, total **₹2,919
 screen.* One row per day is right for the decision, but it makes the bus, the seat and the stops look
 fixed — the traveller sees one time, one seat and no stops at all. The line sits in the bar because
 that is where the decision is committed and the bar never scrolls away.
+
+**The row is called *Change your return day*, and it names no window.** The ticket carries two legs and
+one change row, which never said which leg it moved; and it advertised the traveller's window long
+after the window stopped capping the change.
 
 ### Change day (screen 12) — calendar, then buses
 
