@@ -2855,3 +2855,23 @@ instead of leaving yesterday's time under today's bus.
 The generalisation worth keeping: **when a value is a constant, ask what it would mean for it to
 vary.** If the answer is "a whole feature", it was never a constant — it was an unexamined
 assumption with a `const` in front of it.
+
+CHANGE · 2026-08-30 · (no skill) · Source: user
+**"There is no signal that they can change the bus timings, seat and points on the next screen. The
+user might feel stuck and clueless."** Right, and it is the cost of the decision made an hour
+earlier. One row per day is correct for the choice being made, but it shows one time, one seat and no
+stops — so all three read as fixed. The only place that said otherwise was the screen after this one.
+
+Added one muted line to the bottom bar: *You can change the bus, seat and stops on the next screen.*
+
+In the bar, not in the note block above the list, for the reason already recorded on 7 Aug when the
+note itself was moved: at the bottom of a long list nobody read it until after they had decided. The
+bar is where the decision is committed and it never scrolls away. Verified: 221 combinations, money
+agreeing, click-through through Change bus, and the bar still disappears with the rest of the screen
+in the empty and error states.
+
+LEARNED · 2026-08-30 · (no skill)
+**Every default-plus-override needs a third thing: a sign that the override exists.** This project
+used the pattern three times — seat, points, bus — and each time got the default right and the
+override right. Nobody asked whether the screen *before* the override says it is coming. A default
+the traveller does not know is a default is just a limitation.

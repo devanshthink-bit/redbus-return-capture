@@ -559,6 +559,11 @@ build.
 
 Money for the worked example: onward ₹1,599, return ₹1,320, total **₹2,919**.
 
+**The bottom bar says the choice is not over.** *You can change the bus, seat and stops on the next
+screen.* One row per day is right for the decision, but it makes the bus, the seat and the stops look
+fixed — the traveller sees one time, one seat and no stops at all. The line sits in the bar because
+that is where the decision is committed and the bar never scrolls away.
+
 ### Change bus (screen 07b)
 
 **One operator does not mean one bus a day.** `TERMS.md` §4 records the unverified same-operator
