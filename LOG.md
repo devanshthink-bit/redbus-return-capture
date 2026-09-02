@@ -2942,3 +2942,46 @@ tickets. Both times the wrong reading was the tidier one.
 
 The check that catches it: **before calling something a contradiction, name which object each claim
 is about.** If the objects differ, there is no contradiction, and the tidier story is the wrong one.
+
+DECISION · 2026-09-02 · (no skill) · Source: user + mentor
+**Mentor: "FlexiTicket lets you move to any date. This construct caps you at a week. Isn't
+FlexiTicket better?"** Ran both cases before answering. Booking from a single tap can later move to
+**29 days**; booking from a range can move to **6**. The 7-day cap is on the window picker, not on
+the ticket — one tap gives exactly redBus's reschedule.
+
+I read that gap as an inversion — *the more honest you are about not knowing, the less flexibility
+you get* — and recommended showing days outside the window, marked. **The user rejected it:** *"If
+our construct is a week's window, why should we show outside? What's the point of this window even?"*
+
+They are right and my recommendation contradicted the design's own premise. `BRIEF.md` renamed the
+field from *Back by* to *Last day* precisely so it would read as a commitment rather than a guess.
+Two taps mean *the earliest and the latest I can travel*. Showing days outside would ask for a
+constraint and then ignore it. **No change made.**
+
+It also dissolves the inversion. One tap is not dishonesty — it is *"I have no upper bound I am sure
+of, book me this day."* A range is *"I genuinely cannot travel after the 20th."* Different statements
+earn different reach, and that is coherent.
+
+**What the window is actually for, written down because I could not produce it on demand:**
+1. It lets you buy without naming a date — the one thing FlexiTicket cannot do
+2. It picks which day gets booked: the last *movable* day in the range, so a change is only ever
+   needed earlier
+3. It prices the spread — *"Cheapest is Tue 15 · ₹1,020, you save ₹80"* — which FlexiTicket cannot
+4. It filters the change list
+
+Only the fourth was under attack. Removing it would not have made the window pointless, but it would
+have made it dishonest.
+
+**Still open, and it is a session question, not a design one:** `CRITIQUE.md` §7 already names it —
+does anyone try to pick a day outside their own window? If they do, the second tap is being read as
+a guess and the cap is a cage. That is what the five sessions decide.
+
+LEARNED · 2026-09-02 · (no skill)
+**A design's own premise outranks a fresh finding, and I inverted that.** I measured 29 versus 6,
+built a story on the number, and recommended a change that would have contradicted a naming decision
+made deliberately in BRIEF. The number was real; the conclusion was not, because I never asked what
+the window is *for* before proposing to weaken it.
+
+**Before changing a constraint, state the job it does — all of them.** I could name one (filtering)
+and it was the only one my proposal touched. The other three took ten minutes to find and settled the
+question immediately.
