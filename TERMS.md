@@ -219,12 +219,37 @@ directly — the wording below is what redBus's terms are consistently quoted as
   not be refunded."**
 - **"Once the travel date change option is availed, the ticket cannot be further cancelled."**
 
-**[unconfirmed] A date change is same-operator only.** Multiple walkthroughs of the reschedule flow
-say the app shows "the bus schedule of the same operator" and you pick a new trip from that list.
-This is not in redBus's own terms, so treat it as very likely and still unproven. It is the largest
-open risk in the whole project — if it is true, the return list must be built around operator
-eligibility from the very first screen. `v3.html` already assumes it: the route has one operator,
-Laxmi Holidays, and day-level movability is checked before any promise is made.
+**[VERIFIED 2026-09-02] A date change is same-operator AND same-route only.** Settled from the live
+app, on the user's own FlexiTicket booking (ticket #TV9X11267641, Laxmi Holidays). The *Change travel
+date* screen states it under **How does this work?**:
+
+> "Choose from available buses — You can select bus from same operator and same route as original
+> ticket"
+
+This was the largest open risk in the project and it has closed **in favour of the design**.
+`v3.html` already assumes it: the route carries one operator, day-level movability is checked before
+any promise is made, and the outbound bus list flags eligibility per operator before the traveller
+picks.
+
+### 4a. The rest of the live Change travel date screen — primary evidence, 2026-09-02
+
+Same source. Everything below is quoted from the screen itself.
+
+| What it says | Why it matters |
+|---|---|
+| **"Free date change — No date change fee applicable. Just pay the fare difference, if any."** | Confirms the FlexiTicket promise in the reschedule flow itself, not just on the marketing page |
+| **"Once you change the date for this ticket, you will not be able to cancel or change the date again."** | Confirms **both** halves of §5 at the moment of the change — once per booking, and no cancellation after. Previously only in the T&Cs and an FAQ |
+| **"You will not be able to cancel or change the date again"** | Repeated as the first *How does this work* bullet. redBus states the harm twice on one screen |
+| **"A new ticket with an updated ticket number will be issued after rescheduling"** | **New fact.** The ticket identity changes. Anything holding the old number — a wallet pass, a forwarded PDF, an operator's manifest — is stale |
+| **"Insurance is not transferable upon rescheduling. The premium will be adjusted in the new ticket or refunded separately"** | **New fact**, and it is the same shape as the Free Cancellation interaction in §5: an add-on does not survive a date change |
+| Ticket details offers **"Bus change"** as a row separate from the date change | **New fact.** Changing the bus and changing the date are two different actions in the real product |
+| **"Review and cancel — 85% refund if you cancel From 29th Aug 02:20 PM Until 2nd Sep 02:20 PM"** | **The number we never had.** An ordinary FlexiTicket ticket, before any date change, refunds **85%** inside its window. §2 FAQ 2 only promised "minimum 50%" |
+
+**One contradiction on redBus's own screen, worth knowing before quoting it.** The banner says *"Free
+date change — No date change fee applicable"*, and the third *How does this work* bullet is headed
+**"Date change fee will be applicable"**. That bullet's body is entirely about insurance, so the
+heading reads as boilerplate shown to every ticket regardless of FlexiTicket. **Still unverified:**
+what a FlexiTicket ticket is actually charged at the end of the flow. Do not quote either line alone.
 
 ---
 
@@ -330,9 +355,11 @@ Say these before anyone finds them. Every one is deliberate.
 
 ## 9. Still not verified — the honest list
 
-1. **Is a date change same-operator only?** Strongly indicated by every description of the flow;
-   absent from redBus's own terms. **The biggest open risk.** Confirm by making a real booking and
-   opening the reschedule flow.
+1. ~~**Is a date change same-operator only?**~~ **CLOSED 2026-09-02** — confirmed same operator *and*
+   same route, from the live flow on a real booking. See §4. Confirmed exactly the way this list said
+   to: by making a real booking and opening the reschedule flow.
+1a. **Does a FlexiTicket ticket actually end the flow with a zero fee?** The screen says "Free date
+   change" at the top and "Date change fee will be applicable" in the third bullet. See §4a.
 2. **What is Free Cancellation actually priced at,** and does it scale with fare? Not published.
 3. **When is the cut-off 6 hours and when is it 12?** The terms say "as applicable to your booking"
    and never explain what decides it.

@@ -45,7 +45,8 @@ becomes reachable.
 | FlexiTicket gives a **minimum 50% refund** at 12h+ (50–100%, operator-dependent) — **not** free cancellation | FlexiTicket FAQ 2 |
 | Free Cancellation: 100% refund till 6/12h, paid add-on, **voided by rescheduling**, add-on fee itself non-refundable | Free Cancellation page |
 
-*Still unverified:* whether a date change is **same-operator only**. Multiple descriptions of the
+*Confirmed 2026-09-02:* a date change is **same-operator and same-route only** — quoted from the
+live reschedule flow on a real booking, `TERMS.md` §4. Superseded text: multiple descriptions of the
 reschedule flow say it lists "the bus schedule of the same operator". Treat as likely; confirm in
 the app. Also unverified: whether RedBus can cheaply query availability for a future unbooked date
 repeatedly.
@@ -162,7 +163,7 @@ rule) · Idea 15 (the guarantee).
 12. **Rescheduling voids Free Cancellation** (FAQ #3). Two flexibility products that cancel each other out, and the interaction is buried. Must be visible before payment.
 
 ### Operator reality
-13. **Is a date change same-operator only?** Likely yes, unconfirmed. If so, the return list must be built around operator eligibility from the first screen. **Confirm in the app.** Biggest open risk.
+13. ~~**Is a date change same-operator only?**~~ **CONFIRMED 2026-09-02** from the live app on a real FlexiTicket booking: *"You can select bus from same operator and same route as original ticket."* The return list is already built around operator eligibility from the first screen, so this closes in the design's favour. See `TERMS.md` §4.
 14. Confirmed: rescheduling is offered **only by select operators** → eligibility visible at bus selection; never offer the deadline input on an ineligible bus.
 15. One-bus-a-day routes: "earlier" means 24-hour jumps.
 16. Overnight buses — a "Monday" bus departing 23:00 Sunday. Pick a rule and apply it everywhere.

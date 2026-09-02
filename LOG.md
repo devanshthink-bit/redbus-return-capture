@@ -2875,3 +2875,47 @@ LEARNED · 2026-08-30 · (no skill)
 used the pattern three times — seat, points, bus — and each time got the default right and the
 override right. Nobody asked whether the screen *before* the override says it is coming. A default
 the traveller does not know is a default is just a limitation.
+
+LEARNED · 2026-09-02 · (no skill) · Source: user — a real booking
+**The biggest open risk in the project is closed, and it closed in the design's favour.** The user
+booked a FlexiTicket bus (ticket #TV9X11267641, Laxmi Holidays) and opened *Change travel date*. Under
+**How does this work?**:
+
+> "Choose from available buses — You can select bus from same operator and same route as original
+> ticket"
+
+**A date change is same-operator and same-route only.** Verified from the live app on a real booking,
+which is exactly how `TERMS.md` §9 said to settle it. `v3.html` already assumed it — one operator per
+route, day-level movability checked before any promise, eligibility flagged per bus on the outbound
+list — so nothing has to be rebuilt.
+
+Five more facts off the same two screens, all new:
+
+1. **"A new ticket with an updated ticket number will be issued after rescheduling."** The ticket
+   identity changes. Anything holding the old number goes stale.
+2. **"Insurance is not transferable upon rescheduling."** Same shape as the Free Cancellation
+   interaction: an add-on does not survive a date change.
+3. **Ticket details offers "Bus change" as a row separate from the date change.** Changing the bus
+   and changing the date are two different actions in the real product — which is worth knowing,
+   because v3 now has a Change bus screen of its own.
+4. **"85% refund if you cancel."** The number we never had. §2 FAQ 2 only promised "minimum 50%".
+   This is the ordinary cancellation that the date change destroys, and it is now a real figure.
+5. **"Once you change the date for this ticket, you will not be able to cancel or change the date
+   again"** — both halves of §5, stated in the flow itself, twice on one screen.
+
+**And one contradiction on redBus's own screen.** The banner says *"Free date change — No date change
+fee applicable"*; the third bullet is headed *"Date change fee will be applicable"* over body text
+that is entirely about insurance. It reads as boilerplate shown to every ticket. **New open item:**
+what a FlexiTicket is actually charged at the end of the flow. Do not quote either line alone.
+
+Recorded in `TERMS.md` §4 and the new §4a, and the unverified flags cleared in `BRIEF.md` #13 and
+`DEFENCE.md` (three places, including the closing "what would you do next").
+
+LEARNED · 2026-09-02 · (no skill)
+**The cheapest way to close a research risk was always going to be one real booking.** This sat at the
+top of the unverified list for a month, was the first thing named in the stakeholder defence, and was
+answered by a screenshot. It also paid for itself five times over — four facts nobody had asked for,
+and a number (85%) that a previous conversation had specifically lacked.
+
+Worth remembering when the next item goes on an unverified list: **name the single action that would
+settle it, and ask whether anyone has actually tried.**

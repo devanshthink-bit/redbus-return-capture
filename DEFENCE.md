@@ -1107,9 +1107,10 @@ is a bet, and it is testable for the cost of five sessions.
 ### "Your prototype is not the real product. How do I know this survives engineering?"
 
 It rides an existing reschedule mechanism, so the expensive parts already exist. What is new is an
-entry point, a filtered list, and a move path. The thing I would flag as genuinely unresolved is
-whether a date change is **same-operator only** — I believe it is, I have not confirmed it, and if
-it is wrong the return list has to be rebuilt around operator eligibility from the first screen.
+entry point, a filtered list, and a move path. The same-operator question that used to sit here is
+**settled** — confirmed 2026-09-02 from the live reschedule flow on a real FlexiTicket booking:
+*"You can select bus from same operator and same route as original ticket."* The return list is
+already built around operator eligibility from the first screen, so it closed in the design's favour.
 
 ---
 
@@ -1255,8 +1256,10 @@ feature. The moderator rules are stricter than the tasks: give a task, then stop
 
 Three, in order. **No competitive landscape** — FlixBus was looked at informally and that is not a
 landscape. **The guardrail has no baseline** — 95% is a target I set, not an observed number.
-**Same-operator-only is unverified** — I believe a date change stays with the same operator, and if
-that is wrong the return list must be rebuilt around operator eligibility from the first screen.
+**A FlexiTicket's actual date-change fee is unverified** — the live *Change travel date* screen says
+*"Free date change · No date change fee applicable"* at the top and *"Date change fee will be
+applicable"* three bullets below. I have not taken a change to completion to see which wins.
+(The same-operator question that stood here is now confirmed — `TERMS.md` §4.)
 
 ### "How much of this is your work versus AI?"
 
@@ -1276,7 +1279,8 @@ Say them plainly, early, without apology. Each one, followed by what you'd do ab
 | **No usability testing yet** | The biggest one. Say it first, unprompted. Five sessions are scripted and scheduled; the script names the specific person for each finding. Until they run, the deadline framing is a bet |
 | **Guardrail has no baseline** | 95% is a stated target. No live data exists for a concept study |
 | **No competitive landscape** | Not run. FlixBus looked at informally. That's not a landscape |
-| **Same-operator restriction unverified** | I believe a date change stays with the same operator; multiple descriptions say so, but I have not confirmed it in the app. If it's wrong, the return list must be rebuilt around operator eligibility from the first screen |
+| **~~Same-operator restriction unverified~~ — closed 2026-09-02** | Confirmed in the live app: same operator *and* same route. The design already assumed it, so nothing to rebuild |
+| **A FlexiTicket's real date-change fee** | The live screen contradicts itself — "no date change fee applicable" at the top, "date change fee will be applicable" three bullets down. I have not run a change to completion |
 | **Idea 9 not built** | The rule deciding whether the step appears at all. Specified, not built |
 | **Group all-or-nothing not built** | Specified, not built |
 | **One-bus-a-day routes** | "Earlier" means a 24-hour jump. Not addressed |
@@ -1316,7 +1320,9 @@ would prove you wrong — people answering "probably Monday" instead of "definit
 
 ### "What would you do next?"
 
-Three things, in order. Run the five sessions. Verify the same-operator rule in the live app.
+Three things, in order. Run the five sessions. ~~Verify the same-operator rule in the live app~~ —
+done, 2026-09-02, and it confirmed the design's assumption; the open one now is what a FlexiTicket is
+actually charged for a change.
 Build the Idea 9 guard, so the step never appears on routes where the promise can't be kept.
 
 Then the parked idea worth naming: design for the moment the plan actually resolves — after the
