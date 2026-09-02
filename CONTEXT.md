@@ -63,7 +63,7 @@ on push. `raw/` (interview transcripts) is gitignored.
 | `artefacts.html` | The FigJam-style board — 11 sections, scope card → design brief. **Generated from NOTES.md**, not retyped |
 | `index.html` / `prototype.html` | **v1** — identical copies. index.html is what GitHub Pages serves |
 | `v2.html` | **v2** |
-| `v3.html` | **v3 — the live one being changed** |
+| `index.html` | **the viewer and v3 — the file being changed.** Served at the bare root URL |
 | `component-sheet.html` | Design-language component sheet |
 
 **Source material** (not in the repo): `/Users/devansh/Downloads/RedBus Case Docs/` — 8 interview
@@ -80,10 +80,10 @@ folder name** — PAM04L01–L04, PAM05L03.
 all three  https://devanshthink-bit.github.io/redbus-return-capture/     <- hand out this one
 v1 alone   https://devanshthink-bit.github.io/redbus-return-capture/v1.html
 v2 alone   https://devanshthink-bit.github.io/redbus-return-capture/v2.html
-v3 alone   https://devanshthink-bit.github.io/redbus-return-capture/v3.html
 board      https://devanshthink-bit.github.io/redbus-return-capture/artefacts.html
 ```
-The root is a redirect to `v3.html`, which carries the version switch. `?test` survives it.
+The root **is** the viewer — `index.html` — and it carries the version switch, so the URL names
+no version. `v3.html` is a redirect to it, kept for old links; `?test` survives the hop.
 **`index.html` is no longer v1.** v1's file is unchanged and served at `v1.html` and
 `prototype.html`, both still `a96fc35f…`.
 
@@ -161,7 +161,7 @@ Ticket → Change day → Confirm date change → Pay the difference → Date ch
 The **return seat screen and the return points screen are no longer in the flow** — both are
 defaulted and changed from Review your trip via *Change seat* / *Change points*.
 
-**Session URL:** `v3.html?test` hides the two dev rails **and the shell bar**, and the phone grows to
+**Session URL:** `/?test` hides the panel, and the phone grows to
 fill the window. Without the flag they stay, for building.
 
 ### The presentation shell (outside the prototype)
@@ -198,6 +198,8 @@ design-language tokens.
   red while a non-default state is on, so a hidden state can never look like a broken prototype
 - **iPhone mock** — `.device > .deviceframe > .viewport > (.ios status bar + .phone)`. The frame is a
   fixed 430 × 948 and is scaled **as one piece** by `--ds`, set by `fitDevice()` on load and resize.
+  **`--ds` is capped at 0.92, not 1** — on a tall window the frame would otherwise render full size
+  and dominate the page. In session mode there is no panel to balance it, so the cap is 1.05.
   Nothing inside the 402 × 874 prototype changes size, so no prototype layout depends on the window
 - The iOS status bar is a **sibling above** `.phone`, never an overlay on it, so it cannot cover content
 - **This removed `.phone{height:calc(100vh - 48px)}`.** That rule existed because the 874px frame ran
@@ -264,7 +266,7 @@ saying anything works:**
 
 ```bash
 # 1 · does the script even parse
-python3 -c "import re;s=open('v3.html').read();open('/tmp/x.js','w').write(re.findall(r'<script>(.*?)</script>',s,re.S)[-1])"
+python3 -c "import re;s=open('index.html').read();open('/tmp/x.js','w').write(re.findall(r'<script>(.*?)</script>',s,re.S)[-1])"
 node --check /tmp/x.js
 ```
 
@@ -526,7 +528,7 @@ at checkout (n87) · no photos for government buses (n85).
 ## 18. The hi-fi Figma build — started 2026-08-27
 
 The prototype screens rebuilt pixel-exact in Figma, styled to the **real redBus iOS app**, for
-stakeholder presentation. This is a separate deliverable from `v3.html`; the prototype is unchanged.
+stakeholder presentation. This is a separate deliverable from the prototype, which is unchanged.
 
 **File:** `t9srahcEB1ioKyytu0sEMs` — three pages, and they stay separate:
 

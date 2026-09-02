@@ -4062,3 +4062,30 @@ twice as wide.
 correctly side by side collapsed into one column that buried the screen list under the colour
 swatches. The wide layout was fine; the fallback was the thing to design.
 
+CHANGE · 2026-09-03 · (no skill) · Source: user
+**"why v3 in url when it has all versions? and phone mock is looking too big."** Both fair.
+
+The viewer moved to `index.html`, so the URL is the bare
+`devanshthink-bit.github.io/redbus-return-capture/` and names no version. `v3.html` is now the
+redirect, kept so older links — and the test script's `?test` — still land. **The file to change is
+`index.html` from here on**, and CLAUDE.md, CONTEXT.md and TEST_SCRIPT.md all say so now.
+
+The device cap went from 1.0 to **0.92**. `--ds` is bound by window height, so on a short laptop
+nothing changes; on a tall screen the frame had been rendering at nearly its full 430 × 948 and
+reading as the page rather than as a phone on it. At 1512 × 1080 the device is now 396 × 872 with
+116px margins and a 160px gap. Session mode keeps a 1.05 cap — with the panel hidden there is
+nothing for it to overpower.
+
+Verified: `/` serves the viewer, `/v3.html` and `/v3.html?test` both redirect and keep the flag,
+session mode hides the panel and centres the phone at 1.05, v1 still mirrors 17 screens, and v1, v2
+and prototype.html are byte-identical.
+
+LEARNED · 2026-09-03 · (no skill)
+**A URL is a claim about what the page is.** `v3.html` said "this is version three" to everyone who
+looked at the address bar, while the page underneath held all three. The redirect costs nothing and
+the root says the true thing.
+
+**Fit-to-window is not the same as the right size.** `fitDevice` was written to stop the frame running
+off the bottom of a laptop, so its cap was "as big as fits". On a tall screen that is far too big —
+a mock has a size that reads correctly, and it is smaller than the space available.
+

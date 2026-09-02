@@ -1,6 +1,6 @@
 # Usability script — the return flow
 
-**Build to test:** https://devanshthink-bit.github.io/redbus-return-capture/v3.html?test — **v3, the calendar**
+**Build to test:** https://devanshthink-bit.github.io/redbus-return-capture/?test — **v3, the calendar**
 **The job:** a traveller who doesn't yet know their return date leaves the session holding a return they can change.
 
 > **Send that URL, with `?test` on the end.** Without it, the participant sees two dark panels
@@ -11,7 +11,7 @@
 > handing over.
 
 > **Three prototypes exist. Give each participant exactly one.**
-> `/` v1 *Last day* · `/v2.html` *Return window, cheapest booked* · `/v3.html` *Calendar*
+> `/v1.html` *Last day* · `/v2.html` *Return window, cheapest booked* · `/` *Calendar, v3*
 >
 > Test **v3**. It is the build that is still changing, it is the one every fix and every document
 > now describes, and it carries the open bet in its cleanest form: **when someone genuinely doesn't
