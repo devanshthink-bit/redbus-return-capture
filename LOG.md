@@ -3137,3 +3137,22 @@ never changed, so it quietly became a promise the product breaks.
 **When a new mechanism lands, re-read the copy that was true before it.** Nothing flags this: the
 words still parse, the screen still renders, and the contradiction only exists across two screens
 built a month apart.
+
+NOTE · 2026-09-02 · (no skill)
+Completing the change-day rebuild entry above, because it recorded what the new shape does and not
+what the old one was good at — and a shape that ran from the first build until today deserves both.
+
+**What the listing did well.** Every day carried its full consequence on one screen: the fare
+difference, the seat you would get and why, *No seats left*, *No date change*. Nothing was one tap
+away. For a traveller browsing — *"is there anything cheaper?"* — it was the better screen, and it is
+the reason it survived four rounds of attack unchanged.
+
+**What it cost, and why that finally outweighed it.** One row per day means one bus per day. That was
+invisible while the model had one service a day, and became a hole the moment it did not. And it
+answered *"which day suits me?"* for someone who, at change time, already knows.
+
+**What the calendar gives up, stated so it is not rediscovered as a bug.** A day now shows one number
+instead of four facts. The seat consequence, the no-refund wording and the bus times all moved one tap
+later. If sessions show people picking a day and backing out repeatedly, that is the cost showing up,
+and the fix would be more on the calendar cell — not a return to the list, which cannot address the
+multiple-bus hole.
