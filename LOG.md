@@ -4122,3 +4122,28 @@ should be pinned on the edge it is measured from, or it will move every time the
 **A grid item that spans rows sizes them.** Its excess height is distributed back into the tracks it
 crosses, which moves everything else in those tracks. One `1fr` takes it out of the calculation.
 
+CHANGE · 2026-09-03 · (no skill) · Source: user
+**"so many names of screens is making it look cluttered. any other way to clean it?"**
+
+The eighteen screen names were not the clutter. The clutter was the nineteenth column: every row
+carried the flow stage it belonged to — *Book* four times, *Return* five, *Pay* three, *After* twice,
+*Move* four — eighteen repeated words down the right-hand edge.
+
+That word is the same for every screen in a run, so it is the run's, not the row's. It is now five
+quiet headings — *Book the outbound · Add a return · Review and pay · After booking · Move the date* —
+and the right-hand column is gone. Eighteen rows read as five groups, and the headings say more than
+the labels did: someone who has never seen the prototype can read the flow off the panel.
+
+This is the **second** time the same mistake has been made in this project. On 2 September it was
+*from* on all thirty calendar cells, and the correction was identical.
+
+Verified: five headings, eighteen rows, panel still fits at 1080 with no scroll and no clipping, the
+caption still names the screen and the state, nothing shifts across all four version transitions, and
+one column below 1240 is unchanged. v1, v2 and prototype.html byte-identical.
+
+LEARNED · 2026-09-03 · (no skill)
+**I have now made the repeated-qualifier mistake twice, in the same repo, three weeks apart.** Both
+times it looked like helpful labelling and read as noise. The test is one question, and it should be
+asked before the label is written, not after someone complains: *does this word vary between the
+items?* If it does not, it belongs to the heading.
+

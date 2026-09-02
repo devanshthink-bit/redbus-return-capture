@@ -177,6 +177,15 @@ design-language tokens.
   the whole panel fits with no scrolling; below that it is one column. Source order is a, b, c
   precisely so the one-column fallback reads title → screens → swatches, and the screen list
   never ends up below the fold behind the swatches
+- **The screen list is grouped into five runs** — Book the outbound · Add a return · Review and pay ·
+  After booking · Move the date — with a quiet heading each. The flow stage used to be repeated on
+  every one of the eighteen rows, which is the same mistake as `from` on every calendar cell: a
+  qualifier that is the same for a whole run belongs to the run
+- **Three things that will move the panel if you undo them:** the panel is pinned to the top of the
+  row (centred, it slid as the version changed its height); `.vnote` reserves three lines (the notes
+  are two or three); and the grid's second row is `1fr` (a spanner over `auto` rows feeds its extra
+  height back into row 1). Also `.panel` needs its 10px padding — `overflow-y:auto` makes it a
+  scrollport, which clips **both** axes, and the rails hang 10px either side
 - **`.layout` caps the row at 1280px and uses `space-between`.** Two columns huddled in the
   middle of a wide window with dead margins was the complaint; splitting the panel widened the
   composition enough to fill the frame

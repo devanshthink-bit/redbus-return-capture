@@ -399,13 +399,16 @@ body.legacy-on .phone{display:none}
 .dev button{background:none;color:var(--s-mute);border:0;border-radius:9px;padding:5px 10px;
  font-family:inherit;font-size:13px;font-weight:500;letter-spacing:-.008em;line-height:1.3;
  cursor:pointer;text-align:left;transition:background 130ms,color 130ms;
- display:flex;align-items:baseline;gap:10px}
-.dev button .s-leg{margin-left:auto;font-size:11px;font-weight:500;color:#C3C3CE;flex:0 0 auto;
- transition:color 130ms}
+ display:block;width:100%}
+/* The stage each screen belongs to used to be repeated on all eighteen rows. It is the same
+   for every screen in a run, so it is the group's, not the row's -- the same correction as
+   `from` on the calendar cells. Five quiet headings read as five things, not eighteen. */
+.dev h3{font-size:12px;font-weight:600;letter-spacing:-.005em;color:var(--s-faint);
+ margin:16px 0 3px;padding:0 10px}
+.dev h3:first-child{margin-top:0}
 .dev button:hover{background:rgba(255,255,255,.75);color:var(--s-ink)}
 .dev button:focus-visible{outline:0;box-shadow:0 0 0 2px rgba(216,78,85,.45)}
 .dev button[aria-pressed="true"]{background:var(--s-red-soft);color:var(--s-red);font-weight:700}
-.dev button[aria-pressed="true"] .s-leg{color:rgba(216,78,85,.6)}
 
 .dev.states{display:block;margin-top:22px}
 .dev.states>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;
@@ -527,24 +530,29 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
     <p class="legacynote">Loading this version&rsquo;s screens&hellip;</p>
     <div id="legacyrail"></div>
 <div class="dev screens" id="screenrail">
-  <button onclick="go('s-home')" id="t-home" aria-pressed="true"><span>Home &middot; search</span><span class="s-leg">Book</span></button>
-  <button onclick="go('s-obuses')" id="t-obuses"><span>Outbound buses</span><span class="s-leg">Book</span></button>
-  <button onclick="go('s-oseat')" id="t-oseat"><span>Outbound seat</span><span class="s-leg">Book</span></button>
-  <button onclick="go('s-outpoints')" id="t-outpoints"><span>Outbound points</span><span class="s-leg">Book</span></button>
-  <button onclick="go('s-window')" id="t-window"><span>Return</span><span class="s-leg">Return</span></button>
-  <button onclick="go('s-picked')" id="t-picked"><span>Your return</span><span class="s-leg">Return</span></button>
-  <button onclick="go('s-bus')" id="t-bus"><span>Return bus</span><span class="s-leg">Return</span></button>
-  <button onclick="go('s-seat')" id="t-seat"><span>Return seat</span><span class="s-leg">Return</span></button>
-  <button onclick="go('s-points')" id="t-points"><span>Return points</span><span class="s-leg">Return</span></button>
-  <button onclick="go('s-review')" id="t-review"><span>Trip review</span><span class="s-leg">Pay</span></button>
-  <button onclick="go('s-pay')" id="t-pay"><span>Payment</span><span class="s-leg">Pay</span></button>
-  <button onclick="go('s-done2')" id="t-done2"><span>Booking confirmed</span><span class="s-leg">Pay</span></button>
-  <button onclick="go('s-ticket')" id="t-ticket"><span>Ticket</span><span class="s-leg">After</span></button>
-  <button onclick="go('s-mybook')" id="t-mybook"><span>My Bookings</span><span class="s-leg">After</span></button>
-  <button onclick="openWithin()" id="t-within"><span>Change day</span><span class="s-leg">Move</span></button>
-  <button onclick="go('s-wibus')" id="t-wibus"><span>Move &middot; buses</span><span class="s-leg">Move</span></button>
-  <button onclick="go('s-confirm')" id="t-confirm"><span>Move confirm</span><span class="s-leg">Move</span></button>
-  <button onclick="go('s-done')" id="t-done"><span>Move done</span><span class="s-leg">Move</span></button>
+  <h3>Book the outbound</h3>
+  <button onclick="go('s-home')" id="t-home" aria-pressed="true">Home &middot; search</button>
+  <button onclick="go('s-obuses')" id="t-obuses">Outbound buses</button>
+  <button onclick="go('s-oseat')" id="t-oseat">Outbound seat</button>
+  <button onclick="go('s-outpoints')" id="t-outpoints">Outbound points</button>
+  <h3>Add a return</h3>
+  <button onclick="go('s-window')" id="t-window">Return</button>
+  <button onclick="go('s-picked')" id="t-picked">Your return</button>
+  <button onclick="go('s-bus')" id="t-bus">Return bus</button>
+  <button onclick="go('s-seat')" id="t-seat">Return seat</button>
+  <button onclick="go('s-points')" id="t-points">Return points</button>
+  <h3>Review and pay</h3>
+  <button onclick="go('s-review')" id="t-review">Trip review</button>
+  <button onclick="go('s-pay')" id="t-pay">Payment</button>
+  <button onclick="go('s-done2')" id="t-done2">Booking confirmed</button>
+  <h3>After booking</h3>
+  <button onclick="go('s-ticket')" id="t-ticket">Ticket</button>
+  <button onclick="go('s-mybook')" id="t-mybook">My Bookings</button>
+  <h3>Move the date</h3>
+  <button onclick="openWithin()" id="t-within">Change day</button>
+  <button onclick="go('s-wibus')" id="t-wibus">Move &middot; buses</button>
+  <button onclick="go('s-confirm')" id="t-confirm">Move confirm</button>
+  <button onclick="go('s-done')" id="t-done">Move done</button>
 </div>
 
 <details class="dev states" id="staterail">
@@ -2546,7 +2554,7 @@ function setCaption(){
   if(version !== 3){ cap.innerHTML = 'Version ' + version + ' &mdash; frozen, shown as it was built'; return; }
   const on = document.querySelector('.phone .screen.on');
   const btn = on && document.querySelector('#screenrail [aria-pressed="true"]');
-  const name = btn ? btn.firstElementChild.textContent : '';
+  const name = btn ? btn.textContent : '';
   const st = document.querySelector('#staterail [aria-pressed="true"]');
   const stName = st && st.id !== 'st-default' ? ' &middot; ' + st.textContent : '';
   cap.innerHTML = name ? '<b>' + name + '</b>' + stName : '';
