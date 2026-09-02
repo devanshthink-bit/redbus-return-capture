@@ -1494,13 +1494,16 @@ function renderWithin(){
       inner+='<span class="f">Full</span>'; aria+=', full, no seats left'; }
     else {
       n++;
-      const diff=FARE[d]-FARE[heldDay];
-      inner+='<span class="f">'+(diff>0?'+'+RUPEE(diff):diff<0?'\u2212'+RUPEE(-diff):RUPEE(FARE[d]))+'</span>';
-      aria+=', '+(diff>0?RUPEE(diff)+' more':diff<0?RUPEE(-diff)+' less, not refunded':'same price');
+      // What the day costs, not what it is worth. A cheaper day refunds nothing, so a negative
+      // number here promised money back that never comes -- it is 0. And a day runs several buses
+      // at several fares, so the honest single number is the LEAST they could pay that day, which
+      // they can always achieve by picking that bus on the next screen.
+      const cost = Math.min.apply(null, busesOn(d).map(function(i){
+        return Math.max(0, fareOfBus(d,i)-FARE[heldDay]); }));
+      inner+='<span class="f">'+(cost>0?'+'+RUPEE(cost):RUPEE(0))+'</span>';
+      aria+=', '+(cost>0?'from '+RUPEE(cost)+' more':'nothing more to pay');
       if(!MOVABLE(d)){ cls.push('nomove'); inner+='<i class="nmdot" aria-hidden="true"></i>';
         aria+=', no date change on this day'; }
-      // the week they gave still reads as the week they gave -- it just is not a fence any more
-      if(sel.length===2 && d>=sel[0] && d<=sel[1]) cls.push('mid');
     }
     html += '<button class="'+cls.join(' ')+'"'+dis+' aria-label="'+aria+'" aria-pressed="false" onclick="tapMoveDay('+d+')">'+inner+'</button>';
   }
@@ -1512,8 +1515,10 @@ function renderWithin(){
   const note=document.getElementById('wi-note');
   if(note) note.innerHTML = '<dt class="crit">One change only</dt>'
     + '<dd>After it, you cannot cancel this ticket.</dd>'
+    + '<dt class="crit">No refund on a cheaper day</dt>'
+    + '<dd>You only pay when the new bus costs more.</dd>'
     + '<dt>Any date, not just your week</dt>'
-    + '<dd>Each day shows its closest bus to yours. You pick the bus next.</dd>';
+    + '<dd>Each day shows the least you would pay. You pick the bus next.</dd>';
   withinVisibility(n===0);   // no day left to move to is still an empty state
   return n;
 }

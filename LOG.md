@@ -3051,3 +3051,35 @@ Three call sites were quietly wrong: the change list, `paintPay()` and `doMove()
 `data-` attributes and one accessor caught this for seats and times because those values are *printed*.
 Money is **computed**, and a computation cannot carry an attribute. The check that works for it is the
 one that found this: **take one journey and compare the same number on two screens.**
+
+CHANGE · 2026-09-02 · (no skill) · Source: user
+Three corrections to the new change-day calendar, all of them right.
+
+**1 · The week tint went.** *"Since he can move it to any date, there is no point highlighting
+them."* Correct — the tint was carried over from the booking calendar, where the week does mean
+something. Here it implied a preference the product no longer has.
+
+**2 · No negative numbers.** *"Anyway the user is not gonna get the difference, so show ₹0."* A
+cheaper day refunds nothing, so `−₹230` promised money back that never arrives. Now `₹0`. Not a
+softening: the calendar answers *what will this cost me*, and the answer is nothing. The honest
+*"₹210 less — no refund"* still appears on the bus list one tap later, where there is room for it,
+and the calendar's own note now carries **No refund on a cheaper day** as a critical rule — which is
+also what explains a screen full of `₹0`.
+
+**3 · Which bus the number came from.** *"For a particular date a lot of buses would be there, so how
+are we deciding how much fare difference to show?"* It was the day's *default* bus — arbitrary, and
+invisible to the reader. Now it is the **least they could pay that day**, the minimum across that
+day's services, which they can always achieve by picking that bus on the next screen.
+
+Verified: no tinted cells, no negative figures, and every day's number checked against the cheapest
+bus in its own list. 234 combinations, money agreeing, and a paid move reading `+₹140` on the
+calendar, `₹140` on Confirm and `Pay ₹140`.
+
+LEARNED · 2026-09-02 · (no skill)
+**A summarised number needs a stated rule, or it is a guess with a currency symbol on it.** The
+calendar showed one figure per day for a day that has several fares, and I never chose which one —
+it was whichever bus the default happened to land on. Nobody reading the screen could have known.
+
+**When one number stands for many, say which one it is:** cheapest, typical, or the one you would
+get. Here it is the cheapest, and it is the only one of the three that can never be wrong — the
+traveller can always reach it.

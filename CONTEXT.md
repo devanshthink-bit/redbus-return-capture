@@ -585,11 +585,19 @@ things were wrong with it: somebody changing a date usually *knows* the date, so
 to find it is the wrong question; and one row per day could only ever offer one of that day's buses,
 so two of three services were unreachable.
 
-Now: a calendar carrying the **price difference on every day** (`−₹170`, `+₹60`), `Full` where the
-bus is sold out, `Booked` on the day held, a dot for no-date-change, and the traveller's week tinted.
-Tap a day → **Choose your bus**, every service that runs it, each with the fare difference against
-what they hold and the seat they would get. That is more than redBus's own calendar shows, which
-carries dates and nothing else.
+Now: a calendar carrying **what each day would cost** (`₹0` or `+₹140`), `Full` where the bus is sold
+out, `Booked` on the day held, and a dot for no-date-change. Tap a day → **Choose your bus**, every
+service that runs it, each with the fare difference against what they hold and the seat they would
+get. That is more than redBus's own calendar shows, which carries dates and nothing else.
+
+**Three rules the number obeys.**
+- **Never negative.** A cheaper day refunds nothing, so it is `₹0`. Showing `−₹230` promised money
+  back that never comes. The *"less — no refund"* line still appears on the bus list, where there is
+  room to say it properly.
+- **The least they could pay.** A day runs several buses at several fares, so the single number is
+  the minimum over that day's services — a figure they can always achieve on the next screen.
+- **No week tint.** The window is not a fence any more, so highlighting it on the change calendar
+  implied a preference the product does not have.
 
 `movedFare()` is the one accessor for what the move costs. Confirm and Pay each used to recompute it
 from the day's *default* bus, so moving to a cheaper service showed ₹140 on one screen and ₹230 on
