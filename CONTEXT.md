@@ -166,7 +166,13 @@ Everything around the phone is stakeholder chrome, not design under test. It is 
 stylesheet under *PRESENTATION SHELL* and uses `--s-` prefixed tokens so it can never collide with the
 design-language tokens.
 
-- **Light page**, redBus red accents, a white top bar with a vector redBus lockup drawn as inline SVG
+- **Light page**, a white top bar with a brand hairline, and the **real** logo — the unaltered path
+  from `RedBus_Logo_(2015-present).svg`, which is also where the shell red `#D84E55` comes from.
+  That is the *logo* red; the prototype's own `--accent` `#C54646` is the *button* red measured off
+  the app, and the two are deliberately different. Shell tokens never touch the prototype's
+- **One rail on the left**, not two on both sides. Screens are a plain list; **states are a
+  `<details>` shut by default** — they are for probing, not for walking the flow. Its summary turns
+  red while a non-default state is on, so a hidden state can never look like a broken prototype
 - **iPhone mock** — `.device > .deviceframe > .viewport > (.ios status bar + .phone)`. The frame is a
   fixed 430 × 948 and is scaled **as one piece** by `--ds`, set by `fitDevice()` on load and resize.
   Nothing inside the 402 × 874 prototype changes size, so no prototype layout depends on the window

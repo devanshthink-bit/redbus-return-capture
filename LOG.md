@@ -3962,3 +3962,33 @@ it in a frame and scaling that keeps the artefact fixed and moves the compromise
 **Chrome around a prototype is read as part of it.** Dark developer rails told a stakeholder they were
 looking at a work in progress before they read a single screen. The screens never changed.
 
+CHANGE · 2026-09-03 · (no skill) · Source: user
+**"use this redbus logo ... move screens tabs to left and make states section collapsible by default."**
+He supplied `RedBus_Logo_(2015-present).svg`. The hand-drawn bus lockup I had made from a screenshot is
+gone; the header now carries that file's path unaltered.
+
+Its fill is `#D84E55`. The prototype's `--accent` is `#C54646`, measured off the app's buttons. Both are
+right and they are not the same red — the logo red and the button red. The shell now uses `#D84E55` and
+the prototype keeps `#C54646`, which is why the shell tokens are prefixed and separated.
+
+Both rails collapsed into one card on the left. Screens stay a plain list. States became a `<details>`
+shut by default, with the count on the summary. A shut list can hide a live state, so the summary turns
+red whenever anything other than `default` is on.
+
+An empty spacer opposite the rail keeps the phone in the middle of the window above 1180px; below that
+the spacer drops and the phone sits beside the rail. `justify-content:safe center` stops the rail being
+clipped off the left edge when the row overflows.
+
+Verified: v1, v2 and prototype.html byte-identical; screens and states switch and the rail marks the
+right row; the dirty marker turns on for offline and off again for default; `?test` hides the bar, the
+rail and the glow and scales the phone to 0.97; the 375px breakpoint drops all of it and the phone
+fills the screen.
+
+LEARNED · 2026-09-03 · (no skill)
+**A control you hide has to say it is doing something.** Shutting the state list made the page calm and
+made a live state invisible — someone would have hit a screen stuck in `offline` and read it as a bug in
+the prototype. One red summary costs nothing and removes the whole failure.
+
+**A brand has more than one red.** The logo red and the primary-button red differ by a visible amount,
+and copying one over the other to "make it consistent" would have made both wrong.
+
