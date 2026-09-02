@@ -512,6 +512,18 @@ Tags are green for Cheapest (money-positive, matching the wallet strip and the r
 grey for No date change. `Card / Return day` carries When, Price, Operator and Note as text
 properties with booleans for the note and the tag row.
 
+**The seat, and why only the seat.** Every row names the seat that day would give, from `SEATOF(d)` —
+the onward seat's position where it is free, the nearest seat where it is not. On a row where it does
+not match the onward seat, an amber **Different seat — U8 taken** pill gives the reason, in the same
+demoted colour and with the same label the Change day list uses. Without it the list simply showed a
+different number on some days and not others.
+
+The boarding and dropping points are deliberately **not** on these rows. They are identical on every
+day — one operator, one service, 23:55 every night — so repeating them per row would add nothing to
+the only decision the screen asks for, which is *which day*. The seat is the opposite: it genuinely
+varies by day, which is exactly why it needs the reason. Both points are named with their times on
+Trip review, with **Change points** beside **Change seat** (decision of 13 Aug).
+
 ### Trip review (screen 07)
 
 Two frames — `07` for the two legs, `07a` scrolled to the terms, passenger, add-ons and total.

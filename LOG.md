@@ -2721,3 +2721,36 @@ nothing later can re-explain it.
 
 So: **when CONTEXT and LOG disagree about a reason, LOG wins and CONTEXT is the bug** — CONTEXT is
 written after the fact and is the only one of the two that can be improved into being wrong.
+
+CHANGE · 2026-08-30 · (no skill) · Source: user
+**"If the user selects U8 on the onward, the return shows U7 and we are not telling him why."**
+Correct, and it was a gap I opened yesterday: making the seat truthful gave the list a number that
+moves between days with no reason attached.
+
+Rows whose seat does not match the onward seat now carry an amber **Different seat — U8 taken**
+pill. Same label and same demoted colour as the Change day list, which had already solved this
+exact problem — losing the refund outranks a seat change, and DESIGN_LANGUAGE allows one critical
+rule per block. Rows that give the onward seat carry nothing, because nothing about them is
+surprising. With an onward seat that is free every day, no pill appears at all.
+
+**The second half of the question — the boarding and dropping points — is a no, with a reason.**
+They are identical on every day: one operator, one service, 23:55 every night. Repeating them seven
+times adds nothing to the only decision the screen asks for, which is *which day*. The seat is the
+opposite case: it genuinely varies, which is why it earns the explanation. Both points are already
+named with their times on Trip review, beside Change points (decision of 13 Aug). Recorded in
+CONTEXT so the next reader does not re-open it.
+
+Verified: outbound U8 gives U8 on Fri/Sat with no pill and U7 with the pill from Mon on; the row's
+promise, Trip review and the ticket all name U7. Four §10 checks pass — 208 combinations, money
+agreeing, click-through, Back on every screen.
+
+LEARNED · 2026-08-30 · (no skill)
+**Making a value true is not the same as making it legible, and fixing the first can expose the
+second.** Yesterday the list showed a seat that was wrong; today it showed a seat that was right and
+unexplained. The second is a smaller problem but a newer one, and it existed *because* of the fix —
+a number that was noise when it was arbitrary became a question once it was real.
+
+The general form: **when a value stops being decorative, check whether the screen ever explains it.**
+Anything that varies row to row is making a claim, and a claim with no reason beside it is the next
+bug report. The counter-test is the one that keeps this from becoming "explain everything": ask
+whether the value varies at all. The points do not, so they say nothing and belong elsewhere.

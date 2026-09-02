@@ -1231,6 +1231,10 @@ function renderPicked(){
         + '<div class="subrow"><span class="sub">'+OPERATOR+'</span><span class="onw">No seats left</span></div>'
         + (tags.length?'<div class="pillrow">'+tags.join('')+'</div>':'') + '</div>';
     }
+    // The seat rule anchors on the onward seat, so a row that does not match it needs the reason
+    // beside it. Without this the list just showed a different number on some days and not others.
+    // Same label the Change day list uses, in the same demoted colour — losing the refund outranks it.
+    if(seat !== outSeat()) tags.push('<div class="pill warnpill">\u21BB Different seat \u2014 '+outSeat()+' taken</div>');
     const right = d===heldDay ? '<span class="onw">Booked</span>'
       : (!heldDay ? ''
         : diff>0 ? '<span class="onw diffup">'+RUPEE(diff)+' more</span>'
