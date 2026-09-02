@@ -3992,3 +3992,40 @@ the prototype. One red summary costs nothing and removes the whole failure.
 **A brand has more than one red.** The logo red and the primary-button red differ by a visible amount,
 and copying one over the other to "make it consistent" would have made both wrong.
 
+CHANGE · 2026-09-03 · (no skill) · Source: user
+**"dont give it card bg make it gel in the bg ... why u wrote concept? its not looking professional
+these heading u gave doesnt feel ready ... include those two also in same prototype so that i can
+change version easily."** He sent a prototype page a designer had built for Zepto as the bar.
+
+The top bar is gone. Everything is one left column sitting straight on the page with no card behind
+it: lockup, title *Return capture*, a two-line lede, a version switch, the screens, the states, six
+sampled swatches and a footnote. The page is a gradient — warm red top-left, cool violet top-right,
+near-white at the foot — with a soft glow behind the device. The **Concept** tag is deleted.
+
+All three versions now live behind one URL. The root redirects to `v3.html`, which carries the
+switch. v1 and v2 are loaded whole into an iframe sized so their own centred 402×874 frame lands
+exactly on the crop, and **their rails are read out of the loaded frame and mirrored into the
+panel** rather than retyped here — so v1's 17 screens and v2's 16 come from v1 and v2, and cannot
+go stale. Neither file is edited, overridden or scripted into.
+
+`index.html` used to be v1. It is now the redirect. v1's file is unchanged and still served at
+`v1.html` and `prototype.html`, both still `a96fc35f`.
+
+Verified over a local server, not just off the disk: v1 mirrors 17 screens and 13 states and drives
+them; v2 mirrors 16 and 14; v3 is inline as before with 18 and 13; `?test` survives the redirect and
+hides the panel; the 375px breakpoint drops all of it; v1, v2 and prototype.html byte-identical.
+
+LEARNED · 2026-09-03 · (no skill)
+**A shared stylesheet has no namespace, and a collision is silent.** The shell and the prototype are
+one `<style>`. `.leg`, `.sw` and `.time` all already existed in the prototype, so my swatches
+rendered as zero-width and my screen rows grew to 76px — no error anywhere, it just looked wrong.
+Before adding a class to this file, grep the whole sheet for it.
+
+**Read the other version, do not restate it.** Retyping v1's screen list into v3 would have been
+faster and would have been wrong the first time either file moved. Reading the rails out of the
+loaded frame means v1 and v2 stay the only source of truth about themselves — which is also the only
+way to add a switch without touching two frozen files.
+
+**A file:// test can pass a broken thing and fail a working one.** The iframe was blank off the disk
+and correct over `http://localhost`. Same-origin behaviour has to be checked on a server.
+

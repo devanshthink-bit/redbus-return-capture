@@ -77,11 +77,15 @@ folder name** — PAM04L01–L04, PAM05L03.
 ## 4. Live URLs
 
 ```
-v1  https://devanshthink-bit.github.io/redbus-return-capture/
-v2  https://devanshthink-bit.github.io/redbus-return-capture/v2.html
-v3  https://devanshthink-bit.github.io/redbus-return-capture/v3.html
-board  https://devanshthink-bit.github.io/redbus-return-capture/artefacts.html
+all three  https://devanshthink-bit.github.io/redbus-return-capture/     <- hand out this one
+v1 alone   https://devanshthink-bit.github.io/redbus-return-capture/v1.html
+v2 alone   https://devanshthink-bit.github.io/redbus-return-capture/v2.html
+v3 alone   https://devanshthink-bit.github.io/redbus-return-capture/v3.html
+board      https://devanshthink-bit.github.io/redbus-return-capture/artefacts.html
 ```
+The root is a redirect to `v3.html`, which carries the version switch. `?test` survives it.
+**`index.html` is no longer v1.** v1's file is unchanged and served at `v1.html` and
+`prototype.html`, both still `a96fc35f…`.
 
 Deploys take **45–90 seconds**. Always verify with `curl` + `md5` against the local file before
 telling him it is live, and tell him to hard-refresh.
@@ -166,7 +170,18 @@ Everything around the phone is stakeholder chrome, not design under test. It is 
 stylesheet under *PRESENTATION SHELL* and uses `--s-` prefixed tokens so it can never collide with the
 design-language tokens.
 
-- **Light page**, a white top bar with a brand hairline, and the **real** logo — the unaltered path
+- **No top bar.** Everything sits in a left panel straight on the page, no card behind it —
+  lockup, title, lede, version switch, screens, states, sampled swatches, footnote
+- **Gradient page** — warm red top-left, cool violet top-right, near-white at the foot, plus a
+  soft red glow behind the device. It reads as a product shot rather than a tool
+- **All three versions in one file.** The switch loads v1 and v2 whole into an iframe sized so
+  their own centred 402×874 frame lands exactly on the crop; nothing in either file is edited or
+  overridden. Their screen and state rails are **read out of the loaded frame** and mirrored into
+  the panel, so this never has to hardcode — or restate — v1's or v2's screens. Same origin, so
+  it works on the published site; opened off the disk the browser blocks it and a note says so
+- **Watch for class-name collisions.** The shell shares a stylesheet with the prototype. `.leg`,
+  `.sw` and `.time` all already existed and silently restyled the shell. Prefix or rename
+- The **real** logo — the unaltered path
   from `RedBus_Logo_(2015-present).svg`, which is also where the shell red `#D84E55` comes from.
   That is the *logo* red; the prototype's own `--accent` `#C54646` is the *button* red measured off
   the app, and the two are deliberately different. Shell tokens never touch the prototype's

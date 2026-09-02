@@ -9,8 +9,11 @@ Do not start work, answer a question about the project, or change a file until y
 
 ## The six things that will bite you if you skip it
 
-1. **v1 (`index.html` / `prototype.html`) and v2 (`v2.html`) are frozen.** Only `v3.html`
-   changes. Verify on every commit that v1 and v2 are untouched.
+1. **v1 (`v1.html` / `prototype.html`) and v2 (`v2.html`) are frozen.** Only `v3.html`
+   changes. Verify on every commit that v1 and v2 are untouched — `md5 v1.html v2.html
+   prototype.html` must stay `a96fc35f…`, `412b90eb…`, `a96fc35f…`.
+   **`index.html` is no longer v1** — it is a redirect to `v3.html`, which is the viewer for all
+   three versions. v1's file is unchanged and still served at `v1.html` and `prototype.html`.
 2. **Assert on every string replacement.** A silent no-op looks exactly like success. This has
    cost real time more than once.
 3. **Never replace a source range using two string indexes.** It once deleted 5,182 characters
@@ -37,7 +40,8 @@ Do not start work, answer a question about the project, or change a file until y
 - `CRITIQUE.md` — eight attacks on the chosen idea, plus the idea ranking
 - `TEST_SCRIPT.md` — the usability script. **Tests v3**, at `v3.html?test`. Sessions not yet run
 - `artefacts.html` — the board, generated from `NOTES.md`. Never retype note text
-- `v3.html` — the live prototype being changed
+- `v3.html` — the live prototype being changed, and the viewer that carries v1 and v2 too
+- `index.html` — a redirect to `v3.html`. This is the general URL to hand anyone
 
 Repo is public and auto-deploys to GitHub Pages on push. Deploys take 45–90 seconds; verify with
 `curl` + `md5` before telling the user it is live.
