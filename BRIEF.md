@@ -473,7 +473,7 @@ which is where they started from and almost always where they're going back to.
 **Not here:** anything that has to be tapped to be read. If the terms need a *Know more*, this
 screen has failed at the exact thing the project exists to fix.
 
-**Why not Passenger Information:** it already carries three paid add-ons — Free Cancellation ₹160,
+**Why not Passenger Information:** it already carries three paid add-ons — Free Cancellation ₹60,
 Trip Guarantee ₹24, Travel Insurance ₹15 (IMG_4576–4579). A fourth block of terms there would be
 unreadable.
 

@@ -124,7 +124,7 @@ Sai Srinivas Buddi · Samarth Kumar · Soumya Mishra · Vivek Nandoskar.
 - **FlexiTicket is free** — *"FREE DATE CHANGE — AT NO EXTRA RATE"*
 - FlexiTicket FAQ: *"the 'date change fee' is zero. You will, however, be required to pay the fare difference (if any)."*
 - FlexiTicket gives a **minimum 50% refund** at 12h+ (50–100%, operator-dependent) — **not** free cancellation
-- **Free Cancellation** is a **separate paid add-on** (₹160 in the prototype), voided by rescheduling
+- **Free Cancellation** is a **separate paid add-on** (₹60 per passenger, observed on this route), voided by rescheduling
 - **Still unverified:** whether a date change is same-operator only
 
 `TERMS.md` carries all of this in full — every clause quoted verbatim, the source named for each,
@@ -510,16 +510,14 @@ to live here.
 
 **The calendar's button stays *Continue*.** Naming the next screen was tried and reverted: the button
 sits directly under a tap the traveller has just made, so *Pick your day* right after picking days
-reads as though the tap did not register. On the day list, where the button is not answering a tap, it
-does name the screen — *Choose your bus*, or *Review trip* on a day that runs one — and holds *Choose
-your bus* while disabled rather than switching to an instruction.
+reads as though the tap did not register. The day list's button is **Review trip** in every state,
+because that is now the only screen it opens.
 
-**With a range, each row is a day, priced at that day's floor** — *from ₹970 · 4 buses · pick one
-next*. It used to show whichever bus happened to be the default, which ran up to **₹200 above** the
-day's cheapest, and the *Cheapest* pill ranked days on that same wrong figure. `minFareOn(d)` is the
-one accessor; `cheapestIn()` and `hasSpread()` read it too. Tapping **Review trip** then opens
-**Choose your bus**, so the fare the row promised is one the traveller can actually take. A day with a
-single bus keeps naming its operator and time inline and goes straight to review.
+**A closed row is priced at that day's floor** — *from ₹830 · 5 buses · tap to see them*. It used to
+show whichever bus happened to be the default, which ran up to **₹200 above** the day's cheapest, and
+the *Cheapest* pill ranked days on that same wrong figure. `minFareOn(d)` is the one accessor;
+`cheapestIn()` and `hasSpread()` read it too. An open row shows the chosen bus's own fare instead, so
+the header, the highlighted bus and the bottom bar always name the same number.
 
 **One day and one bus are chosen on the same screen.** The day rows open in place: tap a day and its
 buses appear inside its own card, the default one selected, the card header and the bottom bar both

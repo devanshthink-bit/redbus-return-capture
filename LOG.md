@@ -3605,3 +3605,52 @@ is comparing across both at once: *is Monday's cheap bus worth a day earlier?*
 
 **When two consecutive screens are both lists, check whether the second is a property of a row in the
 first.** If it is, it can open in place, and the navigation between them was never carrying anything.
+
+CHANGE · 2026-09-02 · (no skill) · Source: user
+**Sanity sweep of the whole build.** Enumerated every bookable day and every bus on it, scanned 936
+screen × state × booking-shape cells for broken text, walked every bus end to end, and audited all
+files. Four defects and three orphans.
+
+**1 · Skip the return, come back, book one — and the return stayed hidden.** `skipReturn()` sets
+`noreturn`, which hides the return leg everywhere. `loadWindow()` preserved it with `setState(state)`,
+so a traveller who skipped, went back to the calendar and picked a day reached Review with the return
+invisible and a total of ₹1,599. Exactly the bug fixed on the *ticket* entry two days ago, reachable
+from a second door I did not check. `loadWindow()` now clears it: reaching that screen **is** the
+decision to book a return.
+
+**2 · A sold-out day carried both "No seats left" and "No date change".** The pill was pushed before
+the sold-out branch returned. It now needs a seat to appear — the two facts are about different things
+and only one of them matters on a day you cannot book.
+
+**3 · `MOVABLE(d)` folded in seat availability**, so "cannot change the date" and "sold out" were
+literally the same flag for all 30 days. Now it asks only what it says: does any bus that day allow a
+date change.
+
+**4 · Which exposed dead UI: no bookable day was non-movable at all.** International Tourist Centre is
+the only operator that refuses date changes, and no `BUS_SETS` entry ran it alone — so the calendar's
+grey dot, its legend, the lead line and the day-level terms card were unreachable. Added `[3]`. Three
+days now have it, and the calendar's promise finally has three states rather than two: *you can change
+the date*, *most buses that day can*, and **no bus that day allows a date change**.
+
+**Orphans removed**, all created by my own changes: `toSeat()` (the old return-seat entry, unreachable
+since the seat became auto-assigned), `pick()` (orphaned by removing `toSeat`), `anyMovableIn()` and an
+unused `bus-h3` id.
+
+**Docs corrected** where the build had moved past them: `CONTEXT.md` still described the two-screen day
+→ bus flow and the CTA labels it had, and four files still priced Free Cancellation at ₹160 —
+`CONTEXT.md`, `TERMS.md`, `BRIEF.md` and `DEFENCE.md` (twice). `LOG.md` left as written; it is history.
+
+Verified after: 30 days of model invariants, 234 screen × state combinations, money agreeing in every
+state, 936 cells with no undefined/NaN/empty text, a 12-step click-through through seat, points, bus,
+pay, ticket and change day, every bus on a 5-bus day carrying its own leg, operator, fare, add-on and
+promise, and no target under 44px.
+
+LEARNED · 2026-09-02 · (no skill)
+**A flag that is always equal to another flag is not a flag.** `MOVABLE(d)` and `!!SEAT[d]` returned the
+same value for all 30 days, which means one of them was doing no work — and the UI built on it was
+unreachable. The check is cheap and I have never run it: **for every derived boolean, compare it
+against the others across the whole domain; if two always agree, one is redundant or wrong.**
+
+**And the second door.** The `noreturn` bug was fixed once, from the ticket, and shipped with the other
+entry still broken. Fixing a state bug at one entry point proves nothing about the others. **List every
+place that sets a flag and every place that should clear it, and check the matrix, not the path.**

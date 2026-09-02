@@ -555,7 +555,7 @@ body.testing .dev{display:none!important}
     </div>
     <div class="banner" data-only="offline"><span aria-hidden="true">&#8856;</span><span>You&rsquo;re offline. Check your internet connection.</span></div>
     <div class="wrap">
-      <div class="terms"><h3 id="bus-h3">Buses that day</h3>
+      <div class="terms"><h3>Buses that day</h3>
         <dl class="rules" id="bus-note"></dl></div>
       <div id="bus-list"></div>
     </div>
@@ -1099,7 +1099,10 @@ const RET_BUSES = [
   {op:'Laxmi Holidays Pvt Ltd',        dep:'23:55', arr:'08:00', delta:   0, movable:true,  fc:60}
 ];
 // Which of them run on a given day. Deterministic, always at least one, and not always the same one.
-const BUS_SETS = [[4],[2,4],[0,1,2,3,4],[0,2,3],[1,2],[0,3,4],[1,3,4],[0,1,2,4]];
+// [3] alone is the day where only International Tourist Centre runs -- the one operator that offers
+// no date change. Without it no bookable day was ever non-movable, and the calendar dot, its legend
+// and every day-level "cannot be changed" line were unreachable.
+const BUS_SETS = [[4],[2,4],[0,1,2,3,4],[0,2,3],[3],[1,2],[0,3,4],[1,3,4],[0,1,2,4]];
 const allBusesOn = d => BUS_SETS[(d*7) % BUS_SETS.length];
 // Booking sees everything; a date change sees only the operator the ticket is already on.
 let busScope = null;                       // null = every operator
@@ -1167,7 +1170,7 @@ const SEAT = new Proxy({}, {get:(_,k)=>{const d=+k; return d>0 ? SEATOF(d) : und
 
 // Not every day has a bus that allows a date change. On a real route this is operator
 // inventory; here it is deterministic so the same day always behaves the same way.
-const MOVABLE = d => allBusesOn(d).some(i => RET_BUSES[i].movable && !!SEATOF(d));
+const MOVABLE = d => allBusesOn(d).some(i => RET_BUSES[i].movable);
 // whether the ticket they hold can be moved -- a property of the bus they are on
 const heldMovable = () => heldDay ? !!(RET_BUSES[busOn(heldDay)]||{}).movable : true;
 // What Free Cancellation costs on the return they are on, or null where that operator does not sell it
@@ -1178,7 +1181,6 @@ const retFC = () => heldDay ? (RET_BUSES[busOn(heldDay)]||{}).fc || null : null;
 // they can move. So: the last MOVABLE day in the range, falling back to the last day if none is.
 // "Movable" is not enough to book someone: the bus also has to have a seat left.
 function lastMovableIn(a,b){ for(let d=b; d>=a; d--) if(MOVABLE(d) && SEAT[d]) return d; return 0; }
-function anyMovableIn(a,b){ return lastMovableIn(a,b) !== 0; }
 
 let sel = [];            // [] nothing · [d] one day · [a,b] a range
 let heldDay = 0;         // the day currently booked
@@ -1304,9 +1306,12 @@ function paintWindow(){
       + '<dd>Book now and this day stays at this price. Change the day later and you pay that day\u2019s price then.</dd>';
   } else if(sel.length===1){
     R.innerHTML = '<dt>We\u2019ll book '+label(sel[0])+' \u00B7 '+RUPEE(FARE[sel[0]])+'</dt>'
-      + '<dd>'+(allBusesOn(sel[0]).every(function(i){return RET_BUSES[i].movable;})
-        ? 'You can change the date once after booking, to any date. Pay any price difference.'
-        : 'Most buses that day let you change the date once, to any date. Not all do \u2014 you pick the bus next.')+'</dd>'
+      + '<dd>'+(function(){
+          const bs=allBusesOn(sel[0]), mv=bs.filter(function(i){return RET_BUSES[i].movable;}).length;
+          if(mv===bs.length) return 'You can change the date once after booking, to any date. Pay any price difference.';
+          if(mv===0) return 'No bus that day allows a date change. Book it and the date is fixed.';
+          return 'Most buses that day let you change the date once, to any date. Not all do \u2014 you pick the bus next.';
+        })()+'</dd>'
       + '<dt class="crit">No refund on a cheaper day</dt>'
       + '<dd>You only pay when the new day costs more.</dd>'
       + '<dt class="prompt">Not sure? Tap a second day</dt>'
@@ -1331,7 +1336,10 @@ function paintWindow(){
 }
 
 function loadWindow(){
-  moveDone=false; setState(state);   // a new booking restores the balance and the row that spends it
+  // Skipping the return sets 'noreturn', which hides the return on every screen. Coming back here and
+  // picking a day is a decision to book one, so the flag has to come off -- otherwise the traveller
+  // pays for a return that Review, Pay, the ticket and My Bookings all say does not exist.
+  moveDone=false; setState(state==='noreturn' ? 'default' : state);
   const b=document.getElementById('b-cont');
   b.disabled=true; b.innerHTML='<span class="spin"></span> Checking';
   setTimeout(()=>{
@@ -1363,8 +1371,9 @@ function renderPicked(){
     // The last day needs no label saying it is last — the traveller chose it and it sits at the
     // bottom of the list. What is not obvious is why it is worth picking, so name that instead.
     if(days.length>1 && spread && d===cheap) tags.push('<div class="pill">\u21BB Cheapest</div>');
-    if(!MOVABLE(d)) tags.push('<div class="pill no">No date change</div>');
     const seat = SEAT[d];                     // the seat that day actually has, not a seat we hold
+    // No date change is about the buses; No seats left is about the day. A sold-out day carried both.
+    if(seat && !MOVABLE(d)) tags.push('<div class="pill no">No date change</div>');
     const low = minFareOn(d), many = busesOn(d).length>1;
     const diff = heldDay ? low-minFareOn(heldDay) : 0;
     if(!seat){                                // no bus seat left: say so, and do not let it be picked
@@ -1702,21 +1711,6 @@ function autoSeat(toBus){
   recalc();
   if(toBus) return openBus(toBus);
   go('s-review');
-}
-function toSeat(){
-  chosen.seat=null;
-  document.querySelectorAll('#g-lower .seat,#g-upper .seat').forEach(b=>b.removeAttribute('aria-pressed'));
-  document.getElementById('seat-count').textContent='No seat selected';
-  document.getElementById('seat-price').innerHTML='&nbsp;';
-  document.getElementById('b-seat').disabled=true;
-  paintSeats();                     // the previous choice is cleared; do not leave it on other screens
-  pick(retOp(), FARE[heldDay]);
-}
-function pick(op,fare){
-  chosen.op=op; chosen.fare=fare;
-  document.getElementById('seat-sub').textContent='Nainital → Delhi · '+op;
-  document.getElementById('pt-price').textContent='₹'+fare.toLocaleString('en-IN');
-  go('s-seat');
 }
 const LOWER=['a','a','booked','a','female','a','a','a','booked','a','a','a'];
 const UPPER=['a','booked','a','a','a','a','booked','a','a','a','a','a'];

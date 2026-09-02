@@ -342,7 +342,7 @@ the three arguments on their own.**
 
 **The premise is wrong, and it is checkable.** FlexiTicket does **not** give free cancellation. It
 gives a **minimum 50% refund** if you cancel 12h+ before departure — 50–100% depending on the
-operator. The 100%-refund product is **Free Cancellation**, a **separate paid add-on** (₹160 on the
+operator. The 100%-refund product is **Free Cancellation**, a **separate paid add-on** (₹60 per passenger on the
 onward leg in the prototype). Two different products have been merged into one.
 
 **Say this:** *"You're comparing my design to a FlexiTicket that doesn't exist. Here is their own
@@ -901,7 +901,7 @@ resells better than one cancelled near departure.
 
 *Why they ask:* it's the sharpest commercial question and most people miss it.
 
-**Answer.** Partly, and worth naming. Free Cancellation is a paid add-on (₹160 on the onward leg
+**Answer.** Partly, and worth naming. Free Cancellation is a paid add-on (₹60 per passenger on the onward leg
 in the prototype). A traveller who feels covered by a free date change may skip it. Against that:
 the add-on is voided by rescheduling anyway, so anyone who moves was never going to keep its
 value. And a captured return leg is worth more than an add-on fee. But I would watch add-on
