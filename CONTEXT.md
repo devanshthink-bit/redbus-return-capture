@@ -172,6 +172,14 @@ design-language tokens.
 
 - **No top bar.** Everything sits in a left panel straight on the page, no card behind it —
   lockup, title, lede, version switch, screens, states, sampled swatches, footnote
+- **The panel is three blocks, `.pcol a / b / c`, placed by grid.** Above 1240px it is two
+  columns (a and c stack on the left, b — the screen list — runs full height on the right) and
+  the whole panel fits with no scrolling; below that it is one column. Source order is a, b, c
+  precisely so the one-column fallback reads title → screens → swatches, and the screen list
+  never ends up below the fold behind the swatches
+- **`.layout` caps the row at 1280px and uses `space-between`.** Two columns huddled in the
+  middle of a wide window with dead margins was the complaint; splitting the panel widened the
+  composition enough to fill the frame
 - **Gradient page** — warm red top-left, cool violet top-right, near-white at the foot, plus a
   soft red glow behind the device. It reads as a product shot rather than a tool
 - **All three versions in one file.** The switch loads v1 and v2 whole into an iframe sized so

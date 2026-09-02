@@ -4029,3 +4029,36 @@ way to add a switch without touching two frozen files.
 **A file:// test can pass a broken thing and fail a working one.** The iframe was blank off the disk
 and correct over `http://localhost`. Same-origin behaviour has to be checked on a server.
 
+CHANGE · 2026-09-03 · (no skill) · Source: user
+**"why they are packed together and empty spaces left and right?"** On a wide screen the panel and
+the phone sat as one clump in the middle with roughly 450px of nothing on either side.
+
+Spreading the two apart only moved the hole: `space-between` at 1440 gave 80px margins and a 500px
+void down the middle. The composition was simply too narrow, and the phone could not grow because
+its size is bound by window *height*, not width.
+
+So the panel was widened instead, by splitting it into three blocks placed by grid. Above 1240px it
+is two columns — the writing and swatches stack on the left, the screen list runs full height on the
+right — which takes the panel from 352 to 724 wide. At 1440 the margins are 80 and the gap 219, and
+the whole panel now fits with no scrolling at all.
+
+Source order is a / b / c so the one-column fallback below 1240 reads title, screens, swatches. The
+first attempt put the swatches in with the writing, which pushed the screen list below the fold on a
+narrow window — the primary control, last on the page.
+
+Also: `fitDevice()` was still reserving 60px for the shell bar deleted in the previous change, so the
+phone had been rendering 6% smaller than it needed to.
+
+Verified: 1440 two columns, panel fits, margins even; 1100 one column with screens above the
+swatches; v1 mirrors 17 screens and v2 16 inside the new grid; `?test` centres the phone with the
+panel gone; 375px unchanged; v1, v2 and prototype.html byte-identical.
+
+LEARNED · 2026-09-03 · (no skill)
+**When two blocks look lost in a wide window, the answer is more content width, not more gap.** Pushing
+them to the edges just relocates the emptiness. The only fix that worked was making the panel itself
+twice as wide.
+
+**A responsive reflow changes reading order, and source order decides it.** Two columns that read
+correctly side by side collapsed into one column that buried the screen list under the colour
+swatches. The wide layout was fine; the fallback was the thing to design.
+

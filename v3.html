@@ -41,9 +41,13 @@ body{
  -webkit-font-smoothing:antialiased;display:flex;flex-direction:column;overflow:hidden}
 
 /* ---------- stage ---------- */
-.stage{flex:1 1 auto;min-height:0;display:flex;align-items:center;gap:clamp(32px,5vw,80px);
- justify-content:center;justify-content:safe center;
- padding:28px 32px;overflow-x:auto;overflow-y:hidden;position:relative}
+.stage{flex:1 1 auto;min-height:0;display:flex;align-items:center;justify-content:center;
+ padding:28px 40px;overflow-x:auto;overflow-y:hidden;position:relative}
+/* The two columns sit at the ends of a capped, full-width row rather than huddling in the
+   middle of the window. gap is the floor; space-between opens them out beyond it. */
+.layout{width:100%;max-width:1280px;display:flex;align-items:center;
+ justify-content:space-between;gap:clamp(40px,5vw,120px)}
+body.testing .layout{justify-content:center}
 .stage::-webkit-scrollbar{height:6px}
 .stage::-webkit-scrollbar-thumb{background:#DEDEE6;border-radius:3px}
 /* product-shot glow behind the device */
@@ -53,8 +57,21 @@ body{
 .panel,.devicewrap{position:relative;z-index:1}
 
 /* ---------- left panel: sits straight on the gradient, no card ---------- */
-.panel{flex:0 0 auto;width:352px;max-height:calc(var(--s-dh) * var(--ds));
+.panel{flex:0 0 auto;width:clamp(340px,25vw,400px);max-height:calc(100vh - 92px);
  overflow-y:auto;scrollbar-width:none;padding-right:6px}
+/* Wide enough for two: the writing goes left, the screen list goes right. It stops the
+   composition huddling in the middle of a big window, and the whole panel fits without
+   scrolling. Below this it is one column again and scrolls.
+   Source order is a / b / c so that the one-column fallback reads title, screens, tokens --
+   the screen list must never end up below the fold behind the swatches. */
+.panel{display:grid;grid-template-columns:1fr;row-gap:26px}
+@media (min-width:1240px){
+  .panel{grid-template-columns:340px 340px;column-gap:44px;row-gap:26px;
+   align-items:start;width:auto;padding-right:0}
+  .pcol.a{grid-column:1;grid-row:1}
+  .pcol.b{grid-column:2;grid-row:1 / span 2}
+  .pcol.c{grid-column:1;grid-row:2}
+}
 .panel::-webkit-scrollbar{display:none}
 .lock{display:flex;align-items:center;gap:12px;margin-bottom:22px}
 .lock svg{height:26px;width:auto;display:block;flex:0 0 auto}
@@ -411,6 +428,7 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
   body{overflow:auto}
   .panel,.ios,.btn-side,.glow,.caption{display:none}
   .stage{padding:0;display:block}
+  .layout{display:block;max-width:none;gap:0}
   .devicewrap{display:block}
   .device{width:100%;height:auto}
   .deviceframe{width:100%;height:auto;transform:none;padding:0;border-radius:0;box-shadow:none;background:none}
@@ -465,9 +483,11 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
 
 <div class="stage">
 <div class="glow" aria-hidden="true"></div>
+<div class="layout">
 
 <!-- ============ presentation panel (not part of the design) ============ -->
 <aside class="panel">
+<div class="pcol a">
   <div class="lock">
     <!-- RedBus_Logo_(2015-present).svg, unaltered path -->
     <svg viewBox="0 0 86 57" fill="none" aria-hidden="true" focusable="false">
@@ -490,7 +510,10 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
     <p class="vnote" id="vnote"></p>
   </div>
 
-  <div class="grp">
+</div><!-- /pcol a -->
+
+<div class="pcol b">
+  <div class="grp" style="margin-top:0">
     <h2>Screens</h2>
     <p class="legacynote">Loading this version&rsquo;s screens&hellip;</p>
     <div id="legacyrail"></div>
@@ -535,7 +558,10 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
 </details>
   </div>
 
-  <div class="grp">
+</div><!-- /pcol b -->
+
+<div class="pcol c">
+  <div class="grp" style="margin-top:0">
     <h2>Sampled from the live app</h2>
     <div class="swatches">
       <div class="tok"><i style="background:#C54646"></i><div><b>Action</b><span>#C54646</span></div></div>
@@ -547,8 +573,9 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
     </div>
   </div>
 
-  <p class="foot">Everything responds. Pick one day or two, change the bus, then move the
+  <p class="foot">Every screen responds &mdash; pick a return, change the bus, then move the
     date after booking from My&nbsp;Bookings. Nothing here is real redBus data.</p>
+</div><!-- /pcol c -->
 </aside>
 
 <!-- ============ the phone ============ -->
@@ -1241,6 +1268,8 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
 </div><!-- /device -->
 <p class="caption" id="caption"></p>
 </div><!-- /devicewrap -->
+
+</div><!-- /layout -->
 
 
 </div>
@@ -2458,9 +2487,8 @@ if(/[?&]test\b/.test(location.search)) document.body.classList.add('testing');
    window any more -- which is what the old .phone{height:calc(100vh - 48px)}
    rule was working around. */
 function fitDevice(){
-  const bar = document.body.classList.contains('testing') ? 0 : 60;
-  const avail = window.innerHeight - bar - 40;          // 20px stage padding, top and bottom
-  const s = Math.max(.45, Math.min(1, avail / 948));
+  const avail = window.innerHeight - 56;               // 28px of stage padding, top and bottom
+  const s = Math.max(.45, Math.min(1.1, avail / 948));
   document.documentElement.style.setProperty('--ds', s.toFixed(4));
 }
 fitDevice();
