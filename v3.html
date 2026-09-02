@@ -614,7 +614,7 @@ body.testing .dev{display:none!important}
   <!-- ============ SCREEN: Trip review ============ -->
   <section class="screen" id="s-review">
     <div class="nav">
-      <button class="back" aria-label="Back" onclick="go('s-picked')">&#8249;</button>
+      <button class="back" aria-label="Back" onclick="backToDays()">&#8249;</button>
       <div class="navtxt"><h1>Review your trip</h1><p>Delhi &harr; Nainital &middot; 1 passenger</p></div>
       <span style="width:34px"></span>
     </div>
@@ -627,7 +627,7 @@ body.testing .dev{display:none!important}
         <p class="legerr-t">Your return seat is gone</p>
         <p class="legerr-b" id="rv-errseat">Seat U5 is gone &mdash; someone just booked it. Your onward trip is fine.</p>
         <div class="legerr-a">
-          <button class="btn pri" onclick="go('s-picked')">Pick another return</button>
+          <button class="btn pri" onclick="backToDays()">Pick another return</button>
           <button class="btn sec" onclick="dropReturn()">Continue without a return</button>
         </div>
       </div>
@@ -1261,6 +1261,8 @@ function paintWindow(){
   } else if(sel.length===1){
     R.innerHTML = '<dt>We\u2019ll book '+label(sel[0])+' \u00B7 '+RUPEE(FARE[sel[0]])+'</dt>'
       + '<dd>You can change the date once after booking, to any date. Pay any price difference.</dd>'
+      + '<dt class="crit">No refund on a cheaper day</dt>'
+      + '<dd>You only pay when the new day costs more.</dd>'
       + '<dt class="prompt">Not sure? Tap a second day</dt>'
       + '<dd>Up to '+MAX_WINDOW+' days apart. That is only how we pick your day \u2014 your ticket can still move to any date.</dd>';
   } else {
@@ -1287,6 +1289,7 @@ function loadWindow(){
   setTimeout(()=>{
     b.innerHTML='Continue'; b.disabled=false;
     setHeldDay(hasSpread() ? 0 : bookedDay());   // a real money trade-off is the traveller's to make
+    if(sel.length===1) return autoSeat();        // one day is not a choice; go straight to review
     go('s-picked');
   }, 800);
 }
@@ -1323,7 +1326,7 @@ function renderPicked(){
     // beside it. Without this the list just showed a different number on some days and not others.
     // Same label the Change day list uses, in the same demoted colour — losing the refund outranks it.
     if(seat !== outSeat()) tags.push('<div class="pill warnpill">\u21BB Different seat \u2014 '+outSeat()+' taken</div>');
-    const right = d===heldDay ? '<span class="onw">Booked</span>'
+    const right = d===heldDay ? '<span class="onw">Your pick</span>'
       : (!heldDay ? ''
         : diff>0 ? '<span class="onw diffup">'+RUPEE(diff)+' more</span>'
         : diff<0 ? '<span class="onw">'+RUPEE(-diff)+' cheaper</span>'
@@ -1462,6 +1465,7 @@ function choosePick(d){ setHeldDay(d); }
 
 // Changing the booked day after payment — any day in the range, either direction.
 const BOOKABLE = Array.from({length: LAST_BOOKABLE-OUT_DAY}, (_,i)=>OUT_DAY+1+i);
+const backToDays = () => go(sel.length===1 ? 's-window' : 's-picked');
 function openWithin(){
   moveDay=0;
   moveMonth = Math.max(0, MONTHS.findIndex(M => heldDay>=M.first && heldDay<M.first+M.len));

@@ -3156,3 +3156,33 @@ instead of four facts. The seat consequence, the no-refund wording and the bus t
 later. If sessions show people picking a day and backing out repeatedly, that is the cost showing up,
 and the fix would be more on the calendar cell — not a return to the list, which cannot address the
 multiple-bus hole.
+
+CHANGE · 2026-09-02 · (no skill) · Source: user
+**"When the user selects only one date, why are you showing this? It's wrong as well as not even
+needed."** Both true.
+
+**Not needed:** with one day picked there is nothing to choose. The screen rendered a list of one,
+under a header and a lead line already naming the same day, above an empty half-screen. Its whole job
+is a trade-off between days, and there was no trade-off.
+
+**Wrong:** the row said **Booked**. Nothing is booked until it is paid for, and this is two screens
+before payment.
+
+Now: a single tap goes calendar → Trip review. The *No refund on a cheaper day* rule that lived only
+on the skipped screen moved onto the calendar, so nothing is lost. On a range the day list still
+appears, and the picked row reads **Your pick**.
+
+Back had to follow: Back from review and *Pick another return* after a lost seat now use
+`backToDays()`, which returns to the calendar or the day list depending on which the traveller
+actually saw. Verified both — including the seat-gone escape from a one-day booking, which used to
+land on a day list of one. 234 combinations, money agreeing, and a full one-day journey to the ticket.
+
+LEARNED · 2026-09-02 · (no skill)
+**A screen built for the general case still renders in the degenerate one, and it renders badly.** The
+day list was designed for a range. A single day is the same screen with n=1, so nothing errored and
+nothing looked broken to me — it just had no reason to exist, and it stated something false while not
+existing for a reason.
+
+**For any list screen, ask what it looks like with one item, and whether it should appear at all.**
+The label was the tell again: *Booked* is fine on the ticket and wrong here, and it was wrong in the
+range case too — I only saw it because the one-day case put it on a screen with nothing else on it.

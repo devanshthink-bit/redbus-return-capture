@@ -503,6 +503,13 @@ Two frames — `06 · Your return · pick a day` and `06a · Your return · last
 product has no advantage on the only thing that decides it, so it does not choose. The lead reads
 *Pick your return day* with *Switching is free until you pay* underneath, and Review trip is off.
 
+**One day skips this screen entirely.** With a single tap there is nothing to choose, so the day list
+rendered a list of one — repeating the header, with *Booked* on a trip nobody had paid for. The
+calendar now goes straight to Trip review, and carries the *No refund on a cheaper day* rule that used
+to live here. Back from review, and *Pick another return* after a lost seat, both return to whichever
+screen the traveller actually came from (`backToDays()`). On a range the picked row reads **Your
+pick**, not *Booked*.
+
 **The week picks the day. It does not cap the ticket.** The 7-day limit is on the calendar, not on
 what the booking can later do — a traveller who states a range gets the same reach as one who taps a
 single day. Four places say so, because copy alone loses to what a list shows:
