@@ -14,12 +14,68 @@
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 [hidden]{display:none!important}   /* .err uses display:flex, which beat the hidden attribute */
 html,body{height:100%}
-body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;color:var(--ink);
- -webkit-font-smoothing:antialiased;display:flex;justify-content:center;align-items:center;padding:24px}
-.stage{display:flex;align-items:flex-start;margin:auto}
+/* ============================================================================
+   PRESENTATION SHELL — everything below is chrome around the prototype, not
+   part of the design being tested. Tokens are prefixed --s- so they can never
+   collide with the design-language tokens above. Colours are the measured
+   redBus values from DESIGN_LANGUAGE.md.
+   ============================================================================ */
+:root{
+  --s-red:#C54646; --s-red-soft:#FBECEC; --s-ink:#1D1D1D; --s-mute:#6E6E78;
+  --s-faint:#9A9AA4; --s-line:#E9E9EE; --s-surface:#FFFFFF;
+  --ds:1;                                  /* device scale, set by fitDevice() */
+  --s-dw:430px; --s-dh:948px;              /* the mock frame at scale 1 */
+}
+body{background:#F7F7FA;
+ background-image:radial-gradient(1100px 480px at 50% -8%, #FCF0F0 0%, rgba(252,240,240,0) 70%);
+ background-attachment:fixed;
+ font-family:Inter,-apple-system,system-ui,sans-serif;color:var(--s-ink);
+ -webkit-font-smoothing:antialiased;display:flex;flex-direction:column;overflow:hidden}
+
+/* ---------- top bar ---------- */
+.shellbar{flex:0 0 auto;height:60px;display:flex;align-items:center;gap:16px;padding:0 24px;
+ background:var(--s-surface);border-bottom:1px solid var(--s-line)}
+.brand{display:flex;align-items:center;gap:9px;color:var(--s-red);flex:0 0 auto}
+.brand svg{height:26px;width:auto;display:block}
+.brand span{font-size:21px;font-weight:800;letter-spacing:-.03em;line-height:1}
+.shellbar .sep{width:1px;height:24px;background:var(--s-line);flex:0 0 auto}
+.shelltitle b{display:block;font-size:14px;font-weight:700;letter-spacing:-.01em;line-height:1.2}
+.shelltitle span{display:block;font-size:12px;color:var(--s-mute);margin-top:2px;line-height:1.2}
+.shellbar .tag{margin-left:auto;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+ color:var(--s-red);background:var(--s-red-soft);border-radius:999px;padding:6px 12px}
+
+/* ---------- stage ---------- */
+.stage{flex:1 1 auto;min-height:0;display:flex;align-items:flex-start;justify-content:center;gap:40px;
+ padding:20px 24px;overflow-x:auto;overflow-y:hidden}   /* narrow window: scroll the rails rather than clip them */
+.stage::-webkit-scrollbar{height:6px}
+.stage::-webkit-scrollbar-thumb{background:#DCDCE3;border-radius:3px}
+
+/* ---------- iPhone mock ---------- */
+/* The frame is drawn at its true pixel size and then scaled as one piece, so the
+   402x874 prototype inside it never changes layout. .device reserves the scaled box. */
+.device{flex:0 0 auto;align-self:center;width:calc(var(--s-dw) * var(--ds));height:calc(var(--s-dh) * var(--ds))}
+.deviceframe{width:var(--s-dw);height:var(--s-dh);transform:scale(var(--ds));transform-origin:top left;
+ background:linear-gradient(150deg,#3A3A40 0%,#0E0E11 26%,#0E0E11 74%,#3A3A40 100%);
+ border-radius:58px;padding:14px;position:relative;
+ box-shadow:0 1px 0 rgba(255,255,255,.22) inset, 0 30px 70px -20px rgba(24,24,32,.45), 0 8px 24px rgba(24,24,32,.14)}
+.deviceframe::after{content:"";position:absolute;inset:5px;border-radius:53px;
+ border:1px solid rgba(255,255,255,.10);pointer-events:none}
+.btn-side{position:absolute;width:3px;background:#26262C;border-radius:2px}
+.btn-side.silent{left:-3px;top:132px;height:32px}
+.btn-side.up{left:-3px;top:186px;height:58px}
+.btn-side.down{left:-3px;top:256px;height:58px}
+.btn-side.power{right:-3px;top:210px;height:92px}
+.viewport{width:402px;height:920px;border-radius:44px;overflow:hidden;background:#fff;
+ display:flex;flex-direction:column;position:relative}
+/* iOS status bar — shell chrome, drawn above the prototype, never over it */
+.ios{flex:0 0 auto;height:46px;background:var(--raised);display:flex;align-items:center;
+ justify-content:space-between;padding:0 24px 0 30px;position:relative}
+.ios .time{font-size:15px;font-weight:700;letter-spacing:-.01em;color:#000}
+.ios .sys{display:flex;align-items:center;gap:6px;color:#000}
+.ios .island{position:absolute;left:50%;top:6px;transform:translateX(-50%);
+ width:104px;height:30px;border-radius:16px;background:#0B0B0D}
 .phone{width:402px;height:874px;flex:0 0 auto;
- background:var(--page);position:relative;overflow:hidden;display:flex;flex-direction:column;
- border-radius:24px;box-shadow:0 12px 40px rgba(0,0,0,.4)}
+ background:var(--page);position:relative;overflow:hidden;display:flex;flex-direction:column}
 
 /* ---------- chrome ---------- */
 .nav{background:var(--raised);padding:8px 12px;display:flex;align-items:center;gap:8px;position:relative;z-index:2}
@@ -254,40 +310,38 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 .swapleg.was{opacity:.6}
 .swapd{font-size:18px;font-weight:700;margin-top:4px}
 .swaparrow{color:var(--muted);font-size:20px;margin:8px 0}
-/* ---------- prototype toolbar (not part of the design) ---------- */
-.dev{position:fixed;top:calc(50vh - 437px);   /* the phone is 874 tall and centred, so this is its top edge */
- background:rgba(24,24,27,.94);color:#E4E4E7;padding:14px;
- display:flex;flex-direction:column;gap:6px;align-items:stretch;font-size:13px;z-index:99;
- font-family:ui-monospace,monospace;border-radius:12px;width:210px;max-height:874px;
- overflow-y:auto;border:1px solid #2E2E33}
-.dev.screens{left:24px}
-.dev.states{right:24px;width:225px}
-@media (max-height:940px){
-  .dev{top:24px;max-height:calc(100vh - 48px)}      /* short window: pin to the top instead */
-  /* On a laptop the 874px frame ran past the bottom of the window, putting the action bar below
-     the fold -- the participant had to scroll the page to reach the prototype's own button. The
-     frame now ends where the window does; every screen already scrolls its own content. */
-  .phone{height:calc(100vh - 48px)}
-}
+/* ---------- prototype rails (not part of the design) ---------- */
+/* The rails used to be fixed, dark, and sized off a hardcoded 874px frame. They are
+   now ordinary flex columns beside the device, so nothing has to know its height. */
+.dev{flex:0 0 auto;width:196px;display:flex;flex-direction:column;gap:1px;
+ max-height:calc(var(--s-dh) * var(--ds));overflow-y:auto;scrollbar-width:none;padding:2px 0}
+.dev::-webkit-scrollbar{display:none}
+.dev.screens{order:-1}
+.dev b{color:var(--s-faint);font-weight:700;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;margin:0 0 10px 10px}
+.dev button{background:none;color:var(--s-mute);border:0;border-radius:9px;padding:8px 10px;
+ font-family:inherit;font-size:13px;font-weight:500;letter-spacing:-.005em;line-height:1.3;
+ cursor:pointer;text-align:left;transition:background 120ms,color 120ms}
+.dev button:hover{background:#EDEDF2;color:var(--s-ink)}
+.dev button:focus-visible{outline:0;box-shadow:0 0 0 2px rgba(197,70,70,.4)}
+.dev button[aria-pressed="true"]{background:var(--s-red-soft);color:var(--s-red);font-weight:700}
 
-/* Session mode. Open the prototype with ?test on the end and the dev rails are gone, so a
-   participant cannot see -- or tap -- the list of screens and states. */
-body.testing .dev{display:none!important}
+/* Session mode. Open the prototype with ?test on the end and the rails and the shell
+   bar are gone, so a participant cannot see -- or tap -- anything but the phone. */
+body.testing .dev,body.testing .shellbar{display:none!important}
 
 /* On a real phone the frame filled 402x874 inside a smaller screen, so it was cut off and the
-   rails sat on top of it. Below 520px the frame simply becomes the screen. */
+   rails sat on top of it. Below 520px the frame simply becomes the screen -- no mock, no rails. */
 @media (max-width:520px){
-  body{padding:0;align-items:stretch}
-  .stage{margin:0;width:100%}
-  .phone{width:100vw;height:100vh;height:100dvh;border-radius:0;box-shadow:none}
-  .dev{display:none}
+  body{overflow:auto}
+  .shellbar,.dev,.ios,.btn-side{display:none}
+  .stage{padding:0;display:block}
+  .device{width:100%;height:auto}
+  .deviceframe{width:100%;height:auto;transform:none;padding:0;border-radius:0;box-shadow:none;background:none}
+  .deviceframe::after{display:none}
+  .viewport{width:100%;height:100vh;height:100dvh;border-radius:0}
+  .phone{width:100%;height:100vh;height:100dvh}
 }
-.dev b{color:#9A9AA4;font-weight:600;font-size:12px;letter-spacing:.1em;margin-bottom:8px}
-.dev button{background:#27272A;color:#E4E4E7;border:1px solid #3F3F46;border-radius:8px;padding:10px 12px;
- font:inherit;cursor:pointer;text-align:left;transition:background 120ms,border-color 120ms}
-.dev button:hover{border-color:#5A5A63}
-.dev.screens button[aria-pressed="true"]{background:#4F46E5;border-color:#4F46E5;color:#fff}
-.dev.states  button[aria-pressed="true"]{background:#0D9488;border-color:#0D9488;color:#fff}
 
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;
@@ -332,7 +386,40 @@ body.testing .dev{display:none!important}
 </style>
 </head><body>
 
+<header class="shellbar">
+  <div class="brand" aria-label="redBus">
+    <svg viewBox="0 0 72 48" role="img" aria-hidden="true" focusable="false">
+      <g fill="none" stroke="currentColor" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9.6 33.5 L6.2 12.6 A6 6 0 0 1 12.2 6 H59.8 A6 6 0 0 1 65.8 12 V27.5 A6 6 0 0 1 59.8 33.5 H57.2"/>
+        <path d="M23.4 33.5 H42.6"/>
+        <circle cx="16.2" cy="37.4" r="7"/>
+        <circle cx="50" cy="37.4" r="7"/>
+      </g>
+    </svg>
+    <span>redBus</span>
+  </div>
+  <div class="sep"></div>
+  <div class="shelltitle">
+    <b>Keeping a return you cannot date yet</b>
+    <span>Interactive prototype &middot; v3</span>
+  </div>
+  <div class="tag">Concept</div>
+</header>
+
 <div class="stage">
+<div class="device">
+<div class="deviceframe">
+  <i class="btn-side silent"></i><i class="btn-side up"></i><i class="btn-side down"></i><i class="btn-side power"></i>
+  <div class="viewport">
+    <div class="ios" aria-hidden="true">
+      <span class="time">9:41</span>
+      <div class="island"></div>
+      <span class="sys">
+        <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+        <svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor"><path d="M8.5 11.6 6.1 9.1a3.4 3.4 0 0 1 4.8 0zM3.6 6.6 2 5a9.2 9.2 0 0 1 13 0l-1.6 1.6a6.9 6.9 0 0 0-9.8 0z"/></svg>
+        <svg width="26" height="12" viewBox="0 0 26 12" fill="none"><rect x=".6" y=".6" width="21" height="10.8" rx="3.2" stroke="currentColor" stroke-opacity=".38" stroke-width="1.1"/><rect x="2.2" y="2.2" width="15" height="7.6" rx="1.9" fill="currentColor"/><path d="M23.4 4.2a3 3 0 0 1 0 3.6z" fill="currentColor" fill-opacity=".38"/></svg>
+      </span>
+    </div>
 <div class="phone">
 
 
@@ -1000,6 +1087,10 @@ body.testing .dev{display:none!important}
   </section>
 
 </div>
+
+  </div><!-- /viewport -->
+</div><!-- /deviceframe -->
+</div><!-- /device -->
 
 <!-- prototype controls, not part of the design -->
 <div class="dev screens">
@@ -2249,6 +2340,20 @@ function setState(s){
 }
 // ?test hides the dev rails for a usability session; without it they stay, for building.
 if(/[?&]test\b/.test(location.search)) document.body.classList.add('testing');
+
+/* ---- presentation shell: fit the device mock to the window ------------------
+   The frame is a fixed 430x948 and is scaled as one piece. Nothing inside the
+   402x874 prototype changes size in CSS terms, so no layout depends on the
+   window any more -- which is what the old .phone{height:calc(100vh - 48px)}
+   rule was working around. */
+function fitDevice(){
+  const bar = document.body.classList.contains('testing') ? 0 : 60;
+  const avail = window.innerHeight - bar - 40;          // 20px stage padding, top and bottom
+  const s = Math.max(.45, Math.min(1, avail / 948));
+  document.documentElement.style.setProperty('--ds', s.toFixed(4));
+}
+fitDevice();
+addEventListener('resize', fitDevice);
 buildSeats();
 setState('default');
 window.addEventListener('load', recalc);

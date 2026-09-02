@@ -157,7 +157,25 @@ Ticket → Change day → Confirm date change → Pay the difference → Date ch
 The **return seat screen and the return points screen are no longer in the flow** — both are
 defaulted and changed from Review your trip via *Change seat* / *Change points*.
 
-**Session URL:** `v3.html?test` hides the two dev rails. Without the flag they stay, for building.
+**Session URL:** `v3.html?test` hides the two dev rails **and the shell bar**, and the phone grows to
+fill the window. Without the flag they stay, for building.
+
+### The presentation shell (outside the prototype)
+
+Everything around the phone is stakeholder chrome, not design under test. It is marked off in the
+stylesheet under *PRESENTATION SHELL* and uses `--s-` prefixed tokens so it can never collide with the
+design-language tokens.
+
+- **Light page**, redBus red accents, a white top bar with a vector redBus lockup drawn as inline SVG
+- **iPhone mock** — `.device > .deviceframe > .viewport > (.ios status bar + .phone)`. The frame is a
+  fixed 430 × 948 and is scaled **as one piece** by `--ds`, set by `fitDevice()` on load and resize.
+  Nothing inside the 402 × 874 prototype changes size, so no prototype layout depends on the window
+- The iOS status bar is a **sibling above** `.phone`, never an overlay on it, so it cannot cover content
+- **This removed `.phone{height:calc(100vh - 48px)}`.** That rule existed because the 874px frame ran
+  past the bottom of a laptop window; scaling the whole frame to fit solves the same problem without
+  changing the prototype's own geometry
+- Below 520px the mock, the bar and the rails all disappear and the phone becomes the screen — so the
+  headless harness at 440 × 960 behaves exactly as before
 
 ### v3 constants
 ```js

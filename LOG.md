@@ -3930,3 +3930,35 @@ a calendar every cell is the same kind of thing, so the word carried no informat
 line each — thirty lines to say one sentence.
 
 **Before repeating a word in a grid, ask what varies.** If the answer is nothing, it is a caption.
+
+CHANGE · 2026-09-03 · (no skill) · Source: user
+**"I have to showcase this prototype to stakeholders, I have to impress them by its beauty."** The page
+around the phone was a dark grey field with two dark monospace rails — a builder's tool, shown to people
+who are being asked to judge a product.
+
+Rebuilt everything outside the phone and nothing inside it. Light page with a soft red wash, a white top
+bar carrying a vector redBus lockup, and the two rails turned into plain text lists that tint red when
+active. The phone now sits in an iPhone mock with a bezel, side buttons and an iOS status bar, and is
+smaller than the window rather than as tall as it.
+
+The mock is a fixed 430 × 948 frame scaled as one piece by a `--ds` variable. That matters: the
+prototype inside is still exactly 402 × 874 in CSS terms, so no layout inside it can react to the
+window. Shell tokens are all `--s-` prefixed and sit in their own marked-off block.
+
+This let me delete `.phone{height:calc(100vh - 48px)}`, added on 12 Aug because the 874px frame ran off
+the bottom of a laptop and put the action bar below the fold. Scaling the frame fixes the same problem
+without the prototype's own height depending on the browser.
+
+Verified: v1, v2 and prototype.html byte-identical; screens and states still switch; the return calendar
+renders unchanged; `?test` hides both rails and the bar and scales the phone up; below 520px the mock,
+bar and rails all drop out and the phone fills the screen, so the headless harness at 440 × 960 is
+unaffected.
+
+LEARNED · 2026-09-03 · (no skill)
+**Scale the frame, not the contents.** The old fix for "the phone is taller than the laptop" changed the
+prototype's own height, which means the thing being tested was a different size on every machine. Wrapping
+it in a frame and scaling that keeps the artefact fixed and moves the compromise into the chrome.
+
+**Chrome around a prototype is read as part of it.** Dark developer rails told a stakeholder they were
+looking at a work in progress before they read a single screen. The screens never changed.
+
