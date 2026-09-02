@@ -3319,3 +3319,44 @@ The pattern behind it is one I have hit all day: **code that was right on one sc
 assumptions to the next.** The seat rule brought the onward anchor into the change flow. The
 same-operator rule came from the change flow into booking. Now the change flow's price comparison went
 the same way. Each time the transplant looked identical and the context underneath it was not.
+
+CHANGE · 2026-09-02 · (no skill) · Source: user
+**"We show this for every bus when the user selects one date. Some buses allow a date change and some
+do not — why show it to all? It is in the window too."** Two bugs, and the second one had been latent
+since this morning.
+
+**1 · The promise did not repaint when the bus changed.** `heldMovable()` was already returning the
+right answer, but `busDone()` called `recalc()`, which does not reach `paintChangeRow()`. So picking
+International Tourist Centre left *You can change this date once* and the full terms card on screen
+until some unrelated repaint corrected them. Both `busDone()` and `autoSeat()` now repaint.
+
+**2 · The copy still talked about days.** *This date cannot be changed · No bus on Fri, 11 Sep offers
+a date change* was written when movability was a property of the day. It is a property of the operator.
+Now: *This bus cannot change its date · International Tourist Centre does not offer it on Fri, 11
+Sep*, and the way out names what is actually there — *Another bus that day can · Tap Change bus* when
+a movable service runs that day, *No bus on Fri, 11 Sep offers it* when none does. The badge, the
+ticket's Change day reason and both calendar legends followed.
+
+**3 · The window promised unconditionally.** Before a bus is chosen the product cannot know, so on a
+mixed day the calendar now reads *Most buses that day let you change the date once, to any date. Not
+all do — you pick the bus next.* That is BRIEF Decision 1a's conditional promise, which the build had
+until now solved by disabling non-movable returns — a solution that stopped working the moment a day
+could hold both kinds.
+
+Verified: picking the non-movable bus flips badge, terms, ticket row and confirmation immediately, and
+switching back flips them back; the ordinary movable journey is unchanged; 234 combinations, money
+agreeing.
+
+LEARNED · 2026-09-02 · (no skill)
+**When a fact moves from one object to another, the copy is the last thing to follow and nothing
+flags it.** Movability moved from the day to the bus this morning. The logic followed the same day.
+The words — *this date*, *no bus on this day*, *No date change on this day* — kept describing the old
+object for six commits, on four screens, and every one of them still rendered and still parsed.
+
+**Grep the old noun.** Searching `this day` found all of them in one pass. When a model change renames
+what a rule is about, the vocabulary of the old model is a reliable index of everywhere the rule is
+stated.
+
+Second, smaller: **a partial repaint is a bug waiting for a state change.** `recalc()` was enough while
+the bus could not change after the seat was assigned. The moment Change bus existed, the set of things
+that must repaint grew, and the call site did not.

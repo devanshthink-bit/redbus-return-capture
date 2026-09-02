@@ -569,7 +569,17 @@ The terms card is the §8 rules list: no fee to change, any day you picked, **yo
 that** in warning colour, change up to 8 hours before. Read the bold lines alone and every rule is
 there.
 
-**On a day with no date change the card is a different card, not the same one with a rule crossed
+**The promise belongs to the bus, and it repaints when the bus changes.** `heldMovable()` asks whether
+the service they are actually on offers a date change; `busDone()` and `autoSeat()` both run
+`paintChangeRow()`, because choosing a bus changes the answer and `recalc()` alone does not reach it.
+The way out names what is actually available: *Another bus that day can — tap Change bus* when a
+movable service runs that day, and *No bus on Fri, 11 Sep offers it* when none does.
+
+**Before a bus is chosen the calendar says "if".** On a day where the buses differ it reads *Most buses
+that day let you change the date once, to any date. Not all do — you pick the bus next*, which is
+BRIEF Decision 1a's conditional promise, finally true.
+
+**On a bus with no date change the card is a different card, not the same one with a rule crossed
 out.** `paintChangeRow()` rebuilds it: *This date cannot be changed · No bus on Mon, 14 Sep offers a
 date change*, then the way out — pick a day without a grey dot, before payment. The confirmation
 screen's card gets the same head and a different second rule, because once it is booked there is no

@@ -457,7 +457,7 @@ body.testing .dev{display:none!important}
         </div>
         <div class="dow"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
         <div class="grid" id="cal-grid" role="group" aria-label="Choose your return day, or two days if you are not sure"></div>
-        <p class="callegend"><i></i>No date change on this day</p>
+        <p class="callegend"><i></i>No bus that day can change its date</p>
       </div>
 
       <dl class="rules" id="win-rules"></dl>
@@ -804,7 +804,7 @@ body.testing .dev{display:none!important}
         </div>
         <div class="dow"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
         <div class="grid" id="wc-grid" role="group" aria-label="Pick the day to move to"></div>
-        <p class="callegend"><i></i>No date change on this day</p>
+        <p class="callegend"><i></i>No bus that day can change its date</p>
       </div>
 
       <div id="wi-none" hidden>
@@ -1243,7 +1243,7 @@ function paintWindow(){
         inner+='<span class="f">'+RUPEE(FARE[d])+'</span>';
         aria+=', '+RUPEE(FARE[d]);
         if(!MOVABLE(d)){ cls.push('nomove'); inner+='<i class="nmdot" aria-hidden="true"></i>';
-          aria+=', no date change on this day'; }
+          aria+=', no bus that day can change its date'; }
         if(d===cheap){ cls.push('cheap'); aria+=', cheapest in your range'; }
       }
       // The band shows the window; the day's own styling shows whether you can take it. A sold-out
@@ -1290,7 +1290,9 @@ function paintWindow(){
       + '<dd>Book now and this day stays at this price. Change the day later and you pay that day\u2019s price then.</dd>';
   } else if(sel.length===1){
     R.innerHTML = '<dt>We\u2019ll book '+label(sel[0])+' \u00B7 '+RUPEE(FARE[sel[0]])+'</dt>'
-      + '<dd>You can change the date once after booking, to any date. Pay any price difference.</dd>'
+      + '<dd>'+(allBusesOn(sel[0]).every(function(i){return RET_BUSES[i].movable;})
+        ? 'You can change the date once after booking, to any date. Pay any price difference.'
+        : 'Most buses that day let you change the date once, to any date. Not all do \u2014 you pick the bus next.')+'</dd>'
       + '<dt class="crit">No refund on a cheaper day</dt>'
       + '<dd>You only pay when the new day costs more.</dd>'
       + '<dt class="prompt">Not sure? Tap a second day</dt>'
@@ -1433,7 +1435,7 @@ function paintChangeRow(){
   const dropped = s==='noreturn';
   const stuck   = heldDay && !heldMovable();
   const blocked = s==='alreadymoved' || s==='pastcutoff' || moveDone || stuck;
-  const why = stuck ? 'No date change on this day.'
+  const why = stuck ? retOp()+' does not offer a date change.'
     : (s==='alreadymoved'||moveDone) ? 'You have used your one change. This ticket is final.'
     : 'Too late to change. Changes close 8 hours before the bus leaves.';
   ['mv','mb'].forEach(function(k){
@@ -1447,7 +1449,7 @@ function paintChangeRow(){
   document.querySelectorAll('[data-movepill]').forEach(function(p){
     p.classList.toggle('no', !!stuck);
     p.innerHTML = stuck
-      ? 'No date change on this day'
+      ? 'No date change on this bus'
       : '<span aria-hidden="true">\u21BB</span> You can change this date once';
   });
   // the cost of using the badge belongs beside it, not 700px further down
@@ -1475,19 +1477,24 @@ function paintChangeRow(){
   ];
   // The way out differs by screen. Before paying they can still pick another day; once it is booked
   // they cannot, so telling them to would be the confirmation screen offering a door that is shut.
-  const stuckHead = '<dt class="crit">This date cannot be changed</dt>'
-    + '<dd>No bus on ' + day + ' offers a date change.</dd>';
+  // A date change is offered by an operator, so the answer is about the bus. Whether another bus
+  // that day would have kept the change decides which way out to name.
+  const others = heldDay ? allBusesOn(heldDay).filter(function(i){
+    return RET_BUSES[i].movable && i!==busOn(heldDay); }) : [];
+  const stuckHead = '<dt class="crit">This bus cannot change its date</dt>'
+    + '<dd>' + (heldDay ? retOp() : 'This operator') + ' does not offer it on ' + day + '.</dd>';
   const stuckRules = {
     'rv-terms': stuckHead
-      + '<dt>Pick a day without a grey dot to keep your change</dt>'
-      + '<dd>Every other day in your window can be moved once.</dd>',
+      + (others.length
+        ? '<dt>Another bus that day can</dt><dd>Tap <b>Change bus</b> on the return leg above.</dd>'
+        : '<dt>No bus on ' + day + ' offers it</dt><dd>Pick a day without a grey dot to keep your change.</dd>'),
     'bc-terms': stuckHead
       + '<dt>Your ticket has no Change day</dt>'
       + '<dd>The date is fixed. Nothing else about the trip is affected.</dd>'
   };
   cards.forEach(function(c){
     const el = E(c[0]); if(!el) return;
-    el.querySelector('h3').textContent = stuck ? 'Your return day' : c[1];
+    el.querySelector('h3').textContent = stuck ? 'Your return bus' : c[1];
     el.querySelector('.rules').innerHTML = stuck ? stuckRules[c[0]] : c[2];
   });
 }
@@ -1553,7 +1560,7 @@ function renderWithin(){
       inner+='<span class="f">'+(cost>0?'+'+RUPEE(cost):RUPEE(0))+'</span>';
       aria+=', '+(cost>0?'from '+RUPEE(cost)+' more':'nothing more to pay');
       if(!MOVABLE(d)){ cls.push('nomove'); inner+='<i class="nmdot" aria-hidden="true"></i>';
-        aria+=', no date change on this day'; }
+        aria+=', no bus that day can change its date'; }
     }
     html += '<button class="'+cls.join(' ')+'"'+dis+' aria-label="'+aria+'" aria-pressed="false" onclick="tapMoveDay('+d+')">'+inner+'</button>';
   }
@@ -1648,6 +1655,7 @@ function autoSeat(toBus){
                            b=>b.getAttribute('aria-label').indexOf('Seat '+nm+',')===0);
   retBus = busOn(heldDay);          // pin the service booked, so scoping the change flow cannot drift it
   chosen.op=retOp(); chosen.fare=FARE[heldDay]; chosen.seat=nm; paintSeats();
+  paintChangeRow();                 // the default bus may be one that cannot change its date
   if(btn) btn.setAttribute('aria-pressed','true');
   document.getElementById('seat-sub').textContent='Nainital \u2192 Delhi \u00B7 '+chosen.op;
   document.getElementById('seat-count').textContent='Seat '+nm+' selected';
@@ -1787,9 +1795,9 @@ function renderBus(){
 function busDone(){
   retBus = busPick;
   chosen.fare = FARE[heldDay];      // the money follows the bus
-  recalc();
-  go('s-review');
-}
+  setState(state);                  // ...and so does the date-change promise: recalc alone does not
+  go('s-review');                   // run paintChangeRow, so the badge and terms kept the old bus's
+}                                   // answer until some unrelated repaint corrected them
 function openPointsForReview(){
   ptMode='review';
   document.getElementById('pt-back').setAttribute('onclick',"ptMode='';go('s-review')");
