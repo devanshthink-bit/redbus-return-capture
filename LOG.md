@@ -3186,3 +3186,34 @@ existing for a reason.
 **For any list screen, ask what it looks like with one item, and whether it should appear at all.**
 The label was the tell again: *Booked* is fine on the ticket and wrong here, and it was wrong in the
 range case too — I only saw it because the one-day case put it on a screen with nothing else on it.
+
+CHANGE · 2026-09-02 · (no skill) · Source: user
+**"But there can be multiple buses if the user selects one date — shouldn't we show them all?"** Yes.
+Skipping the day list for a single date sent them to review with the bus defaulted and never shown.
+The same hole I had just closed in the change flow, reopened one screen earlier by the previous fix.
+
+The reasoning that resolves it: with a **range**, the decision is still *which day*, and the day list
+is that screen — the bus stays a default with **Change bus** at review, like the seat and the points.
+With **one day**, the day is decided and the bus is the only decision left, so it gets the screen the
+day list vacated. **Choose your bus** now opens from the calendar, with *Review trip* on the button.
+
+**And the degenerate case, this time checked first.** A day that runs one bus goes straight to review;
+a list of one is exactly the thing removed an hour ago. Applied the same rule to the change flow,
+where tapping a one-bus day now goes straight to Confirm.
+
+Back follows the entry: the bus screen returns to the calendar when opened from booking, to review
+when opened as an override.
+
+Verified: a 3-bus day shows three and carries the picked one into review at ₹940; a 1-bus day skips
+it; the change flow does both; Change bus from review still says *Use this bus* and returns to review.
+234 combinations, money agreeing.
+
+LEARNED · 2026-09-02 · (no skill)
+**Removing a screen moves its job, it does not delete it.** The day list was doing two things at once
+— choosing the day and, silently, standing between the calendar and a defaulted bus. I removed it for
+the case where the first job was empty and lost the second without noticing, because the second was
+never written down as a job.
+
+**Before deleting a screen, list what passes through it, not just what it decides.** And the
+degenerate-case check I had just written down as a lesson applied immediately to its own fix: the
+replacement screen needed the same *what does this look like with one item* question, one hour later.

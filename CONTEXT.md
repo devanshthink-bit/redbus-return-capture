@@ -506,7 +506,12 @@ product has no advantage on the only thing that decides it, so it does not choos
 **One day skips this screen entirely.** With a single tap there is nothing to choose, so the day list
 rendered a list of one — repeating the header, with *Booked* on a trip nobody had paid for. The
 calendar now goes straight to Trip review, and carries the *No refund on a cheaper day* rule that used
-to live here. Back from review, and *Pick another return* after a lost seat, both return to whichever
+to live here.
+
+**Unless that day runs several buses** — then the bus *is* the only decision left, so **Choose your
+bus** appears in place of the day list, with **Review trip** on the button. A one-bus day still goes
+straight to review. The same rule runs in the change flow: tapping a day with one bus goes straight to
+Confirm rather than showing a list of one. Back from review, and *Pick another return* after a lost seat, both return to whichever
 screen the traveller actually came from (`backToDays()`). On a range the picked row reads **Your
 pick**, not *Booked*.
 

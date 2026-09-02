@@ -539,7 +539,7 @@ body.testing .dev{display:none!important}
   <!-- ============ SCREEN: Change bus ============ -->
   <section class="screen" id="s-bus">
     <div class="nav">
-      <button class="back" aria-label="Back" onclick="go('s-review')">&#8249;</button>
+      <button class="back" aria-label="Back" onclick="busBack()">&#8249;</button>
       <div class="navtxt"><h1>Choose your bus</h1><p id="bus-sub">Nainital &rarr; Delhi</p></div>
       <span style="width:34px"></span>
     </div>
@@ -1289,7 +1289,9 @@ function loadWindow(){
   setTimeout(()=>{
     b.innerHTML='Continue'; b.disabled=false;
     setHeldDay(hasSpread() ? 0 : bookedDay());   // a real money trade-off is the traveller's to make
-    if(sel.length===1) return autoSeat();        // one day is not a choice; go straight to review
+    // one day is not a choice of DAY, but that day may run several buses -- and then the bus is the
+    // only decision left, so it gets its own screen rather than a default the traveller never sees
+    if(sel.length===1) return autoSeat(busesOn(heldDay).length>1 ? 'book' : null);
     go('s-picked');
   }, 800);
 }
@@ -1534,7 +1536,15 @@ function renderWithin(){
   return n;
 }
 function moveStep(k){ moveMonth=Math.max(0,Math.min(MONTHS.length-1,moveMonth+k)); renderWithin(); }
-function tapMoveDay(d){ moveDay=d; renderMoveBuses(); go('s-wibus'); }
+function tapMoveDay(d){
+  moveDay=d;
+  const list=busesOn(d);
+  if(list.length===1){                    // nothing to choose; Confirm shows the same facts
+    const b=RET_BUSES[list[0]], f=fareOfBus(d,list[0]);
+    return confirmMove(label(d), b.dep, f, f-FARE[heldDay], SEAT[d]);
+  }
+  renderMoveBuses(); go('s-wibus');
+}
 
 // The buses that actually run on the day they picked. This is the half the old list could not do:
 // one row per day could only ever offer one of them.
@@ -1589,7 +1599,7 @@ function pickOut(op,fare,dep,arr){
 // return is usually a different bus and U5 is not the same physical position. Same *kind* of
 // seat is: same deck, same position, then the nearest free seat on that deck. That rule lives in
 // SEATOF(), so the seat named on the day list is the seat handed over here.
-function autoSeat(){
+function autoSeat(toBus){
   buildSeats(heldDay);              // the picked day's own occupancy, not a generic bus
   const nm = SEAT[heldDay];
   const btn = [].find.call(document.querySelectorAll('#g-lower .seat,#g-upper .seat'),
@@ -1602,6 +1612,7 @@ function autoSeat(){
   document.getElementById('b-seat').disabled=false;
   document.getElementById('pt-price').textContent=RUPEE(chosen.fare);
   recalc();
+  if(toBus) return openBus(toBus);
   go('s-review');
 }
 function toSeat(){
@@ -1695,8 +1706,9 @@ function bookedOn(day){
 // Change bus: the third override on the return leg, after the seat and the points. Same shape as
 // those two -- the product picks a sensible default and the traveller can overrule it -- so the day
 // list stays a list of days instead of turning back into a list of buses.
-let busPick = null;
-function openBus(){ busPick = busOn(heldDay); renderBus(); go('s-bus'); }
+let busPick = null, busFrom = 'review';
+function openBus(from){ busFrom = from || 'review'; busPick = busOn(heldDay); renderBus(); go('s-bus'); }
+const busBack = () => go(busFrom==='book' ? 's-window' : 's-review');
 function renderBus(){
   const wrap=document.getElementById('bus-list'); if(!wrap) return;
   const list=busesOn(heldDay), def=defaultBusOn(heldDay);
@@ -1719,7 +1731,8 @@ function renderBus(){
     : '<dt>One bus on '+label(heldDay)+'</dt><dd>Laxmi Holidays runs a single service that day.</dd>';
   document.getElementById('bus-bb').textContent = RUPEE(fareOfBus(heldDay, busPick));
   document.getElementById('bus-sub').textContent = 'Nainital \u2192 Delhi \u00B7 '+label(heldDay);
-  document.getElementById('b-bus').disabled = list.length===1 && busPick===def;
+  document.getElementById('b-bus').textContent = busFrom==='book' ? 'Review trip' : 'Use this bus';
+  document.getElementById('b-bus').disabled = busFrom!=='book' && list.length===1 && busPick===def;
 }
 function busDone(){
   retBus = busPick;
