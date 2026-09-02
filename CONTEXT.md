@@ -513,6 +513,11 @@ sits directly under a tap the traveller has just made, so *Pick your day* right 
 reads as though the tap did not register. The day list's button is **Review trip** in every state,
 because that is now the only screen it opens.
 
+**The calendar cell shows the bare price; the rule is stated once beneath it** — *Each price is the
+cheapest bus that day. You pick the bus next.* Putting *from* on all thirty cells wrapped every one of
+them onto two lines and turned the grid into a wall. The day list keeps *from ₹800* on its rows, where
+there is a line to spare.
+
 **A day is priced at its floor — *from ₹800* — and no bus is preselected.** Opening a day shows its
 buses with none highlighted, the bottom bar reading `—` and **Review trip** disabled until the
 traveller picks one. Then the card header and the bar both switch to that bus's fare.

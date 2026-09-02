@@ -470,6 +470,7 @@ body.testing .dev{display:none!important}
         <div class="dow"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
         <div class="grid" id="cal-grid" role="group" aria-label="Choose your return day, or two days if you are not sure"></div>
         <p class="callegend"><i></i>No bus that day can change its date</p>
+        <p class="callegend">Each price is the cheapest bus that day. You pick the bus next.</p>
       </div>
 
       <dl class="rules" id="win-rules"></dl>
@@ -1277,8 +1278,10 @@ function paintWindow(){
       } else {
         // Same rule as the day list: a day costs what its cheapest bus costs. Pricing it at the
         // default bus put the two screens up to ₹230 apart on the same day, one tap from each other.
+        // "from" on thirty cells wrapped every one of them onto two lines and turned the grid into a
+        // wall. The rule is the same for every day, so it is stated once under the calendar instead.
         const many = busesOn(d).length>1;
-        inner+='<span class="f">'+(many?'<span class="from">from </span>':'')+RUPEE(minFareOn(d))+'</span>';
+        inner+='<span class="f">'+RUPEE(minFareOn(d))+'</span>';
         aria+=', '+(many?'from ':'')+RUPEE(minFareOn(d));
         if(!MOVABLE(d)){ cls.push('nomove'); inner+='<i class="nmdot" aria-hidden="true"></i>';
           aria+=', no bus that day can change its date'; }

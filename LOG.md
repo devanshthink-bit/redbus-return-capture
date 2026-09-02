@@ -3908,3 +3908,25 @@ either rule mentions the other.
 text against its background; none of them compare a *fill* against the fill behind it, which is why
 this shipped. And the symptom is the worst kind — it looks like a logic bug, so the first place I
 looked was the code that decides whether to show the tag.
+
+CHANGE · 2026-09-02 · (no skill) · Source: user
+**"'from' is making the calendar look cluttered."** It was: *from* on every cell wrapped all thirty
+onto two lines, and a month of two-line cells reads as a wall rather than a grid.
+
+The cell shows the bare price now. The rule moved to one line under the calendar — *Each price is the
+cheapest bus that day. You pick the bus next.* — beside the existing dot legend. It is the same rule
+for every day, so it belongs in one place rather than repeated thirty times.
+
+The day list keeps *from ₹800* on its rows, where a row has a spare line and the word does real work
+next to a bus count.
+
+Verified: no *from* anywhere in the grid, cells back to one line, the legend reads correctly, day rows
+still carry *from*, and the full journey plus 234 combinations and 13 states pass.
+
+LEARNED · 2026-09-02 · (no skill)
+**A qualifier that is true of every item belongs to the list, not to the items.** *from* earns its
+place on a day row, where it sits beside *4 buses* and distinguishes that row from a single-bus one. On
+a calendar every cell is the same kind of thing, so the word carried no information per cell and cost a
+line each — thirty lines to say one sentence.
+
+**Before repeating a word in a grid, ask what varies.** If the answer is nothing, it is a caption.
