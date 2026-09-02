@@ -360,7 +360,7 @@ Say these before anyone finds them. Every one is deliberate.
 | Free Cancellation costs ₹160 | Price is not published; it varies | A realistic placeholder. Never present ₹160 as a quoted figure |
 | "Pay only the price difference" | "the 'date change fee' is zero. You will, however, be required to pay the fare difference (if any)" | Same meaning, plainer words. This wording exists *because* "no change fee" made people think nothing was payable |
 | One operator on the route (Laxmi Holidays) | Real routes have many | Deliberate. It makes the same-operator constraint visible instead of hiding it |
-| Free Cancellation offered on the onward leg only | Offered wherever the operator supports it | Keeps the return leg's terms clean, and mirrors the real thing where availability is patchy |
+| Free Cancellation offered on some return buses and not others | **Not stated anywhere** — see §9 #2a | An assumption, chosen because every other return-side mechanism is operator-dependent (§3a). Superseded the older "onward leg only", which was a stand-in that had started to read as a rule |
 
 ---
 
@@ -380,6 +380,11 @@ Say these before anyone finds them. Every one is deliberate.
 1a. **Does a FlexiTicket ticket actually end the flow with a zero fee?** The screen says "Free date
    change" at the top and "Date change fee will be applicable" in the third bullet. See §4a.
 2. **What is Free Cancellation actually priced at,** and does it scale with fare? Not published.
+2a. **Is Free Cancellation offered on every bus, or only where the operator supports it?** Nothing in
+   the terms, the seven T&C clauses or the six FAQs says which buses carry the option — only that it is
+   *purchased* on the booking. v3 assumes operator-dependent, matching every other return-side
+   mechanism in §3a, but that is a pattern argument and not evidence. Settle it by searching one route
+   and checking whether the option appears on every bus's checkout or only some.
 3. **When is the cut-off 6 hours and when is it 12?** The terms say "as applicable to your booking"
    and never explain what decides it.
 4. **Can a group booking be moved partially,** or is it all-or-nothing? Nothing found either way.

@@ -3396,3 +3396,26 @@ in terms?**
 The tell was available all along: the sentence names an *operator* fact but was rendered
 unconditionally. **A claim about one instance, shown on every instance, is either a rule or a bug —
 and if it were a rule it would not be phrased about the instance.**
+
+NOTE · 2026-09-02 · (no skill) · Source: user
+**"Is Free Cancellation only on a few operators, or does redBus add it to any bus?"** Not stated
+anywhere. The seven T&C clauses and six FAQs describe what it does and never say which buses carry the
+option — only that it is *purchased* on the booking.
+
+v3 now assumes **operator-dependent**, because every other return-side mechanism is (§3a: FlexiTicket,
+ordinary reschedule, return redDeal — all patchy). That is a pattern argument, not evidence, and it is
+recorded as such: new open item §9 **2a**, with the one-search test that would settle it.
+
+Also corrected a stale row in the traceable table, which still read *"Free Cancellation offered on the
+onward leg only"* — the assumption replaced an hour ago. Its middle column already said *"offered
+wherever the operator supports it"*, which was our inference sitting in the column reserved for what
+redBus says.
+
+LEARNED · 2026-09-02 · (no skill)
+**A table that records what is verified will happily hold an inference if nobody checks the column.**
+The traceable table has three columns — what v3 says, what redBus says, and why the gap. The middle
+column had an inference in it, unmarked, since 3 Aug. That is worse than an unverified claim in prose,
+because the table's whole purpose is to be the place you can trust.
+
+**Audit the evidence column, not just the claim column.** A claim that looks well-sourced because it
+sits next to something in a "source" column is the hardest kind of wrong to see.
