@@ -232,9 +232,6 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 .q{font-size:20px;font-weight:700;color:var(--ink);line-height:1.25}
 .qhint{font-size:14px;color:var(--muted);margin-top:4px;line-height:1.4}
 #win-rules{margin-top:24px}
-.grouph{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
- color:var(--muted);margin:20px 0 8px}
-#wi-list > .grouph:first-child{margin-top:4px}
 .terms-lead{font-size:16px;line-height:1.5;color:var(--ink);margin-bottom:16px}
 /* the lead's second sentence is a separate fact, so it gets its own line -- the same
    heading-then-muted-line rhythm every block under it already uses */
@@ -525,6 +522,20 @@ body.testing .dev{display:none!important}
 
 
   <!-- ============ SCREEN: Return seat ============ -->
+  <!-- ============ SCREEN: Buses on the day you are moving to ============ -->
+  <section class="screen" id="s-wibus">
+    <div class="nav">
+      <button class="back" aria-label="Back" onclick="go('s-within')">&#8249;</button>
+      <div class="navtxt"><h1>Choose your bus</h1><p id="wb-sub">Nainital &rarr; Delhi</p></div>
+      <span style="width:34px"></span>
+    </div>
+    <div class="wrap">
+      <div class="held" id="wb-held"></div>
+      <dl class="rules note-rules" id="wb-note"></dl>
+      <div id="wb-list"></div>
+    </div>
+  </section>
+
   <!-- ============ SCREEN: Change bus ============ -->
   <section class="screen" id="s-bus">
     <div class="nav">
@@ -784,7 +795,16 @@ body.testing .dev{display:none!important}
       </div>
 
       <dl class="rules note-rules" id="wi-note"></dl>
-      <div id="wi-list"></div>
+      <div class="cal" id="wi-cal">
+        <div class="mon">
+          <button class="calnav" id="wc-prev" aria-label="Previous month" onclick="moveStep(-1)">&#8249;</button>
+          <span id="wc-month">September 2026</span>
+          <button class="calnav" id="wc-next" aria-label="Next month" onclick="moveStep(1)">&#8250;</button>
+        </div>
+        <div class="dow"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+        <div class="grid" id="wc-grid" role="group" aria-label="Pick the day to move to"></div>
+        <p class="callegend"><i></i>No date change on this day</p>
+      </div>
 
       <div id="wi-none" hidden>
         <div class="blank">
@@ -982,6 +1002,7 @@ body.testing .dev{display:none!important}
   <button onclick="go('s-ticket')" id="t-ticket">Ticket</button>
   <button onclick="go('s-mybook')" id="t-mybook">My Bookings</button>
   <button onclick="openWithin()" id="t-within">Change day</button>
+  <button onclick="go('s-wibus')" id="t-wibus">Move &middot; buses</button>
   <button onclick="go('s-confirm')" id="t-confirm">Move confirm</button>
   <button onclick="go('s-done')" id="t-done">Move done</button>
 </div>
@@ -1434,9 +1455,13 @@ function choosePick(d){ setHeldDay(d); }
 
 // Changing the booked day after payment — any day in the range, either direction.
 const BOOKABLE = Array.from({length: LAST_BOOKABLE-OUT_DAY}, (_,i)=>OUT_DAY+1+i);
-function openWithin(){ renderWithin(); go('s-within'); }
+function openWithin(){
+  moveDay=0;
+  moveMonth = Math.max(0, MONTHS.findIndex(M => heldDay>=M.first && heldDay<M.first+M.len));
+  renderWithin(); go('s-within');
+}
 function withinVisibility(empty){
-  const s=state, L=document.getElementById('wi-list'), N=document.getElementById('wi-none'),
+  const s=state, L=document.getElementById('wi-cal'), N=document.getElementById('wi-none'),
         T=document.getElementById('wi-note');
   if(L) L.hidden = empty || ['loading','nothingearlier','checkfail'].includes(s);
   if(N) N.hidden = !(s==='nothingearlier' || (empty && s!=='loading' && s!=='checkfail'));
@@ -1444,66 +1469,88 @@ function withinVisibility(empty){
 }
 
 function renderWithin(){
-  const wrap=document.getElementById('wi-list'); if(!wrap) return 0;
-  if(!heldDay){ wrap.innerHTML=''; withinVisibility(true); return 0; }
-  // The week picked which day we booked. It is NOT the limit on where that day can go -- capping
-  // the list to it gave a traveller who stated a range less reach than one who tapped a single day,
-  // which is backwards for a product built for people who cannot name a date. Days inside the week
-  // still come first, because that is what they told us they were planning for.
-  const inWindow = sel.length===2 ? (d=>d>=sel[0] && d<=sel[1]) : (()=>true);
-  // MOVABLE is deliberately NOT a filter here. It asks whether a day's ticket could be changed
-  // again, and this move spends the only change there is. A bus still runs on those days with
-  // seats free, so hiding them removes real options to protect a change that no longer exists.
-  const all=BOOKABLE.filter(d=>d!==heldDay);
-  const days=all.filter(inWindow), rest=all.filter(d=>!inWindow(d));
+  const g=document.getElementById('wc-grid'); if(!g) return 0;
+  if(!heldDay){ g.innerHTML=''; withinVisibility(true); return 0; }
+  // Narrow with a calendar, decide with a list -- the same shape as the booking flow, and the shape
+  // the real app uses. A traveller changing a date usually knows the date, so making them scroll a
+  // day list to find it was the wrong question; and a list with one row per day could only ever
+  // offer one of that day's buses. Both fixed by putting the calendar first.
   const held=document.querySelector('#s-within .held');
   if(held) held.innerHTML='<div class="legtag">Your booking</div>'
     + '<div class="row"><span class="time" style="font-size:16px">'+label(heldDay)+' \u00B7 '+retDep()+'</span>'
     + '<span class="price" style="font-size:16px">'+RUPEE(FARE[heldDay])+'</span></div>'
     + '<div class="cap" style="margin-top:4px">'+OPERATOR+' \u00B7 Seat '+retSeat()+'</div>';
 
-  const card = function(d){
-    const seat=SEAT[d], diff=FARE[d]-FARE[heldDay];
-    if(!seat){          // the bus runs, the seat does not exist — say which, and do not offer it
-      return '<div class="card off" aria-disabled="true">'
-        + '<div class="row"><span class="time">'+label(d)+' \u00B7 '+depOn(d)+'</span><span class="price">'+RUPEE(FARE[d])+'</span></div>'
-        + '<div class="subrow"><span class="sub">'+OPERATOR+'</span><span class="onw">No seats left</span></div></div>';
+  const M=MONTHS[moveMonth];
+  let html='<div></div>'.repeat(M.lead), n=0;
+  for(let i=0;i<M.len;i++){
+    const d=M.first+i;
+    const cls=['cday']; let inner='<span class="n">'+dnum(d)+'</span>', aria=label(d), dis='';
+    const bookable = d>OUT_DAY && d<=LAST_BOOKABLE;
+    if(d===heldDay){ cls.push('sel'); inner+='<span class="f">Booked</span>'; aria+=', your booking'; dis=' disabled'; }
+    else if(!bookable){ cls.push('off'); dis=' disabled';
+      aria += d<=OUT_DAY ? ', before your outbound journey' : ', beyond the booking window'; }
+    else if(!SEAT[d]){ cls.push('off'); dis=' disabled';
+      inner+='<span class="f">Full</span>'; aria+=', full, no seats left'; }
+    else {
+      n++;
+      const diff=FARE[d]-FARE[heldDay];
+      inner+='<span class="f">'+(diff>0?'+'+RUPEE(diff):diff<0?'\u2212'+RUPEE(-diff):RUPEE(FARE[d]))+'</span>';
+      aria+=', '+(diff>0?RUPEE(diff)+' more':diff<0?RUPEE(-diff)+' less, not refunded':'same price');
+      if(!MOVABLE(d)){ cls.push('nomove'); inner+='<i class="nmdot" aria-hidden="true"></i>';
+        aria+=', no date change on this day'; }
+      // the week they gave still reads as the week they gave -- it just is not a fence any more
+      if(sel.length===2 && d>=sel[0] && d<=sel[1]) cls.push('mid');
     }
-    const mine = retSeat(), same = seat===mine;
-    const seatTxt = same ? 'Your seat '+mine+' is free' : 'Seat '+mine+' is taken. You get '+seat;
+    html += '<button class="'+cls.join(' ')+'"'+dis+' aria-label="'+aria+'" aria-pressed="false" onclick="tapMoveDay('+d+')">'+inner+'</button>';
+  }
+  g.innerHTML=html;
+  document.getElementById('wc-month').textContent = M.name;
+  document.getElementById('wc-prev').disabled = moveMonth===0;
+  document.getElementById('wc-next').disabled = moveMonth===MONTHS.length-1;
+
+  const note=document.getElementById('wi-note');
+  if(note) note.innerHTML = '<dt class="crit">One change only</dt>'
+    + '<dd>After it, you cannot cancel this ticket.</dd>'
+    + '<dt>Any date, not just your week</dt>'
+    + '<dd>Each day shows its closest bus to yours. You pick the bus next.</dd>';
+  withinVisibility(n===0);   // no day left to move to is still an empty state
+  return n;
+}
+function moveStep(k){ moveMonth=Math.max(0,Math.min(MONTHS.length-1,moveMonth+k)); renderWithin(); }
+function tapMoveDay(d){ moveDay=d; renderMoveBuses(); go('s-wibus'); }
+
+// The buses that actually run on the day they picked. This is the half the old list could not do:
+// one row per day could only ever offer one of them.
+function renderMoveBuses(){
+  const wrap=document.getElementById('wb-list'); if(!wrap||!moveDay) return;
+  const seat=SEAT[moveDay], list=busesOn(moveDay), def=defaultBusOn(moveDay);
+  document.getElementById('wb-sub').textContent = 'Nainital \u2192 Delhi \u00B7 '+label(moveDay);
+  document.getElementById('wb-held').innerHTML = '<div class="legtag">Your booking</div>'
+    + '<div class="row"><span class="time" style="font-size:16px">'+label(heldDay)+' \u00B7 '+retDep()+'</span>'
+    + '<span class="price" style="font-size:16px">'+RUPEE(FARE[heldDay])+'</span></div>'
+    + '<div class="cap" style="margin-top:4px">'+OPERATOR+' \u00B7 Seat '+retSeat()+'</div>';
+  const mine=retSeat(), same=seat===mine;
+  wrap.innerHTML = list.map(function(i){
+    const b=RET_BUSES[i], f=fareOfBus(moveDay,i), diff=f-FARE[heldDay];
     const right = diff>0 ? '<span class="onw diffup">Pay '+RUPEE(diff)+' more</span>'
                  : diff<0 ? '<span class="onw">'+RUPEE(-diff)+' less \u2014 no refund</span>'
                           : '<span class="onw">Same price</span>';
-    return '<button class="card" onclick="confirmMove(\''+label(d)+'\',\''+depOn(d)+'\','+FARE[d]+','+diff+',\''+seat+'\')">'
-      + '<div class="row"><span class="time">'+label(d)+' \u00B7 '+depOn(d)+'</span><span class="price">'+RUPEE(FARE[d])+'</span></div>'
-      + '<div class="subrow"><span class="sub">'+OPERATOR+' \u00B7 '+seatTxt+'</span>'+right+'</div>'
-      + (same?'':'<div class="pillrow"><div class="pill warnpill">\u21BB Different seat</div></div>') + '</button>';
-  };
-  // Days they planned for first, then everything else. The second heading is the whole point:
-  // seeing days outside the week is the proof that the week was not a cage. Copy alone cannot
-  // beat what the list shows.
-  const group = (label, ds) => ds.length
-    ? (rest.length ? '<p class="grouph">'+label+'</p>' : '') + ds.map(card).join('') : '';
-  wrap.innerHTML = group('Your week', days) + group('Other days', rest);
-  // Two separate facts. They were one grey paragraph with a line break in the middle, which read as
-  // a wall. Same pattern as the terms blocks: a heading you can scan, a line you can read if it
-  // applies to you. The per-day cards already say which seat you would get, so that is not repeated.
-  // Above the list, not under it: at the bottom this sat 786px down a 697px screen, so nobody
-  // reading it had not already made the choice it was meant to inform.
-  const note=document.getElementById('wi-note');
-  // Two pairs, in the same shape as every other block in the app. The warning was a loose
-  // paragraph above these; it is the first pair now, and keeps its weight through the crit
-  // colour rather than through being the odd one out.
-  if(note) note.innerHTML = (days.length+rest.length)
-    ? '<dt class="crit">One change only</dt>'
-      + '<dd>After it, you cannot cancel this ticket.</dd>'
-      + (rest.length ? '<dt>Any date, not just your week</dt>'
-      + '<dd>Your week only picked the day we booked.</dd>' : '')
-      + '<dt>You may get a different seat</dt>'
-      + '<dd>You get whatever is free that day. Change the seat before you confirm.</dd>'
-    : '';
-  withinVisibility(days.length+rest.length===0);
-  return days.length+rest.length;
+    const tags=[];
+    if(i===def) tags.push('<div class="pill">Closest to your onward</div>');
+    if(!same) tags.push('<div class="pill warnpill">\u21BB Different seat</div>');
+    return '<button class="card" onclick="confirmMove(\''+label(moveDay)+'\',\''+b.dep+'\','+f+','+diff+',\''+seat+'\')">'
+      + '<div class="row"><span class="time">'+b.dep+'<span class="d">\u2014</span><span class="arr">'+b.arr+'</span></span>'
+      + '<span class="price">'+RUPEE(f)+'</span></div>'
+      + '<div class="subrow"><span class="sub">'+OPERATOR+' \u00B7 '
+      + (same ? 'Your seat '+mine+' is free' : 'Seat '+mine+' is taken. You get '+seat)+'</span>'+right+'</div>'
+      + (tags.length?'<div class="pillrow">'+tags.join('')+'</div>':'') + '</button>';
+  }).join('');
+  const note=document.getElementById('wb-note');
+  if(note) note.innerHTML = '<dt class="crit">One change only</dt>'
+    + '<dd>After it, you cannot cancel this ticket.</dd>'
+    + (list.length>1 ? '<dt>'+list.length+' buses on '+label(moveDay)+'</dt>'
+       + '<dd>Your boarding and dropping times move with the bus.</dd>' : '');
 }
 
 let chosen={op:'',fare:0,seat:null};
@@ -1611,7 +1658,12 @@ function setPt(el,group){
   document.querySelectorAll('.ptn[data-g="'+group+'"]').forEach(p=>p.setAttribute('aria-pressed','false'));
   el.setAttribute('aria-pressed','true');
 }
-let movedTo='', movedSeat=HELD_SEAT, movedDay=0;
+let movedTo='', movedSeat=HELD_SEAT, movedDay=0, movedBus=null;
+// The move is to a bus, not to a day. Every screen after Confirm used to recompute the difference
+// from the day's DEFAULT bus, so moving to a cheaper service on that day showed one number on
+// Confirm and another on Pay. One accessor, like every other value that goes wrong twice.
+const movedFare = () => movedBus===null ? FARE[movedDay] : fareOfBus(movedDay, movedBus);
+let moveMonth=0, moveDay=0;              // the change-day calendar, and the day picked in it
 let moveDone=false;
 const changesLeft = () => (moveDone || state==='alreadymoved') ? 0 : 1;
 let seatMode='';        // '' = booking · 'move' = seat for a date change · 'review' = changing it at trip review
@@ -1719,11 +1771,14 @@ function seatDone(){
   document.getElementById('seat-note').textContent='This is your return bus. Your onward seat stays the same.';
   document.getElementById('seat-back').setAttribute('onclick',"go('s-review')");
   document.getElementById('b-seat').textContent='Select points';
-  confirmMove(movedTo, depOn(movedDay), FARE[movedDay], FARE[movedDay]-FARE[heldDay], movedSeat);
+  confirmMove(movedTo, movedBus===null?depOn(movedDay):RET_BUSES[movedBus].dep,
+              movedFare(), movedFare()-FARE[heldDay], movedSeat);
 }
 function confirmMove(date,time,fare,diff,seat){
   movedTo=date; movedSeat=seat||retSeat();
   movedDay=BOOKABLE.find(d=>label(d)===date)||movedDay;
+  const bi=RET_BUSES.findIndex(function(b){return b.dep===time;});
+  movedBus = bi>=0 ? bi : null;
   document.getElementById('c-to').textContent = date+' · '+time;
   const mine = retSeat(), sameSeat = movedSeat===mine;
   document.getElementById('c-tosub').textContent = 'Seat '+movedSeat+' · ₹'+fare.toLocaleString('en-IN');
@@ -1762,7 +1817,7 @@ let moveTimer=null;
 // It used to say 'You pay now Rs470' and then jump straight to the done screen.
 let payMode='booking';
 function paintPay(){
-  const E=id=>document.getElementById(id), owed=FARE[movedDay]-FARE[heldDay];
+  const E=id=>document.getElementById(id), owed=movedFare()-FARE[heldDay];
   const change = payMode==='change';
   if(E('pay-book'))   E('pay-book').hidden   = change;
   if(E('pay-change')) E('pay-change').hidden = !change;
@@ -1781,7 +1836,7 @@ function doMove(){
     moveTimer=null;
     b.innerHTML='Confirm change'; b.disabled=false;
     if(document.getElementById('st-sf').getAttribute('aria-pressed')==='true'){ setState('swapfail'); return; }
-    if(FARE[movedDay]-FARE[heldDay] > 0){    // owe the difference: pay for it like anything else
+    if(movedFare()-FARE[heldDay] > 0){    // owe the difference: pay for it like anything else
       payMode='change'; paintPay(); go('s-pay');
     } else {
       finishMove();                          // same price or cheaper: nothing to pay
@@ -1792,6 +1847,8 @@ function finishMove(){
   payMode='booking';
   moveDone=true;
   setHeldDay(movedDay||heldDay);
+  retBus = movedBus;                 // the ticket now runs the service they moved to
+  setState(state);
   recalc(); paintPay(); go('s-done');
 }
 function abortMove(){
@@ -1964,8 +2021,8 @@ function setState(s){
     document.getElementById('b-pay').disabled = s==='seatgone';
   }
   const E=id=>document.getElementById(id);
-  if(E('wi-list')){
-    renderWithin();                       // sets wi-list / wi-none itself
+  if(E('wi-cal')){
+    renderWithin();                       // sets the calendar / wi-none itself
     E('wi-loading').hidden = s!=='loading';
     E('wi-err').hidden     = s!=='checkfail';
     E('c-err').hidden     = s!=='swapfail';

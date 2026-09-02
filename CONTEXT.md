@@ -577,6 +577,24 @@ screen.* One row per day is right for the decision, but it makes the bus, the se
 fixed — the traveller sees one time, one seat and no stops at all. The line sits in the bar because
 that is where the decision is committed and the bar never scrolls away.
 
+### Change day (screen 12) — calendar, then buses
+
+**Narrow with a calendar, decide with a list** — the booking flow's own shape, and the real app's.
+The old screen was a scrolling list of every day, one row each, showing that day's default bus. Two
+things were wrong with it: somebody changing a date usually *knows* the date, so scrolling 29 cards
+to find it is the wrong question; and one row per day could only ever offer one of that day's buses,
+so two of three services were unreachable.
+
+Now: a calendar carrying the **price difference on every day** (`−₹170`, `+₹60`), `Full` where the
+bus is sold out, `Booked` on the day held, a dot for no-date-change, and the traveller's week tinted.
+Tap a day → **Choose your bus**, every service that runs it, each with the fare difference against
+what they hold and the seat they would get. That is more than redBus's own calendar shows, which
+carries dates and nothing else.
+
+`movedFare()` is the one accessor for what the move costs. Confirm and Pay each used to recompute it
+from the day's *default* bus, so moving to a cheaper service showed ₹140 on one screen and ₹230 on
+the next.
+
 ### Change bus (screen 07b)
 
 **One operator does not mean one bus a day.** `TERMS.md` §4 records the unverified same-operator

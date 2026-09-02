@@ -3017,3 +3017,37 @@ tightened the product.
 
 **Ask which object a limit belongs to.** I argued this cap twice today, once for and once against,
 and both arguments were about whether the limit was justified. Neither asked what it was a limit *on*.
+
+CHANGE · 2026-09-02 · (no skill) · Source: user
+**"When changing the date the user is mostly confirmed on the exact date. Why show bus options for
+all dates? And what if there are multiple buses on one date — our design fails, right?"** Both true.
+The second is a defect I introduced this session.
+
+Measured before answering: of 7 sampled days, **5 run more than one bus and the list showed exactly
+one**. Adding multiple services a day updated the change list to show each day's *default* bus and
+never gave a way to reach the others. Two of three services were unreachable.
+
+Rebuilt as **calendar → buses on that day → confirm** — redBus's own shape, and the shape the booking
+flow already uses (window picker → day list). The calendar carries the price difference on every day,
+`Full`, `Booked`, the no-date-change dot, and the traveller's week tinted. Tapping a day lists every
+service that runs it with the fare difference and the seat.
+
+**A money bug fell out of it, of the exact class this project keeps hitting.** Confirm said ₹140 and
+Pay said ₹230 for the same move. `paintPay()` and `doMove()` both recomputed the difference as
+`FARE[movedDay] - FARE[heldDay]` — the day's *default* bus — while the move was to a cheaper service
+on that day. Now `movedFare()` is the single accessor, and `movedBus` is carried through `confirmMove`
+so the ticket ends up on the service they actually chose.
+
+Verified: 234 combinations, money agreeing in every state, every bus on a day checked so Confirm and
+Pay report the same number, the free-move path (no payment screen) and the paid path both walked end
+to end, and the ticket showing the bus moved to.
+
+LEARNED · 2026-09-02 · (no skill)
+**Adding a dimension to a value breaks every screen that still reads it as one-dimensional — and the
+grep for it finds nothing.** The fare stopped being a property of a day and became a property of a
+bus. `FARE[d]` still existed, still returned a number, still looked right on the screen I was testing.
+Three call sites were quietly wrong: the change list, `paintPay()` and `doMove()`.
+
+`data-` attributes and one accessor caught this for seats and times because those values are *printed*.
+Money is **computed**, and a computation cannot carry an attribute. The check that works for it is the
+one that found this: **take one journey and compare the same number on two screens.**
