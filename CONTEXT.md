@@ -598,7 +598,8 @@ because hiding it would leave the traveller assuming they have cover they do not
 That is TERMS FAQ 3 stated at the moment of purchase. On the 23:10, which offers no date change, there
 is nothing to void it and the caveat does not appear — so the cheapest bus on the route is the one
 where the refund is safe and the date is not. Both tags sit on the bus card, so the trade-off is
-visible before the bus is chosen, not after.
+visible before the bus is chosen, not after — **named, not priced**. redBus tags the feature on the
+list and prices it on Passenger Information, so the amount appears once, on review.
 
 **It is not the same fact as the date change, and the two must not be merged.** Free Cancellation is
 the paid add-on that returns 100%. *Ordinary* cancellation always exists and returns part of the fare

@@ -1775,7 +1775,9 @@ function renderBus(){
     const tags=[];
     if(!b.movable) tags.push('<div class="pill no">No date change</div>');
     if(spread && f===low) tags.push('<div class="pill">Cheapest</div>');
-    if(b.fc) tags.push('<div class="pill">Free Cancellation '+RUPEE(b.fc)+'</div>');
+    // redBus tags the feature on the bus card and prices it later, on Passenger Information.
+    // Ours priced it on the card, which is not how the real list reads.
+    if(b.fc) tags.push('<div class="pill">Free Cancellation</div>');
     if(i===def) tags.push('<div class="pill">Closest to your onward</div>');
     // Nothing is booked yet, so there is nothing to be cheaper THAN. The old line compared every bus
     // to the default one -- a bus the traveller never picked and cannot see named anywhere.

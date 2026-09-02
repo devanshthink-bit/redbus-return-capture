@@ -3458,3 +3458,22 @@ completely — you do not build a filter for something everything has.
 **When a policy question has no policy answer, look for the control.** Filters, toggles, empty states
 and disabled rows encode the rule the prose omits, and they are cheaper to find than a legal page.
 That is now two open items closed in one day from the running app rather than the terms.
+
+CHANGE · 2026-09-02 · (no skill) · Source: user
+**"redBus doesn't show the amount like this."** The bus card's tag read *Free Cancellation ₹60*. In
+the real app the list tags the **feature** — *Free date change*, *Free Cancellation* — and the price
+appears once, later, on Passenger Information (§3b). Ours priced it twice, in a place the real list
+never does.
+
+Now the card says *Free Cancellation*, and ₹60 appears on review where the choice is actually made.
+
+Verified: five bus cards tagged without amounts, ₹60 still on the review row, 234 combinations, money
+agreeing.
+
+LEARNED · 2026-09-02 · (no skill)
+**Evidence arrives as a bundle and I unpacked only the half I was looking for.** The same screenshots
+that gave me ₹60 and the 6-hour cut-off also showed *where* redBus puts a price — on the add-on
+screen, not the list. I took the numbers and put them wherever my own layout already had room.
+
+**When a capture answers a question, read it for the questions you did not ask.** The price was the
+answer I wanted; the placement was sitting in the same image and I walked past it.
