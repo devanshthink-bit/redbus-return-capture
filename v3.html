@@ -513,7 +513,7 @@ body.testing .dev{display:none!important}
       </div>
     </div>
     <div class="bottombar col" id="pk-bar">
-      <p class="barnote">Bus, seat and stops change on the next screen. The date can change later, to any day.</p>
+      <p class="barnote">You choose the bus, seat and stops before you pay. The date can change later, to any day.</p>
       <div class="barrow">
         <div><div class="bb1">Return</div><div class="bb2" id="pk-bb">&#8377;949</div></div>
         <button class="btn pri" id="b-pk" disabled onclick="autoSeat(busesOn(heldDay).length>1?'book':null)">Review trip</button>
@@ -1428,7 +1428,9 @@ function renderPicked(){
     note.innerHTML = '<dt>Every day costs the same</dt><dd>Pick whichever suits you.</dd>' + after;
   }
   document.getElementById('pk-bb').textContent = heldDay ? RUPEE(minFareOn(heldDay)) : '\u2014';
-  document.getElementById('b-pk').disabled = !heldDay;
+  const bpk=document.getElementById('b-pk');
+  bpk.disabled = !heldDay;
+  bpk.textContent = (heldDay && busesOn(heldDay).length>1) ? 'Choose your bus' : 'Review trip';
   const sub = sel.length===2 ? label(sel[0])+' \u2013 '+label(sel[1]) : label(sel[0]);
   const ps=document.getElementById('pk-sub');
   if(ps) ps.textContent='Nainital \u2192 Delhi \u00B7 '+sub;

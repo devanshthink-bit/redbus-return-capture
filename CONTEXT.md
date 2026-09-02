@@ -508,6 +508,9 @@ rendered a list of one — repeating the header, with *Booked* on a trip nobody 
 calendar now goes straight to Trip review, and carries the *No refund on a cheaper day* rule that used
 to live here.
 
+**The button names the screen it opens** — *Choose your bus* on a day that runs several, *Review trip*
+on a day that runs one. It said *Review trip* on both from the moment the bus screen was added.
+
 **With a range, each row is a day, priced at that day's floor** — *from ₹970 · 4 buses · pick one
 next*. It used to show whichever bus happened to be the default, which ran up to **₹200 above** the
 day's cheapest, and the *Cheapest* pill ranked days on that same wrong figure. `minFareOn(d)` is the

@@ -3477,3 +3477,25 @@ screen, not the list. I took the numbers and put them wherever my own layout alr
 
 **When a capture answers a question, read it for the questions you did not ask.** The price was the
 answer I wanted; the placement was sitting in the same image and I walked past it.
+
+CHANGE · 2026-09-02 · (no skill) · Source: user
+**"Why are we showing Review trip on the CTA?"** Because it was written when review was the next
+screen. Once a day could hold several buses, tapping it opened **Choose your bus** — the button named
+a screen the traveller would not see for another two taps.
+
+The button now names what it opens: *Choose your bus* where the day runs more than one, *Review trip*
+where it runs one. The bar note followed — it said *"Bus, seat and stops change on the next screen"*,
+and for a multi-bus day the next screen is the bus picker, not review. Now: *"You choose the bus, seat
+and stops before you pay."* True on both paths.
+
+Verified: label matches the screen on every day tested — 3, 2 and 5 buses all read *Choose your bus*
+and land on `s-bus`; a 1-bus day reads *Review trip* and lands on `s-review`. 234 combinations, money
+agreeing.
+
+LEARNED · 2026-09-02 · (no skill)
+**A button label is a claim about the next screen, and inserting a screen invalidates every label
+pointing past it.** I added the bus picker in three separate places today and never checked what the
+buttons in front of it said. The routing was right each time; the words were stale each time.
+
+**When a screen is inserted, re-read the labels of everything that now lands one step earlier** — the
+button, and any copy promising what happens "next". Both were wrong here, and both still rendered.
