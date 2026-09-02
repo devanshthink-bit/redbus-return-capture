@@ -322,6 +322,29 @@ not happening. Every deferral is a decision.
 
 ---
 
+### "Your bus list advertises *Free date change* on the onward bus. Where do I use it?"
+
+*Asked by a traveller, not a stakeholder, and it has no answer in the build.*
+
+**Concede it immediately.** The outbound list carries a *Free date change* badge on eligible buses —
+that is redBus's own list, replicated — and then the whole construct is about the **return**. The
+ticket has one change row, *Change your return day*, and nothing anywhere offers to move the onward.
+
+**Why that is defensible.** The onward date is the one thing the traveller already knows. The problem
+statement is the return: *"I know I'll go on the 10th, I don't know when I'm coming back."* Building a
+change flow for a date nobody is uncertain about spends screens on the wrong half of the trip, and
+the 95% guardrail is spent on the return step.
+
+**Why it is still a real gap.** Someone who chose that bus *because* of the badge has been sold
+something the product never delivers. In a shipped version the onward's change lives where redBus
+already puts it — My Bookings, the ordinary reschedule flow — and the prototype simply does not draw
+that screen.
+
+**The honest close:** *"The onward change already exists in redBus and I did not rebuild it. If a
+session shows people looking for it on the ticket, the fix is a second row, not a second flow."*
+
+---
+
 ## 2A. The FlexiTicket cross-examination — asked live, and got me
 
 *These three came from a mentor during a live v3 demo and I had no answer. Two of them rest on a

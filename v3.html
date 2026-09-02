@@ -167,7 +167,6 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 .bottombar{flex:0 0 auto;background:var(--raised);border-top:1px solid var(--line);
  padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .bb1{font-size:14px;color:var(--muted)} .bb2{font-size:18px;font-weight:700}
-.from{font-size:12px;font-weight:400;color:var(--muted)}
 .dayhead{display:block;width:100%;text-align:left;background:none;border:0;padding:0;cursor:pointer}
 .buses{margin-top:12px;border-top:1px solid var(--line);padding-top:4px}
 .busrow{display:flex;width:100%;align-items:flex-start;justify-content:space-between;gap:12px;
@@ -356,7 +355,7 @@ body.testing .dev{display:none!important}
   <section class="screen" id="s-obuses">
     <div class="nav">
       <button class="back" aria-label="Back" onclick="go('s-home')">&#8249;</button>
-      <div class="navtxt"><h1>Delhi &rarr; Nainital</h1><p>Thu, 10 Sep &middot; 57 buses</p></div>
+      <div class="navtxt"><h1>Delhi &rarr; Nainital</h1><p>Thu, 10 Sep &middot; 3 buses</p></div>
       <span style="width:44px"></span>
     </div>
     <div class="wrap">
@@ -1065,14 +1064,18 @@ const label = d => dname(d)+', '+dnum(d)+' '+mname(d);
 
 // Deterministic, so the same date always costs the same. Weekends carry the peak, which is
 // what makes the cheapest-versus-dearest choice on the next screen mean anything.
-function FAREOF(d){
+// The day's base fare, before any bus. Kept separate from FAREOF because the bus that prices a day
+// is now chosen BY price -- so anything that resolves a bus must be able to read a fare without
+// asking which bus was chosen, or defaultBusOn and FAREOF call each other forever.
+function baseFare(d){
   const w = dname(d);
   let f = 880 + ((d*37) % 9) * 30;
   if(w==='Fri'||w==='Sat') f += 320;
   else if(w==='Sun') f += 160;
-  return f + RET_BUSES[busOn(d)].delta;      // the fare belongs to a bus, not to a day
+  return f;
 }
-const fareOfBus = (d,i) => FAREOF(d) - RET_BUSES[busOn(d)].delta + RET_BUSES[i].delta;
+const fareOfBus = (d,i) => baseFare(d) + RET_BUSES[i].delta;
+function FAREOF(d){ return fareOfBus(d, busOn(d)); }   // the fare belongs to a bus, not to a day
 // What a day costs at its cheapest. The day list compares days, so it has to compare the same thing
 // on each -- the default bus's fare was up to ₹200 above the day's real floor, and the Cheapest pill
 // was ranking days on it.
@@ -1139,7 +1142,16 @@ function closestBusOn(d, to, list){
 }
 // Booking anchors on the onward departure. A date change anchors on the return they already hold --
 // the onward is not what is moving. Same rule, different reference point.
-const defaultBusOn = d => closestBusOn(d, out.dep);
+const closestToOnward = d => closestBusOn(d, out.dep);
+// What the traveller is booked onto, and therefore what the day costs. The cheapest bus that KEEPS
+// the date change -- because that is the product this flow sells, and a bus without it is a different
+// deal. The row, the open card and the bottom bar all name this one number, so tapping a day no
+// longer raises the price. Cheaper unchangeable buses stay in the list, tagged.
+function defaultBusOn(d){
+  const pool = busesOn(d).length ? busesOn(d) : allBusesOn(d);
+  const mov = pool.filter(i => RET_BUSES[i].movable);
+  return (mov.length ? mov : pool).reduce(function(a,b){ return fareOfBus(d,b) < fareOfBus(d,a) ? b : a; });
+}
 // One writer for the return bus, the way outSeat()/retSeat() are the one writer for the seat.
 // retBus is only ever set for the booked day; every other day shows its own default.
 let retBus = null;
@@ -1202,7 +1214,7 @@ function bookedDay(){
 // Only days you could actually book count. A sold-out day was being named as the cheapest.
 function cheapestIn(a,b){   // by each day's floor, not by whichever bus happens to be the default
   let best=0;
-  for(let d=a;d<=b;d++) if(SEAT[d] && (!best || minFareOn(d)<minFareOn(best))) best=d;
+  for(let d=a;d<=b;d++) if(SEAT[d] && (!best || FARE[d]<FARE[best])) best=d;
   return best || a;
 }
 
@@ -1213,7 +1225,7 @@ function cheapestIn(a,b){   // by each day's floor, not by whichever bus happens
 // cost the same while the fares differed by hundreds.
 function hasSpread(){
   if(sel.length!==2) return false;
-  const fs = Array.from({length: sel[1]-sel[0]+1}, (_,i)=>minFareOn(sel[0]+i));
+  const fs = Array.from({length: sel[1]-sel[0]+1}, (_,i)=>FARE[sel[0]+i]);
   return Math.max.apply(null,fs) !== Math.min.apply(null,fs);
 }
 
@@ -1267,9 +1279,8 @@ function paintWindow(){
       } else {
         // Same rule as the day list: a day costs what its cheapest bus costs. Pricing it at the
         // default bus put the two screens up to ₹230 apart on the same day, one tap from each other.
-        const many = busesOn(d).length>1;
-        inner+='<span class="f">'+(many?'<span class="from">from </span>':'')+RUPEE(minFareOn(d))+'</span>';
-        aria+=', '+(many?'from ':'')+RUPEE(minFareOn(d));
+        inner+='<span class="f">'+RUPEE(FARE[d])+'</span>';
+        aria+=', '+RUPEE(FARE[d]);
         if(!MOVABLE(d)){ cls.push('nomove'); inner+='<i class="nmdot" aria-hidden="true"></i>';
           aria+=', no bus that day can change its date'; }
         if(d===cheap){ cls.push('cheap'); aria+=', cheapest in your range'; }
@@ -1317,7 +1328,7 @@ function paintWindow(){
     R.innerHTML = '<dt>Prices can go up</dt>'
       + '<dd>Book now and this day stays at this price. Change the day later and you pay that day\u2019s price then.</dd>';
   } else if(sel.length===1){
-    R.innerHTML = '<dt>We\u2019ll book '+label(sel[0])+' \u00B7 '+(busesOn(sel[0]).length>1?'from ':'')+RUPEE(minFareOn(sel[0]))+'</dt>'
+    R.innerHTML = '<dt>We\u2019ll book '+label(sel[0])+' \u00B7 '+RUPEE(FARE[sel[0]])+'</dt>'
       + '<dd>'+(function(){
           const bs=allBusesOn(sel[0]), mv=bs.filter(function(i){return RET_BUSES[i].movable;}).length;
           if(mv===bs.length) return 'You can change the date once after booking, to any date. Pay any price difference.';
@@ -1331,14 +1342,14 @@ function paintWindow(){
   } else {
     const b=sel[1], c=cheapestIn(sel[0],sel[1]);
     R.innerHTML = (!hasSpread()
-      ? '<dt>We\u2019ll book '+label(b)+' \u00B7 '+(busesOn(b).length>1?'from ':'')+RUPEE(minFareOn(b))+'</dt>'
+      ? '<dt>We\u2019ll book '+label(b)+' \u00B7 '+RUPEE(FARE[b])+'</dt>'
       + '<dd>Your last day, so you never need to change it. Every day costs the same.</dd>'
       : c===b
       ? '<dt>Next, pick your day</dt>'
-      + '<dd>'+label(b)+' is your last day and also the cheapest, at '+RUPEE(minFareOn(b))
+      + '<dd>'+label(b)+' is your last day and also the cheapest, at '+RUPEE(FARE[b])
       + '. Earlier days cost more.</dd>'
       : '<dt>Next, pick your day</dt>'
-      + '<dd>Cheapest: '+label(c)+' '+RUPEE(minFareOn(c))+'. Your last day: '+label(b)+' '+RUPEE(minFareOn(b))+'.</dd>')
+      + '<dd>Cheapest: '+label(c)+' '+RUPEE(FARE[c])+'. Your last day: '+label(b)+' '+RUPEE(FARE[b])+'.</dd>')
       + '<dt>You can change the date once, to any date</dt>'
       + '<dd>Not just this week. Pay the difference if it costs more. No refund if it costs less.</dd>';
   }
@@ -1386,11 +1397,11 @@ function renderPicked(){
     const seat = SEAT[d];                     // the seat that day actually has, not a seat we hold
     // No date change is about the buses; No seats left is about the day. A sold-out day carried both.
     if(seat && !MOVABLE(d)) tags.push('<div class="pill no">No date change</div>');
-    const low = minFareOn(d), many = busesOn(d).length>1;
-    const diff = heldDay ? low-minFareOn(heldDay) : 0;
+    const many = busesOn(d).length>1;
+    const diff = heldDay ? FARE[d]-FARE[heldDay] : 0;
     if(!seat){                                // no bus seat left: say so, and do not let it be picked
       return '<div class="card off" aria-disabled="true">'
-        + '<div class="row"><span class="time">'+label(d)+' \u00B7 '+depOn(d)+'</span><span class="price">'+RUPEE(minFareOn(d))+'</span></div>'
+        + '<div class="row"><span class="time">'+label(d)+' \u00B7 '+depOn(d)+'</span><span class="price">'+RUPEE(FARE[d])+'</span></div>'
         + '<div class="subrow"><span class="sub">'+opOn(d)+'</span><span class="onw">No seats left</span></div>'
         + (tags.length?'<div class="pillrow">'+tags.join('')+'</div>':'') + '</div>';
     }
@@ -1412,6 +1423,9 @@ function renderPicked(){
           const b=RET_BUSES[i], f=fareOfBus(d,i), on=(i===busOn(d));
           const bt=[];
           if(!b.movable) bt.push('<span class="pill no">No date change</span>');
+          // the day is priced at the cheapest CHANGEABLE bus, so name the true floor where it differs
+          if(f===minFareOn(d) && minFareOn(d)!==FARE[d]) bt.push('<span class="pill">Cheapest</span>');
+          if(i===closestToOnward(d)) bt.push('<span class="pill">Closest to your onward</span>');
           if(b.fc) bt.push('<span class="pill">Free Cancellation</span>');
           return '<button class="busrow'+(on?' sel':'')+'" aria-pressed="'+on+'" onclick="event.stopPropagation();pickBus('+d+','+i+')">'
             + '<span class="bt"><b>'+b.dep+'</b> \u2014 '+b.arr+'<br><span class="cap">'+b.op+'</span>'
@@ -1421,7 +1435,7 @@ function renderPicked(){
     return '<div class="card'+(open?' sel':'')+'">'
       + '<button class="dayhead" onclick="choosePick('+d+')" aria-expanded="'+open+'">'
       + '<div class="row"><span class="time">'+label(d)+(many?'':' \u00B7 '+depOn(d))+'</span>'
-      + '<span class="price">'+(many&&!open?'<span class="from">from </span>':'')+RUPEE(open?FARE[d]:low)+'</span></div>'
+      + '<span class="price">'+RUPEE(FARE[d])+'</span></div>'
       + '<div class="subrow"><span class="sub">'
       + (many ? busesOn(d).length+' buses'+(open?'':' \u00B7 tap to see them')
               : opOn(d)+' \u00B7 only bus that day')+'</span>'+right+'</div>'
@@ -1467,8 +1481,8 @@ function renderPicked(){
       + '<dt class="crit">No refund on a cheaper day</dt>'
       + '<dd>You only pay when the new day costs more.</dd>';
   } else if(spread){
-    const save = minFareOn(last)-minFareOn(cheap);
-    note.innerHTML = '<dt>Cheapest is '+label(cheap)+' \u00B7 '+RUPEE(minFareOn(cheap))+'</dt>'
+    const save = FARE[last]-FARE[cheap];
+    note.innerHTML = '<dt>Cheapest is '+label(cheap)+' \u00B7 '+RUPEE(FARE[cheap])+'</dt>'
       + '<dd>Pick it now and you save '+RUPEE(save)+'.</dd>'
       + '<dt class="crit">No refund on a cheaper day</dt>'
       + '<dd>You only pay when the new day costs more.</dd>'
@@ -1823,7 +1837,7 @@ function renderBus(){
     // redBus tags the feature on the bus card and prices it later, on Passenger Information.
     // Ours priced it on the card, which is not how the real list reads.
     if(b.fc) tags.push('<div class="pill">Free Cancellation</div>');
-    if(i===def) tags.push('<div class="pill">Closest to your onward</div>');
+    if(i===closestToOnward(heldDay)) tags.push('<div class="pill">Closest to your onward</div>');
     // Nothing is booked yet, so there is nothing to be cheaper THAN. The old line compared every bus
     // to the default one -- a bus the traveller never picked and cannot see named anywhere.
     const right = '';

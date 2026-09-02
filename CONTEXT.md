@@ -513,10 +513,19 @@ sits directly under a tap the traveller has just made, so *Pick your day* right 
 reads as though the tap did not register. The day list's button is **Review trip** in every state,
 because that is now the only screen it opens.
 
-**The calendar prices a day the same way the day list does** — at its floor, marked *from* when the
-day runs more than one bus. It used to price the default bus, which put the two screens up to **₹230
-apart on the same day**, one tap from each other, and made *"Cheapest: Mon, 14 Sep ₹1,030"* a figure
-that appeared nowhere else.
+**A day is priced at the cheapest bus that keeps the date change, and that is the bus it opens on.**
+The calendar cell, the day row, the open card and the bottom bar are one number, so tapping a day
+never raises the price. Cheaper buses that cannot be moved stay in the list, tagged **Cheapest** and
+**No date change** — available, not advertised.
+
+The reasoning: this flow exists to sell flexibility, so the headline price should be the price of the
+flexible option. A bus without a date change is a different deal, not the same day for less.
+
+**The cost, stated:** the default is no longer the service closest to the onward departure — that is a
+tag now, one tap away. Someone who took a 23:55 bus out may be defaulted onto a 21:15 back. Two
+earlier arrangements were tried and rejected: pricing at the default bus (the calendar and the list
+disagreed by up to ₹230 on the same day) and pricing at the true floor (tapping a day raised the price
+on every multi-bus day, and the floor usually belonged to a bus with no date change).
 
 **A closed row is priced at that day's floor** — *from ₹830 · 5 buses · tap to see them*. It used to
 show whichever bus happened to be the default, which ran up to **₹200 above** the day's cheapest, and

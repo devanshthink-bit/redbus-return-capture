@@ -3796,3 +3796,56 @@ each screen *computes* needs the comparison done screen to screen, not writer to
 Second, smaller and repeated: **removing a constraint leaves its description behind.** The window
 stopped capping changes days ago; the ticket kept advertising it. Same shape as the *this day* copy
 after movability moved to the bus. Grep the removed concept, not just the removed code.
+
+DECISION · 2026-09-02 · (no skill) · Source: user
+**A day is priced at the cheapest bus that keeps the date change, and opens on that bus.** Chosen from
+the user-walkthrough findings, over two arrangements that had both already shipped and failed:
+
+- **Priced at the default bus** — the calendar and the day list then disagreed by up to **₹230 on the
+  same day**, one tap apart.
+- **Priced at the true floor** — the two screens agreed, but tapping a day *raised* the price on every
+  multi-bus day, and on 3 of 5 days that floor belonged to a bus tagged **No date change**. The number
+  that pulled the eye was the one that voided the product's whole promise.
+
+Now the calendar cell, the day row, the open card and the bottom bar are one number. No jump anywhere.
+The reasoning: this flow exists to sell flexibility, so the headline price should be the price of the
+flexible option. A bus without a date change is a different deal, not the same day for less. It stays
+in the list, tagged **Cheapest** and **No date change** — available, not advertised.
+
+**The cost, and it is a real reversal:** the default is no longer *closest to your onward departure*,
+the rule chosen on 30 Aug so that a night bus out gives a night bus back. It is a tag now, one tap
+away. Someone who took the 23:55 out may be defaulted onto the 21:15 back. Flagged rather than buried
+— if sessions show people rejecting the time, the fix is to default on time and price on time, which
+brings back a smaller version of the first problem.
+
+**A hard bug fell out of it.** Choosing the bus *by price* made `defaultBusOn → fareOfBus → FAREOF →
+busOn → defaultBusOn` a cycle, and the page died with a stack overflow. Split out `baseFare(d)`, the
+day's fare before any bus, so anything resolving a bus can read a fare without asking which bus was
+resolved.
+
+**Also done:** the outbound list said *57 buses* and showed 3 — now *3 buses*, so a session is not
+derailed by it.
+
+Verified: calendar = row = open card = bar on every day tested, every booked bus keeps its date change,
+234 combinations, 13 states, money agreeing, no broken text, no dead buttons.
+
+CHANGE · 2026-09-02 · (no skill) · Source: user
+**`DEFENCE.md`: "Your bus list advertises Free date change on the onward bus. Where do I use it?"**
+The sixth walkthrough finding, and the only one with no answer in the build. The outbound list carries
+the badge — redBus's own list, replicated — and then the entire construct is about the return.
+
+Written up as a concession rather than a rebuttal: the onward date is the one thing the traveller
+already knows, the problem statement is the return, and a shipped version would leave the onward
+change where redBus already puts it. The prototype simply does not draw that screen. Closing line:
+*"if a session shows people looking for it on the ticket, the fix is a second row, not a second flow."*
+
+LEARNED · 2026-09-02 · (no skill)
+**Choosing a thing by a property of that thing invites a cycle, and the language will not warn you.**
+`FAREOF` asked *which bus*, `defaultBusOn` asked *what does it cost* — fine while the default was
+chosen by time, fatal the moment it was chosen by price. The fix is always the same shape: expose the
+input the derivation needs (`baseFare`) so the two questions stop depending on each other.
+
+**And the design lesson underneath the whole day: a price is a claim about what you will pay.** Three
+arrangements shipped this week. The first was wrong because two screens disagreed. The second was
+wrong because the screen disagreed with itself one tap later. Only the third — price what you will
+actually be booked onto — makes the number mean the same thing everywhere it appears.
