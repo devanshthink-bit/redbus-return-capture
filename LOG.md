@@ -3419,3 +3419,42 @@ because the table's whole purpose is to be the place you can trust.
 
 **Audit the evidence column, not just the claim column.** A claim that looks well-sourced because it
 sits next to something in a "source" column is the hardest kind of wrong to see.
+
+LEARNED · 2026-09-02 · (no skill) · Source: user — live app, Delhi → Nainital
+**§9 item 2a closed the same day it was opened, and four other facts came with it.** The user searched
+the project's own route and captured the bus list and the Passenger Information screen.
+
+**The answer: Free Cancellation is not on every bus.** The bus list carries a **Free Cancellation
+filter chip**, beside Group Deal and Early Buy. A filter exists only where the thing is not universal.
+v3's assumption — operator-dependent, argued from the §3a pattern — was right, and is now evidenced.
+
+Four more, all new:
+
+1. **"₹60 per passenger."** Our ₹160 was a placeholder three times too high. Corrected everywhere,
+   and **per passenger** is confirmed — v3 already multiplied by passenger count, so six passengers
+   correctly reads ₹360.
+2. **"Cancel anytime up to 6 hours before bus departure."** Not 12. We had chosen 12 as the
+   conservative half of "6 or 12, as applicable" before having an observation. §9 #3 — what decides
+   which — stays open; this is one instance, not the rule.
+3. **An explicit radio pair, Add / Don't add.** redBus forces the choice rather than defaulting to
+   off. v3 uses a checkbox, which defaults to off. Noted, not changed.
+4. **Trip Guarantee — ₹26 per passenger, "full ticket price + ₹300 extra if your bus gets cancelled by
+   the operator."** A third add-on we had no record of. It covers *operator* cancellation, so it does
+   not touch the date-change interaction — but anyone reading our Free Cancellation work needs to know
+   it exists and is a different product.
+
+The list banner also markets **Free Cancellation** and **FREE DATE CHANGE — min 50% refund** side by
+side, which is exactly the confusion DEFENCE §2A was written to answer. Good to know it is redBus's
+own layout that causes it.
+
+Verified after the change: ₹60 on both legs, 6-hour wording, ₹360 at six passengers, ₹2,749 total
+agreeing across review, its bar, Pay and the Pay title. 234 combinations.
+
+LEARNED · 2026-09-02 · (no skill)
+**The interface answers questions the terms do not.** §9 2a asked whether Free Cancellation is
+universal, and no clause, FAQ or T&C on redBus's own pages says. A **filter chip** answers it
+completely — you do not build a filter for something everything has.
+
+**When a policy question has no policy answer, look for the control.** Filters, toggles, empty states
+and disabled rows encode the rule the prose omits, and they are cheaper to find than a legal page.
+That is now two open items closed in one day from the running app rather than the terms.

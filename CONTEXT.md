@@ -587,9 +587,11 @@ day left to pick: *Your ticket has no Change day*. Both cards answer to the same
 badge above them, which is the point — they used to promise the fee, the window and the 8-hour
 cut-off for a change the ticket could not have, directly under a grey badge saying so.
 
-Free Cancellation is offered on the onward leg at ₹160, and on the return **wherever that operator
-sells it** — ₹140 on the 20:30, ₹160 on the 23:55, ₹120 on the 23:10, not at all on the 21:15 or
-22:15. Where it is not sold the row is shown greyed with the operator named, rather than hidden,
+Free Cancellation is **₹60 per passenger** with a **6-hour** cut-off — both observed on Delhi →
+Nainital on 2 Sep (`TERMS.md` §3b), replacing a ₹160 / 12-hour placeholder. It is offered on the
+onward leg, and on the return **wherever that operator sells it** — the 20:30, the 23:55 and the
+23:10, not the 21:15 or 22:15. That it is not on every bus is settled: redBus's own bus list carries a
+**Free Cancellation filter chip**, which would not exist if every bus had it. Where it is not sold the row is shown greyed with the operator named, rather than hidden,
 because hiding it would leave the traveller assuming they have cover they do not (decision of 3 Aug).
 
 **On a bus that offers both, the row says what buying it costs you:** *"Lost if you change the date."*
