@@ -232,6 +232,9 @@ body{background:#2A2A2E;font-family:Inter,-apple-system,system-ui,sans-serif;col
 .q{font-size:20px;font-weight:700;color:var(--ink);line-height:1.25}
 .qhint{font-size:14px;color:var(--muted);margin-top:4px;line-height:1.4}
 #win-rules{margin-top:24px}
+.grouph{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+ color:var(--muted);margin:20px 0 8px}
+#wi-list > .grouph:first-child{margin-top:4px}
 .terms-lead{font-size:16px;line-height:1.5;color:var(--ink);margin-bottom:16px}
 /* the lead's second sentence is a separate fact, so it gets its own line -- the same
    heading-then-muted-line rhythm every block under it already uses */
@@ -512,7 +515,7 @@ body.testing .dev{display:none!important}
       </div>
     </div>
     <div class="bottombar col" id="pk-bar">
-      <p class="barnote">You can change the bus, seat and stops on the next screen.</p>
+      <p class="barnote">Bus, seat and stops change on the next screen. The date can change later, to any day.</p>
       <div class="barrow">
         <div><div class="bb1">Return</div><div class="bb2" id="pk-bb">&#8377;949</div></div>
         <button class="btn pri" id="b-pk" disabled onclick="autoSeat()">Review trip</button>
@@ -644,7 +647,7 @@ body.testing .dev{display:none!important}
         <h3>Changing your return</h3>
         <dl class="rules">
           <dt>No fee to change it</dt><dd>Pay only if the new bus costs more</dd>
-          <dt>Any day you picked</dt><dd id="rv-window">Sat, 9 &ndash; Sat, 12 Sep. Earlier or later</dd>
+          <dt>Change to any date</dt><dd id="rv-window">Earlier or later</dd>
           <dt class="crit">You cannot cancel after that</dt><dd>No refund on the return. Your onward trip is not affected</dd>
           <dt>Change it up to 8 hours before</dt><dd>After that the date is fixed</dd>
         </dl>
@@ -946,7 +949,7 @@ body.testing .dev{display:none!important}
         <dl class="rules">
           <dt>Open your ticket</dt><dd>Tap <b>Change day</b> and pick another date</dd>
           <dt>No fee to change it</dt><dd>Pay only if the new bus costs more</dd>
-          <dt id="bc-window">Sat, 9 &ndash; Sat, 12 Sep</dt><dd>Any day in that range, earlier or later</dd>
+          <dt id="bc-window">Change to any date</dt><dd>Earlier or later. Your week only picked the day we booked</dd>
           <dt class="crit">You cannot cancel after that</dt><dd>No refund on the return</dd>
         </dl>
       </div>
@@ -1229,9 +1232,9 @@ function paintWindow(){
     R.innerHTML = '<dt>Prices can go up</dt><dd>Book now to keep this price and a seat.</dd>';
   } else if(sel.length===1){
     R.innerHTML = '<dt>We\u2019ll book '+label(sel[0])+' \u00B7 '+RUPEE(FARE[sel[0]])+'</dt>'
-      + '<dd>You can change the date once after booking. Pay any price difference.</dd>'
+      + '<dd>You can change the date once after booking, to any date. Pay any price difference.</dd>'
       + '<dt class="prompt">Not sure? Tap a second day</dt>'
-      + '<dd>Up to '+MAX_WINDOW+' days apart. You choose the day next.</dd>';
+      + '<dd>Up to '+MAX_WINDOW+' days apart. That is only how we pick your day \u2014 your ticket can still move to any date.</dd>';
   } else {
     const b=sel[1], c=cheapestIn(sel[0],sel[1]);
     R.innerHTML = (!hasSpread()
@@ -1243,8 +1246,8 @@ function paintWindow(){
       + '. Earlier days cost more.</dd>'
       : '<dt>Next, pick your day</dt>'
       + '<dd>Cheapest: '+label(c)+' '+RUPEE(FARE[c])+'. Your last day: '+label(b)+' '+RUPEE(FARE[b])+'.</dd>')
-      + '<dt>You can change the date once</dt>'
-      + '<dd>Pay the difference if it costs more. No refund if it costs less.</dd>';
+      + '<dt>You can change the date once, to any date</dt>'
+      + '<dd>Not just this week. Pay the difference if it costs more. No refund if it costs less.</dd>';
   }
   document.getElementById('b-cont').disabled = (!sel.length || offline);
 }
@@ -1393,15 +1396,15 @@ function paintChangeRow(){
   const cards = [
     ['rv-terms', 'Changing your return',
       '<dt>No fee to change it</dt><dd>Pay only if the new bus costs more</dd>'
-      + '<dt>Any day you picked</dt><dd id="rv-window">'
-        + ((E('rv-window') && E('rv-window').textContent) || 'Any other day, earlier or later') + '</dd>'
+      + '<dt>Change to any date</dt><dd id="rv-window">'
+        + ((E('rv-window') && E('rv-window').textContent) || 'Earlier or later.') + '</dd>'
       + '<dt class="crit">You cannot cancel after that</dt><dd>No refund on the return. Your onward trip is not affected</dd>'
       + '<dt>Change it up to 8 hours before</dt><dd>After that the date is fixed</dd>'],
     ['bc-terms', 'Changing your return day',
       '<dt>Open your ticket</dt><dd>Tap <b>Change day</b> and pick another date</dd>'
       + '<dt>No fee to change it</dt><dd>Pay only if the new bus costs more</dd>'
-      + '<dt id="bc-window">'
-        + ((E('bc-window') && E('bc-window').textContent) || 'Any day you picked') + '</dt><dd>Any day in that range, earlier or later</dd>'
+      + '<dt id="bc-window">Change to any date</dt>'
+        + '<dd>Earlier or later. Your week only picked the day we booked</dd>'
       + '<dt class="crit">You cannot cancel after that</dt><dd>No refund on the return</dd>']
   ];
   // The way out differs by screen. Before paying they can still pick another day; once it is booked
@@ -1443,21 +1446,23 @@ function withinVisibility(empty){
 function renderWithin(){
   const wrap=document.getElementById('wi-list'); if(!wrap) return 0;
   if(!heldDay){ wrap.innerHTML=''; withinVisibility(true); return 0; }
-  // The window is the promise. They told us the earliest and latest they could travel, so days
-  // outside it are days they have already said are impossible. One tap means no window was
-  // given, and then the change is the ordinary FlexiTicket one — any day.
+  // The week picked which day we booked. It is NOT the limit on where that day can go -- capping
+  // the list to it gave a traveller who stated a range less reach than one who tapped a single day,
+  // which is backwards for a product built for people who cannot name a date. Days inside the week
+  // still come first, because that is what they told us they were planning for.
   const inWindow = sel.length===2 ? (d=>d>=sel[0] && d<=sel[1]) : (()=>true);
   // MOVABLE is deliberately NOT a filter here. It asks whether a day's ticket could be changed
   // again, and this move spends the only change there is. A bus still runs on those days with
   // seats free, so hiding them removes real options to protect a change that no longer exists.
-  const days=BOOKABLE.filter(d=>d!==heldDay && inWindow(d));
+  const all=BOOKABLE.filter(d=>d!==heldDay);
+  const days=all.filter(inWindow), rest=all.filter(d=>!inWindow(d));
   const held=document.querySelector('#s-within .held');
   if(held) held.innerHTML='<div class="legtag">Your booking</div>'
     + '<div class="row"><span class="time" style="font-size:16px">'+label(heldDay)+' \u00B7 '+retDep()+'</span>'
     + '<span class="price" style="font-size:16px">'+RUPEE(FARE[heldDay])+'</span></div>'
     + '<div class="cap" style="margin-top:4px">'+OPERATOR+' \u00B7 Seat '+retSeat()+'</div>';
 
-  wrap.innerHTML = days.map(function(d){
+  const card = function(d){
     const seat=SEAT[d], diff=FARE[d]-FARE[heldDay];
     if(!seat){          // the bus runs, the seat does not exist — say which, and do not offer it
       return '<div class="card off" aria-disabled="true">'
@@ -1473,7 +1478,13 @@ function renderWithin(){
       + '<div class="row"><span class="time">'+label(d)+' \u00B7 '+depOn(d)+'</span><span class="price">'+RUPEE(FARE[d])+'</span></div>'
       + '<div class="subrow"><span class="sub">'+OPERATOR+' \u00B7 '+seatTxt+'</span>'+right+'</div>'
       + (same?'':'<div class="pillrow"><div class="pill warnpill">\u21BB Different seat</div></div>') + '</button>';
-  }).join('');
+  };
+  // Days they planned for first, then everything else. The second heading is the whole point:
+  // seeing days outside the week is the proof that the week was not a cage. Copy alone cannot
+  // beat what the list shows.
+  const group = (label, ds) => ds.length
+    ? (rest.length ? '<p class="grouph">'+label+'</p>' : '') + ds.map(card).join('') : '';
+  wrap.innerHTML = group('Your week', days) + group('Other days', rest);
   // Two separate facts. They were one grey paragraph with a line break in the middle, which read as
   // a wall. Same pattern as the terms blocks: a heading you can scan, a line you can read if it
   // applies to you. The per-day cards already say which seat you would get, so that is not repeated.
@@ -1483,14 +1494,16 @@ function renderWithin(){
   // Two pairs, in the same shape as every other block in the app. The warning was a loose
   // paragraph above these; it is the first pair now, and keeps its weight through the crit
   // colour rather than through being the odd one out.
-  if(note) note.innerHTML = days.length
+  if(note) note.innerHTML = (days.length+rest.length)
     ? '<dt class="crit">One change only</dt>'
       + '<dd>After it, you cannot cancel this ticket.</dd>'
+      + (rest.length ? '<dt>Any date, not just your week</dt>'
+      + '<dd>Your week only picked the day we booked.</dd>' : '')
       + '<dt>You may get a different seat</dt>'
       + '<dd>You get whatever is free that day. Change the seat before you confirm.</dd>'
     : '';
-  withinVisibility(days.length===0);
-  return days.length;
+  withinVisibility(days.length+rest.length===0);
+  return days.length+rest.length;
 }
 
 let chosen={op:'',fare:0,seat:null};
@@ -1886,7 +1899,6 @@ function paintReturn(){
   const mb = E('mb-trip');
   if(mb) mb.textContent = 'Delhi \u2194 Nainital \u00B7 '+nights+' day'+(nights===1?'':'s')+' \u00B7 1 passenger';
   const d=label(heldDay), f=RUPEE(FARE[heldDay]);
-  const win = sel.length===2 ? label(sel[0])+' \u2013 '+label(sel[1]) : d;
   const set=(id,v)=>{ const e=E(id); if(e) e.textContent=v; };
   set('rv-legtag','Return \u00B7 '+d);       set('rv-ret',f);
   set('tk-legtag','Return \u00B7 '+d);       set('tk-price',f);
@@ -1896,10 +1908,11 @@ function paintReturn(){
   set('c-from',d+' \u00B7 '+retDep());           set('c-fromsub','Seat '+retSeat()+' \u00B7 '+f);
   const safe = 'Your '+d+' booking is safe. Nothing was charged.';
   set('wi-none-b', safe); set('wi-err-b', safe);
-  set('bc-window',win);
+  // bc-window is a fixed rule now, not the range -- paintChangeRow owns it
+  // The week picked the day we booked. It is not the limit on where that day can go.
   const rw=E('rv-window'); if(rw) rw.textContent = sel.length===2
-    ? win+'. Earlier or later'
-    : 'Any other day, earlier or later';
+    ? 'Earlier or later. Your week only picked the day we book.'
+    : 'Earlier or later.';
   const sub = (sel.length===2
     ? label(sel[0])+' to '+label(sel[1])
     : 'Any other day, earlier or later') + '. Pay only the price difference.';

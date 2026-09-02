@@ -2985,3 +2985,35 @@ the window is *for* before proposing to weaken it.
 **Before changing a constraint, state the job it does — all of them.** I could name one (filtering)
 and it was the only one my proposal touched. The other three took ten minutes to find and settled the
 question immediately.
+
+DECISION · 2026-09-02 · (no skill) · Source: user
+**The week picks the day; it does not cap the ticket.** Reversal of the 25 Aug decision to cap the
+Change day list to the stated window, and of my own entry earlier today defending that cap.
+
+What settled it was the user's framing, not my measurement. The window picker tested well and is
+keeping its 7-day cap — it lowers the commitment bar, because answering *"roughly which week"* is
+possible where *"exactly which day"* is not. The cap belongs to **that question**. It was leaking
+onto the ticket, where it did real damage: a range reached 6 days, a single tap reached 29.
+
+Four changes, because copy alone loses to what a list shows:
+
+1. **Picker** — *"Up to 7 days apart. That is only how we pick your day — your ticket can still move
+   to any date."* The greyed-out days now have a stated reason.
+2. **Day-list bar** — *"…The date can change later, to any day."*
+3. **Review and confirmation terms** — *Any day you picked · Fri 11 – Thu 17* was the line doing the
+   damage. Now *Change to any date · Your week only picked the day we book.*
+4. **Change day list uncapped**, grouped **Your week** then **Other days**. The second heading is the
+   proof; the first keeps the days they planned for on top.
+
+Both paths now reach 29 days. Verified: 221 combinations, money agreeing, a click-through that ends
+by moving to a day outside the week, Back on every screen, and the *no other days* empty state
+unchanged.
+
+LEARNED · 2026-09-02 · (no skill)
+**A constraint that is right for the question can be wrong for the object.** Seven days is right for
+the calendar — it is what makes the question answerable, and it is why the picker tested well. It was
+never right for the ticket. One word, *window*, carried both, so tightening the question quietly
+tightened the product.
+
+**Ask which object a limit belongs to.** I argued this cap twice today, once for and once against,
+and both arguments were about whether the limit was justified. Neither asked what it was a limit *on*.

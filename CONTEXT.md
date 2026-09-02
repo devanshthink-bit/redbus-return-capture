@@ -503,6 +503,19 @@ Two frames — `06 · Your return · pick a day` and `06a · Your return · last
 product has no advantage on the only thing that decides it, so it does not choose. The lead reads
 *Pick your return day* with *Switching is free until you pay* underneath, and Review trip is off.
 
+**The week picks the day. It does not cap the ticket.** The 7-day limit is on the calendar, not on
+what the booking can later do — a traveller who states a range gets the same reach as one who taps a
+single day. Four places say so, because copy alone loses to what a list shows:
+
+1. the picker — *"Up to 7 days apart. That is only how we pick your day — your ticket can still move
+   to any date."*
+2. the day-list bar — *"…The date can change later, to any day."*
+3. review and confirmation terms — *Change to any date · Your week only picked the day we book*
+4. **Change day lists every day**, grouped **Your week** then **Other days**
+
+Before this, a range capped the change list to 6 days while a single tap reached 29 — the more
+honestly a traveller admitted they did not know, the less reach they got.
+
 **06a books the last day, and shows what that costs.** Every other card carries what it would have
 saved — ₹200, ₹440, ₹410, ₹380, ₹30 cheaper — against a booked Sat 22 Aug. The trade-off is stated
 where the choice is made rather than where the loss lands, and the traveller still picks the deadline
