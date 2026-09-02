@@ -516,6 +516,25 @@ body.testing .dev{display:none!important}
 
 
   <!-- ============ SCREEN: Return seat ============ -->
+  <!-- ============ SCREEN: Change bus ============ -->
+  <section class="screen" id="s-bus">
+    <div class="nav">
+      <button class="back" aria-label="Back" onclick="go('s-review')">&#8249;</button>
+      <div class="navtxt"><h1>Choose your bus</h1><p id="bus-sub">Nainital &rarr; Delhi</p></div>
+      <span style="width:34px"></span>
+    </div>
+    <div class="banner" data-only="offline"><span aria-hidden="true">&#8856;</span><span>You&rsquo;re offline. Check your internet connection.</span></div>
+    <div class="wrap">
+      <div class="terms"><h3>Same day, same operator</h3>
+        <dl class="rules" id="bus-note"></dl></div>
+      <div id="bus-list"></div>
+    </div>
+    <div class="bottombar">
+      <div><div class="bb1">Return</div><div class="bb2" id="bus-bb">&#8377;999</div></div>
+      <button class="btn pri" id="b-bus" onclick="busDone()">Use this bus</button>
+    </div>
+  </section>
+
   <section class="screen" id="s-seat">
     <div class="nav">
       <button class="back" aria-label="Back" id="seat-back" onclick="go('s-review')">&#8249;</button>
@@ -551,18 +570,18 @@ body.testing .dev{display:none!important}
     <div class="wrap">
       <h2 class="q" style="font-size:16px;margin-bottom:8px">Boarding point in Nainital</h2>
       <button class="ptn" data-g="board" onclick="setPt(this,'board')" aria-pressed="true">
-        <div class="pt-t">23:55 &middot; Nainital Bus Stand</div>
+        <div class="pt-t" data-pt="dep" data-off="0" data-place="Nainital Bus Stand">23:55 &middot; Nainital Bus Stand</div>
         <div class="pt-s">Tallital, near the boat house</div></button>
       <button class="ptn" data-g="board" onclick="setPt(this,'board')" aria-pressed="false">
-        <div class="pt-t">00:15 &middot; Mallital</div>
+        <div class="pt-t" data-pt="dep" data-off="20" data-place="Mallital">00:15 &middot; Mallital</div>
         <div class="pt-s">Opposite the bus depot</div></button>
 
       <h2 class="q" style="font-size:16px;margin:24px 0 8px">Dropping point in Delhi</h2>
       <button class="ptn" data-g="drop" onclick="setPt(this,'drop')" aria-pressed="true">
-        <div class="pt-t">08:00 &middot; ISBT Kashmiri Gate</div>
+        <div class="pt-t" data-pt="arr" data-off="0" data-place="ISBT Kashmiri Gate">08:00 &middot; ISBT Kashmiri Gate</div>
         <div class="pt-s">Gate Number 4 &mdash; where you started</div></button>
       <button class="ptn" data-g="drop" onclick="setPt(this,'drop')" aria-pressed="false">
-        <div class="pt-t">08:40 &middot; Akshardham</div>
+        <div class="pt-t" data-pt="arr" data-off="40" data-place="Akshardham">08:40 &middot; Akshardham</div>
         <div class="pt-s">NH24, near the metro station</div></button>
       <p class="note">You started from Kashmiri Gate, so we picked it for your drop.</p>
     </div>
@@ -604,12 +623,12 @@ body.testing .dev{display:none!important}
       <!-- leg 2 -->
       <div class="leg" data-ret>
         <div class="legtag" id="rv-legtag">Return &middot; Thu, 10 Sep</div>
-        <div class="row"><span class="time">23:55<span class="d">&mdash;</span><span class="arr">08:00</span></span><span class="price" id="rv-ret">&#8377;999</span></div>
+        <div class="row"><span class="time" data-retleg>23:55<span class="d">&mdash;</span><span class="arr">08:00</span></span><span class="price" id="rv-ret">&#8377;999</span></div>
         <div class="subrow"><span class="sub">Nainital &rarr; Delhi &middot; 8h 5m</span><span class="onw" data-retseat>Seat U5</span></div>
         <div class="oprow"><div><div class="op">Laxmi Holidays Pvt Ltd</div></div></div>
-        <div class="ptline"><span>Boarding</span><b id="rv-board">23:55 &middot; Nainital Bus Stand</b><span class="cap">Tallital, near the boat house</span></div>
-        <div class="ptline"><span>Dropping</span><b id="rv-drop">08:00 &middot; ISBT Kashmiri Gate</b><span class="cap" id="rv-dropwhy">Gate Number 4 &mdash; where you started</span></div>
-        <div class="ptacts"><button class="linkbtn" id="rv-seatbtn" onclick="openSeatForReview()">Change seat</button><button class="linkbtn" id="rv-ptbtn" onclick="openPointsForReview()">Change points</button></div>
+        <div class="ptline"><span>Boarding</span><b id="rv-board" data-pt="dep" data-off="0" data-place="Nainital Bus Stand">23:55 &middot; Nainital Bus Stand</b><span class="cap">Tallital, near the boat house</span></div>
+        <div class="ptline"><span>Dropping</span><b id="rv-drop" data-pt="arr" data-off="0" data-place="ISBT Kashmiri Gate">08:00 &middot; ISBT Kashmiri Gate</b><span class="cap" id="rv-dropwhy">Gate Number 4 &mdash; where you started</span></div>
+        <div class="ptacts"><button class="linkbtn" id="rv-seatbtn" onclick="openSeatForReview()">Change seat</button><button class="linkbtn" id="rv-ptbtn" onclick="openPointsForReview()">Change points</button><button class="linkbtn" id="rv-busbtn" onclick="openBus()">Change bus</button></div>
         <div class="pill" data-movepill><span aria-hidden="true">&#8635;</span> You can change this date once</div><!-- replaces the FlexiTicket badge on return legs; never shown alongside it -->
         <p class="pillnote" data-pillnote>After that, the return cannot be cancelled.</p>
       </div>
@@ -670,7 +689,7 @@ body.testing .dev{display:none!important}
 
       <div class="leg" id="tk-ret">
         <div class="legtag" id="tk-legtag">Return &middot; Thu, 10 Sep</div>
-        <div class="row"><span class="time">23:55<span class="d">&mdash;</span><span class="arr">08:00</span></span><span class="price" id="tk-price">&#8377;999</span></div>
+        <div class="row"><span class="time" data-retleg>23:55<span class="d">&mdash;</span><span class="arr">08:00</span></span><span class="price" id="tk-price">&#8377;999</span></div>
         <div class="subrow"><span class="sub">Nainital &rarr; Delhi &middot; 8h 5m</span><span class="onw" data-retseat>Seat U5</span></div>
         <div class="oprow"><div><div class="op">Laxmi Holidays Pvt Ltd</div><div class="cap">Nainital Bus Stand &rarr; ISBT Kashmiri Gate, Gate 4</div></div></div>
       </div>
@@ -708,7 +727,7 @@ body.testing .dev{display:none!important}
         <div class="subrow"><span class="sub">Laxmi Holidays Pvt Ltd &middot; 23:55</span><span class="onw" data-outseat>Seat U4</span></div>
         <div id="mb-ret">
           <div class="row" style="margin-top:16px"><span class="time">Return &middot; <span id="mb-rdate">Thu, 10 Sep</span></span><span class="price" id="mb-rprice">&#8377;949</span></div>
-          <div class="subrow"><span class="sub">Laxmi Holidays Pvt Ltd &middot; 23:55</span><span class="onw" data-retseat>Seat U5</span></div>
+          <div class="subrow"><span class="sub">Laxmi Holidays Pvt Ltd &middot; <span data-pt="dep" data-off="0">23:55</span></span><span class="onw" data-retseat>Seat U5</span></div>
         </div>
         <div id="mb-noret" hidden>
           <div class="row" style="margin-top:16px"><span class="time" style="color:var(--muted)">No return booked</span><span class="price" style="color:var(--muted)">&mdash;</span></div>
@@ -909,7 +928,7 @@ body.testing .dev{display:none!important}
 
       <div class="leg" id="bc-ret">
         <div class="legtag" id="bc-legtag">Return &middot; Thu, 10 Sep</div>
-        <div class="row"><span class="time">23:55<span class="d">&mdash;</span><span class="arr">08:00</span></span><span class="price" id="bc-price">&#8377;949</span></div>
+        <div class="row"><span class="time" data-retleg>23:55<span class="d">&mdash;</span><span class="arr">08:00</span></span><span class="price" id="bc-price">&#8377;949</span></div>
         <div class="subrow"><span class="sub">Nainital &rarr; Delhi &middot; 8h 5m</span><span class="onw" data-retseat>Seat U5</span></div>
         <div class="oprow"><div><div class="op">Laxmi Holidays Pvt Ltd</div><div class="cap">Nainital Bus Stand &rarr; ISBT Kashmiri Gate, Gate 4</div></div></div>
         <div class="pill" data-movepill><span aria-hidden="true">&#8635;</span> You can change this date once</div>
@@ -945,6 +964,7 @@ body.testing .dev{display:none!important}
   <button onclick="go('s-outpoints')" id="t-outpoints">Outbound points</button>
   <button onclick="go('s-window')" id="t-window">Return</button>
   <button onclick="go('s-picked')" id="t-picked">Your return</button>
+  <button onclick="go('s-bus')" id="t-bus">Return bus</button>
   <button onclick="go('s-seat')" id="t-seat">Return seat</button>
   <button onclick="go('s-points')" id="t-points">Return points</button>
   <button onclick="go('s-review')" id="t-review">Trip review</button>
@@ -1007,12 +1027,43 @@ function FAREOF(d){
   let f = 880 + ((d*37) % 9) * 30;
   if(w==='Fri'||w==='Sat') f += 320;
   else if(w==='Sun') f += 160;
-  return f;
+  return f + RET_BUSES[busOn(d)].delta;      // the fare belongs to a bus, not to a day
 }
+const fareOfBus = (d,i) => FAREOF(d) - RET_BUSES[busOn(d)].delta + RET_BUSES[i].delta;
 const FARE = new Proxy({}, {get:(_,k)=>{const d=+k; return d>0 ? FAREOF(d) : undefined;}});
 
 // Which seat you would get on a given day: your own if it is still free, otherwise what is.
-const DEP_TIME='23:55', ARR_TIME='08:00';   // both legs run the one Laxmi Holidays service
+const DEP_TIME='23:55', ARR_TIME='08:00';   // the outbound service
+
+// An operator runs more than one bus a day, and the time matters as much on the way back as it did
+// on the way out. Three Nainital -> Delhi services, all 8h 5m. The fare delta is why Change bus is
+// worth having: the earlier buses are cheaper, and the default is not.
+const RET_BUSES = [
+  {dep:'20:30', arr:'04:35', delta:-90},
+  {dep:'22:15', arr:'06:20', delta:-40},
+  {dep:'23:55', arr:'08:00', delta:  0}
+];
+// Which of them run on a given day. Deterministic, always at least one, and not always the same one.
+const BUS_SETS = [[2],[1,2],[0,1,2],[0,1],[1],[0,2]];
+const busesOn = d => BUS_SETS[(d*7) % BUS_SETS.length];
+const mins = t => +t.slice(0,2)*60 + +t.slice(3);
+// The default is the service closest to the outbound departure. Someone who took a night bus out
+// wants a night bus back -- the same "same kind as the onward" rule the seat already follows.
+function defaultBusOn(d){
+  const want = mins(out.dep);
+  return busesOn(d).slice().sort(function(a,b){
+    const da = Math.min(Math.abs(mins(RET_BUSES[a].dep)-want), 1440-Math.abs(mins(RET_BUSES[a].dep)-want));
+    const db = Math.min(Math.abs(mins(RET_BUSES[b].dep)-want), 1440-Math.abs(mins(RET_BUSES[b].dep)-want));
+    return da-db;
+  })[0];
+}
+// One writer for the return bus, the way outSeat()/retSeat() are the one writer for the seat.
+// retBus is only ever set for the booked day; every other day shows its own default.
+let retBus = null;
+const busOn  = d => (d===heldDay && retBus!==null && busesOn(d).indexOf(retBus)>=0) ? retBus : defaultBusOn(d);
+const depOn  = d => RET_BUSES[busOn(d)].dep;      // the day list shows each day's own default bus
+const retDep = () => RET_BUSES[busOn(heldDay)].dep;
+const retArr = () => RET_BUSES[busOn(heldDay)].arr;
 const OPERATOR='Laxmi Holidays Pvt Ltd';
 const HELD_SEAT = 'U5';
 const OUT_SEAT_DEFAULT = 'U4';   // the grids only ever produce L1..L12 / U1..U12
@@ -1227,7 +1278,7 @@ function renderPicked(){
     const diff = heldDay ? FARE[d]-FARE[heldDay] : 0;
     if(!seat){                                // no bus seat left: say so, and do not let it be picked
       return '<div class="card off" aria-disabled="true">'
-        + '<div class="row"><span class="time">'+label(d)+' \u00B7 '+DEP_TIME+'</span><span class="price">'+RUPEE(FARE[d])+'</span></div>'
+        + '<div class="row"><span class="time">'+label(d)+' \u00B7 '+depOn(d)+'</span><span class="price">'+RUPEE(FARE[d])+'</span></div>'
         + '<div class="subrow"><span class="sub">'+OPERATOR+'</span><span class="onw">No seats left</span></div>'
         + (tags.length?'<div class="pillrow">'+tags.join('')+'</div>':'') + '</div>';
     }
@@ -1241,7 +1292,7 @@ function renderPicked(){
         : diff<0 ? '<span class="onw">'+RUPEE(-diff)+' cheaper</span>'
                  : '<span class="onw">Same price</span>');
     return '<button class="card'+(d===heldDay?' sel':'')+'" onclick="choosePick('+d+')" aria-pressed="'+(d===heldDay)+'">'
-      + '<div class="row"><span class="time">'+label(d)+' \u00B7 '+DEP_TIME+'</span><span class="price">'+RUPEE(FARE[d])+'</span></div>'
+      + '<div class="row"><span class="time">'+label(d)+' \u00B7 '+depOn(d)+'</span><span class="price">'+RUPEE(FARE[d])+'</span></div>'
       + '<div class="subrow"><span class="sub">'+OPERATOR+' \u00B7 Seat '+seat+'</span>'+right+'</div>'
       + (tags.length?'<div class="pillrow">'+tags.join('')+'</div>':'') + '</button>';
   }).join('');
@@ -1369,7 +1420,7 @@ function paintChangeRow(){
 // The booked day drives the ticket row, the move badge, the money and every date on screen.
 // Assigning it directly and then choosing which painters to call is how the same bug arrived four
 // separate times. Nothing assigns heldDay any more; everything goes through here.
-function setHeldDay(d){ heldDay = d; setState(state); }
+function setHeldDay(d){ heldDay = d; retBus = null; setState(state); }   // a new day, a new bus list
 function choosePick(d){ setHeldDay(d); }
 
 // Changing the booked day after payment — any day in the range, either direction.
@@ -1396,7 +1447,7 @@ function renderWithin(){
   const days=BOOKABLE.filter(d=>d!==heldDay && inWindow(d));
   const held=document.querySelector('#s-within .held');
   if(held) held.innerHTML='<div class="legtag">Your booking</div>'
-    + '<div class="row"><span class="time" style="font-size:16px">'+label(heldDay)+' \u00B7 '+DEP_TIME+'</span>'
+    + '<div class="row"><span class="time" style="font-size:16px">'+label(heldDay)+' \u00B7 '+retDep()+'</span>'
     + '<span class="price" style="font-size:16px">'+RUPEE(FARE[heldDay])+'</span></div>'
     + '<div class="cap" style="margin-top:4px">'+OPERATOR+' \u00B7 Seat '+retSeat()+'</div>';
 
@@ -1404,7 +1455,7 @@ function renderWithin(){
     const seat=SEAT[d], diff=FARE[d]-FARE[heldDay];
     if(!seat){          // the bus runs, the seat does not exist — say which, and do not offer it
       return '<div class="card off" aria-disabled="true">'
-        + '<div class="row"><span class="time">'+label(d)+' \u00B7 '+DEP_TIME+'</span><span class="price">'+RUPEE(FARE[d])+'</span></div>'
+        + '<div class="row"><span class="time">'+label(d)+' \u00B7 '+depOn(d)+'</span><span class="price">'+RUPEE(FARE[d])+'</span></div>'
         + '<div class="subrow"><span class="sub">'+OPERATOR+'</span><span class="onw">No seats left</span></div></div>';
     }
     const mine = retSeat(), same = seat===mine;
@@ -1412,8 +1463,8 @@ function renderWithin(){
     const right = diff>0 ? '<span class="onw diffup">Pay '+RUPEE(diff)+' more</span>'
                  : diff<0 ? '<span class="onw">'+RUPEE(-diff)+' less \u2014 no refund</span>'
                           : '<span class="onw">Same price</span>';
-    return '<button class="card" onclick="confirmMove(\''+label(d)+'\',\''+DEP_TIME+'\','+FARE[d]+','+diff+',\''+seat+'\')">'
-      + '<div class="row"><span class="time">'+label(d)+' \u00B7 '+DEP_TIME+'</span><span class="price">'+RUPEE(FARE[d])+'</span></div>'
+    return '<button class="card" onclick="confirmMove(\''+label(d)+'\',\''+depOn(d)+'\','+FARE[d]+','+diff+',\''+seat+'\')">'
+      + '<div class="row"><span class="time">'+label(d)+' \u00B7 '+depOn(d)+'</span><span class="price">'+RUPEE(FARE[d])+'</span></div>'
       + '<div class="subrow"><span class="sub">'+OPERATOR+' \u00B7 '+seatTxt+'</span>'+right+'</div>'
       + (same?'':'<div class="pillrow"><div class="pill warnpill">\u21BB Different seat</div></div>') + '</button>';
   }).join('');
@@ -1553,6 +1604,41 @@ function bookedOn(day){
   for(let i=0;i<5;i++) taken.add(((day*7+i*5)%12)+1);
   return taken;
 }
+// Change bus: the third override on the return leg, after the seat and the points. Same shape as
+// those two -- the product picks a sensible default and the traveller can overrule it -- so the day
+// list stays a list of days instead of turning back into a list of buses.
+let busPick = null;
+function openBus(){ busPick = busOn(heldDay); renderBus(); go('s-bus'); }
+function renderBus(){
+  const wrap=document.getElementById('bus-list'); if(!wrap) return;
+  const list=busesOn(heldDay), def=defaultBusOn(heldDay);
+  wrap.innerHTML = list.map(function(i){
+    const b=RET_BUSES[i], f=fareOfBus(heldDay,i), diff=f-fareOfBus(heldDay,def);
+    const tags=[];
+    if(i===def) tags.push('<div class="pill">Closest to your onward</div>');
+    const right = diff>0 ? '<span class="onw diffup">\u20B9'+diff+' more</span>'
+                : diff<0 ? '<span class="onw">\u20B9'+Math.abs(diff)+' cheaper</span>'
+                         : '<span class="onw">Same price</span>';
+    return '<button class="card'+(i===busPick?' sel':'')+'" onclick="busPick='+i+';renderBus()" aria-pressed="'+(i===busPick)+'">'
+      + '<div class="row"><span class="time">'+b.dep+'<span class="d">\u2014</span><span class="arr">'+b.arr+'</span></span>'
+      + '<span class="price">'+RUPEE(f)+'</span></div>'
+      + '<div class="subrow"><span class="sub">'+OPERATOR+' \u00B7 8h 5m</span>'+right+'</div>'
+      + (tags.length?'<div class="pillrow">'+tags.join('')+'</div>':'') + '</button>';
+  }).join('');
+  const note=document.getElementById('bus-note');
+  if(note) note.innerHTML = list.length>1
+    ? '<dt>'+list.length+' buses on '+label(heldDay)+'</dt><dd>Your boarding and dropping times move with the bus.</dd>'
+    : '<dt>One bus on '+label(heldDay)+'</dt><dd>Laxmi Holidays runs a single service that day.</dd>';
+  document.getElementById('bus-bb').textContent = RUPEE(fareOfBus(heldDay, busPick));
+  document.getElementById('bus-sub').textContent = 'Nainital \u2192 Delhi \u00B7 '+label(heldDay);
+  document.getElementById('b-bus').disabled = list.length===1 && busPick===def;
+}
+function busDone(){
+  retBus = busPick;
+  chosen.fare = FARE[heldDay];      // the money follows the bus
+  recalc();
+  go('s-review');
+}
 function openPointsForReview(){
   ptMode='review';
   document.getElementById('pt-back').setAttribute('onclick',"ptMode='';go('s-review')");
@@ -1561,10 +1647,17 @@ function openPointsForReview(){
 }
 function ptDone(){
   const pick = g => { const b=document.querySelector('.ptn[data-g="'+g+'"][aria-pressed="true"]');
-    return b ? {t:b.querySelector('.pt-t').textContent, s:b.querySelector('.pt-s').textContent} : null; };
+    return b ? {el:b.querySelector('.pt-t'), t:b.querySelector('.pt-t').textContent, s:b.querySelector('.pt-s').textContent} : null; };
   const bd=pick('board'), dr=pick('drop'), E=i=>document.getElementById(i);
-  if(bd){ E('rv-board').textContent=bd.t; E('rv-board').nextElementSibling.textContent=bd.s; }
-  if(dr){ E('rv-drop').textContent=dr.t; E('rv-dropwhy').textContent=dr.s; }
+  // Copy the point's identity, not its rendered time. paintTimes() re-times it from the bus, so
+  // changing the bus after choosing a point no longer leaves the old time on the review screen.
+  const carry=(id,b)=>{ if(!b||!b.el) return;
+    E(id).setAttribute('data-off', b.el.getAttribute('data-off'));
+    E(id).setAttribute('data-place', b.el.getAttribute('data-place')); };
+  carry('rv-board', bd); carry('rv-drop', dr);
+  if(bd){ E('rv-board').nextElementSibling.textContent=bd.s; }
+  if(dr){ E('rv-dropwhy').textContent=dr.s; }
+  paintTimes();                      // the new points are named, now time them from the bus
   ptMode=''; 
   document.getElementById('pt-back').setAttribute('onclick',"go('s-review')");
   document.getElementById('b-pt').textContent='Continue';
@@ -1607,7 +1700,7 @@ function seatDone(){
   document.getElementById('seat-note').textContent='This is your return bus. Your onward seat stays the same.';
   document.getElementById('seat-back').setAttribute('onclick',"go('s-review')");
   document.getElementById('b-seat').textContent='Select points';
-  confirmMove(movedTo, DEP_TIME, FARE[movedDay], FARE[movedDay]-FARE[heldDay], movedSeat);
+  confirmMove(movedTo, depOn(movedDay), FARE[movedDay], FARE[movedDay]-FARE[heldDay], movedSeat);
 }
 function confirmMove(date,time,fare,diff,seat){
   movedTo=date; movedSeat=seat||retSeat();
@@ -1629,7 +1722,9 @@ function confirmMove(date,time,fare,diff,seat){
   document.getElementById('c-pay').textContent  = up ? '₹'+diff : '₹0';
   document.getElementById('d-date').textContent = date;
   const dt=document.getElementById('d-time');
-  if(dt) dt.innerHTML = time+'<span class="d">&mdash;</span><span class="arr">'+ARR_TIME+'</span>';
+  // the arrival belongs to the bus the new day actually runs, not to the old one
+  const arr = (RET_BUSES.filter(function(b){return b.dep===time;})[0]||{arr:ARR_TIME}).arr;
+  if(dt) dt.innerHTML = time+'<span class="d">&mdash;</span><span class="arr">'+arr+'</span>';
   document.getElementById('d-price').textContent = '₹'+fare.toLocaleString('en-IN');
   const ds=document.querySelector('#s-done .subrow .onw'); if(ds) ds.textContent='Seat '+movedSeat;
   const shift = heldDay - movedDay;                 // + = earlier, - = later
@@ -1754,11 +1849,29 @@ function paintSeats(){
   }
 }
 
+// Every return departure, arrival and point time comes from here and nowhere else. The times were
+// typed into markup on six screens; a second bus would have left five of them saying 23:55 forever.
+// Same pattern as paintSeats(): data- attributes, so a new screen opts in by carrying one.
+function paintTimes(){
+  const dep = mins(retDep()), arr = mins(retArr());
+  const hhmm = m => String(Math.floor((m%1440)/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0');
+  document.querySelectorAll('[data-retleg]').forEach(function(e){
+    e.innerHTML = retDep()+'<span class="d">\u2014</span><span class="arr">'+retArr()+'</span>';
+  });
+  document.querySelectorAll('[data-pt]').forEach(function(e){
+    const base = e.getAttribute('data-pt')==='arr' ? arr : dep;
+    const t = hhmm(base + (+e.getAttribute('data-off')||0));
+    const place = e.getAttribute('data-place');
+    e.textContent = place ? t+' \u00B7 '+place : t;
+  });
+}
+
 function paintReturn(){
   const E=id=>document.getElementById(id);
   const n=changesLeft(), txt = n ? n+' change left' : 'No changes left';
   ['mv-bal','mb-bal'].forEach(function(id){ const b=E(id); if(b){ b.textContent=txt; b.classList.toggle('none', !n); } });
   paintSeats();   // above the guard: with no return booked, Skip still has an onward seat to show
+  paintTimes();   // same reason
   if(!heldDay) return;
   const nights = heldDay - OUT_DAY;                    // days present in Nainital
   const trip = E('bc-trip');
@@ -1774,7 +1887,7 @@ function paintReturn(){
   set('bc-legtag','Return \u00B7 '+d);       set('bc-price',f);
   set('mb-rdate',d);                         set('mb-rprice',f);
   set('pay-retlabel','Return \u00B7 '+d);
-  set('c-from',d+' \u00B7 '+DEP_TIME);           set('c-fromsub','Seat '+retSeat()+' \u00B7 '+f);
+  set('c-from',d+' \u00B7 '+retDep());           set('c-fromsub','Seat '+retSeat()+' \u00B7 '+f);
   const safe = 'Your '+d+' booking is safe. Nothing was charged.';
   set('wi-none-b', safe); set('wi-err-b', safe);
   set('bc-window',win);

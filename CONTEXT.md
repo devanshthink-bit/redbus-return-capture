@@ -559,6 +559,31 @@ build.
 
 Money for the worked example: onward ₹1,599, return ₹1,320, total **₹2,919**.
 
+### Change bus (screen 07b)
+
+**One operator does not mean one bus a day.** `TERMS.md` §4 records the unverified same-operator
+rule, and v3 gives the route one operator — Laxmi Holidays. Collapsing that to a single 23:55
+service was never argued anywhere; it was just never noticed. Return times matter as much as onward
+ones.
+
+Three Nainital → Delhi services, all 8h 5m: **20:30 → 04:35**, **22:15 → 06:20**, **23:55 → 08:00**,
+the earlier ones cheaper. `busesOn(d)` decides which run on a day — always at least one, not always
+the same one.
+
+**The default is the service closest to the outbound departure**, the same "same kind as the onward"
+rule the seat already follows: someone who took a night bus out wants a night bus back. The day list
+still shows **one row per day**, at that day's default time and fare. That is the whole point — the
+return is a *day* decision, because the traveller does not know their date. Turning the list into
+2–4 rows a day would hand back the choice they cannot make.
+
+The override is **Change bus** on the return leg at review, beside Change seat and Change points —
+the third use of the same default-plus-override pattern. Changing the bus moves the fare, the leg
+times and **both point times**, because the points are stored as offsets from the departure rather
+than as rendered strings.
+
+`paintTimes()` is the one writer, painting `[data-retleg]` and `[data-pt]`. Before it, the times were
+typed into markup on six screens.
+
 ### Pay (screen 08)
 
 A replication, not a design. The Pay screen exists in the real app, carries no part of the new

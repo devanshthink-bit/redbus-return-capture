@@ -2811,3 +2811,47 @@ left as static markup that happened to be right in the common case. **A fact wit
 readers, where only one reader was ever wired up, looks correct until you visit the uncommon state.**
 The state matrix cannot catch it — `MOVABLE` is a property of the held day, not one of the thirteen
 dev states.
+
+DECISION · 2026-08-30 · (no skill) · Source: user
+**"We show one bus per date. What if there are multiple buses that day with different timings?
+Return timings matter too."** A real gap, and a miss rather than a decision — nothing in BRIEF,
+TERMS or DEFENCE mentions departure time or multiple departures a day.
+
+Where it came from: `TERMS.md` §4 records the unverified **same-operator** rule, so v3 gives the
+route one operator. I then collapsed one operator into one *service*, 23:55 every night. That second
+step was never argued. Real operators run several departures a day.
+
+**Not solved by adding rows.** Each day would become 2–4 rows and the screen turns back into a bus
+list. The construct rests on the return being a **day** decision, because the traveller does not know
+their date. Making them pick a bus hands back the choice they cannot make.
+
+Solved instead with the pattern this project already uses twice — the seat is auto-assigned with
+**Change seat**, the points are defaulted with **Change points**. Now the bus is defaulted with
+**Change bus**, on the same row of links at review.
+
+- Three services, all 8h 5m: 20:30 → 04:35, 22:15 → 06:20, 23:55 → 08:00. Earlier is cheaper.
+- `busesOn(d)` varies by day; always at least one, not always the same one.
+- **The default is the service closest to the outbound departure.** The user chose this over
+  "cheapest that day": someone who took a night bus out wants a night bus back, and cheapest could
+  hand them a 06:00 morning bus. It is also the same rule the seat already follows.
+- One row per day survives, at that day's own time and fare.
+
+Verified: 221 combinations, money agreeing in every state, a 13-step click-through through Change
+bus / Change points / Change seat and out to the ticket, Back on every screen, and the Change day
+flow carrying the right service both sides of a move.
+
+LEARNED · 2026-08-30 · (no skill)
+**A constant is a decision nobody made.** `DEP_TIME='23:55'` was typed once, with the comment "both
+legs run the one Laxmi Holidays service", and never questioned again. It was not in the open-risk
+list in BRIEF or DEFENCE, because the open-risk list records things I decided to leave — not things
+I never saw as a choice.
+
+The times were then typed into markup on **six screens**. This is the seat bug of 24 Aug again, in a
+different value: one constant, many literals, and no writer. `paintTimes()` now owns every return
+time through `[data-retleg]` and `[data-pt]`, and the boarding and dropping points are stored as
+**offsets from the departure** rather than as rendered strings — so changing the bus re-times them
+instead of leaving yesterday's time under today's bus.
+
+The generalisation worth keeping: **when a value is a constant, ask what it would mean for it to
+vary.** If the answer is "a whole feature", it was never a constant — it was an unexamined
+assumption with a `const` in front of it.
