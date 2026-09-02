@@ -3886,3 +3886,25 @@ problem instead of resolving it.
 
 Three pricing arrangements shipped in one day. That is the cost of treating a disagreement as an
 arithmetic problem rather than asking what the number is for.
+
+CHANGE · 2026-09-02 · (no skill) · Source: user
+**"On selecting, why is the tag disappearing?"** It was not. The tag was still in the DOM — it had the
+same background as the row it sat on.
+
+A selected bus row is tinted `var(--chip)`. A pill is filled `var(--chip)`. Chip on chip, so every tag
+except the grey **No date change** turned invisible the moment the traveller tapped the row — on the
+one row they were looking at. Pills on a selected row now sit on `var(--raised)`.
+
+Checked all 29 pill-and-selected-row combinations across five days: none share their row's background,
+and the pill text reads at 16.9:1. 234 combinations, money agreeing, no broken text.
+
+LEARNED · 2026-09-02 · (no skill)
+**A selected state changes the background of everything inside it, and a token used for both a
+surface and a badge will collide.** `--chip` is the app's "quietly highlighted" fill. It is correct for
+a selected row and correct for a pill; it is wrong for a pill *on* a selected row, and nothing in
+either rule mentions the other.
+
+**Check every fill token against every surface it can land on.** The four visual checks in §10 compare
+text against its background; none of them compare a *fill* against the fill behind it, which is why
+this shipped. And the symptom is the worst kind — it looks like a logic bug, so the first place I
+looked was the code that decides whether to show the tag.
