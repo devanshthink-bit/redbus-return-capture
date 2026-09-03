@@ -4390,3 +4390,26 @@ the content genuinely fits.
 **A breakpoint that only counts one of the things in the row will be wrong.** 1240 was chosen from
 the panel's width alone and ignored the phone beside it.
 
+CHANGE · 2026-09-03 · (no skill) · Source: user
+**"still there is less gap on the right"** — with a screenshot whose left column was missing again,
+exactly as before. The deployed file already had the previous fix (checked: the 1400 threshold and
+the width term are both live, and the served md5 matches local), and at 1470 the measured gaps are
+equal. So he was looking at a cached copy, a stage still parked sideways, or both.
+
+Added the guard that should have been there the first time: `.stage.scrollLeft` is reset in
+`fitDevice()` and on any scroll event where there is nothing to scroll. Forcing `scrollLeft = 400`
+now snaps straight back to 0 with the title still on screen.
+
+Worth recording because it settles the question: **in a correct render he cannot see less gap on the
+right.** At 1470 the phone sits 156px from the panel and 196px from the window's right edge; on a
+window wider than 1480 the capped layout centres and the right margin only grows. Less space on the
+right is only possible when the row is scrolled left, which is what the missing column showed.
+
+LEARNED · 2026-09-03 · (no skill)
+**Check whether the thing you fixed is the thing they are looking at.** Two rounds went into layout
+maths for a screenshot taken from a stale page. `curl` the deployed file for the fix and compare its
+md5 before touching the CSS again.
+
+**Any container with `overflow-x:auto` can be left parked out of position, and it stays that way.**
+If nothing is meant to overflow, reset the scroll rather than trusting that it never will.
+

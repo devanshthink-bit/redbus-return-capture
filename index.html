@@ -2559,9 +2559,19 @@ function fitDevice(){
   const s = testing ? Math.min(1.05, (h - 56) / 948)
                     : Math.min(.90,  Math.min(h * .82, h - 84) / 948, byWidth);
   document.documentElement.style.setProperty('--ds', Math.max(.42, s).toFixed(4));
+  /* The stage can be scrolled sideways, and once it is, the writing is off the left of the
+     screen and the phone looks stranded. Nothing should overflow any more, but a stray
+     trackpad swipe must not be able to leave the composition parked out of view. */
+  const stage = document.querySelector('.stage');
+  if(stage && stage.scrollLeft) stage.scrollLeft = 0;
 }
 fitDevice();
 addEventListener('resize', fitDevice);
+addEventListener('pageshow', fitDevice);
+document.querySelector('.stage').addEventListener('scroll', () => {
+  const st = document.querySelector('.stage');
+  if(st.scrollWidth <= st.clientWidth + 1 && st.scrollLeft) st.scrollLeft = 0;
+});
 
 /* The state list is shut by default. If a state other than `default` is on while it is shut,
    the summary turns red -- otherwise a hidden state looks like a broken prototype. */
