@@ -4720,3 +4720,26 @@ the file) tell you *how it looks*. I read the prototype's rows as a spec for bot
 austerity into Figma. The tell I ignored: the file already had a full `Card / Bus`, and the outbound
 list used it — my return lists should have too. **When a faithful component already exists for the
 thing you are building, use it; do not hand-roll a thinner version.**
+
+DECISION · 2026-09-03 · (no skill) · Source: user
+Audited the hi-fi against every real redBus screenshot and matched the app's actual patterns, after
+studying the change-travel-date / reschedule / refund flows (IMG_5199, 5200, 5203, 5210, 5215, 5225).
+Recorded them to memory `redbus-ui-patterns.md`: white sections on grey with bold-title/grey-subtitle
+headers; "How does this work?" = icon + bold title + grey subtitle rows; **critical warnings = a peach
+Note box (#F5DCCE), never brown body text**; radio-option cards with a coloured badge tab; fare
+breakups with a dark #303030 header bar; `Card / Bus` for every bus.
+
+Applied: replaced my invented bold/grey "terms" pairs on **12, 13, 14, 15, 16** with redBus's **peach
+Note box** for the one-change/no-cancel/no-refund warnings, and clean bold-black + grey section pairs
+for the informational lines (same operator, any date). Screen 13's "After you change it", 14's "What
+this means", 16's "One change only" and 12's rules are now the peach-note pattern; 15's heavy info
+card is a plain redBus header + peach note. Verified against screenshots — 16 now reads as the real
+app: held card, peach note, section header, and `Card / Bus` rows with ratings and Free-date-change
+pills.
+
+LEARNED · 2026-09-03 · (no skill)
+**"Make it like the real app" means find the real app's pattern for each block, not approximate it.**
+I had rendered "terms" as brown-bold + grey text pairs — a reasonable-looking invention, but redBus
+never does that: it uses a peach Note box for warnings and icon-led rows for mechanics. The fix was
+not restyling my invention; it was replacing it with redBus's actual component. Memorised the pattern
+set so the next block starts from "which real screen shows this?" rather than from taste.
