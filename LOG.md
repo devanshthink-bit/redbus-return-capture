@@ -4567,3 +4567,26 @@ window / Trip review / Ticket / Change day across 16; both panels fit; clicking 
 drives the frozen build and updates the caption; nothing moves across version switches; `?test` at
 94%; 375px unchanged; v1, v2 and prototype.html byte-identical.
 
+
+LEARNED · 2026-09-03 · (no skill)
+**The freeze check was pointing at the wrong file, and it passed anyway.** CLAUDE.md is explicit — the
+working file is `index.html`, and `v3.html` is a 616-byte redirect kept so old links resolve. All
+session I ran `md5 -q index.html prototype.html v2.html` and asserted `a96fc35f, a96fc35f, 412b90eb`.
+It returned exactly that every time, so I read it as "v1 and v2 untouched".
+
+It was checking `index.html` — the working file — against **v1's** hash. It passed because of how the
+files happened to be arranged during the session, and the moment they were rearranged it would have
+gone on passing while protecting nothing.
+
+Verified against the right targets: `v1.html` and `prototype.html` are `a96fc35f`, `v2.html` is
+`412b90eb`, both untouched. No damage.
+
+**The rule: a guard that names a file is only as good as the name.** This one asserted three hashes
+and two of the three files it should have been watching were not in the command. A check that can pass
+while looking at the wrong thing is worse than no check, because it is quoted as evidence — I quoted it
+in about twenty commit messages today.
+
+**Correct command, for every future session:**
+```
+md5 -q v1.html prototype.html v2.html   # a96fc35f, a96fc35f, 412b90eb
+```
