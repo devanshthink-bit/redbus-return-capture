@@ -4479,3 +4479,29 @@ in the rendering said so — only measuring it did. Do not animate a width that 
 The check for "did this break anything" has to include the archive versions, not just the one being
 worked on.
 
+CHANGE · 2026-09-03 · (no skill) · Source: user
+**"width of mockup of v1, v2 is not same as v3"** — the frame had been narrowing to match the build
+it was showing, so the mock changed size when you switched version.
+
+The frame is now one size for every version, 458 × 948, and the legacy pair are stretched
+`scaleX(430/402)` about the frozen phone's own left edge so they fill the same 430 screen.
+
+Four options and none of them is free, so recording why this one:
+- **frame changes size** — what we had; he flagged it
+- **14px strips each side** — what came before that; he flagged it too
+- **uniform scale** — would render v1 at 430 × 935 inside an 874 screen and cut the action bar off
+- **horizontal stretch** — nothing cropped, height untouched, and type in v1 and v2 runs 7% wide
+
+Since v1 and v2 are archive builds shown for comparison rather than read closely, 7% of width in the
+type is the cheapest of the four. The stretch is disabled below 520px, where there is no mock to fill.
+
+Verified: the device is 383px wide in v3, v1 and v2 alike, centred in the leftover at 132/132 in all
+three, no overflow, v1 still mirrors 30 controls, `?test` at 94%, 375px renders unstretched, and v1,
+v2 and prototype.html byte-identical.
+
+LEARNED · 2026-09-03 · (no skill)
+**Two fixed sizes cannot both be honoured in one frame; something gives, and the only question is
+what.** Three rounds went on this because each fix moved the cost somewhere he could see rather than
+naming the cost up front. The four options and their prices should have been on the table the moment
+the screen went from 402 to 430.
+
