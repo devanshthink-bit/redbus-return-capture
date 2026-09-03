@@ -4259,3 +4259,30 @@ for the artefact too. Shell values belong on `.panel`, and only tokens the proto
 silently resolving to the system face for the whole project, while the measurements it was built on
 came from Inter.
 
+CHANGE · 2026-09-03 · (no skill) · Source: user
+**"Why is this tab so long? Make the mock a little bigger ... make the prototype centered in the
+white space which is remaining from the whole text on the left."** Three, all in the shell.
+
+**The tab.** Rail rows were `width:100%`, so *Ticket* got the same 340px of highlight as *Booking
+confirmed* and trailed a long empty tail. They shrink to their label now. Measured after: *Ticket*
+58px, *Home · search* 110, *Booking confirmed* 136.
+
+**The mock** went from 74% of the window's height to 82%, cap .82 → .90.
+
+**The centring.** The phone had been at the far right of a `space-between` row. It is now the flexible
+child of a row with **no gap**, so the writing takes what it needs on the left and the phone centres in
+everything left over: 172px either side at 1470, 195 either side at 1100. A gap of any size breaks
+this, because the gap only exists on one side of the phone.
+
+Verified: nothing moves across all four version transitions — the swatches, the panel top and the
+device's x all identical; single column at 1100 still centres; `?test` fills at 93%; 375px unchanged;
+v1, v2 and prototype.html byte-identical.
+
+LEARNED · 2026-09-03 · (no skill)
+**"Centre it in the space that is left" is `flex:1` on the thing being centred, and a gap of zero.**
+Any gap sits on one side only, so it offsets the centring by exactly its own width — which reads as
+"nearly centred", the least convincing result available.
+
+**A selection highlight should be the size of what is selected.** Stretching every row to the column
+width makes the shortest label look like a mistake.
+

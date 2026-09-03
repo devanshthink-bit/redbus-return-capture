@@ -69,10 +69,10 @@ body{
 /* ---------- stage ---------- */
 .stage{flex:1 1 auto;min-height:0;display:flex;align-items:center;justify-content:center;
  padding:28px 40px;overflow-x:auto;overflow-y:hidden;position:relative}
-/* The two columns sit at the ends of a capped, full-width row rather than huddling in the
-   middle of the window. gap is the floor; space-between opens them out beyond it. */
-.layout{width:100%;max-width:1280px;display:flex;align-items:flex-start;
- justify-content:space-between;gap:clamp(40px,5vw,120px)}
+/* The writing takes the width it needs on the left; the phone then centres in whatever is
+   left over, rather than being pushed to the far edge by space-between. */
+.layout{width:100%;max-width:1400px;display:flex;align-items:flex-start;
+ gap:0}   /* no gap: the leftover beside the text IS the phone's space, and it centres in all of it */
 /* The panel is pinned to the top: centred, it slid up and down as the version changed its
    height. The phone stays centred against whichever of the two is taller. */
 .devicewrap{align-self:center}
@@ -152,7 +152,7 @@ body.testing .layout{justify-content:center}
 /* ---------- iPhone mock ---------- */
 /* The frame is drawn at its true pixel size and then scaled as one piece, so the
    402x874 prototype inside it never changes layout. .device reserves the scaled box. */
-.devicewrap{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:14px}
+.devicewrap{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;align-items:center;gap:14px}
 .device{width:calc(var(--s-dw) * var(--ds));height:calc(var(--s-dh) * var(--ds))}
 .deviceframe{width:var(--s-dw);height:var(--s-dh);transform:scale(var(--ds));transform-origin:top left;
  background:linear-gradient(150deg,#4A4A52 0%,#0E0E11 26%,#0E0E11 74%,#4A4A52 100%);
@@ -427,11 +427,11 @@ body.legacy-on .phone{display:none}
 /* Two dark fixed rails on both sides became one column inside the left panel, on the
    gradient with no card behind it. States are a <details>, shut by default -- they are
    for probing, not for walking the flow. */
-.dev{display:flex;flex-direction:column;gap:1px;margin:0 -10px}
+.dev{display:flex;flex-direction:column;align-items:flex-start;gap:1px;margin:0 -10px}
 .dev button{background:none;color:var(--s-on-60);border:0;border-radius:9px;padding:5px 10px;
  font-family:inherit;font-size:13px;font-weight:500;letter-spacing:-.008em;line-height:1.3;
  cursor:pointer;text-align:left;transition:background 130ms,color 130ms;
- display:block;width:100%}
+ display:block;max-width:100%}   /* no width:100% -- a short label had a long empty tail */
 /* The stage each screen belongs to used to be repeated on all eighteen rows. It is the same
    for every screen in a run, so it is the group's, not the row's -- the same correction as
    `from` on the calendar cells. Five quiet headings read as five things, not eighteen. */
@@ -443,16 +443,16 @@ body.legacy-on .phone{display:none}
 .dev button[aria-pressed="true"]{background:var(--s-red-soft);color:#B23138;font-weight:700}
 
 .dev.states{display:block;margin-top:22px}
-.dev.states>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;
+.dev.states>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;
  font-family:var(--s-mono);color:var(--s-on-45);font-weight:500;font-size:10px;
  letter-spacing:.16em;text-transform:uppercase;
  padding:6px 10px;border-radius:9px;transition:color 130ms,background 130ms}
 .dev.states>summary::-webkit-details-marker{display:none}
 .dev.states>summary:hover{color:var(--s-on);background:rgba(255,255,255,.7)}
 .dev.states>summary .cnt{font-size:10px;letter-spacing:0;color:var(--s-on-30);font-weight:600}
-.dev.states>summary .chev{margin-left:auto;font-size:12px;letter-spacing:0;transition:transform 180ms}
+.dev.states>summary .chev{font-size:12px;letter-spacing:0;transition:transform 180ms}
 .dev.states[open]>summary .chev{transform:rotate(90deg)}
-.statelist{display:flex;flex-direction:column;gap:1px;margin-top:6px}
+.statelist{display:flex;flex-direction:column;align-items:flex-start;gap:1px;margin-top:6px}
 /* a state other than default is on: say so on the shut summary */
 .dev.states.dirty>summary{color:#B23138}
 .dev.states.dirty>summary .cnt{color:rgba(178,49,56,.65)}
@@ -2544,7 +2544,7 @@ function fitDevice(){
      phone standing on it. A session has nothing else on screen, so there it does fill. */
   const h = window.innerHeight;
   const s = testing ? Math.min(1.05, (h - 56) / 948)
-                    : Math.min(.82,  Math.min(h * .74, h - 96) / 948);
+                    : Math.min(.90,  Math.min(h * .82, h - 84) / 948);
   document.documentElement.style.setProperty('--ds', Math.max(.42, s).toFixed(4));
 }
 fitDevice();

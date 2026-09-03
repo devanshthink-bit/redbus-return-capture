@@ -188,9 +188,11 @@ design-language tokens.
   the row's height never depends on which version is showing and the composition stays centred.
   Also `.panel` needs its 10px padding — `overflow-y:auto` makes it a scrollport, which clips
   **both** axes, and the rails hang 10px either side
-- **`.layout` caps the row at 1280px and uses `space-between`.** Two columns huddled in the
-  middle of a wide window with dead margins was the complaint; splitting the panel widened the
-  composition enough to fill the frame
+- **`.layout` caps the row at 1400px, has no gap, and gives `.devicewrap` `flex:1`.** The writing
+  takes the width it needs on the left and the phone centres in **all** of what is left — measured
+  equal to the pixel on either side. `space-between` and a gap both put the phone at the far edge
+- **Rail rows shrink to their label** (`align-items:flex-start`, no `width:100%`). Full-width rows
+  gave a short label like *Ticket* a long empty tail of highlight
 - **The page is a blush red** — `#FCF0F1 → #F9E8EA → #F6E2E4`, unmistakably redBus-tinted and
   never white, with a white lift behind the device. Text is dark ink, held in `--s-on-80/60/45/30`,
   and **every value measures 4.5:1 or better against `#F6E2E4`**, the darkest corner. A saturated
@@ -208,8 +210,8 @@ design-language tokens.
   that does not set its own colour inherits it. When the shell was red this was `--s-on` = white,
   and every bold value inside the phone went invisible on a white card. The shell's ink lives on
   `.panel` instead
-- **The device is a share of the window, not the largest that fits** — `min(74% of height, …)`,
-  capped at .82. Fitting made it 91% of a laptop screen, which read as the page rather than as a
+- **The device is a share of the window, not the largest that fits** — `min(82% of height, …)`,
+  capped at .90. Fitting made it 91% of a laptop screen, which read as the page rather than as a
   phone standing on it. Session mode still fills (`?test`, ~93%)
 - **All three versions in one file.** The switch loads v1 and v2 whole into an iframe sized so
   their own centred 402×874 frame lands exactly on the crop; nothing in either file is edited or
