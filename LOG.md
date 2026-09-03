@@ -4535,3 +4535,20 @@ of it in one line.
 **Trace a complaint back to what changed, not forward to what could satisfy it.** "Make the screen
 wider" was the symptom of a status bar I had added; the fix was upstream of the request.
 
+CHANGE · 2026-09-03 · (no skill) · Source: user
+**"remove the category names"** — the five run headings are gone. The spacing between the runs stays,
+so eighteen rows still read as five groups rather than one wall.
+
+Worth noting where this ended up. The list has now been through three states: a flow word on every
+row (cluttered), five named headings (his "any other way to clean it?"), and now space alone. Each
+step removed words and the list got easier to read each time. The grouping was doing the work; the
+labels were only naming it.
+
+Verified: no headings, 18 rows, 4 run breaks, panel fits exactly (804 = 804), caption still names the
+screen, nothing moves across any version switch, `?test` at 94%, 375px unchanged, v1/v2/prototype.html
+byte-identical.
+
+LEARNED · 2026-09-03 · (no skill)
+**Grouping can be shown with space before it is said with a label.** Three passes over the same list
+each took words out and each read better. The heading was describing a break the eye had already made.
+

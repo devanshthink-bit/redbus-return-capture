@@ -189,10 +189,10 @@ design-language tokens.
   writing, which at a 744px panel means a 1960px window. It was tried, it moved the swatches to the
   far right, and he rejected it: *"why did u move it towards the right? Earlier, the structure was
   better."*
-- **The screen list is grouped into five runs** — Book the outbound · Add a return · Review and pay ·
-  After booking · Move the date — with a quiet heading each, all rows visible. The run name replaced
-  a flow word repeated on every one of the eighteen rows: the same mistake as `from` on every
-  calendar cell — a qualifier that is the same for a whole run belongs to the run
+- **The screen list is eighteen rows in five runs, separated by space and nothing else.** The runs
+  are Book the outbound · Add a return · Review and pay · After booking · Move the date; they carried
+  headings until he asked for the names to go. Before that, each row carried its own flow word —
+  the same mistake as `from` on every calendar cell. Space alone turned out to be enough
 - **Three things that will move the panel if you undo them:** the panel is pinned to the top of the
   row (centred, it slid as the version changed its height); `.vnote` reserves three lines (the notes
   are two or three); and the grid's second row is `1fr` (a spanner over `auto` rows feeds its extra

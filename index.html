@@ -442,8 +442,10 @@ body.legacy-on .phone{display:none}
 /* The stage each screen belongs to used to be repeated on all eighteen rows. It is the same
    for every screen in a run, so it is the group's, not the row's -- the same correction as
    `from` on the calendar cells. Five quiet headings read as five things, not eighteen. */
-.dev h3{font-size:11px;font-weight:600;letter-spacing:.01em;color:var(--s-on-30);
- margin:13px 0 3px;padding:0 10px}   /* quieter by size, not by fading below the contrast bar */
+ /* The five runs -- Book the outbound, Add a return, Review and pay, After booking, Move the date --
+    used to carry a heading each. He asked for the names to go; the spacing between the runs stays,
+    so eighteen rows still read as five groups rather than one wall. */
+.dev button.runstart{margin-top:14px}
 .dev h3:first-child{margin-top:0}
 .dev button:hover{background:rgba(255,255,255,.7);color:var(--s-on)}
 .dev button:focus-visible{outline:0;box-shadow:0 0 0 2px rgba(216,78,85,.5)}
@@ -571,26 +573,21 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
     <p class="legacynote">Loading this version&rsquo;s screens&hellip;</p>
     <div id="legacyrail"></div>
 <div class="dev screens" id="screenrail">
-  <h3>Book the outbound</h3>
   <button onclick="go('s-home')" id="t-home" aria-pressed="true">Home &middot; search</button>
   <button onclick="go('s-obuses')" id="t-obuses">Outbound buses</button>
   <button onclick="go('s-oseat')" id="t-oseat">Outbound seat</button>
   <button onclick="go('s-outpoints')" id="t-outpoints">Outbound points</button>
-  <h3>Add a return</h3>
-  <button onclick="go('s-window')" id="t-window">Return</button>
+  <button class="runstart" onclick="go('s-window')" id="t-window">Return</button>
   <button onclick="go('s-picked')" id="t-picked">Your return</button>
   <button onclick="go('s-bus')" id="t-bus">Return bus</button>
   <button onclick="go('s-seat')" id="t-seat">Return seat</button>
   <button onclick="go('s-points')" id="t-points">Return points</button>
-  <h3>Review and pay</h3>
-  <button onclick="go('s-review')" id="t-review">Trip review</button>
+  <button class="runstart" onclick="go('s-review')" id="t-review">Trip review</button>
   <button onclick="go('s-pay')" id="t-pay">Payment</button>
   <button onclick="go('s-done2')" id="t-done2">Booking confirmed</button>
-  <h3>After booking</h3>
-  <button onclick="go('s-ticket')" id="t-ticket">Ticket</button>
+  <button class="runstart" onclick="go('s-ticket')" id="t-ticket">Ticket</button>
   <button onclick="go('s-mybook')" id="t-mybook">My Bookings</button>
-  <h3>Move the date</h3>
-  <button onclick="openWithin()" id="t-within">Change day</button>
+  <button class="runstart" onclick="openWithin()" id="t-within">Change day</button>
   <button onclick="go('s-wibus')" id="t-wibus">Move &middot; buses</button>
   <button onclick="go('s-confirm')" id="t-confirm">Move confirm</button>
   <button onclick="go('s-done')" id="t-done">Move done</button>
