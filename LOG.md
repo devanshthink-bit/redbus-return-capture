@@ -4286,3 +4286,44 @@ Any gap sits on one side only, so it offsets the centring by exactly its own wid
 **A selection highlight should be the size of what is selected.** Stretching every row to the column
 width makes the shortest label look like a mistake.
 
+CHANGE · 2026-09-03 · (no skill) · Source: user
+**"The mock is still not centered. And which was the mono font you were using earlier? Use that
+again."**
+
+**The mono.** Geist Mono, from his portfolio, was loading correctly — but the only mono this project
+used before it was the browser's `ui-monospace`, in the original dark dev rails. That is what he
+meant, so the small labels are back on the system mono and Geist Mono is out of the font request.
+
+**Not centred — two causes.** The first was a real bug: `.stage` had plain `justify-content:center`
+with `overflow-x:auto`, so when the row was too wide the overflow went off the **left** edge, which
+cannot be scrolled to, and the panel simply vanished. That is what his screenshot showed — the panel
+cut off at x=0. It is `safe center` again. **Second time this exact rule has bitten this file.**
+
+The second cause was geometry and needed the layout rebuilt. The phone was centred in the space
+*left over* beside the text, which is not the window's centre. Centring on the window needs a
+matching column opposite the text — and with the two-column panel at 744 wide that needs a 1960px
+window. Measured at 1470: the phone sat 200px right of centre.
+
+So the empty right side became a **real third column** holding the sampled swatches and the
+footnote, and the panel went back to one 340px column. That only fits if the screen list is shorter,
+so the five runs are now `<details>` with only the current one open — `syncGroups()` follows the
+phone, so walking the flow costs no clicks. Eighteen rows open needed 1372px against 854px of
+window; the current run open needs 726.
+
+At 1470 × 810: phone off-centre by **0px**, panel fits exactly (726 = 726), nothing moves across any
+version switch. Below 1100 the three columns stack and the page scrolls rather than dropping one.
+`?test` and the 375px breakpoint unchanged; v1, v2 and prototype.html byte-identical.
+
+LEARNED · 2026-09-03 · (no skill)
+**`justify-content:center` on a scroll container is a trap, and I have now fallen into it twice in
+this one file.** The overflow goes off both edges and the start edge is unreachable, so the content
+does not merely clip — it cannot be scrolled to. `safe center` every time.
+
+**"Centre it" means a column on both sides.** Centring in the leftover is a different thing that
+looks nearly right, which is worse than looking clearly wrong. If there is nothing to put on the far
+side, the layout is asymmetric and no alignment property will hide that.
+
+**When two requirements fight, look for the change that dissolves both.** A panel that fits and a
+phone on the centre line were opposed while the swatches lived on the left. Moving them to the empty
+right side made the panel short enough *and* handed the phone its second column.
+
