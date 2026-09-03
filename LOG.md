@@ -4590,3 +4590,33 @@ in about twenty commit messages today.
 ```
 md5 -q v1.html prototype.html v2.html   # a96fc35f, a96fc35f, 412b90eb
 ```
+
+DECISION · 2026-09-03 · (no skill) · Source: user
+Began syncing the Figma hi-fi to the v3 changes and the new real-app screenshots (IMG_5194–5230).
+User confirmed: the change-day calendar keeps its per-day prices but wears redBus's calendar chrome
+(measured from the real Select-date sheet, IMG_5223) — not the price-less real picker.
+
+**Groundwork done once, reused across screens:** extracted the prototype's model into a Node harness
+and dumped every value Figma needs — the September booking-calendar floor prices, the day-list rows
+for a Fri 11–Thu 17 window, the seven services across three operators, the buses inside an open day,
+and the change-day calendar for a Wed-16 Laxmi booking scoped to Laxmi. Figma now matches the
+prototype's numbers exactly instead of my guesses.
+
+**Screen 12 (Change day) rebuilt** — the biggest structural change (list → calendar). Reused the
+`Calendar / Day` component (already carried Day/Fare/No-date-change/Selected states). Built a fresh
+September grid because Sep's lead day differs from the file's August one. Booked day 16 is the red
+Selected pill reading *Booked*; other days show the cost delta (+₹170, ₹0), None where Laxmi doesn't
+run, Full where sold out. Rules rebuilt to the four change-day pairs with the two critical ones in warn
+brown. Verified against a screenshot.
+
+**Still to sync, in rough priority:** booking calendars 05/05a/05b (Aug→Sep + floor prices + new
+legend); the "Your return" day-list → accordion with a new Row/Return-bus; two new screens (Choose
+your bus, Move·buses); Review 07 (per-leg Free Cancellation ₹60, Change bus, flipped movable terms);
+Ticket 11 row rename; three-operator bus cards; Confirm-move/Move-done times; My Bookings return leg.
+
+LEARNED · 2026-09-03 · (no skill)
+**A one-off Node harness that runs the prototype's own model is worth more than reading its output
+screen by screen.** The change-day calendar has 20 live cells whose values come from seat availability,
+operator scope and a fare formula — impossible to eyeball reliably. Extracting the model and computing
+them gave exact, defensible numbers for every screen at once, and it is re-runnable when the model
+changes again.
