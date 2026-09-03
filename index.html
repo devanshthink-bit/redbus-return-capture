@@ -3,12 +3,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>redBus — Return</title>
-<!-- The three faces devanshsomvanshi.com is set in: Manrope for the title, Geist Mono for the
-     small labels, Inter for everything else. Inter is also what the prototype's type scale was
-     measured against, so loading it makes the phone more correct, not less. -->
+<!-- From devanshsomvanshi.com: Manrope for the title, Inter for everything else. The small labels
+     use the system mono rather than the portfolio's Geist Mono, at his request. Inter is also what
+     the prototype's type scale was measured against, so loading it makes the phone more correct. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&family=Geist+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap">
 <style>
 :root{
   /* DESIGN_LANGUAGE.md — do not add values */
@@ -45,7 +45,8 @@ html,body{height:100%}
   --s-hair:rgba(255,255,255,.18);
   --s-wash:rgba(255,255,255,.12);
   --s-display:Manrope,Inter,-apple-system,system-ui,sans-serif;    /* portfolio headings */
-  --s-mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace; /* portfolio labels */
+  --s-mono:ui-monospace,SFMono-Regular,Menlo,monospace;   /* the system mono the dev rails used
+     originally. Geist Mono, the portfolio's mono, is one word away if he wants it back */
   --ds:1;                                  /* device scale, set by fitDevice() */
   --s-dw:430px; --s-dh:948px;              /* the mock frame at scale 1 */
 }
@@ -67,12 +68,31 @@ body{
  -webkit-font-smoothing:antialiased;display:flex;flex-direction:column;overflow:hidden}
 
 /* ---------- stage ---------- */
-.stage{flex:1 1 auto;min-height:0;display:flex;align-items:center;justify-content:center;
+.stage{flex:1 1 auto;min-height:0;display:flex;align-items:center;
+ justify-content:center;justify-content:safe center;   /* plain `center` puts the overflow off the
+   LEFT edge, where it cannot be scrolled to -- the panel simply vanishes. This has now bitten twice */
  padding:28px 40px;overflow-x:auto;overflow-y:hidden;position:relative}
 /* The writing takes the width it needs on the left; the phone then centres in whatever is
    left over, rather than being pushed to the far edge by space-between. */
-.layout{width:100%;max-width:1400px;display:flex;align-items:flex-start;
- gap:0}   /* no gap: the leftover beside the text IS the phone's space, and it centres in all of it */
+.layout{width:100%;max-width:1400px;display:flex;align-items:flex-start;gap:0}
+/* Three columns of a fixed, equal width either side of the phone, so the phone sits on the
+   window's centre line by construction. The right column is not a spacer -- it holds the sampled
+   colours and the footnote, which is what stopped the left column having to scroll. */
+.layout{justify-content:center}
+.panel,.side{flex:0 0 clamp(340px,25vw,400px)}
+.side{align-self:flex-start;color:var(--s-on);padding:0 10px}
+body.testing .side{display:none}
+/* Under about 1100 the three columns cannot stand side by side. Rather than drop one, the whole
+   thing stacks and the page scrolls -- writing, phone, swatches. */
+@media (max-width:1099px) and (min-width:521px){
+  body{overflow:auto}
+  .stage{align-items:flex-start;overflow:visible;padding:32px 24px}
+  .layout{flex-direction:column;align-items:center;gap:32px;max-width:none}
+  .panel,.side{flex:0 0 auto;width:clamp(340px,90vw,420px)}
+  .panel{height:auto;overflow:visible}
+  .devicewrap{flex:0 0 auto}
+  .glow{display:none}
+}
 /* The panel is pinned to the top: centred, it slid up and down as the version changed its
    height. The phone stays centred against whichever of the two is taller. */
 .devicewrap{align-self:center}
@@ -87,40 +107,25 @@ body.testing .layout{justify-content:center}
 
 /* ---------- left panel: sits straight on the gradient, no card ---------- */
 .panel{color:var(--s-on);   /* the shell's ink lives here, not on body */
- flex:0 0 auto;width:clamp(340px,25vw,400px);
  /* a fixed height, not a max: the row's height then never depends on which version is
     showing, so the whole composition stays put in the middle of the window */
- height:calc(100vh - 96px);
+ height:calc(100vh - 84px);
  overflow-y:auto;scrollbar-width:none;
  padding:0 10px}   /* the rails hang 10px either side; overflow-y:auto would clip them without this */
-/* Wide enough for two: the writing goes left, the screen list goes right. It stops the
-   composition huddling in the middle of a big window, and the whole panel fits without
-   scrolling. Below this it is one column again and scrolls.
-   Source order is a / b / c so that the one-column fallback reads title, screens, tokens --
-   the screen list must never end up below the fold behind the swatches. */
-.panel{display:grid;grid-template-columns:1fr;row-gap:26px}
-@media (min-width:1240px){
-  .panel{grid-template-columns:340px 340px;column-gap:44px;row-gap:26px;
-   align-items:start;width:auto;
-   /* the second row must be flexible: b spans both rows, and across an `auto` row its extra
-      height is shared out into row 1, which moved the swatches every time the version changed
-      the length of the screen list. A spanning item does not size a track next to an fr. */
-   grid-template-rows:auto 1fr}
-  .pcol.a{grid-column:1;grid-row:1}
-  .pcol.b{grid-column:2;grid-row:1 / span 2}
-  .pcol.c{grid-column:1;grid-row:2}
-}
+/* One column: the writing and the screen list stacked. The two-column arrangement is gone --
+   it made the panel 744 wide, which put the phone 200px off the window's centre line. */
+.panel{display:flex;flex-direction:column;row-gap:26px}
 .panel::-webkit-scrollbar{display:none}
-.lock{display:block;margin-bottom:26px;color:var(--s-red)}   /* the mark is the brand red again */
+.lock{display:block;margin-bottom:20px;color:var(--s-red)}   /* the mark is the brand red again */
 .lock svg{height:44px;width:auto;display:block}   /* the mark carries the page, so it is given room */
-.lock span{display:block;margin-top:13px;font-family:var(--s-mono);font-size:10px;font-weight:500;
+.lock span{display:block;margin-top:13px;font-family:var(--s-mono);font-size:10px;font-weight:600;
  letter-spacing:.16em;text-transform:uppercase;color:var(--s-on-45)}
 .panel h1{font-family:var(--s-display);font-size:31px;font-weight:800;letter-spacing:-.03em;
- line-height:1.1;margin-bottom:9px;color:var(--s-on)}
+ line-height:1.1;margin-bottom:7px;color:var(--s-on)}
 .panel .lede{font-size:14px;line-height:1.55;color:var(--s-on-60);max-width:32ch}
 .panel .lede b{color:var(--s-on);font-weight:600}
-.grp{margin-top:22px}
-.grp>h2{font-family:var(--s-mono);font-size:10px;font-weight:500;letter-spacing:.16em;
+.grp{margin-top:20px}
+.grp>h2{font-family:var(--s-mono);font-size:10px;font-weight:600;letter-spacing:.16em;
  text-transform:uppercase;color:var(--s-on-45);margin:0 0 12px 2px}
 
 /* version switch */
@@ -152,7 +157,7 @@ body.testing .layout{justify-content:center}
 /* ---------- iPhone mock ---------- */
 /* The frame is drawn at its true pixel size and then scaled as one piece, so the
    402x874 prototype inside it never changes layout. .device reserves the scaled box. */
-.devicewrap{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;align-items:center;gap:14px}
+.devicewrap{flex:1 0 auto;display:flex;flex-direction:column;align-items:center;gap:14px}   /* never shrinks: the mirror gives way first */
 .device{width:calc(var(--s-dw) * var(--ds));height:calc(var(--s-dh) * var(--ds))}
 .deviceframe{width:var(--s-dw);height:var(--s-dh);transform:scale(var(--ds));transform-origin:top left;
  background:linear-gradient(150deg,#4A4A52 0%,#0E0E11 26%,#0E0E11 74%,#4A4A52 100%);
@@ -435,16 +440,28 @@ body.legacy-on .phone{display:none}
 /* The stage each screen belongs to used to be repeated on all eighteen rows. It is the same
    for every screen in a run, so it is the group's, not the row's -- the same correction as
    `from` on the calendar cells. Five quiet headings read as five things, not eighteen. */
-.dev h3{font-size:11px;font-weight:600;letter-spacing:.01em;color:var(--s-on-30);
- margin:13px 0 3px;padding:0 10px}   /* quieter by size, not by fading below the contrast bar */
-.dev h3:first-child{margin-top:0}
+ /* Each run of screens is a <details>. Only the one you are in is open, which is what lets the
+    panel be a single 340px column -- and a single column is what lets the phone sit on the
+    window's centre line. All eighteen open at once needed 1372px of panel for 854px of window. */
+.grpx{margin-top:4px}
+.grpx:first-child{margin-top:0}
+.grpx>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:6px;
+ font-size:11px;font-weight:600;letter-spacing:.01em;color:var(--s-on-30);
+ padding:5px 10px;border-radius:9px;transition:background 130ms,color 130ms}
+.grpx>summary::-webkit-details-marker{display:none}
+.grpx>summary:hover{background:rgba(255,255,255,.7);color:var(--s-on)}
+.grpx>summary:focus-visible{outline:0;box-shadow:0 0 0 2px rgba(216,78,85,.5)}
+.grpx>summary .cv{font-style:normal;font-size:11px;color:var(--s-on-45);transition:transform 180ms}
+.grpx[open]>summary .cv{transform:rotate(90deg)}
+.grpx[open]>summary{color:var(--s-on-60)}
+.grows{display:flex;flex-direction:column;align-items:flex-start;gap:1px;margin:2px 0 6px}
 .dev button:hover{background:rgba(255,255,255,.7);color:var(--s-on)}
 .dev button:focus-visible{outline:0;box-shadow:0 0 0 2px rgba(216,78,85,.5)}
 .dev button[aria-pressed="true"]{background:var(--s-red-soft);color:#B23138;font-weight:700}
 
 .dev.states{display:block;margin-top:22px}
 .dev.states>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;
- font-family:var(--s-mono);color:var(--s-on-45);font-weight:500;font-size:10px;
+ font-family:var(--s-mono);color:var(--s-on-45);font-weight:600;font-size:10px;
  letter-spacing:.16em;text-transform:uppercase;
  padding:6px 10px;border-radius:9px;transition:color 130ms,background 130ms}
 .dev.states>summary::-webkit-details-marker{display:none}
@@ -474,6 +491,7 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
   .panel,.ios,.btn-side,.glow,.caption{display:none}
   .stage{padding:0;display:block}
   .layout{display:block;max-width:none;gap:0}
+  .layout::after{display:none}
   .devicewrap{display:block}
   .device{width:100%;height:auto}
   .deviceframe{width:100%;height:auto;transform:none;padding:0;border-radius:0;box-shadow:none;background:none}
@@ -564,29 +582,49 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
     <p class="legacynote">Loading this version&rsquo;s screens&hellip;</p>
     <div id="legacyrail"></div>
 <div class="dev screens" id="screenrail">
-  <h3>Book the outbound</h3>
-  <button onclick="go('s-home')" id="t-home" aria-pressed="true">Home &middot; search</button>
-  <button onclick="go('s-obuses')" id="t-obuses">Outbound buses</button>
-  <button onclick="go('s-oseat')" id="t-oseat">Outbound seat</button>
-  <button onclick="go('s-outpoints')" id="t-outpoints">Outbound points</button>
-  <h3>Add a return</h3>
-  <button onclick="go('s-window')" id="t-window">Return</button>
-  <button onclick="go('s-picked')" id="t-picked">Your return</button>
-  <button onclick="go('s-bus')" id="t-bus">Return bus</button>
-  <button onclick="go('s-seat')" id="t-seat">Return seat</button>
-  <button onclick="go('s-points')" id="t-points">Return points</button>
-  <h3>Review and pay</h3>
-  <button onclick="go('s-review')" id="t-review">Trip review</button>
-  <button onclick="go('s-pay')" id="t-pay">Payment</button>
-  <button onclick="go('s-done2')" id="t-done2">Booking confirmed</button>
-  <h3>After booking</h3>
-  <button onclick="go('s-ticket')" id="t-ticket">Ticket</button>
-  <button onclick="go('s-mybook')" id="t-mybook">My Bookings</button>
-  <h3>Move the date</h3>
-  <button onclick="openWithin()" id="t-within">Change day</button>
-  <button onclick="go('s-wibus')" id="t-wibus">Move &middot; buses</button>
-  <button onclick="go('s-confirm')" id="t-confirm">Move confirm</button>
-  <button onclick="go('s-done')" id="t-done">Move done</button>
+  <details class="grpx">
+    <summary><span>Book the outbound</span><i class="cv">&rsaquo;</i></summary>
+    <div class="grows">
+    <button onclick="go('s-home')" id="t-home" aria-pressed="true">Home &middot; search</button>
+    <button onclick="go('s-obuses')" id="t-obuses">Outbound buses</button>
+    <button onclick="go('s-oseat')" id="t-oseat">Outbound seat</button>
+    <button onclick="go('s-outpoints')" id="t-outpoints">Outbound points</button>
+    </div>
+  </details>
+  <details class="grpx">
+    <summary><span>Add a return</span><i class="cv">&rsaquo;</i></summary>
+    <div class="grows">
+    <button onclick="go('s-window')" id="t-window">Return</button>
+    <button onclick="go('s-picked')" id="t-picked">Your return</button>
+    <button onclick="go('s-bus')" id="t-bus">Return bus</button>
+    <button onclick="go('s-seat')" id="t-seat">Return seat</button>
+    <button onclick="go('s-points')" id="t-points">Return points</button>
+    </div>
+  </details>
+  <details class="grpx">
+    <summary><span>Review and pay</span><i class="cv">&rsaquo;</i></summary>
+    <div class="grows">
+    <button onclick="go('s-review')" id="t-review">Trip review</button>
+    <button onclick="go('s-pay')" id="t-pay">Payment</button>
+    <button onclick="go('s-done2')" id="t-done2">Booking confirmed</button>
+    </div>
+  </details>
+  <details class="grpx">
+    <summary><span>After booking</span><i class="cv">&rsaquo;</i></summary>
+    <div class="grows">
+    <button onclick="go('s-ticket')" id="t-ticket">Ticket</button>
+    <button onclick="go('s-mybook')" id="t-mybook">My Bookings</button>
+    </div>
+  </details>
+  <details class="grpx">
+    <summary><span>Move the date</span><i class="cv">&rsaquo;</i></summary>
+    <div class="grows">
+    <button onclick="openWithin()" id="t-within">Change day</button>
+    <button onclick="go('s-wibus')" id="t-wibus">Move &middot; buses</button>
+    <button onclick="go('s-confirm')" id="t-confirm">Move confirm</button>
+    <button onclick="go('s-done')" id="t-done">Move done</button>
+    </div>
+  </details>
 </div>
 
 <details class="dev states" id="staterail">
@@ -611,22 +649,6 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
 
 </div><!-- /pcol b -->
 
-<div class="pcol c">
-  <div class="grp" style="margin-top:0">
-    <h2>Sampled from the live app</h2>
-    <div class="swatches">
-      <div class="tok"><i style="background:#C54646"></i><div><b>Action</b><span>#C54646</span></div></div>
-      <div class="tok"><i style="background:#458442"></i><div><b>Rating</b><span>#458442</span></div></div>
-      <div class="tok"><i style="background:#A45729"></i><div><b>Warning</b><span>#A45729</span></div></div>
-      <div class="tok"><i style="background:#E9EAF6"></i><div><b>Chip</b><span>#E9EAF6</span></div></div>
-      <div class="tok"><i style="background:#1D1D1D"></i><div><b>Ink</b><span>#1D1D1D</span></div></div>
-      <div class="tok"><i style="background:#F1F1F6"></i><div><b>Page</b><span>#F1F1F6</span></div></div>
-    </div>
-  </div>
-
-  <p class="foot">Every screen responds &mdash; pick a return, change the bus, then move the
-    date after booking from My&nbsp;Bookings. Nothing here is real redBus data.</p>
-</div><!-- /pcol c -->
 </aside>
 
 <!-- ============ the phone ============ -->
@@ -1319,6 +1341,24 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
 </div><!-- /device -->
 <p class="caption" id="caption"></p>
 </div><!-- /devicewrap -->
+
+<!-- the right column: what used to be an empty mirror holding the phone on centre -->
+<aside class="side">
+  <div class="grp" style="margin-top:0">
+    <h2>Sampled from the live app</h2>
+    <div class="swatches">
+      <div class="tok"><i style="background:#C54646"></i><div><b>Action</b><span>#C54646</span></div></div>
+      <div class="tok"><i style="background:#458442"></i><div><b>Rating</b><span>#458442</span></div></div>
+      <div class="tok"><i style="background:#A45729"></i><div><b>Warning</b><span>#A45729</span></div></div>
+      <div class="tok"><i style="background:#E9EAF6"></i><div><b>Chip</b><span>#E9EAF6</span></div></div>
+      <div class="tok"><i style="background:#1D1D1D"></i><div><b>Ink</b><span>#1D1D1D</span></div></div>
+      <div class="tok"><i style="background:#F1F1F6"></i><div><b>Page</b><span>#F1F1F6</span></div></div>
+    </div>
+  </div>
+
+  <p class="foot">Every screen responds &mdash; pick a return, change the bus, then move the
+    date after booking from My&nbsp;Bookings. Nothing here is real redBus data.</p>
+</aside>
 
 </div><!-- /layout -->
 
@@ -2594,6 +2634,16 @@ function setCaption(){
   const stName = st && st.id !== 'st-default' ? ' &middot; ' + st.textContent : '';
   cap.innerHTML = name ? '<b>' + name + '</b>' + stName : '';
 }
+/* Open the run the current screen belongs to, and shut the others. Walking the flow therefore
+   needs no clicks at all -- the list follows the phone. */
+function syncGroups(){
+  const on = document.querySelector('#screenrail button[aria-pressed="true"]');
+  document.querySelectorAll('#screenrail .grpx').forEach(d =>
+    d.open = !!(on && d.contains(on)));
+}
+const _setCaption = setCaption;
+setCaption = function(){ _setCaption(); if(version === 3) syncGroups(); };
+
 new MutationObserver(setCaption).observe(document.querySelector('.phone'),
   {subtree:true, attributes:true, attributeFilter:['class']});
 document.querySelectorAll('#screenrail button,#staterail button')
