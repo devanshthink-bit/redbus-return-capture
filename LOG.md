@@ -4620,3 +4620,16 @@ screen by screen.** The change-day calendar has 20 live cells whose values come 
 operator scope and a fare formula — impossible to eyeball reliably. Extracting the model and computing
 them gave exact, defensible numbers for every screen at once, and it is re-runnable when the model
 changes again.
+
+DECISION · 2026-09-03 · (no skill) · Source: user
+Figma sync, batch 2. Booking calendars 05/05a/05b converted Aug→Sept by cloning the rebuilt
+September calendar and re-valuing: 05 shows floor prices + the new price legend; 05a shades the
+Fri 11–Thu 17 window (In-reach state) with the Sept cheapest line; 05b selects day 14 with the
+7-day reach band. Onward-journey dates and all rule copy updated to v3 strings.
+
+Built **Row / Return bus** (350:2708) — time/operator/price + tags, text props — and rebuilt the
+**"Your return" day-list (screen 06) as the v3 accordion**: collapsed day rows (day · from ₹X ·
+N buses · tap to see them), the sold-out day dimmed with "No seats left", and Mon 14 expanded to
+four bus rows carrying the real tags (No date change / Cheapest / Free Cancellation / Closest to
+your onward). Review-trip CTA disabled, matching the shipped "nothing preselected" state. Frame grown
+so the open day clears the action bar. All verified against screenshots.
