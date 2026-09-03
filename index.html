@@ -48,7 +48,7 @@ html,body{height:100%}
   --s-mono:ui-monospace,SFMono-Regular,Menlo,monospace;   /* the system mono the dev rails used
      originally. Geist Mono, the portfolio's mono, is one word away if he wants it back */
   --ds:1;                                  /* device scale, set by fitDevice() */
-  --s-dw:430px; --s-dh:948px;              /* the mock frame at scale 1 */
+  --s-dw:458px; --s-dh:948px;              /* the mock frame at scale 1: 430x920 screen + 14 bezel */
 }
 body{
  /* A blush ground -- unmistakably redBus-tinted, never white, and light enough that dark ink
@@ -158,7 +158,7 @@ body.testing .layout{justify-content:center}
 
 /* ---------- iPhone mock ---------- */
 /* The frame is drawn at its true pixel size and then scaled as one piece, so the
-   402x874 prototype inside it never changes layout. .device reserves the scaled box. */
+   430x874 prototype inside it never changes layout. .device reserves the scaled box. */
 .devicewrap{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;align-items:center;gap:14px}
 .device{width:calc(var(--s-dw) * var(--ds));height:calc(var(--s-dh) * var(--ds))}
 .deviceframe{width:var(--s-dw);height:var(--s-dh);transform:scale(var(--ds));transform-origin:top left;
@@ -172,7 +172,7 @@ body.testing .layout{justify-content:center}
 .btn-side.up{left:-3px;top:186px;height:58px}
 .btn-side.down{left:-3px;top:256px;height:58px}
 .btn-side.power{right:-3px;top:210px;height:92px}
-.viewport{width:402px;height:920px;border-radius:44px;overflow:hidden;background:#fff;
+.viewport{width:430px;height:920px;border-radius:44px;overflow:hidden;background:var(--page);
  display:flex;flex-direction:column;position:relative}
 /* iOS status bar — shell chrome, drawn above the prototype, never over it */
 .ios{flex:0 0 auto;height:46px;background:var(--raised);display:flex;align-items:center;
@@ -189,12 +189,12 @@ body.testing .layout{justify-content:center}
 /* ---------- v1 / v2, shown in the same mock ---------- */
 /* Both are frozen files. They are loaded whole in an iframe sized so their own 402x874
    frame lands exactly on the crop below -- nothing in them is edited or overridden. */
-.legacy{position:absolute;left:0;right:0;top:46px;height:874px;overflow:hidden;
- border-radius:24px;background:var(--page);display:none}
+.legacy{position:absolute;left:14px;width:402px;top:46px;height:874px;overflow:hidden;
+ border-radius:24px;background:var(--page);display:none}   /* v1 and v2 are 402 wide and frozen */
 body.legacy-on .legacy{display:block}
 body.legacy-on .phone{display:none}
 .legacy iframe{position:absolute;left:-299px;top:-48px;width:1000px;height:970px;border:0}
-.phone{width:402px;height:874px;flex:0 0 auto;
+.phone{width:430px;height:874px;flex:0 0 auto;
  background:var(--page);position:relative;overflow:hidden;display:flex;flex-direction:column}
 
 /* ---------- chrome ---------- */
@@ -474,7 +474,7 @@ body.legacy-on .legacynote{display:block}
    participant cannot see -- or tap -- anything but the phone. */
 body.testing .panel,body.testing .glow,body.testing .caption{display:none!important}
 
-/* On a real phone the frame filled 402x874 inside a smaller screen, so it was cut off and the
+/* On a real phone the frame filled 430x874 inside a smaller screen, so it was cut off and the
    rails sat on top of it. Below 520px the frame simply becomes the screen -- no mock, no panel. */
 @media (max-width:520px){
   body{overflow:auto}
@@ -2541,7 +2541,7 @@ if(/[?&]test\b/.test(location.search)) document.body.classList.add('testing');
 
 /* ---- presentation shell: fit the device mock to the window ------------------
    The frame is a fixed 430x948 and is scaled as one piece. Nothing inside the
-   402x874 prototype changes size in CSS terms, so no layout depends on the
+   430x874 prototype changes size in CSS terms, so no layout depends on the
    window any more -- which is what the old .phone{height:calc(100vh - 48px)}
    rule was working around. */
 function fitDevice(){
@@ -2551,7 +2551,7 @@ function fitDevice(){
      away from -- taking the writing off the screen. */
   const panel = document.querySelector('.panel');
   const byWidth = testing ? Infinity
-    : (window.innerWidth - 80 - (panel ? panel.offsetWidth : 0) - 48) / 430;
+    : (window.innerWidth - 80 - (panel ? panel.offsetWidth : 0) - 48) / 458;
   /* Sized as a *share* of the window, not as "the largest that fits". Fitting made the frame
      fill 91% of the height on any normal laptop, which reads as the page rather than as a
      phone standing on it. A session has nothing else on screen, so there it does fill. */

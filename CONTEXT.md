@@ -240,7 +240,13 @@ design-language tokens.
   `<details>` shut by default** — they are for probing, not for walking the flow. Its summary turns
   red while a non-default state is on, so a hidden state can never look like a broken prototype
 - **iPhone mock** — `.device > .deviceframe > .viewport > (.ios status bar + .phone)`. The frame is a
-  fixed 430 × 948 and is scaled **as one piece** by `--ds`, set by `fitDevice()` on load and resize.
+  fixed 458 × 948 and is scaled **as one piece** by `--ds`, set by `fitDevice()` on load and resize.
+  **The prototype's own viewport is 430 wide, not 402.** The status bar added 46px of height above
+  the 874px screen, which made a 402 × 920 screen — taller in proportion than any real iPhone and
+  visibly stretched. 430 × 920 matches an iPhone Pro Max. Fifteen screens were checked for overflow
+  after the change; none, and the calendar cells stay uniform. **v1 and v2 are frozen at 402**, so
+  their iframe crop stays 402 and is centred in the 430 viewport, whose background is `--page` so
+  the two strips either side blend.
   **`--ds` is capped at 0.92, not 1** — on a tall window the frame would otherwise render full size
   and dominate the page. In session mode there is no panel to balance it, so the cap is 1.05.
   Nothing inside the 402 × 874 prototype changes size, so no prototype layout depends on the window

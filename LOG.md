@@ -4423,3 +4423,28 @@ the frame is 409 wide. Session mode is 92%.
 The one cost: on an 800px-tall window the panel no longer quite fits and scrolls a little. Everything
 above the swatches is still above the fold.
 
+CHANGE · 2026-09-03 · (no skill) · Source: user
+**"make width of screen wider"** — and he was right about a proportion I had broken without noticing.
+
+Adding the iOS status bar put 46px *above* the 874px screen rather than inside it, making the mock's
+screen **402 × 920**. That is an aspect of 2.29; a real iPhone 16 Pro is 2.17 and a Pro Max 2.17. The
+mock had been reading as stretched ever since.
+
+The prototype's viewport is now **430 × 874** — an iPhone Pro Max width — and the frame 458 × 948.
+
+This one does reach inside the phone: the prototype is 28px wider than it was. It is fluid, so
+nothing broke — fifteen screens checked, no overflow anywhere, no horizontal scroll, calendar cells
+uniform at 41px — and one line of copy that used to wrap now fits. **v1 and v2 are frozen at 402**,
+so their crop stays 402 and centres inside the 430 viewport; the viewport's background is `--page`
+so the 14px either side blend into their own page colour.
+
+Verified: 88% of window height, centred in the leftover at 132/132 (1470) and 202/202 (1260), no
+overflow, v1 still mirrors 30 controls, `?test` at 94%, 375px unchanged, and v1, v2 and
+prototype.html byte-identical.
+
+LEARNED · 2026-09-03 · (no skill)
+**Chrome added around an artefact changes the artefact's proportions.** The status bar was drawn
+outside the prototype so that it could not cover content — correct — but it still made the visible
+screen 46px taller than the thing it framed, and nothing checked the resulting aspect against a real
+device. If a mock is meant to read as a phone, its screen has to have a phone's ratio.
+
