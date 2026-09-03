@@ -245,8 +245,9 @@ design-language tokens.
   the 874px screen, which made a 402 × 920 screen — taller in proportion than any real iPhone and
   visibly stretched. 430 × 920 matches an iPhone Pro Max. Fifteen screens were checked for overflow
   after the change; none, and the calendar cells stay uniform. **v1 and v2 are frozen at 402**, so
-  their iframe crop stays 402 and is centred in the 430 viewport, whose background is `--page` so
-  the two strips either side blend.
+  **the frame itself narrows to 430 × 948 and the screen to 402 when a legacy version is showing** —
+  each build is then at its own true width, rather than sitting in strips or being stretched.
+  Do not put a `transition:width` on the frame: it leaves the width stuck at the old value.
   **`--ds` is capped at 0.92, not 1** — on a tall window the frame would otherwise render full size
   and dominate the page. In session mode there is no panel to balance it, so the cap is 1.05.
   Nothing inside the 402 × 874 prototype changes size, so no prototype layout depends on the window

@@ -4448,3 +4448,34 @@ outside the prototype so that it could not cover content — correct — but it 
 screen 46px taller than the thing it framed, and nothing checked the resulting aspect against a real
 device. If a mock is meant to read as a phone, its screen has to have a phone's ratio.
 
+CHANGE · 2026-09-03 · (no skill) · Source: user
+**"wifi icon is not matching with ios"** and, mid-change, **"v1, v2 are not fitting to mock screen"**.
+
+The wifi glyph was one filled arc band and a triangle. It is now what iOS actually draws: two
+concentric stroked arcs with round caps over a filled dot. While zoomed in on it, the battery in the
+same row was plainly broken too — its terminal rendered as a stray `)` floating outside a too-thick
+outline — so that was redrawn as a hairline capsule, a filled level and a proper nub. He asked about
+the wifi; the battery was the same defect three pixels away.
+
+**v1 and v2 not fitting** was mine from the previous change: widening the screen to 430 left them, at
+their frozen 402, sitting in a 14px strip either side. Stretching them was not an option — it would
+misrepresent the design. So **the frame narrows to the width of the build it is showing**: 458 × 948
+for v3, 430 × 948 for v1 and v2. Each is now at its own true size, edge to edge.
+
+A `transition:width` on the frame had to come out. With it, `--s-dw` on the element read 430 while
+the computed width stayed at 458 — the transition never resolved, so the frame silently kept the old
+width and only the measurements showed it.
+
+Verified: v3 430/458, v1 and v2 402/430 and back again; v1's nav bar spans the full 402; centred in
+the leftover at 132/132 (v3) and 143/143 (v1); no overflow; `?test` at 94%; 375px unchanged; v1, v2
+and prototype.html byte-identical.
+
+LEARNED · 2026-09-03 · (no skill)
+**A `transition` on a width that is driven by a custom property can leave the width stuck.** The
+variable updated, the selector matched, and `getComputedStyle` still returned the old value. Nothing
+in the rendering said so — only measuring it did. Do not animate a width that a `var()` feeds.
+
+**Widening the frame was a change to a shared stage, and two frozen builds were standing on it.**
+The check for "did this break anything" has to include the archive versions, not just the one being
+worked on.
+
