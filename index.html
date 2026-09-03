@@ -22,26 +22,35 @@ html,body{height:100%}
    ============================================================================ */
 :root{
   --s-red:#D84E55;              /* the official logo red, from RedBus_Logo_(2015-present).svg */
-  /* The page is the brand red, so everything on it is a tint of white rather than a grey. */
-  --s-on:#FFFFFF;
-  --s-on-80:rgba(255,255,255,.84);
-  --s-on-60:rgba(255,255,255,.72);   /* 4.5:1 on the mid red. .62 measured 4.2 and failed */
-  --s-on-45:rgba(255,255,255,.58);
-  --s-on-30:rgba(255,255,255,.46);
+  /* A pale red ground with dark ink. The names are kept from the dark-red version so nothing
+     downstream has to change; only the values moved. Every one of these measures 4.5:1 or
+     better on #F6E2E4, the darkest point of the page. */
+  /* Ratios measured against #F6E2E4, the darkest corner of the page. On a light ground a
+     hierarchy cannot be made out of lightness alone -- everything quieter than about #676775
+     drops under 4.5 -- so the labels and group headings separate by size and weight instead. */
+  --s-on:#17171C;                    /* titles                    14.4:1 */
+  --s-on-80:#33333C;                 /* emphasis inside body copy 10.1:1 */
+  --s-on-60:#5E5E6B;                 /* body, lede, rail rows      5.1:1 */
+  --s-on-45:#636370;                 /* labels, footnote, hex      4.8:1 */
+  --s-on-30:#646471;                 /* group headings             4.7:1 */
+  --s-hair:rgba(23,23,28,.10);
+  --s-wash:rgba(255,255,255,.62);
+  --s-red-soft:#FCE3E5;
   --s-hair:rgba(255,255,255,.18);
   --s-wash:rgba(255,255,255,.12);
   --ds:1;                                  /* device scale, set by fitDevice() */
   --s-dw:430px; --s-dh:948px;              /* the mock frame at scale 1 */
 }
 body{
- /* the brand red, deepened so white type sits on it at full contrast and so it does not
-    compete with the prototype's own #C54646 buttons a few hundred pixels away */
- background:#9E2B33;
+ /* A blush ground -- unmistakably redBus-tinted, never white, and light enough that dark ink
+    carries a proper type hierarchy again. It stays well clear of the prototype's own #C54646
+    buttons, which remain the brightest red on screen. */
+ background:#FAEBEC;
  background-image:
-   radial-gradient(1100px 780px at 6% -8%,  #B2373F 0%, rgba(178,55,63,0) 58%),
-   radial-gradient(900px 800px at 98% 6%,   #7C1D26 0%, rgba(124,29,38,0) 60%),
-   radial-gradient(1000px 700px at 50% 112%,#6E1620 0%, rgba(110,22,32,0) 58%),
-   linear-gradient(165deg,#B03640 0%,#9A2A33 46%,#7A1E27 100%);
+   radial-gradient(1100px 800px at 6% -8%,  #FEF6F6 0%, rgba(254,246,246,0) 58%),
+   radial-gradient(900px 800px at 99% 4%,   #F7E4E7 0%, rgba(247,228,231,0) 60%),
+   radial-gradient(1000px 720px at 50% 112%,#F3DCDF 0%, rgba(243,220,223,0) 60%),
+   linear-gradient(165deg,#FCF0F1 0%,#F9E8EA 48%,#F6E2E4 100%);
  background-attachment:fixed;
  font-family:Inter,-apple-system,system-ui,sans-serif;color:var(--s-on);
  -webkit-font-smoothing:antialiased;display:flex;flex-direction:column;overflow:hidden}
@@ -58,11 +67,11 @@ body{
 .devicewrap{align-self:center}
 body.testing .layout{justify-content:center}
 .stage::-webkit-scrollbar{height:6px}
-.stage::-webkit-scrollbar-thumb{background:rgba(255,255,255,.3);border-radius:3px}
+.stage::-webkit-scrollbar-thumb{background:rgba(23,23,28,.18);border-radius:3px}
 /* product-shot glow behind the device */
 .glow{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:1000px;height:1000px;
  border-radius:50%;pointer-events:none;z-index:0;
- background:radial-gradient(closest-side, rgba(255,255,255,.13), rgba(255,255,255,.05) 50%, rgba(255,255,255,0) 74%)}
+ background:radial-gradient(closest-side, rgba(255,255,255,.72), rgba(255,255,255,.28) 50%, rgba(255,255,255,0) 74%)}
 .panel,.devicewrap{position:relative;z-index:1}
 
 /* ---------- left panel: sits straight on the gradient, no card ---------- */
@@ -90,7 +99,7 @@ body.testing .layout{justify-content:center}
   .pcol.c{grid-column:1;grid-row:2}
 }
 .panel::-webkit-scrollbar{display:none}
-.lock{display:block;margin-bottom:26px;color:var(--s-on)}
+.lock{display:block;margin-bottom:26px;color:var(--s-red)}   /* the mark is the brand red again */
 .lock svg{height:44px;width:auto;display:block}   /* the mark carries the page, so it is given room */
 .lock span{display:block;margin-top:13px;font-size:10px;font-weight:700;letter-spacing:.18em;
  text-transform:uppercase;color:var(--s-on-45)}
@@ -103,15 +112,15 @@ body.testing .layout{justify-content:center}
  color:var(--s-on-45);margin:0 0 12px 2px}
 
 /* version switch */
-.vers{display:flex;gap:6px;background:var(--s-wash);border:1px solid var(--s-hair);
+.vers{display:flex;gap:6px;background:rgba(255,255,255,.72);border:1px solid rgba(23,23,28,.08);
  border-radius:12px;padding:4px;backdrop-filter:blur(6px)}
 .vers button{flex:1;border:0;background:none;font-family:inherit;font-size:13px;font-weight:700;
  letter-spacing:-.01em;color:var(--s-on-60);padding:9px 0;border-radius:9px;cursor:pointer;
  transition:background 160ms,color 160ms,box-shadow 160ms}
 .vers button:hover{color:var(--s-on)}
-.vers button:focus-visible{outline:0;box-shadow:0 0 0 2px rgba(255,255,255,.6)}
-.vers button[aria-pressed="true"]{background:var(--s-on);color:#9A2A33;
- box-shadow:0 1px 2px rgba(60,10,14,.22),0 6px 16px -6px rgba(60,10,14,.5)}
+.vers button:focus-visible{outline:0;box-shadow:0 0 0 2px rgba(216,78,85,.5)}
+.vers button[aria-pressed="true"]{background:var(--s-red);color:#fff;
+ box-shadow:0 1px 2px rgba(140,30,38,.22),0 6px 16px -6px rgba(140,30,38,.5)}
 .vnote{font-size:13px;line-height:1.5;color:var(--s-on-60);margin-top:10px;
  min-height:59px}   /* three lines: the longest of the three notes. Stops the swatches jumping */
 .vnote b{color:var(--s-on);font-weight:600}
@@ -120,7 +129,7 @@ body.testing .layout{justify-content:center}
 .swatches{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px}
 .tok{display:flex;align-items:center;gap:9px;min-width:0}
 .tok i{width:22px;height:22px;border-radius:7px;flex:0 0 auto;
- box-shadow:inset 0 0 0 1px rgba(255,255,255,.28)}   /* the pale swatches need an edge on red */
+ box-shadow:inset 0 0 0 1px rgba(23,23,28,.10)}   /* the pale swatches need an edge to read */
 .tok div{min-width:0}
 .tok b{display:block;font-size:12px;font-weight:600;letter-spacing:-.01em;line-height:1.2;color:var(--s-on)}
 .tok span{display:block;font-size:11px;color:var(--s-on-45);font-variant-numeric:tabular-nums;line-height:1.3}
@@ -136,7 +145,7 @@ body.testing .layout{justify-content:center}
 .deviceframe{width:var(--s-dw);height:var(--s-dh);transform:scale(var(--ds));transform-origin:top left;
  background:linear-gradient(150deg,#4A4A52 0%,#0E0E11 26%,#0E0E11 74%,#4A4A52 100%);
  border-radius:58px;padding:14px;position:relative;
- box-shadow:0 1px 0 rgba(255,255,255,.24) inset, 0 46px 90px -26px rgba(50,8,14,.62), 0 12px 30px rgba(50,8,14,.3)}
+ box-shadow:0 1px 0 rgba(255,255,255,.24) inset, 0 44px 84px -26px rgba(80,26,32,.34), 0 12px 28px rgba(80,26,32,.13)}
 .deviceframe::after{content:"";position:absolute;inset:5px;border-radius:53px;
  border:1px solid rgba(255,255,255,.10);pointer-events:none}
 .btn-side{position:absolute;width:3px;background:#26262C;border-radius:2px}
@@ -414,26 +423,26 @@ body.legacy-on .phone{display:none}
 /* The stage each screen belongs to used to be repeated on all eighteen rows. It is the same
    for every screen in a run, so it is the group's, not the row's -- the same correction as
    `from` on the calendar cells. Five quiet headings read as five things, not eighteen. */
-.dev h3{font-size:12px;font-weight:600;letter-spacing:-.005em;color:var(--s-on-30);
- margin:13px 0 3px;padding:0 10px}
+.dev h3{font-size:11px;font-weight:600;letter-spacing:.01em;color:var(--s-on-30);
+ margin:13px 0 3px;padding:0 10px}   /* quieter by size, not by fading below the contrast bar */
 .dev h3:first-child{margin-top:0}
-.dev button:hover{background:rgba(255,255,255,.10);color:var(--s-on)}
-.dev button:focus-visible{outline:0;box-shadow:0 0 0 2px rgba(255,255,255,.6)}
-.dev button[aria-pressed="true"]{background:rgba(255,255,255,.17);color:var(--s-on);font-weight:700}
+.dev button:hover{background:rgba(255,255,255,.7);color:var(--s-on)}
+.dev button:focus-visible{outline:0;box-shadow:0 0 0 2px rgba(216,78,85,.5)}
+.dev button[aria-pressed="true"]{background:var(--s-red-soft);color:#B23138;font-weight:700}
 
 .dev.states{display:block;margin-top:22px}
 .dev.states>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;
  color:var(--s-on-45);font-weight:700;font-size:10px;letter-spacing:.16em;text-transform:uppercase;
  padding:6px 10px;border-radius:9px;transition:color 130ms,background 130ms}
 .dev.states>summary::-webkit-details-marker{display:none}
-.dev.states>summary:hover{color:var(--s-on);background:rgba(255,255,255,.10)}
+.dev.states>summary:hover{color:var(--s-on);background:rgba(255,255,255,.7)}
 .dev.states>summary .cnt{font-size:10px;letter-spacing:0;color:var(--s-on-30);font-weight:600}
 .dev.states>summary .chev{margin-left:auto;font-size:12px;letter-spacing:0;transition:transform 180ms}
 .dev.states[open]>summary .chev{transform:rotate(90deg)}
 .statelist{display:flex;flex-direction:column;gap:1px;margin-top:6px}
 /* a state other than default is on: say so on the shut summary */
-.dev.states.dirty>summary{color:#FFD9A8}   /* red on red is invisible; warm amber reads on it */
-.dev.states.dirty>summary .cnt{color:rgba(255,217,168,.7)}
+.dev.states.dirty>summary{color:#B23138}
+.dev.states.dirty>summary .cnt{color:rgba(178,49,56,.65)}
 /* v1 and v2 have their own screens, so their own rails are mirrored in here */
 body.legacy-on #screenrail,body.legacy-on #staterail{display:none}
 #legacyrail{display:none}

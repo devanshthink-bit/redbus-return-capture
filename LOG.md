@@ -4188,3 +4188,34 @@ brightest thing on screen.
 **Tints on a coloured ground have to be calculated.** White at 62% looked perfectly readable and was
 4.2:1. On the lightest corner of the same gradient it was 3.1:1.
 
+CHANGE · 2026-09-03 · (no skill) · Source: user
+**He asked for the red page to be lighter.** I put the question back to him with three measured
+options rather than guessing, and he took the lightest: **a blush ground with dark ink** —
+`#FCF0F1 → #F9E8EA → #F6E2E4`. The logo is the brand red again rather than a white knockout, and the
+active version pill is `#D84E55`.
+
+The reason it became a question at all: on a saturated red, a lighter page and a readable type
+hierarchy are mutually exclusive. Measured at the lightest corner of the mid-red version, white at
+86% was **4.42:1** — so making the ground lighter would have forced every label up to near-white and
+flattened the panel. On the blush ground the same hierarchy runs from 14.4:1 down to 4.7:1.
+
+The light ground has its own version of the constraint: anything paler than about `#676775` drops
+under 4.5. So the group headings became **quieter by size** — 11px instead of 12 — rather than by a
+paler grey. Same principle as the calendar caption: change the right property.
+
+Measured after the change: title 14.4, lede and rows 5.1, active row 5.0, labels, footnote and
+caption 4.8, group headings 4.7. Nothing under 4.5.
+
+Verified: centred at 48px top and bottom, the phone at 74% of the window, the panel fitting exactly,
+nothing moving across all four version transitions, v1 mirroring 30 controls, `?test` filling at 93%,
+1100px single column and 375px both unchanged, and v1, v2 and prototype.html byte-identical.
+
+LEARNED · 2026-09-03 · (no skill)
+**A saturated background is a decision about type hierarchy, not just about colour.** Every step
+lighter costs a step of hierarchy, because the tints have to move up to stay readable. It is worth
+saying that out loud before painting the page, not after.
+
+**When taste and a measurable constraint pull apart, put the numbers in front of him and let him
+choose.** Three options with their contrast figures took one question and got a better answer than
+two more rounds of guessing at how light "lighter" meant.
+

@@ -191,13 +191,15 @@ design-language tokens.
 - **`.layout` caps the row at 1280px and uses `space-between`.** Two columns huddled in the
   middle of a wide window with dead margins was the complaint; splitting the panel widened the
   composition enough to fill the frame
-- **The page is the brand red**, a deepened gradient (`#B2373F → #9A2A33 → #7A1E27`) with a soft
-  white glow behind the device. Everything on it is a tint of white, not a grey, held in
-  `--s-on-80/60/45/30`. `--s-on-60` is **.72, not .62** — .62 measured 4.2:1 on the mid red and
-  failed body text. The red is deliberately deeper than the logo's `#D84E55` so it does not
-  compete with the prototype's own `#C54646` buttons a few hundred pixels away
-- **The logo knocks out white.** Only the `fill` is changed from the supplied file; the path is
-  untouched. It runs at 44px on its own line with the kicker beneath
+- **The page is a blush red** — `#FCF0F1 → #F9E8EA → #F6E2E4`, unmistakably redBus-tinted and
+  never white, with a white lift behind the device. Text is dark ink, held in `--s-on-80/60/45/30`,
+  and **every value measures 4.5:1 or better against `#F6E2E4`**, the darkest corner. A saturated
+  red page was tried first and abandoned: white tints there could not carry a hierarchy and stay
+  readable — at the lightest corner even 86% white came out at 4.42:1
+- **On a light ground the quiet things are quiet by size, not by fading.** Anything lighter than
+  about `#676775` drops under 4.5:1, so the group headings went to 11px rather than to a paler grey
+- **The logo is the brand red at 44px**, on its own line with the kicker beneath. Only the `fill`
+  is ever changed from the supplied file; the path is untouched
 - **The device is a share of the window, not the largest that fits** — `min(74% of height, …)`,
   capped at .82. Fitting made it 91% of a laptop screen, which read as the page rather than as a
   phone standing on it. Session mode still fills (`?test`, ~93%)
