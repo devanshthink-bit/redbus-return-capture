@@ -4219,3 +4219,43 @@ saying that out loud before painting the page, not after.
 choose.** Three options with their contrast figures took one question and got a better answer than
 two more rounds of guessing at how light "lighter" meant.
 
+CHANGE · 2026-09-03 · (no skill) · Source: user
+**"Why is this screen showing for some time?"** — a screenshot of the phone with every bold value
+missing: no *Bus Tickets*, no *ISBT Kashmiri Gate*, no *Nainital*, no *Booking for women*. The labels
+were there, the values were not.
+
+Nothing was loading. `body{color:…}` had been on a **shell** token since the first shell rewrite. It
+was harmless while that token was `#17171C`; when the page went red I set it to white, and from then
+on every element inside the phone that does not declare its own colour — `.sval`, `.navtxt h1`, the
+women's-row label — inherited white and disappeared on a white card. The blush theme accidentally hid
+it again by making the token dark. It is now `var(--ink)`, the prototype's own token, and the shell's
+ink sits on `.panel`.
+
+The prototype's screens are one stylesheet away from the shell and inherit from the same `body`.
+That is the second time a shell change has reached inside the phone by accident — the first was the
+`.leg` / `.sw` / `.time` class collisions.
+
+CHANGE · 2026-09-03 · (no skill) · Source: user
+**"This is my portfolio. Use the same fonts as used in this portfolio in this prototype."**
+Read off devanshsomvanshi.com: **Manrope** 700/800 for headings, **Geist Mono** for the small tracked
+labels, **Inter** for body. All three are on Google Fonts.
+
+Manrope takes the title. Geist Mono takes the kicker, the section labels, the version numbers, the
+states summary and the hex codes — everything that was already tracked small caps. Inter takes the
+rest.
+
+Inter matters more than it looks: the prototype had `font-family:Inter,…` with no font actually
+loaded, so it had been falling back to the system face this whole time. The design language says the
+type scale was derived from Inter's own cap ratio, so the phone is now rendering in the face it was
+measured against. Checked ten screens for overflow after the swap — none, and the calendar cells stay
+uniform.
+
+LEARNED · 2026-09-03 · (no skill)
+**The shell and the prototype share one `body`.** Anything set there is not chrome, it is a default
+for the artefact too. Shell values belong on `.panel`, and only tokens the prototype owns belong on
+`body`. Both times this has gone wrong the symptom looked like a loading bug rather than a CSS one.
+
+**A font stack naming a font nobody loaded is a stack that never ran.** `font-family:Inter` had been
+silently resolving to the system face for the whole project, while the measurements it was built on
+came from Inter.
+

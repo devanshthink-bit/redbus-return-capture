@@ -200,6 +200,14 @@ design-language tokens.
   about `#676775` drops under 4.5:1, so the group headings went to 11px rather than to a paler grey
 - **The logo is the brand red at 44px**, on its own line with the kicker beneath. Only the `fill`
   is ever changed from the supplied file; the path is untouched
+- **Type comes from devanshsomvanshi.com** — **Manrope** for the title, **Geist Mono** for every
+  small tracked label and the hex codes, **Inter** for everything else. All three from Google Fonts
+  with `display=swap`. Inter is also what the prototype's own scale was measured against, so the
+  phone finally renders in the face it was designed for; verified no overflow on ten screens
+- **`body{color}` must be `--ink`, the prototype's token, never a shell one.** Anything in the phone
+  that does not set its own colour inherits it. When the shell was red this was `--s-on` = white,
+  and every bold value inside the phone went invisible on a white card. The shell's ink lives on
+  `.panel` instead
 - **The device is a share of the window, not the largest that fits** — `min(74% of height, …)`,
   capped at .82. Fitting made it 91% of a laptop screen, which read as the page rather than as a
   phone standing on it. Session mode still fills (`?test`, ~93%)
