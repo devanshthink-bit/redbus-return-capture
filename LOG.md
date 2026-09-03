@@ -4633,3 +4633,28 @@ N buses · tap to see them), the sold-out day dimmed with "No seats left", and M
 four bus rows carrying the real tags (No date change / Cheapest / Free Cancellation / Closest to
 your onward). Review-trip CTA disabled, matching the shipped "nothing preselected" state. Frame grown
 so the open day clears the action bar. All verified against screenshots.
+
+DECISION · 2026-09-03 · (no skill) · Source: user
+Figma sync, batch 3 (completing the flow). Review (07) was already built from the real redBus
+add-on cards (Free Cancellation / Trip Guarantee / Insurance with radios) — more faithful than the
+prototype — so it needed value updates, not a rebuild: Free Cancellation ₹180→**₹60 per passenger**
+(the real figure from IMG_5230), Trip Guarantee →₹26, the date-change block reworded to *"Move your
+return to any date, earlier or later"*, and all journey dates to September. The FC card is now a
+pixel match to the real screenshot.
+
+Swept **every screen** for leftover August dates and fixed 22 in one batch to a consistent scenario
+(onward Thu 10 Sep, return Mon 14 Sep, window Fri 11–Thu 17 Sep): Home, Outbound list, Points, Pay,
+Booking confirmed, My Bookings, Ticket, Confirm-move, Return-moved, and 06a. Renamed the ticket and
+My-Bookings action row *Change day → Change your return day*. Verified zero "Aug" strings remain
+anywhere, and spot-checked Ticket and Confirmed against screenshots — both clean September.
+
+**Still net-new (don't exist in Figma):** the standalone *Choose your bus* screen (single-date
+booking path) and *Move · buses* (change-flow bus list). The accordion already shows the multi-bus
+case inline, so the core flow is fully covered; these two would complete the change-flow visual.
+
+LEARNED · 2026-09-03 · (no skill)
+**When the Figma is already closer to the real app than the prototype is, the sync is a value
+update, not a rebuild.** The Review screen had been built straight from redBus's add-on cards. Trying
+to force the prototype's simpler per-leg structure onto it would have made it *less* like redBus. The
+project's own rule settled it — real app over prototype for UI — so the right move was to keep the
+structure and correct only the numbers the prototype had changed (₹60, ₹26, September).
