@@ -4355,3 +4355,38 @@ right move was to re-read the first, not to reach for a bigger interpretation.
 collapsed list and a restructured panel. When a change starts pulling in things nobody mentioned,
 that is the signal the premise is wrong.
 
+CHANGE · 2026-09-03 · (no skill) · Source: user
+**"Why is the mock still not horizontally centered in the white space?"** — with a screenshot whose
+left column was missing entirely: no logo, no title, no version switch, just the screen list and the
+phone. That was the whole answer. The phone *was* centred in the leftover; the writing had scrolled
+out of view, so what he could see was not the composition.
+
+Two columns switched on at 1240px but need 744 + a phone up to 387 + 80 of padding = **1211 before
+any leftover at all**. In that band the row overflowed, `.stage` became scrollable, and scrolling it
+right took the entire left column off screen. `safe center` stops the overflow being *unreachable*;
+it does not stop the overflow.
+
+Two fixes, both about never overflowing rather than about alignment:
+- the two-column threshold is **1400**, not 1240
+- `fitDevice()` gained a **width** term alongside the height one, so the frame can never be wider
+  than the room left beside the panel
+
+Measured after, at 1000 / 1200 / 1260 / 1399 / 1401 / 1470 / 1920: no overflow at any of them, the
+panel's left edge always at x=40 or better, and the phone centred in the leftover to the pixel every
+time (227/227 at 1260, 291/291 at 1399, 95/95 at 1401, 156/156 at 1470, 135/135 at 1920). Version
+switching, `?test` at 94% and the 375px breakpoint all unchanged; v1, v2 and prototype.html
+byte-identical.
+
+LEARNED · 2026-09-03 · (no skill)
+**A screenshot with something missing from it is a layout bug, not a taste note.** Three exchanges
+were spent on where to centre the phone when the actual fault was that the writing had scrolled off
+the left. The first question to ask of a "this looks wrong" screenshot is *what is not in it*.
+
+**`safe center` fixes reachability, not overflow.** It stops the overflow being stranded off the
+start edge, so nothing is permanently lost — but the content still overflows, the container still
+scrolls, and the user can still scroll away from half the layout. The breakpoint has to be set where
+the content genuinely fits.
+
+**A breakpoint that only counts one of the things in the row will be wrong.** 1240 was chosen from
+the panel's width alone and ignored the phone beside it.
+

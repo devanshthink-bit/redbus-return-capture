@@ -173,12 +173,18 @@ design-language tokens.
 - **No top bar.** Everything sits in a left panel straight on the page, no card behind it —
   lockup, title, lede, version switch, screens, states, sampled swatches, footnote
 - **Two columns of writing on the left, the phone on the right.** `.pcol a / b / c` placed by grid:
-  above 1240px a (title, version) and c (swatches, footnote) stack in the left column and b — the
-  screen list — runs full height in the right one; below that it is one column. Source order is
+  above **1400px** a (title, version) and c (swatches, footnote) stack in the left column and b —
+  the screen list — runs full height in the right one; below that it is one column and scrolls.
+  **1400, not 1240**: two columns make the panel 744 wide, and with a phone up to 387 plus 80 of
+  padding that is 1211 before any leftover at all. In the old 1240–1400 band the row overflowed,
+  the stage scrolled, and scrolling it right put the entire left column out of view. Source order is
   a, b, c so the one-column fallback reads title → screens → swatches
 - **The phone centres in the space left over beside the writing** — `.devicewrap{flex:1}` and a
   **zero** gap on `.layout`, measured equal to the pixel either side (172/172 at 1470, 195/195 at
   1100). A gap of any size sits on one side only and offsets it by its own width.
+  `fitDevice()` also carries a **width** term — the frame can never be wider than the room left
+  beside the panel — so the row cannot overflow at any size, and an overflowing row is exactly what
+  can be scrolled away from.
   **Do not try to centre it on the window instead** — that needs a matching column opposite the
   writing, which at a 744px panel means a 1960px window. It was tried, it moved the swatches to the
   far right, and he rejected it: *"why did u move it towards the right? Earlier, the structure was

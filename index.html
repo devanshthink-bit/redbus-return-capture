@@ -102,7 +102,11 @@ body.testing .layout{justify-content:center}
    Source order is a / b / c so that the one-column fallback reads title, screens, tokens --
    the screen list must never end up below the fold behind the swatches. */
 .panel{display:grid;grid-template-columns:1fr;row-gap:26px}
-@media (min-width:1240px){
+/* 1400, not 1240. Two columns make the panel 744 wide; with a phone up to 387 and 80 of padding
+   that is 1211 before any leftover at all. Between 1240 and 1400 the row overflowed, the stage
+   scrolled, and scrolling it right put the whole left column out of view -- which is what "the
+   mock is not centred" looked like. */
+@media (min-width:1400px){
   .panel{grid-template-columns:340px 340px;column-gap:44px;row-gap:26px;
    align-items:start;width:auto;
    /* the second row must be flexible: b spans both rows, and across an `auto` row its extra
@@ -2542,12 +2546,18 @@ if(/[?&]test\b/.test(location.search)) document.body.classList.add('testing');
    rule was working around. */
 function fitDevice(){
   const testing = document.body.classList.contains('testing');
+  /* A width term as well as a height one, so the frame can never be wider than the room left
+     beside the panel. Without it the row could overflow, and an overflowing row can be scrolled
+     away from -- taking the writing off the screen. */
+  const panel = document.querySelector('.panel');
+  const byWidth = testing ? Infinity
+    : (window.innerWidth - 80 - (panel ? panel.offsetWidth : 0) - 48) / 430;
   /* Sized as a *share* of the window, not as "the largest that fits". Fitting made the frame
      fill 91% of the height on any normal laptop, which reads as the page rather than as a
      phone standing on it. A session has nothing else on screen, so there it does fill. */
   const h = window.innerHeight;
   const s = testing ? Math.min(1.05, (h - 56) / 948)
-                    : Math.min(.90,  Math.min(h * .82, h - 84) / 948);
+                    : Math.min(.90,  Math.min(h * .82, h - 84) / 948, byWidth);
   document.documentElement.style.setProperty('--ds', Math.max(.42, s).toFixed(4));
 }
 fitDevice();
