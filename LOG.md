@@ -4695,3 +4695,28 @@ LEARNED · 2026-09-03 · (no skill)
 **A case-sensitive search for dates misses the uppercase ones.** My Aug sweep used /\bAug\b/ and
 passed clean, but a tag rendered "TUE, 18 AUG" survived. Date and label text appears in both cases in
 a UI (sentence case in body, uppercase in tags/legtags). Always scan /aug/i, not /Aug/.
+
+CRITIQUE · 2026-09-03 · (no skill) · Source: user
+**"Why did you make the screens like the prototype UI? I asked: logic/flow from the prototype, UI
+exactly like the real redBus screenshots."** Correct, and I got it wrong on the bus lists. For the
+accordion (06), Choose-your-bus (15) and Move-buses (16) I invented minimal, prototype-style bus rows
+(time — time · operator · price · a couple of chips) instead of using the real redBus **`Card / Bus`**
+component that already existed in the file — the one with the Primo mark, the duration·seats meta, the
+operator name + bus-pin icon, the bus type, the green rating badge, and the amenity/Free-date-change
+pills. The user's side-by-side made it plain: neither the component nor the screen matched redBus.
+
+**Fixed:** rebuilt every return bus on 06/15/16 from `Card / Bus` instances — real redBus card, with
+per-operator rating (Laxmi 4.7/178, RS Yadav 4.5/315, ITC 4.2/420), real bus types, the redBus
+*Free date change* pill on movable services, and our new-feature chips (Cheapest / Closest to your
+onward / Free Cancellation / No date change) rendered in redBus's own chip style beneath. The move
+flow keeps its seat-change + price-difference line. Verified all three against screenshots.
+
+LEARNED · 2026-09-03 · (no skill)
+**"Take the logic from the prototype" does not mean "copy the prototype's look."** The prototype is
+deliberately low-fidelity — flat rows, no operator chrome, no ratings — because it exists to test
+flow, not visuals. When the brief is "UI exactly like the real app," the prototype tells you *what
+appears and in what order*, and the real screenshots (and the redBus-faithful components already in
+the file) tell you *how it looks*. I read the prototype's rows as a spec for both and rebuilt its
+austerity into Figma. The tell I ignored: the file already had a full `Card / Bus`, and the outbound
+list used it — my return lists should have too. **When a faithful component already exists for the
+thing you are building, use it; do not hand-roll a thinner version.**
