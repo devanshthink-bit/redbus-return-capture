@@ -4776,3 +4776,16 @@ The green success banner on 14 rendered at 168px (it hugged instead of filling t
 its text wrapped to a cramped column and clipped. Set it to FILL and the text column to FILL — now
 full-width and clean. A rebuilt block that changes an auto-layout frame's direction can silently drop
 its FILL sizing; check width after.
+
+CHANGE · 2026-09-03 · (no skill) · Source: user
+The accordion's expanded-day bus cards were grey (#F7F7FA, with a grey border) while redBus's bus
+cards are pure white. Set them to #FFFFFF and dropped the border. Confirmed the chips were already
+correct — #E9EAF6, the exact fill of the Card/Bus component's own "Free date change"/date pills, so
+mine sit consistently beside them. The grey was mine alone, added to separate nested cards; redBus
+never greys a bus card.
+
+LEARNED · 2026-09-03 · (no skill)
+**Don't tint a component's card to solve a layout problem the component didn't have.** I greyed the
+accordion's nested bus cards so they'd separate from their container — a fix for MY nesting, not
+redBus's design. redBus keeps every bus card white and separates by spacing/shadow. When a real
+component has a canonical fill, keep it; solve nesting with spacing, not colour.
