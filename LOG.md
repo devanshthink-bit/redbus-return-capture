@@ -4770,3 +4770,9 @@ redBus?", the honest answer was no — I'd generalised one peach box from one sc
 blocks, kept my own copy, dropped redBus's icons, and invented a green box. The fix was per-block:
 find the real screen, copy its structure AND its wording. The tell I should have caught myself: if I
 can't point to the exact screenshot a block came from, it isn't a match yet.
+
+CHANGE · 2026-09-03 · (no skill) · Source: user
+The green success banner on 14 rendered at 168px (it hugged instead of filling the 358 content), so
+its text wrapped to a cramped column and clipped. Set it to FILL and the text column to FILL — now
+full-width and clean. A rebuilt block that changes an auto-layout frame's direction can silently drop
+its FILL sizing; check width after.
