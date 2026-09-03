@@ -222,8 +222,8 @@ design-language tokens.
   that does not set its own colour inherits it. When the shell was red this was `--s-on` = white,
   and every bold value inside the phone went invisible on a white card. The shell's ink lives on
   `.panel` instead
-- **The device is a share of the window, not the largest that fits** — `min(82% of height, …)`,
-  capped at .90. Fitting made it 91% of a laptop screen, which read as the page rather than as a
+- **The device is a share of the window, not the largest that fits** — `min(88% of height, …)`,
+  capped at .95. Fitting made it 91% of a laptop screen, which read as the page rather than as a
   phone standing on it. Session mode still fills (`?test`, ~93%)
 - **All three versions in one file.** The switch loads v1 and v2 whole into an iframe sized so
   their own centred 402×874 frame lands exactly on the crop; nothing in either file is edited or

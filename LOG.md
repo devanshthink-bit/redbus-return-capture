@@ -4413,3 +4413,13 @@ md5 before touching the CSS again.
 **Any container with `overflow-x:auto` can be left parked out of position, and it stays that way.**
 If nothing is meant to overflow, reset the scroll rather than trusting that it never will.
 
+CHANGE · 2026-09-03 · (no skill) · Source: user
+**"make mock bigger"** — 82% of the window's height to **88%**, cap .90 to .95.
+
+Measured at 1470 x 900: the frame is 359 x 792, still centred in the leftover at 143/143, 39px of
+slack above and below, no overflow, panel still fits. At 1600 x 1080 the cap takes over at 83% and
+the frame is 409 wide. Session mode is 92%.
+
+The one cost: on an 800px-tall window the panel no longer quite fits and scrolls a little. Everything
+above the swatches is still above the fold.
+

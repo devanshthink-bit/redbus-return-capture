@@ -2557,7 +2557,7 @@ function fitDevice(){
      phone standing on it. A session has nothing else on screen, so there it does fill. */
   const h = window.innerHeight;
   const s = testing ? Math.min(1.05, (h - 56) / 948)
-                    : Math.min(.90,  Math.min(h * .82, h - 84) / 948, byWidth);
+                    : Math.min(.95,  Math.min(h * .88, h - 76) / 948, byWidth);
   document.documentElement.style.setProperty('--ds', Math.max(.42, s).toFixed(4));
   /* The stage can be scrolled sideways, and once it is, the writing is off the left of the
      screen and the phone looks stranded. Nothing should overflow any more, but a stray
