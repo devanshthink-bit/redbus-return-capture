@@ -240,16 +240,16 @@ design-language tokens.
   `<details>` shut by default** — they are for probing, not for walking the flow. Its summary turns
   red while a non-default state is on, so a hidden state can never look like a broken prototype
 - **iPhone mock** — `.device > .deviceframe > .viewport > (.ios status bar + .phone)`. The frame is a
-  fixed 458 × 948 and is scaled **as one piece** by `--ds`, set by `fitDevice()` on load and resize.
-  **The prototype's own viewport is 430 wide, not 402.** The status bar added 46px of height above
-  the 874px screen, which made a 402 × 920 screen — taller in proportion than any real iPhone and
-  visibly stretched. 430 × 920 matches an iPhone Pro Max. Fifteen screens were checked for overflow
-  after the change; none, and the calendar cells stay uniform. **v1 and v2 are frozen at 402**, so
-  **the legacy iframe is stretched `scaleX(430/402)` about the frozen phone's own left edge** so it
-  fills the same screen. The frame is one size for every version — 458 × 948. The cost is that type
-  in v1 and v2 renders 7% wide; the alternatives were a mock that changed size between versions
-  (rejected), 14px strips down each side (rejected), or a uniform scale, which would run them 935
-  tall in an 874 screen and cut the action bar off. Nothing is cropped and the height is untouched.
+  fixed 430 × 902 and is scaled **as one piece** by `--ds`, set by `fitDevice()` on load and resize.
+  **The screen is 402 × 874 — exactly an iPhone 16 Pro, and exactly what all three builds are.**
+  It went round the houses to get there and the reasons are worth keeping:
+  an iOS status strip drawn above the prototype made the screen 402 × **920**, an aspect of 2.29
+  against a real phone's 2.17, and it read as stretched. Widening to 430 fixed the proportion but
+  left v1 and v2, frozen at 402, needing either 14px strips down the sides *or* a `scaleX(430/402)`
+  stretch — and the stretch was visible in their type and pulled their own rounded corners out of
+  line with the clip, showing as a boundary. A frame that resized per version was rejected too.
+  Matching the real 402 × 874 settles all four at the cost of the status bar. **There is no iOS
+  status bar any more**; if it comes back, the aspect problem comes back with it.
   Do not put a `transition:width` on the frame: it leaves the width stuck at the old value.
   **`--ds` is capped at 0.92, not 1** — on a tall window the frame would otherwise render full size
   and dominate the page. In session mode there is no panel to balance it, so the cap is 1.05.

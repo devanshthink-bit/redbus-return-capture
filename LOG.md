@@ -4505,3 +4505,33 @@ what.** Three rounds went on this because each fix moved the cost somewhere he c
 naming the cost up front. The four options and their prices should have been on the table the moment
 the screen went from 402 to 430.
 
+CHANGE · 2026-09-03 · (no skill) · Source: user
+**"in v1, v2 there is difference is text also and why is boundary visible?"** Both were the stretch I
+had put in one change earlier, and both were predictable: the 7% `scaleX` widened their type, and it
+pulled v1's own 24px rounded corners out of line with the clip that was masking them, so its phone
+edge showed as a boundary line.
+
+Four ways to reconcile a 402 build with a 430 screen had now been tried and three rejected — a frame
+that resizes, strips down the sides, a horizontal stretch — and the fourth crops the action bar. So
+the screen went back to **402 × 874**, which is what all three builds actually are.
+
+That reopens the original complaint the widening was for: at 402 the screen looked stretched. It
+looked stretched because the iOS status strip sat **above** the 874, making the screen 402 × 920 —
+an aspect of 2.29 where a real iPhone is 2.17. **The status bar is gone**, and 402 × 874 is exactly
+an iPhone 16 Pro. Cost: no 9:41, no island, no signal or battery glyphs.
+
+Verified: 402 × 874 screen and 430 × 902 frame for v3, v1 and v2 alike; the legacy crop matches the
+viewport to the pixel with no transform; 88% of window height; centred in the leftover at 134/134
+(1470) and 216/216 (1260); no overflow; panel fits; `?test` at 94%; 375px unchanged; v1, v2 and
+prototype.html byte-identical.
+
+LEARNED · 2026-09-03 · (no skill)
+**A decoration that changes the artefact's proportions is not a decoration.** The status bar was
+added to make the mock feel real. It made the screen 5% too tall, which read as "too narrow", which
+led to widening the screen, which broke both frozen builds, which took four attempts to reconcile —
+every one of them paid for by the artefact rather than by the chrome. Removing the ornament fixed all
+of it in one line.
+
+**Trace a complaint back to what changed, not forward to what could satisfy it.** "Make the screen
+wider" was the symptom of a status bar I had added; the fix was upstream of the request.
+
