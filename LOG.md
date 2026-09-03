@@ -4658,3 +4658,25 @@ update, not a rebuild.** The Review screen had been built straight from redBus's
 to force the prototype's simpler per-leg structure onto it would have made it *less* like redBus. The
 project's own rule settled it — real app over prototype for UI — so the right move was to keep the
 structure and correct only the numbers the prototype had changed (₹60, ₹26, September).
+
+DECISION · 2026-09-03 · (no skill) · Source: user
+Built the two net-new Figma screens the sync was missing:
+
+**15 · Choose your bus** (booking, single-date path) — info card *"4 buses on Mon, 14 Sep / …times
+move with the bus / Not every bus can change its date"*, four bus cards with the real tags, the
+default Laxmi 23:55 preselected (red border + chip fill, pills lifted to white so they don't vanish —
+the bug the user caught), and a *Return ₹1,030 / Review trip* action bar.
+
+**16 · Move · buses** (change flow) — held-booking card (Wed 16 · Laxmi · ₹1,090 · Seat U5), the two
+change-flow note pairs, and the Laxmi-only buses for the moved-to day (Tue 15) showing *₹120 less —
+no refund*, the taken-seat line, and the *Different seat / Same time as now* chips. Values computed
+from the model, scoped to the booked operator.
+
+Both placed to the right of the existing screens in the section. That completes the Figma sync: every
+v3 flow change is now reflected, and the two screens that had no Figma equivalent exist.
+
+NOTE · 2026-09-03 · (no skill)
+Minor open polish on 16 · Move · buses: the operator+seat sub-line ("…Seat U5 is taken. You get U4")
+is long enough to wrap past the right-aligned price-difference note, so the two briefly interleave.
+Legible, but a cleaner build would stack the seat detail under the operator or shorten it. Left as-is
+for now; flagged so it isn't mistaken for correct spacing later.
