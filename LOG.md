@@ -4680,3 +4680,18 @@ Minor open polish on 16 · Move · buses: the operator+seat sub-line ("…Seat U
 is long enough to wrap past the right-aligned price-difference note, so the two briefly interleave.
 Legible, but a cleaner build would stack the seat detail under the operator or shorten it. Left as-is
 for now; flagged so it isn't mistaken for correct spacing later.
+
+CHANGE · 2026-09-03 · (no skill) · Source: user
+Final Figma sync pass. A case-insensitive re-sweep caught one "TUE, 18 AUG" my case-sensitive scan
+missed (uppercase tag on 14). Aligned Confirm-date-change (13) and Return-moved (14) to one coherent
+move — Wed 16 → Tue 15, ₹1,090 → ₹1,060, ₹30 less/no refund, pay ₹0 — and fixed 06a's leftover
+₹1,320 return fares to ₹970.
+
+Confirmed the only remaining ₹999 values are **not** stale return prices: one is a hotel room price
+on Home (cross-sell), the rest are outbound bus/seat fares on the onward flow — pre-existing content
+v3 never touched. So the return-capture sync is complete across every screen.
+
+LEARNED · 2026-09-03 · (no skill)
+**A case-sensitive search for dates misses the uppercase ones.** My Aug sweep used /\bAug\b/ and
+passed clean, but a tag rendered "TUE, 18 AUG" survived. Date and label text appears in both cases in
+a UI (sentence case in body, uppercase in tags/legtags). Always scan /aug/i, not /Aug/.
