@@ -172,23 +172,25 @@ design-language tokens.
 
 - **No top bar.** Everything sits in a left panel straight on the page, no card behind it —
   lockup, title, lede, version switch, screens, states, sampled swatches, footnote
-- **Three columns of equal fixed width: writing · phone · swatches.** The phone therefore sits on
-  the **window's centre line by construction**, not in the middle of whatever is left over. The
-  right column is not a spacer — moving the swatches and the footnote into it is what stopped the
-  left column having to scroll. Below 1100px the three cannot stand side by side, so the whole
-  thing **stacks** — writing, phone, swatches — and the page scrolls. Nothing is dropped
-- **The screen list is five `<details>` — Book the outbound · Add a return · Review and pay ·
-  After booking · Move the date — and only the run you are in is open.** `syncGroups()` follows the
-  phone, so walking the flow needs no clicks. This is load-bearing, not decoration: all eighteen
-  rows open needed 1372px of panel against 854px of window, and the two-column panel that used to
-  solve that was 744px wide, which pushed the phone 200px off centre.
-  The run name replaced a flow word repeated on every one of the eighteen rows — the same mistake as
-  `from` on every calendar cell: a qualifier that is the same for a whole run belongs to the run
+- **Two columns of writing on the left, the phone on the right.** `.pcol a / b / c` placed by grid:
+  above 1240px a (title, version) and c (swatches, footnote) stack in the left column and b — the
+  screen list — runs full height in the right one; below that it is one column. Source order is
+  a, b, c so the one-column fallback reads title → screens → swatches
+- **The phone centres in the space left over beside the writing** — `.devicewrap{flex:1}` and a
+  **zero** gap on `.layout`, measured equal to the pixel either side (172/172 at 1470, 195/195 at
+  1100). A gap of any size sits on one side only and offsets it by its own width.
+  **Do not try to centre it on the window instead** — that needs a matching column opposite the
+  writing, which at a 744px panel means a 1960px window. It was tried, it moved the swatches to the
+  far right, and he rejected it: *"why did u move it towards the right? Earlier, the structure was
+  better."*
+- **The screen list is grouped into five runs** — Book the outbound · Add a return · Review and pay ·
+  After booking · Move the date — with a quiet heading each, all rows visible. The run name replaced
+  a flow word repeated on every one of the eighteen rows: the same mistake as `from` on every
+  calendar cell — a qualifier that is the same for a whole run belongs to the run
 - **Three things that will move the panel if you undo them:** the panel is pinned to the top of the
   row (centred, it slid as the version changed its height); `.vnote` reserves three lines (the notes
   are two or three); and the grid's second row is `1fr` (a spanner over `auto` rows feeds its extra
-  height back into row 1 — now moot, the grid is gone); and `.panel` has a **fixed**
-  `height:calc(100vh - 84px)`, not a max, so
+  height back into row 1); and `.panel` has a **fixed** `height:calc(100vh - 96px)`, not a max, so
   the row's height never depends on which version is showing and the composition stays centred.
   Also `.panel` needs its 10px padding — `overflow-y:auto` makes it a scrollport, which clips
   **both** axes, and the rails hang 10px either side

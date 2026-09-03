@@ -4327,3 +4327,31 @@ side, the layout is asymmetric and no alignment property will hide that.
 phone on the centre line were opposed while the swatches lived on the left. Moving them to the empty
 right side made the panel short enough *and* handed the phone its second column.
 
+CHANGE · 2026-09-03 · (no skill) · Source: user
+**"No, why did u move it towards the right? Earlier, the structure was better. I just wanted you to
+move the mock to the center position in the whole left space on the right."** Reverted.
+
+I had read "centre it" as "centre it on the window", and rebuilt the layout around that: a third
+column on the right holding the swatches and the footnote, the panel back to one column, the screen
+list collapsed into `<details>` so it would fit. All of it was in service of a goal he had not set.
+He wanted the phone centred **in the space left over beside the writing** — which is what the
+previous version already did, 172px either side.
+
+`index.html` is back to f533828 exactly, with only the two things from the last round he did want
+carried forward: `justify-content:safe center` on `.stage`, and the small labels on the system mono.
+
+Verified after the revert: two-column panel, 18 rows under 5 headings, swatches back under the
+writing on the left, phone centred in the leftover at 172/172 (1470) and 195/195 (1100), panel fits,
+nothing moves across any version switch, `?test` at 93%, 375px unchanged, v1/v2/prototype.html
+byte-identical.
+
+LEARNED · 2026-09-03 · (no skill)
+**"Centre it" has two meanings and I picked the wrong one, then spent a rebuild defending the pick.**
+His sentence the first time — *"centered in the white space which is remaining from the whole text on
+the left"* — actually said which one he meant. When the second message said "still not centered", the
+right move was to re-read the first, not to reach for a bigger interpretation.
+
+**The size of a fix should match the size of the complaint.** A misalignment produced a new column, a
+collapsed list and a restructured panel. When a change starts pulling in things nobody mentioned,
+that is the signal the premise is wrong.
+
