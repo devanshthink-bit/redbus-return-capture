@@ -10,8 +10,11 @@ Do not start work, answer a question about the project, or change a file until y
 ## The six things that will bite you if you skip it
 
 1. **v1 (`v1.html` / `prototype.html`) and v2 (`v2.html`) are frozen.** Only **`index.html`**
-   changes. Verify on every commit that v1 and v2 are untouched — `md5 v1.html v2.html
-   prototype.html` must stay `a96fc35f…`, `412b90eb…`, `a96fc35f…`.
+   changes. Verify on every commit that v1 and v2 are untouched — run exactly
+   `md5 -q v1.html prototype.html v2.html`, which must return `a96fc35f…`, `a96fc35f…`,
+   `412b90eb…`. **Never put `index.html` in that command.** On 3 Sep a whole session ran the check
+   with `index.html` standing in v1's place; it returned the expected hashes every time while
+   watching neither frozen file, and got quoted as evidence in twenty commit messages.
    **The working file is `index.html`, not `v3.html`.** It is the viewer: v3 inline, plus v1 and
    v2 in an iframe behind a version switch. It lives at the root so the URL names no version.
    `v3.html` is now a redirect to `/`, kept only so old links still work. v1's file is unchanged
