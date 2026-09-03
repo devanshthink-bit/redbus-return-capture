@@ -192,7 +192,11 @@ design-language tokens.
 - **The screen list is eighteen rows in five runs, separated by space and nothing else.** The runs
   are Book the outbound · Add a return · Review and pay · After booking · Move the date; they carried
   headings until he asked for the names to go. Before that, each row carried its own flow word —
-  the same mistake as `from` on every calendar cell. Space alone turned out to be enough
+  the same mistake as `from` on every calendar cell. Space alone turned out to be enough.
+  **v1 and v2 get the same five runs.** The mirror marks a break on the ids the frozen files already
+  use — `t-backby` and `t-later` in v1, `t-window` and `t-within` in v2, `t-review` and `t-ticket` in
+  both — so nothing about their screens is restated here, and an id the list does not know simply
+  gets no break
 - **Three things that will move the panel if you undo them:** the panel is pinned to the top of the
   row (centred, it slid as the version changed its height); `.vnote` reserves three lines (the notes
   are two or three); and the grid's second row is `1fr` (a spanner over `auto` rows feeds its extra

@@ -4552,3 +4552,18 @@ LEARNED · 2026-09-03 · (no skill)
 **Grouping can be shown with space before it is said with a label.** Three passes over the same list
 each took words out and each read better. The heading was describing a break the eye had already made.
 
+CHANGE · 2026-09-03 · (no skill) · Source: user
+**"in v1, v2 also give spaces like this"** — the mirrored rails were flat lists while v3 had its five
+runs.
+
+Both frozen files turn out to break at the same points, and their button ids say where: v1 opens its
+return run at `t-backby` and its move run at `t-later`, v2 at `t-window` and `t-within`, and both use
+`t-review` and `t-ticket` for the other two. So the mirror marks a break on a six-id list rather than
+restating either version's screens. An id not on the list gets no break, so this cannot damage a rail
+it does not recognise.
+
+Verified: v1 breaks at Last day / Trip review / Ticket / Change date across 17 rows; v2 at Return
+window / Trip review / Ticket / Change day across 16; both panels fit; clicking a mirrored row still
+drives the frozen build and updates the caption; nothing moves across version switches; `?test` at
+94%; 375px unchanged; v1, v2 and prototype.html byte-identical.
+

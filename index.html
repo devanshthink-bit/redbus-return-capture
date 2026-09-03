@@ -2630,10 +2630,15 @@ function buildLegacyRail(){
   note.hidden = true;
   const screens = [...doc.querySelectorAll('.dev.screens button')];
   const states  = [...doc.querySelectorAll('.dev.states  button')];
+  /* The same five runs as v3, keyed on the ids the frozen files already use:
+     v1 opens its return run at t-backby and its move run at t-later; v2 at t-window and t-within.
+     An id that is not here simply gets no break, so this cannot damage a rail it does not know. */
+  const RUN_START = ['t-backby','t-window','t-review','t-ticket','t-later','t-within'];
   const mirror = src => {
     const b = document.createElement('button');
     b.type = 'button';
-    b.appendChild(Object.assign(document.createElement('span'), {textContent: src.textContent}));
+    b.textContent = src.textContent;
+    if(RUN_START.includes(src.id)) b.className = 'runstart';
     b.onclick = () => { src.click(); sync(); };
     return b;
   };
