@@ -4743,3 +4743,30 @@ I had rendered "terms" as brown-bold + grey text pairs — a reasonable-looking 
 never does that: it uses a peach Note box for warnings and icon-led rows for mechanics. The fix was
 not restyling my invention; it was replacing it with redBus's actual component. Memorised the pattern
 set so the next block starts from "which real screen shows this?" rather than from taste.
+
+CHANGE · 2026-09-03 · (no skill) · Source: user
+Redid the note/terms blocks properly against redBus's real patterns (not my one-pattern-everywhere
+overreach):
+
+- **12 · Change day** — rules → redBus's exact peach-note sentence ("Note: Once you change the date…
+  you will not be able to cancel or change the date again.") + a **"How does this work?"** section with
+  icon rows (calendar / bus / percent), matching IMG_5199 structure.
+- **13 · Confirm** — peach note with redBus's real copy.
+- **14 · Return moved** — the invented flat-green box redone as redBus would: a green **confirmation
+  banner** with a tick-circle icon + green title + subtitle (redBus's success-green vocabulary), not a
+  bare coloured box.
+- **15 · Choose your bus** — caveat reworded to reference redBus's real *"Free date change"* tag.
+- **16 · Move buses** — peach note (real copy) + a bus-icon **"Choose from available buses"** how-it-
+  works row instead of a bold/grey pair.
+
+Kept the grey "No date change" chip as a new-feature signal in redBus's muted-chip style (the app has
+no such chip, but date-change eligibility is our feature; per the brief, a new signal styled the way
+redBus would). Everything verified against screenshots. Memory `redbus-ui-patterns.md` now also covers
+the green success banner and the icon-row how-it-works.
+
+LEARNED · 2026-09-03 · (no skill)
+**Claiming a match I hadn't earned was the real error.** When asked "are you sure this matches
+redBus?", the honest answer was no — I'd generalised one peach box from one screenshot across many
+blocks, kept my own copy, dropped redBus's icons, and invented a green box. The fix was per-block:
+find the real screen, copy its structure AND its wording. The tell I should have caught myself: if I
+can't point to the exact screenshot a block came from, it isn't a match yet.
