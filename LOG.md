@@ -4147,3 +4147,44 @@ times it looked like helpful labelling and read as noise. The test is one questi
 asked before the label is written, not after someone complains: *does this word vary between the
 items?* If it does not, it belongs to the heading.
 
+CHANGE · 2026-09-03 · (no skill) · Source: user
+**"Why is the whole thing not at the center? ... the mock looks is still very big ... can you use the
+color of the RedBus as the background instead of white ... make the logo a little bigger."** Four
+things, and the first two had one cause between them.
+
+**The page is red now.** A deepened brand gradient, `#B2373F → #9A2A33 → #7A1E27`, with a white glow
+behind the device. Everything on the page became a tint of white rather than a grey. The red is
+deliberately deeper than the logo's `#D84E55`: at full strength it would have been arguing with the
+prototype's own `#C54646` buttons a few hundred pixels away.
+
+Contrast had to be measured rather than eyeballed. White at 62% came out at **4.2:1** on the mid red
+and **3.1:1** on the lightest corner — under the bar for body text. The tints went up (.72 for body)
+and the light corner of the gradient came down.
+
+**The logo is 44px**, on its own line with the kicker beneath rather than beside it. Only the `fill`
+changed, to `currentColor`, so it knocks out white; the path from the supplied file is untouched.
+
+**The mock is smaller, and that is why it now centres.** `fitDevice` had been asking for the largest
+frame that fits, which on a laptop is 91% of the window height — so the composition could not centre,
+because there was nothing left to centre it in. It now takes a *share*: 74% of the height, capped at
+.82. Session mode still fills, at ~93%, since there is nothing else on screen to balance.
+
+The panel also went from `max-height` to a fixed `height`, so the row's height no longer depends on
+which version is loaded. At 1470 × 810 the slack is 48px above and 48px below.
+
+Verified: centred to the pixel, nothing moves across all four version transitions, v1 and v2 still
+mirror inside the red panel, `?test` fills and centres, 375px unchanged, and v1, v2 and
+prototype.html byte-identical.
+
+LEARNED · 2026-09-03 · (no skill)
+**"Fit the window" and "centre in the window" are the same demand, and it cannot be met twice.** As
+long as the frame was sized to the largest that fits, no amount of alignment work could centre
+anything — there was no slack. Shrinking it was the alignment fix.
+
+**A colour that is right for a 44px logo is not right for a whole page.** `#D84E55` at full bleed
+fought the prototype's own red. The page needed the same hue two steps down so the artefact stays the
+brightest thing on screen.
+
+**Tints on a coloured ground have to be calculated.** White at 62% looked perfectly readable and was
+4.2:1. On the lightest corner of the same gradient it was 3.1:1.
+

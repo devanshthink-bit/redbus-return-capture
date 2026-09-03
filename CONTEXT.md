@@ -184,13 +184,23 @@ design-language tokens.
 - **Three things that will move the panel if you undo them:** the panel is pinned to the top of the
   row (centred, it slid as the version changed its height); `.vnote` reserves three lines (the notes
   are two or three); and the grid's second row is `1fr` (a spanner over `auto` rows feeds its extra
-  height back into row 1). Also `.panel` needs its 10px padding — `overflow-y:auto` makes it a
-  scrollport, which clips **both** axes, and the rails hang 10px either side
+  height back into row 1); and `.panel` has a **fixed** `height:calc(100vh - 96px)`, not a max, so
+  the row's height never depends on which version is showing and the composition stays centred.
+  Also `.panel` needs its 10px padding — `overflow-y:auto` makes it a scrollport, which clips
+  **both** axes, and the rails hang 10px either side
 - **`.layout` caps the row at 1280px and uses `space-between`.** Two columns huddled in the
   middle of a wide window with dead margins was the complaint; splitting the panel widened the
   composition enough to fill the frame
-- **Gradient page** — warm red top-left, cool violet top-right, near-white at the foot, plus a
-  soft red glow behind the device. It reads as a product shot rather than a tool
+- **The page is the brand red**, a deepened gradient (`#B2373F → #9A2A33 → #7A1E27`) with a soft
+  white glow behind the device. Everything on it is a tint of white, not a grey, held in
+  `--s-on-80/60/45/30`. `--s-on-60` is **.72, not .62** — .62 measured 4.2:1 on the mid red and
+  failed body text. The red is deliberately deeper than the logo's `#D84E55` so it does not
+  compete with the prototype's own `#C54646` buttons a few hundred pixels away
+- **The logo knocks out white.** Only the `fill` is changed from the supplied file; the path is
+  untouched. It runs at 44px on its own line with the kicker beneath
+- **The device is a share of the window, not the largest that fits** — `min(74% of height, …)`,
+  capped at .82. Fitting made it 91% of a laptop screen, which read as the page rather than as a
+  phone standing on it. Session mode still fills (`?test`, ~93%)
 - **All three versions in one file.** The switch loads v1 and v2 whole into an iframe sized so
   their own centred 402×874 frame lands exactly on the crop; nothing in either file is edited or
   overridden. Their screen and state rails are **read out of the loaded frame** and mirrored into
