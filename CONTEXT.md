@@ -687,6 +687,52 @@ v4, not v3.** What changed in Figma, and the node ids, in case it has to be done
   return.
 - All copy was read out of the running prototype for the 11–17 Sep window rather than retyped.
 
+### The flow, frame by frame — read this before rebuilding a screen in code
+
+Every hi-fi frame, the prototype screen it is, and what moves you off it. Derived from the build,
+not from memory. **21 frames = 16 screens + 5 state variants.**
+
+| # · Frame | Prototype | Control | Goes to |
+|---|---|---|---|
+| 01 · Home | `s-home` | Search buses | 02 |
+| 02 · Outbound bus list | `s-obuses` | a bus card | 03 |
+| 03 · Outbound seat map | `s-oseat` | Select points | 04 |
+| 03a / 03b · Seat map sheet | — | *states of 03* — sheet collapsed / full | — |
+| 04 · Boarding & dropping points | `s-outpoints` | Proceed | 05 |
+| 05 · Return · pick your days | `s-window` | Continue | 06 |
+| 05a / 05b | — | *states of 05* — window chosen / one day picked | — |
+| 06 · Your return · pick a day | `s-picked` | tap a day | 06a |
+| 06a · Your return · day chosen | `s-picked` | Review trip · All N buses | 08 · 07 |
+| 07 · Choose your bus | `s-bus` | Use this bus | **whichever opened it** — 06a or 08 |
+| 08 · Review your trip | `s-review` | Pay now · Change bus · Change seat · Change points | 09 · 07 · 08a · 08b |
+| 08a · Return seat | `s-seat` | Select points | 08 |
+| 08b · Return points | `s-points` | Proceed | 08 |
+| 09 · Pay | `s-pay` | a payment method | 10 |
+| 10 · Booking confirmed | `s-done2` | View ticket | 11 |
+| 11 · Ticket details | `s-ticket` | Change your return day | 13 |
+| 12 · My Bookings | `s-mybook` | a booking card | 11 |
+| 13 · Change day | `s-within` | tap a date | 14, **or 15 direct** |
+| 14 · Move · buses | `s-wibus` | a bus card | 15 |
+| 15 · Confirm the move | `s-confirm` | Confirm change | 16 |
+| 16 · Return moved | `s-done` | — | — |
+
+**The four branches a linear reading of the canvas will miss:**
+
+1. **07 is opened from two places** and returns to whichever one called it — `busFrom` is `'picked'`
+   from 06a's fold, `'review'` from 08's *Change bus*.
+2. **12 · My Bookings is an entry point**, not the step after 11. It is reached from the tab bar.
+3. **13 skips 14** when the chosen date runs only one eligible bus — `tapMoveDay()` goes straight to
+   *Confirm the move*, because there is nothing to choose.
+4. **05 → 06** is the window path. A single date behaves differently: see §7.
+
+**Not in Figma:** the 13 states (`offline`, `none in window`, `route has none`, `return seat gone`,
+`past cutoff`, `already moved`, `seat lost mid-swap`, …). Several replace the whole content area.
+Anyone rebuilding from the file alone will produce the default state only.
+
+**Also in the file:** prototype connections on the real controls, matching the table above. They are
+there so the transitions are explicit and the file click-throughs for a stakeholder; the table is the
+source a coding agent should read.
+
 ### The canvas is laid out as the flow, not as a number line (4 Sep)
 
 All 21 screens used to sit in one 9,270px row in numeric order, which put `15 · Choose your bus` and
