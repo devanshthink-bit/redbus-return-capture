@@ -2954,11 +2954,24 @@ function buildHifiRail(){
   const RUN_START = ['01','05','08','11','13'];
   const list = document.createElement('div');
   list.className = 'dev';
-  /* Figma names a state variant "screen · state" -- "Return \u00b7 window chosen". The lo-fi rail
-     is short names, so the qualifier after the dot is dropped here too. */
+  /* Short names, one per screen, the way the lo-fi rail is written. Figma calls a state variant
+     "screen · state" — three frames whose names differ only after the dot, so cutting there left
+     three rows all reading "Return". Keyed on the frame number rather than on position, so
+     reordering the canvas cannot shift a label onto the wrong screen, and a frame this list does
+     not know keeps its Figma name instead of going blank. */
+  const HIFI_NAMES = {
+    '01':'Home',             '02':'Outbound buses',    '03':'Outbound seat',
+    '03a':'Seat sheet',      '03b':'Bus details',      '04':'Boarding points',
+    '05':'Return calendar',  '05a':'Return window',    '05b':'Return day',
+    '06':'Your return',      '06a':'Return chosen',    '07':'Choose your bus',
+    '08':'Review your trip', '08a':'Return seat',      '08b':'Return points',
+    '09':'Pay',              '10':'Booking confirmed', '11':'Ticket details',
+    '12':'My Bookings',      '13':'Change day',        '14':'Move buses',
+    '15':'Confirm move',     '16':'Return moved'
+  };
   const names = rows.map(src => {
     const id = (src.querySelector('.railn') || {}).textContent || '';
-    return {id:id, name:src.textContent.slice(id.length).split(' \u00b7 ')[0]};
+    return {id:id, name: HIFI_NAMES[id] || src.textContent.slice(id.length)};
   });
   const mine = rows.map((src, i) => {
     const b = document.createElement('button');
