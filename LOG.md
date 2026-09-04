@@ -5446,10 +5446,33 @@ CHANGE · 2026-09-05 · (no skill) · Source: user
 **Rail labels stop at the dot.** *"dont use words after dot. do it like lofi"* — the hi-fi rail read
 *Return · pick your days* where the lo-fi reads *Return*. Now cut at the `·`.
 
-**It collapses seven rows into three repeated labels** — *Seat map* twice, *Return* three times,
+**It collapsed seven rows into three repeated labels** — *Seat map* twice, *Return* three times,
 *Your return* twice — because Figma names a state variant `screen · state`, and the dot is exactly
-what separated them. The rows still drive the right screens; they no longer say which is which.
-Done as asked and flagged rather than quietly worked around. Note this cuts against
-[[repeated-qualifier-belongs-to-the-group]], which says the repeated word is the heading and the
-qualifier is the content — by that rule the half to keep would have been *pick your days*. His
-call, made with the list in front of him.
+what separated them. Flagged at the time and **it did not survive contact**: he came back with
+*"why same name ??"*. See the entry below.
+
+DECISION · 2026-09-05 · (no skill) · Source: user
+**The hi-fi rail is 23 short names, written down.** *"why same name ??"* — cutting the Figma frame
+names at the dot had left three rows reading *Return*. He was shown three options with the exact
+list each would produce and picked **short hand-written names**, which is how the lo-fi rail was
+always written. So `HIFI_NAMES` lives in `index.html`: Home · Outbound buses · Outbound seat ·
+Seat sheet · Bus details · Boarding points · Return calendar · Return window · Return day ·
+Your return · Return chosen · Choose your bus · Review your trip · Return seat · Return points ·
+Pay · Booking confirmed · Ticket details · My Bookings · Change day · Move buses · Confirm move ·
+Return moved.
+
+**The cost, stated so nobody rediscovers it:** the labels no longer come from Figma, so renaming a
+frame there will not change the rail. That is a drift, not a break — the map is keyed on the
+**frame number**, not on position, so reordering the canvas cannot slide a label onto the wrong
+screen, and a frame the map does not know falls back to its Figma name rather than going blank.
+Rows, clicks and run breaks are all still read out of the loaded frame; only the label is ours.
+
+LEARNED · 2026-09-05 · (no skill)
+**Flagging a consequence is not the same as avoiding it.** I cut the labels at the dot, predicted
+in the same breath that seven rows would collapse into three repeated ones, shipped it, and said
+so. He still had to come back and ask why the names were the same. Two rounds where one would have
+done. **When the predicted consequence is a defect rather than a trade-off — three rows you cannot
+tell apart is a defect — ask before shipping, not after.** The three-option question with the real
+list under each took one message and settled it. See [[repeated-qualifier-belongs-to-the-group]],
+whose rule pointed the other way and which I should have raised as the question rather than as a
+footnote.
