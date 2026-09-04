@@ -742,9 +742,18 @@ at absolute y 26,580 inside a section 3,464 tall, and the section drew an empty 
 The tell was `get_screenshot` on the section rendering 16,609px tall; `absoluteBoundingBox` is what
 proves it. The Screens section works because its children's values were already small.
 
-**The other eight are still not in Figma.** `offline` and `loading` say nothing about the idea;
-`can't check` overlaps S1; `seat lost mid-swap` is a narrower `seatgone`; `6 passengers`, `no other
-days` and `return dropped` are breadth rather than argument.
+**All thirteen states are now in Figma**, in two rows. The first five are the argument; the second
+row, *Also handled*, is the rest — they matter for completeness, not for the case study's spine:
+
+| Frame | State | Where it shows |
+|---|---|---|
+| S6 · Loading | `loading` | 06, skeleton cards, no action bar |
+| S7 · Can't check | `checkfail` | 06, *We couldn't check those days · Nothing was charged. Your onward trip is not affected.* |
+| S8 · Offline | `offline` | the `#A45729` banner directly under the nav, drawn on 05 |
+| S9 · No other days | `nothingearlier` | 13, *No other days to pick · There is no other day in your range.* |
+| S10 · Seat lost mid-swap | `swapfail` | 15, *That seat is gone* with Confirm held back |
+| S11 · Return dropped | `noreturn` | 11, *No return booked · You booked this trip one way.*, change row hidden |
+| S12 · Six passengers | `crowded` | 08, six travellers with their seat pairs, and the add-ons multiplied — ₹360, ₹156, ₹90, total ₹15,774 |
 
 **Also in the file:** prototype connections on the real controls, matching the table above. They are
 there so the transitions are explicit and the file click-throughs for a stakeholder; the table is the

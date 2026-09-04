@@ -5074,3 +5074,21 @@ it in one call.
 section use section-relative ones. The Screens section never exposed this because its children's
 values were small enough to look like both.
 
+CHANGE · 2026-09-04 · (no skill) · Source: user
+**"Now build the remaining states too."** All thirteen are in Figma now — the five that carry the
+argument in the top row, the other seven below under *Also handled*.
+
+S6 loading (skeleton cards, no bar) · S7 can't check · S8 offline (the `#A45729` banner under the
+nav) · S9 no other days · S10 seat lost mid-swap, with Confirm held back · S11 return dropped, change
+row hidden · S12 six passengers, with all six travellers, their seat pairs, and the add-ons
+multiplied — ₹360, ₹156, ₹90, total ₹15,774.
+
+Every string came out of the running build again, and the group case had to be reached through the
+whole flow to render: setting `crowded` and jumping to Review shows one passenger, because the list is
+painted on the way there, not by the state.
+
+LEARNED · 2026-09-04 · (no skill)
+**Some states only exist after the journey that produces them.** `crowded` read as a single passenger
+when set directly on Review, and correctly as six only after walking the booking. A state flag is not
+the state; the screen has to have been through what fills it.
+
