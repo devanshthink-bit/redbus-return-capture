@@ -4896,3 +4896,33 @@ LEARNED · 2026-09-04 · (no skill)
 and leaving a redirect behind satisfied both "these links must stop working" and "these files must
 never change", which looked like a contradiction for a minute.
 
+CHANGE · 2026-09-04 · (no skill) · Source: user
+**"now update hi-fi UI screen in figma acc to new v4."** Screens 06 and 06a in the hi-fi file now show
+v4 instead of v3.
+
+**06 · pick a day** — the cheapest-day recommendation is out of the rules card, every day's second
+line is the flexibility line, no row says *tap to see them*, and Mon 14's open accordion (four
+`Card / Bus` instances, 900px of nested list) is deleted so the row is closed like the rest. Fri 11
+gained the *Different seat* chip. The frame came down from 1991 to 1202.
+
+**06a · day chosen** — renamed from *last day chosen*. Its day list is a clone of 06's, so the two
+cannot drift; on top of that, the per-day delta, `Your pick` and the accent ring on Thu 17, the lead
+without *"We will book"*, and the bar naming the bus.
+
+**The fold** is built under Thu 17 with the accent rule down its left: `YOUR BUS`, one white card
+holding the `Card / Bus` instance with the seat line and pills, `OTHER BUSES THAT DAY`, the single
+trade row that beats the pick on price, and the link to all five.
+
+Every string was read out of the running prototype for the 11–17 Sep window rather than retyped, so
+Figma and the build say the same thing.
+
+LEARNED · 2026-09-04 · (no skill)
+**A hand-built row and a component instance are not interchangeable, and the tree tells you which you
+have.** Four day cards keep the sub-line as a direct child; two put it in a detail row. Writing to
+`sub.parent` assumed the second shape and turned four cards on their side. Read the structure per
+node, not per screen.
+
+**Clone the corrected list rather than editing the second copy.** 06a's day rows were rebuilt by
+cloning 06's, which cost one line and removed the whole class of bug where the two frames say slightly
+different things.
+

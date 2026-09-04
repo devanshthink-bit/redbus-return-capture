@@ -660,9 +660,32 @@ Screens only ever use semantic tokens. Type and elevation are shared styles, nev
 
 **Screens done:** 01 Home · 02 Outbound bus list · 03 Outbound seat map. All iPhone 14, 390×844.
 
-### Your return, the day list (screen 06)
+### Your return, the day list (screens 06 / 06a) — rebuilt for v4 on 4 Sep
 
-Two frames — `06 · Your return · pick a day` and `06a · Your return · last day chosen`.
+Two frames — `06 · Your return · pick a day` and `06a · Your return · day chosen`. **Both now show
+v4, not v3.** What changed in Figma, and the node ids, in case it has to be done again:
+
+- **06** is the unpicked state: nothing selected, no day open, `Review trip` off. The rules card lost
+  *"Cheapest is Mon, 14 Sep · ₹800 / Pick it now and you save ₹170"* — the same recommendation v4
+  removed from the build. Every day's second line answers *can I still move this?* — `1 bus · can
+  change date`, `2 buses · all can change date`, `4 buses · 2 can change date` — and no row says
+  *tap to see them*. Mon 14's nested bus list (`352:2653`, four `Card / Bus` instances, 900px tall)
+  was deleted and the card given a closed row's fill, stroke and padding. Fri 11 gained the
+  *↻ Different seat — U4 taken* chip in the warn tone.
+- **06a** is the picked state. Its day list is a **clone of 06's**, so the two frames cannot drift
+  apart, plus the per-day delta (`₹290 more`, `₹170 cheaper`, …) and `Your pick` with the 2px
+  `#C54646` ring on Thu 17. The lead dropped *"We will book"*, and the action bar names the bus:
+  *Return · Thu, 17 Sep · 23:55 · ₹1,120*.
+- **The bus fold** (`413:2908`) sits directly under Thu 17, tied to it by a 2px accent rule down the
+  left — `strokeLeftWeight: 2` with the other three at 0. Inside: a `YOUR BUS` label, one white card
+  wrapping the `Card / Bus` instance plus the seat line and the two extra pills, then
+  `OTHER BUSES THAT DAY`, one trade row, and `All 5 buses on Thu, 17 Sep →`.
+- **Two traps hit while building it.** Four of the day cards keep their sub-line as a *direct child*
+  rather than in a detail row, so setting a horizontal layout on `sub.parent` turned the whole card
+  sideways; they needed a real `Detail row` frame and `layoutSizingVertical = 'HUG'`, or the new row
+  is clipped. And `Card / Bus` carries an **Onwards** label from the outbound list — hide it on a
+  return.
+- All copy was read out of the running prototype for the 11–17 Sep window rather than retyped.
 
 **Nothing is pre-selected in 06.** That is the §8 decision made visible: when the fares differ, the
 product has no advantage on the only thing that decides it, so it does not choose. The lead reads
