@@ -424,7 +424,11 @@ body.legacy-on .phone{display:none}
    always in the same place. */
 .seclab{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
  color:#8A8A95;margin:0 0 10px 2px}   /* the same section label the ticket's ptline already uses */
-.seclab.gap{margin-top:24px}
+.seclab.gap{margin-top:20px}
+/* Sits under the chosen day's card and reads as part of it: pulled up over the card's own bottom
+   margin, indented, and tied to it by the accent rule down the left. */
+.busfold{margin:-8px 0 16px;padding:14px 0 4px 14px;border-left:2px solid var(--accent)}
+.busfold .seclab{margin-bottom:8px}
 /* the full bus card: the same shape as the outbound list, not a reduced row */
 .buscard{background:var(--raised);border-radius:12px;padding:16px;width:100%;text-align:left;
  border:0;display:block;box-shadow:0 0 0 2px var(--accent)}
@@ -830,7 +834,6 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
         <dl class="rules" id="pk-note" style="margin-bottom:20px"></dl>
         <div class="seclab" id="pk-daylab">Days</div>
         <div id="pk-list"></div>
-        <div id="pk-bus"></div>
       </div>
 
       <div id="pk-none" hidden>
@@ -1733,10 +1736,14 @@ function tradeRows(d, pick){
   return out;
 }
 
-function renderBusSection(d){
-  const host=document.getElementById('pk-bus'); if(!host) return;
+// Returns the chosen day's bus and its alternatives, to sit directly under that day's own row.
+// It went below the whole list first, and on an 874 screen that put it under the fold: the
+// traveller picked a day, never saw a bus, and arrived at Review wondering when they had chosen
+// one. It is bounded -- one card and at most three one-line rows -- so unlike v3's accordion it
+// cannot bury the days beneath it.
+function busSectionHTML(d){
   const pick = retBus;
-  if(!d || pick===null || !SEAT[d]){ host.innerHTML=''; return; }   // no day, no bus, or a sold-out day
+  if(!d || pick===null || !SEAT[d]) return '';   // no day, no bus, or a sold-out day
   const b=RET_BUSES[pick], op=rated(pick), seat=SEAT[d], mine=outSeat();
   const flexPills = (RET_BUSES[pick].movable
         ? '<div class="pill">\u21BB Free date change</div>'
@@ -1767,9 +1774,11 @@ function renderBusSection(d){
   }).join('');
 
   const n = busesOn(d).length;
-  host.innerHTML = '<div class="seclab gap">Your bus on '+label(d)+'</div>' + card
+  return '<div class="busfold">'
+    + '<div class="seclab">Your bus</div>' + card
     + (rows ? '<div class="seclab gap">Other buses that day</div>'+rows : '')
-    + (n>1 ? '<button class="allbuses" onclick="openBus(\'picked\')">All '+n+' buses on '+label(d)+' \u2192</button>' : '');
+    + (n>1 ? '<button class="allbuses" onclick="openBus(\'picked\')">All '+n+' buses on '+label(d)+' \u2192</button>' : '')
+    + '</div>';
 }
 
 function renderPicked(){
@@ -1819,9 +1828,9 @@ function renderPicked(){
       + '<span class="price"><span class="from">from </span>'+RUPEE(low)+'</span></div>'
       + '<div class="subrow"><span class="sub">'
       + (many ? busesOn(d).length+' buses' : '1 bus')+flex+'</span>'+right+'</div>'
-      + (tags.length?'<div class="pillrow">'+tags.join('')+'</div>':'') + '</button>';
+      + (tags.length?'<div class="pillrow">'+tags.join('')+'</div>':'') + '</button>'
+      + (open ? busSectionHTML(d) : '');
   }).join('');
-  renderBusSection(heldDay);
   const dl=document.getElementById('pk-daylab');
   if(dl) dl.textContent = days.length===1 ? 'Your day' : 'Days';
 
@@ -1877,6 +1886,11 @@ function renderPicked(){
   } else {
     note.innerHTML = '<dt>Every day costs the same</dt><dd>Pick whichever suits you.</dd>' + after;
   }
+  // The bar names the bus, not just its price. Someone who scrolls past the card should still
+  // never reach Review without having been told which bus they are buying.
+  const bb1=document.querySelector('#pk-bar .bb1');
+  if(bb1) bb1.textContent = (heldDay && retBus!==null)
+    ? 'Return \u00B7 '+label(heldDay)+' \u00B7 '+RET_BUSES[retBus].dep : 'Return';
   document.getElementById('pk-bb').textContent = (heldDay && retBus!==null) ? RUPEE(FARE[heldDay]) : '\u2014';
   const bpk=document.getElementById('b-pk');
   bpk.disabled = !heldDay || retBus===null;   // a day is not a booking until a bus is chosen
@@ -1970,7 +1984,13 @@ function setHeldDay(d){
   retBus = d ? (one.length===1 ? one[0] : defaultBusOn(d)) : null;
   heldDay = d; setState(state);
 }
-function choosePick(d){ setHeldDay(d); }
+function choosePick(d){
+  setHeldDay(d);
+  // Only on an explicit tap, never on a repaint -- a state change must not move the view.
+  // `nearest` scrolls only when it has to, so picking a day near the top does not jump at all.
+  const fold=document.querySelector('#pk-list .busfold');
+  if(fold) fold.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
 // The empty state is "no day here can be changed later". Showing them anyway is the whole point of the
 // primary button -- a return that cannot be moved is still a return, and the terms say so on review.
 function showAllReturns(){ setState('default'); }

@@ -158,8 +158,12 @@ services — the project's own Figma capture of redBus's live bus list is **14 c
 single day** — so the open day buried every other day, and the screen exists to compare days.
 
 v4 separates the two jobs. The days are a fixed list whose height does not depend on how many buses
-a day has, and the chosen bus is shown **once, in full, below them**, in the same `Card / Bus` shape
-as the outbound list: times, duration, seats, operator, vehicle, the real rating badge, the seat line
+a day has, and the chosen bus is shown **once, in full, directly under the day it belongs to** — a
+`.busfold`, tied to the day's card by an accent rule down its left. It went below the whole list
+first and that put it under the fold on an 874 screen: *"i just selected the date and now i am at
+review, why? i didnt select the bus."* It is safe inside the day because it is **bounded** — one
+card and at most three one-line rows, never thirty buses, which is exactly what v3's accordion was
+not. The card is the same `Card / Bus` shape as the outbound list: times, duration, seats, operator, vehicle, the real rating badge, the seat line
 and the flexibility pills. Under it sit up to **three alternatives that beat it on something the
 traveller named** — each stating what it wins and what it costs — and a link to the full list.
 
@@ -191,6 +195,10 @@ product's action, on a screen whose premise is that the traveller need not decid
 which contradicts J3's *"as information not urgency"*. The lead now states what they hold and what
 they can still do; the cheapest fact lives on that day's own row as `₹340 cheaper`, at the point of
 comparison.
+
+**Two guards against ever reaching Review without having seen the bus:** `choosePick()` scrolls the
+fold into view with `block:'nearest'` — only when it has to, and only on an explicit tap, never on a
+repaint — and the bottom bar names the bus rather than only its price: *Return · Sat, 12 Sep · 23:40*.
 
 **Picking a day now proposes its default bus.** v3 left the bus unchosen until a row inside the
 accordion was tapped; there is no such row, so `setHeldDay()` sets `retBus = defaultBusOn(d)` and

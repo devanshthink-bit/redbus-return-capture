@@ -4843,3 +4843,28 @@ and hide the rest — correct as far as it went, and it would have left the scre
 list. Asking what the traveller is actually deciding produced a different shape: compare days here,
 choose a bus there, both visible at once.
 
+CHANGE · 2026-09-04 · (no skill) · Source: user
+**"actual bus is showing by scrolling till bottom, most users will miss it and will wonder i just
+selected the date and now i am at review why? i didnt select the bus."** Right, and it was mine: I
+had put the bus section below the whole day list, which on an 874 screen is under the fold.
+
+The bus moved back **under the day it belongs to** — a `.busfold` tied to that day's card by an
+accent rule down the left. This is not v3's accordion coming back: v3 nested the day's *whole bus
+list*, twenty or thirty services, which is unbounded. The fold is one card and at most three
+one-line rows, so it can never bury the days beneath it. The cap was the fix all along; the position
+was not.
+
+Two more guards, because a screen should not depend on a scroll:
+- `choosePick()` brings the fold into view with `block:'nearest'` — only when it has to, and only on
+  an explicit tap, never on a repaint, so a state change cannot move the view
+- the bottom bar names the bus, not just the price: *Return · Sat, 12 Sep · 23:40 · ₹1,180*
+
+Verified again after the move: 234 state combinations clean; the full journey including the trade
+row, the full list and back; Back correct on all 18 screens; money agrees in all 13 states; type
+scale clean; no tap target under 44. v1, v2, v3 and prototype.html byte-identical.
+
+LEARNED · 2026-09-04 · (no skill)
+**Where a thing sits is a separate decision from how big it is allowed to get.** v3's fault was an
+unbounded accordion, and I fixed it by moving the content out of the day rather than by bounding it.
+Bounded, it belongs exactly where it was. Fix the property that is actually broken.
+
