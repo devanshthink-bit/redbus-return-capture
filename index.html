@@ -2618,6 +2618,13 @@ function setState(s){
     E0('pk-loading').hidden = s!=='loading';
     E0('pk-main').hidden    = gone;
     E0('pk-none').hidden    = s!=='none';
+    // The window in this line was markup only and never written, so the blank state named
+    // "Wed, 9 Sep to Sat, 12 Sep" whatever the traveller had actually picked. Same class as the
+    // seat literals of 24 Aug: a value no code path produces.
+    if(s==='none' && sel.length){
+      const b=E0('pk-none-b');
+      if(b) b.textContent = 'No day from '+label(sel[0])+' to '+label(sel[sel.length-1])+' can be changed later.';
+    }
     E0('pk-err').hidden     = s!=='checkfail';
     E0('pk-bar').style.display = gone ? 'none' : '';
   }

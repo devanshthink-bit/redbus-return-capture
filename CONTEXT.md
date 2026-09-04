@@ -725,9 +725,20 @@ not from memory. **21 frames = 16 screens + 5 state variants.**
    *Confirm the move*, because there is nothing to choose.
 4. **05 → 06** is the window path. A single date behaves differently: see §7.
 
-**Not in Figma:** the 13 states (`offline`, `none in window`, `route has none`, `return seat gone`,
-`past cutoff`, `already moved`, `seat lost mid-swap`, …). Several replace the whole content area.
-Anyone rebuilding from the file alone will produce the default state only.
+**Five states are now in Figma**, in their own section — *States · when the promise cannot be kept*.
+Chosen so each fails in a **different** way; five failures of the same kind would only show one:
+
+| Frame | State | What it proves | Built on |
+|---|---|---|---|
+| S1 · Route has none | `noguard` | the **precondition is missing** — no operator here allows a date change, so the return step never runs and Review shows the onward alone | 08, return leg + date-change block hidden, amount ₹1,920 |
+| S3 · Return seat gone | `seatgone` | the **held thing is lost** — *Seat U5 is gone, someone just booked it. Your onward trip is fine.* Pay is held back | 08, error card above the journey |
+| S4 · Past cutoff | `pastcutoff` | the promise has an **expiry** — *Too late to change. Changes close 8 hours before the bus leaves.* | 11, change row off |
+| S5 · Already moved | `alreadymoved` | the promise has a **count** — *You have used your one change. This ticket is final.* | 11, change row off |
+| S2 · None in window | `none` | the **input can yield nothing** — the window they gave has no changeable day | 06, content replaced by the blank state |
+
+**The other eight are still not in Figma.** `offline` and `loading` say nothing about the idea;
+`can't check` overlaps S1; `seat lost mid-swap` is a narrower `seatgone`; `6 passengers`, `no other
+days` and `return dropped` are breadth rather than argument.
 
 **Also in the file:** prototype connections on the real controls, matching the table above. They are
 there so the transitions are explicit and the file click-throughs for a stakeholder; the table is the

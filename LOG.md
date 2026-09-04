@@ -5014,3 +5014,40 @@ this repo, and it will never open Figma before it opens CONTEXT.md. Put the fact
 because the frames that exist are named well. What mattered was the two screens with no frame at all,
 which no amount of reading the names would surface.
 
+CHANGE · 2026-09-04 · (no skill) · Source: user
+**"Build these 5 states in Figma in Hi-fi ui exactly like RedBus real ui in a different section."**
+Built, in a new section *States · when the promise cannot be kept*, ordered as the argument runs:
+precondition missing · thing lost · promise expired · promise spent · input empty.
+
+- **S1 · Route has none** — Review with the return leg, the *Free date change* block and the return's
+  Change links all gone, amount down to the onward alone. The guard's visible result is that the
+  return step never happened.
+- **S3 · Return seat gone** — Review with the error card above the journey and Pay held back.
+- **S4 · Past cutoff** and **S5 · Already moved** — the ticket's change row in its off state, the
+  reason replacing the invitation and the change-count pill hidden.
+- **S2 · None in window** — the day screen's content replaced by the blank state, action bar gone.
+
+Every string was read out of the running build, which is how the next thing was found.
+
+**A real bug, found while capturing.** `pk-none-b` — the line naming the window in the *none in
+window* blank state — was markup only and never written by any code path, so it always read
+*"No day from Wed, 9 Sep to Sat, 12 Sep"* whatever the traveller had actually picked. Exactly the
+class §10 warns about after the seat literals of 24 Aug: a value no code path can produce. It is now
+generated from `sel`, verified across three different windows.
+
+**And a mistake of my own, caught by the screenshot.** Building S1 I set the amount using the node
+ids I had read from the *source* frame rather than from the clone, so **08 · Review your trip itself**
+was changed to ₹1,920 and S3 inherited it. Fixed all three by finding the nodes inside each frame.
+
+Verified: 234 state combinations clean after the `setState` change, no JS errors, and the blank state
+names the real window on a cold load.
+
+LEARNED · 2026-09-04 · (no skill)
+**Clone, then read the clone.** Node ids read from a source frame keep pointing at the source. Two
+frames were wrong for a few minutes because the edit landed on the original — and it was only visible
+in a screenshot, never in the return value, which said the write had succeeded.
+
+**Capturing a state to rebuild it is a test of that state.** Nothing had ever exercised the *none in
+window* copy against a real selection, because the state matrix only checks that one screen is
+visible. Building it in Figma is what read the words.
+
