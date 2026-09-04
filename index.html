@@ -2534,8 +2534,9 @@ function toggleTicket(leg){
 
 function paintSeats(){
   const o=outSeat(), r=retSeat(), E=id=>document.getElementById(id);
-  document.querySelectorAll('[data-outseat]').forEach(e=>{ e.textContent='Seat '+o; });
-  document.querySelectorAll('[data-retseat]').forEach(e=>{ e.textContent='Seat '+r; });
+  const seatWord = one => PAX()>1 ? PAX()+' seats' : 'Seat '+one;
+  document.querySelectorAll('[data-outseat]').forEach(e=>{ e.textContent=seatWord(o); });
+  document.querySelectorAll('[data-retseat]').forEach(e=>{ e.textContent=seatWord(r); });
   const bb=E('opt-bb');    if(bb) bb.innerHTML='Laxmi Holidays &middot; Seat '+o;
   const de=E('d-outseat'); if(de) de.textContent=label(OUT_DAY)+', seat '+o;
   const er=E('rv-errseat');if(er) er.textContent='Seat '+r+' is gone \u2014 someone just booked it. Your onward trip is fine.';
