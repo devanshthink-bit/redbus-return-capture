@@ -385,6 +385,11 @@ body.legacy-on .phone{display:none}
 .terms p:last-child{margin-bottom:0}
 .pax{display:flex;flex-direction:column}
 .paxname{font-size:16px;font-weight:700}
+/* The ticket lists who is travelling and where they sit. No avatar, no rule between rows and no
+   age or gender -- those belong on passenger details, where they are used to pick a person out. */
+.paxlist{margin-top:4px;border-top:1px solid var(--line);padding-top:10px}
+.paxrow{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:7px 0;font-size:15px}
+.paxrow .st{font-weight:600;white-space:nowrap}
 .addon{display:flex;align-items:flex-start;gap:12px;padding:8px 0;font-size:16px;cursor:pointer;border-top:1px solid var(--line)}
 .addon:first-of-type{border-top:0;padding-top:0}
 .addon input{width:24px;height:24px;accent-color:var(--accent);margin-top:4px;flex:0 0 auto}
@@ -1058,6 +1063,8 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
         <div class="row"><span class="time">23:55<span class="d">&mdash;</span><span class="arr">08:00</span></span><span class="price">&#8377;1,599</span></div>
         <div class="subrow"><span class="sub">Delhi &rarr; Nainital &middot; 8h 5m</span><span class="onw" data-outseat>Seat U4</span></div>
         <div class="oprow"><div><div class="op">Laxmi Holidays Pvt Ltd</div><div class="cap">ISBT Kashmiri Gate, Gate 4 &rarr; Nainital Bus Stand</div></div></div>
+        <button class="linkbtn" id="tk-more-out" aria-expanded="false" aria-controls="tk-pax-out" onclick="toggleTicket('out')">Ticket details</button>
+        <div class="paxlist" id="tk-pax-out" hidden></div>
       </div>
 
       <div class="leg" id="tk-ret">
@@ -1065,6 +1072,8 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
         <div class="row"><span class="time" data-retleg>23:55<span class="d">&mdash;</span><span class="arr">08:00</span></span><span class="price" id="tk-price">&#8377;999</span></div>
         <div class="subrow"><span class="sub">Nainital &rarr; Delhi &middot; 8h 5m</span><span class="onw" data-retseat>Seat U5</span></div>
         <div class="oprow"><div><div class="op" data-retop>Laxmi Holidays Pvt Ltd</div><div class="cap">Nainital Bus Stand &rarr; ISBT Kashmiri Gate, Gate 4</div></div></div>
+        <button class="linkbtn" id="tk-more-ret" aria-expanded="false" aria-controls="tk-pax-ret" onclick="toggleTicket('ret')">Ticket details</button>
+        <div class="paxlist" id="tk-pax-ret" hidden></div>
       </div>
 
       <div class="blank" id="tk-noret" hidden>
@@ -2497,6 +2506,32 @@ const PAX = () => (state==='crowded' ? 6 : 1);
 // the money totals follow. Hardcoded copies of these drifted from the booked day four times.
 // One writer for every seat number on every screen. The data attributes mean a new screen picks
 // this up by carrying the attribute, rather than by someone remembering to extend a list of ids.
+const PAX_NAMES = ['Devansh Somvanshi','Priyanka Ramachandran-Iyer','Sai Srinivas Buddi',
+                   'Harshraj Vamanjoor','Soumya Mishra','Jaimin Gagiya'];
+const PAX_META  = ['Male, 29','Female, 27','Male, 31','Male, 26','Female, 24','Male, 33'];
+// [onward, return] per traveller. The first pair is whatever the flow actually holds.
+const PAX_SEATS = () => [[outSeat(),retSeat()],['L2','L3'],['U6','U8'],['L1','L1'],['U2','U2'],['L5','L6']]
+                          .slice(0, PAX());
+
+// What the Ticket details link opens: who is on this leg and which seat is theirs.
+function paintTicketPax(){
+  const seats = PAX_SEATS();
+  [['out',0],['ret',1]].forEach(function(pair){
+    const box = document.getElementById('tk-pax-'+pair[0]);
+    if(!box) return;
+    box.innerHTML = PAX_NAMES.slice(0, PAX()).map(function(nm,i){
+      return '<div class="paxrow"><span class="who">'+nm+'</span><span class="st">'
+           + seats[i][pair[1]]+'</span></div>'; }).join('');
+  });
+}
+function toggleTicket(leg){
+  const box = document.getElementById('tk-pax-'+leg), btn = document.getElementById('tk-more-'+leg);
+  if(!box || !btn) return;
+  box.hidden = !box.hidden;
+  btn.setAttribute('aria-expanded', String(!box.hidden));
+  btn.textContent = box.hidden ? 'Ticket details' : 'Hide details';
+}
+
 function paintSeats(){
   const o=outSeat(), r=retSeat(), E=id=>document.getElementById(id);
   document.querySelectorAll('[data-outseat]').forEach(e=>{ e.textContent='Seat '+o; });
@@ -2504,12 +2539,14 @@ function paintSeats(){
   const bb=E('opt-bb');    if(bb) bb.innerHTML='Laxmi Holidays &middot; Seat '+o;
   const de=E('d-outseat'); if(de) de.textContent=label(OUT_DAY)+', seat '+o;
   const er=E('rv-errseat');if(er) er.textContent='Seat '+r+' is gone \u2014 someone just booked it. Your onward trip is fine.';
+  paintTicketPax();
   const pax=E('rv-pax');
   if(pax){
+    const ps = PAX_SEATS();
     pax.innerHTML = state==='crowded'
-      ? ['Devansh Somvanshi','Priyanka Ramachandran-Iyer','Sai Srinivas Buddi','Harshraj Vamanjoor','Soumya Mishra','Jaimin Gagiya']
-          .map((nm,i)=>'<div class="paxname" style="margin-top:'+(i?10:0)+'px">'+nm+'</div><div class="cap">Seat '+[o+'/'+r,'L2/L3','U6/U8','L1/L1','U2/U2','L5/L6'][i]+'</div>').join('')
-      : '<div class="paxname">Devansh Somvanshi</div><div class="cap">Male, 29 \u00B7 Seat '+(state==='noreturn'?o:o+' / '+r)+'</div>';
+      ? PAX_NAMES.map((nm,i)=>'<div class="paxname" style="margin-top:'+(i?10:0)+'px">'+nm+'</div>'
+          + '<div class="cap">'+PAX_META[i]+' \u00B7 Seat '+ps[i][0]+'/'+ps[i][1]+'</div>').join('')
+      : '<div class="paxname">'+PAX_NAMES[0]+'</div><div class="cap">'+PAX_META[0]+' \u00B7 Seat '+(state==='noreturn'?o:o+' / '+r)+'</div>';
     const nv=document.querySelector('#s-review .navtxt p');
     if(nv) nv.textContent='Delhi \u2194 Nainital \u00B7 '+PAX()+' passenger'+(PAX()>1?'s':'');
   }
