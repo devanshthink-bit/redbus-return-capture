@@ -5358,3 +5358,60 @@ order they are arranged, which is what he asked for. §18's own table differs in
 11 → 13 (Ticket details straight to Change day) and calls 12 · My Bookings an entry point reached
 from the tab bar rather than the step after 11. On the canvas 11 → 12 → 13, and that is what the
 build does. Worth knowing before anyone reads the two as contradicting each other.
+
+DECISION · 2026-09-04 · (no skill) · Source: user
+**One URL, two prototypes, hi-fi first.** He asked for it plainly: *"make this hi-fi prototype as
+a switchable tab along with lo-fi tab switching with show lofi and hifi prototypes just like
+versions are and on landing open hi-fi prototype by default and make this separate link dead"*.
+So the root viewer gains a **Lo-fi / Hi-fi** switch and opens on the hi-fi, and `/hifi/` stops
+being a place you can land. One link to hand anyone, again.
+
+DECISION · 2026-09-04 · (no skill)
+**The switch sits one level above Version, and Version is a lo-fi idea.** Fidelity picks *which
+prototype*; version picks *which of the four lo-fi builds*. Nesting them the other way would have
+implied a v1–v4 of the hi-fi, which does not exist. Picking Hi-fi therefore hides the Version
+group and v4's screen and state rails together — they all belong to the thing that is no longer
+showing.
+
+DECISION · 2026-09-04 · (no skill)
+**Built on the v1/v2 mechanism rather than a new one.** The root already knew how to load a whole
+build into an iframe, leave it unedited, and *read its rail out of the loaded frame* to drive the
+real buttons. The hi-fi uses the same three moves. That is why renaming a frame in Figma cannot
+leave a stale label in the panel — nothing here retypes the 23 screen names. The iframe is loaded
+once and kept, so switching back and forth does not throw away where you were.
+
+DECISION · 2026-09-04 · (no skill)
+**A 0.46% stretch, knowingly, against §7's rule.** The hi-fi is an iPhone 14 (390 × 844) inside a
+frame that is an iPhone 16 Pro (402 × 874), so `?embed` scales it on both axes to fill. §7 rejected
+stretching v1 and v2 — but that was **430/402 ≈ 7%**, *"visible in their type"*. This is 0.46%, an
+order of magnitude smaller and an order of magnitude under the 3–5% Inter discrepancy §20 already
+accepts. The alternative was 6px rails and 15px bands inside a phone bezel, which reads as a bug
+rather than as a smaller phone. **Recorded because it is a deliberate exception to a written rule**,
+not an oversight.
+
+DECISION · 2026-09-04 · (no skill) · Source: user
+**"Make this separate link dead" is served by a redirect, not a 404.** He wanted `/hifi/` to stop
+being a second place the prototype lives. §4's rule already covers exactly this case — *"a URL
+someone can share must never be a bare prototype outside the viewer"* — and the repo already
+solves it for v1–v3 with redirect files. So `hifi/index.html` became a redirect to
+`/?fidelity=hifi` and the build moved to `hifi/app.html`, which only the iframe reaches. The
+standalone prototype is gone; the link I handed him yesterday still opens the right thing instead
+of 404ing. **If he wants a hard 404 instead, it is one file to delete** — but that would break a
+link that is already out.
+
+LEARNED · 2026-09-04 · (no skill)
+**Naming a version has to imply the lo-fi, or the redirects break.** `v1.html` redirects to
+`/?version=1`. With the hi-fi as the default, that link would have opened the hi-fi with a version
+parameter nothing could use. The boot rule is: `?fidelity` wins if given; otherwise a usable
+`?version` means lo-fi; otherwise hi-fi. Checked all seven entry points rather than reasoning about
+them — `/`, `?fidelity=hifi`, `?fidelity=lofi`, `?version=1`, `?version=3`, `/v1.html`,
+`/prototype.html`, plus `/hifi/` and `?test`.
+
+CHANGE · 2026-09-04 · (no skill)
+**The root shell change is 112 insertions and no deletions.** Worth stating, because §10 exists
+for the times a shell edit quietly breaks the prototype underneath it. The only edit inside an
+existing function is one early return in `setCaption` for when the hi-fi is showing. Re-ran the
+lo-fi checks anyway: 234 state cells (18 × 13) each render exactly one screen with no JS error,
+and Back lands correctly on all eight screens that have one. The hi-fi's own walk still passes
+inside the iframe — 23 rail rows each drive their own screen, run breaks at 01/05/08/11/13, and
+01 → 16 forward through the real controls.

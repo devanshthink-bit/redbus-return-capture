@@ -68,7 +68,7 @@ on push. `raw/` (interview transcripts) is gitignored.
 | `frozen/v1.html` · `frozen/v2.html` · `frozen/prototype.html` | the other frozen builds |
 | `v1.html` · `v2.html` · `v3.html` · `prototype.html` | redirects to `/?version=N` |
 | `component-sheet.html` | Design-language component sheet |
-| `hifi/` | **The hi-fi prototype** — the 23 Figma frames as working code, served at `/hifi/`. `index.html` and `app.css` are generated; see §21 |
+| `hifi/` | **The hi-fi prototype** — the 23 Figma frames as working code, shown inside the root viewer. `app.html` and `app.css` are generated, `index.html` is a redirect; see §21 |
 
 **Source material** (not in the repo): `/Users/devansh/Downloads/RedBus Case Docs/` — 8 interview
 transcripts, scope card and research plan PDFs, `redfigjam.pdf`, `PAM03L08.pdf`, and two screenshot
@@ -81,13 +81,17 @@ folder name** — PAM04L01–L04, PAM05L03.
 ## 4. Live URLs
 
 ```
-all four   https://devanshthink-bit.github.io/redbus-return-capture/       <- the lo-fi, all versions
-hi-fi      https://devanshthink-bit.github.io/redbus-return-capture/hifi/  <- the Figma screens, in code
-board      https://devanshthink-bit.github.io/redbus-return-capture/artefacts.html
+everything  https://devanshthink-bit.github.io/redbus-return-capture/     <- the only one to hand out
+board       https://devanshthink-bit.github.io/redbus-return-capture/artefacts.html
 ```
-**Two prototypes now, at two URLs.** The root is the lo-fi viewer carrying v1–v4. `/hifi/` is the
-hi-fi Figma build — a different deliverable, not a version of the first. Nothing at the root
-changed when it was added and nothing links the two; hand out whichever the room needs.
+**One URL, two prototypes.** The root viewer now carries a **Lo-fi / Hi-fi** switch, one level
+above the version switch, and **opens on the hi-fi**. Lo-fi is v1–v4; hi-fi is the Figma build.
+
+There is no separate link for either prototype or for any version. `?fidelity=hifi|lofi` and
+`?version=N` are the parameters; `/hifi/`, `/v1.html`, `/v2.html`, `/v3.html` and
+`/prototype.html` are **redirects** carrying what they used to be, so an old link opens the viewer
+on the right thing. Naming a version implies the lo-fi, because Version is a lo-fi idea.
+The builds themselves — `frozen/*.html` and `hifi/app.html` — are reached only by the iframe.
 **There is no separate link for a version any more.** `/v1.html`, `/v2.html`, `/v3.html` and
 `/prototype.html` are redirects to `/?version=N`, so an old link opens the viewer on the version it
 asked for. The builds themselves moved to `frozen/`, where only the iframe reaches them — a URL
@@ -1900,12 +1904,15 @@ Images kept on 03b: two bus photographs, the Primo bus illustration, three small
 ## 21 · The hi-fi prototype in code — `/hifi/` (4 Sep 2026)
 
 §20 said the Figma screens were going to become "a coded working prototype run on real phones".
-This is that, and it is a **separate deliverable at a separate URL**:
-`https://devanshthink-bit.github.io/redbus-return-capture/hifi/`. The lo-fi viewer at the root is
-untouched — adding this changed no file outside `hifi/` except `.gitignore`.
+This is that. All **23 frames** of *Screens · redBus return capture (iPhone 14)*, at 390 × 844,
+walked in the order they are arranged on the canvas.
 
-All **23 frames** of *Screens · redBus return capture (iPhone 14)*, at 390 × 844, walked in the
-order they are arranged on the canvas.
+**It lives inside the root viewer, behind a Lo-fi / Hi-fi switch, and the hi-fi is what opens.**
+It was briefly its own URL; he asked for one link instead — *"make this hi-fi prototype as a
+switchable tab along with lo-fi… on landing open hi-fi prototype by default and make this separate
+link dead"*. So `hifi/app.html` is now reached only by the viewer's iframe and `hifi/index.html`
+is a redirect to `/?fidelity=hifi`, the same shape `v1.html` already uses. Nothing serves a bare
+prototype at a shareable URL — the rule §4 already held for v1–v3.
 
 ### The screens are generated, not authored
 
@@ -1937,6 +1944,20 @@ React is a **build** dependency only; the page ships as static HTML plus one sty
    that puts them at the bottom of the *content*, not the viewport. The shell lifts every direct
    child of a screen root carrying both `absolute` and `bottom-` into an overlay pinned to the
    viewport — which catches exactly the action bars, both tab bars, three sheets and two FABs.
+
+### Inside the viewer
+
+The switch is built on the mechanism the root already had for v1 and v2, not a new one: the hi-fi
+loads whole into an iframe (`hifi/app.html?embed`), nothing in it is edited from the parent, and
+its rail is **read out of the loaded frame** and drives the real buttons — so renaming a frame in
+Figma cannot leave a stale label in the panel. It loads once and is kept, so switching back and
+forth does not lose your place. Picking Hi-fi hides the Version group and v4's screen and state
+rails, because all three are lo-fi ideas.
+
+**The one deliberate distortion.** The hi-fi is an iPhone 14 (390 × 844) inside a frame that is an
+iPhone 16 Pro (402 × 874), so `?embed` scales it on **both axes** to fill. That is a **0.46%**
+stretch. §7 rejected stretching v1/v2 — but that was **7%** and visible in their type; this is an
+order of magnitude smaller, and the alternative, letterboxing inside a phone bezel, reads as a bug.
 
 ### The flow
 
