@@ -687,6 +687,22 @@ v4, not v3.** What changed in Figma, and the node ids, in case it has to be done
   return.
 - All copy was read out of the running prototype for the 11–17 Sep window rather than retyped.
 
+### The canvas is laid out as the flow, not as a number line (4 Sep)
+
+All 21 screens used to sit in one 9,270px row in numeric order, which put `15 · Choose your bus` and
+`16 · Move · buses` at the far right, nowhere near what opens them. They are now **five rows, one per
+run**, each with a heading, in the order a traveller meets them:
+
+1. **Book the outbound** — 01 · 02 · 03 · 02c · 02d · 04
+2. **Add a return** — 05 · 05a · 05b · 06 · 06a · **15**
+3. **Review and pay** — 07 · 08 · 09
+4. **After booking** — 11 · 10
+5. **Move the date** — 12 · **16** · 13 · 14
+
+15 sits with the return because that is what opens it — the fold's *All N buses* link, and *Change
+bus* from review. 16 sits between Change day and Confirm the move, which is the only place it
+appears. The section is 2,710 × 12,965 instead of 9,270 × 5,137.
+
 **Nothing is pre-selected in 06.** That is the §8 decision made visible: when the fares differ, the
 product has no advantage on the only thing that decides it, so it does not choose. The lead reads
 *Pick your return day* with *Switching is free until you pay* underneath, and Review trip is off.

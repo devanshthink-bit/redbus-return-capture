@@ -2142,7 +2142,7 @@ function pickOut(op,fare,dep,arr){
 // return is usually a different bus and U5 is not the same physical position. Same *kind* of
 // seat is: same deck, same position, then the nearest free seat on that deck. That rule lives in
 // SEATOF(), so the seat named on the day list is the seat handed over here.
-function autoSeat(toBus){
+function autoSeat(){
   buildSeats(heldDay);              // the picked day's own occupancy, not a generic bus
   const nm = SEAT[heldDay];
   const btn = [].find.call(document.querySelectorAll('#g-lower .seat,#g-upper .seat'),
@@ -2157,7 +2157,6 @@ function autoSeat(toBus){
   document.getElementById('b-seat').disabled=false;
   document.getElementById('pt-price').textContent=RUPEE(chosen.fare);
   recalc();
-  if(toBus) return openBus(toBus);
   go('s-review');
 }
 const LOWER=['a','a','booked','a','female','a','a','a','booked','a','a','a'];
@@ -2238,9 +2237,7 @@ function bookedOn(day){
 // list stays a list of days instead of turning back into a list of buses.
 let busPick = null, busFrom = 'review';
 function openBus(from){ busFrom = from || 'review'; busPick = busOn(heldDay); renderBus(); go('s-bus'); }
-const busBack = () => busFrom==='book' ? backToDays()
-                    : busFrom==='picked' ? go('s-picked')
-                    : go('s-review');
+const busBack = () => busFrom==='picked' ? go('s-picked') : go('s-review');
 function renderBus(){
   const wrap=document.getElementById('bus-list'); if(!wrap) return;
   const list=busesOn(heldDay), def=defaultBusOn(heldDay);
@@ -2273,10 +2270,8 @@ function renderBus(){
       + '<dd>A grey tag means that operator does not allow it.</dd>' : '');
   document.getElementById('bus-bb').textContent = RUPEE(fareOfBus(heldDay, busPick));
   document.getElementById('bus-sub').textContent = 'Nainital \u2192 Delhi \u00B7 '+label(heldDay);
-  document.getElementById('b-bus').textContent = busFrom==='book' ? 'Review trip' : 'Use this bus';
-  // On a one-bus day opened from the day screen there is still a way back; the button is not the
-  // only exit, but it must not sit disabled with nothing to say.
-  document.getElementById('b-bus').disabled = busFrom!=='book' && list.length===1 && busPick===def;
+  document.getElementById('b-bus').textContent = 'Use this bus';
+  document.getElementById('b-bus').disabled = list.length===1 && busPick===def;   // nothing to confirm
 }
 function busDone(){
   retBus = busPick;

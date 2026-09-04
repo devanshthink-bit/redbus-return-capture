@@ -4926,3 +4926,31 @@ node, not per screen.
 cloning 06's, which cost one line and removed the whole class of bug where the two frames say slightly
 different things.
 
+CHANGE · 2026-09-04 · (no skill) · Source: user
+**"I think in Figma they are not placed at the right position. Place all the screens at their right
+positions so that the whole flow is visible end to end, and also clean up the dead code."**
+
+**Figma.** The 21 screens sat in one 9,270px row in numeric order, so `15 · Choose your bus` and
+`16 · Move · buses` were at the far right, nowhere near what opens them. They are now five rows with
+a heading each — Book the outbound · Add a return · Review and pay · After booking · Move the date —
+in the order a traveller meets them. 15 moved into the return run; 16 moved between Change day and
+Confirm the move. The section went from 9,270 × 5,137 to 2,710 × 12,965.
+
+**Dead code.** `busFrom === 'book'` was the route into the bus list from v3's separate *Choose your
+bus* step, which stopped existing when the day and the bus became one screen. Nothing has passed it
+since. It had three branches — `busBack`, the button label, the disabled test — plus `autoSeat`'s
+`toBus` argument, which was its only caller and which nothing passes. All gone.
+
+Verified after: 234 state combinations clean, the full journey including both routes into the bus
+list and the move flow (Ticket → Change your return day → a day with more than one bus → Move ·
+buses), no JS errors.
+
+LEARNED · 2026-09-04 · (no skill)
+**A canvas ordered by file name is not ordered by anything a reader has.** The numbers were assigned
+as screens were built, so 15 and 16 — added last — landed furthest from the screens that open them.
+Laying the canvas out as the flow made that visible immediately; the numbering had been hiding it.
+
+**Dead code survives a refactor by having more than one branch.** `busFrom === 'book'` looked live
+because three separate places tested it. None of them could ever be true, and the only function that
+could have set it took an argument nobody passed.
+
