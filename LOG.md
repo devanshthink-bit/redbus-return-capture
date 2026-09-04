@@ -5092,3 +5092,22 @@ LEARNED · 2026-09-04 · (no skill)
 when set directly on Review, and correctly as six only after walking the booking. A state flag is not
 the state; the screen has to have been through what fills it.
 
+
+LEARNED · 2026-09-04 · (no skill) · Source: user
+**Two FILL siblings in a row split the free width between them.** Devansh, on Travel Insurance in
+S12: *"This section is also wrong. It doesn't match with the real ui."* Every one of the three
+coverage rows had a Label set to FILL *and* a spacer frame also set to FILL. Auto-layout gave each
+half of what was left, so a 190pt label ran at 89pt and "hospitalisation" broke as
+"hospitalisat / ion". The spacer is a habit from rows where the label hugs; where the label already
+fills, it is the bug. Deleting it in all 12 rows across four frames brought the wrap to 2 / 2 / 1
+lines — the real app exactly.
+
+LEARNED · 2026-09-04 · (no skill) · Source: user
+**To repeat a row, clone the row — not the text inside it.** Devansh, on the six-passenger block:
+*"This section is not correct. Refer to the real RedBus screenshots in the folder and see how RedBus
+does it. I think there is a checkbox, and it adds a name checkbox, etc., for the passenger below the
+first."* I had cloned the single Name node five times into one passenger row, which produced six
+names under one avatar, one "Male, 29 Years", and a clipped string. The real page repeats the whole
+unit — avatar, name, "Male, 29 Years", checkbox — with a rule between, and a counter above. Rebuilt
+as six rows and the counter set to 6/6. The seed for a repeat is the smallest node that carries the
+whole meaning, and here that was the row.
