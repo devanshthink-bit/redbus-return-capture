@@ -795,6 +795,29 @@ total. The change flow did the same. The per-seat numbers still decide the rules
 print the ticket. Verified live: one passenger unchanged at ₹1,030, six reads ₹6,180, and the move
 is ₹6,540 → ₹6,360, ₹180 less.
 
+**A state frame has to be a whole screen (4 Sep).** Devansh, on S6, S7, S9 and S2: *"Why have you
+not designed the complete screen?"* Three things were wrong at once.
+
+- **They were shorter than the device.** S6 was 478pt, S2 and S7 614, S11b 767 — a frame that stops
+  above the fold reads as a fragment, not a screen. Every state frame is now at least **844**, the
+  height the other screens use.
+- **S9 was missing a block the build keeps.** `nothingearlier` does not replace the Change day
+  screen; the *Your booking* card stays and the empty state sits under it. The frame had only the
+  nav and the empty state. It also carried a second button, *Continue without a return*, that the
+  build does not offer — the only action there is **Keep my booking**. Both fixed, and the date in
+  the empty state now says Wed, 16 Sep, agreeing with the booking above it.
+- **The loading skeleton was two cards on an 844pt screen.** A skeleton stands in for the list that
+  is coming, so it has to be the size of that list. Five cards now, in the build as well as in
+  Figma, in both places that have one.
+
+The buttons on every other blank and error state were checked against the running build and match:
+S2 *Show all returns · Pick other days*, S7 *Try again · Continue without a return*, S3 *Pick another
+return · Continue without a return*, S10 *See other days*.
+
+**Figma draws a frame's own name just above the frame**, and at low zoom that label is large enough
+to cross anything sitting close above it. The band headings were 54pt clear and collided; they are
+120pt clear now.
+
 **Coordinates inside a Figma section are relative to the section, not to the page.** Setting a
 child's `y` to an absolute page value puts it that far *below* the section's top. The tell was
 `get_screenshot` on the section rendering 16,609px tall; `absoluteBoundingBox` is what proves it.

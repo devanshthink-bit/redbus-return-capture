@@ -5211,3 +5211,23 @@ from a plain `setState`, because the guard acts on the way through, not in a pai
 same reason `crowded` showed one passenger until the whole booking was walked. So the sweep proves
 what it found and not what it missed: S1 is designed, not measured, and the entry above says so
 rather than pretending the number covers it.
+
+CHANGE · 2026-09-04 · (no skill) · Source: user
+**A state frame has to be a whole screen.** Devansh, on four of them: *"Why have you not designed
+the complete screen?"* Three faults. S6 was 478pt tall, S2 and S7 614, S11b 767 — every one of them
+stopping above the fold, so they read as fragments; all are 844 now, the height the other screens
+use. S9 was missing the *Your booking* card that the build keeps above the empty state, and carried
+a *Continue without a return* button the build does not offer there. And the loading skeleton was two
+cards on an 844pt screen; it is five now, in the build as well, in both places that have one.
+
+LEARNED · 2026-09-04 · (no skill)
+**A blank state is not a blank screen.** I had built S9 as nav plus empty state, because that is what
+"no other days" sounds like. The build keeps the *Your booking* card above it — of course it does:
+the whole point of the message is that the booking is safe, and the card is the booking. Reading the
+state's own DOM, not its name, is what caught it, and the same read caught a button that exists in
+the component but not in that state.
+
+LEARNED · 2026-09-04 · (no skill)
+**A frame shorter than the device is not a screen.** Four state frames had been sized to their
+content, which is what auto-layout wants, and every one of them looked unfinished on the canvas
+regardless of being correct. Screens are a fixed size; only their content is variable.
