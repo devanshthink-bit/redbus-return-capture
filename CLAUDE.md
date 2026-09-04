@@ -9,10 +9,11 @@ Do not start work, answer a question about the project, or change a file until y
 
 ## The six things that will bite you if you skip it
 
-1. **v1 (`v1.html` / `prototype.html`), v2 (`v2.html`) and v3 (`v3.html`) are frozen.** Only
-   **`index.html`** changes, and it now holds **v4**. Verify on every commit that the three are
-   untouched — run exactly `md5 -q v1.html prototype.html v2.html v3.html`, which must return
+1. **v1, v2 and v3 are frozen, and they live in `frozen/`.** Only **`index.html`** changes, and it
+   now holds **v4**. Verify on every commit that the three are untouched — run exactly
+   `md5 -q frozen/v1.html frozen/prototype.html frozen/v2.html frozen/v3.html`, which must return
    `a96fc35f…`, `a96fc35f…`, `412b90eb…`, `6e9c8a7c…`. **Never put `index.html` in that command.**
+   The four files at the root with those names are **redirects into the viewer**, not the builds.
    On 3 Sep a whole session ran the check with `index.html` standing in v1's place; it returned the
    expected hashes every time while watching neither frozen file, and got quoted as evidence in
    twenty commit messages.
@@ -49,7 +50,10 @@ Do not start work, answer a question about the project, or change a file until y
 - `artefacts.html` — the board, generated from `NOTES.md`. Never retype note text
 - `index.html` — **the file you change: v4.** Also the viewer that carries all four versions.
   Served at the bare root URL, which is the one to hand anyone
-- `v3.html` — v3, frozen, the way `v1.html` and `v2.html` are
+- `frozen/v1.html` · `frozen/v2.html` · `frozen/v3.html` · `frozen/prototype.html` — the frozen
+  builds, byte-for-byte. Only the viewer loads them, in an iframe
+- `v1.html` · `v2.html` · `v3.html` · `prototype.html` — **redirects** to `/?version=N`, so an old
+  link opens the viewer on the version it asked for instead of a bare prototype
 
 Repo is public and auto-deploys to GitHub Pages on push. Deploys take 45–90 seconds; verify with
 `curl` + `md5` before telling the user it is live.

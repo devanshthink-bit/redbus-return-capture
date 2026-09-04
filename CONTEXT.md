@@ -64,7 +64,9 @@ on push. `raw/` (interview transcripts) is gitignored.
 | `index.html` / `prototype.html` | **v1** — identical copies. index.html is what GitHub Pages serves |
 | `v2.html` | **v2** |
 | `index.html` | **the viewer and v4 — the file being changed.** Served at the bare root URL |
-| `v3.html` | **v3, frozen** the way v1 and v2 are. `6e9c8a7c…` |
+| `frozen/v3.html` | **v3, frozen** the way v1 and v2 are. `6e9c8a7c…` |
+| `frozen/v1.html` · `frozen/v2.html` · `frozen/prototype.html` | the other frozen builds |
+| `v1.html` · `v2.html` · `v3.html` · `prototype.html` | redirects to `/?version=N` |
 | `component-sheet.html` | Design-language component sheet |
 
 **Source material** (not in the repo): `/Users/devansh/Downloads/RedBus Case Docs/` — 8 interview
@@ -78,12 +80,13 @@ folder name** — PAM04L01–L04, PAM05L03.
 ## 4. Live URLs
 
 ```
-all four   https://devanshthink-bit.github.io/redbus-return-capture/     <- hand out this one
-v1 alone   https://devanshthink-bit.github.io/redbus-return-capture/v1.html
-v2 alone   https://devanshthink-bit.github.io/redbus-return-capture/v2.html
-v3 alone   https://devanshthink-bit.github.io/redbus-return-capture/v3.html
+all four   https://devanshthink-bit.github.io/redbus-return-capture/     <- the only one to hand out
 board      https://devanshthink-bit.github.io/redbus-return-capture/artefacts.html
 ```
+**There is no separate link for a version any more.** `/v1.html`, `/v2.html`, `/v3.html` and
+`/prototype.html` are redirects to `/?version=N`, so an old link opens the viewer on the version it
+asked for. The builds themselves moved to `frozen/`, where only the iframe reaches them — a URL
+someone can share must never be a bare prototype outside the viewer.
 The root **is** the viewer — `index.html` — it holds **v4** and carries the version switch, so the
 URL names no version. `?test` works on it.
 **`index.html` is no longer v1.** v1's file is unchanged and served at `v1.html` and

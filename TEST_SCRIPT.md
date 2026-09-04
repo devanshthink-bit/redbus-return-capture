@@ -17,8 +17,9 @@
 > handing over.
 
 > **Three prototypes exist. Give each participant exactly one.**
-> `/v1.html` *Last day* · `/v2.html` *Return window, cheapest booked* ·
-> `/v3.html` *Calendar, buses inside the day row* · `/` *Calendar, v4*
+> All four are behind the one link, on the version switch: **v1** *Last day* · **v2** *Return window,
+> cheapest booked* · **v3** *Calendar, buses inside the day row* · **v4** *Calendar, days fixed and
+> the bus below its day*. In a session, open `/?test` — the switch is hidden with the rest of the panel.
 >
 > Test **v3**. It is the build that is still changing, it is the one every fix and every document
 > now describes, and it carries the open bet in its cleanest form: **when someone genuinely doesn't

@@ -4868,3 +4868,31 @@ LEARNED · 2026-09-04 · (no skill)
 unbounded accordion, and I fixed it by moving the content out of the day rather than by bounding it.
 Bounded, it belongs exactly where it was. Fix the property that is actually broken.
 
+CHANGE · 2026-09-04 · (no skill) · Source: user
+**"I want all such links of V1, V2, V3 etc disabled since inside one link only we have all the
+versions now."** He had opened `/v2` and got the bare old prototype with its dark dev rails — which
+is exactly the thing the viewer exists to replace.
+
+The builds cannot simply go: the viewer loads them in an iframe. And they cannot be edited to
+redirect themselves, because they are frozen and their hashes are the guarantee.
+
+So the bytes moved instead. `frozen/v1.html`, `frozen/v2.html`, `frozen/v3.html`,
+`frozen/prototype.html` are the untouched builds, reachable only by the iframe. The four names at the
+root are now **redirects to `/?version=N`**, so an old link opens the viewer already on the version
+it asked for rather than a bare prototype. The viewer reads `?version=` on boot and ignores anything
+outside 1..4.
+
+**The freeze is on the bytes, not on the path.** All four md5s are unchanged: `a96fc35f…`,
+`a96fc35f…`, `412b90eb…`, `6e9c8a7c…`. `CLAUDE.md`'s check command now names the `frozen/` paths, and
+says in as many words that the four files at the root are redirects, not builds — someone who runs
+the old command against the redirects would get four matching hashes of the wrong thing, which is the
+same trap as putting `index.html` in that command on 3 Sep.
+
+Verified: `/?version=2` opens on v2 with `frozen/v2.html` in the frame and its 16 screens mirrored;
+`?version=9` falls back to v4; `?test` still hides the panel; all four builds byte-identical.
+
+LEARNED · 2026-09-04 · (no skill)
+**A frozen file can still be moved.** The rule protects the artefact, not its URL. Moving the bytes
+and leaving a redirect behind satisfied both "these links must stop working" and "these files must
+never change", which looked like a contradiction for a minute.
+
