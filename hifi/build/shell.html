@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>redBus return capture — high-fidelity prototype</title>
+<meta name="description" content="The Figma hi-fi screens, built in code. iPhone 14, 23 frames, walked in the order they are arranged in the Figma section.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
+<style>
+  /* ─── PRESENTATION SHELL — everything here is chrome, not design under test.
+         All class names are hf- prefixed so they can never collide with the
+         Tailwind utilities the screens are built from. ─── */
+  :root{
+    --hf-bg1:#FCF0F1; --hf-bg2:#F9E8EA; --hf-bg3:#F6E2E4;
+    --hf-on:#1D1D22; --hf-on60:#4A4A55; --hf-on45:#5E5E6B; --hf-line:#E3CDD0;
+    --hf-red:#D84E55; --hf-vw:390px; --hf-vh:844px; --hf-s:1;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{
+    font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    color:var(--hf-on);
+    background:linear-gradient(140deg,var(--hf-bg1) 0%,var(--hf-bg2) 55%,var(--hf-bg3) 100%);
+    -webkit-font-smoothing:antialiased;
+  }
+  /* Figma writes font-['Inter:Bold'] etc; the weight class carries the weight,
+     so neutralise the invalid family and let Inter through. */
+  [class*="font-['Inter"]{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+
+  .hf-layout{display:flex;gap:0;height:100vh;padding:24px;align-items:flex-start}
+  .hf-panel{
+    width:302px;flex:0 0 302px;height:calc(100vh - 48px);
+    overflow-y:auto;padding:10px;display:flex;flex-direction:column;gap:20px;
+  }
+  .hf-lock{display:flex;flex-direction:column;gap:6px}
+  .hf-logo{font-size:30px;font-weight:800;letter-spacing:-.02em;color:var(--hf-red);line-height:1}
+  .hf-kicker{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--hf-on45);font-weight:600}
+  .hf-lede{font-size:13px;line-height:1.5;color:var(--hf-on60);margin:0}
+  .hf-h{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--hf-on45);font-weight:600;margin:0 0 6px}
+  .hf-rail{display:flex;flex-direction:column;align-items:flex-start;gap:1px}
+  .hf-rail button{
+    font:inherit;font-size:13px;line-height:1.35;color:var(--hf-on60);background:none;border:0;
+    padding:5px 9px;border-radius:7px;cursor:pointer;text-align:left;display:flex;gap:9px;
+  }
+  .hf-rail button:hover{background:rgba(216,78,85,.09);color:var(--hf-on)}
+  .hf-rail button[aria-current="true"]{background:var(--hf-red);color:#fff;font-weight:600}
+  .hf-rail button[aria-current="true"] .hf-railn{color:rgba(255,255,255,.8)}
+  .hf-railn{font-variant-numeric:tabular-nums;color:var(--hf-on45);min-width:24px}
+  .hf-note{font-size:12px;line-height:1.5;color:var(--hf-on45);margin:0}
+  .hf-note b{color:var(--hf-on60);font-weight:600}
+  .hf-steps{display:flex;gap:8px;align-items:center}
+  .hf-steps button{
+    font:inherit;font-size:13px;font-weight:600;padding:7px 14px;border-radius:999px;cursor:pointer;
+    border:1px solid var(--hf-line);background:rgba(255,255,255,.65);color:var(--hf-on);
+  }
+  .hf-steps button:hover{background:#fff}
+  .hf-steps button:disabled{opacity:.4;cursor:default}
+  .hf-count{font-size:12px;color:var(--hf-on45);font-variant-numeric:tabular-nums}
+
+  .hf-stage{flex:1;display:flex;align-items:center;justify-content:safe center;height:calc(100vh - 48px);overflow:auto}
+  .hf-device{
+    width:var(--hf-vw);height:var(--hf-vh);flex:none;
+    transform:scale(var(--hf-s));transform-origin:center center;
+    border-radius:44px;background:#fff;
+    box-shadow:0 0 0 11px #14141a,0 0 0 13px #2c2c34,0 26px 60px rgba(30,10,14,.28);
+    overflow:hidden;position:relative;
+  }
+  .hf-viewport{position:absolute;inset:0;overflow:hidden}
+
+  /* ─── the prototype itself ─── */
+  .screen{position:absolute;inset:0;overflow:hidden;background:#fff}
+  .screen[hidden]{display:none}
+  .scroll{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+  .scroll::-webkit-scrollbar{width:0;height:0}
+  .scroll > div{width:390px;min-height:844px}
+  .overlay{position:absolute;inset:0;pointer-events:none}
+  .overlay > *{pointer-events:auto}
+  .hf-hot{cursor:pointer}
+  .hf-hot:active{filter:brightness(.96)}
+
+  /* session mode: ?test — chrome away, phone fills the window */
+  body.hf-test .hf-panel{display:none}
+  body.hf-test .hf-layout{padding:0}
+  body.hf-test .hf-stage{height:100vh}
+
+  @media (max-width:1180px){
+    .hf-layout{flex-direction:column;height:auto;padding:16px;gap:16px}
+    .hf-panel{width:100%;flex:none;height:auto;overflow:visible}
+    .hf-stage{height:auto;width:100%}
+  }
+  @media (max-width:520px){
+    .hf-panel{display:none}
+    .hf-layout{padding:0}
+    .hf-device{border-radius:0;box-shadow:none}
+  }
+</style>
+</head>
+<body>
+<div class="hf-layout">
+  <aside class="hf-panel">
+    <div class="hf-lock">
+      <div class="hf-logo">redBus</div>
+      <div class="hf-kicker">Return capture · hi-fi</div>
+    </div>
+    <p class="hf-lede">The Figma frames from <b>Screens · redBus return capture (iPhone 14)</b>, built in code.
+      23 screens, walked in the order they are arranged on the canvas.</p>
+    <div class="hf-steps">
+      <button id="hf-prev" type="button">← Back</button>
+      <button id="hf-next" type="button">Next →</button>
+      <span class="hf-count" id="hf-count"></span>
+    </div>
+    <div>
+      <p class="hf-h">Screens</p>
+      <nav class="hf-rail" id="hf-rail"><!--RAIL--></nav>
+    </div>
+    <p class="hf-note">Tap the real control on each screen to move forward — the button, the bus card,
+      the payment row. The chevron goes back. Arrow keys work too.</p>
+  </aside>
+
+  <div class="hf-stage">
+    <div class="hf-device">
+      <div class="hf-viewport" id="hf-viewport">
+<!--SCREENS-->
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  /*FLOW*/
+  var BACK = '[data-name="Back"],[data-name="Button / Close"]';
+  var vp    = document.getElementById('hf-viewport');
+  var rail  = document.getElementById('hf-rail');
+  var count = document.getElementById('hf-count');
+  var prevB = document.getElementById('hf-prev');
+  var nextB = document.getElementById('hf-next');
+  var screens = ORDER.map(function(id){ return vp.querySelector('[data-screen="'+id+'"]'); });
+  var rows = Array.prototype.slice.call(rail.querySelectorAll('button'));
+  var at = 0;
+
+  // 1 · Figma pins bottom bars, tab bars, sheets and the FAB to the viewport
+  //     ("Fixed position when scrolling"). Here they are absolute children of a
+  //     frame taller than the screen, so lift them out of the scroller.
+  screens.forEach(function(sec){
+    var root = sec.querySelector('.scroll > div');
+    var layer = sec.querySelector('.overlay');
+    Array.prototype.slice.call(root.children).forEach(function(el){
+      var c = el.className || '';
+      if (typeof c === 'string' && /(^|\s)absolute(\s|$)/.test(c) && /(^|\s)bottom-/.test(c)) {
+        layer.appendChild(el);
+      }
+    });
+  });
+
+  // 2 · hotspots
+  function markHot(sec, sel, kind, fn){
+    if (!sel) return 0;
+    var found = sec.querySelectorAll(sel);
+    Array.prototype.forEach.call(found, function(el){
+      el.classList.add('hf-hot', kind);
+      el.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); fn(); });
+    });
+    return found.length;
+  }
+  screens.forEach(function(sec, i){
+    var n = 0;
+    (FORWARD[ORDER[i]] || []).forEach(function(sel){
+      n += markHot(sec, sel, 'hf-fwd', function(){ go(i + 1); });
+    });
+    markHot(sec, BACK, 'hf-back', function(){ go(i - 1); });
+    // last screen has nowhere to go; every other screen must have a way forward
+    if (n === 0 && i < screens.length - 1) console.warn('no forward hotspot on ' + ORDER[i]);
+  });
+
+  // 3 · navigation
+  function go(i){
+    if (i < 0 || i >= screens.length) return;
+    screens[at].hidden = true;
+    at = i;
+    var sec = screens[at];
+    sec.hidden = false;
+    sec.querySelector('.scroll').scrollTop = 0;
+    rows.forEach(function(r, k){ r.setAttribute('aria-current', String(k === at)); });
+    var cur = rows[at];
+    if (cur && cur.scrollIntoView) cur.scrollIntoView({ block: 'nearest' });
+    count.textContent = (at + 1) + ' / ' + screens.length;
+    prevB.disabled = at === 0;
+    nextB.disabled = at === screens.length - 1;
+    if (history.replaceState) history.replaceState(null, '', '#' + ORDER[at]);
+    document.title = NAMES[at] + ' — redBus hi-fi';
+  }
+  rows.forEach(function(r){ r.addEventListener('click', function(){ go(+r.dataset.go); }); });
+  prevB.addEventListener('click', function(){ go(at - 1); });
+  nextB.addEventListener('click', function(){ go(at + 1); });
+  document.addEventListener('keydown', function(e){
+    if (e.target && /^(INPUT|TEXTAREA)$/.test(e.target.tagName)) return;
+    if (e.key === 'ArrowRight') go(at + 1);
+    if (e.key === 'ArrowLeft')  go(at - 1);
+  });
+
+  // 4 · fit the phone to the window, and honour ?test / #screen
+  function fit(){
+    var stage = document.querySelector('.hf-stage');
+    var pad = window.innerWidth <= 520 ? 0 : 32;
+    var sh = (stage.clientHeight || window.innerHeight) - pad;
+    var sw = (stage.clientWidth  || window.innerWidth)  - pad;
+    var cap = document.body.classList.contains('hf-test') ? 1.15 : 1;
+    var s = Math.min(sh / 844, sw / 390, cap);
+    if (window.innerWidth <= 520) s = Math.min(window.innerWidth / 390, window.innerHeight / 844);
+    document.documentElement.style.setProperty('--hf-s', String(s));
+    stage.style.minHeight = (844 * s + pad) + 'px';
+  }
+  if (/[?&]test\b/.test(location.search)) document.body.classList.add('hf-test');
+  var want = (location.hash || '').replace('#','') ||
+             (new URLSearchParams(location.search).get('screen') || '');
+  var idx = ORDER.indexOf(want);
+  go(idx >= 0 ? idx : 0);
+  fit();
+  window.addEventListener('resize', fit);
+})();
+</script>
+</body>
+</html>

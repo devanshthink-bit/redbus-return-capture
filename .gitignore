@@ -5,3 +5,12 @@ raw/
 .DS_Store
 
 transcript/
+
+# hi-fi prototype build artefacts (the built index.html, app.css and assets DO ship)
+hifi/node_modules/
+hifi/build/venv/
+hifi/build/shots/
+hifi/build/ref/
+hifi/build/screens.cjs
+hifi/build/_probe.cjs
+hifi/build/figma_nodes.json
