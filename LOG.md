@@ -5426,3 +5426,30 @@ backstop, and shows a loading line meanwhile. 746ms against seconds. **The class
 event that means "everything has arrived" used where "the thing I need has arrived" was meant.**
 The general rule is the one §4 already states for deploys — check the published site, not the
 local one — and this is the first time it caught something the local checks could not.
+
+LEARNED · 2026-09-05 · (no skill) · Source: user
+**`size-full` on a Figma frame root means "one viewport", not "the whole page".** He asked why the
+grey background stopped partway down the hi-fi screens. Every frame root carries Figma's
+`size-full` — `height:100%` — and inside an 844px scroller that pins it to 844 while the content
+runs on to 1,700 or 5,000. The page colour painted the first screenful and the white underneath
+showed through everything below it, on **19 of the 23 screens**. The root now takes its height
+from its content, with 844 as the floor.
+
+**Why every check passed anyway, which is the part worth keeping.** The screenshot harness gave
+each frame an explicit height, so `size-full` resolved to the whole frame and the harness never
+had the geometry that breaks. 1,730 node heights and 23 pixel diffs all agreed with Figma —
+because they were measuring the right pixels in the *wrong container*. A harness that fixes the
+thing the bug depends on cannot see the bug. **Measure in the shipping container, not a stand-in
+built for measuring.**
+
+CHANGE · 2026-09-05 · (no skill) · Source: user
+**Rail labels stop at the dot.** *"dont use words after dot. do it like lofi"* — the hi-fi rail read
+*Return · pick your days* where the lo-fi reads *Return*. Now cut at the `·`.
+
+**It collapses seven rows into three repeated labels** — *Seat map* twice, *Return* three times,
+*Your return* twice — because Figma names a state variant `screen · state`, and the dot is exactly
+what separated them. The rows still drive the right screens; they no longer say which is which.
+Done as asked and flagged rather than quietly worked around. Note this cuts against
+[[repeated-qualifier-belongs-to-the-group]], which says the repeated word is the heading and the
+qualifier is the content — by that rule the half to keep would have been *pick your days*. His
+call, made with the list in front of him.
