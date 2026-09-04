@@ -507,9 +507,6 @@ body.hifi-on #screenrail,body.hifi-on #staterail,body.hifi-on #legacyrail,
 body.hifi-on .legacynote,body.hifi-on #vgrp{display:none}
 #hifirail{display:none}
 body.hifi-on #hifirail{display:block}
-#hifirail .hfnum{font-family:var(--s-mono);font-size:11px;color:var(--s-on-45);
- min-width:26px;display:inline-block}
-body.hifi-on #hifirail button[aria-pressed="true"] .hfnum{color:rgba(255,255,255,.75)}
 #legacyrail{display:none}
 body.legacy-on #legacyrail{display:block}
 .legacynote{display:none;font-size:13px;line-height:1.55;color:var(--s-on-60)}
@@ -2957,27 +2954,31 @@ function buildHifiRail(){
   const RUN_START = ['01','05','08','11','13'];
   const list = document.createElement('div');
   list.className = 'dev';
-  const mine = rows.map(src => {
+  const names = rows.map(src => {
+    const id = (src.querySelector('.railn') || {}).textContent || '';
+    return {id:id, name:src.textContent.slice(id.length)};
+  });
+  const mine = rows.map((src, i) => {
     const b = document.createElement('button');
     b.type = 'button';
-    const id = (src.querySelector('.railn') || {}).textContent || '';
-    if(RUN_START.includes(id)) b.className = 'runstart';
-    b.innerHTML = '<span class="hfnum">' + id + '</span>' +
-                  src.textContent.slice(id.length).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+    b.textContent = names[i].name;
+    if(RUN_START.includes(names[i].id)) b.className = 'runstart';
     b.onclick = () => { src.click(); setTimeout(sync,0); };
     list.appendChild(b);
     return b;
   });
   host.appendChild(list);
   function sync(){
-    let on = null;
+    let onIdx = -1;
     rows.forEach((src,i) => {
       const p = src.getAttribute('aria-current') === 'true';
       mine[i].setAttribute('aria-pressed', p ? 'true' : 'false');
-      if(p) on = src;
+      if(p) onIdx = i;
     });
-    document.getElementById('caption').innerHTML =
-      on ? '<b>' + on.textContent.replace(/^[0-9a-b]+\s*/,'') + '</b>' : '';
+    const cap = document.getElementById('caption');
+    cap.textContent = '';
+    if(onIdx >= 0){ const bold = document.createElement('b');
+      bold.textContent = names[onIdx].name; cap.appendChild(bold); }
   }
   /* the hi-fi navigates itself when a control inside a screen is tapped, so watch it
      rather than only reacting to the rail */
