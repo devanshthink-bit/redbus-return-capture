@@ -5231,3 +5231,20 @@ LEARNED · 2026-09-04 · (no skill)
 **A frame shorter than the device is not a screen.** Four state frames had been sized to their
 content, which is what auto-layout wants, and every one of them looked unfinished on the canvas
 regardless of being correct. Screens are a fixed size; only their content is variable.
+
+DECISION · 2026-09-04 · (no skill) · Source: user
+**The six passengers belong inside the ticket, behind the Ticket details tap.** Devansh, twice:
+*"passenger card shud come inside the ticket no point showing them outside"*, then *"i mean it shud
+come when user taps ticket details"*. I had built it as a separate Passengers card sitting below the
+ticket, which is neither — it is a second object claiming to be part of the first. The list is now
+inside the ticket card and **below the perforation and the Ticket details link**, because that is
+what the tap opens. The collapsed ticket still summarises above the perforation: *Devansh Somvanshi
++ 5*, and a *6 seats* badge. The frame is named *Ticket details tapped* so it is not mistaken for
+the resting state.
+
+LEARNED · 2026-09-04 · (no skill)
+**Where a thing sits says when it appears.** Above the perforation reads as always there; below the
+*Ticket details* link reads as revealed by it. Same six rows, same styling, and the placement alone
+carries the interaction. Getting it wrong made the screen claim the ticket always lists six people.
+Adding the rows also meant detaching that ticket instance — Figma instances accept no new children —
+which is a real cost, and worth it only because this frame is a state, not a component.

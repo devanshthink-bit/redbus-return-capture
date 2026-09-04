@@ -742,7 +742,7 @@ frames. The Screens section is untouched.
 | S9 · No other days | `nothingearlier` | nothing to move to | Change day |
 | S10 · Seat lost mid-swap | `swapfail` | it went **while you moved** | Confirm the move |
 | S11 · Return dropped | `noreturn` | booked one way | Ticket details **and** Booking confirmed |
-| S12 · Six passengers | `crowded` | the group case | Review **and** Ticket details |
+| S12 · Six passengers | `crowded` | the group case | Review **and** Ticket details, tapped open |
 
 ### A state earns a second screen only by changing the design (4 Sep)
 
@@ -774,9 +774,13 @@ or not a frame shows it.
   in a paint function. The S1 frame is right — it drops 42 visible layers from Review — but it was
   designed, not measured. Same limitation that made `crowded` need the whole walk before Review
   would render six passengers.
-- **S12b's Passengers card is in Figma and not in the build.** A group ticket that never names who
-  is travelling is a real gap, and the card is the fix, but the prototype's Ticket details screen
-  does not have it yet.
+- **S12b's passenger list is in Figma and not in the build.** A group ticket that never names who is
+  travelling is a real gap. The list lives **inside the ticket card, under the *Ticket details*
+  link** — it is what that tap reveals, not a second card floating below the ticket, and not
+  something the collapsed ticket shows. The ticket still summarises above the perforation:
+  *Devansh Somvanshi + 5* and a *6 seats* badge. The prototype does not have any of this yet.
+  Putting it there meant detaching that one ticket instance, because an instance takes no new
+  children.
 
 **Two pairs of states share one design.** S4 · Past cutoff and S5 · Already moved are structurally
 identical — the same layers removed from the ticket screen, one line of copy apart — and so are
