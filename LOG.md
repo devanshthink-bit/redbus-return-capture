@@ -5276,3 +5276,85 @@ Verified on the deployed build: the 18 × 13 state matrix renders 234 cells with
 empty screen; the toggle opens, relabels, closes and relabels; the ticket's Back still lands on
 Booking confirmed and no Back on any screen points at a screen that does not exist; and the seat
 wording reads *Seat U4 · Seat U5* at one passenger and *6 seats* at six.
+
+DECISION · 2026-09-04 · (no skill) · Source: user
+**The hi-fi Figma screens become a coded prototype, at their own URL.** He asked for it in one
+message: *"build me a fully working prototype of the high-fidelity UI screens in this Figma file…
+Not by connections, but by code. Use actual assets, components from figma… 100% like it with no
+difference anywhere… Make a different URL for the high-fidelity prototype."* It lives at
+`/hifi/`, so the lo-fi viewer at the root is untouched — no file outside `hifi/` changed except
+`.gitignore`. This is §20's *"the Figma screens are going to become a coded working prototype run
+on real phones"* actually happening.
+
+DECISION · 2026-09-04 · (no skill)
+**The screens are not re-drawn, they are the Figma output.** Each `hifi/src/screens/*.tsx` is what
+the Figma MCP `get_design_context` returned for that frame, with exactly one edit: the asset URLs
+rewritten to the 237 files now in `hifi/assets/`. Nothing was re-authored from a screenshot, so
+there is no place for taste to leak in. `build/build.mjs` renders them once with
+`react-dom/server`, which keeps React a build dependency and ships plain HTML plus one Tailwind
+stylesheet — a runtime JSX compiler on 23 frames would have been slower and no more faithful.
+**Treat those files as generated:** to change a screen, change it in Figma and re-pull.
+
+LEARNED · 2026-09-04 · (no skill)
+**Figma MCP asset URLs expire in seven days.** The response says so in passing and it is easy to
+skim past — a prototype that referenced them would have looked perfect for a week and then gone
+blank. All 237 are downloaded and committed. The general rule: if a tool hands you a URL and calls
+it temporary, the artefact is not yours until you have the bytes.
+
+LEARNED · 2026-09-04 · (no skill)
+**JSX attributes do not process backslash escapes, and that is what makes the Tailwind classes
+work.** Figma emits `className="bg-[var(--surface\/page,#f2f2f7)]"`. In a JS string `\/` collapses
+to `/`; in a JSX attribute it stays a literal backslash — which is exactly what Tailwind's
+generated selector expects. Reading those files as if the escapes resolved would have led to
+"fixing" them and breaking every colour on every screen. Verified by computed style, not by
+reading: the probe element reports `rgb(242, 242, 247)`.
+
+CHANGE · 2026-09-04 · (no skill)
+**Pinned bars are lifted out of the scroller.** Figma marks bottom bars, tab bars, bottom sheets
+and the Ask Ray FAB *Fixed position when scrolling*; in the exported code they are `absolute`
+children with a `bottom-*` class, which inside a frame taller than the screen puts them at the
+bottom of the **content**, not the viewport. The shell moves every direct child of a screen root
+carrying both `absolute` and `bottom-` into an overlay layer pinned to the viewport. That one rule
+catches exactly the right set — the action bars, both tab bars, three sheets and two FABs — and
+nothing else.
+
+CRITIQUE · 2026-09-04 · (no skill)
+**"100% like it" is a claim that needs a number, so it got one.** Two independent checks, because
+each is blind to what the other sees. Geometry: 1,730 nodes matched by `data-node-id` against the
+Figma metadata — three blocks off by more than 4px. Pixels: all 23 frames rendered headless at
+native size and diffed against Figma's own renders — mean 5.2% of pixels differing, worst 12.4%,
+at most 12px of cumulative drift over a 3,519px screen. The residue is glyph rasterisation and
+sub-pixel line-height accumulation, which is the same finding §20 already records as *"rendered
+type measures 3–5% wider than Inter"*. **It is not pixel-identical and should not be described
+that way.**
+
+LEARNED · 2026-09-04 · (no skill)
+**A drift profile separates a real bug from accumulation.** Measuring one number for a whole
+screen said 02 and 01 were equally bad. Measuring the best vertical offset in bands down the page
+said something quite different: 01 crept +0 → +12 over 3,519px, while 02 sat at exactly 0 until
+y≈1920 and then **stepped** to −20 and held. A step is one block with a wrong height; a ramp is
+line-height accumulation and is not worth chasing. Only one of the two was fixable, and the
+profile is what said which.
+
+CHANGE · 2026-09-04 · (no skill)
+**The empty amenities row, again.** §"The empty-row trap" recorded this for Figma and it came back
+in code: `Card / Bus` renders its amenities row with no chips on the two *top rated* cards, and a
+flex row with no children is 0 tall where Figma's auto-layout row keeps its own 24px. Twice on one
+screen, 24px each. The fix is `min-h-[24px]` on the row, which cannot move a populated one because
+every chip in it is 24px — and it is what Figma's own exporter emits for the same empty row on
+screens 07 and 14, so it is a correction toward the file rather than a judgement call. Screen 02
+went from 11.9% differing pixels and −20px drift to 6.0% and +2px.
+
+LEARNED · 2026-09-04 · (no skill)
+**A headless screenshot can lie about fonts, and a single run cannot tell you.** Screen 06 measured
+4.6% differing, then 6.4% on a re-run I had not changed anything for. Two passes at a longer
+virtual-time budget agree with each other to **0.00%** and land back at 4.6% — the odd reading was
+Inter not having loaded. Any visual-regression number taken from one render is worth what one
+render costs. Shoot twice and compare the shots to each other before comparing either to the truth.
+
+NOTE · 2026-09-04 · (no skill)
+**Where the canvas order and the semantic flow disagree.** The prototype walks the frames in the
+order they are arranged, which is what he asked for. §18's own table differs in two places: it has
+11 → 13 (Ticket details straight to Change day) and calls 12 · My Bookings an entry point reached
+from the tab bar rather than the step after 11. On the canvas 11 → 12 → 13, and that is what the
+build does. Worth knowing before anyone reads the two as contradicting each other.

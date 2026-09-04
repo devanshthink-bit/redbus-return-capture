@@ -68,6 +68,7 @@ on push. `raw/` (interview transcripts) is gitignored.
 | `frozen/v1.html` · `frozen/v2.html` · `frozen/prototype.html` | the other frozen builds |
 | `v1.html` · `v2.html` · `v3.html` · `prototype.html` | redirects to `/?version=N` |
 | `component-sheet.html` | Design-language component sheet |
+| `hifi/` | **The hi-fi prototype** — the 23 Figma frames as working code, served at `/hifi/`. `index.html` and `app.css` are generated; see §21 |
 
 **Source material** (not in the repo): `/Users/devansh/Downloads/RedBus Case Docs/` — 8 interview
 transcripts, scope card and research plan PDFs, `redfigjam.pdf`, `PAM03L08.pdf`, and two screenshot
@@ -80,9 +81,13 @@ folder name** — PAM04L01–L04, PAM05L03.
 ## 4. Live URLs
 
 ```
-all four   https://devanshthink-bit.github.io/redbus-return-capture/     <- the only one to hand out
+all four   https://devanshthink-bit.github.io/redbus-return-capture/       <- the lo-fi, all versions
+hi-fi      https://devanshthink-bit.github.io/redbus-return-capture/hifi/  <- the Figma screens, in code
 board      https://devanshthink-bit.github.io/redbus-return-capture/artefacts.html
 ```
+**Two prototypes now, at two URLs.** The root is the lo-fi viewer carrying v1–v4. `/hifi/` is the
+hi-fi Figma build — a different deliverable, not a version of the first. Nothing at the root
+changed when it was added and nothing links the two; hand out whichever the room needs.
 **There is no separate link for a version any more.** `/v1.html`, `/v2.html`, `/v3.html` and
 `/prototype.html` are redirects to `/?version=N`, so an old link opens the viewer on the version it
 asked for. The builds themselves moved to `frozen/`, where only the iframe reaches them — a URL
@@ -1891,3 +1896,74 @@ Images kept on 03b: two bus photographs, the Primo bus illustration, three small
   cost real time; the first was the 100x100 spacer frames on the review screen.
 - A component's name tells you nothing about its contents. The "icons" that were PNGs only gave
   themselves away when recolouring one turned it into a solid blue square.
+
+## 21 · The hi-fi prototype in code — `/hifi/` (4 Sep 2026)
+
+§20 said the Figma screens were going to become "a coded working prototype run on real phones".
+This is that, and it is a **separate deliverable at a separate URL**:
+`https://devanshthink-bit.github.io/redbus-return-capture/hifi/`. The lo-fi viewer at the root is
+untouched — adding this changed no file outside `hifi/` except `.gitignore`.
+
+All **23 frames** of *Screens · redBus return capture (iPhone 14)*, at 390 × 844, walked in the
+order they are arranged on the canvas.
+
+### The screens are generated, not authored
+
+Each `hifi/src/screens/*.tsx` is the Figma MCP `get_design_context` output for that frame with
+**one** edit: asset URLs rewritten to local files. Nothing was rebuilt from a screenshot, so
+there is nowhere for taste to leak in. **To change a screen, change it in Figma and re-pull** —
+hand-editing those files puts them out of sync with the file they came from.
+
+```bash
+node build/build.mjs                                    # screens -> index.html (react-dom/server)
+npx @tailwindcss/cli -i build/tw.css -o app.css --minify
+```
+
+React is a **build** dependency only; the page ships as static HTML plus one stylesheet.
+
+- **237 assets are committed** under `hifi/assets/`. Figma's MCP asset URLs expire after seven
+  days — a prototype pointing at them would look perfect for a week and then go blank.
+- **`build/shell.html`** is the chrome around the phone and the flow map. Every class in it is
+  `hf-` prefixed, because the shell shares a page with the screens' Tailwind classes and §7
+  records what class-name collisions cost last time.
+
+### Two traps in the exported code
+
+1. **JSX attributes do not process backslash escapes.** Figma writes
+   `className="bg-[var(--surface\/page,#f2f2f7)]"`. In a JS string `\/` collapses to `/`; in a JSX
+   attribute the backslash survives — and Tailwind's generated selector expects it. "Tidying"
+   those escapes breaks every colour on every screen. Check by computed style, not by reading.
+2. **Figma's fixed bars are `absolute bottom-*` children.** Inside a frame taller than the screen
+   that puts them at the bottom of the *content*, not the viewport. The shell lifts every direct
+   child of a screen root carrying both `absolute` and `bottom-` into an overlay pinned to the
+   viewport — which catches exactly the action bars, both tab bars, three sheets and two FABs.
+
+### The flow
+
+Forward is each screen's **own** control — the button, a bus card, a payment row, the booking card;
+back is the chevron or close. Five frames have no back control in Figma (01, 03b, 10, 12, 16) and
+so have none here. Verified by clicking: 01 → 16 forward, and back from every screen that has one.
+
+**Where the canvas order and §18's table disagree:** §18 has 11 → 13 and treats 12 · My Bookings as
+a tab-bar entry point. The canvas reads 11 → 12 → 13, and the build follows the canvas, because
+that is what was asked for. Not a bug — a different question being answered.
+
+### How close it actually is
+
+Two checks, because each is blind to what the other sees.
+
+| | |
+|---|---|
+| **Geometry** | 1,730 nodes matched by `data-node-id` against the Figma metadata. **Three** blocks off by more than 4px |
+| **Pixels** | all 23 frames rendered headless at native size, diffed against Figma's own renders: **mean 5.2%** of pixels differing, **worst 12.4%** (01 and 03b, the tallest), **≤12px** cumulative drift over a 3,519px screen |
+
+**It is not pixel-identical and must not be described as such.** The residue is glyph
+rasterisation plus sub-pixel line-height accumulation — the same effect §20 records as rendered
+type measuring 3–5% wider than Inter. A *step* in the drift profile is a real bug; a *ramp* is
+accumulation and is not worth chasing. That distinction found the one genuine defect: `Card / Bus`
+collapsed its empty amenities row to 0 where Figma keeps it at 24px, twice on screen 02.
+`min-h-[24px]` fixed it — 11.9% → 6.0% differing, −20px → +2px drift.
+
+**Take any visual-regression number from two renders, not one.** Screen 06 read 4.6% then 6.4%
+with nothing changed in between; two passes at a longer virtual-time budget agree to 0.00% and
+land back at 4.6%. The odd reading was Inter not having loaded.

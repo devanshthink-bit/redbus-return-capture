@@ -54,6 +54,14 @@ Do not start work, answer a question about the project, or change a file until y
   builds, byte-for-byte. Only the viewer loads them, in an iframe
 - `v1.html` · `v2.html` · `v3.html` · `prototype.html` — **redirects** to `/?version=N`, so an old
   link opens the viewer on the version it asked for instead of a bare prototype
+- `hifi/` — **the hi-fi prototype: the 23 Figma frames as working code**, served at `/hifi/`. A
+  separate deliverable from the lo-fi at the root, not a version of it. `hifi/index.html` and
+  `hifi/app.css` are **generated** — rebuild with `node hifi/build/build.mjs`, never hand-edit.
+  `hifi/src/screens/*.tsx` are the Figma MCP output for each frame and are generated too: to
+  change a screen, change it in Figma and re-pull. `CONTEXT.md` §21 has the traps
+
+**`hifi/` is not `index.html`.** Nothing in the hi-fi build touches the root prototype, and the
+root's version switch does not know about it. Keep it that way unless asked.
 
 Repo is public and auto-deploys to GitHub Pages on push. Deploys take 45–90 seconds; verify with
 `curl` + `md5` before telling the user it is live.
