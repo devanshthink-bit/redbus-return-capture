@@ -780,7 +780,10 @@ or not a frame shows it.
   something the collapsed ticket shows. The ticket still summarises above the perforation:
   *Devansh Somvanshi + 5* and a *6 seats* badge. The prototype does not have any of this yet.
   Putting it there meant detaching that one ticket instance, because an instance takes no new
-  children.
+  children. **The rows carry a name and a seat and nothing else** — no avatar, no rule between them,
+  no age or gender. The first build had all three and read as clutter: six empty circles and five
+  hairlines around twelve lines of type. A ticket answers *who, and where do they sit*; passenger
+  details is where the rest belongs.
 
 **Two pairs of states share one design.** S4 · Past cutoff and S5 · Already moved are structurally
 identical — the same layers removed from the ticket screen, one line of copy apart — and so are

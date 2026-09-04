@@ -5248,3 +5248,17 @@ LEARNED · 2026-09-04 · (no skill)
 carries the interaction. Getting it wrong made the screen claim the ticket always lists six people.
 Adding the rows also meant detaching that ticket instance — Figma instances accept no new children —
 which is a real cost, and worth it only because this frame is a state, not a component.
+
+CHANGE · 2026-09-04 · (no skill) · Source: user
+**The passenger list was cluttered, and most of it was decoration.** Devansh, one word: *"cluttered"*.
+Six rows had carried an avatar circle, a name, a second grey line of age and gender, and a hairline
+rule between each pair — six empty circles, five rules and twelve lines of type to say six things.
+The rows are now one line each: name on the left, seat on the right, separated by spacing. Age and
+gender went back to passenger details, where they are used. The operator name also stopped wrapping
+once the seat badge lost four points of padding.
+
+LEARNED · 2026-09-04 · (no skill)
+**An avatar with no picture in it is not an avatar.** The circles came from the passenger-selection
+row, where they sit beside a checkbox and help you pick a person out. On a ticket nobody is picking
+anyone — the list is a record — so the circle is a coloured dot repeated six times. Reusing a row
+carries its reasons as well as its layout, and the reasons do not always travel.
