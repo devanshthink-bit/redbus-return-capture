@@ -5187,3 +5187,27 @@ layer tree against the base frame gave a number instead of an impression: +56, +
 The first pass of that test missed S1 entirely, because its return leg is *hidden*, not deleted, and
 `findAll` returns hidden nodes. Walking with a visibility flag found the 42 layers it drops. Any
 structural diff in Figma has to carry visibility or it will call a blanked screen unchanged.
+
+DECISION · 2026-09-04 · (no skill) · Source: user
+**One section, state by state, and a second screen only where the design changes.** Devansh:
+*"If any states need multiple screens, build those, but they need to have a substantial design
+change. Ignore where the change is very obvious or very minimal... Everything should be properly
+organized in one section only, state-wise."* The two sections are now one — *States · every way the
+promise can fail* — twelve bands, each a label with that state's screens beneath it. The Screens
+section was not touched.
+
+CHANGE · 2026-09-04 · (no skill)
+**Every state was measured, not judged.** Each was set in the deployed build and every screen's
+visible DOM diffed against the same screen in `default`. `noreturn` was the only state that earned a
+new frame: Booking confirmed loses the whole return leg *and* the whole *Changing your return day*
+block — 29 elements — which no other frame shows. `loading` and `checkfail` do change Change day as
+well, but with the same skeleton and the same blank state already drawn on Your return, so a second
+frame would repeat a design rather than add one. `offline` puts the same banner on eight screens.
+`pastcutoff` and `alreadymoved` move three layers on My Bookings. All skipped.
+
+LEARNED · 2026-09-04 · (no skill)
+**A state driven by the flow cannot be measured by setting it.** `noguard` returns no diff at all
+from a plain `setState`, because the guard acts on the way through, not in a paint function — the
+same reason `crowded` showed one passenger until the whole booking was walked. So the sweep proves
+what it found and not what it missed: S1 is designed, not measured, and the entry above says so
+rather than pretending the number covers it.

@@ -725,64 +725,63 @@ not from memory. **21 frames = 16 screens + 5 state variants.**
    *Confirm the move*, because there is nothing to choose.
 4. **05 → 06** is the window path. A single date behaves differently: see §7.
 
-**Five states are now in Figma**, in their own section — *States · when the promise cannot be kept*.
-Chosen so each fails in a **different** way; five failures of the same kind would only show one:
+**Every state lives in one section**, *States · every way the promise can fail*, laid out state by
+state: a label, then that state's screens beneath it, then the next state. Twelve bands, fourteen
+frames. The Screens section is untouched.
 
-| Frame | State | What it proves | Built on |
+| Band | State | What it proves | Screens |
 |---|---|---|---|
-| S1 · Route has none | `noguard` | the **precondition is missing** — no operator here allows a date change, so the return step never runs and Review shows the onward alone | 08, return leg + date-change block hidden, amount ₹1,920 |
-| S3 · Return seat gone | `seatgone` | the **held thing is lost** — *Seat U5 is gone, someone just booked it. Your onward trip is fine.* Pay is held back | 08, error card above the journey |
-| S4 · Past cutoff | `pastcutoff` | the promise has an **expiry** — *Too late to change. Changes close 8 hours before the bus leaves.* | 11, change row off |
-| S5 · Already moved | `alreadymoved` | the promise has a **count** — *You have used your one change. This ticket is final.* | 11, change row off |
-| S2 · None in window | `none` | the **input can yield nothing** — the window they gave has no changeable day | 06, content replaced by the blank state |
-
-**Coordinates inside a Figma section are relative to the section, not to the page.** Setting a child's
-`y` to an absolute page value puts it that far *below* the section's top — the five states were parked
-at absolute y 26,580 inside a section 3,464 tall, and the section drew an empty box around nothing.
-The tell was `get_screenshot` on the section rendering 16,609px tall; `absoluteBoundingBox` is what
-proves it. The Screens section works because its children's values were already small.
-
-**All thirteen states are now in Figma**, in two rows. The first five are the argument; the second
-row, *Also handled*, is the rest — they matter for completeness, not for the case study's spine:
-
-| Frame | State | Where it shows |
-|---|---|---|
-| S6 · Loading | `loading` | 06, skeleton cards, no action bar |
-| S7 · Can't check | `checkfail` | 06, *We couldn't check those days · Nothing was charged. Your onward trip is not affected.* |
-| S8 · Offline | `offline` | the `#A45729` banner directly under the nav, drawn on 05 |
-| S9 · No other days | `nothingearlier` | 13, *No other days to pick · There is no other day in your range.* |
-| S10 · Seat lost mid-swap | `swapfail` | 15, *That seat is gone* with Confirm held back |
-| S11 · Return dropped | `noreturn` | 11, *No return booked · You booked this trip one way.*, change row hidden |
-| S12 · Six passengers | `crowded` | its own section — Review with six passenger rows, and Ticket details with the Passengers card. See below |
+| S1 · Route has none | `noguard` | the **precondition is missing** — no operator here allows a date change, so the return step never runs | Review without a return |
+| S2 · None in window | `none` | the **input can yield nothing** — the window they gave has no changeable day | Your return |
+| S3 · Return seat gone | `seatgone` | the **held thing is lost** — Pay is held back | Review |
+| S4 · Past cutoff | `pastcutoff` | the promise has an **expiry** | Ticket details |
+| S5 · Already moved | `alreadymoved` | the promise has a **count** | Ticket details |
+| S6 · Loading | `loading` | before the answer arrives | Your return |
+| S7 · Can't check | `checkfail` | the answer is **unknown** | Your return |
+| S8 · Offline | `offline` | the check **cannot run** | Pick your days |
+| S9 · No other days | `nothingearlier` | nothing to move to | Change day |
+| S10 · Seat lost mid-swap | `swapfail` | it went **while you moved** | Confirm the move |
+| S11 · Return dropped | `noreturn` | booked one way | Ticket details **and** Booking confirmed |
+| S12 · Six passengers | `crowded` | the group case | Review **and** Ticket details |
 
 ### A state earns a second screen only by changing the design (4 Sep)
 
-`crowded` touches the whole run, but touching is not designing. Every downstream screen was built,
-then diffed against the screen it clones — visible layers, not just words — and five of the seven
-turned out to be the same design with different numbers in it:
+Devansh set the rule: a state gets more than one frame only where the design actually changes.
+So every state was driven in the deployed build and every screen's **visible** DOM diffed against
+the same screen in `default` — added and removed elements, not words. What that returned:
 
-| Screen | Difference from the default | |
+| State | Screens it touches structurally | Second frame? |
 |---|---|---|
-| Review your trip | +56 layers — one passenger row becomes six | kept |
-| Ticket details | +60 layers — a **Passengers** card that does not exist at one passenger | kept |
-| Pay | 0 layers, 2 strings | cut |
-| Booking confirmed | 0 layers, 5 strings | cut |
-| Change day | 0 layers, 7 strings | cut |
-| Confirm the move | 0 layers, 3 strings | cut |
-| Return moved | 1 text node swapped | cut |
+| `loading` | Your return −55, Change day −107 | no — the second is the same skeleton on another screen |
+| `checkfail` | Your return −54, Change day −107 | no — the same blank state twice |
+| `none` | Your return −54 | one screen |
+| `seatgone` | Review +6 | one screen |
+| `swapfail` | Confirm the move +6 | one screen |
+| `nothingearlier` | Change day −107 | one screen |
+| `offline` | +3 on **eight** screens | no — one banner, repeated |
+| `pastcutoff`, `alreadymoved` | Ticket +1/−3, My Bookings +1/−3 | no — three layers |
+| `crowded` | Review +10 | Review, plus Ticket details (see below) |
+| `noreturn` | Review −49, Ticket +6/−21, Booking confirmed −29, My Bookings −11 | **yes** — Booking confirmed loses the whole return leg *and* the whole promise block |
 
-The two survivors sit in their own section, **S12 · Six passengers · the group case**, under the
-States section. The rule this settles: *a state that spans several screens gets a frame per screen
-only where a component is added or removed. A number that grew is not a design.*
+**The five six-passenger screens that were cut.** Pay, Booking confirmed, Change day, Confirm the
+move and Return moved each gained **zero** layers and differed by 2 to 7 strings. Numbers that grew
+are not a design. The build keeps every fix for them regardless — the money has to be right whether
+or not a frame shows it.
 
-**The build was still fixed everywhere**, cut screens included — the money has to be right whether or
-not a frame shows it. See the entry below.
+**Two known gaps in this evidence.**
 
-**Two pairs of states share one design.** The diff also showed that S4 · Past cutoff and
-S5 · Already moved are structurally identical — same five layers removed from screen 11, one line of
-copy apart — and so are S2 · None in window and S7 · Can't check, both being the blank state on 06
-with a different heading and button. They are kept as separate frames because they prove different
-rules, but only one of each pair is a new design.
+- `noguard` returns *no* diff from a plain `setState`, because the guard acts during the flow, not
+  in a paint function. The S1 frame is right — it drops 42 visible layers from Review — but it was
+  designed, not measured. Same limitation that made `crowded` need the whole walk before Review
+  would render six passengers.
+- **S12b's Passengers card is in Figma and not in the build.** A group ticket that never names who
+  is travelling is a real gap, and the card is the fix, but the prototype's Ticket details screen
+  does not have it yet.
+
+**Two pairs of states share one design.** S4 · Past cutoff and S5 · Already moved are structurally
+identical — the same layers removed from the ticket screen, one line of copy apart — and so are
+S2 · None in window and S7 · Can't check, both the blank state on Your return. They are kept apart
+because they prove different rules, but only one of each pair is a new design.
 
 **No day becomes impossible for a group.** The change is bound to the booked operator, and every
 Laxmi service in September has at least two buses with six or more seats free — checked against
@@ -791,11 +790,15 @@ days are the same at six as at one. Only the money moves.
 
 **The build priced one seat and charged six (fixed 4 Sep).** `pay-sub` was written only by
 `paintPay()`, which the booking flow never calls; `mb-trip` had *1 passenger* in the source; and
-`rv-ret`, `tk-price`, `bc-price` and `mb-rprice` printed the per-seat return fare beside a
-six-seat total. The change flow did the same — calendar chips, the bus list, the swap card and the
-confirmation all quoted a sixth of what a group pays. The per-seat numbers still decide the rules;
-the screens now print the ticket. Verified on the deployed build in both states: one passenger is
-unchanged at ₹1,030 everywhere, six reads ₹6,180, and the move is ₹6,540 → ₹6,360, ₹180 less.
+`rv-ret`, `tk-price`, `bc-price` and `mb-rprice` printed the per-seat return fare beside a six-seat
+total. The change flow did the same. The per-seat numbers still decide the rules; the screens now
+print the ticket. Verified live: one passenger unchanged at ₹1,030, six reads ₹6,180, and the move
+is ₹6,540 → ₹6,360, ₹180 less.
+
+**Coordinates inside a Figma section are relative to the section, not to the page.** Setting a
+child's `y` to an absolute page value puts it that far *below* the section's top. The tell was
+`get_screenshot` on the section rendering 16,609px tall; `absoluteBoundingBox` is what proves it.
+
 
 **Also in the file:** prototype connections on the real controls, matching the table above. They are
 there so the transitions are explicit and the file click-throughs for a stakeholder; the table is the
