@@ -4954,3 +4954,30 @@ Laying the canvas out as the flow made that visible immediately; the numbering h
 because three separate places tested it. None of them could ever be true, and the only function that
 could have set it took an argument nobody passed.
 
+CHANGE · 2026-09-04 · (no skill) · Source: user
+**"update the number sequence in frame names."** The canvas had been reordered into the five runs but
+the names still carried the numbers screens were given as they were built, so the sequence jumped
+around: … 06a, **15**, 07, 08, 09, **10**, 11, 12, **16**, 13, 14.
+
+Renamed by node id, never by name — renaming by name collides the moment 07 becomes 08 while 08 still
+exists. The canvas now reads **01 → 16** in the order a traveller meets the screens, with `03a/03b`,
+`05a/05b` and `06a` as state variants of the screen they belong to. Sixteen main screens, which is the
+number the build table has always given.
+
+The two that moved furthest: *Choose your bus* was 15 and is **07**, because the return fold is what
+opens it. *Move · buses* was 16 and is **14**, between Change day and Confirm the move. And the two
+seat-map sheets were numbered `02c/02d` after the bus list they were captured with, but they are
+states of the **seat map** — `03a/03b`.
+
+`CONTEXT.md` §18 carried the old numbers in seven headings and seventeen mentions; all updated, with
+an old → new table beside the run list so nothing is ambiguous. `LOG.md` keeps its old numbers: they
+were correct when written, and this file is a record rather than a reference.
+
+LEARNED · 2026-09-04 · (no skill)
+**Numbers assigned in build order stop describing the thing the moment the order changes.** 15 and 16
+were the last two screens built and the last two in the flow's numbering, but the first is the second
+run and the second is the fifth. The name was recording when it was made, not where it goes.
+
+**Rename by id.** Any rename that shifts a sequence has a window where two nodes want the same name;
+addressing by id removes the window entirely.
+

@@ -693,15 +693,27 @@ All 21 screens used to sit in one 9,270px row in numeric order, which put `15 ·
 `16 · Move · buses` at the far right, nowhere near what opens them. They are now **five rows, one per
 run**, each with a heading, in the order a traveller meets them:
 
-1. **Book the outbound** — 01 · 02 · 03 · 02c · 02d · 04
-2. **Add a return** — 05 · 05a · 05b · 06 · 06a · **15**
-3. **Review and pay** — 07 · 08 · 09
-4. **After booking** — 11 · 10
-5. **Move the date** — 12 · **16** · 13 · 14
+1. **Book the outbound** — 01 · 02 · 03 · 03a · 03b · 04
+2. **Add a return** — 05 · 05a · 05b · 06 · 06a · 07
+3. **Review and pay** — 08 · 09 · 10
+4. **After booking** — 11 · 12
+5. **Move the date** — 13 · 14 · 15 · 16
 
-15 sits with the return because that is what opens it — the fold's *All N buses* link, and *Change
-bus* from review. 16 sits between Change day and Confirm the move, which is the only place it
-appears. The section is 2,710 × 12,965 instead of 9,270 × 5,137.
+**The frame names were renumbered to match** (4 Sep), so the canvas now reads 01 → 16 in the order a
+traveller meets the screens, with `03a/03b`, `05a/05b` and `06a` as state variants of the screen they
+belong to. Sixteen main screens, which is the number the build table gives. The moves that matter:
+*Choose your bus* was 15 and is now **07**, because the return fold is what opens it; *Move · buses*
+was 16 and is now **14**, between Change day and Confirm the move. The section is 2,710 × 12,965
+instead of 9,270 × 5,137.
+
+| was | is | | was | is |
+|---|---|---|---|---|
+| 02c | 03a | | 09 | 10 |
+| 02d | 03b | | 10 | 12 |
+| 15 | 07 | | 12 | 13 |
+| 07 | 08 | | 16 | 14 |
+| 08 | 09 | | 13 | 15 |
+| | | | 14 | 16 |
 
 **Nothing is pre-selected in 06.** That is the §8 decision made visible: when the fares differ, the
 product has no advantage on the only thing that decides it, so it does not choose. The lead reads
@@ -787,7 +799,7 @@ the only decision the screen asks for, which is *which day*. The seat is the opp
 varies by day, which is exactly why it needs the reason. Both points are named with their times on
 Trip review, with **Change points** beside **Change seat** (decision of 13 Aug).
 
-### Trip review (screen 07)
+### Trip review (screen 08)
 
 Two frames — `07` for the two legs, `07a` scrolled to the terms, passenger, add-ons and total.
 
@@ -850,7 +862,7 @@ that is where the decision is committed and the bar never scrolls away.
 one change row, which never said which leg it moved; and it advertised the traveller's window long
 after the window stopped capping the change.
 
-### Change day (screen 12) — calendar, then buses
+### Change day (screen 13) — calendar, then buses
 
 **Narrow with a calendar, decide with a list** — the booking flow's own shape, and the real app's.
 The old screen was a scrolling list of every day, one row each, showing that day's default bus. Two
@@ -924,7 +936,7 @@ default bus — a bus the traveller never picked and which is named nowhere.
 `retOp()` is the one writer for the operator name, painted through `[data-retop]` — it was a literal on
 four screens.
 
-### Change bus (screen 07b)
+### Change bus (screen 07 · Choose your bus)
 
 **One operator does not mean one bus a day.** `TERMS.md` §4 records the unverified same-operator
 rule, and v3 gives the route one operator — Laxmi Holidays. Collapsing that to a single 23:55
@@ -949,7 +961,7 @@ than as rendered strings.
 `paintTimes()` is the one writer, painting `[data-retleg]` and `[data-pt]`. Before it, the times were
 typed into markup on six screens.
 
-### Pay (screen 08)
+### Pay (screen 09)
 
 A replication, not a design. The Pay screen exists in the real app, carries no part of the new
 feature, and so is rebuilt exactly: the amount in the nav title with the seat-hold countdown chip
@@ -961,7 +973,7 @@ payment starts when a method is chosen. The prototype's own bottom bar was dropp
 
 Amounts are ours: `Pay ₹2,919`, wallet ₹100.
 
-### Booking confirmed (screen 09)
+### Booking confirmed (screen 10)
 
 Two frames — `09` for the two tickets, `09a` scrolled to what can still be changed.
 
@@ -974,7 +986,7 @@ lives before they need it (*Open your ticket · Tap Change day and pick another 
 arrow markers and the connecting rule, duration centred between the stops, white footer with the
 operator, passenger and the seat badge. Twelve text properties, used for both legs.
 
-### Where the change control lives (screens 10, 11, 12)
+### Where the change control lives (screens 11, 12, 13)
 
 **Corrected on review.** The first attempt invented a "Your ticket" screen from v3's simplified
 markup. The real flow is: *View ticket* opens **My Bookings**, and tapping a booking card opens
@@ -1249,15 +1261,15 @@ any zoom.
 The gold pill and trophy behind *zingbus plus*, and the amber tint on a low `(2 Single)` count.
 Both are small operator-specific flourishes, not structure.
 
-### 02c and 02d — the seat map and its bottom sheet
+### 03a and 03b — the seat map and its bottom sheet
 
 Two more captures, two more long frames, slotted between 02 and 03 and named so the canvas still
 reads in order.
 
-- **02c · Seat map · sheet collapsed** — 390 × 1510. Real status bar and `Nav / Top Bar`
+- **03a · Seat map · sheet collapsed** — 390 × 1510. Real status bar and `Nav / Top Bar`
   ("Select seats"), then one crop of the two decks and the *Know your seat types* legend, with the
   collapsed sheet as a fixed overlay.
-- **02d · Seat map · sheet full** — 390 × 4540. Real status bar, then the whole sheet in four
+- **03b · Seat map · sheet full** — 390 × 4540. Real status bar, then the whole sheet in four
   crops: cancellation and refund policy, date change, other policies, bus route, boarding and
   dropping points, rest stop, bus features, ratings and reviews.
 
@@ -1296,7 +1308,7 @@ the prototype — there is no trade-off. Home's tab bar sits at `frameHeight −
 list's Ask Ray at `frameHeight − 43 − 96`, and the collapsed sheet flush on the frame's bottom
 edge, all with `vertical: MAX`.
 
-The round **Ask Ray** on 02c is an instance of the existing `Button / Ask Ray FAB`, bottom-right
+The round **Ask Ray** on 03a is an instance of the existing `Button / Ask Ray FAB`, bottom-right
 with a 20pt inset and `horizontal: MAX`, clear of the sheet. It was painted out of the capture
 eight times over; there is exactly one of it in the file.
 
@@ -1314,7 +1326,7 @@ Finding it needs the right signal. Row brightness alone flags every legitimate g
 every card shadow. What identifies a seam is that the row's **white level** dips smoothly below the
 local baseline *while the row is still mostly white* — a darkening laid over unchanged content.
 The fix follows from the cause: it is a black overlay at some alpha, so dividing each row by
-`white_level / baseline` restores it exactly. One confirmed seam on 02c; the similar-looking dip on
+`white_level / baseline` restores it exactly. One confirmed seam on 03a; the similar-looking dip on
 the full sheet turned out to be a genuinely tinted table row, and was left alone.
 
 **2. My own repair box was too small.** The Ask Ray glow reaches much further than the button.
@@ -1363,7 +1375,7 @@ Right, and it changes the rule for the whole build. **A crop is only acceptable 
 are the content** — a photograph, an illustration, a marketing banner. Anything a finger lands on
 has to be a component.
 
-02c's seat map is rebuilt: **42 seats**, every one an instance, laid out from a grid read out of the
+03a's seat map is rebuilt: **42 seats**, every one an instance, laid out from a grid read out of the
 capture rather than typed by eye. Connected-component analysis on the green outlines and the grey
 fills found each seat's box, and the sizes separate the two types cleanly — sleepers 86 × 187px,
 seaters 70 × 69px. Six columns at x = 13, 97, 141 within each deck card, row pitch 236px for
@@ -1391,7 +1403,7 @@ map cannot drift apart.
 The first attempt clipped every seater, because the arms were 28.2pt wide inside a frame resized to
 25.3. Set `constraints: SCALE` on the shapes inside a component that will be resized.
 
-### 07 · Review your trip, rebuilt on the real screen
+### 08 · Review your trip, rebuilt on the real screen
 
 `Picsew_TripReview.HEIC` (1080 × 6952 → 2510pt) is the app's **Passenger Information** page, and my
 07 had been an invention. It is now the real structure, entirely in components — no crops at all,
@@ -1688,13 +1700,13 @@ as artwork too.
 4. Text in an image ignores the phone's font-size setting and is invisible to a screen reader.
 
 **Where the crops were.** Every screen on the walked path was already clean (0–7%). The crops were
-all on browsing surfaces: 02d 99%, Home 78%, bus list 29%, 02c 14%.
+all on browsing surfaces: 03b 99%, Home 78%, bus list 29%, 03a 14%.
 
 ### Converted (all done 2026-08-28)
-`02d` · `02c` · every icon component · Home's whole marketing rail · the bus list's four promo
+`03b` · `03a` · every icon component · Home's whole marketing rail · the bus list's four promo
 blocks · both `Art / tripReward strip` components · the Seat Guarantee band.
 
-**The file is 4% image overall.** Home 78% → 17%, bus list 29% → 6%, 02d 99% → 5%, 02c 13% → 1%.
+**The file is 4% image overall.** Home 78% → 17%, bus list 29% → 6%, 03b 99% → 5%, 03a 13% → 1%.
 Ten screens contain no images at all.
 
 What stays an image, deliberately: photographs (bus interiors, hotel rooms), illustrated marketing
@@ -1707,7 +1719,7 @@ Primo) and payment logos including Apple Wallet.
   Note the round chrome buttons had *opaque white plates* baked into their PNGs — they never
   composited properly on a coloured background, and nobody had noticed.
 
-### What 02d is made of now
+### What 03b is made of now
 Twelve sections: sheet header · Highlights · Cancellation and refund policy · Date change policy ·
 Other policies · Bus route · Boarding points · Dropping point · Rest stop · Bus features ·
 Ratings & reviews · This is a Primo. 4698pt (source 4553; 3% over, from slightly looser rows).
@@ -1717,7 +1729,7 @@ New components, all on the Components page:
 (State = Header/Default/Highlighted) · `Row / Rating bar` · `Chip / Feature` · `Chip / Praise` ·
 `Art / Laurel` and `Art / Laurel · mirrored` · `Art / Sunburst` · 17 vector line icons.
 
-Images kept on 02d: two bus photographs, the Primo bus illustration, three small marks.
+Images kept on 03b: two bus photographs, the Primo bus illustration, three small marks.
 
 ### Plugin API traps that produced plausible-looking wrong screens
 - `addComponentProperty(name,'INSTANCE_SWAP',default)` wants the component's **node id**, not its
