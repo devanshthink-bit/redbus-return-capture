@@ -2026,8 +2026,9 @@ function renderWithin(){
   const held=document.querySelector('#s-within .held');
   if(held) held.innerHTML='<div class="legtag">Your booking</div>'
     + '<div class="row"><span class="time" style="font-size:16px">'+label(heldDay)+' \u00B7 '+retDep()+'</span>'
-    + '<span class="price" style="font-size:16px">'+RUPEE(FARE[heldDay])+'</span></div>'
-    + '<div class="cap" style="margin-top:4px">'+retOp()+' \u00B7 Seat '+retSeat()+'</div>';
+    + '<span class="price" style="font-size:16px">'+RUPEE(FARE[heldDay]*PAX())+'</span></div>'
+    + '<div class="cap" style="margin-top:4px">'+retOp()+' \u00B7 '
+    + (PAX()>1 ? PAX()+' seats' : 'Seat '+retSeat())+'</div>';
 
   const M=MONTHS[moveMonth];
   let html='<div></div>'.repeat(M.lead), n=0;
@@ -2049,7 +2050,7 @@ function renderWithin(){
       // number here promised money back that never comes -- it is 0. And a day runs several buses
       // at several fares, so the honest single number is the LEAST they could pay that day, which
       // they can always achieve by picking that bus on the next screen.
-      const cost = Math.min.apply(null, busesOn(d).map(function(i){
+      const cost = PAX() * Math.min.apply(null, busesOn(d).map(function(i){
         return Math.max(0, fareOfBus(d,i)-FARE[heldDay]); }));
       inner+='<span class="f">'+(cost>0?'+'+RUPEE(cost):RUPEE(0))+'</span>';
       aria+=', '+(cost>0?'from '+RUPEE(cost)+' more':'nothing more to pay');
@@ -2095,13 +2096,15 @@ function renderMoveBuses(){
   document.getElementById('wb-sub').textContent = 'Nainital \u2192 Delhi \u00B7 '+label(moveDay);
   document.getElementById('wb-held').innerHTML = '<div class="legtag">Your booking</div>'
     + '<div class="row"><span class="time" style="font-size:16px">'+label(heldDay)+' \u00B7 '+retDep()+'</span>'
-    + '<span class="price" style="font-size:16px">'+RUPEE(FARE[heldDay])+'</span></div>'
-    + '<div class="cap" style="margin-top:4px">'+retOp()+' \u00B7 Seat '+retSeat()+'</div>';
+    + '<span class="price" style="font-size:16px">'+RUPEE(FARE[heldDay]*PAX())+'</span></div>'
+    + '<div class="cap" style="margin-top:4px">'+retOp()+' \u00B7 '
+    + (PAX()>1 ? PAX()+' seats' : 'Seat '+retSeat())+'</div>';
   const mine=retSeat(), same=seat===mine;
   wrap.innerHTML = list.map(function(i){
     const b=RET_BUSES[i], f=fareOfBus(moveDay,i), diff=f-FARE[heldDay];
-    const right = diff>0 ? '<span class="onw diffup">Pay '+RUPEE(diff)+' more</span>'
-                 : diff<0 ? '<span class="onw">'+RUPEE(-diff)+' less \u2014 no refund</span>'
+    const fq=f*PAX(), dq=diff*PAX();          // per seat decides, per ticket is what is shown
+    const right = dq>0 ? '<span class="onw diffup">Pay '+RUPEE(dq)+' more</span>'
+                 : dq<0 ? '<span class="onw">'+RUPEE(-dq)+' less \u2014 no refund</span>'
                           : '<span class="onw">Same price</span>';
     const tags=[];
     if(b.dep===now) tags.push('<div class="pill">Same time as now</div>');
@@ -2109,7 +2112,7 @@ function renderMoveBuses(){
     if(!same) tags.push('<div class="pill warnpill">\u21BB Different seat</div>');
     return '<button class="card" onclick="confirmMove(\''+label(moveDay)+'\',\''+b.dep+'\','+f+','+diff+',\''+seat+'\')">'
       + '<div class="row"><span class="time">'+b.dep+'<span class="d">\u2014</span><span class="arr">'+b.arr+'</span></span>'
-      + '<span class="price">'+RUPEE(f)+'</span></div>'
+      + '<span class="price">'+RUPEE(fq)+'</span></div>'
       + '<div class="subrow"><span class="sub">'+b.op+' \u00B7 '
       + (same ? 'Your seat '+mine+' is free' : 'Seat '+mine+' is taken. You get '+seat)+'</span>'+right+'</div>'
       + (tags.length?'<div class="pillrow">'+tags.join('')+'</div>':'') + '</button>';
@@ -2344,13 +2347,15 @@ function seatDone(){
               movedFare(), movedFare()-FARE[heldDay], movedSeat);
 }
 function confirmMove(date,time,fare,diff,seat){
+  const fq=fare*PAX(), dq=diff*PAX();       // the rules read the per-seat numbers; the screen prints the ticket
   movedTo=date; movedSeat=seat||retSeat();
   movedDay=BOOKABLE.find(d=>label(d)===date)||movedDay;
   const bi=RET_BUSES.findIndex(function(b){return b.dep===time;});
   movedBus = bi>=0 ? bi : null;
   document.getElementById('c-to').textContent = date+' · '+time;
   const mine = retSeat(), sameSeat = movedSeat===mine;
-  document.getElementById('c-tosub').textContent = 'Seat '+movedSeat+' · ₹'+fare.toLocaleString('en-IN');
+  document.getElementById('c-tosub').textContent =
+    (PAX()>1 ? PAX()+' seats' : 'Seat '+movedSeat)+' · '+RUPEE(fq);
   const only=document.getElementById('c-only');
   if(only){ only.hidden = !movedDay || busesOn(movedDay).length!==1;
     // "service", not "bus" -- two of the three operator names already end in Bus
@@ -2364,15 +2369,15 @@ function confirmMove(date,time,fare,diff,seat){
     + '</dd>';
   const up = diff>0;
   document.getElementById('c-diff').textContent =
-      diff>0 ? '₹'+diff : diff<0 ? '₹'+Math.abs(diff)+' less — no refund' : 'Same price';
+      dq>0 ? RUPEE(dq) : dq<0 ? RUPEE(Math.abs(dq))+' less — no refund' : 'Same price';
   document.getElementById('c-payl').textContent = up ? 'You pay now' : 'You pay now';
-  document.getElementById('c-pay').textContent  = up ? '₹'+diff : '₹0';
+  document.getElementById('c-pay').textContent  = up ? RUPEE(dq) : '₹0';
   document.getElementById('d-date').textContent = date;
   const dt=document.getElementById('d-time');
   // the arrival belongs to the bus the new day actually runs, not to the old one
   const arr = (RET_BUSES.filter(function(b){return b.dep===time;})[0]||{arr:ARR_TIME}).arr;
   if(dt) dt.innerHTML = time+'<span class="d">&mdash;</span><span class="arr">'+arr+'</span>';
-  document.getElementById('d-price').textContent = '₹'+fare.toLocaleString('en-IN');
+  document.getElementById('d-price').textContent = RUPEE(fq);
   const ds=document.querySelector('#s-done .subrow .onw'); if(ds) ds.textContent='Seat '+movedSeat;
   const shift = heldDay - movedDay;                 // + = earlier, - = later
   const n = Math.abs(shift), day = n===1 ? 'a day' : n+' days';
@@ -2381,8 +2386,8 @@ function confirmMove(date,time,fare,diff,seat){
                         : shift<0 ? 'Back in Delhi '+day+' later than planned.'
                                   : 'Your return is set.';
   document.getElementById('d-what').innerHTML = up
-    ? 'Changed from '+label(heldDay)+'. You paid ₹'+diff+'.'
-    : 'Changed from '+label(heldDay)+'. The new day is ₹'+Math.abs(diff)+' cheaper. You do not get that back.';
+    ? 'Changed from '+label(heldDay)+'. You paid '+RUPEE(dq)+'.'
+    : 'Changed from '+label(heldDay)+'. The new day is '+RUPEE(Math.abs(dq))+' cheaper. You do not get that back.';
   go('s-confirm');
 }
 let moveTimer=null;
@@ -2534,15 +2539,18 @@ function paintReturn(){
   if(trip) trip.innerHTML = '<span>Your trip</span><b>'+label(OUT_DAY)+' \u2192 '+label(heldDay)
     + ' \u00B7 '+nights+' day'+(nights===1?'':'s')+' in Nainital</b>';
   const mb = E('mb-trip');
-  if(mb) mb.textContent = 'Delhi \u2194 Nainital \u00B7 '+nights+' day'+(nights===1?'':'s')+' \u00B7 1 passenger';
-  const d=label(heldDay), f=RUPEE(FARE[heldDay]);
+  if(mb) mb.textContent = 'Delhi \u2194 Nainital \u00B7 '+nights+' day'+(nights===1?'':'s')
+    + ' \u00B7 '+PAX()+' passenger'+(PAX()>1?'s':'');
+  const d=label(heldDay), f=RUPEE(FARE[heldDay]*PAX());
+  // A group has no single seat to name. Same phrase everywhere a seat used to be printed.
+  const nSeat = PAX()>1 ? PAX()+' seats' : 'Seat '+retSeat();
   const set=(id,v)=>{ const e=E(id); if(e) e.textContent=v; };
   set('rv-legtag','Return \u00B7 '+d);       set('rv-ret',f);
   set('tk-legtag','Return \u00B7 '+d);       set('tk-price',f);
   set('bc-legtag','Return \u00B7 '+d);       set('bc-price',f);
   set('mb-rdate',d);                         set('mb-rprice',f);
   set('pay-retlabel','Return \u00B7 '+d);
-  set('c-from',d+' \u00B7 '+retDep());           set('c-fromsub','Seat '+retSeat()+' \u00B7 '+f);
+  set('c-from',d+' \u00B7 '+retDep());           set('c-fromsub',nSeat+' \u00B7 '+f);
   const safe = 'Your '+d+' booking is safe. Nothing was charged.';
   set('wi-none-b', safe); set('wi-err-b', safe);
   // bc-window is a fixed rule now, not the range -- paintChangeRow owns it
@@ -2554,7 +2562,7 @@ function paintReturn(){
   // the calendar offers every day, most of them outside the window the traveller gave.
   const sub = 'Any date, earlier or later. Pay only the price difference.';
   ['mv-sub','mb-sub'].forEach(function(id){ set(id, sub); });
-  const ce=E('c-errb'); if(ce) ce.innerHTML='<b>Your '+d+' booking is safe.</b> Seat '+retSeat()+', '+f
+  const ce=E('c-errb'); if(ce) ce.innerHTML='<b>Your '+d+' booking is safe.</b> '+nSeat+', '+f
     +'. Nothing was charged.';
 }
 
@@ -2562,6 +2570,9 @@ function paintReturn(){
 function recalc(){
   const E=id=>document.getElementById(id);
   const mult = PAX();
+  // paintPay() owns this line in the change flow, but the booking flow never calls paintPay --
+  // "Pay now" goes straight to the screen -- so at six passengers it still said "1 passenger".
+  if(payMode==='booking' && E('pay-sub')) E('pay-sub').textContent = mult+' passenger'+(mult>1?'s':'');
   const out  = retOnly ? 0 : 1599*mult;                             // adding a return: the onward is already paid
   const ret  = (state==='noreturn' ? 0 : (FARE[heldDay]||0))*mult;      // a dropped return contributes nothing
   const fc   = (!retOnly && E('fc-on') && E('fc-on').checked) ? FC_PRICE*mult : 0;
