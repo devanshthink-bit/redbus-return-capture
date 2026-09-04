@@ -5262,3 +5262,17 @@ LEARNED · 2026-09-04 · (no skill)
 row, where they sit beside a checkbox and help you pick a person out. On a ticket nobody is picking
 anyone — the list is a record — so the circle is a coloured dot repeated six times. Reusing a row
 carries its reasons as well as its layout, and the reasons do not always travel.
+
+CHANGE · 2026-09-04 · (no skill) · Source: user
+**The passenger list is in the build now.** `Ticket details` on each leg of the ticket toggles to
+`Hide details` and opens one row per traveller — name left, seat right, the same shape as the Figma
+frame. The six names and their seat pairs had been a literal inside `paintSeats`; the ticket needs
+the same list and two copies of a list drift, so both now read `PAX_NAMES` and `PAX_SEATS()`.
+Adding it exposed one more per-seat leak: the leg summary said *Seat U5* on a six-seat ticket. The
+`data-outseat` / `data-retseat` writer now says *6 seats* when there is more than one traveller,
+which is the whole point of having one writer.
+
+Verified on the deployed build: the 18 × 13 state matrix renders 234 cells with no throw and no
+empty screen; the toggle opens, relabels, closes and relabels; the ticket's Back still lands on
+Booking confirmed and no Back on any screen points at a screen that does not exist; and the seat
+wording reads *Seat U4 · Seat U5* at one passenger and *6 seats* at six.

@@ -780,7 +780,10 @@ or not a frame shows it.
   something the collapsed ticket shows. The ticket still summarises above the perforation:
   *Devansh Somvanshi + 5* and a *6 seats* badge. The prototype does not have any of this yet.
   Putting it there meant detaching that one ticket instance, because an instance takes no new
-  children. **The rows carry a name and a seat and nothing else** — no avatar, no rule between them,
+  children. **It is in the build now too** — `Ticket details` on each leg card toggles to
+  `Hide details` and opens one row per traveller, and `PAX_NAMES` / `PAX_SEATS()` are the single
+  source both the ticket and the Review list read, replacing the literal that used to live inside
+  `paintSeats`. **The rows carry a name and a seat and nothing else** — no avatar, no rule between them,
   no age or gender. The first build had all three and read as clutter: six empty circles and five
   hairlines around twelve lines of type. A ticket answers *who, and where do they sit*; passenger
   details is where the rest belongs.
