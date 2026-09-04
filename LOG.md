@@ -5051,3 +5051,26 @@ in a screenshot, never in the return value, which said the write had succeeded.
 window* copy against a real selection, because the state matrix only checks that one screen is
 visible. Building it in Figma is what read the words.
 
+CHANGE · 2026-09-04 · (no skill) · Source: user
+**"Where are the screens?"** — the new States section was an empty box.
+
+**Coordinates inside a section are relative to the section, not to the page.** I had set each frame's
+`y` to 13355 meaning an absolute page position; inside a section that means 13,355px *below* the
+section's top, so the five frames sat at absolute y **26,580** in a section 3,464 tall. All present,
+all visible, all outside the frame that was supposed to contain them. Repositioned to `x: 80, 520,
+960, 1400, 1840` and `y: 130`, which are section-relative, and all five now render inside it.
+
+**I had already been shown this and read it wrong.** Two `get_screenshot` calls on the section came
+back 16,609px tall — 13,355 + the tallest frame — with the content crushed at the bottom and grey
+above. I called it a renderer quirk and moved on. It was the geometry reporting itself accurately.
+
+LEARNED · 2026-09-04 · (no skill)
+**A container that renders far bigger than its own height is not a rendering artefact.** The number
+16,609 was the answer — it is exactly the offset I had used plus the child height. When a measurement
+disagrees with the property, believe the measurement and find out why; `absoluteBoundingBox` settles
+it in one call.
+
+**Two coordinate spaces in one file.** Frames on a page use absolute coordinates; children of a
+section use section-relative ones. The Screens section never exposed this because its children's
+values were small enough to look like both.
+

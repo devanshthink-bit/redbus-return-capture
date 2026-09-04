@@ -736,6 +736,12 @@ Chosen so each fails in a **different** way; five failures of the same kind woul
 | S5 · Already moved | `alreadymoved` | the promise has a **count** — *You have used your one change. This ticket is final.* | 11, change row off |
 | S2 · None in window | `none` | the **input can yield nothing** — the window they gave has no changeable day | 06, content replaced by the blank state |
 
+**Coordinates inside a Figma section are relative to the section, not to the page.** Setting a child's
+`y` to an absolute page value puts it that far *below* the section's top — the five states were parked
+at absolute y 26,580 inside a section 3,464 tall, and the section drew an empty box around nothing.
+The tell was `get_screenshot` on the section rendering 16,609px tall; `absoluteBoundingBox` is what
+proves it. The Screens section works because its children's values were already small.
+
 **The other eight are still not in Figma.** `offline` and `loading` say nothing about the idea;
 `can't check` overlaps S1; `seat lost mid-swap` is a narrower `seatgone`; `6 passengers`, `no other
 days` and `return dropped` are breadth rather than argument.
