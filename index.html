@@ -344,18 +344,7 @@ body.legacy-on .phone{display:none}
  padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .bb1{font-size:14px;color:var(--muted)} .bb2{font-size:18px;font-weight:700}
 .from{font-size:12px;font-weight:400;color:var(--muted)}
-.dayhead{display:block;width:100%;text-align:left;background:none;border:0;padding:0;cursor:pointer}
-.buses{margin-top:12px;border-top:1px solid var(--line);padding-top:4px}
-.busrow{display:flex;width:100%;align-items:flex-start;justify-content:space-between;gap:12px;
- background:none;border:0;border-radius:10px;padding:10px 8px;margin-top:4px;text-align:left;cursor:pointer}
-.busrow:hover{background:#FAFAFB}
-.busrow.sel{background:var(--chip)}
-.bt{font-size:14px;line-height:1.5}
-.bf{font-size:16px;font-weight:700;white-space:nowrap}
-.busrow .pill{display:inline-flex;margin-top:6px}
-/* A selected row is tinted with --chip, and so is a pill. Chip on chip made every tag except the grey
-   one vanish on the row the traveller had just tapped. Lift them onto the card surface instead. */
-.busrow.sel .pill, .busrow.sel .pill.no{background:var(--raised)}
+/* v3's accordion is gone in v4 -- .dayhead, .buses, .busrow, .bt and .bf went with it. */
 .bottombar.col{display:block}
 .bottombar.col .barrow{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .barnote{font-size:12px;color:var(--muted);margin-bottom:10px}
@@ -428,6 +417,37 @@ body.legacy-on .phone{display:none}
 .diffup{color:var(--warn)!important}
 .swap{background:var(--raised);border-radius:12px;padding:16px;margin-bottom:16px}
 .swapleg.was{opacity:.6}
+/* ---------- v4: the day list, and one bus shown in full beneath it ----------
+   v3 opened a day's buses inside its own row. With a real route's twenty or thirty services that
+   buries every other day, and the screen exists to compare days. So the days are a fixed list --
+   the same height whether a day has two buses or thirty -- and the chosen bus sits below them,
+   always in the same place. */
+.seclab{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+ color:#8A8A95;margin:0 0 10px 2px}   /* the same section label the ticket's ptline already uses */
+.seclab.gap{margin-top:24px}
+/* the full bus card: the same shape as the outbound list, not a reduced row */
+.buscard{background:var(--raised);border-radius:12px;padding:16px;width:100%;text-align:left;
+ border:0;display:block;box-shadow:0 0 0 2px var(--accent)}
+.buscard .seatline{font-size:14px;color:var(--muted);margin-top:12px}
+.buscard .seatline b{color:var(--ink);font-weight:700}
+.buscard .pillrow{margin-top:12px}
+/* a trade row: what it wins on the left, what it costs on the right, the facts underneath */
+.trade{background:var(--raised);border-radius:12px;padding:12px 16px;margin-bottom:8px;width:100%;
+ text-align:left;border:0;display:block;cursor:pointer;transition:box-shadow var(--t-state)}
+.trade:hover{box-shadow:0 2px 10px rgba(0,0,0,.07)}
+.trade:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(197,70,70,.35)}
+.trade:active{transform:scale(.995)}
+.trade .top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.trade .why{font-size:12px;font-weight:700;color:var(--ink);background:var(--chip);
+ border-radius:4px;height:24px;padding:0 12px;display:inline-flex;align-items:center}
+.trade .cost{font-size:14px;font-weight:700;color:var(--ink);flex:0 0 auto}
+.trade .cost.up{color:var(--muted);font-weight:400}
+.trade .facts{font-size:14px;color:var(--muted);margin-top:8px;line-height:1.4}
+.trade .facts .s{color:var(--warn)}
+/* the way out to everything else, when three is not enough */
+.allbuses{display:block;width:100%;text-align:left;background:none;border:0;padding:14px 2px 0;
+ font-family:inherit;font-size:14px;font-weight:700;color:var(--accent);cursor:pointer;min-height:44px}
+.allbuses:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(197,70,70,.35);border-radius:8px}
 .swapd{font-size:18px;font-weight:700;margin-top:4px}
 .swaparrow{color:var(--muted);font-size:20px;margin:8px 0}
 /* ---------- prototype controls (not part of the design) ---------- */
@@ -560,7 +580,8 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
     <div class="vers">
       <button type="button" onclick="setVersion(1)" id="v-1">v1</button>
       <button type="button" onclick="setVersion(2)" id="v-2">v2</button>
-      <button type="button" onclick="setVersion(3)" id="v-3" aria-pressed="true">v3</button>
+      <button type="button" onclick="setVersion(3)" id="v-3">v3</button>
+      <button type="button" onclick="setVersion(4)" id="v-4" aria-pressed="true">v4</button>
     </div>
     <p class="vnote" id="vnote"></p>
   </div>
@@ -807,7 +828,9 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
       <div id="pk-main">
         <p class="terms-lead" id="pk-lead">We picked <b>Thu, 10 Sep</b> &mdash; the cheapest day in your window.</p>
         <dl class="rules" id="pk-note" style="margin-bottom:20px"></dl>
+        <div class="seclab" id="pk-daylab">Days</div>
         <div id="pk-list"></div>
+        <div id="pk-bus"></div>
       </div>
 
       <div id="pk-none" hidden>
@@ -1379,15 +1402,31 @@ const DEP_TIME='23:55', ARR_TIME='08:00';   // the outbound service
 // Every operator runs more than one service, because a date change stays on the booked operator --
 // so an operator with a single service could never offer a choice on the new day, and a traveller
 // booked on one would never see the bus list at all. Two of three were single-service.
+// v4. A rating belongs to the operator, not to one of its services -- three Laxmi departures do not
+// have three different scores. The values are the ones already on the outbound cards, so the return
+// list and the onward list agree. `seats` is a base; the day varies it, the way the fare does.
+const OPS = {   // named OPS, not OPERATOR -- that name is already a string constant below
+  'Laxmi Holidays Pvt Ltd':       {rating:4.7, votes:178, veh:'Bharat Benz A/C Seater /Sleeper (2+1)'},
+  'RS Yadav Smart Bus':           {rating:4.5, votes:315, veh:'A/C Seater / Sleeper (2+1)'},
+  'International Tourist Centre': {rating:4.2, votes:420, veh:'VE A/C Sleeper (2+1)'}
+};
+const VOTE_FLOOR = 50;   // below this a rating is not evidence, so no bus is called "Best rated" on it
 const RET_BUSES = [
-  {op:'International Tourist Centre',  dep:'19:45', arr:'03:50', delta:-230, movable:false, fc:null},
-  {op:'Laxmi Holidays Pvt Ltd',        dep:'20:30', arr:'04:35', delta: -90, movable:true,  fc:60},
-  {op:'RS Yadav Smart Bus',            dep:'21:15', arr:'05:40', delta:-150, movable:true,  fc:null},
-  {op:'Laxmi Holidays Pvt Ltd',        dep:'22:15', arr:'06:20', delta: -40, movable:true,  fc:null},
-  {op:'International Tourist Centre',  dep:'23:10', arr:'07:20', delta:-200, movable:false, fc:60},
-  {op:'RS Yadav Smart Bus',            dep:'23:40', arr:'07:45', delta:-110, movable:true,  fc:60},
-  {op:'Laxmi Holidays Pvt Ltd',        dep:'23:55', arr:'08:00', delta:   0, movable:true,  fc:60}
+  {op:'International Tourist Centre',  dep:'19:45', arr:'03:50', delta:-230, movable:false, fc:null, seats:21},
+  {op:'Laxmi Holidays Pvt Ltd',        dep:'20:30', arr:'04:35', delta: -90, movable:true,  fc:60,   seats:46},
+  {op:'RS Yadav Smart Bus',            dep:'21:15', arr:'05:40', delta:-150, movable:true,  fc:null, seats:31},
+  {op:'Laxmi Holidays Pvt Ltd',        dep:'22:15', arr:'06:20', delta: -40, movable:true,  fc:null, seats:40},
+  {op:'International Tourist Centre',  dep:'23:10', arr:'07:20', delta:-200, movable:false, fc:60,   seats:26},
+  {op:'RS Yadav Smart Bus',            dep:'23:40', arr:'07:45', delta:-110, movable:true,  fc:60,   seats:35},
+  {op:'Laxmi Holidays Pvt Ltd',        dep:'23:55', arr:'08:00', delta:   0, movable:true,  fc:60,   seats:44}
 ];
+const rated  = i => OPS[RET_BUSES[i].op];
+// Seats left is a property of the bus ON A DAY, not of the service. Deterministic, never zero,
+// and low enough on some days that "N seats left" is a real thing to read.
+const seatsOn = (d,i) => 4 + ((RET_BUSES[i].seats + d*13 + i*7) % (RET_BUSES[i].seats - 3));
+const singlesOn = (d,i) => 2 + ((d*5 + i*3) % 9);
+const durOf = i => { const b=RET_BUSES[i], a=mins(b.dep), z=mins(b.arr);
+  const m=(z-a+1440)%1440; return Math.floor(m/60)+'h'+(m%60?' '+(m%60)+'m':''); };
 // Which of them run on a given day. Deterministic, always at least one, and not always the same one.
 // [0,4] is the day where only International Tourist Centre runs -- the one operator that offers no
 // date change -- so the calendar dot, its legend and every day-level "cannot be changed" line stay
@@ -1660,6 +1699,79 @@ const daysInPlay = () => !sel.length ? []
 
 // The booked day and every alternative, with what switching would cost or save.
 // Before payment a switch is free — the single reschedule only starts after booking.
+// v4. Two days is the construct's case: this traveller is buying the right to be wrong, so
+// flexibility leads. One day is an ordinary redBus booking, where time, price and rating lead.
+// Same components either way; only the ranking changes.
+const WINDOW_MODE = () => sel.length===2;
+
+// The three alternatives shown under the chosen bus. Not three arbitrary services -- the ones that
+// BEAT the pick on something this traveller said matters, each stating what it wins and what it
+// costs. Anyone whose priority is different takes the full list instead.
+function tradeRows(d, pick){
+  const list = busesOn(d).filter(i => i!==pick);
+  if(!list.length) return [];
+  const fare = i => fareOfBus(d,i);
+  const out = [], taken = {};
+  const add = (why, i) => { if(i==null || taken[i] || out.length>=3) return; taken[i]=1; out.push({why:why, i:i}); };
+  const cheapest = list.slice().sort((a,b)=>fare(a)-fare(b))[0];
+  // A rating is only evidence above the vote floor, so a 4.9 from eleven people never wins this.
+  const rateable = list.filter(i => rated(i).votes >= VOTE_FLOOR);
+  const best = rateable.slice().sort((a,b)=> rated(b).rating-rated(a).rating || fare(a)-fare(b))[0];
+  const bestBeatsPick = best!=null && rated(best).rating > rated(pick).rating;
+  if(WINDOW_MODE()){
+    // Most flexible only appears when the pick actually loses on it.
+    if(!RET_BUSES[pick].movable) add('Can change date', list.filter(i=>RET_BUSES[i].movable).sort((a,b)=>fare(a)-fare(b))[0]);
+    add('Cheapest', cheapest);
+    if(!RET_BUSES[pick].fc) add('Free cancellation', list.filter(i=>RET_BUSES[i].fc).sort((a,b)=>fare(a)-fare(b))[0]);
+    if(bestBeatsPick) add('Best rated', best);
+  } else {
+    add('Cheapest', cheapest);
+    if(bestBeatsPick) add('Best rated', best);
+    add('Leaves later', list.filter(i=>mins(RET_BUSES[i].dep)>mins(RET_BUSES[pick].dep))
+                           .sort((a,b)=>mins(RET_BUSES[a].dep)-mins(RET_BUSES[b].dep))[0]);
+  }
+  return out;
+}
+
+function renderBusSection(d){
+  const host=document.getElementById('pk-bus'); if(!host) return;
+  const pick = retBus;
+  if(!d || pick===null || !SEAT[d]){ host.innerHTML=''; return; }   // no day, no bus, or a sold-out day
+  const b=RET_BUSES[pick], op=rated(pick), seat=SEAT[d], mine=outSeat();
+  const flexPills = (RET_BUSES[pick].movable
+        ? '<div class="pill">\u21BB Free date change</div>'
+        : '<div class="pill no">No date change</div>')
+    + (b.fc ? '<div class="pill">Free Cancellation</div>' : '');
+  const qualPills = (pick===closestToOnward(d) ? '<div class="pill">Closest to your onward</div>' : '');
+  const pills = WINDOW_MODE() ? flexPills+qualPills : qualPills+flexPills;
+  const card = '<div class="buscard">'
+    + '<div class="row"><span class="time">'+b.dep+'<span class="d">\u2014</span><span class="arr">'+b.arr+'</span></span>'
+    + '<span class="price">'+RUPEE(fareOfBus(d,pick))+'</span></div>'
+    + '<div class="subrow"><span class="sub">'+durOf(pick)+' \u00B7 '+seatsOn(d,pick)+' seats ('+singlesOn(d,pick)+' single)</span></div>'
+    + '<div class="oprow"><div><div class="op">'+b.op+'</div><div class="cap">'+op.veh+'</div></div>'
+    + '<div class="rate"><div class="b">\u2605 '+op.rating.toFixed(1)+'</div><div class="n">'+op.votes+'</div></div></div>'
+    + '<p class="seatline">Seat <b>'+seat+'</b>'+(seat===mine ? ' \u2014 same as your onward'
+        : ' \u2014 <span class="s">'+mine+' is taken on this bus</span>')+'</p>'
+    + '<div class="pillrow">'+pills+'</div></div>';
+
+  const rows = tradeRows(d, pick).map(function(t){
+    const i=t.i, r=RET_BUSES[i], o=rated(i), diff=fareOfBus(d,i)-fareOfBus(d,pick);
+    const cost = diff===0 ? '<span class="cost">Same price</span>'
+      : diff<0 ? '<span class="cost">'+RUPEE(-diff)+' less</span>'
+               : '<span class="cost up">'+RUPEE(diff)+' more</span>';
+    const facts = r.dep+' \u2014 '+r.arr+' \u00B7 \u2605 '+o.rating.toFixed(1)+' ('+o.votes+')'
+      + (r.movable ? '' : ' \u00B7 <span class="s">cannot change date</span>');
+    return '<button class="trade" onclick="pickBus('+d+','+i+')">'
+      + '<div class="top"><span class="why">'+t.why+'</span>'+cost+'</div>'
+      + '<div class="facts">'+facts+'</div></button>';
+  }).join('');
+
+  const n = busesOn(d).length;
+  host.innerHTML = '<div class="seclab gap">Your bus on '+label(d)+'</div>' + card
+    + (rows ? '<div class="seclab gap">Other buses that day</div>'+rows : '')
+    + (n>1 ? '<button class="allbuses" onclick="openBus(\'picked\')">All '+n+' buses on '+label(d)+' \u2192</button>' : '');
+}
+
 function renderPicked(){
   const wrap=document.getElementById('pk-list'); if(!wrap) return;
   if(!sel.length){ wrap.innerHTML=''; return; }        // nothing chosen yet — nothing to draw
@@ -1691,37 +1803,27 @@ function renderPicked(){
     if(!many && seat !== outSeat()) tags.push('<div class="pill warnpill">\u21BB Different seat \u2014 '+outSeat()+' taken</div>');
     const open = d===heldDay;
     const right = open ? '<span class="onw">Your pick</span>'
-      : (!heldDay ? ''
+      : (!heldDay ? ''                       // nothing picked yet: there is nothing to be cheaper THAN
         : diff>0 ? '<span class="onw diffup">'+RUPEE(diff)+' more</span>'
         : diff<0 ? '<span class="onw">'+RUPEE(-diff)+' cheaper</span>'
                  : '<span class="onw">Same price</span>');
-    // The day and the bus were two screens, which is a navigation for a choice the traveller can see
-    // in one glance. The day opens in place instead: the list stays scannable by day, and the buses
-    // for the open day sit inside its own card.
-    const buses = (open && many) ? '<div class="buses">'
-      + busesOn(d).map(function(i){
-          const b=RET_BUSES[i], f=fareOfBus(d,i), on=(retBus!==null && i===retBus);
-          const bt=[];
-          if(!b.movable) bt.push('<span class="pill no">No date change</span>');
-          // the day is priced at the cheapest CHANGEABLE bus, so name the true floor where it differs
-          if(many && f===minFareOn(d)) bt.push('<span class="pill">Cheapest</span>');
-          if(i===closestToOnward(d)) bt.push('<span class="pill">Closest to your onward</span>');
-          if(b.fc) bt.push('<span class="pill">Free Cancellation</span>');
-          return '<button class="busrow'+(on?' sel':'')+'" aria-pressed="'+on+'" onclick="event.stopPropagation();pickBus('+d+','+i+')">'
-            + '<span class="bt"><b>'+b.dep+'</b> \u2014 '+b.arr+'<br><span class="cap">'+b.op+'</span>'
-            + (bt.length?'<br>'+bt.join(' '):'')+'</span>'
-            + '<span class="bf">'+RUPEE(f)+'</span></button>';
-        }).join('') + '</div>' : '';
-    return '<div class="card'+(open?' sel':'')+'">'
-      + '<button class="dayhead" onclick="choosePick('+d+')" aria-expanded="'+open+'">'
-      + '<div class="row"><span class="time">'+label(d)+(many?'':' \u00B7 '+depOn(d))+'</span>'
-      + '<span class="price">'+((many && !(open && retBus!==null))?'<span class="from">from </span>':'')
-      + RUPEE(open && retBus!==null ? FARE[d] : low)+'</span></div>'
+    // v4: a day row is a fixed height whatever the day holds. Its second line answers the question
+    // this traveller actually has — can I still move this? — rather than "tap to see them".
+    const movers = busesOn(d).filter(i=>RET_BUSES[i].movable).length;
+    const flex = !WINDOW_MODE() ? ''
+      : movers===0 ? ' \u00B7 <span class="s">cannot change date</span>'
+      : movers===busesOn(d).length ? (many ? ' \u00B7 all can change date' : ' \u00B7 can change date')
+      : ' \u00B7 '+movers+' can change date';
+    return '<button class="card'+(open?' sel':'')+'" onclick="choosePick('+d+')" aria-pressed="'+open+'">'
+      + '<div class="row"><span class="time">'+label(d)+'</span>'
+      + '<span class="price"><span class="from">from </span>'+RUPEE(low)+'</span></div>'
       + '<div class="subrow"><span class="sub">'
-      + (many ? busesOn(d).length+' buses'+(open?'':' \u00B7 tap to see them')
-              : opOn(d)+' \u00B7 only bus that day')+'</span>'+right+'</div>'
-      + (tags.length?'<div class="pillrow">'+tags.join('')+'</div>':'') + '</button>' + buses + '</div>';
+      + (many ? busesOn(d).length+' buses' : '1 bus')+flex+'</span>'+right+'</div>'
+      + (tags.length?'<div class="pillrow">'+tags.join('')+'</div>':'') + '</button>';
   }).join('');
+  renderBusSection(heldDay);
+  const dl=document.getElementById('pk-daylab');
+  if(dl) dl.textContent = days.length===1 ? 'Your day' : 'Days';
 
   const lead=document.getElementById('pk-lead');
   const lastMov = sel.length===2 ? lastMovableIn(sel[0],sel[1]) : (MOVABLE(sel[0]) ? sel[0] : 0);
@@ -1731,18 +1833,22 @@ function renderPicked(){
   } else if(!MOVABLE(heldDay)){
     // Outranks every other thing the lead could say. It used to be checked only on the single-day
     // branch, so picking a non-movable day inside a range said nothing at all.
-    lead.innerHTML = (days.length===1 ? 'Your return on <b>' : 'We will book <b>')+label(heldDay)+'</b>.'
+    lead.innerHTML = '<b>'+label(heldDay)+'</b>.'
       + '<span class="leadsub">You cannot change this date later.</span>';
   } else if(days.length===1){
     lead.innerHTML = 'Your return on <b>'+label(heldDay)+'</b>.';
+  // v4. "We will book X" is the product's voice about the product's action, on a screen whose whole
+  // premise is that the traveller need not decide. It now states what they hold and what they can
+  // still do. The cheapest day is no longer recommended here either -- that fact lives on the day's
+  // own row as "₹340 cheaper", which is J3's "information not urgency", at the point of comparison.
   } else if(heldDay===last){
-    lead.innerHTML = 'We will book <b>'+label(last)+'</b>, your last day.'
+    lead.innerHTML = '<b>'+label(last)+'</b>, your last day.'
       + '<span class="leadsub">You never need to change it.</span>';
   } else if(heldDay===lastMov && lastMov!==last){
-    lead.innerHTML = 'We will book <b>'+label(lastMov)+'</b>.'
+    lead.innerHTML = '<b>'+label(lastMov)+'</b> \u2014 free to move to any day up to '+label(lastMov)+'.'
       + '<span class="leadsub">'+label(last)+' cannot be changed later.</span>';
   } else {
-    lead.innerHTML = 'We will book <b>'+label(heldDay)+'</b>.';
+    lead.innerHTML = '<b>'+label(heldDay)+'</b> \u2014 free to move to any day up to '+label(last)+'.';
   }
 
   // the trade-off, stated where the choice is made rather than where the loss happens
@@ -1762,10 +1868,10 @@ function renderPicked(){
       + '<dt class="crit">No refund on a cheaper day</dt>'
       + '<dd>You only pay when the new day costs more.</dd>';
   } else if(spread){
-    const save = minFareOn(last)-minFareOn(cheap);
-    note.innerHTML = '<dt>Cheapest is '+label(cheap)+' \u00B7 '+RUPEE(minFareOn(cheap))+'</dt>'
-      + '<dd>Pick it now and you save '+RUPEE(save)+'.</dd>'
-      + '<dt class="crit">No refund on a cheaper day</dt>'
+    // v4: the cheapest day is not recommended here. "Pick it now and you save ₹170" is a
+    // recommendation in urgency language aimed at someone whose stated problem is not knowing
+    // their date. The same number is on that day's own row, where they are comparing.
+    note.innerHTML = '<dt class="crit">No refund on a cheaper day</dt>'
       + '<dd>You only pay when the new day costs more.</dd>'
       + spreadNote;
   } else {
@@ -1857,7 +1963,11 @@ function paintChangeRow(){
 // separate times. Nothing assigns heldDay any more; everything goes through here.
 function setHeldDay(d){
   const one = d ? busesOn(d) : [];
-  retBus = (d && one.length===1) ? one[0] : null;   // nothing to choose on a one-bus day
+  // v4. v3 left the bus unchosen until the traveller tapped a row inside the day's accordion.
+  // There is no such row now: the day's default bus is shown in full underneath, with the
+  // alternatives that beat it. So picking a day proposes a complete booking, and swapping the bus
+  // is a change to a proposal rather than a blank to fill.
+  retBus = d ? (one.length===1 ? one[0] : defaultBusOn(d)) : null;
   heldDay = d; setState(state);
 }
 function choosePick(d){ setHeldDay(d); }
@@ -2108,7 +2218,9 @@ function bookedOn(day){
 // list stays a list of days instead of turning back into a list of buses.
 let busPick = null, busFrom = 'review';
 function openBus(from){ busFrom = from || 'review'; busPick = busOn(heldDay); renderBus(); go('s-bus'); }
-const busBack = () => busFrom==='book' ? backToDays() : go('s-review');
+const busBack = () => busFrom==='book' ? backToDays()
+                    : busFrom==='picked' ? go('s-picked')
+                    : go('s-review');
 function renderBus(){
   const wrap=document.getElementById('bus-list'); if(!wrap) return;
   const list=busesOn(heldDay), def=defaultBusOn(heldDay);
@@ -2142,14 +2254,16 @@ function renderBus(){
   document.getElementById('bus-bb').textContent = RUPEE(fareOfBus(heldDay, busPick));
   document.getElementById('bus-sub').textContent = 'Nainital \u2192 Delhi \u00B7 '+label(heldDay);
   document.getElementById('b-bus').textContent = busFrom==='book' ? 'Review trip' : 'Use this bus';
+  // On a one-bus day opened from the day screen there is still a way back; the button is not the
+  // only exit, but it must not sit disabled with nothing to say.
   document.getElementById('b-bus').disabled = busFrom!=='book' && list.length===1 && busPick===def;
 }
 function busDone(){
   retBus = busPick;
   chosen.fare = FARE[heldDay];      // the money follows the bus
   setState(state);                  // ...and so does the date-change promise: recalc alone does not
-  go('s-review');                   // run paintChangeRow, so the badge and terms kept the old bus's
-}                                   // answer until some unrelated repaint corrected them
+  go(busFrom==='picked' ? 's-picked' : 's-review');   // run paintChangeRow, so the badge and terms
+}                                   // kept the old bus's answer until some unrelated repaint corrected them
 function openPointsForReview(){
   ptMode='review';
   document.getElementById('pt-back').setAttribute('onclick',"ptMode='';go('s-review')");
@@ -2579,15 +2693,16 @@ document.querySelector('.stage').addEventListener('scroll', () => {
 const VERSIONS = {
   1:{file:'v1.html', note:'<b>v1</b> asks for the last day you could travel, and books that day. 17 screens.'},
   2:{file:'v2.html', note:'<b>v2</b> asks for an earliest and a latest day, and books the cheapest one between them. 16 screens.'},
-  3:{file:null,      note:'<b>v3</b> is one calendar. Tap a day, or two for a window, then pick the bus yourself. 16 screens.'}
+  3:{file:'v3.html', note:'<b>v3</b> is one calendar, and the chosen day opens its buses inside its own row. 16 screens.'},
+  4:{file:null,      note:'<b>v4</b> keeps the calendar and rebuilds the day screen: the days stay a fixed list and the chosen bus is shown in full below them. 16 screens.'}
 };
-let version = 3;
+let version = 4;
 function setVersion(v){
   version = v;
   for(const k in VERSIONS) document.getElementById('v-'+k).setAttribute('aria-pressed', String(+k===v));
   document.getElementById('vnote').innerHTML = VERSIONS[v].note;
   const frame = document.getElementById('legacyframe');
-  document.body.classList.toggle('legacy-on', v!==3);
+  document.body.classList.toggle('legacy-on', v!==4);
   frame.src = VERSIONS[v].file || 'about:blank';
   setCaption();
 }
@@ -2597,7 +2712,7 @@ function setVersion(v){
    so it stays right when the prototype navigates itself. */
 function setCaption(){
   const cap = document.getElementById('caption');
-  if(version !== 3){ cap.innerHTML = 'Version ' + version + ' &mdash; frozen, shown as it was built'; return; }
+  if(version !== 4){ cap.innerHTML = 'Version ' + version + ' &mdash; frozen, shown as it was built'; return; }
   const on = document.querySelector('.phone .screen.on');
   const btn = on && document.querySelector('#screenrail [aria-pressed="true"]');
   const name = btn ? btn.textContent : '';
@@ -2633,7 +2748,7 @@ function buildLegacyRail(){
   /* The same five runs as v3, keyed on the ids the frozen files already use:
      v1 opens its return run at t-backby and its move run at t-later; v2 at t-window and t-within.
      An id that is not here simply gets no break, so this cannot damage a rail it does not know. */
-  const RUN_START = ['t-backby','t-window','t-review','t-ticket','t-later','t-within'];
+  const RUN_START = ['t-backby','t-window','t-review','t-ticket','t-later','t-within'];   // v1 · v2 · v3
   const mirror = src => {
     const b = document.createElement('button');
     b.type = 'button';
@@ -2674,10 +2789,10 @@ function buildLegacyRail(){
   sync();
 }
 document.getElementById('legacyframe').addEventListener('load', () => {
-  if(version !== 3) buildLegacyRail();
+  if(version !== 4) buildLegacyRail();
 });
 
-setVersion(3);
+setVersion(4);
 buildSeats();
 setState('default');
 window.addEventListener('load', recalc);

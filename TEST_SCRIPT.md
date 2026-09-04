@@ -1,6 +1,12 @@
 # Usability script — the return flow
 
-**Build to test:** https://devanshthink-bit.github.io/redbus-return-capture/?test — **v3, the calendar**
+**Build to test:** https://devanshthink-bit.github.io/redbus-return-capture/?test — **v4, the calendar**
+
+> **Written for v3; v4 changed one screen.** The calendar, the question and the money trade-off are
+> unchanged, so every task below still runs. What differs is *Your return*: v3 opened a day's buses
+> inside its own row, v4 keeps the days as a fixed list and shows the chosen bus in full underneath
+> with the alternatives that beat it. No sessions have been run, so nothing is invalidated — but any
+> observation note describing an accordion on that screen describes something that no longer exists.
 **The job:** a traveller who doesn't yet know their return date leaves the session holding a return they can change.
 
 > **Send that URL, with `?test` on the end.** Without it, the participant sees two dark panels
@@ -11,7 +17,8 @@
 > handing over.
 
 > **Three prototypes exist. Give each participant exactly one.**
-> `/v1.html` *Last day* · `/v2.html` *Return window, cheapest booked* · `/` *Calendar, v3*
+> `/v1.html` *Last day* · `/v2.html` *Return window, cheapest booked* ·
+> `/v3.html` *Calendar, buses inside the day row* · `/` *Calendar, v4*
 >
 > Test **v3**. It is the build that is still changing, it is the one every fix and every document
 > now describes, and it carries the open bet in its cleanest form: **when someone genuinely doesn't

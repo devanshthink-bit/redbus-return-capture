@@ -9,15 +9,16 @@ Do not start work, answer a question about the project, or change a file until y
 
 ## The six things that will bite you if you skip it
 
-1. **v1 (`v1.html` / `prototype.html`) and v2 (`v2.html`) are frozen.** Only **`index.html`**
-   changes. Verify on every commit that v1 and v2 are untouched — run exactly
-   `md5 -q v1.html prototype.html v2.html`, which must return `a96fc35f…`, `a96fc35f…`,
-   `412b90eb…`. **Never put `index.html` in that command.** On 3 Sep a whole session ran the check
-   with `index.html` standing in v1's place; it returned the expected hashes every time while
-   watching neither frozen file, and got quoted as evidence in twenty commit messages.
-   **The working file is `index.html`, not `v3.html`.** It is the viewer: v3 inline, plus v1 and
-   v2 in an iframe behind a version switch. It lives at the root so the URL names no version.
-   `v3.html` is now a redirect to `/`, kept only so old links still work. v1's file is unchanged
+1. **v1 (`v1.html` / `prototype.html`), v2 (`v2.html`) and v3 (`v3.html`) are frozen.** Only
+   **`index.html`** changes, and it now holds **v4**. Verify on every commit that the three are
+   untouched — run exactly `md5 -q v1.html prototype.html v2.html v3.html`, which must return
+   `a96fc35f…`, `a96fc35f…`, `412b90eb…`, `6e9c8a7c…`. **Never put `index.html` in that command.**
+   On 3 Sep a whole session ran the check with `index.html` standing in v1's place; it returned the
+   expected hashes every time while watching neither frozen file, and got quoted as evidence in
+   twenty commit messages.
+   **The working file is `index.html`, and it is v4.** It is also the viewer: v4 inline, plus v1,
+   v2 and v3 in an iframe behind a version switch. It lives at the root so the URL names no
+   version. v1's file is unchanged
    and still served at `v1.html` and `prototype.html`.
 2. **Assert on every string replacement.** A silent no-op looks exactly like success. This has
    cost real time more than once.
@@ -43,11 +44,12 @@ Do not start work, answer a question about the project, or change a file until y
   reschedule, refunds), each with its source and a verified/unverified flag
 - `DEFENCE.md` — 110 stakeholder/interview questions with answers
 - `CRITIQUE.md` — eight attacks on the chosen idea, plus the idea ranking
-- `TEST_SCRIPT.md` — the usability script. **Tests v3**, at `/?test`. Sessions not yet run
+- `TEST_SCRIPT.md` — the usability script. **Tests v4**, at `/?test`. Written for v3; only the
+  *Your return* screen changed. Sessions not yet run
 - `artefacts.html` — the board, generated from `NOTES.md`. Never retype note text
-- `index.html` — **the file you change.** The prototype and the viewer that carries all three
-  versions. Served at the bare root URL, which is the one to hand anyone
-- `v3.html` — a redirect to `/`, so older links keep working
+- `index.html` — **the file you change: v4.** Also the viewer that carries all four versions.
+  Served at the bare root URL, which is the one to hand anyone
+- `v3.html` — v3, frozen, the way `v1.html` and `v2.html` are
 
 Repo is public and auto-deploys to GitHub Pages on push. Deploys take 45–90 seconds; verify with
 `curl` + `md5` before telling the user it is live.

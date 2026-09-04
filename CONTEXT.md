@@ -63,7 +63,8 @@ on push. `raw/` (interview transcripts) is gitignored.
 | `artefacts.html` | The FigJam-style board — 11 sections, scope card → design brief. **Generated from NOTES.md**, not retyped |
 | `index.html` / `prototype.html` | **v1** — identical copies. index.html is what GitHub Pages serves |
 | `v2.html` | **v2** |
-| `index.html` | **the viewer and v3 — the file being changed.** Served at the bare root URL |
+| `index.html` | **the viewer and v4 — the file being changed.** Served at the bare root URL |
+| `v3.html` | **v3, frozen** the way v1 and v2 are. `6e9c8a7c…` |
 | `component-sheet.html` | Design-language component sheet |
 
 **Source material** (not in the repo): `/Users/devansh/Downloads/RedBus Case Docs/` — 8 interview
@@ -77,13 +78,14 @@ folder name** — PAM04L01–L04, PAM05L03.
 ## 4. Live URLs
 
 ```
-all three  https://devanshthink-bit.github.io/redbus-return-capture/     <- hand out this one
+all four   https://devanshthink-bit.github.io/redbus-return-capture/     <- hand out this one
 v1 alone   https://devanshthink-bit.github.io/redbus-return-capture/v1.html
 v2 alone   https://devanshthink-bit.github.io/redbus-return-capture/v2.html
+v3 alone   https://devanshthink-bit.github.io/redbus-return-capture/v3.html
 board      https://devanshthink-bit.github.io/redbus-return-capture/artefacts.html
 ```
-The root **is** the viewer — `index.html` — and it carries the version switch, so the URL names
-no version. `v3.html` is a redirect to it, kept for old links; `?test` survives the hop.
+The root **is** the viewer — `index.html` — it holds **v4** and carries the version switch, so the
+URL names no version. `?test` works on it.
 **`index.html` is no longer v1.** v1's file is unchanged and served at `v1.html` and
 `prototype.html`, both still `a96fc35f…`.
 
@@ -143,10 +145,56 @@ terms. Read it before quoting a number at anyone.
 |---|---|---|---|
 | **v1** | The last day you can travel | that day | Move earlier surfaced; later change in My Bookings. **17 screens** |
 | **v2** | Earliest and latest, two fields | the **cheapest** day | One *Change day*, either direction. **16 screens** |
-| **v3** | One calendar — one tap = fixed date, two = range | **the traveller picks**, from a list with the cheapest flagged and their last day named | Idea 9 guard · day-level movability · auto-assigned seat and points, changed at review · visible change balance · the change pays through the normal payment screen. **16 screens** |
+| **v3** | One calendar — one tap = fixed date, two = range | **the traveller picks**, from a list with the cheapest flagged and their last day named | Idea 9 guard · day-level movability · auto-assigned seat and points, changed at review · visible change balance · the change pays through the normal payment screen. Buses open **inside the day's own row**. **16 screens** |
+| **v4** | the same calendar | the same | Everything v3 has. *Your return* is rebuilt: the days are a **fixed list** and the chosen bus sits **below** them in full, with the alternatives that beat it. **16 screens** |
 
-**v1 and v2 are frozen.** Only v3 is being changed. Do not touch v1 or v2 without being asked —
+**v1, v2 and v3 are frozen.** Only v4 is being changed. Do not touch them without being asked —
 he has instructed this explicitly and it has been verified on every commit.
+
+### Why v4 exists
+
+v3 opened a day's buses inside the day's own row. On a real route that day holds twenty or thirty
+services — the project's own Figma capture of redBus's live bus list is **14 cards and 4,957px for a
+single day** — so the open day buried every other day, and the screen exists to compare days.
+
+v4 separates the two jobs. The days are a fixed list whose height does not depend on how many buses
+a day has, and the chosen bus is shown **once, in full, below them**, in the same `Card / Bus` shape
+as the outbound list: times, duration, seats, operator, vehicle, the real rating badge, the seat line
+and the flexibility pills. Under it sit up to **three alternatives that beat it on something the
+traveller named** — each stating what it wins and what it costs — and a link to the full list.
+
+**The seven things travellers said decide a return bus**, from his own interviews: date, timing,
+rating, cheap price, preferred seat availability, free cancellation, flexibility to change date.
+They rank differently for the two travellers, and the screen ranks with them:
+
+| | Window — does not own the date | Fixed date — owns it |
+|---|---|---|
+| 1 | can this date change, and what does changing cost | timing |
+| 2 | can I get out entirely (free cancellation) | price |
+| 3 | which day leaves the most room | rating **with its vote count** |
+| 4 | price as a floor and a delta | preferred seat |
+| 5 | rating as a threshold, not a target | free cancellation |
+| 6 | timing | date-change flexibility |
+| 7 | preferred seat | — |
+
+**The window traveller's top two are the fixed-date traveller's bottom two.** That is the whole
+finding, and it comes straight out of the JTBDs: all four reduce to *"I want to be wrong about my
+return date without it costing me much."* The mode is `WINDOW_MODE()` — `sel.length===2`.
+
+**A rating without its count is not evidence.** `OPS` holds rating and votes per **operator**, not
+per service, and `VOTE_FLOOR = 50`: no bus is called *Best rated* on fewer votes than that, and the
+row is dropped rather than awarded. 4.9 from eleven people must not outrank 4.5 from 315.
+
+**The lead no longer decides.** *"We will book Sat, 12 Sep"* was the product's voice about the
+product's action, on a screen whose premise is that the traveller need not decide; and under it
+*"Cheapest is Mon 14 — pick it now and you save ₹170"* was a recommendation in urgency language,
+which contradicts J3's *"as information not urgency"*. The lead now states what they hold and what
+they can still do; the cheapest fact lives on that day's own row as `₹340 cheaper`, at the point of
+comparison.
+
+**Picking a day now proposes its default bus.** v3 left the bus unchosen until a row inside the
+accordion was tapped; there is no such row, so `setHeldDay()` sets `retBus = defaultBusOn(d)` and
+swapping the bus is a change to a proposal rather than a blank to fill.
 
 **Test v1, not v3.** v1 carries the open bet (does *"last day"* read as a commitment or a guess?).
 v3 asks a question people already know how to answer, so it removes less uncertainty.

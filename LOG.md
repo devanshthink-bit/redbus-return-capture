@@ -4789,3 +4789,57 @@ LEARNED · 2026-09-03 · (no skill)
 accordion's nested bus cards so they'd separate from their container — a fix for MY nesting, not
 redBus's design. redBus keeps every bus card white and separates by spacing/shadow. When a real
 component has a canonical fill, keep it; solve nesting with spacing, not colour.
+
+DECISION · 2026-09-04 · (no skill) · Source: user
+**v4.** *"the capped version is fine but as per user told me things important to them while choosing
+the bus is date, timing, rating, cheap price, preferred seat availability, free cancellation,
+flexibility to change date ... i want users to make informed decision"* — then
+*"build this as version v4, since its a major change in UI from v3."*
+
+**What was wrong with v3's screen.** A day opened its buses inside its own row. On a real route that
+is twenty or thirty services; this project's own Figma capture of redBus's live bus list is 14 cards
+and 4,957px for one day. The open day buried every other day, and comparing days is what the screen
+is for.
+
+**v4 separates the two jobs.** Days are a fixed list — the same height whether a day has two buses or
+thirty. The chosen bus sits below them, once, in full, in the same `Card / Bus` shape as the outbound
+list. Under it, up to three alternatives that **beat it on something the traveller named**, each
+stating what it wins and what it costs. Then a link to the whole list, which reuses the `s-bus`
+screen that already existed.
+
+**Two rankings, one structure.** The seven decision criteria rank almost backwards for the two
+travellers — the window traveller's top two (can I move this, can I get out) are the fixed-date
+traveller's bottom two. `WINDOW_MODE()` is `sel.length===2`, which the screen already branched on
+for its copy; now it branches the trade rows, the day sub-line and the pill order too.
+
+**A rating without its count is not evidence.** `VOTE_FLOOR = 50`. Nothing is called *Best rated* on
+fewer votes, and the row is dropped rather than awarded. Ratings live on `OPS` per operator, not per
+service — three Laxmi departures do not have three different scores — using the values already on the
+outbound cards, so the two lists agree.
+
+**The lead stopped deciding.** *"We will book Sat, 12 Sep"* became the held state and the right that
+comes with it. *"Cheapest is Mon 14 · pick it now and you save ₹170"* is gone from the lead entirely:
+it was a recommendation in urgency language aimed at someone whose stated problem is not knowing their
+date, which is the opposite of J3. The same number is on Mon 14's own row as `₹340 cheaper`.
+
+**v3 is frozen** at `6e9c8a7c…`, taken from `c5863a3:v3.html` — the last commit before the shell work
+— after checking its screens and script were byte-identical to the ones in `index.html`. It now sits
+in the viewer beside v1 and v2, and `index.html` is v4.
+
+Verified with the full harness in §10: script parses; state matrix 18 × 13 = 234 combinations with no
+errors and exactly one screen visible in each; click-through of the whole journey including both ways
+into the full bus list and back; Back on all 18 screens lands where it should; money agrees across
+`rv-tot`, `rv-bb` and `pay-tot` in all 13 states; type scale clean and no tap target under 44. All
+four versions load in the switch. v1, v2, v3 and prototype.html byte-identical.
+
+LEARNED · 2026-09-04 · (no skill)
+**`const OPERATOR` already existed.** A new operator table called `OPERATOR` shadowed a string
+constant twenty lines below and killed the whole script — the same collision class as `.leg`, `.sw`
+and `.time` in the CSS, now in JS. One stylesheet and one script means one namespace. Grep the name
+before declaring it, every time; this is the second time it has cost a debugging round.
+
+**A cap is not a structure.** The first answer to "the accordion is too long" was to show three buses
+and hide the rest — correct as far as it went, and it would have left the screen doing two jobs in one
+list. Asking what the traveller is actually deciding produced a different shape: compare days here,
+choose a bus there, both visible at once.
+
