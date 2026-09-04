@@ -5168,3 +5168,22 @@ LEARNED · 2026-09-04 · (no skill)
 +₹90, +₹150 and no *None* on those days. I multiplied the stale numbers by six and got six times a
 wrong answer. Both frames now carry what the build renders, read out of the running page. A clone
 inherits everything, including the parts nobody has checked lately.
+
+DECISION · 2026-09-04 · (no skill) · Source: user
+**A state earns a second screen only by changing the design.** Devansh: *"only show multiple screens
+where substantial design changes are made compared to the default screens... If there are only
+minimal changes, for example, in the amount of 6 passengers, I won't be showing them in the case
+study, right?"* So the seven six-passenger screens were diffed against the screens they clone —
+counting visible layers, not words. Review gains 56 layers and Ticket details 60; Pay, Booking
+confirmed, Change day, Confirm the move and Return moved gain nothing at all and differ by 2 to 7
+strings. The five went. The two that remain sit in their own section, *S12 · Six passengers · the
+group case*. The build keeps every fix, cut screens included — the money has to be right whether or
+not a frame shows it.
+
+LEARNED · 2026-09-04 · (no skill)
+**Diff the layers, not the pixels, to know whether a state is a design.** Eyeballing said all seven
+six-passenger screens "looked different" — they all carried different numbers. Comparing the visible
+layer tree against the base frame gave a number instead of an impression: +56, +60, 0, 0, 0, 0, +1.
+The first pass of that test missed S1 entirely, because its return leg is *hidden*, not deleted, and
+`findAll` returns hidden nodes. Walking with a visibility flag found the 42 layers it drops. Any
+structural diff in Figma has to carry visibility or it will call a blanked screen unchanged.

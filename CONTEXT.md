@@ -753,25 +753,36 @@ row, *Also handled*, is the rest — they matter for completeness, not for the c
 | S9 · No other days | `nothingearlier` | 13, *No other days to pick · There is no other day in your range.* |
 | S10 · Seat lost mid-swap | `swapfail` | 15, *That seat is gone* with Confirm held back |
 | S11 · Return dropped | `noreturn` | 11, *No return booked · You booked this trip one way.*, change row hidden |
-| S12 · Six passengers | `crowded` | 08, six travellers with their seat pairs, and the add-ons multiplied — ₹360, ₹156, ₹90, total ₹15,774 |
+| S12 · Six passengers | `crowded` | its own section — Review with six passenger rows, and Ticket details with the Passengers card. See below |
 
-### Six passengers changes more than the Review screen (4 Sep)
+### A state earns a second screen only by changing the design (4 Sep)
 
-`crowded` is not one screen. It is a run, and the screens that change carry their own section,
-**Six passengers · the rest of the run**, next to the States section.
+`crowded` touches the whole run, but touching is not designing. Every downstream screen was built,
+then diffed against the screen it clones — visible layers, not just words — and five of the seven
+turned out to be the same design with different numbers in it:
 
-| Frame | What actually changes at six |
-|---|---|
-| S12 (in States) | Review — six passenger rows, add-ons ×6, total ₹15,774 |
-| S12a · Pay | *6 Passengers*, and the title becomes *Pay ₹15,774* |
-| S12b · Booking confirmed | *· 6 passengers*, and each leg's seat pill reads *6 seats* |
-| S12c · Ticket details | gains a **Passengers** card — six names with their return seats |
-| S12d · Change day | the booking row is *6 seats · ₹6,540*, and every calendar price is a group price: +₹170 becomes +₹1,020, +₹350 becomes +₹2,100 |
-| S12e · Confirm the move | *6 seats · ₹6,540* → *6 seats · ₹6,360*, difference *₹180 less — no refund* |
-| S12f · Return moved | *· 6 passengers*, ₹6,360, six seats, *₹180 cheaper* |
+| Screen | Difference from the default | |
+|---|---|---|
+| Review your trip | +56 layers — one passenger row becomes six | kept |
+| Ticket details | +60 layers — a **Passengers** card that does not exist at one passenger | kept |
+| Pay | 0 layers, 2 strings | cut |
+| Booking confirmed | 0 layers, 5 strings | cut |
+| Change day | 0 layers, 7 strings | cut |
+| Confirm the move | 0 layers, 3 strings | cut |
+| Return moved | 1 text node swapped | cut |
 
-**My Bookings was built and then cut.** The only difference at six was the seat-count badge going
-from 1 to 6. A screen whose whole diff is one digit is not a screen worth showing.
+The two survivors sit in their own section, **S12 · Six passengers · the group case**, under the
+States section. The rule this settles: *a state that spans several screens gets a frame per screen
+only where a component is added or removed. A number that grew is not a design.*
+
+**The build was still fixed everywhere**, cut screens included — the money has to be right whether or
+not a frame shows it. See the entry below.
+
+**Two pairs of states share one design.** The diff also showed that S4 · Past cutoff and
+S5 · Already moved are structurally identical — same five layers removed from screen 11, one line of
+copy apart — and so are S2 · None in window and S7 · Can't check, both being the blank state on 06
+with a different heading and button. They are kept as separate frames because they prove different
+rules, but only one of each pair is a new design.
 
 **No day becomes impossible for a group.** The change is bound to the booked operator, and every
 Laxmi service in September has at least two buses with six or more seats free — checked against
