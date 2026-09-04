@@ -194,6 +194,13 @@ body.testing .layout{justify-content:center}
 body.legacy-on .legacy{display:block}
 body.legacy-on .phone{display:none}
 .legacy iframe{position:absolute;left:-299px;top:-48px;width:1000px;height:970px;border:0}
+/* The hi-fi build, loaded whole. It is an iPhone 14 (390x874 -> 390x844 screen) against this
+   frame's iPhone 16 Pro 402x874, so ?embed scales it on both axes to fill exactly. The two
+   aspects are 0.4621 and 0.4600 -- a 0.46% stretch, against the 7% one rejected for v1/v2. */
+.hifi{position:absolute;inset:0;overflow:hidden;display:none;background:#F1F1F6}
+.hifi iframe{position:absolute;left:0;top:0;width:402px;height:874px;border:0}
+body.hifi-on .hifi{display:block}
+body.hifi-on .phone,body.hifi-on .legacy{display:none}
 .phone{width:402px;height:874px;flex:0 0 auto;
  background:var(--page);position:relative;overflow:hidden;display:flex;flex-direction:column}
 
@@ -496,6 +503,13 @@ body.legacy-on .phone{display:none}
 .dev.states.dirty>summary .cnt{color:rgba(178,49,56,.65)}
 /* v1 and v2 have their own screens, so their own rails are mirrored in here */
 body.legacy-on #screenrail,body.legacy-on #staterail{display:none}
+body.hifi-on #screenrail,body.hifi-on #staterail,body.hifi-on #legacyrail,
+body.hifi-on .legacynote,body.hifi-on #vgrp{display:none}
+#hifirail{display:none}
+body.hifi-on #hifirail{display:block}
+#hifirail .hfnum{font-family:var(--s-mono);font-size:11px;color:var(--s-on-45);
+ min-width:26px;display:inline-block}
+body.hifi-on #hifirail button[aria-pressed="true"] .hfnum{color:rgba(255,255,255,.75)}
 #legacyrail{display:none}
 body.legacy-on #legacyrail{display:block}
 .legacynote{display:none;font-size:13px;line-height:1.55;color:var(--s-on-60)}
@@ -585,6 +599,15 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
     Built on colour and type measured off the live redBus app.</p>
 
   <div class="grp">
+    <h2>Prototype</h2>
+    <div class="vers" id="fidsw">
+      <button type="button" onclick="setFidelity('hifi')" id="f-hifi" aria-pressed="true">Hi-fi</button>
+      <button type="button" onclick="setFidelity('lofi')" id="f-lofi">Lo-fi</button>
+    </div>
+    <p class="vnote" id="fnote"></p>
+  </div>
+
+  <div class="grp" id="vgrp">
     <h2>Version</h2>
     <div class="vers">
       <button type="button" onclick="setVersion(1)" id="v-1">v1</button>
@@ -602,6 +625,7 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
     <h2>Screens</h2>
     <p class="legacynote">Loading this version&rsquo;s screens&hellip;</p>
     <div id="legacyrail"></div>
+    <div id="hifirail"></div>
 <div class="dev screens" id="screenrail">
   <button onclick="go('s-home')" id="t-home" aria-pressed="true">Home &middot; search</button>
   <button onclick="go('s-obuses')" id="t-obuses">Outbound buses</button>
@@ -671,6 +695,8 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
   <div class="viewport">
     <!-- v1 / v2 land here, whole and unedited, cropped to the phone -->
     <div class="legacy"><iframe id="legacyframe" title="Earlier version" src="about:blank"></iframe></div>
+    <!-- the hi-fi build, whole and unedited, cropped to the phone -->
+    <div class="hifi"><iframe id="hififrame" title="High-fidelity prototype" src="about:blank"></iframe></div>
 <div class="phone">
 
 
@@ -2789,6 +2815,7 @@ function setVersion(v){
    so it stays right when the prototype navigates itself. */
 function setCaption(){
   const cap = document.getElementById('caption');
+  if(fidelity === 'hifi') return;            // the hi-fi rail writes its own
   if(version !== 4){ cap.innerHTML = 'Version ' + version + ' &mdash; frozen, shown as it was built'; return; }
   const on = document.querySelector('.phone .screen.on');
   const btn = on && document.querySelector('#screenrail [aria-pressed="true"]');
@@ -2869,6 +2896,85 @@ document.getElementById('legacyframe').addEventListener('load', () => {
   if(version !== 4) buildLegacyRail();
 });
 
+/* ---- prototype switch: lo-fi | hi-fi ---------------------------------------
+   One level above the version switch. The lo-fi is this file (v4) plus the three frozen
+   builds; the hi-fi is the Figma screens, built from the file and loaded whole into an
+   iframe from hifi/app.html -- nothing in it is edited or overridden from here. Version
+   only means anything inside the lo-fi, so that group hides when the hi-fi is on. */
+const FIDELITY = {
+  hifi:{note:'<b>Hi-fi</b> is the Figma build &mdash; 23 screens at iPhone&nbsp;14 size, walked in the order they are arranged on the canvas.'},
+  lofi:{note:'<b>Lo-fi</b> is the working prototype, in four versions. Every screen responds.'}
+};
+let fidelity = 'hifi';
+let hifiLoaded = false;
+function setFidelity(f){
+  fidelity = (f === 'lofi') ? 'lofi' : 'hifi';
+  document.getElementById('f-hifi').setAttribute('aria-pressed', String(fidelity==='hifi'));
+  document.getElementById('f-lofi').setAttribute('aria-pressed', String(fidelity==='lofi'));
+  document.getElementById('fnote').innerHTML = FIDELITY[fidelity].note;
+  document.body.classList.toggle('hifi-on', fidelity==='hifi');
+  if(fidelity === 'hifi'){
+    /* loaded once and kept, so switching back and forth does not throw away where you were */
+    if(!hifiLoaded){ document.getElementById('hififrame').src = 'hifi/app.html?embed'; hifiLoaded = true; }
+    else buildHifiRail();
+  } else {
+    setCaption();
+  }
+  fitDevice();
+}
+
+/* The hi-fi carries its own screen list. Rather than retype 23 names here -- which would go
+   stale the moment a frame was renamed in Figma -- the panel reads the rail out of the loaded
+   frame and drives the real buttons, exactly as it does for v1 and v2. */
+function buildHifiRail(){
+  const host = document.getElementById('hifirail');
+  host.innerHTML = '';
+  let doc = null;
+  try { doc = document.getElementById('hififrame').contentDocument; } catch(e){}
+  const rows = doc ? [...doc.querySelectorAll('.hf-rail button')] : [];
+  if(!rows.length){
+    host.innerHTML = '<p class="legacynote" style="display:block">The hi-fi build carries its own ' +
+                     'controls. Open the published link to step through it from here.</p>';
+    return;
+  }
+  /* the same five runs the lo-fi rail uses, by position in the canvas order */
+  const RUN_START = ['01','05','08','11','13'];
+  const list = document.createElement('div');
+  list.className = 'dev';
+  const mine = rows.map(src => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    const id = (src.querySelector('.railn') || {}).textContent || '';
+    if(RUN_START.includes(id)) b.className = 'runstart';
+    b.innerHTML = '<span class="hfnum">' + id + '</span>' +
+                  src.textContent.slice(id.length).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+    b.onclick = () => { src.click(); setTimeout(sync,0); };
+    list.appendChild(b);
+    return b;
+  });
+  host.appendChild(list);
+  function sync(){
+    let on = null;
+    rows.forEach((src,i) => {
+      const p = src.getAttribute('aria-current') === 'true';
+      mine[i].setAttribute('aria-pressed', p ? 'true' : 'false');
+      if(p) on = src;
+    });
+    document.getElementById('caption').innerHTML =
+      on ? '<b>' + on.textContent.replace(/^[0-9a-b]+\s*/,'') + '</b>' : '';
+  }
+  /* the hi-fi navigates itself when a control inside a screen is tapped, so watch it
+     rather than only reacting to the rail */
+  try {
+    new MutationObserver(sync).observe(doc.querySelector('#hf-viewport'),
+      {subtree:true, attributes:true, attributeFilter:['hidden']});
+  } catch(e){}
+  sync();
+}
+document.getElementById('hififrame').addEventListener('load', () => {
+  if(fidelity === 'hifi') buildHifiRail();
+});
+
 /* v1.html, v2.html, v3.html and prototype.html are redirects into here, each carrying the version
    it used to be. Anything outside 1..4 is ignored rather than trusted. */
 const asked = +(new URLSearchParams(location.search).get('version'));
@@ -2877,5 +2983,11 @@ buildSeats();
 setState('default');
 window.addEventListener('load', recalc);
 booted=true;
+
+/* The hi-fi is what opens. A link that named a version -- v1.html and friends redirect here
+   carrying one -- means the lo-fi, because Version is a lo-fi idea; ?fidelity=lofi says so
+   outright. hifi/index.html redirects here with ?fidelity=hifi. */
+const askedFid = (new URLSearchParams(location.search).get('fidelity') || '').toLowerCase();
+setFidelity(askedFid === 'lofi' || (!askedFid && VERSIONS[asked]) ? 'lofi' : 'hifi');
 </script>
 </body></html>

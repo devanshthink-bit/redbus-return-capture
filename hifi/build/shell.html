@@ -86,6 +86,20 @@
   body.hf-test .hf-layout{padding:0}
   body.hf-test .hf-stage{height:100vh}
 
+  /* embed mode: ?embed — this page inside the root viewer's own phone. No panel, no
+     bezel, no shadow: the parent already draws those. The 390x844 iPhone 14 screen is
+     scaled on both axes to whatever the parent's viewport is (402x874, an iPhone 16 Pro).
+     The two aspects are 0.4621 and 0.4600, so that is a 0.46% stretch — an order of
+     magnitude under the 7% one CONTEXT §7 rejected for v1/v2, and not visible in type. */
+  body.hf-embed{background:none}
+  body.hf-embed .hf-panel{display:none}
+  body.hf-embed .hf-layout{padding:0;display:block;height:auto}
+  body.hf-embed .hf-stage{height:auto;display:block;overflow:visible}
+  body.hf-embed .hf-device{
+    border-radius:0;box-shadow:none;
+    transform:scale(var(--hf-sx,1),var(--hf-sy,1));transform-origin:top left;
+  }
+
   @media (max-width:1180px){
     .hf-layout{flex-direction:column;height:auto;padding:16px;gap:16px}
     .hf-panel{width:100%;flex:none;height:auto;overflow:visible}
@@ -202,8 +216,16 @@
     if (e.key === 'ArrowLeft')  go(at - 1);
   });
 
-  // 4 · fit the phone to the window, and honour ?test / #screen
+  // 4 · fit the phone to the window, and honour ?test / ?embed / #screen
+  var EMBED = /[?&]embed\b/.test(location.search);
   function fit(){
+    if (EMBED) {
+      // fill the parent's viewport exactly on both axes
+      document.documentElement.style.setProperty('--hf-sx', String(window.innerWidth / 390));
+      document.documentElement.style.setProperty('--hf-sy', String(window.innerHeight / 844));
+      document.documentElement.style.setProperty('--hf-s', '1');
+      return;
+    }
     var stage = document.querySelector('.hf-stage');
     var pad = window.innerWidth <= 520 ? 0 : 32;
     var sh = (stage.clientHeight || window.innerHeight) - pad;
@@ -214,6 +236,7 @@
     document.documentElement.style.setProperty('--hf-s', String(s));
     stage.style.minHeight = (844 * s + pad) + 'px';
   }
+  if (EMBED) document.body.classList.add('hf-embed');
   if (/[?&]test\b/.test(location.search)) document.body.classList.add('hf-test');
   var want = (location.hash || '').replace('#','') ||
              (new URLSearchParams(location.search).get('screen') || '');

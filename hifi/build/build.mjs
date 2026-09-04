@@ -1,5 +1,7 @@
-// Builds hifi/index.html: every Figma frame in "Screens · redBus return capture (iPhone 14)"
+// Builds hifi/app.html: every Figma frame in "Screens · redBus return capture (iPhone 14)"
 // rendered to static HTML, wrapped in an iPhone 14 viewport with the flow wired.
+// The root viewer loads this in an iframe (?embed). hifi/index.html is a redirect into it,
+// so there is no shareable URL that serves a bare prototype outside the viewer.
 import { build } from 'esbuild';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
@@ -86,5 +88,5 @@ if (page.includes('<!--SCREENS-->') || page.includes('<!--RAIL-->') || page.incl
   throw new Error('shell placeholder not replaced');
 
 mkdirSync(path.join(root), { recursive: true });
-writeFileSync(path.join(root, 'index.html'), page);
-console.log(`index.html written · ${rendered.length} screens · ${(page.length / 1024).toFixed(0)} KB`);
+writeFileSync(path.join(root, 'app.html'), page);
+console.log(`app.html written · ${rendered.length} screens · ${(page.length / 1024).toFixed(0)} KB`);

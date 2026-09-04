@@ -1,8 +1,12 @@
 # How this folder is built
 
-`index.html` and `app.css` are generated. Do not hand-edit them.
+`app.html` and `app.css` are generated. Do not hand-edit them.
 
-    node build/build.mjs                                   # renders src/screens/*.tsx -> index.html
+`index.html` is a **redirect** into the root viewer (`/?fidelity=hifi`) — the prototype is not
+served standalone any more. Only the viewer's iframe reaches `app.html`, the same arrangement
+`frozen/` has for v1-v3.
+
+    node build/build.mjs                                   # renders src/screens/*.tsx -> app.html
     npx @tailwindcss/cli -i build/tw.css -o app.css --minify
 
 - `src/screens/*.tsx` — one file per Figma frame, taken from the Figma MCP
