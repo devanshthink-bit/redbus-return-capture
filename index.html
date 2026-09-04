@@ -2954,9 +2954,11 @@ function buildHifiRail(){
   const RUN_START = ['01','05','08','11','13'];
   const list = document.createElement('div');
   list.className = 'dev';
+  /* Figma names a state variant "screen · state" -- "Return \u00b7 window chosen". The lo-fi rail
+     is short names, so the qualifier after the dot is dropped here too. */
   const names = rows.map(src => {
     const id = (src.querySelector('.railn') || {}).textContent || '';
-    return {id:id, name:src.textContent.slice(id.length)};
+    return {id:id, name:src.textContent.slice(id.length).split(' \u00b7 ')[0]};
   });
   const mine = rows.map((src, i) => {
     const b = document.createElement('button');
