@@ -2915,7 +2915,13 @@ function setFidelity(f){
   document.body.classList.toggle('hifi-on', fidelity==='hifi');
   if(fidelity === 'hifi'){
     /* loaded once and kept, so switching back and forth does not throw away where you were */
-    if(!hifiLoaded){ document.getElementById('hififrame').src = 'hifi/app.html?embed'; hifiLoaded = true; }
+    if(!hifiLoaded){
+      document.getElementById('hifirail').innerHTML =
+        '<p class="legacynote" style="display:block">Loading the hi-fi screens&hellip;</p>';
+      document.getElementById('hififrame').src = 'hifi/app.html?embed';
+      hifiLoaded = true;
+      pollHifiRail(80);
+    }
     else buildHifiRail();
   } else {
     setCaption();
@@ -2926,6 +2932,16 @@ function setFidelity(f){
 /* The hi-fi carries its own screen list. Rather than retype 23 names here -- which would go
    stale the moment a frame was renamed in Figma -- the panel reads the rail out of the loaded
    frame and drives the real buttons, exactly as it does for v1 and v2. */
+let hifiObs = null;
+/* The frame's `load` waits on all 237 assets, which over a network is seconds after the rail
+   itself is in the DOM. Poll for the rail rather than leave the panel looking empty. */
+function pollHifiRail(tries){
+  if(fidelity !== 'hifi' || document.querySelector('#hifirail button')) return;
+  let doc = null;
+  try { doc = document.getElementById('hififrame').contentDocument; } catch(e){}
+  if(doc && doc.querySelector('.hf-rail button')){ buildHifiRail(); return; }
+  if(tries > 0) setTimeout(() => pollHifiRail(tries - 1), 150);
+}
 function buildHifiRail(){
   const host = document.getElementById('hifirail');
   host.innerHTML = '';
@@ -2966,7 +2982,9 @@ function buildHifiRail(){
   /* the hi-fi navigates itself when a control inside a screen is tapped, so watch it
      rather than only reacting to the rail */
   try {
-    new MutationObserver(sync).observe(doc.querySelector('#hf-viewport'),
+    if(hifiObs) hifiObs.disconnect();
+    hifiObs = new MutationObserver(sync);
+    hifiObs.observe(doc.querySelector('#hf-viewport'),
       {subtree:true, attributes:true, attributeFilter:['hidden']});
   } catch(e){}
   sync();
