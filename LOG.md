@@ -5111,3 +5111,37 @@ names under one avatar, one "Male, 29 Years", and a clipped string. The real pag
 unit — avatar, name, "Male, 29 Years", checkbox — with a rule between, and a counter above. Rebuilt
 as six rows and the counter set to 6/6. The seed for a repeat is the smallest node that carries the
 whole meaning, and here that was the row.
+
+CHANGE · 2026-09-04 · (no skill) · Source: user
+**Built the rest of the six-passenger run in Figma** — a new section, *Six passengers · the rest of
+the run*: Pay, Booking confirmed, Ticket details, Change day, Confirm the move, Return moved. The
+numbers came out of the running build, not out of arithmetic on the existing frames: six passengers
+on 14 Sep is ₹9,594 onward + ₹6,180 return = ₹15,774. The move screens are the other scenario —
+booked Wed 16 Sep at ₹6,540, moving to Tue 15 Sep at ₹6,360, ₹180 less and not refunded.
+
+DECISION · 2026-09-04 · (no skill) · Source: user
+**My Bookings was built and then cut.** Devansh: *"Only show changed UI screens. Why are you showing
+all the screens for 6 passengers?"* Six of the seven do change. My Bookings did not — its whole diff
+at six passengers was a badge going from 1 to 6. A screen whose difference is one digit is padding,
+not evidence, so it went.
+
+LEARNED · 2026-09-04 · (no skill)
+**The group constraint does not bite the calendar.** I expected days to close for a party of six —
+the interesting design problem. They do not. The date change is bound to the booked operator, and
+every Laxmi service in September has at least two buses with six or more seats free, checked with
+`seatsOn(d,i)` across days 11–30. The *Full* and *None* days are identical at six and at one. Only
+the money moves. Worth knowing before designing a rule that has nothing to rule on.
+
+LEARNED · 2026-09-04 · (no skill)
+**A FILL child does not stop its own children overflowing.** The leg card's text column is FILL, so
+it shrank to 130pt when the seat pill grew to hold six seat numbers — and the operator name, HUG at
+234pt, simply ran out under the pill. FILL sizes the box, not what is in it. The pill now says
+"6 seats", the seat numbers moved to the Passengers card on Ticket details where there is room, and
+the two text lines are FILL so they wrap instead of escaping.
+
+LEARNED · 2026-09-04 · (no skill)
+**Three of the build's screens still say one passenger at six.** `pay-sub` is set once and never
+re-run, so Pay reads *1 passenger* with a ₹15,774 total; `mb-trip` hardcodes *1 passenger*; and
+`tk-price`, `bc-price` and `mb-rprice` print the per-seat return fare instead of the ticket. Found by
+driving the deployed build rather than by reading the Figma frames — the frames' own ₹2,919 is
+₹290 stale against the build's ₹2,629, which is how the drift surfaced.

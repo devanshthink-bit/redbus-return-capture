@@ -755,6 +755,34 @@ row, *Also handled*, is the rest — they matter for completeness, not for the c
 | S11 · Return dropped | `noreturn` | 11, *No return booked · You booked this trip one way.*, change row hidden |
 | S12 · Six passengers | `crowded` | 08, six travellers with their seat pairs, and the add-ons multiplied — ₹360, ₹156, ₹90, total ₹15,774 |
 
+### Six passengers changes more than the Review screen (4 Sep)
+
+`crowded` is not one screen. It is a run, and the screens that change carry their own section,
+**Six passengers · the rest of the run**, next to the States section.
+
+| Frame | What actually changes at six |
+|---|---|
+| S12 (in States) | Review — six passenger rows, add-ons ×6, total ₹15,774 |
+| S12a · Pay | *6 Passengers*, and the title becomes *Pay ₹15,774* |
+| S12b · Booking confirmed | *· 6 passengers*, and each leg's seat pill reads *6 seats* |
+| S12c · Ticket details | gains a **Passengers** card — six names with their return seats |
+| S12d · Change day | the booking row is *6 seats · ₹6,540*, and every calendar price is a group price: +₹170 becomes +₹1,020, +₹350 becomes +₹2,100 |
+| S12e · Confirm the move | *6 seats · ₹6,540* → *6 seats · ₹6,360*, difference *₹180 less — no refund* |
+| S12f · Return moved | *· 6 passengers*, ₹6,360, six seats, *₹180 cheaper* |
+
+**My Bookings was built and then cut.** The only difference at six was the seat-count badge going
+from 1 to 6. A screen whose whole diff is one digit is not a screen worth showing.
+
+**No day becomes impossible for a group.** The change is bound to the booked operator, and every
+Laxmi service in September has at least two buses with six or more seats free — checked against
+`seatsOn(d,i)` for all three services on every day from 11 to 30. So the calendar's *Full* and *None*
+days are the same at six as at one. Only the money moves.
+
+**Three places in the build still say one passenger at six.** `pay-sub` is written once and never
+re-run, so Pay reads *1 passenger*; `mb-trip` has *1 passenger* hardcoded; and `tk-price`,
+`bc-price` and `mb-rprice` show the per-seat return fare, not the ticket. The Figma frames above are
+right and the build is not.
+
 **Also in the file:** prototype connections on the real controls, matching the table above. They are
 there so the transitions are explicit and the file click-throughs for a stakeholder; the table is the
 source a coding agent should read.
