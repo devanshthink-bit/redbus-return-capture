@@ -778,10 +778,13 @@ Laxmi service in September has at least two buses with six or more seats free �
 `seatsOn(d,i)` for all three services on every day from 11 to 30. So the calendar's *Full* and *None*
 days are the same at six as at one. Only the money moves.
 
-**Three places in the build still say one passenger at six.** `pay-sub` is written once and never
-re-run, so Pay reads *1 passenger*; `mb-trip` has *1 passenger* hardcoded; and `tk-price`,
-`bc-price` and `mb-rprice` show the per-seat return fare, not the ticket. The Figma frames above are
-right and the build is not.
+**The build priced one seat and charged six (fixed 4 Sep).** `pay-sub` was written only by
+`paintPay()`, which the booking flow never calls; `mb-trip` had *1 passenger* in the source; and
+`rv-ret`, `tk-price`, `bc-price` and `mb-rprice` printed the per-seat return fare beside a
+six-seat total. The change flow did the same — calendar chips, the bus list, the swap card and the
+confirmation all quoted a sixth of what a group pays. The per-seat numbers still decide the rules;
+the screens now print the ticket. Verified on the deployed build in both states: one passenger is
+unchanged at ₹1,030 everywhere, six reads ₹6,180, and the move is ₹6,540 → ₹6,360, ₹180 less.
 
 **Also in the file:** prototype connections on the real controls, matching the table above. They are
 there so the transitions are explicit and the file click-throughs for a stakeholder; the table is the

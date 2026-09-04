@@ -5145,3 +5145,26 @@ re-run, so Pay reads *1 passenger* with a ₹15,774 total; `mb-trip` hardcodes *
 `tk-price`, `bc-price` and `mb-rprice` print the per-seat return fare instead of the ticket. Found by
 driving the deployed build rather than by reading the Figma frames — the frames' own ₹2,919 is
 ₹290 stale against the build's ₹2,629, which is how the drift surfaced.
+
+CHANGE · 2026-09-04 · (no skill) · Source: user
+**The build priced one seat and charged six.** `pay-sub` is written only by `paintPay()`, which the
+booking flow never calls — "Pay now" goes straight to the screen — so Pay read *1 passenger* beside a
+₹15,774 total. `mb-trip` had *1 passenger* in the source. And `rv-ret`, `tk-price`, `bc-price` and
+`mb-rprice` printed the per-seat return fare, ₹1,030, on a ticket costing ₹6,180. The change flow was
+the same story: calendar chips, the bus list, the swap card and the confirmation all quoted a sixth
+of what a group pays. Fixed by multiplying at the point of print — the per-seat numbers still decide
+the rules, so nothing about which days are movable changed. One passenger is byte-identical after.
+
+LEARNED · 2026-09-04 · (no skill)
+**A screen that is only ever painted by the flow that skips it is never painted.** `pay-sub` had a
+correct writer. Nothing called it. Three of the four callers of `paintPay()` are in the change flow;
+the booking flow's Pay button is a bare `go('s-pay')`. The fix was not to write the line better but
+to move it into `recalc()`, which every state change already runs. Ask which paths reach a screen,
+not whether a writer exists.
+
+LEARNED · 2026-09-04 · (no skill)
+**The Figma calendar had drifted from the build and I cloned the drift.** `13 · Change day` showed
++₹30, +₹70, +₹140, +₹10, +₹320, +₹350 and two *None* days. The build renders ₹0, ₹0, +₹100, ₹0,
++₹90, +₹150 and no *None* on those days. I multiplied the stale numbers by six and got six times a
+wrong answer. Both frames now carry what the build renders, read out of the running page. A clone
+inherits everything, including the parts nobody has checked lately.
