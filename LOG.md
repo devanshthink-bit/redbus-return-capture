@@ -5415,3 +5415,14 @@ lo-fi checks anyway: 234 state cells (18 × 13) each render exactly one screen w
 and Back lands correctly on all eight screens that have one. The hi-fi's own walk still passes
 inside the iframe — 23 rail rows each drive their own screen, run breaks at 01/05/08/11/13, and
 01 → 16 forward through the real controls.
+
+LEARNED · 2026-09-04 · (no skill)
+**A warm cache hid a real defect, and only the published site showed it.** The hi-fi's screen rail
+is read out of the loaded iframe on its `load` event — which waits for **all 237 assets**. Locally
+they were cached and the rail appeared instantly; on the published site the panel showed a
+*Screens* heading with nothing under it for several seconds, which reads as broken. The rail is in
+the frame's DOM long before its images are, so it now polls for the rail with `load` kept as a
+backstop, and shows a loading line meanwhile. 746ms against seconds. **The class of bug: an
+event that means "everything has arrived" used where "the thing I need has arrived" was meant.**
+The general rule is the one §4 already states for deploys — check the published site, not the
+local one — and this is the first time it caught something the local checks could not.
