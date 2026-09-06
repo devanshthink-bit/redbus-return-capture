@@ -5,7 +5,8 @@
 > **Written for v3; v4 changed one screen.** The calendar, the question and the money trade-off are
 > unchanged, so every task below still runs. What differs is *Your return*: v3 opened a day's buses
 > inside its own row, v4 keeps the days as a fixed list and shows the chosen bus in full underneath
-> with the alternatives that beat it. No sessions have been run, so nothing is invalidated — but any
+> with the alternatives that beat it. **Three sessions were run on v3 on 6 Sep** — see `LOG.md` — and
+> v4 fixes exactly one of their findings, so nothing here is invalidated by the rebuild. But any
 > observation note describing an accordion on that screen describes something that no longer exists.
 **The job:** a traveller who doesn't yet know their return date leaves the session holding a return they can change.
 

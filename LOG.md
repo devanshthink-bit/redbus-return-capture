@@ -5476,3 +5476,343 @@ tell apart is a defect — ask before shipping, not after.** The three-option qu
 list under each took one message and settled it. See [[repeated-qualifier-belongs-to-the-group]],
 whose rule pointed the other way and which I should have raised as the question rather than as a
 footnote.
+
+NOTE · 2026-09-06 · molades-test · Source: user
+**The sessions were run. Three people, on v3.** Vivek Nandoskar, Soumya Mishra, Sai Srinivas
+Buddi — three of the five named in `TEST_SCRIPT.md`, all three from the original interview set.
+Anand Chauhan and Samarth Kumar were not run, so the sceptic and the fixed-plan traveller are
+both still untested, and kill condition 4 ("Samarth is slower than the unsure participants")
+cannot be evaluated at all.
+
+**Everything below is graded against the kill list as it was written before the sessions**, at
+the threshold agreed before the notes were read: two of three. It fired. See the next entry.
+
+CRITIQUE · 2026-09-06 · molades-test · Source: user — all three
+**The kill list fired: two clear hits of three evaluable.**
+
+- **"Three or more unsure people tap a single day."** Adjusted to two of three. **Nobody used
+  the window.** Vivek read *"When can you travel back?"*, said *"Ok I am not sure"* out loud —
+  and tapped **Skip**. Soumya tapped one day, read the hint, and tapped the immediately
+  following day. Sai read *"tap two days instead"* and tapped two consecutive days. Three
+  people, three different failures, one instruction. **HIT.**
+- **"They take the cheapest day and are then surprised they can't move."** Sai picked the
+  cheapest day on the list, did not see the **No date change** tag, and left holding a ticket
+  that cannot do the one thing he came for. **HIT.**
+- **"Nobody reads the four rules before paying."** Near-hit, not a hit. Soumya did read them —
+  but only at Review, and she said most people including her would scan past. Vivek read
+  headings only and missed the flexibility entirely.
+
+**By the rule written before the sessions, v3 as tested is killed.** Recorded plainly so nobody
+later argues the threshold was different.
+
+**What it killed, precisely: the execution of the window, not the bet.** The bet was *when
+someone genuinely does not know their return date, do they say so?* Vivek said it out loud, in
+words, and the interface had nowhere to put the answer. That is a discoverability failure at
+the moments layer, not a rejection of the premise. The counter-evidence is in the entries below
+and it is strong.
+Severity:  blocker
+Layer:     moments
+Action:    [blank]
+
+CRITIQUE · 2026-09-06 · molades-test · Source: user — Sai Srinivas Buddi
+**The strongest single piece of evidence in the set, and it was unprompted.** At the end,
+without being asked to compare, Sai said he would use this over redBus's current flow —
+going back to the homepage, flipping the cities and searching again — and that he **would not
+tap Skip**, even though he had not understood the window on first contact. His reason was time:
+*"cutting his booking process time in half… the product is making them on his behalf and giving
+him freedom to change them if he wants."*
+
+**Why this is worth more than Soumya's praise for the same construct.** Soumya said she *"really
+liked the 7 day window thing"* — but she said it **after the moderator explained it to her**.
+`TEST_SCRIPT.md` warns about exactly that: people are polite, and they rate attractive things as
+more usable. Sai's is about what he would do; hers is about how she felt once told. Both are
+recorded; only one is behavioural.
+
+This is the reason the kill above reads as *fix the door*, not *abandon the room*.
+Severity:  minor
+Layer:     the bet
+Action:    keep — do not lose this in the rework
+
+CRITIQUE · 2026-09-06 · molades-test · Source: user — Sai Srinivas Buddi, Soumya Mishra
+**"Tap two days" means "tap the two ends of a range" to us, and "tap 2 days" to a user.**
+Sai read it literally and tapped two consecutive dates. Soumya did the same thing by a different
+route: one day, then the immediately following one. Neither produced a window; both thought they
+had answered the question.
+
+The instruction is being asked to teach a **mode** — a thing a calendar cannot do in a hint line.
+The copy is not badly worded; it is the wrong mechanism for the job.
+
+**The suggestion on the table, not yet decided:** make the choice explicit and visible *before*
+the calendar — *I know my date* / *I'm not sure yet* — so the calendar runs in one mode and the
+shading has a stated reason on screen. Vivek is the proof this would land: he answered that
+question out loud, correctly, and then hit Skip because nothing on screen took the answer.
+Severity:  blocker
+Layer:     moments
+Action:    [blank]
+
+CRITIQUE · 2026-09-06 · molades-test · Source: user — Vivek Nandoskar, Sai Srinivas Buddi
+**They do not know what object a window buys, and they guessed wrong three separate ways.**
+This is the most alarming finding in the set, because the misunderstanding is of the construct's
+own central object, at the moment of commitment.
+
+- **Vivek, on seeing four dates highlighted:** *"I have one confusion that, in this my seat is
+  getting confirmed right?"* He believed a seat was being held on **all four days**.
+- **Sai, on the same screen:** unsure whether he was about to pay for several dates, or for the
+  two dark-red ends, or something else. Anxious about price on a screen where price is not the
+  decision.
+- **Vivek, on the whole construct:** he understood it as *he can travel on any day inside the
+  window*, and would lose cancellation if he did not travel. Both halves wrong.
+
+The build never states, at heading weight, on the screen where they commit: **one seat, one fare,
+one day, chosen next.** It is stated in the rules list underneath, which is exactly where these
+three do not read. See the heading-only finding below.
+Severity:  blocker
+Layer:     things
+Action:    [blank]
+
+CRITIQUE · 2026-09-06 · molades-test · Source: user — Sai Srinivas Buddi
+**A traveller who declared he did not know his date bought a ticket that cannot change.**
+On the day list, Sai took the cheapest day and did not notice the grey **No date change** tag.
+He would have discovered it only when he tried to move — after paying, weeks later, with the
+money gone. Every screen up to that point had told him he was buying flexibility.
+
+**His own suggested fix, and why I would not take it as stated.** Sai said: *"why not show only
+free date change buses for such users who select the window construct."* Three objections. It
+removes the cheapest service on the route, and price is a top-two factor for all three
+participants. It hides a real trade-off rather than making it legible — which is the same
+mistake `CONTEXT.md` §10 already records as a live bug in the change-day list, where a `MOVABLE`
+filter hid bookable days to protect a second change that does not exist. And redBus cannot
+filter the market away; the case study's claim to operator reality depends on those buses being
+there.
+
+**The alternative on the table, not yet decided:** default the list to changeable buses with a
+visible *Show all buses* toggle, plus a hard confirm when a window traveller picks a
+non-changeable one — *"This ticket can't be changed. You said you weren't sure of your date."*
+Same protection, nothing hidden. **This is a recommendation, not his decision and not Devansh's.**
+Severity:  blocker
+Layer:     steps
+Action:    [blank]
+
+CRITIQUE · 2026-09-06 · molades-test · Source: user — Vivek Nandoskar, Soumya Mishra
+**The one-change limit arrives after the decision it should inform.** Soumya understood she
+could change the date once only at **Review**. Vivek did not see it until the **confirm date
+change** screen — after booking, after paying, at the moment he was spending the change.
+
+The single-change limit *is* the product. It currently appears first three screens after the
+traveller commits to the construct. Vivek asked for it in two places himself: on the day list
+right after the calendar, and *"something more significant at the top"* of the confirm-change
+screen — his reasoning being that spending the only change there is deserves more than a line
+in a rules list. It is currently a `<dt>` among other `<dt>`s.
+Severity:  blocker
+Layer:     steps
+Action:    [blank]
+
+CRITIQUE · 2026-09-06 · molades-test · Source: user — Vivek Nandoskar, Soumya Mishra
+**"I already picked the dates — why am I picking again?"** Both said it, on the day list that
+follows the calendar. Vivek did not understand the screen even after reading the copy; it did
+not feel intuitive to him that having given a range he was now being asked for a date. Soumya
+asked the same question the moment she was told to select a window.
+
+Sai recovered on his own — *"i got clear on the next screen that here i am being shown those 7
+dates of the window to select one of them"* — so the screen is understandable, just not
+self-evident. That is what makes it a copy-and-transition problem before it is a structural one.
+
+**v4 rebuilt this screen and kept it as a second screen**, so this finding transfers to v4
+whole. Cheapest thing to try: make the heading refer back to what they just did, so the screen
+reads as narrowing rather than repeating. The structural option — day list under the calendar on
+one screen — is a bigger change and should not be first.
+Severity:  blocker
+Layer:     steps
+Action:    [blank]
+
+CRITIQUE · 2026-09-06 · molades-test · Source: user — all three
+**Nobody read a subheading. Not one, across three sessions.** Vivek: headings only, *"not even
+single subheading"*, and he *"ignored all the copies"* — he reached the flexibility hint only by
+accident, just before tapping Continue. Soumya said the Review screen had too much copy, that
+she would read headings and skip the rest, and that most people would scan straight to payment
+and *"later wonder when something goes wrong."*
+
+**This invalidates a written design rule.** `CONTEXT.md` §8 says terms are a rules list whose
+test is *"read only the bold lines and you have every rule."* That test assumed people read the
+bold lines. Two of three did not read anything below a heading.
+
+**This is upstream of most of the copy findings below.** Fixing them one at a time will not
+work. The audit to run: for every rule that changes what a traveller would do, ask whether it
+survives at **heading weight**. A rule that lives only in a subhead does not exist.
+Severity:  major
+Layer:     looks
+Action:    [blank]
+
+CRITIQUE · 2026-09-06 · molades-test · Source: user — Soumya Mishra, Sai Srinivas Buddi
+**The shading is invisible and its explanation is unread.** Both of them tapped a first date and
+**did not notice** that some days became selectable and the rest went disabled. Both ignored
+*"Shaded days are within 7 days of your pick"*; Soumya read it and still did not find it clear.
+
+The calendar changes state under their hands and they do not see it happen. That is the state
+change carrying the entire 7-day rule.
+Severity:  major
+Layer:     looks
+Action:    [blank]
+
+CRITIQUE · 2026-09-06 · molades-test · Source: user — Sai Srinivas Buddi
+**Two tones of red read as two different meanings.** The first and last dates render dark, the
+days between them light. Sai could not tell whether the dark ends were counted in the total —
+*"will the darker ones are counted or not"*. He was trying to answer "how many days is this?"
+and the colour would not tell him.
+
+Suggested, not decided: one treatment for everything inside the range, and the count stated in
+words — *4 days selected*. Colour is being asked to carry a number.
+Severity:  major
+Layer:     looks
+Action:    [blank]
+
+CRITIQUE · 2026-09-06 · molades-test · Source: user — Vivek Nandoskar
+**Nothing says which fare the difference is measured against, or when.** On the day list Vivek
+asked whether the price shown would hold for him, or whether moving later would be priced at
+whatever the fare had become by then.
+
+This is a genuine hole, not a wording problem. The build says *pay the price difference*
+throughout and never says the difference is calculated at the time of the change, against the
+fare then. `TERMS.md` records the rule; no screen states it. A traveller deciding whether
+flexibility is worth having cannot price it.
+Severity:  major
+Layer:     things
+Action:    [blank]
+
+CRITIQUE · 2026-09-06 · molades-test · Source: user — Vivek Nandoskar
+**The return's cancellation story is missing at the moment it is being given up.** Vivek asked
+when the cancellation window would start and end, and for which date inside a window of several.
+Nothing on the calendar tells him he cannot cancel this ticket at all once he changes it — only
+move it.
+
+Same root as the object confusion above: the calendar states what he gains and not what he
+gives up, so he filled the gap himself and filled it wrong.
+Severity:  major
+Layer:     things
+Action:    [blank]
+
+CRITIQUE · 2026-09-06 · molades-test · Source: user — Vivek Nandoskar
+**Free Cancellation says what buying it gives and never what not buying it gives.** Two separate
+questions from Vivek on the onward leg, neither answerable from the screen:
+
+1. If he does not select it, what refund does he get — any at all?
+2. If he does select it and then cancels, does the ₹160 fee come back with the fare?
+
+Both answers exist in `TERMS.md` and appear nowhere in the interface. This is the replication
+rather than the new feature, which is why it is major and not a blocker — but it is a real gap,
+and an add-on that cannot be compared against not buying it is being sold on fear.
+
+Note: he saw v3's placeholder of **₹160 / 12 hours**. v4 carries the observed **₹60 / 6 hours**
+from `TERMS.md` §3b, so the numbers he reacted to are not the current ones. The confusion is
+about the missing comparison, not the amount.
+Severity:  major
+Layer:     things
+Action:    [blank]
+
+CRITIQUE · 2026-09-06 · molades-test · Source: user — all three
+**All three tapped a control that does nothing.** Every participant looked for filters and sort
+on the bus lists, outbound and return. The chip is in the markup — `<button class="chip">Filter
+and Sort</button>` — with no handler behind it.
+
+Two costs. It took time out of three sessions. And it is the first thing all three reached for
+when choosing a bus, which says something about the replication's completeness that the state
+matrix cannot: the screen looks finished and is not.
+
+Either wire it or remove it. An inert control that everyone taps is worse than an absent one.
+Severity:  major
+Layer:     things
+Action:    [blank]
+
+CRITIQUE · 2026-09-06 · molades-test · Source: user — Soumya Mishra
+**"Pay the difference if it costs more" was not clear to her.** Recorded on its own because it
+is a specific string and it sits on the line that carries the whole cost of the flexibility.
+Related to the price-stability gap above, and probably not fixable without answering it.
+Severity:  major
+Layer:     looks
+Action:    [blank]
+
+CRITIQUE · 2026-09-06 · molades-test · Source: user — Vivek Nandoskar
+**The change-day row reads as floating outside the ticket rather than belonging to it.** Vivek's
+words: it *"feels detached and floating outside"*, and he suggested attaching it to the return
+ticket card.
+
+**Checked in the source rather than assumed, and it is still true in v4.** The row is a sibling
+`.rowact` after the ticket card's closing `</div>` on both `s-ticket` and `s-mybook`. `CONTEXT.md`
+§18 says this was fixed — *"attached under the booking card, inside the same visual group"* —
+but that was fixed **in Figma only**. The build never got it.
+
+**A second defect found while checking, which the sessions did not surface.** The row's caption
+still reads *"Wed, 9 Sep to Sat, 12 Sep. Pay only the price difference."* — it names the
+traveller's window. Since the change now reaches **any** date, that line is no longer merely
+redundant, it is **wrong**, and it under-sells the ticket to the person holding it. `CONTEXT.md`
+already records the decision that this row *"names no window"*. Same drift as above: decided,
+written down, applied to Figma, never applied to `index.html`.
+
+**The class worth remembering: a fix recorded in `CONTEXT.md` is not a fix in the build.** Two
+found in one row. The rest of the Figma-era decisions should be swept the same way.
+Severity:  major
+Layer:     steps
+Action:    [blank]
+
+CRITIQUE · 2026-09-06 · molades-test · Source: user — Sai Srinivas Buddi
+**He wants to book the first day and move later — the opposite of the founding premise.** Idea
+16 is *book the deadline, not the date*, and v1 booked the last day outright. Sai said plainly
+that choosing the **first** date and moving **later** feels better to him, and that on the day
+list he would take the cheapest.
+
+v3 and v4 already accommodate him, because the traveller picks the day rather than being given
+their last one — so this is not a defect, it is evidence that giving away the choice was right.
+But the day list still frames the deadline as the thing being booked, and that framing now
+points away from at least one of three travellers.
+
+**Worth carrying into the case study rather than only into the build.** It is a direct, named
+challenge to the original idea's direction, from someone who then endorsed the flow.
+Severity:  major
+Layer:     the bet
+Action:    [blank]
+
+NOTE · 2026-09-06 · molades-test · Source: user — Sai Srinivas Buddi
+**Three things that worked, recorded so the rework does not quietly remove them.**
+
+- **No seat screen and no boarding-point screen on the return.** He liked it when asked
+  directly. That is the default-plus-override decision of 13 Aug holding up under a real user.
+- **Boarding and dropping points shown in full on the return preview card**, which he preferred
+  to the onward card's single line — *"makes him feel secured that everything is right."*
+  Worth considering the same treatment on the onward leg, which is the reverse of the change
+  anyone would have proposed from the desk.
+- **The change-date flow itself**: smooth, and he *"didn't need to think too much about it."*
+
+Also recorded, on what decides a bus for these three: Soumya named timings, ratings, price,
+pickup and drop points, and cancellation — and said she would look at nothing else. Sai added
+**trip duration**, faster being better. Both sit inside the seven factors `CONTEXT.md` §7
+already lists, which is a small independent check on that list.
+
+NOTE · 2026-09-06 · molades-test · Source: user — Vivek Nandoskar
+**The out-of-scope list came back, exactly as `molades-test` predicts it would.** Vivek, on the
+return: with no cancellation available he wants assurance the ticket is safe if the operator or
+the driver fails, since it is a booking far in the future — *"its not his fault."*
+
+That is **n94**, sorted out of scope during synthesis. It is a real problem and it is not this
+project's. Noted and staying out. Recorded because a participant independently raising a note
+you sorted out months ago is evidence the sorting was honest, and it is a line the case study
+can use.
+
+LEARNED · 2026-09-06 · molades-test
+**v4 fixes exactly one of these findings, and I checked rather than assumed.** The working
+assumption going in was that v4 — built after v3 froze — would have absorbed some of this.
+Reading `index.html`: it has not.
+
+- **Fixed:** moving beyond the window. The day-list bar now reads *"The date can change later,
+  to any day"*, which answers Vivek's and Sai's finding. Devansh made that change himself after
+  the sessions, on realising FlexiTicket already allowed it.
+- **Not fixed, verbatim still present:** `"Pick one day. Pick two if you're not sure yet."` ·
+  `"Not sure? Tap two days instead."` · `"Shaded days are within 7 days of your pick."` — the
+  three strings all three participants failed on.
+- **Not fixed:** the day list is still a second screen; the one-change limit still first appears
+  at Review; the change-day row is still outside the ticket card and still names the window.
+
+**The trap this avoided:** v4 rebuilt *Your return*, which is the screen most of these findings
+land on, so "v4 changed that screen" was an available and wrong reason to discount them. What v4
+changed there was the **bus** presentation — accordion to fixed list plus a bounded fold. It
+changed nothing about how a day or a window is chosen, which is what the sessions were about.
+**A rebuild of a screen is not a fix of a finding on that screen.** Check the strings.

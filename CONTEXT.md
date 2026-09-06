@@ -462,7 +462,11 @@ isolate a section by hiding the others instead.
 
 ## 11. Open items — nothing here is done
 
-- **The five usability sessions have not been run.** This is the biggest gap and he should volunteer it before anyone asks. Until then the deadline framing is a bet
+- **Three of the five usability sessions were run on 2026-09-06** — Vivek, Soumya, Sai, on **v3**.
+  Anand and Samarth were not, so the sceptic and the fixed-plan traveller are still untested and
+  kill condition 4 cannot be scored. **The kill list fired: two clear hits of three evaluable.**
+  Nobody discovered the week window, and one participant bought a non-changeable ticket believing
+  he had flexibility. Twenty-one entries in `LOG.md` under 2026-09-06. **The fixes are not built**
 - **No competitive landscape.** FlixBus looked at informally; that is not a landscape
 - **Guardrail has no baseline.** 95% is a stated target
 - **Same-operator-only unverified.** If wrong, the return list must be rebuilt around operator eligibility from the first screen
@@ -488,7 +492,9 @@ and that would be the sharpest finding, not a bad session.
    arguing the difference before conceding the sameness
 2. **"This is a generic solution."** — The generic ones are ideas 1–5. Four were killed because
    RedBus already ships them and 73.9% still defer
-3. **"Have you tested it?"** — Not yet. Say it first, unprompted
+3. **"Have you tested it?"** — **Yes, three sessions, and it failed its own kill list.** Say that
+   first, unprompted, and say what it killed: the window is undiscoverable, not unwanted. The
+   counter-evidence is Sai, who would use it over redBus’s current flow and would not tap Skip
 
 ---
 
