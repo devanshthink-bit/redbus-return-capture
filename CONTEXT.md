@@ -158,7 +158,42 @@ terms. Read it before quoting a number at anyone.
 | **v1** | The last day you can travel | that day | Move earlier surfaced; later change in My Bookings. **17 screens** |
 | **v2** | Earliest and latest, two fields | the **cheapest** day | One *Change day*, either direction. **16 screens** |
 | **v3** | One calendar — one tap = fixed date, two = range | **the traveller picks**, from a list with the cheapest flagged and their last day named | Idea 9 guard · day-level movability · auto-assigned seat and points, changed at review · visible change balance · the change pays through the normal payment screen. Buses open **inside the day's own row**. **16 screens** |
-| **v4** | the same calendar | the same | Everything v3 has. *Your return* is rebuilt: the days are a **fixed list** and the chosen bus sits **below** them in full, with the alternatives that beat it. **16 screens** |
+| **v4** | **a stated mode, then the calendar** | the same | Everything v3 has. *Your return* is rebuilt: the days are a **fixed list** and the chosen bus sits **below** them in full, with the alternatives that beat it. Since 6 Sep it also carries the usability fixes below. **16 screens** |
+
+### What the sessions changed in v4 (6 Sep 2026)
+
+Three people used v3. The kill list fired — nobody discovered the week window, and one participant
+bought a ticket that could not change while believing he had flexibility. Twenty-one findings are in
+`LOG.md` under 2026-09-06. What is built:
+
+- **The calendar opens on a question, not a hint.** *I know my date* / *I'm not sure yet*, and the
+  calendar does not appear until one is answered. `retMode` decides what a tap means: `fixed`
+  replaces the day on every tap, `unsure` opens the 7-day reach then closes the range. **No default
+  answer** — 65.2% were unsure, so defaulting to *I know my date* defaults against the target
+  segment. `resetMode()` is the sole writer, called from `afterOutbound()`.
+- **Every rule on that screen is a `<dt>`.** Nobody in three sessions read a subheading, so §8's
+  *"read only the bold lines"* test was being applied to lines nobody read. `changeRule()`,
+  `cancelRule(crit)`, `refundRule`, `priceRule` and `oneDayRule(n)` are the five, and
+  **exactly one carries the warning colour** in every one of the 189 windows and 30 single dates.
+- **"We book one day, not all 4."** Two participants thought a range held a seat on every marked
+  day, or cost several fares. It is now a heading with the count in it.
+- **"Change the date and you cannot cancel"** moved from Review to the calendar (TERMS 4c).
+  *No refund on a cheaper day* stepped down to plain to keep §8's one-warning rule.
+- **The cheapest day says when it cannot move** — `cheapestMovableIn()` names the cheapest day that
+  still can. Without this the calendar was recommending the trap.
+- **On the day list, a non-changeable day changes the primary button** to *Book a fixed date*, and
+  the bar note names the traveller's own answer back to them. Nothing is hidden from the list.
+- **The day list heading refers back**: *Now pick one of your 4 days*, because two of three asked
+  why they were choosing a date again.
+- **The 7-day band sweeps in on the first tap**, because two never saw it arrive.
+- **The change-day row lives inside the return leg card** on Ticket details and My Bookings, its
+  stale window caption deleted from the markup, and `go()` paints both rows on entry.
+- **Free Cancellation states what declining it gives**, and that the fee is not refunded (TERMS 4b).
+
+**Not built yet, and why:** the dead *Filter and Sort* chip all three tapped; the two-tone red on a
+marked range (the count is now in words, the colour is unchanged); and the day list still frames the
+last day as the thing being booked, which points away from Sai, who wants to book the first day and
+move later.
 
 **v1, v2 and v3 are frozen.** Only v4 is being changed. Do not touch them without being asked —
 he has instructed this explicitly and it has been verified on every commit.
@@ -333,9 +368,10 @@ design-language tokens.
 - Below 520px the mock, the bar and the rails all disappear and the phone becomes the screen — so the
   headless harness at 440 × 960 behaves exactly as before
 
-### v3 constants
+### v4 constants
 ```js
 OUT_DAY = 10 (Thu 10 Sep) · HORIZON = 30 · LAST_BOOKABLE = 40 (Sat 10 Oct) · MAX_WINDOW = 7 days
+retMode = '' | 'fixed' | 'unsure'        // '' until the traveller answers; nothing renders before that
 HELD_SEAT = 'U5'
 MOVABLE = d => ((d*13 + 5) % 9) < 7      // ~6 of 30 days have no movable bus
 FARE, SEAT are Proxies over generator functions — every date has real data
