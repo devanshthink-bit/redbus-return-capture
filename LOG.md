@@ -5903,3 +5903,69 @@ Severity:  blocker
 Layer:     steps
 Action:    fixed — finding 6
 
+
+CHANGE · 2026-09-06 · molades-build · Source: user
+**The change row moved inside the ticket, and its caption stopped being a lie.** Vivek: it *"feels
+detached and floating outside"*. It was a `.rowact` sibling **after** the ticket card's closing tag
+on both Ticket details and My Bookings, styled as its own white card. It is now the last row of the
+return leg card, separated by a rule instead of a gap — which also answers the question the row
+never did: **which leg does it move?**
+
+**And the caption was stale, not merely redundant.** The markup said *"Wed, 9 Sep to Sat, 12 Sep.
+Pay only the price difference."* `paintReturn()` overwrites it with *"Any date, earlier or later"* —
+but only when something calls it, and **arriving at the screen did not**. Verified before the fix:
+a plain `go('s-ticket')` left the window text on screen. Since the change now reaches any date,
+that text under-sold the ticket to the person holding it.
+
+Two rules from `CONTEXT.md` §9 broke together and the fix applies both: **§9.3** — the literals are
+gone from the markup, so the painter is the only source; **§9.4** — `go()` now paints both rows on
+entry to `s-ticket` and `s-mybook`.
+
+**The class worth keeping: a fix recorded in `CONTEXT.md` is not a fix in the build.** §18 says this
+row *"names no window"* and sits *"inside the same visual group"*. Both were true of Figma and
+neither was true of `index.html`. The rest of the Figma-era decisions need the same sweep.
+Severity:  major
+Layer:     steps
+Action:    fixed — finding 15, plus a defect the sessions did not surface
+
+CHANGE · 2026-09-06 · molades-build · Source: user
+**The 7-day band now arrives where they can see it.** Soumya and Sai both tapped a first day and
+did not notice the month go dark around it; both then ignored the line explaining it. The sweep
+animation already existed for ranges, so it now plays across the newly reachable days on the first
+tap. A state change nobody watches happen is a state change nobody knows about.
+Severity:  major
+Layer:     looks
+Action:    fixed — finding 8
+
+CHANGE · 2026-09-06 · molades-build · Source: user
+**The cancellation rule moved to the screen where it is being given up.** Vivek asked, on the
+calendar, when his cancellation window would start and for which day inside a window of several.
+The answer — that a changed ticket cannot be cancelled at all (TERMS 4c, FAQ 3) — was two screens
+further on, at Review.
+
+It is now a calendar rule: **"Change the date and you cannot cancel"**, with *"Cancel before you
+change it and the usual refund applies. After a change, neither."*
+
+**It took the warning slot and "No refund on a cheaper day" stepped down to plain.** §8 allows one
+warning-colour rule per block, and losing cancellation outranks losing a refund on a cheaper day.
+Severity:  major
+Layer:     things
+Action:    fixed — finding 11
+
+CHANGE · 2026-09-06 · molades-build · Source: user
+**Free Cancellation now says what not buying it gives you.** Vivek asked two questions the screen
+could not answer: what refund do I get if I do not select it, and does the fee itself come back?
+The add-on was being sold against a blank — it stated what buying gives and nothing else.
+
+Two rules under the block, both sourced: *"Without it, you still get a part refund — how much
+depends on how early you cancel"* (TERMS §2), and *"The fee itself is not refunded"* (TERMS 4b,
+*"does not cover additional charges, including but not limited to add-ons"*). The amount in that
+second line is written by `recalc()` from `FC_PRICE * PAX()`, never typed — at six passengers it
+is ₹360, not ₹60.
+
+He reacted to v3's ₹160 / 12-hour placeholder; the build now carries the observed ₹60 / 6 hours.
+The gap he found is the missing comparison, not the number.
+Severity:  major
+Layer:     things
+Action:    fixed — finding 12
+

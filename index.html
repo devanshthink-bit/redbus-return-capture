@@ -411,6 +411,10 @@ body.hifi-on .phone,body.hifi-on .legacy{display:none}
 .legerr-a{display:flex;flex-direction:column;gap:8px;margin-top:16px}
 .legerr-a .btn{width:100%;flex:none}
 /* ---------- move earlier ---------- */
+/* Inside the ticket card it is the last row of that card, not a second card after it -- the
+   participant's words were "detached and floating outside". Separated by a rule, not by a gap. */
+.rowact.inleg{background:transparent;border-radius:0;padding:16px 0 0;margin:16px 0 0;
+ border-top:1px solid var(--line)}
 .rowact{width:100%;background:var(--raised);border:0;border-radius:12px;padding:16px;margin-bottom:12px;display:flex;
  align-items:center;justify-content:space-between;gap:12px;text-align:left;font-size:16px;cursor:pointer;
  transition:box-shadow var(--t-state)}
@@ -1077,6 +1081,16 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
         <label class="addon"><input type="checkbox" id="fc-on" autocomplete="off" onchange="recalc()"><span><b>Onward</b><br><span class="cap" id="fc-oncap">100% refund up to 6 hours before departure</span></span><span class="addonp" id="fc-onp">&#8377;60</span></label>
         <label class="addon" data-ret id="fc-ret-on" hidden><input type="checkbox" id="fc-ret" autocomplete="off" onchange="recalc()"><span><b>Return</b><br><span class="cap" id="fc-retcap">100% refund up to 6 hours before departure</span></span><span class="addonp" id="fc-retp">&#8377;60</span></label>
         <div class="addon off" data-ret id="fc-ret-off"><span><b>Return</b><br><span class="cap" id="fc-offcap">Not offered on this bus</span></span><span class="addonp">&mdash;</span></div>
+        <!-- Both of Vivek's questions, answered where the choice is made. The screen said what
+             buying it gives and never what not buying it gives, so the add-on was being sold
+             against a blank. Sources: TERMS 4b (the fee is not refunded) and §2 (an ordinary
+             cancellation still returns part of the fare). -->
+        <dl class="rules" id="fc-compare" style="margin-top:14px">
+          <dt>Without it, you still get a part refund</dt>
+          <dd>How much depends on how early you cancel. With it, you get the full fare back.</dd>
+          <dt>The fee itself is not refunded</dt>
+          <dd>You get the ticket price back, not the <span id="fc-feeamt">&#8377;60</span>.</dd>
+        </dl>
       </div>
 
       <!-- total -->
@@ -1119,6 +1133,14 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
         <div class="oprow"><div><div class="op" data-retop>Laxmi Holidays Pvt Ltd</div><div class="cap">Nainital Bus Stand &rarr; ISBT Kashmiri Gate, Gate 4</div></div></div>
         <button class="linkbtn" id="tk-more-ret" aria-expanded="false" aria-controls="tk-pax-ret" onclick="toggleTicket('ret')">Ticket details</button>
         <div class="paxlist" id="tk-pax-ret" hidden></div>
+
+        <button class="rowact inleg" id="mv-act" onclick="openWithin()">
+          <span><b>Change your return day</b><br><span class="cap" id="mv-sub"></span><span class="bal" id="mv-bal">1 change left</span></span>
+          <span class="chev">&#8250;</span>
+        </button>
+        <div class="rowact inleg off" id="mv-off" hidden>
+          <span><b>Change your return day</b><br><span class="cap" id="mv-why">This ticket can&rsquo;t be changed.</span></span>
+        </div>
       </div>
 
       <div class="blank" id="tk-noret" hidden>
@@ -1128,13 +1150,6 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
         <div class="acts"><button class="btn pri" style="width:100%" onclick="bookReturnLater()">Book a return</button></div>
       </div>
 
-      <button class="rowact" id="mv-act" onclick="openWithin()">
-        <span><b>Change your return day</b><br><span class="cap" id="mv-sub">Wed, 9 Sep to Sat, 12 Sep. Pay only the price difference.</span><span class="bal" id="mv-bal">1 change left</span></span>
-        <span class="chev">&#8250;</span>
-      </button>
-      <div class="rowact off" id="mv-off" hidden>
-        <span><b>Change your return day</b><br><span class="cap" id="mv-why">This ticket can&rsquo;t be changed.</span></span>
-      </div>
     </div>
   </section>
 
@@ -1168,7 +1183,7 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
       </button>
 
       <button class="rowact" id="mb-act" onclick="openWithin()">
-        <span><b>Change your return day</b><br><span class="cap" id="mb-sub">Wed, 9 Sep to Sat, 12 Sep. Pay only the price difference.</span><span class="bal" id="mb-bal">1 change left</span></span>
+        <span><b>Change your return day</b><br><span class="cap" id="mb-sub"></span><span class="bal" id="mb-bal">1 change left</span></span>
         <span class="chev">&#8250;</span>
       </button>
       <div class="rowact off" id="mb-off" hidden>
@@ -1617,6 +1632,10 @@ function go(id){
     s.classList.toggle('anim', on && booted);   // no entry animation on first paint
   });
   document.querySelectorAll('.dev [id^="t-"]').forEach(b=>b.setAttribute('aria-pressed', b.id==='t-'+id.slice(2)));
+  // CONTEXT §9.4: a screen that needs data must draw it on entry. The two change rows carried a
+  // stale literal in the markup for exactly this reason -- their painters ran from recalc(), which
+  // the booking flow reaches but a direct arrival does not. The literals are gone; this is the source.
+  if(booted && (id==='s-ticket' || id==='s-mybook')){ paintReturn(); paintChangeRow(); }
 }
 
 // A third tap starts a new selection, so nobody can get stuck inside a range.
@@ -1640,7 +1659,14 @@ function tapDay(d){
     sel = d===sel[0] ? [d] : (d>sel[0] ? [sel[0],d] : [d,sel[0]]);
     if(sel.length===2){ sweepFrom=sel[0]; sweepTo=sel[1]; }
   }
-  else { sel=[d]; sweepFrom=sweepTo=0; }
+  else {
+    sel=[d];
+    // Soumya and Sai both tapped a first day and did not see the month change under their hands.
+    // A state change nobody watches is a state change nobody knows about, so it plays across the
+    // days that are now reachable rather than appearing between two frames.
+    sweepFrom = Math.max(OUT_DAY+1, d-(MAX_WINDOW-1));
+    sweepTo   = Math.min(LAST_BOOKABLE, d+(MAX_WINDOW-1));
+  }
   paintWindow();
 }
 
@@ -1743,7 +1769,12 @@ function paintWindow(){
   // repriced at the new day's live fare -- redBus holds no price it captured weeks ago.
   const priceRule = '<dt>Prices can go up</dt>'
     + '<dd>Book now and this day stays at this price. Change the day later and you pay that day\u2019s price then.</dd>';
-  const refundRule = '<dt class="crit">No refund on a cheaper day</dt>'
+  // TERMS 4c and FAQ 3: a rescheduled ticket cannot be cancelled at all. One participant asked on
+  // this screen when his cancellation window started; the answer was on Review, two screens later.
+  // §8 allows one warning-colour rule per block, and losing cancellation outranks losing a refund.
+  const cancelRule = '<dt class="crit">Change the date and you cannot cancel</dt>'
+    + '<dd>Cancel before you change it and the usual refund applies. After a change, neither.</dd>';
+  const refundRule = '<dt>No refund on a cheaper day</dt>'
     + '<dd>You only pay when the new day costs more.</dd>';
   // The answer to the question two participants asked out loud on this screen: one thought a seat
   // was being held on every day he had marked, the other could not tell what he was about to pay.
@@ -1757,7 +1788,7 @@ function paintWindow(){
     R.innerHTML = !sel.length ? priceRule
       : '<dt>We\u2019ll book '+label(sel[0])+' \u00B7 '+(busesOn(sel[0]).length>1?'from ':'')+RUPEE(minFareOn(sel[0]))+'</dt>'
         + '<dd>You choose the bus, seat and stops before you pay.</dd>'
-        + changeRule(sel[0]) + refundRule;
+        + changeRule(sel[0]) + refundRule + cancelRule;
   } else if(!sel.length){
     R.innerHTML = oneDayRule(0) + priceRule;
   } else if(sel.length===1){
@@ -1775,7 +1806,7 @@ function paintWindow(){
             + '<dd>Your last day, '+label(b)+', is '+RUPEE(minFareOn(b))+'. You pick which on the next screen.</dd>')
       + '<dt>You can change the date once, to any date</dt>'
       + '<dd>Not just this week. Pay the difference if it costs more.</dd>'
-      + refundRule;
+      + refundRule + cancelRule;
   }
   const cont=document.getElementById('b-cont');
   cont.disabled = (!retMode || !sel.length || offline);
@@ -2753,6 +2784,7 @@ function recalc(){
   const tot  = out + ret + fc + rfc;
 
   if(E('fc-onp')) E('fc-onp').textContent = RUP(FC_PRICE*mult);
+  if(E('fc-feeamt')) E('fc-feeamt').textContent = RUP(FC_PRICE*mult);   // never a literal: PAX() moves it
   if(E('fc-oncap')) E('fc-oncap').textContent = '100% refund up to '+FC_HOURS+' hours before departure';
   if(E('rv-fc')) E('rv-fc').hidden = !fc;
   if(E('pay-fc')) E('pay-fc').hidden = !fc;
