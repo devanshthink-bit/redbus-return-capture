@@ -74,6 +74,37 @@ nothing last time, which is the point of running them.
 Repo is public and auto-deploys to GitHub Pages on push. Deploys take 45–90 seconds; verify with
 `curl` + `md5` before telling the user it is live.
 
+## Figma and the hi-fi build move together. Always.
+
+**Standing instruction from Devansh, 6 Sep 2026, and it holds in every chat:**
+*"whenever we make some changes in the Hi-fi UI in Figma, those same changes are also made in the
+hi-fi prototype build as well everytime, even if i ask for it in different chats. i want figma ui
+screens and hi-fi prototype consistent always so that nothing is missed."*
+
+So **a Figma edit is not finished when Figma looks right.** It is finished when the build matches
+it and the diff proves it. The same holds the other way: a change made to v4 that belongs in the
+hi-fi is not finished until it is in **both** Figma and `hifi/`.
+
+**The loop, every time — `hifi/build/SYNC.md` has the commands:**
+
+1. Change the frame in **Figma** (`use_figma`, after loading the `figma-use` skill)
+2. **Re-pull** that frame with `get_design_context` → `hifi/src/screens/<NN>.tsx`.
+   **Never hand-edit a screen file** — it is generated, and editing it puts it out of sync with
+   the file it came from
+3. Rewrite the asset URLs to `assets/` (Figma's expire in 7 days)
+4. `node hifi/build/build.mjs` then the Tailwind CLI
+5. **Re-render and diff**: fresh Figma render into `build/ref/<NN>_figma.png`, headless build
+   render into `build/shots/<NN>.png`, then `diff.py`. A frame that moved and was not re-diffed
+   is a frame you are guessing about
+6. Commit Figma change and build change **together**, in one commit
+
+**Never let step 1 ship without steps 2–6.** If the build cannot be regenerated in that session,
+say so in the reply and write a `NOTE` in `LOG.md` naming the frames that are now ahead of the
+build — an undeclared drift is the thing this rule exists to prevent.
+
+**The three lo-fi screens the hi-fi mirrors most closely** are the calendar (05/05a/05b), the day
+list (06/06a) and Review (08). A v4 change to any of those almost certainly needs a Figma change.
+
 ## Log it, and what counts
 
 Append to `LOG.md` in the same session, oldest-first, in the existing format:
