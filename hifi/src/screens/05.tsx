@@ -155,14 +155,26 @@ export default function Component05ReturnPickYourDays() {
             Delhi → Nainital · Thu, 10 Sep · 23:55
           </p>
         </div>
-        <div className="[word-break:break-word] content-stretch flex flex-col gap-[4px] items-start not-italic relative shrink-0 w-full" data-node-id="83:325" data-name="Question">
-          <p className="font-['Inter:Bold'] font-bold leading-[25px] relative shrink-0 text-[20px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="83:326">
+        <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-node-id="83:325" data-name="Question">
+          <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[25px] not-italic relative shrink-0 text-[20px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="83:326">
             When can you travel back?
           </p>
-          <p className="font-['Inter:Regular'] font-normal leading-[20px] relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="83:327">
-            Pick your return day. Not sure? Tap two days instead.
-          </p>
         </div>
+        <div className="bg-[#ededf2] border border-[#e4e4e4] border-solid content-stretch flex gap-[4px] items-start overflow-clip p-[4px] relative rounded-[24px] shrink-0 w-full" data-node-id="510:3844" data-name="Mode toggle">
+          <div className="content-stretch flex flex-[1_0_0] items-center justify-center min-w-px overflow-clip py-[11px] relative rounded-[20px]" data-node-id="510:3845" data-name="Segment / I know my date">
+            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[14px] text-center whitespace-nowrap" data-node-id="510:3846">
+              I know my date
+            </p>
+          </div>
+          <div className="content-stretch flex flex-[1_0_0] items-center justify-center min-w-px overflow-clip py-[11px] relative rounded-[20px]" data-node-id="510:3847" data-name="Segment / I’m not sure yet">
+            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[14px] text-center whitespace-nowrap" data-node-id="510:3848">
+              I’m not sure yet
+            </p>
+          </div>
+        </div>
+        <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="83:327">
+          Pick your day. Or mark a range, if your plans could still move.
+        </p>
         <div className="bg-white content-stretch flex flex-col items-start overflow-clip px-[20px] py-[16px] relative rounded-[16px] shrink-0 w-full" data-node-id="345:2709" data-name="Calendar">
           <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[16px] whitespace-nowrap" data-node-id="345:2710">
             September 2026
