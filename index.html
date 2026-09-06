@@ -538,6 +538,17 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
 }
 
 .cal{background:var(--raised);border-radius:12px;padding:16px;margin-top:16px}
+/* The mode question. Three people in a row failed the hint line that used to do this job:
+   one tapped Skip after saying "I'm not sure" out loud, two read "tap two days" as two
+   consecutive dates. A hint cannot teach a mode; a question can be answered. */
+.modes{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.mode{display:block;width:100%;text-align:left;background:var(--raised);border:1.5px solid var(--line);
+ border-radius:12px;padding:14px 16px;min-height:44px;cursor:pointer;
+ transition:border-color var(--t-fast),background var(--t-fast)}
+.mode b{display:block;font-size:16px;font-weight:700;color:var(--ink);line-height:1.3}
+.mode span{display:block;font-size:14px;color:var(--muted);margin-top:2px;line-height:1.4}
+.mode[aria-pressed="true"]{border-color:var(--accent);background:#FDF6F6}
+.mode[aria-pressed="true"] b{color:var(--accent)}
 .cal .mon{font-size:16px;font-weight:700;color:var(--ink);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
 .calnav{width:44px;height:44px;border:0;background:none;color:var(--ink);font-size:20px;cursor:pointer;border-radius:8px}
 .calnav[disabled]{color:#C4C4C8;cursor:default}
@@ -820,7 +831,15 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
       </div>
 
       <h2 class="q">When can you travel back?</h2>
-      <p class="qhint" id="q-hint">Pick one day. Pick two if you&rsquo;re not sure yet.</p>
+      <div class="modes" role="group" aria-label="Do you know your return date?">
+        <button class="mode" id="mode-fixed" aria-pressed="false" onclick="pickMode('fixed')">
+          <b>I know my date</b><span>Pick the day you&rsquo;ll travel back.</span></button>
+        <button class="mode" id="mode-unsure" aria-pressed="false" onclick="pickMode('unsure')">
+          <b>I&rsquo;m not sure yet</b><span>Mark the first and last day you could travel, up to 7 days apart.</span></button>
+      </div>
+
+      <div id="cal-block" hidden>
+      <p class="qhint" id="q-hint"></p>
 
       <div class="cal">
         <div class="mon">
@@ -835,6 +854,7 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
       </div>
 
       <dl class="rules" id="win-rules"></dl>
+      </div>
     </div>
     <div class="bottombar">
       <button class="btn sec" onclick="skipReturn()">Skip</button>
@@ -1560,6 +1580,9 @@ const retFC = () => heldDay ? (RET_BUSES[busOn(heldDay)]||{}).fc || null : null;
 function lastMovableIn(a,b){ for(let d=b; d>=a; d--) if(MOVABLE(d) && SEAT[d]) return d; return 0; }
 
 let sel = [];            // [] nothing · [d] one day · [a,b] a range
+// '' until they answer the question · 'fixed' they know the date · 'unsure' they want a range.
+// A mode the traveller states, not one inferred from how many days they happened to tap.
+let retMode = '';
 let heldDay = 0;         // the day currently booked
 
 const RUPEE = n => '\u20B9'+n.toLocaleString('en-IN');
@@ -1596,7 +1619,20 @@ function go(id){
 
 // A third tap starts a new selection, so nobody can get stuck inside a range.
 let sweepFrom=0, sweepTo=0;
+function pickMode(m){
+  if(retMode===m) return;                      // tapping the same answer twice is not a change of mind
+  retMode=m; sel=[]; sweepFrom=sweepTo=0;      // the answer decides what a tap means, so old taps cannot survive it
+  document.getElementById('mode-fixed').setAttribute('aria-pressed', m==='fixed');
+  document.getElementById('mode-unsure').setAttribute('aria-pressed', m==='unsure');
+  document.getElementById('cal-block').hidden = false;
+  paintWindow();
+}
+
 function tapDay(d){
+  // In 'fixed' there is no second day to give, so every tap replaces the last one. This is the
+  // whole reason the mode exists: 'tap two days' meant 'tap the two ends of a range' to us and
+  // 'tap 2 days' to all three participants.
+  if(retMode==='fixed'){ sel=[d]; sweepFrom=sweepTo=0; paintWindow(); return; }
   if(sel.length===1){
     if(Math.abs(d-sel[0])+1 > MAX_WINDOW){ sel=[d]; paintWindow(); return; }   // out of reach: start again there
     sel = d===sel[0] ? [d] : (d>sel[0] ? [sel[0],d] : [d,sel[0]]);
@@ -1674,46 +1710,73 @@ function paintWindow(){
   // Three different moments, three different things to say. It used to say 'pick any shaded day'
   // for both one and two picks, which is only true for one -- with a range chosen, the shading is
   // the range itself, not a set of options. The 7-day cap is stated up front, where they decide.
+  // The hint answers 'what do I do now', never 'what mode am I in' -- the question above says that.
+  // With a range marked it states the count in words, because two tones of red could not: one
+  // participant could not tell whether the dark ends were counted in the total.
   document.getElementById('q-hint').textContent =
-      !sel.length   ? 'Pick your return day. Not sure? Tap two days instead.'
-    : sel.length===1? 'Shaded days are within '+MAX_WINDOW+' days of your pick.'   // the prompt to use them is in the rules below, not repeated here
-    :                 'Tap any day to start again.';
+      retMode==='fixed'
+        ? (sel.length ? 'Tap another day to change it.' : 'Tap the day you\u2019ll travel back.')
+    : !sel.length   ? 'Tap the first day you could travel back.'
+    : sel.length===1? 'Now tap your last day. Only days within '+MAX_WINDOW+' of the first can be picked.'
+    :                 label(sel[0])+' to '+label(sel[1])+' \u00B7 '+(sel[1]-sel[0]+1)+' days marked. Tap any day to start again.';
 
+  // Every rule that changes what a traveller would do is now a <dt>. All three participants read
+  // headings and nothing under them -- one read "not even a single subheading" -- so a rule living
+  // only in a <dd> is a rule that does not exist. The <dd> carries the detail, never the rule.
   const R=document.getElementById('win-rules');
-  if(!sel.length){
-    // "Keep this price" was true of the ticket and false of the flexibility. A date change is
-    // repriced at the new day's live fare -- redBus holds no price it captured weeks ago -- and this
-    // construct exists to be changed, so the lock this line implied is the one thing it cannot give.
-    R.innerHTML = '<dt>Prices can go up</dt>'
-      + '<dd>Book now and this day stays at this price. Change the day later and you pay that day\u2019s price then.</dd>';
+  if(!retMode){ R.innerHTML=''; return; }   // the calendar is not shown yet, so it has no rules
+
+  // One writer for the change promise, because it is the product and it was arriving three screens
+  // too late: one participant met it only on the confirm-change screen, after paying.
+  function changeRule(d){
+    const bs=allBusesOn(d), mv=bs.filter(function(i){return RET_BUSES[i].movable;}).length;
+    if(mv===0) return '<dt class="crit">This date cannot be changed</dt>'
+      + '<dd>No bus on '+label(d)+' allows a date change.</dd>';
+    if(mv===bs.length) return '<dt>You can change this date once, to any date</dt>'
+      + '<dd>Not just this week. Pay the difference if the new day costs more.</dd>';
+    return '<dt>Most buses that day can change the date once</dt>'
+      + '<dd>To any date, not just this week. Not all buses do \u2014 you pick the bus next.</dd>';
+  }
+  // "Keep this price" was true of the ticket and false of the flexibility. A date change is
+  // repriced at the new day's live fare -- redBus holds no price it captured weeks ago.
+  const priceRule = '<dt>Prices can go up</dt>'
+    + '<dd>Book now and this day stays at this price. Change the day later and you pay that day\u2019s price then.</dd>';
+  const refundRule = '<dt class="crit">No refund on a cheaper day</dt>'
+    + '<dd>You only pay when the new day costs more.</dd>';
+  // The answer to the question two participants asked out loud on this screen: one thought a seat
+  // was being held on every day he had marked, the other could not tell what he was about to pay.
+  const oneDayRule = function(n){
+    return '<dt>We book one day, not '+(n?'all '+n:'the whole week')+'</dt>'
+      + '<dd>One seat, one fare, one day. The days you mark are only how far we look \u2014 you pick '
+      + 'the day itself on the next screen.</dd>';
+  };
+
+  if(retMode==='fixed'){
+    R.innerHTML = !sel.length ? priceRule
+      : '<dt>We\u2019ll book '+label(sel[0])+' \u00B7 '+(busesOn(sel[0]).length>1?'from ':'')+RUPEE(minFareOn(sel[0]))+'</dt>'
+        + '<dd>You choose the bus, seat and stops before you pay.</dd>'
+        + changeRule(sel[0]) + refundRule;
+  } else if(!sel.length){
+    R.innerHTML = oneDayRule(0) + priceRule;
   } else if(sel.length===1){
-    R.innerHTML = '<dt>We\u2019ll book '+label(sel[0])+' \u00B7 '+(busesOn(sel[0]).length>1?'from ':'')+RUPEE(minFareOn(sel[0]))+'</dt>'
-      + '<dd>'+(function(){
-          const bs=allBusesOn(sel[0]), mv=bs.filter(function(i){return RET_BUSES[i].movable;}).length;
-          if(mv===bs.length) return 'You can change the date once after booking, to any date. Pay any price difference.';
-          if(mv===0) return 'No bus that day allows a date change. Book it and the date is fixed.';
-          return 'Most buses that day let you change the date once, to any date. Not all do \u2014 you pick the bus next.';
-        })()+'</dd>'
-      + '<dt class="crit">No refund on a cheaper day</dt>'
-      + '<dd>You only pay when the new day costs more.</dd>'
-      + '<dt class="prompt">Not sure? Tap a second day</dt>'
-      + '<dd>Up to '+MAX_WINDOW+' days apart. That is only how we pick your day \u2014 your ticket can still move to any date.</dd>';
+    R.innerHTML = oneDayRule(0)
+      + '<dt class="prompt">Now tap your last day</dt>'
+      + '<dd>Up to '+MAX_WINDOW+' days from the first. Shaded days are the ones you can still pick.</dd>'
+      + priceRule;
   } else {
     const b=sel[1], c=cheapestIn(sel[0],sel[1]);
-    R.innerHTML = (!hasSpread()
-      ? '<dt>We\u2019ll book '+label(b)+' \u00B7 '+(busesOn(b).length>1?'from ':'')+RUPEE(minFareOn(b))+'</dt>'
-      + '<dd>Your last day, so you never need to change it. Every day costs the same.</dd>'
-      : c===b
-      ? '<dt>Next, pick your day</dt>'
-      + '<dd>'+label(b)+' is your last day and also the cheapest, at '+RUPEE(minFareOn(b))
-      + '. Earlier days cost more.</dd>'
-      : '<dt>Next, pick your day</dt>'
-      + '<dd>Cheapest: '+label(c)+' '+RUPEE(minFareOn(c))+'. Your last day: '+label(b)+' '+RUPEE(minFareOn(b))+'.</dd>')
+    R.innerHTML = oneDayRule(sel[1]-sel[0]+1)
+      + (!hasSpread()
+          ? '<dt>Every day in these '+(sel[1]-sel[0]+1)+' costs the same</dt>'
+            + '<dd>'+RUPEE(minFareOn(b))+'. Nothing to weigh up \u2014 pick the day that suits you.</dd>'
+          : '<dt>Cheapest is '+label(c)+' \u00B7 '+RUPEE(minFareOn(c))+'</dt>'
+            + '<dd>Your last day, '+label(b)+', is '+RUPEE(minFareOn(b))+'. You pick which on the next screen.</dd>')
       + '<dt>You can change the date once, to any date</dt>'
-      + '<dd>Not just this week. Pay the difference if it costs more. No refund if it costs less.</dd>';
+      + '<dd>Not just this week. Pay the difference if it costs more.</dd>'
+      + refundRule;
   }
   const cont=document.getElementById('b-cont');
-  cont.disabled = (!sel.length || offline);
+  cont.disabled = (!retMode || !sel.length || offline);
   cont.textContent = 'Continue';
 }
 
@@ -2495,7 +2558,20 @@ function dropReturn(){ if(retOnly) return abandonReturn(); setState('noreturn');
 // Idea 9 — the guard. If no operator on this route allows a date change, the promise
 // cannot be kept, so the return step never appears and today's flow runs unchanged.
 const ROUTE_HAS_MOVABLE = () => state!=='noguard';
+// The question is asked again on every return booking -- the answer belongs to a trip, not to a
+// session, and a stale 'I know my date' would silently take the range away from the next traveller.
+function resetMode(){
+  retMode=''; sel=[]; sweepFrom=sweepTo=0;
+  const f=document.getElementById('mode-fixed'), u=document.getElementById('mode-unsure'),
+        c=document.getElementById('cal-block');
+  if(f) f.setAttribute('aria-pressed','false');
+  if(u) u.setAttribute('aria-pressed','false');
+  if(c) c.hidden=true;
+  paintWindow();
+}
+
 function afterOutbound(){
+  resetMode();
   retOnly=false;                       // a fresh booking pays for both legs
   busScope = null;                     // a first booking is an ordinary search: every operator
   const t=document.getElementById('bc-title'); if(t) t.textContent='Booking confirmed';

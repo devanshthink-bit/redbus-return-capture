@@ -5816,3 +5816,49 @@ land on, so "v4 changed that screen" was an available and wrong reason to discou
 changed there was the **bus** presentation — accordion to fixed list plus a bounded fold. It
 changed nothing about how a day or a window is chosen, which is what the sessions were about.
 **A rebuild of a screen is not a fix of a finding on that screen.** Check the strings.
+
+CHANGE · 2026-09-06 · molades-build · Source: user
+**The mode question replaces the hint line.** Three participants failed one instruction three
+different ways: Vivek said *"Ok I am not sure"* out loud and tapped **Skip**; Soumya tapped a day
+and then the next day; Sai read *"tap two days instead"* as two consecutive dates. A hint line was
+being asked to teach a **mode**, which it cannot do.
+
+The calendar screen now opens on a question with two answers — **I know my date** / **I'm not sure
+yet** — and the calendar itself does not appear until one is chosen. `retMode` decides what a tap
+means: in `fixed` every tap replaces the last, so there is no second day to misread; in `unsure`
+the first tap opens the 7-day reach and the second closes the range.
+
+**No default answer, deliberately.** 65.2% of qualified respondents were unsure of their exact
+return date, so defaulting to *I know my date* would default against the majority of the target
+segment. It costs one tap and it is the tap the whole construct rests on — and Vivek would have
+got it right, because he said the answer aloud before tapping Skip.
+
+`resetMode()` is the single writer that clears it, called from `afterOutbound()`, so a second
+booking in the same session never inherits the first traveller's answer.
+Severity:  blocker
+Layer:     moments
+Action:    fixed — findings 1 and 2
+
+CHANGE · 2026-09-06 · molades-build · Source: user
+**Every rule on the calendar is a heading now.** Vivek read *"not even a single subheading"*;
+Soumya said she and most people would read headings and skip to payment. `CONTEXT.md` §8's test —
+*"read only the bold lines and you have every rule"* — assumed the bold lines were read. They were
+not, and the rules were `<dd>`s. The `<dt>` carries the rule, the `<dd>` carries only detail.
+
+Three things that were buried and are now headings:
+
+- **"We book one day, not all 4"** — the answer to the two questions asked out loud on this screen.
+  Vivek believed a seat was being held on every day he had marked (*"in this my seat is getting
+  confirmed right?"*); Sai could not tell whether he was about to pay for several dates. The rule
+  names the count, so it is never abstract.
+- **"You can change this date once, to any date"** — Soumya met this at Review, Vivek only at the
+  confirm-change screen, after paying. It is the product; it was arriving three screens late.
+  `changeRule()` is one writer with three outcomes — all buses movable, none, or some.
+- **"No refund on a cheaper day"**, in warning colour, in every state where a booking is in view.
+
+The day count is also stated in words in the hint — *"Mon, 14 Sep to Thu, 17 Sep · 4 days marked"* —
+because two tones of red could not: Sai could not tell whether the dark end dates were counted.
+Severity:  blocker
+Layer:     looks
+Action:    fixed — findings 3, 5 and part of 9
+
