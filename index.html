@@ -265,6 +265,7 @@ body.hifi-on .phone,body.hifi-on .legacy{display:none}
  border-radius:4px;height:24px;padding:0 12px;margin-top:16px}
 .pill.no{color:var(--muted);background:#F1F1F1}
 .pill.warnpill{color:var(--warn);background:#F6EDE6}
+.warnink{color:var(--warn)!important;font-weight:700}
 .bal{display:inline-block;margin-top:8px;font-size:12px;font-weight:700;color:var(--ink);background:var(--chip);border-radius:4px;padding:4px 8px}
 .bal.none{color:var(--muted);background:#F1F1F1}
 .dlead{font-size:18px;font-weight:700;color:var(--ink);line-height:1.3;margin:0 0 4px}
@@ -881,6 +882,7 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
       </div>
 
       <div id="pk-main">
+        <h2 class="q" id="pk-q">Now pick one of your days</h2>
         <p class="terms-lead" id="pk-lead">We picked <b>Thu, 10 Sep</b> &mdash; the cheapest day in your window.</p>
         <dl class="rules" id="pk-note" style="margin-bottom:20px"></dl>
         <div class="seclab" id="pk-daylab">Days</div>
@@ -1897,7 +1899,12 @@ function renderPicked(){
     if(days.length>1 && spread && d===cheap) tags.push('<div class="pill">\u21BB Cheapest</div>');
     const seat = SEAT[d];                     // the seat that day actually has, not a seat we hold
     // No date change is about the buses; No seats left is about the day. A sold-out day carried both.
-    if(seat && !MOVABLE(d)) tags.push('<div class="pill no">No date change</div>');
+    // Grey read as "inactive" to the participant who walked into this: he took the cheapest day,
+    // never saw the tag, and would have found out only when he tried to move. To someone who has
+    // just said they are not sure of their date, losing the date change is a warning, not a note.
+    if(seat && !MOVABLE(d)) tags.push(WINDOW_MODE()
+      ? '<div class="pill warnpill">\u21BB Cannot change this date</div>'
+      : '<div class="pill no">No date change</div>');
     const many = busesOn(d).length>1;
     const low = minFareOn(d);
     const diff = heldDay ? low-minFareOn(heldDay) : 0;
@@ -1921,7 +1928,7 @@ function renderPicked(){
     // this traveller actually has — can I still move this? — rather than "tap to see them".
     const movers = busesOn(d).filter(i=>RET_BUSES[i].movable).length;
     const flex = !WINDOW_MODE() ? ''
-      : movers===0 ? ' \u00B7 <span class="s">cannot change date</span>'
+      : movers===0 ? ' \u00B7 <span class="s warnink">cannot change this date later</span>'
       : movers===busesOn(d).length ? (many ? ' \u00B7 all can change date' : ' \u00B7 can change date')
       : ' \u00B7 '+movers+' can change date';
     return '<button class="card'+(open?' sel':'')+'" onclick="choosePick('+d+')" aria-pressed="'+open+'">'
@@ -1934,6 +1941,14 @@ function renderPicked(){
   }).join('');
   const dl=document.getElementById('pk-daylab');
   if(dl) dl.textContent = days.length===1 ? 'Your day' : 'Days';
+
+  // "I already picked the dates -- why am I picking again?" Two of three asked it, and one did not
+  // work it out from the copy at all. The heading has to refer back to the tap they just made, so
+  // the screen reads as narrowing rather than as repeating. It names the number they marked.
+  const q=document.getElementById('pk-q');
+  if(q) q.textContent = days.length===1
+    ? 'Your return day'
+    : 'Now pick one of your '+days.length+' days';
 
   const lead=document.getElementById('pk-lead');
   const lastMov = sel.length===2 ? lastMovableIn(sel[0],sel[1]) : (MOVABLE(sel[0]) ? sel[0] : 0);
@@ -1997,7 +2012,18 @@ function renderPicked(){
   bpk.disabled = !heldDay || retBus===null;   // a day is not a booking until a bus is chosen
   // Disabled holds the label it will most often take, rather than switching to an instruction the
   // traveller has already followed.
-  bpk.textContent = 'Review trip';
+  // A traveller who answered "I'm not sure yet" and is about to buy a ticket that cannot move is
+  // contradicting their own answer. Say so on the two things they cannot scroll past -- the bar
+  // note and the button itself -- rather than trusting a pill they have already missed once.
+  const fixedTrap = WINDOW_MODE() && heldDay && retBus!==null && !RET_BUSES[retBus].movable;
+  bpk.textContent = fixedTrap ? 'Book a fixed date' : 'Review trip';
+  const bn=document.querySelector('#pk-bar .barnote');
+  if(bn){
+    bn.classList.toggle('warnink', !!fixedTrap);
+    bn.textContent = fixedTrap
+      ? 'This bus cannot change its date. You said you were not sure yet \u2014 pick a day without the warning to keep that.'
+      : 'You choose the bus, seat and stops before you pay. The date can change later, to any day.';
+  }
   const sub = sel.length===2 ? label(sel[0])+' \u2013 '+label(sel[1]) : label(sel[0]);
   const ps=document.getElementById('pk-sub');
   if(ps) ps.textContent='Nainital \u2192 Delhi \u00B7 '+sub;

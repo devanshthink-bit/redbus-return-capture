@@ -5862,3 +5862,44 @@ Severity:  blocker
 Layer:     looks
 Action:    fixed — findings 3, 5 and part of 9
 
+
+CHANGE · 2026-09-06 · molades-build · Source: user
+**The cheapest-day trap: the button stops saying Review trip.** Sai took the cheapest day, did not
+see the grey **No date change** tag, and would have left holding a ticket that cannot do the one
+thing he came for. Grey reads as *inactive*, not as *warning* — and every screen before it had told
+him he was buying flexibility.
+
+Three changes, in rising order of how hard they are to miss:
+
+1. In window mode the tag is a **warning pill**, not a grey one, and it reads *Cannot change this
+   date* rather than *No date change*.
+2. The row's second line says it in words, in the warning colour: *cannot change this date later*.
+3. **The primary button changes**. On a day whose bus cannot move, it reads **Book a fixed date**
+   instead of *Review trip*, and the bar note above it says *"This bus cannot change its date. You
+   said you were not sure yet — pick a day without the warning to keep that."* Both are things the
+   traveller cannot scroll past, and both name their own answer back to them.
+
+**Why not Sai's own fix.** He suggested showing only date-changeable buses to window travellers.
+Rejected as recorded: it removes the cheapest service on the route, price is a top-two factor for
+all three participants, and `CONTEXT.md` §10 already records hiding options to protect a lost
+promise as a live bug in the change-day list. Nothing is hidden; the consequence is made loud.
+Severity:  blocker
+Layer:     steps
+Action:    fixed — finding 4
+
+CHANGE · 2026-09-06 · molades-build · Source: user
+**The day list now refers back to the tap that got them there.** *"I already picked the dates —
+why am I picking again?"* — Vivek and Soumya both, and Vivek never worked it out from the copy.
+
+The screen gains a heading above the lead: **"Now pick one of your 4 days"**, naming the number
+they marked. A single date reads *Your return day* instead, so the certain traveller is never
+asked to pick from a list of one.
+
+The screen is unchanged otherwise. Sai recovered on his own — *"i got clear on the next screen
+that here i am being shown those 7 dates to select one of them"* — which is what says this was a
+framing problem before it was a structural one. Merging the two screens stays available if the
+heading does not hold up in the next round.
+Severity:  blocker
+Layer:     steps
+Action:    fixed — finding 6
+
