@@ -6013,3 +6013,31 @@ Checked against commit `0582fb0`, before any of today's work: identical, 508 vs 
 because it is not this round's finding and nobody reported it — recorded so the next person who
 sees it does not spend the time twice.
 
+
+CRITIQUE · 2026-09-06 · molades-build · Source: user
+**The window's rule was being enforced on people who had said they did not need it.** He caught it
+on a screenshot: *"Why are we highlighting a few dates and disabling a few when the person knows the
+exact date? This was for window, right?"*
+
+Yes. `paintWindow()` narrowed the month to ±7 days whenever `sel.length===1`, and after the mode
+question that test no longer means what it used to. In **fixed** mode one selected day is the
+*answer*, not the first half of a range — so the narrowing disabled every other date the traveller
+might have meant, and the sweep animation I had just added drew attention to it happening. Someone
+who picked 17 and then wanted 30 was told 30 was unavailable.
+
+`narrow` is now `retMode==='unsure' && sel.length===1`, and the sweep only runs in `unsure`.
+Verified through the UI rather than by reading: in fixed mode the same 18 days stay tappable before
+and after a pick, no band is shaded, and 30 and 11 are both still reachable after picking 17. In
+unsure mode it still narrows, 18 days to 11.
+
+**The class, and it is the second time today.** Adding a mode changes the meaning of every test
+written before the mode existed. `sel.length===1` meant *"they have given me one end of a range"*
+when the only way to have one day was to be part-way through picking two. `CONTEXT.md` §9.9 already
+records this shape — *a derived boolean needs a test that matches its name* — and §9.11 says to
+chase a behaviour change backwards through every screen that predicts it. **The sweep of all 189
+windows passed while this was live**, because it only ever exercised the mode the rule was right
+for. A sweep of one mode cannot see a rule leaking into the other.
+Severity:  major
+Layer:     steps
+Action:    fixed
+

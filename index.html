@@ -1670,9 +1670,12 @@ function tapDay(d){
     sel=[d];
     // Soumya and Sai both tapped a first day and did not see the month change under their hands.
     // A state change nobody watches is a state change nobody knows about, so it plays across the
-    // days that are now reachable rather than appearing between two frames.
-    sweepFrom = Math.max(OUT_DAY+1, d-(MAX_WINDOW-1));
-    sweepTo   = Math.min(LAST_BOOKABLE, d+(MAX_WINDOW-1));
+    // days that are now reachable rather than appearing between two frames. Nothing narrows in
+    // 'fixed', so there is nothing to sweep there.
+    if(retMode==='unsure'){
+      sweepFrom = Math.max(OUT_DAY+1, d-(MAX_WINDOW-1));
+      sweepTo   = Math.min(LAST_BOOKABLE, d+(MAX_WINDOW-1));
+    } else { sweepFrom=sweepTo=0; }
   }
   paintWindow();
 }
@@ -1684,8 +1687,12 @@ function paintWindow(){
   const M=MONTHS[calMonth];
   const cheap = sel.length===2 ? cheapestIn(sel[0],sel[1]) : 0;
   // With one day chosen, only days that keep the window within MAX_WINDOW stay selectable.
-  const lo = sel.length===1 ? Math.max(OUT_DAY+1, sel[0]-(MAX_WINDOW-1)) : OUT_DAY+1;
-  const hi = sel.length===1 ? Math.min(LAST_BOOKABLE, sel[0]+(MAX_WINDOW-1)) : LAST_BOOKABLE;
+  // Only in 'unsure'. The 7-day reach exists to bound a range; someone who has told us they know
+  // their date is choosing one day, and narrowing the month around their first tap takes away
+  // every other date they might have meant -- a rule from the other mode, enforced on them.
+  const narrow = retMode==='unsure' && sel.length===1;
+  const lo = narrow ? Math.max(OUT_DAY+1, sel[0]-(MAX_WINDOW-1)) : OUT_DAY+1;
+  const hi = narrow ? Math.min(LAST_BOOKABLE, sel[0]+(MAX_WINDOW-1)) : LAST_BOOKABLE;
 
   let html='<div></div>'.repeat(M.lead);
   for(let i=0;i<M.len;i++){
