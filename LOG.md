@@ -6041,3 +6041,56 @@ Severity:  major
 Layer:     steps
 Action:    fixed
 
+
+DECISION · 2026-09-06 · molades-build · Source: user
+**Two stacked cards became a segmented control, after he showed me Swiggy Crew's version.** Their
+sheet asks *"When?"* over a pill toggle — **I'm flexible** / **I have exact dates** — with the
+calendar visible underneath. Three things about that shape are better than what I had built:
+
+1. **A segmented control reads as one setting with two positions.** Two large cards read as two
+   tasks to complete, which is close to the failure mode that made Vivek tap Skip.
+2. **One row instead of ~180px.** My cards pushed the calendar down; on the render the rules had
+   gone under the fold.
+3. **The calendar never leaves.** All three participants scanned prices on the calendar first, and
+   my version had hidden it behind the question. **A question in front of the thing they came for
+   is a gate**, and I had built one while fixing a different gate.
+
+**What I kept, against their version.** Their labels are two words each. Ours keeps a line under
+the control saying what the selected answer will do — *"Mark the first and last day you could
+travel, up to 7 days apart."* Sai misread **"tap two days"** as two consecutive dates; two-word
+labels would reproduce that failure exactly. The explanation is the fix, not decoration.
+
+**And no preselection**, where theirs appears to default to *I have exact dates*. 65.2% of
+qualified respondents were unsure of their return date, so a default lands on the wrong answer for
+the majority of the segment this exists for.
+
+**One word left open, and it is a real question.** *"I'm flexible"* is something people are happy
+to call themselves; *"I'm not sure yet"* is an admission, and people under-report uncertainty.
+Against that, *"wasn't sure of my exact return date"* is the users' own phrasing — it is the 65.2%
+line. Reasoning cannot settle it. **Paper test, alongside the badge-naming one.** Left as ours
+until then.
+Severity:  major
+Layer:     looks
+Action:    built
+
+DECISION · 2026-09-06 · molades-build
+**Tapping a day before answering answers the question, rather than being refused.** Ungating the
+calendar raised a question the gate had hidden: what happens if they tap a date before touching the
+toggle? Refusing the tap makes a dead control, which is exactly the *Filter and Sort* finding all
+three participants hit. So a tap sets **I know my date** — tapping one day *is* what knowing your
+date looks like.
+
+**The risk, stated because it partly reverses the no-default argument above:** most people tap a
+date first, so in practice many land in fixed mode without having considered the other answer.
+What makes that acceptable and did not make a preselected default acceptable: the toggle sits
+directly above the calendar in the reading path with **both labels legible before anything is
+touched**, and switching is one tap that costs nothing. Soumya's failure was not knowing the
+option existed at all — it was a grey hint line at the bottom of the screen.
+
+**Unanswered, both labels are full ink** rather than muted. With neither segment lifted the control
+otherwise reads as a grey caption instead of two things you can press, and this control is the
+whole question. The losing label steps back to muted only once one has been chosen.
+Severity:  major
+Layer:     moments
+Action:    built
+

@@ -545,15 +545,20 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
 .cal{background:var(--raised);border-radius:12px;padding:16px;margin-top:16px}
 /* The mode question. Three people in a row failed the hint line that used to do this job:
    one tapped Skip after saying "I'm not sure" out loud, two read "tap two days" as two
-   consecutive dates. A hint cannot teach a mode; a question can be answered. */
-.modes{display:flex;flex-direction:column;gap:8px;margin-top:12px}
-.mode{display:block;width:100%;text-align:left;background:var(--raised);border:1.5px solid var(--line);
- border-radius:12px;padding:14px 16px;min-height:44px;cursor:pointer;
- transition:border-color var(--t-fast),background var(--t-fast)}
-.mode b{display:block;font-size:16px;font-weight:700;color:var(--ink);line-height:1.3}
-.mode span{display:block;font-size:14px;color:var(--muted);margin-top:2px;line-height:1.4}
-.mode[aria-pressed="true"]{border-color:var(--accent);background:#FDF6F6}
-.mode[aria-pressed="true"] b{color:var(--accent)}
+   consecutive dates. A hint cannot teach a mode; a question can be answered.
+   It is a segmented control rather than two stacked cards: two cards read as two tasks to
+   complete and cost 180px, which pushed the calendar under the fold -- and the calendar is the
+   first thing all three participants looked at. One row, and the calendar never leaves. */
+.seg{display:flex;gap:4px;background:#EDEDF2;border:1px solid var(--line);border-radius:22px;
+ padding:4px;margin-top:12px}
+/* Unanswered, BOTH labels are full ink: with neither segment lifted the control reads as a grey
+   caption rather than two things you can press, and this is the whole question. Once one is
+   answered the other steps back to muted, which is the ordinary segmented-control behaviour. */
+.segbtn{flex:1;min-height:40px;border:0;border-radius:18px;background:transparent;cursor:pointer;
+ font-size:14px;font-weight:700;color:var(--ink);line-height:1.3;padding:8px 4px;
+ transition:background var(--t-fast),color var(--t-fast),box-shadow var(--t-fast)}
+.seg.answered .segbtn{color:var(--muted)}
+.segbtn[aria-pressed="true"]{background:var(--raised);color:var(--accent);box-shadow:0 1px 3px rgba(0,0,0,.12)}
 .cal .mon{font-size:16px;font-weight:700;color:var(--ink);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
 .calnav{width:44px;height:44px;border:0;background:none;color:var(--ink);font-size:20px;cursor:pointer;border-radius:8px}
 .calnav[disabled]{color:#C4C4C8;cursor:default}
@@ -836,14 +841,10 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
       </div>
 
       <h2 class="q">When can you travel back?</h2>
-      <div class="modes" role="group" aria-label="Do you know your return date?">
-        <button class="mode" id="mode-fixed" aria-pressed="false" onclick="pickMode('fixed')">
-          <b>I know my date</b><span>Pick the day you&rsquo;ll travel back.</span></button>
-        <button class="mode" id="mode-unsure" aria-pressed="false" onclick="pickMode('unsure')">
-          <b>I&rsquo;m not sure yet</b><span>Mark the first and last day you could travel, up to 7 days apart.</span></button>
+      <div class="seg" role="group" aria-label="Do you know your return date?">
+        <button class="segbtn" id="mode-fixed" aria-pressed="false" onclick="pickMode('fixed')">I know my date</button>
+        <button class="segbtn" id="mode-unsure" aria-pressed="false" onclick="pickMode('unsure')">I&rsquo;m not sure yet</button>
       </div>
-
-      <div id="cal-block" hidden>
       <p class="qhint" id="q-hint"></p>
 
       <div class="cal">
@@ -859,7 +860,6 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
       </div>
 
       <dl class="rules" id="win-rules"></dl>
-      </div>
     </div>
     <div class="bottombar">
       <button class="btn sec" onclick="skipReturn()">Skip</button>
@@ -1647,16 +1647,24 @@ function go(id){
 
 // A third tap starts a new selection, so nobody can get stuck inside a range.
 let sweepFrom=0, sweepTo=0;
-function pickMode(m){
-  if(retMode===m) return;                      // tapping the same answer twice is not a change of mind
-  retMode=m; sel=[]; sweepFrom=sweepTo=0;      // the answer decides what a tap means, so old taps cannot survive it
+function applyMode(m){
+  retMode=m;
   document.getElementById('mode-fixed').setAttribute('aria-pressed', m==='fixed');
   document.getElementById('mode-unsure').setAttribute('aria-pressed', m==='unsure');
-  document.getElementById('cal-block').hidden = false;
+  document.querySelector('#s-window .seg').classList.toggle('answered', !!m);
+}
+function pickMode(m){
+  if(retMode===m) return;                      // tapping the same answer twice is not a change of mind
+  applyMode(m); sel=[]; sweepFrom=sweepTo=0;   // the answer decides what a tap means, so old taps cannot survive it
   paintWindow();
 }
 
 function tapDay(d){
+  // The calendar is live before the question is answered, because hiding it made the question a
+  // gate in front of the one thing all three participants looked at first. Tapping a single day
+  // IS what knowing your date looks like, so it answers the question rather than being refused --
+  // no dead control, and the other answer stays labelled and one tap away directly above.
+  if(!retMode) applyMode('fixed');
   // In 'fixed' there is no second day to give, so every tap replaces the last one. This is the
   // whole reason the mode exists: 'tap two days' meant 'tap the two ends of a range' to us and
   // 'tap 2 days' to all three participants.
@@ -1756,7 +1764,9 @@ function paintWindow(){
   // With a range marked it states the count in words, because two tones of red could not: one
   // participant could not tell whether the dark ends were counted in the total.
   document.getElementById('q-hint').textContent =
-      retMode==='fixed'
+      !retMode
+        ? 'Pick your day. Or mark a range, if your plans could still move.'
+    : retMode==='fixed'
         ? (sel.length ? 'Tap another day to change it.' : 'Tap the day you\u2019ll travel back.')
     : !sel.length   ? 'Tap the first day you could travel back.'
     : sel.length===1? 'Now tap your last day. Only days within '+MAX_WINDOW+' of the first can be picked.'
@@ -1766,7 +1776,6 @@ function paintWindow(){
   // headings and nothing under them -- one read "not even a single subheading" -- so a rule living
   // only in a <dd> is a rule that does not exist. The <dd> carries the detail, never the rule.
   const R=document.getElementById('win-rules');
-  if(!retMode){ R.innerHTML=''; return; }   // the calendar is not shown yet, so it has no rules
 
   // One writer for the change promise, because it is the product and it was arriving three screens
   // too late: one participant met it only on the confirm-change screen, after paying.
@@ -1802,7 +1811,9 @@ function paintWindow(){
       + '<dd>One seat, one fare, one day. You pick which day next.</dd>';
   };
 
-  if(retMode==='fixed'){
+  if(!retMode){
+    R.innerHTML = priceRule;                 // nothing is chosen yet, so nothing else is true yet
+  } else if(retMode==='fixed'){
     R.innerHTML = !sel.length ? priceRule
       : '<dt>We\u2019ll book '+label(sel[0])+' \u00B7 '+(busesOn(sel[0]).length>1?'from ':'')+RUPEE(minFareOn(sel[0]))+'</dt>'
         + '<dd>You choose the bus, seat and stops before you pay.</dd>'
@@ -2648,10 +2659,10 @@ const ROUTE_HAS_MOVABLE = () => state!=='noguard';
 function resetMode(){
   retMode=''; sel=[]; sweepFrom=sweepTo=0;
   const f=document.getElementById('mode-fixed'), u=document.getElementById('mode-unsure'),
-        c=document.getElementById('cal-block');
+        g=document.querySelector('#s-window .seg');
   if(f) f.setAttribute('aria-pressed','false');
   if(u) u.setAttribute('aria-pressed','false');
-  if(c) c.hidden=true;
+  if(g) g.classList.remove('answered');
   paintWindow();
 }
 
