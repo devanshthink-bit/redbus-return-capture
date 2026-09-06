@@ -5969,3 +5969,47 @@ Severity:  major
 Layer:     things
 Action:    fixed — finding 12
 
+
+CRITIQUE · 2026-09-06 · molades-build
+**The calendar was pointing at the trap the day list had just been fixed to catch.** Found by
+looking at a render rather than at the code, after the day-list work was already committed. On the
+18–21 Sep window, the cheapest day is **21 Sep — the one day in that window with the
+no-date-change dot** — and the rule read *"Cheapest is Mon, 21 Sep · ₹740"* with nothing after it.
+
+So an unsure traveller was being told, in plain black text on the screen where they commit to
+flexibility, to take the one day that has none. That is Sai's finding one screen earlier than
+where he hit it, and the day-list fix would only have caught him after he had already been sent
+there.
+
+It now reads **"Cheapest is Mon, 21 Sep · ₹740 — but it cannot change"** in the warning colour,
+with *"Cheapest day that can still change: Sun, 20 Sep · ₹870"* under it. `cheapestMovableIn()` is
+the accessor, mirroring `cheapestIn()` — which keeps ignoring movability on purpose, because it
+answers *what is the floor* and the new one answers *what is the floor I can still move*.
+
+**The general point: a fix aimed at one screen leaves the same defect upstream.** `CONTEXT.md` §9.11
+already says to chase a behaviour change backwards through every screen that predicts it. The trap
+was predicted on the calendar and I had only fixed where it landed.
+Severity:  blocker
+Layer:     moments
+Action:    fixed
+
+DECISION · 2026-09-06 · molades-build
+**One warning-colour rule per block, kept by making the standing rule step down.** Adding the
+cancellation rule to the calendar put two amber headings on one screen whenever the cheapest day
+also could not move. §8 allows one, and two dilute both.
+
+The rule that steps down is the standing one — *Change the date and you cannot cancel* — because
+the other is about the choice sitting in front of them right now. `cancelRule(crit)` takes the
+flag; the data decides. Swept the whole input space rather than reasoning about it: **all 189
+windows and all 30 single dates render at most one warning, and none renders zero rules.**
+Severity:  minor
+Layer:     looks
+Action:    fixed
+
+NOTE · 2026-09-06 · molades-build
+**A pre-existing 8px horizontal overflow in the session shell, not introduced here.** At `?test`
+on a window narrower than the phone, `.phone` measures `scrollWidth` 508 against `clientWidth` 500.
+Checked against commit `0582fb0`, before any of today's work: identical, 508 vs 500. Left alone
+because it is not this round's finding and nobody reported it — recorded so the next person who
+sees it does not spend the time twice.
+

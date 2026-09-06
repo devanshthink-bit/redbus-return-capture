@@ -1594,6 +1594,13 @@ const retFC = () => heldDay ? (RET_BUSES[busOn(heldDay)]||{}).fc || null : null;
 // be changed later. Booking a non-movable day would hand them a ticket every screen claims
 // they can move. So: the last MOVABLE day in the range, falling back to the last day if none is.
 // "Movable" is not enough to book someone: the bus also has to have a seat left.
+// The cheapest day that still keeps the promise. Mirrors cheapestIn(), which ignores movability
+// on purpose -- it answers "what is the floor", and this answers "what is the floor I can move".
+function cheapestMovableIn(a,b){
+  let best=0;
+  for(let d=a;d<=b;d++) if(SEAT[d] && MOVABLE(d) && (!best || minFareOn(d)<minFareOn(best))) best=d;
+  return best || b;
+}
 function lastMovableIn(a,b){ for(let d=b; d>=a; d--) if(MOVABLE(d) && SEAT[d]) return d; return 0; }
 
 let sel = [];            // [] nothing · [d] one day · [a,b] a range
@@ -1772,23 +1779,27 @@ function paintWindow(){
   // TERMS 4c and FAQ 3: a rescheduled ticket cannot be cancelled at all. One participant asked on
   // this screen when his cancellation window started; the answer was on Review, two screens later.
   // §8 allows one warning-colour rule per block, and losing cancellation outranks losing a refund.
-  const cancelRule = '<dt class="crit">Change the date and you cannot cancel</dt>'
-    + '<dd>Cancel before you change it and the usual refund applies. After a change, neither.</dd>';
+  // §8 allows exactly one warning-colour rule per block. When the data has already raised one --
+  // the cheapest day in the range being a day that cannot move -- this standing rule steps down,
+  // because the actionable warning about the choice in front of them outranks it in that moment.
+  const cancelRule = function(crit){
+    return '<dt'+(crit?' class="crit"':'')+'>Change the date and you cannot cancel</dt>'
+      + '<dd>Cancel before you change it and the usual refund applies. After a change, neither.</dd>';
+  };
   const refundRule = '<dt>No refund on a cheaper day</dt>'
     + '<dd>You only pay when the new day costs more.</dd>';
   // The answer to the question two participants asked out loud on this screen: one thought a seat
   // was being held on every day he had marked, the other could not tell what he was about to pay.
   const oneDayRule = function(n){
     return '<dt>We book one day, not '+(n?'all '+n:'the whole week')+'</dt>'
-      + '<dd>One seat, one fare, one day. The days you mark are only how far we look \u2014 you pick '
-      + 'the day itself on the next screen.</dd>';
+      + '<dd>One seat, one fare, one day. You pick which day next.</dd>';
   };
 
   if(retMode==='fixed'){
     R.innerHTML = !sel.length ? priceRule
       : '<dt>We\u2019ll book '+label(sel[0])+' \u00B7 '+(busesOn(sel[0]).length>1?'from ':'')+RUPEE(minFareOn(sel[0]))+'</dt>'
         + '<dd>You choose the bus, seat and stops before you pay.</dd>'
-        + changeRule(sel[0]) + refundRule + cancelRule;
+        + changeRule(sel[0]) + refundRule + cancelRule(MOVABLE(sel[0]));
   } else if(!sel.length){
     R.innerHTML = oneDayRule(0) + priceRule;
   } else if(sel.length===1){
@@ -1800,13 +1811,23 @@ function paintWindow(){
     const b=sel[1], c=cheapestIn(sel[0],sel[1]);
     R.innerHTML = oneDayRule(sel[1]-sel[0]+1)
       + (!hasSpread()
-          ? '<dt>Every day in these '+(sel[1]-sel[0]+1)+' costs the same</dt>'
-            + '<dd>'+RUPEE(minFareOn(b))+'. Nothing to weigh up \u2014 pick the day that suits you.</dd>'
-          : '<dt>Cheapest is '+label(c)+' \u00B7 '+RUPEE(minFareOn(c))+'</dt>'
-            + '<dd>Your last day, '+label(b)+', is '+RUPEE(minFareOn(b))+'. You pick which on the next screen.</dd>')
+          ? '<dt>Every day costs the same \u00B7 '+RUPEE(minFareOn(b))+'</dt>'
+            + '<dd>Nothing to weigh up \u2014 pick the day that suits you.</dd>'
+          // The cheapest day in a range can be one that cannot move. Naming it as the cheapest and
+          // stopping there points an unsure traveller straight at the ticket they must not buy --
+          // which is exactly what happened in testing, one screen later.
+          : '<dt'+(MOVABLE(c)?'':' class="crit"')+'>Cheapest is '+label(c)+' \u00B7 '+RUPEE(minFareOn(c))
+            +(MOVABLE(c)?'':' \u2014 but it cannot change')+'</dt>'
+            + '<dd>'
+            + (c===b ? 'That is also your last day.'
+                     : 'Your last day, '+label(b)+', is '+RUPEE(minFareOn(b))+'.')
+            + (MOVABLE(c) ? '' : ' Cheapest day that can still change: '
+                + label(cheapestMovableIn(sel[0],sel[1]))+' \u00B7 '
+                + RUPEE(minFareOn(cheapestMovableIn(sel[0],sel[1])))+'.')
+            + '</dd>')
       + '<dt>You can change the date once, to any date</dt>'
       + '<dd>Not just this week. Pay the difference if it costs more.</dd>'
-      + refundRule + cancelRule;
+      + refundRule + cancelRule(!hasSpread() || MOVABLE(c));
   }
   const cont=document.getElementById('b-cont');
   cont.disabled = (!retMode || !sel.length || offline);
