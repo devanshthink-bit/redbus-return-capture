@@ -2011,6 +2011,26 @@ so have none here. Verified by clicking: 01 → 16 forward, and back from every 
 a tab-bar entry point. The canvas reads 11 → 12 → 13, and the build follows the canvas, because
 that is what was asked for. Not a bug — a different question being answered.
 
+### Figma and this build move together — the standing rule (6 Sep)
+
+Devansh: *"whenever we make some changes in the Hi-fi UI in Figma, those same changes are also made
+in the hi-fi prototype build as well everytime, even if i ask for it in different chats."*
+`CLAUDE.md` carries the rule; **`hifi/build/SYNC.md` carries the six-step loop and the commands.**
+A Figma edit is finished when the build matches it *and the diff says so*, not when Figma looks
+right. If the build cannot be regenerated in a session, say so and log a `NOTE` naming the frames
+that are ahead — an undeclared drift is the whole failure mode.
+
+**`build/shot.sh <id> <height>`** renders one screen at its native Figma size with the presentation
+shell stripped. It exists because two harness mistakes both produced plausible numbers against
+nothing: shooting *through* the shell (which scales the phone into an 844 stage) read 10.9%, and
+writing the temp page outside `hifi/` — where `app.css` and `assets/` do not resolve — rendered the
+screen as unstyled text and still read 9.9%. **Pull the Figma reference after the last Figma edit**,
+not before; diffing a new build against an old render reads as a build defect.
+
+**Carried over on 6 Sep**, all seven diffed inside the baseline: 05 · 05a · 05b (mode toggle, the
+new rules, and the range **ends** in the accent), 06 · 06a (the narrowing heading), 08 (what
+declining Free Cancellation gives you), 11 (Change day inside the ticket card). 12 was already right.
+
 ### How close it actually is
 
 Two checks, because each is blind to what the other sees.
