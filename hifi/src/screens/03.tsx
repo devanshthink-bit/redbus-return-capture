@@ -444,7 +444,7 @@ export default function Component03OutboundSeatMap() {
           </div>
         </div>
       </div>
-      <div className="content-stretch flex flex-col items-center pb-[276.56px] pt-[33.3px] px-[16px] relative shrink-0 w-full" data-node-id="210:1995" data-name="Seat types">
+      <div className="content-stretch flex flex-col items-center pb-[24px] pt-[33.3px] px-[16px] relative shrink-0 w-full" data-node-id="210:1995" data-name="Seat types">
         <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[24px] not-italic relative shrink-0 text-[18px] text-[color:var(--text\/primary,#1d1d1d)] text-center whitespace-nowrap" data-node-id="210:1996">
           Know your seat types
         </p>

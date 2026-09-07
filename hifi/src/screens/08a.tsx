@@ -10,6 +10,58 @@ const imgArtSteeringWheel = "assets/15e65345-49df-474e-be45-ae631f3e831b.svg";
 const imgSparkle = "assets/d7e1240d-5bc0-42f3-bfff-2be54d80b1f6.svg";
 const imgBreakdown = "assets/b725b0a7-dffd-4022-be80-fcb3548ccf83.svg";
 
+const imgStateWomenOnlyLg = "assets/233a8b3c-0b6a-4bae-8b5c-62101f19c57c.svg";
+const imgStateBookedFemaleLg = "assets/5c327726-ad21-418b-b3e4-b417bc8d4dc6.svg";
+const imgStateMenOnlyLg = "assets/482fd8a7-cd09-4da0-a177-c77574b93c02.svg";
+const imgStateBookedMaleLg = "assets/6cb648fc-3537-47de-9cdb-ea6da09fd4c8.svg";
+const imgStateWomenOnly1Lg = "assets/00000790-8cae-4007-9543-0e4c28e0d439.svg";
+const imgStateBookedFemale1Lg = "assets/c16b97a4-3563-44b4-ab78-56f49c652946.svg";
+const imgStateBookedMale1Lg = "assets/13ddfb8f-8081-48eb-978b-af7b34734274.svg";
+const imgStateMenOnly1Lg = "assets/29fe08c8-256c-47a5-9f5f-6649e0c96324.svg";
+
+type SeatSleeperPropsLg = {
+  className?: string;
+  state?: "Available" | "Booked" | "Women only" | "Booked female" | "Men only" | "Booked male";
+};
+
+function SeatSleeperLg({ className, state = "Available" }: SeatSleeperPropsLg) {
+  const isBooked = state === "Booked";
+  const isBookedFemale = state === "Booked female";
+  const isBookedMale = state === "Booked male";
+  const isMenOnly = state === "Men only";
+  const isWomenOnlyOrBookedFemaleOrMenOnlyOrBookedMale = ["Women only", "Booked female", "Men only", "Booked male"].includes(state);
+  return (
+    <div className={className || `h-[70px] relative w-[32px] ${isWomenOnlyOrBookedFemaleOrMenOnlyOrBookedMale ? "" : isBooked ? "bg-[#e6e6e6] rounded-[9px]" : "bg-white border-[#4d784b] border-[1.5px] border-solid rounded-[9px]"}`} id={isBookedMale ? "node-203_1917" : isMenOnly ? "node-203_1913" : isBookedFemale ? "node-203_1910" : state === "Women only" ? "node-51_211" : isBooked ? "node-51_208" : "node-51_203"}>
+      {isWomenOnlyOrBookedFemaleOrMenOnlyOrBookedMale && <img alt="" className="absolute block inset-0 max-w-none size-full" src={isBookedMale ? imgStateBookedMaleLg : isMenOnly ? imgStateMenOnlyLg : isBookedFemale ? imgStateBookedFemaleLg : imgStateWomenOnlyLg} />}
+      {state === "Available" && <div className="absolute bg-[#dff3d8] inset-[calc(82.86%+0.99px)_calc(12.5%-1.13px)_calc(7.14%-1.29px)_calc(12.5%-1.13px)] rounded-[3px]" data-node-id="203:1905" data-name="Pillow" />}
+    </div>
+  );
+}
+
+type SeatSeaterPropsLg = {
+  className?: string;
+  state?: "Available" | "Women only" | "Booked female" | "Booked male" | "Booked" | "Men only";
+};
+
+function SeatSeaterLg({ className, state = "Available" }: SeatSeaterPropsLg) {
+  const isAvailableOrBooked = ["Available", "Booked"].includes(state);
+  const isBooked = state === "Booked";
+  const isBookedFemale = state === "Booked female";
+  const isBookedMale = state === "Booked male";
+  const isMenOnly = state === "Men only";
+  return (
+    <div className={className || "relative size-[30px]"} id={isMenOnly ? "node-203_1936" : isBooked ? "node-203_1925" : isBookedMale ? "node-51_220" : isBookedFemale ? "node-51_218" : state === "Women only" ? "node-51_216" : "node-51_214"}>
+      {["Women only", "Booked female", "Booked male", "Men only"].includes(state) && <img alt="" className="absolute block inset-0 max-w-none size-full" src={isMenOnly ? imgStateMenOnly1Lg : isBookedMale ? imgStateBookedMale1Lg : isBookedFemale ? imgStateBookedFemale1Lg : imgStateWomenOnly1Lg} />}
+      {isAvailableOrBooked && (
+        <>
+          <div className={`absolute inset-[28.67%_3%_3%_3%] rounded-[7px] ${isBooked ? "bg-[#e6e6e6]" : "bg-white border-[#4d784b] border-[1.6px] border-solid"}`} id={isBooked ? "node-203_1926" : "node-203_1920"} data-name="Arms" />
+          <div className={`absolute inset-[3%_15.33%_29%_15.33%] rounded-[5.5px] ${isBooked ? "bg-[#e6e6e6]" : "bg-white border-[#4d784b] border-[1.6px] border-solid"}`} id={isBooked ? "node-203_1927" : "node-203_1921"} data-name="Back" />
+        </>
+      )}
+    </div>
+  );
+}
+
 function IconSearch({ className }: { className?: string }) {
   return (
     <div className={className || "relative size-[20px]"} data-node-id="13:15" data-name="Icon / Search">
@@ -466,10 +518,98 @@ export default function Component08AReturnSeat() {
           </div>
         </div>
       </div>
-      <div className="content-stretch flex flex-col items-center pb-[270.3px] pt-[28px] relative shrink-0 w-full" data-node-id="423:3120" data-name="Seat types heading">
+      <div className="content-stretch flex flex-col items-center pb-[24px] pt-[28px] px-[16px] relative shrink-0 w-full" data-node-id="423:3120" data-name="Seat types">
         <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[26px] not-italic relative shrink-0 text-[20px] text-[color:var(--text\/primary,#1d1d1d)] text-center whitespace-nowrap" data-node-id="423:3121">
           Know your seat types
         </p>
+        <div className="h-[29.9px] relative shrink-0 w-full" data-node-id="581:4012" data-name="gap" />
+        <div className="bg-[#f2f1f5] border border-[#e3e2e8] border-solid content-stretch flex flex-col items-start overflow-clip relative rounded-[12px] shrink-0 w-full" data-node-id="581:4013" data-name="Legend">
+          <div className="[word-break:break-word] content-stretch flex font-['Inter:Bold'] font-bold h-[38.7px] items-center leading-[18px] not-italic pl-[16px] pr-[14.5px] relative shrink-0 text-[14px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="581:4014" data-name="Header">
+            <p className="flex-[1_0_0] min-w-px relative" data-node-id="581:4015">
+              Type
+            </p>
+            <p className="relative shrink-0 text-center w-[60px]" data-node-id="581:4016">
+              Seater
+            </p>
+            <p className="relative shrink-0 text-center w-[64px]" data-node-id="581:4017">
+              Sleeper
+            </p>
+          </div>
+          <div className="bg-[#e3e2e8] h-px relative shrink-0 w-full" data-node-id="581:4018" data-name="Divider" />
+          <div className="content-stretch flex h-[94.2px] items-center pl-[16px] pr-[14.5px] relative shrink-0 w-full" data-node-id="581:4019" data-name="Row">
+            <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Regular'] font-normal leading-[20px] min-w-px not-italic relative text-[14px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="581:4020">
+              Available
+            </p>
+            <div className="content-stretch flex h-[94.2px] items-center justify-center relative shrink-0 w-[60px]" data-node-id="581:4021" data-name="Seater">
+              <SeatSeaterLg className="relative shrink-0 size-[30px]" />
+            </div>
+            <div className="content-stretch flex h-[94.2px] items-center justify-center relative shrink-0 w-[64px]" data-node-id="581:4023" data-name="Sleeper">
+              <SeatSleeperLg className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[70px] relative rounded-[9px] shrink-0 w-[32px]" />
+            </div>
+          </div>
+          <div className="bg-[#e3e2e8] h-px relative shrink-0 w-full" data-node-id="581:4025" data-name="Divider" />
+          <div className="content-stretch flex h-[93.9px] items-center pl-[16px] pr-[14.5px] relative shrink-0 w-full" data-node-id="581:4026" data-name="Row">
+            <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Regular'] font-normal leading-[20px] min-w-px not-italic relative text-[14px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="581:4027">
+              Already booked
+            </p>
+            <div className="content-stretch flex h-[93.9px] items-center justify-center relative shrink-0 w-[60px]" data-node-id="581:4028" data-name="Seater">
+              <SeatSeaterLg className="relative shrink-0 size-[30px]" state="Booked" />
+            </div>
+            <div className="content-stretch flex h-[93.9px] items-center justify-center relative shrink-0 w-[64px]" data-node-id="581:4030" data-name="Sleeper">
+              <SeatSleeperLg className="bg-[#e6e6e6] h-[70px] relative rounded-[9px] shrink-0 w-[32px]" state="Booked" />
+            </div>
+          </div>
+          <div className="bg-[#e3e2e8] h-px relative shrink-0 w-full" data-node-id="581:4032" data-name="Divider" />
+          <div className="content-stretch flex h-[94.3px] items-center pl-[16px] pr-[14.5px] relative shrink-0 w-full" data-node-id="581:4033" data-name="Row">
+            <div className="[word-break:break-word] flex-[1_0_0] font-['Inter:Regular'] font-normal leading-[0] min-w-px not-italic relative text-[14px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="581:4034">
+              <p className="leading-[20px] mb-0">Available only for</p>
+              <p className="leading-[20px]">female passenger</p>
+            </div>
+            <div className="content-stretch flex h-[94.3px] items-center justify-center relative shrink-0 w-[60px]" data-node-id="581:4035" data-name="Seater">
+              <SeatSeaterLg className="relative shrink-0 size-[30px]" state="Women only" />
+            </div>
+            <div className="content-stretch flex h-[94.3px] items-center justify-center relative shrink-0 w-[64px]" data-node-id="581:4037" data-name="Sleeper">
+              <SeatSleeperLg className="h-[70px] relative shrink-0 w-[32px]" state="Women only" />
+            </div>
+          </div>
+          <div className="bg-[#e3e2e8] h-px relative shrink-0 w-full" data-node-id="581:4039" data-name="Divider" />
+          <div className="content-stretch flex h-[92.8px] items-center pl-[16px] pr-[14.5px] relative shrink-0 w-full" data-node-id="581:4040" data-name="Row">
+            <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Regular'] font-normal leading-[20px] min-w-px not-italic relative text-[14px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="581:4041">
+              Booked by female passenger
+            </p>
+            <div className="content-stretch flex h-[92.8px] items-center justify-center relative shrink-0 w-[60px]" data-node-id="581:4042" data-name="Seater">
+              <SeatSeaterLg className="relative shrink-0 size-[30px]" state="Booked female" />
+            </div>
+            <div className="content-stretch flex h-[92.8px] items-center justify-center relative shrink-0 w-[64px]" data-node-id="581:4044" data-name="Sleeper">
+              <SeatSleeperLg className="h-[70px] relative shrink-0 w-[32px]" state="Booked female" />
+            </div>
+          </div>
+          <div className="bg-[#e3e2e8] h-px relative shrink-0 w-full" data-node-id="581:4046" data-name="Divider" />
+          <div className="content-stretch flex h-[93.9px] items-center pl-[16px] pr-[14.5px] relative shrink-0 w-full" data-node-id="581:4047" data-name="Row">
+            <div className="[word-break:break-word] flex-[1_0_0] font-['Inter:Regular'] font-normal leading-[0] min-w-px not-italic relative text-[14px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="581:4048">
+              <p className="leading-[20px] mb-0">Available only for</p>
+              <p className="leading-[20px]">male passenger</p>
+            </div>
+            <div className="content-stretch flex h-[93.9px] items-center justify-center relative shrink-0 w-[60px]" data-node-id="581:4049" data-name="Seater">
+              <SeatSeaterLg className="relative shrink-0 size-[30px]" state="Men only" />
+            </div>
+            <div className="content-stretch flex h-[93.9px] items-center justify-center relative shrink-0 w-[64px]" data-node-id="581:4051" data-name="Sleeper">
+              <SeatSleeperLg className="h-[70px] relative shrink-0 w-[32px]" state="Men only" />
+            </div>
+          </div>
+          <div className="bg-[#e3e2e8] h-px relative shrink-0 w-full" data-node-id="581:4053" data-name="Divider" />
+          <div className="content-stretch flex h-[94.6px] items-center pl-[16px] pr-[14.5px] relative shrink-0 w-full" data-node-id="581:4054" data-name="Row">
+            <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Regular'] font-normal leading-[20px] min-w-px not-italic relative text-[14px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="581:4055">
+              Booked by male passenger
+            </p>
+            <div className="content-stretch flex h-[94.6px] items-center justify-center relative shrink-0 w-[60px]" data-node-id="581:4056" data-name="Seater">
+              <SeatSeaterLg className="relative shrink-0 size-[30px]" state="Booked male" />
+            </div>
+            <div className="content-stretch flex h-[94.6px] items-center justify-center relative shrink-0 w-[64px]" data-node-id="581:4058" data-name="Sleeper">
+              <SeatSleeperLg className="h-[70px] relative shrink-0 w-[32px]" state="Booked male" />
+            </div>
+          </div>
+        </div>
       </div>
       <div className="absolute bottom-[284.3px] drop-shadow-[0px_0px_8px_rgba(107,61,140,0.28)] right-[16px] rounded-[var(--radius\/full,999px)] size-[48px]" data-node-id="423:3122" style={{ backgroundImage: "linear-gradient(135deg, rgb(197, 70, 70) 0%, rgb(121, 65, 224) 71.429%)" }} data-name="Ask Ray">
         <div className="absolute left-[11px] size-[26px] top-[11px]" data-node-id="I423:3122;63:230" data-name="Sparkle">
