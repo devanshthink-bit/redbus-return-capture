@@ -747,8 +747,9 @@ not from memory. **21 frames = 16 screens + 5 state variants.**
 |---|---|---|---|
 | 01 · Home | `s-home` | Search buses | 02 |
 | 02 · Outbound bus list | `s-obuses` | a bus card | 03 |
-| 03 · Outbound seat map | `s-oseat` | Select points | 04 |
-| 03a / 03b · Seat map sheet | — | *states of 03* — sheet collapsed / full | — |
+| 03 · Outbound seat map | `s-oseat` | **the bookable seat** | 03b |
+| 03a · Seat map · sheet full | — | *opened by pulling 03's sheet up*; Collapse | back to 03 |
+| 03b · Seat map · seat selected | `s-oseat` | Select points | 04 |
 | 04 · Boarding & dropping points | `s-outpoints` | Proceed | 05 |
 | 05 · Return · pick your days | `s-window` | Continue | 06 |
 | 05a / 05b | — | *states of 05* — window chosen / one day picked | — |

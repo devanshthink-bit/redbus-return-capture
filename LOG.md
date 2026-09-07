@@ -6467,3 +6467,50 @@ Severity:  minor
 Layer:     moments
 Action:    done
 
+
+DECISION · 2026-09-06 · molades-build · Source: user
+**The three seat screens were named in build order, not flow order.** *"In Figma, also change the
+order of these screens to the correct order"*. A traveller lands on the seat map with the sheet
+collapsed, may pull the sheet up, and only then picks a seat — but the frames were named as though
+the *selected* state came first, because it was drawn first.
+
+Rotated, in Figma and in the build:
+
+| was | is | what it is |
+|---|---|---|
+| 03a · sheet collapsed | **03 · Outbound seat map** | what you land on from the bus list |
+| 03b · sheet full | **03a · Seat map · sheet full** | opened by pulling the sheet up |
+| 03 · Outbound seat map | **03b · Seat map · seat selected** | after a seat is picked, price sheet up |
+
+The canvas row now reads 01 · 01a · 02 · 03 · 03a · 03b · 04, which is the order a traveller meets
+them — §18's rule that the canvas is the flow. Files, `render.tsx`, the forward hotspots, the rail
+labels and the ref/shot pairs all rotated with them.
+
+CHANGE · 2026-09-06 · molades-build · Source: user
+**The seat map no longer arrives with a seat already chosen.** *"here seat should not be selected in
+green"*. The landing screen's job is to ask; showing a green seat answered it. Swapped to
+`State=Available`.
+
+**And its wrapper still said `Seat Selected`** on the screen whose whole point is that nothing is
+selected — renamed `Seat · bookable`. That is the same class of stale artefact as the change-day row
+that still named a window: a name left behind after the thing it described was removed.
+
+**Picking that seat is what opens the price sheet.** Tapping it goes to 03b, and the sheet there now
+**slides up from the bottom** rather than being there already — `go()` restarts the animation on any
+overlay named `Bottom sheet`, so it is the sheet's behaviour, not one screen's special case.
+
+**The full sheet opens by pulling, not tapping.** *"should come only when the user pulls the bottom
+sheet upwards otherwise, it won't come"*. A pointer drag of more than 40px upward on the collapsed
+sheet opens it; a tap does nothing, and so does a downward drag. Verified all three.
+
+**03a joins 01a in `OVERLAY`.** It is opened by a gesture, so it is not a step: prev / next / Back
+skip it, and `prev` from 04 lands on 03b rather than on an open sheet. That is the second time the
+same rule has been needed, which is why it is written in `CLAUDE.md` rather than remembered.
+
+**What was already right:** the sheet and the FAB were already pinned and the seats already scrolled
+under them — the Figma frame stacks everything, so it looks wrong there, but the running prototype
+has a 844 viewport over 1745 of content. Checked before changing anything.
+Severity:  major
+Layer:     steps
+Action:    done
+

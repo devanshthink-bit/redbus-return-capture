@@ -112,6 +112,8 @@
     50%    {box-shadow:0 0 0 4px rgba(197,70,70,.55)}
   }
   .hf-blink{animation:hf-blink 800ms ease-in-out 3;border-radius:8px;position:relative;z-index:5}
+  @keyframes hf-slideup{from{transform:translateY(100%)}to{transform:translateY(0)}}
+  .hf-slideup{animation:hf-slideup 340ms cubic-bezier(.22,1,.36,1)}
   body.hf-embed .hf-stage{height:auto;display:block;overflow:visible}
   body.hf-embed .hf-device{
     border-radius:0;box-shadow:none;
@@ -176,7 +178,7 @@
 
   // 01a is a bottom sheet, not a step: it opens from the date row on Home and closes back to it.
   // Leaving it in the linear order meant Back from the bus list landed on an open calendar.
-  var OVERLAY = { '01a': 1 };
+  var OVERLAY = { '01a': 1, '03a': 1 };
   function nextOf(i){ i += 1; while (screens[i] && OVERLAY[ORDER[i]]) i += 1; return i; }
   function prevOf(i){ i -= 1; while (screens[i] && OVERLAY[ORDER[i]]) i -= 1; return i; }
 
@@ -230,6 +232,9 @@
     nextB.disabled = at === screens.length - 1;
     if (history.replaceState) history.replaceState(null, '', '#' + ORDER[at]);
     document.title = NAMES[at] + ' — redBus hi-fi';
+    // a price sheet is a sheet: it comes up from the bottom rather than being there already
+    var sheet = sec.querySelector('.overlay [data-name="Bottom sheet"]');
+    if (sheet) { sheet.classList.remove('hf-slideup'); void sheet.offsetWidth; sheet.classList.add('hf-slideup'); }
   }
   rows.forEach(function(r){ r.addEventListener('click', function(){ go(+r.dataset.go); }); });
   prevB.addEventListener('click', function(){ go(prevOf(at)); });
@@ -377,6 +382,29 @@
   // 02 · the outbound list. Only the bus this case study books goes anywhere: Laxmi Holidays,
   //      23:55, the one whose seat map screen 03 draws.
   onlyOne('02', '[data-node-id="183:1503"]', function(i){ go(nextOf(i)); });
+
+  // 03 · the seat map you land on. One seat is bookable; picking it is what opens the price sheet.
+  onlyOne('03', '[data-node-id="530:3981"]', function(){ go(ORDER.indexOf('03b')); });
+
+  // 03a · the full bus-details sheet closes back to the seat map, it does not go forward
+  onlyOne('03a', '[data-name="Collapse"]', function(){ go(ORDER.indexOf('03')); });
+
+  // and the full sheet opens only by pulling the collapsed one up -- a tap will not do it
+  (function pullSheet(){
+    var i03 = ORDER.indexOf('03'), i03a = ORDER.indexOf('03a');
+    if (i03 < 0 || i03a < 0) return;
+    var sheet = screens[i03].querySelector('[data-name="Bottom sheet · collapsed"]');
+    if (!sheet) { console.warn('no collapsed sheet on 03'); return; }
+    var y0 = null;
+    sheet.addEventListener('pointerdown', function(e){ y0 = e.clientY; });
+    sheet.addEventListener('pointermove', function(e){
+      if (y0 === null) return;
+      if (y0 - e.clientY > 40) { y0 = null; go(i03a); }
+    });
+    ['pointerup','pointercancel','pointerleave'].forEach(function(ev){
+      sheet.addEventListener(ev, function(){ y0 = null; });
+    });
+  })();
 
   fit();
   window.addEventListener('resize', fit);
