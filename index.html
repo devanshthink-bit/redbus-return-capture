@@ -619,8 +619,8 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
   <div class="grp">
     <h2>Prototype</h2>
     <div class="vers" id="fidsw">
-      <button type="button" onclick="setFidelity('hifi')" id="f-hifi" aria-pressed="true">Hi-fi</button>
-      <button type="button" onclick="setFidelity('lofi')" id="f-lofi">Lo-fi</button>
+      <button type="button" onclick="setFidelity('hifi')" id="f-hifi" aria-pressed="true">High fidelity</button>
+      <button type="button" onclick="setFidelity('lofi')" id="f-lofi">Low fidelity</button>
     </div>
     <p class="vnote" id="fnote"></p>
   </div>
@@ -3072,8 +3072,8 @@ document.getElementById('legacyframe').addEventListener('load', () => {
    iframe from hifi/app.html -- nothing in it is edited or overridden from here. Version
    only means anything inside the lo-fi, so that group hides when the hi-fi is on. */
 const FIDELITY = {
-  hifi:{note:'<b>Hi-fi</b> is the Figma build &mdash; 23 screens at iPhone&nbsp;14 size, walked in the order they are arranged on the canvas.'},
-  lofi:{note:'<b>Lo-fi</b> is the working prototype, in four versions. Every screen responds.'}
+  hifi:{note:'<b>High fidelity</b> is the Figma build &mdash; 26 screens at iPhone&nbsp;14 size, walked in the order they are arranged on the canvas.'},
+  lofi:{note:'<b>Low fidelity</b> is the working prototype, in four versions. Every screen responds.'}
 };
 let fidelity = 'hifi';
 let hifiLoaded = false;

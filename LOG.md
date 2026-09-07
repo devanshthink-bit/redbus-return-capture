@@ -6829,3 +6829,37 @@ element's own box — halo, outline, focus ring, drop shadow used as emphasis �
 every `overflow-clip` ancestor, and Figma gives almost every frame one. Draw emphasis inside the
 box. The bug is invisible on a centred card and obvious on a full-bleed row, so it survives
 casual checking.
+
+CHANGE  ·  2026-09-08  ·  molades-none  · Source: user
+The fidelity switch says the words out. Devansh: *"write these hi fideliety and low fideliety
+full names"*. "Hi-fi" / "Lo-fi" are now "High fidelity" / "Low fidelity" on the switch, in the
+note under it, and in the hi-fi sidebar kicker. The screen counts in both blurbs said 23; both
+say 26.
+
+NOTE  ·  2026-09-08  ·  molades-none  · Source: user
+**The bottom tab bar does not match the real app, it is measured, and it is NOT fixed.**
+Devansh: *"bottom nav all throught is not at all matching in figma/prototype with real nav in
+app"*. He is right. Measured off `RedBusScreenshots/IMG_4548.PNG` (1206px wide = 402pt at 3x)
+against our own render of 01:
+
+| | real app | ours | |
+|---|---|---|---|
+| icon box | 17.3pt tall, 17–19 wide | 28px tall, 23–27 wide | **~60% too big** |
+| icon → label gap | 8.6pt | 5px | too tight |
+| label cap height | 8.7pt | 9px | right |
+| ink above screen bottom | 33 – 67.7pt | 12 – 54px | **sits ~20pt too low** |
+| active pill | wide soft near-white oval behind icon **and** label | smaller, darker grey rounded rect behind the icon only | wrong shape, wrong weight |
+
+The icons being oversized and the bar sitting too low is why the labels look crowded and clipped.
+
+It is **not fixed** because it lives in the `Nav / Tab Bar` component in Figma — used on 01 and
+12 — and the Figma MCP server lost its authorization partway through this session, so
+`use_figma` and `get_design_context` are gone from the tool list. Changing it in the build alone
+is exactly the drift the sync rule exists to stop. The measurements above are the fix; it needs
+Figma reconnected to apply.
+
+LEARNED  ·  2026-09-08  ·  molades-none
+Measure the reference, do not eyeball it. "The nav doesn't match" was true for four separate
+reasons, and only one of them (the active pill) was visible without measuring. The icon size and
+the bar's vertical position were the ones actually causing the crowding, and both read as
+"looks about right" side by side until the pixel runs were counted.
