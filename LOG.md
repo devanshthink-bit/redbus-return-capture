@@ -6975,3 +6975,57 @@ published file proves the server has the new bytes, which is the check `CLAUDE.m
 passed on both commits. It says nothing about what a browser that already has the old bytes will
 show. Anything loaded at a fixed URL that changes contents — an iframe document above all — needs
 its URL to change too, or the deploy check is answering a question nobody asked.
+
+CHANGE  ·  2026-09-08  ·  molades-none  · Source: user
+**The dead band above the action bar was clearance counted twice.** Devansh: *"why blank space?"*
+Every Figma frame already carries bottom padding for the bar that floats over it — 05's Content had
+**135** under a 99pt bar — and `clearBottom()` in the shell then padded the scroller by the bar's
+full height again. 250pt of nothing below the last card, 150 of it visible.
+
+The shell now adds **only what is missing**: it finds where the content actually ends, measures the
+trailing space the frame already has, and tops up the difference. Across all 26 screens the
+clearance above a pinned bar is now 16–37pt, except 03's sheet at 107 and 08b's under-filled frame
+at 392; nothing sits under a bar anywhere. 05/05a/05b also had their own padding trimmed 135 → 115,
+which is the 99pt bar plus one 16 gap.
+
+LEARNED  ·  2026-09-08  ·  molades-none
+**A container's box bottom is not where its content ends.** The first version of the fix measured
+every descendant's `getBoundingClientRect().bottom` and found the content ending exactly where the
+padding did — because the Content frame's own box includes its 135pt of padding. Measuring only
+**leaf** elements is what finds the last thing a person can actually see. Any "is there room below
+this?" test has the same trap.
+
+CHANGE  ·  2026-09-08  ·  molades-none  · Source: user
+**The return question is redBus's own two-option pattern now, and it answers to a tap.** Devansh:
+*"i am not able to tap on toggle and the design doesnt look like its redbus, study real app
+screenshot of redbus in the folder and improve this design to exactly match how redbus wud do"*.
+
+Three things came out of the 85 captures, and all three said the screen was inventing:
+
+- **redBus does not use a segmented control for a two-way question.** `IMG_5203`/`IMG_5204` — its
+  own *Change of plans?* sheet — asks with **two stacked cards**: white, 1px `#D1D1D1`, radius 12,
+  a bold title over a grey supporting line, and a **22pt radio on the right**. Selected is a red
+  disc with a white centre, not a ring with a dot. That is now `Row / Choice`, and the mode toggle
+  is gone.
+- **redBus has no dimmed primary button.** A scan of all 85 captures for a wide pale-red control
+  returns **zero**. Ours was at 40% opacity when no answer had been given. It is solid red now, and
+  Continue with no answer **blinks the question** instead of moving — which is also what a Figma
+  prototype does on a region with no connection.
+- **Saturday and Sunday are red in redBus's date picker** (`IMG_5223`), `#BC361C` — measured
+  identical across all four week rows, and a different red from the button's `#C54646`. It is a new
+  `text/weekend` semantic token, painted on the weekend numbers that are actually bookable; past,
+  sold-out and selected days keep their own colour.
+
+**Tapping works now.** A card selects (the ring fills, the other clears), and on 05 the answer is
+what Continue routes on: *I know my date* → 05b, *I'm not sure yet* → 05a. Verified by clicking in
+a headless browser, both routes and the no-answer case. The calendar itself is still walk-only.
+
+Frame diffs after the rebuild: 05 **5.91%**, 05a **9.00%**, 05b **8.68%** — the drift profile is a
+ramp of 0 → −10px down the page, which `CONTEXT` §21 records as accumulation rather than a defect.
+
+NOTE  ·  2026-09-08  ·  molades-none
+**Declared divergence: v4 still has the segmented control and the dimmed Continue.** The change
+above was driven by the real app's patterns, so it belongs to the hi-fi. The lo-fi's `.seg` /
+`.segbtn` and its `cont.disabled` are untouched, and the two prototypes now ask the same question
+in two different shapes. That is a decision for Devansh, not one to make silently: if the option
+cards are right, v4's calendar screen wants the same treatment.

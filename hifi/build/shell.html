@@ -134,6 +134,10 @@
   [data-name^="Segment / "],[data-name="Radio"]{
     transition:background-color 200ms ease, color 200ms ease, box-shadow 200ms ease,
                left 220ms cubic-bezier(.22,1,.36,1), opacity 200ms ease}
+  /* The return question is two option cards with a ring each (redBus's own pattern). The ring
+     carries a white dot at all times; filling the ring is what makes the dot read. */
+  .hf-choice-on{background:#C54646!important;border-color:#C54646!important}
+  .hf-choice-off{background:transparent!important;border-color:#767680!important}
   .hf-radio-on{position:relative}
   /* A radio dot does not travel -- it is either set or not. It fades in on the spot. */
   @keyframes hf-dot{from{opacity:0;transform:scale(.6)} to{opacity:1;transform:none}}
@@ -245,7 +249,28 @@
       var h = (layer.offsetHeight || 0) - (el.offsetTop || 0);
       if (h > tall) tall = h;
     });
-    if (tall > 0) { root.style.paddingBottom = Math.round(tall + 16) + 'px'; sec.dataset.cleared = '1'; }
+    if (tall <= 0) { sec.dataset.cleared = '1'; return; }
+    // ADD only what is missing. Every frame already carries its own bottom padding for the bar it
+    // was designed with -- 05 has 135 under a 99pt bar -- so padding the full height again left a
+    // dead band of 150 above the bar. Find where the content actually ends and top it up.
+    var rr = root.getBoundingClientRect();
+    var scale = rr.width / (root.offsetWidth || 1) || 1;
+    var deepest = 0;
+    // LEAVES only. A container's box bottom includes its own bottom padding -- Content on 05 is
+    // padded 135 for the bar -- so measuring containers reports the content ending exactly where
+    // the padding does, and nothing is ever found to be already clear.
+    Array.prototype.forEach.call(root.querySelectorAll('*'), function(el){
+      if (el.children.length) return;
+      var b = el.getBoundingClientRect();
+      if (!b.height && !b.width) return;                 // hidden, or a zero box
+      var y = (b.bottom - rr.top) / scale;
+      if (y > deepest) deepest = y;
+    });
+    var trailing = root.offsetHeight - deepest;          // padding the frame already carries
+    var need = Math.round(tall + 16 - trailing);
+    if (need > 0) root.style.paddingBottom =
+      Math.round(parseFloat(getComputedStyle(root).paddingBottom) || 0) + need + 'px';
+    sec.dataset.cleared = '1';
   }
 
   // 2 · hotspots
@@ -524,6 +549,50 @@
       var only = d.querySelector('[data-name^="Point / "]');
       if (only) blinkAt(only);
     }, true);
+  })();
+
+  // 05 / 05a / 05b · the return question. redBus asks a two-way question as two option cards with
+  //      a radio each, so the answer has to be answerable: tapping a card moves the ring, and on 05
+  //      the answer is what Continue routes on -- "I know my date" goes to the single-day frame,
+  //      "I'm not sure yet" to the window one. Continue with no answer blinks the question instead
+  //      of moving, which is what the screen's own rule says (no default: 65.2% were unsure).
+  (function modeChoice(){
+    var idx = ['05','05a','05b'].map(function(k){ return ORDER.indexOf(k); });
+    var i05 = idx[0], i05a = idx[1], i05b = idx[2];
+    if (i05 < 0) return;
+    idx.forEach(function(i){
+      if (i < 0) return;
+      var sec  = screens[i];
+      var opts = [].slice.call(sec.querySelectorAll('[data-name="Mode options"] > [data-name="Row / Choice"]'));
+      if (opts.length !== 2) { console.warn('mode options missing on ' + ORDER[i]); return; }
+      var cont = sec.querySelector('[data-name="Button / Primary"]');
+      function radio(o){ return o.querySelector('[data-name="Radio"]'); }
+      function chosen(){
+        for (var k = 0; k < 2; k++) {
+          var r = radio(opts[k]); if (!r) continue;
+          if (r.classList.contains('hf-choice-on')) return k;
+          if (!r.classList.contains('hf-choice-off') && /bg-\[#c54646\]/.test(r.className)) return k;
+        }
+        return -1;
+      }
+      function pick(k){
+        opts.forEach(function(o, j){
+          var r = radio(o); if (!r) return;
+          r.classList.toggle('hf-choice-on',  j === k);
+          r.classList.toggle('hf-choice-off', j !== k);
+        });
+      }
+      sec.addEventListener('click', function(e){
+        if (e.target.closest && e.target.closest('.hf-back')) return;
+        var o = e.target.closest('[data-name="Mode options"] > [data-name="Row / Choice"]');
+        if (o && opts.indexOf(o) >= 0) { e.preventDefault(); e.stopPropagation(); pick(opts.indexOf(o)); return; }
+        if (cont && cont.contains(e.target)) {
+          var k = chosen();
+          if (k < 0) { e.preventDefault(); e.stopPropagation(); blinkAt(opts[0]); blinkAt(opts[1]); return; }
+          if (ORDER[i] === '05') { e.preventDefault(); e.stopPropagation(); go(k === 0 ? i05b : i05a); }
+        }
+      }, true);
+    });
   })();
 
   // and the full sheet opens only by pulling the collapsed one up -- a tap will not do it

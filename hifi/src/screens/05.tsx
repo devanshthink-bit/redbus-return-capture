@@ -1,7 +1,7 @@
-const imgGlyph = "assets/f8eb1eae-ff07-40bc-8148-2e5b056082c4.svg";
-const imgNoChangeDot = "assets/909e0470-fcdb-48d4-bf36-435813192560.svg";
-const imgIconChevronLeft = "assets/0f5e7cb0-8490-472f-b17f-aba02fea49e3.svg";
-const imgStatusIcons = "assets/4ed9412b-a873-4471-938b-88ef5312966b.svg";
+const imgGlyph = "assets/f987e112-3f21-4093-9c91-abca9b06aa32.svg";
+const imgNoChangeDot = "assets/49f2b78a-388d-4975-8647-f3b3bd660e10.svg";
+const imgIconChevronLeft = "assets/c52a55a0-4bd0-4f7a-a9fa-205a96aa0d14.svg";
+const imgStatusIcons = "assets/091fbdca-8e2e-4f59-80c8-bfdc341f332f.svg";
 const imgEllipse = "assets/319b1653-24db-4425-9992-a40e2fce1943.svg";
 
 function IconSearch({ className }: { className?: string }) {
@@ -110,6 +110,32 @@ function CalendarDay({ className, day = "10", fare = "₹910", noDateChange = fa
   );
 }
 
+type RowChoiceProps = {
+  className?: string;
+  detail?: string;
+  title?: string;
+};
+
+function RowChoice({ className, detail = "Pick the day you are coming back.", title = "I know my date" }: RowChoiceProps) {
+  return (
+    <div className={className || "content-stretch flex flex-col items-start relative w-[358px]"} data-node-id="607:3981" data-name="Row / Choice">
+      <div className="bg-white border border-[#d1d1d1] border-solid content-stretch flex gap-[12px] items-center p-[16px] relative rounded-[12px] shrink-0 w-full" data-node-id="607:3975" data-name="Row / Choice">
+        <div className="[word-break:break-word] bg-white content-stretch flex flex-[1_0_0] flex-col gap-[4px] items-start leading-[20px] min-w-px not-italic overflow-clip relative" data-node-id="607:3976" data-name="Text">
+          <p className="font-['Inter:Bold'] font-bold relative shrink-0 text-[#1d1d1d] text-[16px] w-full" data-node-id="607:3977">
+            {title}
+          </p>
+          <p className="font-['Inter:Regular'] font-normal relative shrink-0 text-[#636363] text-[14px] w-full" data-node-id="607:3978">
+            {detail}
+          </p>
+        </div>
+        <div className="border-[#767680] border-[1.5px] border-solid content-stretch flex items-center justify-center overflow-clip relative rounded-[11px] shrink-0 size-[22px]" data-node-id="607:3979" data-name="Radio">
+          <div className="bg-white relative rounded-[4px] shrink-0 size-[8px]" data-node-id="607:3980" data-name="Dot" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function IconChevronLeft({ className }: { className?: string }) {
   return (
     <div className={className || "relative size-[20px]"} data-node-id="33:93" data-name="Icon / Chevron Left">
@@ -146,7 +172,7 @@ export default function Component05ReturnPickYourDays() {
           </div>
         </div>
       </div>
-      <div className="content-stretch flex flex-col gap-[16px] items-start pb-[135px] pt-[13px] px-[16px] relative shrink-0 w-full" data-node-id="83:321" data-name="Content">
+      <div className="content-stretch flex flex-col gap-[16px] items-start pb-[115px] pt-[13px] px-[16px] relative shrink-0 w-full" data-node-id="83:321" data-name="Content">
         <div className="[word-break:break-word] bg-[var(--colour\/neutral\/150,#e9eaf6)] content-stretch flex flex-col gap-[4px] items-start not-italic px-[16px] py-[12px] relative rounded-[var(--radius\/8,8px)] shrink-0 w-full whitespace-nowrap" data-node-id="83:322" data-name="Onward journey">
           <p className="font-['Inter:Regular'] font-normal leading-[16px] relative shrink-0 text-[12px] text-[color:var(--text\/secondary,#636363)]" data-node-id="83:323">
             Onward journey
@@ -160,21 +186,10 @@ export default function Component05ReturnPickYourDays() {
             When can you travel back?
           </p>
         </div>
-        <div className="bg-[#ededf2] border border-[#e4e4e4] border-solid content-stretch flex gap-[4px] items-start overflow-clip p-[4px] relative rounded-[24px] shrink-0 w-full" data-node-id="510:3844" data-name="Mode toggle">
-          <div className="content-stretch flex flex-[1_0_0] items-center justify-center min-w-px overflow-clip py-[11px] relative rounded-[20px]" data-node-id="510:3845" data-name="Segment / I know my date">
-            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[14px] text-center whitespace-nowrap" data-node-id="510:3846">
-              I know my date
-            </p>
-          </div>
-          <div className="content-stretch flex flex-[1_0_0] items-center justify-center min-w-px overflow-clip py-[11px] relative rounded-[20px]" data-node-id="510:3847" data-name="Segment / I’m not sure yet">
-            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[14px] text-center whitespace-nowrap" data-node-id="510:3848">
-              I’m not sure yet
-            </p>
-          </div>
+        <div className="content-stretch flex flex-col gap-[12px] items-start overflow-clip relative shrink-0 w-full" data-node-id="608:3974" data-name="Mode options">
+          <RowChoice className="content-stretch flex flex-col items-start relative shrink-0 w-full" />
+          <RowChoice className="content-stretch flex flex-col items-start relative shrink-0 w-full" detail="Mark a range. We book one day inside it." title="I’m not sure yet" />
         </div>
-        <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="83:327">
-          Pick your day. Or mark a range, if your plans could still move.
-        </p>
         <div className="bg-white content-stretch flex flex-col items-start overflow-clip px-[20px] py-[16px] relative rounded-[16px] shrink-0 w-full" data-node-id="345:2709" data-name="Calendar">
           <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[16px] whitespace-nowrap" data-node-id="345:2710">
             September 2026
@@ -219,7 +234,14 @@ export default function Component05ReturnPickYourDays() {
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="9" fare=" " state="Unavailable" />
               <CalendarDay className="bg-[var(--colour\/neutral\/150,#e9eaf6)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" fare="Out" state="Out" />
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="11" fare="₹1,260" />
-              <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="12" fare="₹1,140" />
+              <div className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" data-node-id="345:2735" data-name="12">
+                <p className="font-['Inter:Medium'] font-medium leading-[20px] relative shrink-0 text-[16px] text-[color:var(--text\/weekend,#bc361c)]" data-node-id="I345:2735;82:303">
+                  12
+                </p>
+                <p className="font-['Inter:Regular'] font-normal leading-[14px] relative shrink-0 text-[12px] text-[color:var(--text\/secondary,#636363)]" data-node-id="I345:2735;82:304">
+                  ₹1,140
+                </p>
+              </div>
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="13" fare="Full" state="Full" />
             </div>
             <div className="[word-break:break-word] content-stretch flex gap-[4px] items-start not-italic overflow-clip relative shrink-0 w-full whitespace-nowrap" data-node-id="345:2737" data-name="Week">
@@ -228,8 +250,22 @@ export default function Component05ReturnPickYourDays() {
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="16" fare="₹860" />
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="17" fare="₹970" />
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="18" fare="₹1,050" />
-              <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="19" fare="₹1,190" />
-              <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="20" fare="₹870" />
+              <div className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" data-node-id="345:2743" data-name="19">
+                <p className="font-['Inter:Medium'] font-medium leading-[20px] relative shrink-0 text-[16px] text-[color:var(--text\/weekend,#bc361c)]" data-node-id="I345:2743;82:303">
+                  19
+                </p>
+                <p className="font-['Inter:Regular'] font-normal leading-[14px] relative shrink-0 text-[12px] text-[color:var(--text\/secondary,#636363)]" data-node-id="I345:2743;82:304">
+                  ₹1,190
+                </p>
+              </div>
+              <div className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" data-node-id="345:2744" data-name="20">
+                <p className="font-['Inter:Medium'] font-medium leading-[20px] relative shrink-0 text-[16px] text-[color:var(--text\/weekend,#bc361c)]" data-node-id="I345:2744;82:303">
+                  20
+                </p>
+                <p className="font-['Inter:Regular'] font-normal leading-[14px] relative shrink-0 text-[12px] text-[color:var(--text\/secondary,#636363)]" data-node-id="I345:2744;82:304">
+                  ₹870
+                </p>
+              </div>
             </div>
             <div className="content-stretch flex gap-[4px] items-start overflow-clip relative shrink-0 w-full" data-node-id="345:2745" data-name="Week">
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="21" fare="₹740" noDateChange />
@@ -237,8 +273,22 @@ export default function Component05ReturnPickYourDays() {
               <CalendarDay className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px not-italic relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)] whitespace-nowrap" day="23" fare="Full" state="Full" />
               <CalendarDay className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px not-italic relative rounded-[var(--radius\/10,10px)] whitespace-nowrap" day="24" fare="₹860" />
               <CalendarDay className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px not-italic relative rounded-[var(--radius\/10,10px)] whitespace-nowrap" day="25" fare="₹1,180" />
-              <CalendarDay className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px not-italic relative rounded-[var(--radius\/10,10px)] whitespace-nowrap" day="26" fare="₹1,240" />
-              <CalendarDay className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px not-italic relative rounded-[var(--radius\/10,10px)] whitespace-nowrap" day="27" fare="₹810" />
+              <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px not-italic relative rounded-[var(--radius\/10,10px)] whitespace-nowrap" data-node-id="345:2751" data-name="26">
+                <p className="font-['Inter:Medium'] font-medium leading-[20px] relative shrink-0 text-[16px] text-[color:var(--text\/weekend,#bc361c)]" data-node-id="I345:2751;82:303">
+                  26
+                </p>
+                <p className="font-['Inter:Regular'] font-normal leading-[14px] relative shrink-0 text-[12px] text-[color:var(--text\/secondary,#636363)]" data-node-id="I345:2751;82:304">
+                  ₹1,240
+                </p>
+              </div>
+              <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px not-italic relative rounded-[var(--radius\/10,10px)] whitespace-nowrap" data-node-id="345:2752" data-name="27">
+                <p className="font-['Inter:Medium'] font-medium leading-[20px] relative shrink-0 text-[16px] text-[color:var(--text\/weekend,#bc361c)]" data-node-id="I345:2752;82:303">
+                  27
+                </p>
+                <p className="font-['Inter:Regular'] font-normal leading-[14px] relative shrink-0 text-[12px] text-[color:var(--text\/secondary,#636363)]" data-node-id="I345:2752;82:304">
+                  ₹810
+                </p>
+              </div>
             </div>
             <div className="content-stretch flex gap-[4px] items-start overflow-clip relative shrink-0 w-full" data-node-id="345:2753" data-name="Week">
               <CalendarDay className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px not-italic relative rounded-[var(--radius\/10,10px)] whitespace-nowrap" day="28" fare="₹760" />
@@ -278,7 +328,7 @@ export default function Component05ReturnPickYourDays() {
             Skip
           </p>
         </div>
-        <ButtonPrimary className="bg-[var(--surface\/accent,#c54646)] content-stretch cursor-pointer drop-shadow-[0px_2px_3px_rgba(0,0,0,0.1)] flex flex-[1_0_0] gap-[10px] h-[48px] items-center justify-center min-w-px opacity-40 px-[20px] relative rounded-[var(--radius\/full,999px)]" label="Continue" showIcon={false} />
+        <ButtonPrimary className="bg-[var(--surface\/accent,#c54646)] content-stretch cursor-pointer drop-shadow-[0px_2px_3px_rgba(0,0,0,0.1)] flex flex-[1_0_0] gap-[10px] h-[48px] items-center justify-center min-w-px px-[20px] relative rounded-[var(--radius\/full,999px)]" label="Continue" showIcon={false} />
       </div>
     </div>
   );
