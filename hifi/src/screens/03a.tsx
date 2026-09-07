@@ -1,17 +1,17 @@
 const imgArtPrimo = "assets/180e720d-ef38-40a2-babe-7815bb8770c7.png";
-const imgStar = "assets/d11e8eae-1ebe-4173-8ecc-95e7ad236163.svg";
+const imgStar = "assets/5defeabb-4b51-4462-9a95-e9a44e39c85f.svg";
 const imgStateWomenOnly = "assets/233a8b3c-0b6a-4bae-8b5c-62101f19c57c.svg";
 const imgStateBookedFemale = "assets/5c327726-ad21-418b-b3e4-b417bc8d4dc6.svg";
 const imgStateMenOnly = "assets/482fd8a7-cd09-4da0-a177-c77574b93c02.svg";
 const imgStateBookedMale = "assets/6cb648fc-3537-47de-9cdb-ea6da09fd4c8.svg";
-const imgStateWomenOnly1 = "assets/0d7631fa-8ac9-4205-8391-c82d4a3ff817.svg";
-const imgStateBookedFemale1 = "assets/be66be0c-6b86-45ac-a756-f890d6cf0272.svg";
-const imgStateBookedMale1 = "assets/c975fa3e-8da9-4566-8056-afd12649d7db.svg";
+const imgStateWomenOnly1 = "assets/00000790-8cae-4007-9543-0e4c28e0d439.svg";
+const imgStateBookedFemale1 = "assets/c16b97a4-3563-44b4-ab78-56f49c652946.svg";
+const imgStateBookedMale1 = "assets/13ddfb8f-8081-48eb-978b-af7b34734274.svg";
 const imgStateMenOnly1 = "assets/29fe08c8-256c-47a5-9f5f-6649e0c96324.svg";
-const imgArtSteeringWheel = "assets/a8046f97-d818-4e0c-ab76-d4a7c7186ef2.svg";
-const imgIconChevronLeft = "assets/067f8864-5cb1-4cd7-ac2b-aa0f6b96e39f.svg";
+const imgIconChevronLeft = "assets/c52a55a0-4bd0-4f7a-a9fa-205a96aa0d14.svg";
 const imgPhoto = "assets/e1493517-bca5-4aaa-976b-200125ff5ebf.png";
-const imgStatusIcons = "assets/8bc5bc2f-43f9-4703-888d-a80ceafb5924.svg";
+const imgStatusIcons = "assets/091fbdca-8e2e-4f59-80c8-bfdc341f332f.svg";
+const imgArtSteeringWheel = "assets/15e65345-49df-474e-be45-ae631f3e831b.svg";
 const imgSparkle = "assets/8dc1da91-cd71-4fd5-abfb-741575eac530.svg";
 
 function ArtPrimo({ className }: { className?: string }) {
@@ -48,7 +48,7 @@ function RatingBadge({ className, count = "178", score = "4.7" }: RatingBadgePro
 
 type SeatSleeperProps = {
   className?: string;
-  state?: "Available" | "Booked" | "Women only" | "Booked female" | "Men only" | "Booked male";
+  state?: "Available" | "Selected" | "Booked" | "Women only" | "Booked female" | "Men only" | "Booked male";
 };
 
 function SeatSleeper({ className, state = "Available" }: SeatSleeperProps) {
@@ -56,11 +56,12 @@ function SeatSleeper({ className, state = "Available" }: SeatSleeperProps) {
   const isBookedFemale = state === "Booked female";
   const isBookedMale = state === "Booked male";
   const isMenOnly = state === "Men only";
+  const isSelected = state === "Selected";
   const isWomenOnlyOrBookedFemaleOrMenOnlyOrBookedMale = ["Women only", "Booked female", "Men only", "Booked male"].includes(state);
   return (
-    <div className={className || `h-[70px] relative w-[32px] ${isWomenOnlyOrBookedFemaleOrMenOnlyOrBookedMale ? "" : isBooked ? "bg-[#e6e6e6] rounded-[9px]" : "bg-white border-[#4d784b] border-[1.5px] border-solid rounded-[9px]"}`} id={isBookedMale ? "node-203_1917" : isMenOnly ? "node-203_1913" : isBookedFemale ? "node-203_1910" : state === "Women only" ? "node-51_211" : isBooked ? "node-51_208" : "node-51_203"}>
+    <div className={className || `h-[70px] relative w-[32px] ${isWomenOnlyOrBookedFemaleOrMenOnlyOrBookedMale ? "" : isBooked ? "bg-[#e6e6e6] rounded-[9px]" : isSelected ? "bg-[#8ab58c] border-[#4d784b] border-[1.5px] border-solid rounded-[9px]" : "bg-white border-[#4d784b] border-[1.5px] border-solid rounded-[9px]"}`} id={isBookedMale ? "node-203_1917" : isMenOnly ? "node-203_1913" : isBookedFemale ? "node-203_1910" : state === "Women only" ? "node-51_211" : isBooked ? "node-51_208" : isSelected ? "node-51_206" : "node-51_203"}>
       {isWomenOnlyOrBookedFemaleOrMenOnlyOrBookedMale && <img alt="" className="absolute block inset-0 max-w-none size-full" src={isBookedMale ? imgStateBookedMale : isMenOnly ? imgStateMenOnly : isBookedFemale ? imgStateBookedFemale : imgStateWomenOnly} />}
-      {state === "Available" && <div className="absolute bg-[#dff3d8] inset-[calc(82.86%+0.99px)_calc(12.5%-1.13px)_calc(7.14%-1.29px)_calc(12.5%-1.13px)] rounded-[3px]" data-node-id="203:1905" data-name="Pillow" />}
+      {["Available", "Selected"].includes(state) && <div className={`absolute inset-[calc(82.86%+0.99px)_calc(12.5%-1.13px)_calc(7.14%-1.29px)_calc(12.5%-1.13px)] rounded-[3px] ${isSelected ? "bg-[#c9e2c6]" : "bg-[#dff3d8]"}`} id={isSelected ? "node-203_1906" : "node-203_1905"} data-name="Pillow" />}
     </div>
   );
 }
@@ -85,14 +86,6 @@ function SeatSeater({ className, state = "Available" }: SeatSeaterProps) {
           <div className={`absolute inset-[3%_15.33%_29%_15.33%] rounded-[5.5px] ${isBooked ? "bg-[#e6e6e6]" : "bg-white border-[#4d784b] border-[1.6px] border-solid"}`} id={isBooked ? "node-203_1927" : "node-203_1921"} data-name="Back" />
         </>
       )}
-    </div>
-  );
-}
-
-function ArtSteeringWheel({ className }: { className?: string }) {
-  return (
-    <div className={className || "relative size-[44px]"} data-node-id="51:222" data-name="Art / Steering wheel">
-      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgArtSteeringWheel} />
     </div>
   );
 }
@@ -134,290 +127,327 @@ export default function Component03ASeatMapSheetCollapsed() {
           <div className="absolute bottom-0 content-stretch flex items-center justify-end right-[8px] top-0 w-[120px]" data-node-id="I193:1860;56:226" data-name="Trailing slot" />
         </div>
       </div>
-      <div className="content-stretch flex gap-[27.1px] items-start pt-[15.2px] relative shrink-0" data-node-id="201:1879" data-name="Decks">
-        <div className="bg-white content-stretch drop-shadow-[0px_8px_12px_rgba(0,0,0,0.07),0px_2px_3px_rgba(0,0,0,0.05)] flex flex-col items-start relative rounded-[14px] shrink-0 w-[182.3px]" data-node-id="201:1880" data-name="Deck">
-          <div className="bg-[#fafafa] content-stretch flex h-[61px] items-center px-[13px] relative rounded-tl-[14px] rounded-tr-[14px] shrink-0 w-full" data-node-id="201:1881" data-name="Deck header">
-            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[18px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="201:1882">
+      <div className="content-stretch flex gap-[16px] items-start overflow-clip pl-[16px] pt-[16px] relative shrink-0" data-node-id="530:3872" data-name="Decks">
+        <div className="bg-[var(--surface\/panel,#fafafa)] content-stretch flex flex-col gap-[24px] items-start pb-[12px] pt-[21px] px-[4px] relative rounded-[var(--radius\/16,16px)] shrink-0 w-[200px]" data-node-id="530:3873" data-name="Lower deck">
+          <div className="content-stretch flex items-center justify-between pl-[9px] pr-[3px] relative shrink-0 w-full" data-node-id="530:3874" data-name="Deck title">
+            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[18px] not-italic relative shrink-0 text-[13px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="530:3875">
               Lower deck
             </p>
-            <div className="flex-[1_0_0] h-[100px] min-w-px relative" data-node-id="201:1883" data-name="spacer" />
-            <ArtSteeringWheel className="relative shrink-0 size-[34.3px]" />
+            <div className="-translate-y-1/2 absolute right-[3px] size-[44px] top-1/2" data-node-id="530:3876" data-name="Art / Steering wheel">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgArtSteeringWheel} />
+            </div>
           </div>
-          <div className="content-stretch flex items-start pb-[22px] pt-[20.2px] px-[13px] relative shrink-0 w-full" data-node-id="201:1885" data-name="Seat grid">
-            <div className="content-stretch flex flex-col gap-[0.7px] items-center relative shrink-0" data-node-id="201:1886" data-name="Column">
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:1887" data-name="Seat">
-                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[67.5px] relative rounded-[9px] shrink-0 w-[31.1px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:1890">
-                  ₹1,699
+          <div className="bg-[var(--surface\/default,white)] border border-[var(--border\/divider,#e6e6e6)] border-solid content-stretch flex items-start overflow-clip px-[14.5px] py-[20px] relative rounded-[var(--radius\/12,12px)] shrink-0 w-full" data-node-id="530:3877" data-name="Seat grid">
+            <div className="content-stretch flex flex-col gap-[4.33px] items-center relative shrink-0" data-node-id="530:3878" data-name="Sleepers">
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3879" data-name="Seat Available">
+                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[70px] relative rounded-[9px] shrink-0 w-[32px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3881">
+                  ₹1,599
                 </p>
               </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:1891" data-name="Seat">
-                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[67.5px] relative rounded-[9px] shrink-0 w-[31.1px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:1894">
-                  ₹1,699
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3882" data-name="Seat Available">
+                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[70px] relative rounded-[9px] shrink-0 w-[32px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3884">
+                  ₹1,599
                 </p>
               </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:1895" data-name="Seat">
-                <SeatSleeper className="h-[67.5px] relative shrink-0 w-[31.1px]" state="Booked male" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/tertiary,#767680)] text-center whitespace-nowrap" data-node-id="201:1897">
-                  Sold
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3885" data-name="Seat Available">
+                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[70px] relative rounded-[9px] shrink-0 w-[32px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3887">
+                  ₹1,599
                 </p>
               </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:1898" data-name="Seat">
-                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[67.5px] relative rounded-[9px] shrink-0 w-[31.1px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:1901">
-                  ₹1,699
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3888" data-name="Seat Available">
+                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[70px] relative rounded-[9px] shrink-0 w-[32px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3890">
+                  ₹1,599
                 </p>
               </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:1902" data-name="Seat">
-                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[67.5px] relative rounded-[9px] shrink-0 w-[31.1px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:1905">
-                  ₹1,699
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3891" data-name="Seat Available">
+                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[70px] relative rounded-[9px] shrink-0 w-[32px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3893">
+                  ₹1,599
                 </p>
               </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:1906" data-name="Seat">
-                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[67.5px] relative rounded-[9px] shrink-0 w-[31.1px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:1909">
-                  ₹1,699
-                </p>
-              </div>
-            </div>
-            <div className="h-px relative shrink-0 w-[40.8px]" data-node-id="201:1972" data-name="Aisle" />
-            <div className="content-stretch flex flex-col gap-[0.7px] items-center relative shrink-0" data-node-id="201:1910" data-name="Column">
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:1911" data-name="Seat">
-                <SeatSeater className="h-[24.9px] relative shrink-0 w-[25.3px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:1913">
-                  ₹1,299
-                </p>
-              </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:1914" data-name="Seat">
-                <SeatSeater className="h-[24.9px] relative shrink-0 w-[25.3px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:1916">
-                  ₹1,299
-                </p>
-              </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:1917" data-name="Seat">
-                <SeatSeater className="h-[24.9px] relative shrink-0 w-[25.3px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:1919">
-                  ₹1,299
-                </p>
-              </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:1920" data-name="Seat">
-                <SeatSeater className="h-[24.9px] relative shrink-0 w-[25.3px]" state="Booked male" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/tertiary,#767680)] text-center whitespace-nowrap" data-node-id="201:1922">
-                  Sold
-                </p>
-              </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:1923" data-name="Seat">
-                <SeatSeater className="h-[24.9px] relative shrink-0 w-[25.3px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:1925">
-                  ₹1,299
-                </p>
-              </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:1926" data-name="Seat">
-                <SeatSeater className="h-[24.9px] relative shrink-0 w-[25.3px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:1928">
-                  ₹1,299
-                </p>
-              </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:1929" data-name="Seat">
-                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[67.5px] relative rounded-[9px] shrink-0 w-[31.1px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:1932">
-                  ₹1,499
-                </p>
-              </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:1933" data-name="Seat">
-                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[67.5px] relative rounded-[9px] shrink-0 w-[31.1px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:1936">
-                  ₹1,499
-                </p>
-              </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:1937" data-name="Seat">
-                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[67.5px] relative rounded-[9px] shrink-0 w-[31.1px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:1940">
-                  ₹1,499
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3894" data-name="Seat Available">
+                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[70px] relative rounded-[9px] shrink-0 w-[32px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3896">
+                  ₹1,599
                 </p>
               </div>
             </div>
-            <div className="h-px relative shrink-0 w-[18px]" data-node-id="201:1973" data-name="Gap" />
-            <div className="content-stretch flex flex-col gap-[0.7px] items-center relative shrink-0" data-node-id="201:1941" data-name="Column">
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:1942" data-name="Seat">
-                <SeatSeater className="h-[24.9px] relative shrink-0 w-[25.3px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:1944">
-                  ₹1,299
-                </p>
-              </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:1945" data-name="Seat">
-                <SeatSeater className="h-[24.9px] relative shrink-0 w-[25.3px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:1947">
-                  ₹1,299
-                </p>
-              </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:1948" data-name="Seat">
-                <SeatSeater className="h-[24.9px] relative shrink-0 w-[25.3px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:1950">
-                  ₹1,299
-                </p>
-              </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:1951" data-name="Seat">
-                <SeatSeater className="h-[24.9px] relative shrink-0 w-[25.3px]" state="Booked male" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/tertiary,#767680)] text-center whitespace-nowrap" data-node-id="201:1953">
+            <div className="h-px relative shrink-0 w-[59.5px]" data-node-id="530:3897" data-name="Aisle" />
+            <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3898" data-name="Seaters A">
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3899" data-name="Seat Booked female">
+                <SeatSeater className="relative shrink-0 size-[30px]" state="Booked female" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3901">
                   Sold
                 </p>
               </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:1954" data-name="Seat">
-                <SeatSeater className="h-[24.9px] relative shrink-0 w-[25.3px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:1956">
-                  ₹1,299
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3902" data-name="Seat Available">
+                <SeatSeater className="relative shrink-0 size-[30px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3904">
+                  ₹999
                 </p>
               </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:1957" data-name="Seat">
-                <SeatSeater className="h-[24.9px] relative shrink-0 w-[25.3px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:1959">
-                  ₹1,299
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3905" data-name="Seat Available">
+                <SeatSeater className="relative shrink-0 size-[30px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3907">
+                  ₹999
                 </p>
               </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:1960" data-name="Seat">
-                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[67.5px] relative rounded-[9px] shrink-0 w-[31.1px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:1963">
-                  ₹1,499
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3908" data-name="Seat Available">
+                <SeatSeater className="relative shrink-0 size-[30px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3910">
+                  ₹999
                 </p>
               </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:1964" data-name="Seat">
-                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[67.5px] relative rounded-[9px] shrink-0 w-[31.1px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:1967">
-                  ₹1,499
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3911" data-name="Seat Available">
+                <SeatSeater className="relative shrink-0 size-[30px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3913">
+                  ₹999
                 </p>
               </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:1968" data-name="Seat">
-                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[67.5px] relative rounded-[9px] shrink-0 w-[31.1px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:1971">
-                  ₹1,499
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3914" data-name="Seat Available">
+                <SeatSeater className="relative shrink-0 size-[30px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3916">
+                  ₹999
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3917" data-name="Seat Available">
+                <SeatSeater className="relative shrink-0 size-[30px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3919">
+                  ₹999
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3920" data-name="Seat Available">
+                <SeatSeater className="relative shrink-0 size-[30px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3922">
+                  ₹999
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3923" data-name="Seat Available">
+                <SeatSeater className="relative shrink-0 size-[30px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3925">
+                  ₹999
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3926" data-name="Seat Available">
+                <SeatSeater className="relative shrink-0 size-[30px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3928">
+                  ₹999
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3929" data-name="Seat Available">
+                <SeatSeater className="relative shrink-0 size-[30px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3931">
+                  ₹999
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3932" data-name="Seat Available">
+                <SeatSeater className="relative shrink-0 size-[30px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3934">
+                  ₹999
+                </p>
+              </div>
+            </div>
+            <div className="h-px relative shrink-0 w-[12px]" data-node-id="530:3935" data-name="Gap" />
+            <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3936" data-name="Seaters B">
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3937" data-name="Seat Booked male">
+                <SeatSeater className="relative shrink-0 size-[30px]" state="Booked male" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3939">
+                  Sold
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3940" data-name="Seat Available">
+                <SeatSeater className="relative shrink-0 size-[30px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3942">
+                  ₹999
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3943" data-name="Seat Available">
+                <SeatSeater className="relative shrink-0 size-[30px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3945">
+                  ₹999
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3946" data-name="Seat Available">
+                <SeatSeater className="relative shrink-0 size-[30px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3948">
+                  ₹999
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3949" data-name="Seat Women only">
+                <SeatSeater className="relative shrink-0 size-[30px]" state="Women only" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3951">
+                  ₹999
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3952" data-name="Seat Available">
+                <SeatSeater className="relative shrink-0 size-[30px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3954">
+                  ₹999
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3955" data-name="Seat Available">
+                <SeatSeater className="relative shrink-0 size-[30px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3957">
+                  ₹999
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3958" data-name="Seat Available">
+                <SeatSeater className="relative shrink-0 size-[30px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3960">
+                  ₹999
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3961" data-name="Seat Available">
+                <SeatSeater className="relative shrink-0 size-[30px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3963">
+                  ₹999
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3964" data-name="Seat Available">
+                <SeatSeater className="relative shrink-0 size-[30px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3966">
+                  ₹999
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3967" data-name="Seat Available">
+                <SeatSeater className="relative shrink-0 size-[30px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3969">
+                  ₹999
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3970" data-name="Seat Available">
+                <SeatSeater className="relative shrink-0 size-[30px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3972">
+                  ₹999
                 </p>
               </div>
             </div>
           </div>
         </div>
-        <div className="bg-white content-stretch drop-shadow-[0px_8px_12px_rgba(0,0,0,0.07),0px_2px_3px_rgba(0,0,0,0.05)] flex flex-col items-start relative rounded-[14px] shrink-0 w-[182.3px]" data-node-id="201:1974" data-name="Deck">
-          <div className="bg-[#fafafa] content-stretch flex h-[61px] items-center px-[13px] relative rounded-tl-[14px] rounded-tr-[14px] shrink-0 w-full" data-node-id="201:1975" data-name="Deck header">
-            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[18px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="201:1976">
+        <div className="bg-[var(--surface\/panel,#fafafa)] content-stretch flex flex-col gap-[24px] items-start pb-[12px] pt-[21px] px-[4px] relative rounded-[var(--radius\/16,16px)] shrink-0 w-[200px]" data-node-id="530:3973" data-name="Upper deck">
+          <div className="content-stretch flex items-center justify-between pl-[9px] pr-[3px] relative shrink-0 w-full" data-node-id="530:3974" data-name="Deck title">
+            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[18px] not-italic relative shrink-0 text-[13px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="530:3975">
               Upper deck
             </p>
           </div>
-          <div className="content-stretch flex items-start pb-[22px] pt-[20.2px] px-[13px] relative shrink-0 w-full" data-node-id="201:1977" data-name="Seat grid">
-            <div className="content-stretch flex flex-col gap-[0.7px] items-center relative shrink-0" data-node-id="201:1978" data-name="Column">
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:1979" data-name="Seat">
-                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[67.5px] relative rounded-[9px] shrink-0 w-[31.1px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:1982">
-                  ₹1,699
+          <div className="bg-[var(--surface\/default,white)] border border-[var(--border\/divider,#e6e6e6)] border-solid content-stretch flex items-start overflow-clip px-[14.5px] py-[20px] relative rounded-[var(--radius\/12,12px)] shrink-0 w-full" data-node-id="530:3976" data-name="Seat grid">
+            <div className="content-stretch flex flex-col gap-[4.33px] items-center relative shrink-0" data-node-id="530:3977" data-name="Row 1">
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3978" data-name="Seat Available">
+                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[70px] relative rounded-[9px] shrink-0 w-[32px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3980">
+                  ₹1,599
                 </p>
               </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:1983" data-name="Seat">
-                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[67.5px] relative rounded-[9px] shrink-0 w-[31.1px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:1986">
-                  ₹1,699
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3981" data-name="Seat Selected">
+                <SeatSleeper className="bg-[#8ab58c] border-[#4d784b] border-[1.5px] border-solid h-[70px] relative rounded-[9px] shrink-0 w-[32px]" state="Selected" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/seat-price-selected,#458442)] whitespace-nowrap" data-node-id="530:3983">
+                  ₹1,599
                 </p>
               </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:1987" data-name="Seat">
-                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[67.5px] relative rounded-[9px] shrink-0 w-[31.1px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:1990">
-                  ₹1,699
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3984" data-name="Seat Booked">
+                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[70px] relative rounded-[9px] shrink-0 w-[32px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3986">
+                  ₹1,599
                 </p>
               </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:1991" data-name="Seat">
-                <SeatSleeper className="h-[67.5px] relative shrink-0 w-[31.1px]" state="Booked male" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/tertiary,#767680)] text-center whitespace-nowrap" data-node-id="201:1993">
-                  Sold
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3987" data-name="Seat Available">
+                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[70px] relative rounded-[9px] shrink-0 w-[32px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3989">
+                  ₹1,599
                 </p>
               </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:1994" data-name="Seat">
-                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[67.5px] relative rounded-[9px] shrink-0 w-[31.1px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:1997">
-                  ₹1,699
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3990" data-name="Seat Available">
+                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[70px] relative rounded-[9px] shrink-0 w-[32px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3992">
+                  ₹1,599
                 </p>
               </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:1998" data-name="Seat">
-                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[67.5px] relative rounded-[9px] shrink-0 w-[31.1px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:2001">
-                  ₹1,699
-                </p>
-              </div>
-            </div>
-            <div className="h-px relative shrink-0 w-[40.8px]" data-node-id="201:2050" data-name="Aisle" />
-            <div className="content-stretch flex flex-col gap-[0.7px] items-center relative shrink-0" data-node-id="201:2002" data-name="Column">
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:2003" data-name="Seat">
-                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[67.5px] relative rounded-[9px] shrink-0 w-[31.1px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:2006">
-                  ₹1,499
-                </p>
-              </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:2007" data-name="Seat">
-                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[67.5px] relative rounded-[9px] shrink-0 w-[31.1px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:2010">
-                  ₹1,499
-                </p>
-              </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:2011" data-name="Seat">
-                <SeatSleeper className="h-[67.5px] relative shrink-0 w-[31.1px]" state="Booked male" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/tertiary,#767680)] text-center whitespace-nowrap" data-node-id="201:2013">
-                  Sold
-                </p>
-              </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:2014" data-name="Seat">
-                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[67.5px] relative rounded-[9px] shrink-0 w-[31.1px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:2017">
-                  ₹1,499
-                </p>
-              </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:2018" data-name="Seat">
-                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[67.5px] relative rounded-[9px] shrink-0 w-[31.1px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:2021">
-                  ₹1,499
-                </p>
-              </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:2022" data-name="Seat">
-                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[67.5px] relative rounded-[9px] shrink-0 w-[31.1px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:2025">
-                  ₹1,499
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3993" data-name="Seat Available">
+                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[70px] relative rounded-[9px] shrink-0 w-[32px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:3995">
+                  ₹1,599
                 </p>
               </div>
             </div>
-            <div className="h-px relative shrink-0 w-[18px]" data-node-id="201:2051" data-name="Gap" />
-            <div className="content-stretch flex flex-col gap-[0.7px] items-center relative shrink-0" data-node-id="201:2026" data-name="Column">
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:2027" data-name="Seat">
-                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[67.5px] relative rounded-[9px] shrink-0 w-[31.1px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:2030">
-                  ₹1,499
+            <div className="h-px relative shrink-0 w-[59.5px]" data-node-id="530:3996" data-name="Aisle" />
+            <div className="content-stretch flex flex-col gap-[4.33px] items-center relative shrink-0" data-node-id="530:3997" data-name="Row 2">
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:3998" data-name="Seat Booked">
+                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[70px] relative rounded-[9px] shrink-0 w-[32px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:4000">
+                  ₹1,299
                 </p>
               </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:2031" data-name="Seat">
-                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[67.5px] relative rounded-[9px] shrink-0 w-[31.1px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:2034">
-                  ₹1,499
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:4001" data-name="Seat Available">
+                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[70px] relative rounded-[9px] shrink-0 w-[32px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:4003">
+                  ₹1,299
                 </p>
               </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:2035" data-name="Seat">
-                <SeatSleeper className="h-[67.5px] relative shrink-0 w-[31.1px]" state="Booked male" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/tertiary,#767680)] text-center whitespace-nowrap" data-node-id="201:2037">
-                  Sold
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:4004" data-name="Seat Available">
+                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[70px] relative rounded-[9px] shrink-0 w-[32px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:4006">
+                  ₹1,299
                 </p>
               </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:2038" data-name="Seat">
-                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[67.5px] relative rounded-[9px] shrink-0 w-[31.1px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:2041">
-                  ₹1,499
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:4007" data-name="Seat Available">
+                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[70px] relative rounded-[9px] shrink-0 w-[32px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:4009">
+                  ₹1,299
                 </p>
               </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:2042" data-name="Seat">
-                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[67.5px] relative rounded-[9px] shrink-0 w-[31.1px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:2045">
-                  ₹1,499
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:4010" data-name="Seat Available">
+                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[70px] relative rounded-[9px] shrink-0 w-[32px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:4012">
+                  ₹1,299
                 </p>
               </div>
-              <div className="content-stretch flex flex-col gap-[3px] items-center relative shrink-0" data-node-id="201:2046" data-name="Seat">
-                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[67.5px] relative rounded-[9px] shrink-0 w-[31.1px]" />
-                <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="201:2049">
-                  ₹1,499
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:4013" data-name="Seat Available">
+                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[70px] relative rounded-[9px] shrink-0 w-[32px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:4015">
+                  ₹1,299
+                </p>
+              </div>
+            </div>
+            <div className="h-px relative shrink-0 w-[12px]" data-node-id="530:4016" data-name="Gap" />
+            <div className="content-stretch flex flex-col gap-[4.33px] items-center relative shrink-0" data-node-id="530:4017" data-name="Row 3">
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:4018" data-name="Seat Available">
+                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[70px] relative rounded-[9px] shrink-0 w-[32px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:4020">
+                  ₹1,299
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:4021" data-name="Seat Available">
+                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[70px] relative rounded-[9px] shrink-0 w-[32px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:4023">
+                  ₹1,299
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:4024" data-name="Seat Available">
+                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[70px] relative rounded-[9px] shrink-0 w-[32px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:4026">
+                  ₹1,299
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:4027" data-name="Seat Available">
+                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[70px] relative rounded-[9px] shrink-0 w-[32px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:4029">
+                  ₹1,299
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:4030" data-name="Seat Available">
+                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[70px] relative rounded-[9px] shrink-0 w-[32px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:4032">
+                  ₹1,299
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col items-center relative shrink-0" data-node-id="530:4033" data-name="Seat Available">
+                <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[70px] relative rounded-[9px] shrink-0 w-[32px]" />
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="530:4035">
+                  ₹1,299
                 </p>
               </div>
             </div>
@@ -447,10 +477,10 @@ export default function Component03ASeatMapSheetCollapsed() {
               Available
             </p>
             <div className="content-stretch flex h-[94.2px] items-center justify-center relative shrink-0 w-[60px]" data-node-id="210:2006" data-name="Seater">
-              <SeatSeater className="h-[24.9px] relative shrink-0 w-[25.3px]" />
+              <SeatSeater className="relative shrink-0 size-[30px]" />
             </div>
             <div className="content-stretch flex h-[94.2px] items-center justify-center relative shrink-0 w-[64px]" data-node-id="210:2010" data-name="Sleeper">
-              <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[61.7px] relative rounded-[9px] shrink-0 w-[29.6px]" />
+              <SeatSleeper className="bg-white border-[#4d784b] border-[1.5px] border-solid h-[70px] relative rounded-[9px] shrink-0 w-[32px]" />
             </div>
           </div>
           <div className="bg-[#e3e2e8] h-px relative shrink-0 w-full" data-node-id="210:2013" data-name="Divider" />
@@ -459,10 +489,10 @@ export default function Component03ASeatMapSheetCollapsed() {
               Already booked
             </p>
             <div className="content-stretch flex h-[93.9px] items-center justify-center relative shrink-0 w-[60px]" data-node-id="210:2016" data-name="Seater">
-              <SeatSeater className="h-[24.9px] relative shrink-0 w-[25.3px]" state="Booked" />
+              <SeatSeater className="relative shrink-0 size-[30px]" state="Booked" />
             </div>
             <div className="content-stretch flex h-[93.9px] items-center justify-center relative shrink-0 w-[64px]" data-node-id="210:2020" data-name="Sleeper">
-              <SeatSleeper className="bg-[#e6e6e6] h-[61.7px] relative rounded-[9px] shrink-0 w-[29.6px]" state="Booked" />
+              <SeatSleeper className="bg-[#e6e6e6] h-[70px] relative rounded-[9px] shrink-0 w-[32px]" state="Booked" />
             </div>
           </div>
           <div className="bg-[#e3e2e8] h-px relative shrink-0 w-full" data-node-id="210:2022" data-name="Divider" />
@@ -472,10 +502,10 @@ export default function Component03ASeatMapSheetCollapsed() {
               <p className="leading-[20px]">female passenger</p>
             </div>
             <div className="content-stretch flex h-[94.3px] items-center justify-center relative shrink-0 w-[60px]" data-node-id="210:2025" data-name="Seater">
-              <SeatSeater className="h-[24.9px] relative shrink-0 w-[25.3px]" state="Women only" />
+              <SeatSeater className="relative shrink-0 size-[30px]" state="Women only" />
             </div>
             <div className="content-stretch flex h-[94.3px] items-center justify-center relative shrink-0 w-[64px]" data-node-id="210:2031" data-name="Sleeper">
-              <SeatSleeper className="h-[61.7px] relative shrink-0 w-[29.6px]" state="Women only" />
+              <SeatSleeper className="h-[70px] relative shrink-0 w-[32px]" state="Women only" />
             </div>
           </div>
           <div className="bg-[#e3e2e8] h-px relative shrink-0 w-full" data-node-id="210:2036" data-name="Divider" />
@@ -484,10 +514,10 @@ export default function Component03ASeatMapSheetCollapsed() {
               Booked by female passenger
             </p>
             <div className="content-stretch flex h-[92.8px] items-center justify-center relative shrink-0 w-[60px]" data-node-id="210:2039" data-name="Seater">
-              <SeatSeater className="h-[24.9px] relative shrink-0 w-[25.3px]" state="Booked female" />
+              <SeatSeater className="relative shrink-0 size-[30px]" state="Booked female" />
             </div>
             <div className="content-stretch flex h-[92.8px] items-center justify-center relative shrink-0 w-[64px]" data-node-id="210:2045" data-name="Sleeper">
-              <SeatSleeper className="h-[61.7px] relative shrink-0 w-[29.6px]" state="Booked female" />
+              <SeatSleeper className="h-[70px] relative shrink-0 w-[32px]" state="Booked female" />
             </div>
           </div>
           <div className="bg-[#e3e2e8] h-px relative shrink-0 w-full" data-node-id="210:2049" data-name="Divider" />
@@ -497,10 +527,10 @@ export default function Component03ASeatMapSheetCollapsed() {
               <p className="leading-[20px]">male passenger</p>
             </div>
             <div className="content-stretch flex h-[93.9px] items-center justify-center relative shrink-0 w-[60px]" data-node-id="210:2052" data-name="Seater">
-              <SeatSeater className="h-[24.9px] relative shrink-0 w-[25.3px]" state="Men only" />
+              <SeatSeater className="relative shrink-0 size-[30px]" state="Men only" />
             </div>
             <div className="content-stretch flex h-[93.9px] items-center justify-center relative shrink-0 w-[64px]" data-node-id="210:2058" data-name="Sleeper">
-              <SeatSleeper className="h-[61.7px] relative shrink-0 w-[29.6px]" state="Men only" />
+              <SeatSleeper className="h-[70px] relative shrink-0 w-[32px]" state="Men only" />
             </div>
           </div>
           <div className="bg-[#e3e2e8] h-px relative shrink-0 w-full" data-node-id="210:2063" data-name="Divider" />
@@ -509,10 +539,10 @@ export default function Component03ASeatMapSheetCollapsed() {
               Booked by male passenger
             </p>
             <div className="content-stretch flex h-[94.6px] items-center justify-center relative shrink-0 w-[60px]" data-node-id="210:2066" data-name="Seater">
-              <SeatSeater className="h-[24.9px] relative shrink-0 w-[25.3px]" state="Booked male" />
+              <SeatSeater className="relative shrink-0 size-[30px]" state="Booked male" />
             </div>
             <div className="content-stretch flex h-[94.6px] items-center justify-center relative shrink-0 w-[64px]" data-node-id="210:2072" data-name="Sleeper">
-              <SeatSleeper className="h-[61.7px] relative shrink-0 w-[29.6px]" state="Booked male" />
+              <SeatSleeper className="h-[70px] relative shrink-0 w-[32px]" state="Booked male" />
             </div>
           </div>
         </div>

@@ -6249,3 +6249,56 @@ Severity:  major
 Layer:     things
 Action:    fixed — the last declared drift is closed
 
+
+CRITIQUE · 2026-09-06 · molades-build · Source: user
+**The same seat component was drawn at four different sizes.** He spotted it on the frames, not in
+the code: *"seat component doesnt look exactly same one is small one is large"*. I had answered a
+different question first — which bus each frame showed — so this is his correction, and measuring
+settled it in one call.
+
+The masters are **`Seat / Seater` 30×30** and **`Seat / Sleeper` 32×70**.
+
+| Frame | Sleeper | Seater | At master |
+|---|---|---|---|
+| 03 | 32×70 ×24 | 30×30 ×24 | all |
+| 08a | 32×70 ×24 | 30×30 ×24 | all |
+| **03a** | **31×68 ×30 and 30×62 ×6** | **25×25 ×18** | **none** |
+
+Not one instance in 03a was at master size, and its sleepers came in **two** sizes on one screen.
+The seater was 25×25 against a 30×30 master — 83%, which is exactly the small-versus-large he saw.
+
+**Cause, and it is already in §20.** 03a's seat map was traced from a long screenshot of the real
+app and later converted from crops into components. The components were dropped onto the traced
+background and **resized to fit the image underneath** instead of being placed at master size.
+Three ad-hoc sizes in one frame is the signature of that: each seat nudged to match what was behind
+it. The legend under *Know your seat types* was traced the same way and carried the same two wrong
+sizes — a legend showing the seat smaller than the seat.
+
+**One fix for two defects.** 03a also showed a **different bus** — 17 seat columns against 03's 11,
+fares of ₹1,699/₹1,299/₹1,499 against ₹1,599/₹999/₹1,299 — while being named, and treated in §18's
+flow map, as a *state of 03*. Replacing its `Decks` with a clone of 03's restored the bus, the
+fares and master sizing together; resizing in place would only have overlapped the columns, because
+the grid was spaced around the smaller seats. The twelve legend samples were reset separately.
+
+**03b is not part of this** — it has no seat instances at all. Its 4,698px is the full bottom sheet.
+
+Verified in both places: zero off-master seat classes in any screen file, and 03a diffs at **4.39%**,
+the lowest number of the session. **The general shape: a component placed onto a traced backdrop
+inherits the backdrop's geometry, not its own.** Nothing warns you — it still reports as an instance
+of the right component.
+Severity:  major
+Layer:     looks
+Action:    fixed
+
+DECISION · 2026-09-06 · molades-build
+**`build/pull.py` makes steps 2 and 3 of the sync loop repeatable.** Re-pulling a screen was being
+done by hand each time: find the code block in the saved MCP result, then point every Figma asset
+URL at a local file before the URL expires in seven days. The script does both, and **dedupes assets
+by content hash** — a re-pull returns fresh UUIDs for identical bytes, so without it `assets/` grows
+a new copy of the same icon on every pull. 03a's re-pull downloaded 15 assets and added **none**.
+It also fails loudly if any `figma.com/api` URL survives the rewrite, which is the failure that
+would look perfect for a week and then go blank.
+Severity:  minor
+Layer:     steps
+Action:    added
+
