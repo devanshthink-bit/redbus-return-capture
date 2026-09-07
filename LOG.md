@@ -6211,3 +6211,41 @@ Severity:  minor
 Layer:     steps
 Action:    fixed
 
+
+CHANGE · 2026-09-06 · molades-build · Source: user
+**06b · Your return · day cannot change — the trap state finally has a screen.** The last declared
+drift is closed. v4's most important session fix — the one that catches what Sai walked into —
+existed in the build and in none of the 23 frames.
+
+**It goes in the Screens section, not States.** The build reads the Screens section only, so a frame
+in States would have been Figma-only and the drift would have survived in a new form. Lettered
+variants are already the convention there (03a/03b, 05a/05b, 06a), so 06b sits beside the state it
+varies and 07 shifts right.
+
+**It earns a frame by §18's own rule** — *a state gets more than one frame only where the design
+actually changes* — and six things change: the day's tag becomes a warning pill, its sub-line turns
+amber and says *cannot change this date later*, the lead states it, the rules card is replaced
+wholesale, the bar note names the traveller's own answer back to them, and the primary button stops
+saying **Review trip** and says **Book a fixed date**.
+
+**The window had to change with it.** 06 and 06a show 11–17 Sep, where every day has at least one
+changeable bus — which is why I had wrongly called the state "not applicable". 06b shows **18–21
+Sep**, the window from the v4 render, where the cheapest day is the one that cannot move. Every
+string, including the bus fold, was read out of the running build: the ITC 23:10 at ₹770, seat U3
+because U4 is taken, and *All 2 buses on Mon, 21 Sep*. **The cheapest service on the route is the one
+without the promise — that is the whole trade-off the frame exists to show.**
+
+Registered in the four places that had to know: `src/render.tsx`, `build.mjs` (the count guard now
+expects 24, plus a forward hotspot), and `HIFI_NAMES` in the root viewer, where its rail label is
+**Day fixed**. Diffed at **7.76%**, inside the baseline; 24 screens, 24 rail rows, no JS errors, and
+all seven lo-fi suites still pass.
+
+**Two traps repeated from earlier today, both caught by looking at the render rather than the code.**
+Renaming a cloned card does not move what marks it as chosen — the selection ring stayed on the card
+that used to be Thu 17 — and a bar with a FIXED height does not grow for a second line, it just
+overlaps the row underneath. That is the third and fourth time the fixed-height trap has appeared in
+one session, on frames 08, 06, 06a and now 06b.
+Severity:  major
+Layer:     things
+Action:    fixed — the last declared drift is closed
+

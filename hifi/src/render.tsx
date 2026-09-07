@@ -9,6 +9,7 @@ import S05A from "./screens/05a";
 import S05B from "./screens/05b";
 import S06 from "./screens/06";
 import S06A from "./screens/06a";
+import S06B from "./screens/06b";
 import S07 from "./screens/07";
 import S08 from "./screens/08";
 import S08A from "./screens/08a";
@@ -34,6 +35,7 @@ export const SCREENS = [
   { id: "05b", name: '05b · Return · one day picked', C: S05B },
   { id: "06", name: '06 · Your return · pick a day', C: S06 },
   { id: "06a", name: '06a · Your return · day chosen', C: S06A },
+  { id: "06b", name: '06b · Your return · day cannot change', C: S06B },
   { id: "07", name: '07 · Choose your bus', C: S07 },
   { id: "08", name: '08 · Review your trip', C: S08 },
   { id: "08a", name: '08a · Return seat', C: S08A },
