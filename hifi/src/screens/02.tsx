@@ -391,9 +391,9 @@ export default function Component02OutboundBusList() {
         <div className="bg-[var(--surface\/page,#f2f2f7)] h-px relative shrink-0 w-full" data-node-id="35:115" data-name="Divider" />
       </div>
       <div className="bg-[var(--surface\/default,white)] content-stretch flex gap-[8px] items-start overflow-clip pl-[16px] py-[21px] relative shrink-0 w-full" data-node-id="35:116" data-name="Promo strip">
-        <ArtPromoPrimo className="h-[98px] relative shrink-0 w-[129.67px]" />
-        <ArtPromoFreeCancellation className="h-[98px] relative shrink-0 w-[129.33px]" />
-        <ArtPromoFlexiTicket className="h-[98px] relative shrink-0 w-[110.33px]" />
+        <ArtPromoPrimo className="h-[98px] overflow-clip relative rounded-[12px] shrink-0 w-[129.67px]" />
+        <ArtPromoFreeCancellation className="h-[98px] overflow-clip relative rounded-[12px] shrink-0 w-[129.33px]" />
+        <ArtPromoFlexiTicket className="h-[98px] overflow-clip relative rounded-[12px] shrink-0 w-[110.33px]" />
       </div>
       <div className="bg-[var(--border\/divider,#e6e6e6)] h-px relative shrink-0 w-full" data-node-id="35:118" data-name="Divider" />
       <div className="bg-[var(--surface\/default,white)] content-stretch flex flex-col gap-[10px] items-start pb-[11px] pt-[13px] px-[16px] relative shrink-0 w-full" data-node-id="35:119" data-name="Filters">
@@ -533,7 +533,7 @@ export default function Component02OutboundBusList() {
               <div className="content-stretch flex flex-col items-end overflow-clip relative shrink-0" data-node-id="I183:1503;39:117" data-name="Fare column">
                 <div className="content-stretch flex gap-[8px] items-center justify-end relative shrink-0 w-full" data-node-id="I183:1503;179:1447" data-name="Price row">
                   <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="I183:1503;39:118">
-                    ₹599
+                    ₹999
                   </p>
                 </div>
                 <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="I183:1503;39:119">

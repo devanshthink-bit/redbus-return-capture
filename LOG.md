@@ -6432,3 +6432,38 @@ Severity:  major
 Layer:     steps
 Action:    fixed
 
+
+CHANGE · 2026-09-06 · molades-build · Source: user
+**The outbound bus is ₹999, not ₹599.** He caught it against the live app. The card is `183:1503` —
+23:55 → 08:00, 40 Seats (11 Single), Laxmi Holidays, 4.5 from 200 — the bus this whole case study
+books, and the one screen 03 draws the seat map for.
+
+**₹599 matched nothing.** 03's seat map runs **₹999 / ₹1,299 / ₹1,599**, so *"₹999 Onwards"* is the
+number that screen already implies: the cheapest seat on the bus. There are four other Laxmi cards on
+02 at other prices and times; only this one is the trip.
+
+CHANGE · 2026-09-06 · molades-build · Source: user
+**The promo banners were square-cornered crops, so they read as slices of a screenshot.** *"all these
+banners on top are cut around the edges"*. All three — Primo, Free Cancellation, FlexiTicket — are
+image fills with `cornerRadius: 0`, where the real app's are rounded cards. Set to **12px with
+clipping**, on the component masters so every use gets it.
+
+**The third banner is still cut at the right edge, and that is faithful.** The strip is a horizontal
+rail in the real app and FlexiTicket peeks past the screen there too — his own screenshot shows it.
+Left alone deliberately; if he wants all three whole, the three cards have to shrink to about 108
+wide each and the design stops matching the app.
+
+DECISION · 2026-09-06 · molades-build · Source: user
+**`onlyOne()` — the pattern for "just this one thing is tappable".** *"In this screen, only this
+Lakshmi holiday card should be tapable to go to the next screen."* Rather than wire 02 by hand, the
+shell gains a helper: name a screen and a selector, and every other tap on that screen blinks the
+target instead of doing nothing. It is what a Figma prototype does when you tap a region with no
+connection on it.
+
+**Back is deliberately exempt.** The handler lets any click inside `.hf-back` through untouched —
+gating the way forward must not also trap somebody on the screen. The next screens he describes can
+be wired with one line each.
+Severity:  minor
+Layer:     moments
+Action:    done
+

@@ -357,6 +357,27 @@
     }, true);
   })();
 
+  // 6 · screens where exactly one thing may be tapped. Everything else blinks it instead, which is
+  //     what a Figma prototype does when you tap a region with no connection on it. Back is left
+  //     alone -- gating the way forward must not also trap you on the screen.
+  function onlyOne(screenId, sel, onHit){
+    var i = ORDER.indexOf(screenId); if (i < 0) return;
+    var sec = screens[i];
+    var t = sec.querySelector(sel);
+    if (!t) { console.warn('onlyOne: no target ' + sel + ' on ' + screenId); return; }
+    sec.addEventListener('click', function(e){
+      if (e.target.closest && e.target.closest('.hf-back')) return;   // Back still works
+      e.preventDefault(); e.stopPropagation();
+      if (t.contains(e.target)) { onHit(i); return; }
+      t.classList.remove('hf-blink'); void t.offsetWidth; t.classList.add('hf-blink');
+      if (t.scrollIntoView) t.scrollIntoView({ block: 'nearest' });
+    }, true);
+  }
+
+  // 02 · the outbound list. Only the bus this case study books goes anywhere: Laxmi Holidays,
+  //      23:55, the one whose seat map screen 03 draws.
+  onlyOne('02', '[data-node-id="183:1503"]', function(i){ go(nextOf(i)); });
+
   fit();
   window.addEventListener('resize', fit);
 })();
