@@ -3088,7 +3088,11 @@ function setFidelity(f){
     if(!hifiLoaded){
       document.getElementById('hifirail').innerHTML =
         '<p class="legacynote" style="display:block">Loading the hi-fi screens&hellip;</p>';
-      document.getElementById('hififrame').src = 'hifi/app.html?embed';
+      /* The build's URL never changes but its contents change on every rebuild, and GitHub
+         Pages serves it with max-age=600. A hard refresh of THIS page does not always make
+         the browser revalidate the iframe's own document, so a stale hi-fi survived one.
+         The stamp makes each page load fetch the current build. */
+      document.getElementById('hififrame').src = 'hifi/app.html?embed&t=' + Date.now();
       hifiLoaded = true;
       pollHifiRail(80);
     }

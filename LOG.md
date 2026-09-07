@@ -6953,3 +6953,25 @@ was meant to take 01 from 3518.92 to 3519 so the tab bar's bottom inset was a wh
 returned **3504** — the frame's hug height — quietly losing 15pt off the bottom of Home. Set
 `primaryAxisSizingMode = 'FIXED'` first, and read the height back before trusting it. 01 is 3519
 now, 0.08pt off where it started, and that is deliberate.
+
+CHANGE  ·  2026-09-08  ·  molades-none  · Source: user
+**The viewer now busts the hi-fi build's cache on every page load.** Devansh: *"cant see new nav
+on prototype hard refreshed still"*. The deployed site was correct — I read the tab bar out of the
+live page's DOM and it had `bottom:21px`, `height:60px`, `gap:16px`, `justify-content:center` and
+the Pill — but his browser was still showing the old one.
+
+The cause is that `hifi/app.html` **never changes its URL** while its contents change on every
+rebuild, and GitHub Pages serves it `max-age=600`. A hard refresh reloads the page you are on; it
+does not reliably make the browser revalidate a **document loaded into an iframe**. So the shell
+was fetching a stale build and there was nothing on screen to say so.
+
+The iframe src is now `hifi/app.html?embed&t=' + Date.now()`. It costs one 877 KB fetch per page
+load — the assets and the stylesheet keep their own URLs and stay cached — and it makes it
+impossible for anyone he sends the link to to see a build that is not the current one.
+
+LEARNED  ·  2026-09-08  ·  molades-none
+**"It is deployed" and "they can see it" are two different checks.** `curl` + `md5` against the
+published file proves the server has the new bytes, which is the check `CLAUDE.md` asks for, and it
+passed on both commits. It says nothing about what a browser that already has the old bytes will
+show. Anything loaded at a fixed URL that changes contents — an iframe document above all — needs
+its URL to change too, or the deploy check is answering a question nobody asked.
