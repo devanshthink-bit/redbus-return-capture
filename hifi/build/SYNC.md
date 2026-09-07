@@ -22,15 +22,25 @@ that output is rewriting asset URLs. Hand-editing one puts it silently out of sy
 it came from, which is the exact failure this whole document exists to stop.
 
 ```bash
-# get_design_context -> a json blob -> the code block
-python3 build/extract.py <mcp-output.json> src/screens/<NN>.tsx
+# get_design_context saves a large result to a file; pull.py does the rest
+python3 build/pull.py <mcp-result.json> <NN>
 ```
+
+`pull.py` extracts the code block **and** rewrites every Figma asset URL to a local file, deduping
+by content hash — a re-pull returns fresh UUIDs for identical bytes, so without that `assets/`
+grows a new copy of the same icon every time. It exits non-zero if any `figma.com/api` URL survives,
+which is the failure that looks perfect for seven days and then goes blank.
+(`build/extract.py` is the older code-only half; `pull.py` supersedes it.)
 
 ### 3 · Rewrite the asset URLs
 
-Figma's MCP asset URLs expire after **7 days**. Every `http…figma…` URL in the pulled code must
-become a local `assets/…` path. A screen pointing at a live Figma URL looks perfect for a week and
-then goes blank.
+Done by `pull.py` in step 2. Figma's MCP asset URLs expire after **7 days**.
+
+**One trap the diff will not catch:** a component dropped onto a traced screenshot inherits the
+**backdrop's** geometry, not its own. 03a's seats sat at 25×25 and 31×68 against masters of 30×30
+and 32×70 — resized to fit the image behind them — and still reported as instances of the right
+component. When a frame was ever traced from a crop, measure its instances against the master
+before trusting it.
 
 ### 4 · Rebuild
 
