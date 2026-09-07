@@ -6358,3 +6358,43 @@ Severity:  minor
 Layer:     things
 Action:    done
 
+
+DECISION · 2026-09-06 · molades-build · Source: user
+**The hi-fi stops being a click-through and starts being a prototype, screen by screen.** His
+instruction: *"prototype is not a working prototype properly… implement it properly so that user
+using this prototype can feel how real app would work"*, starting with Home and continuing screen by
+screen. Also: *"Whenever a user taps on something else, just like in a Figma prototype, blink the
+correct place where he should tap"*, and **nothing else on Home is tappable**.
+
+**Home now behaves as a form.** From, To and Date start **empty**; tapping each fills it — ISBT
+Kashmiri Gate, Delhi / Nainital / Thu 10 Sep. The date opens a real calendar. The *Booking for women*
+toggle flips both ways at any point. **Search buses only works once all three are filled**; before
+that it blinks the field that is due. Tapping anywhere else blinks the field that is due.
+
+**Where this lives, and why it is not a hand-edit of a generated screen.** `src/screens/*.tsx` stay
+generated; the behaviour is in **`build/shell.html`**, which has always been the hand-authored half —
+it already owns the flow map, the back control and the rail. The flow map can only say *"this element
+goes forward"*, which cannot express *fill this, then that, then open the calendar*. So Home and the
+calendar are driven by a module there instead, on **capture-phase** listeners so they run before the
+hotspot handlers `markHot()` attached and can stop them.
+
+**`01a · Select date` is a real Figma frame, not an overlay invented in code.** It carries a dimmed
+copy of Home behind the sheet, so it stands alone as a screen and the prototype navigates
+01 → 01a → 01 exactly as a Figma prototype would. Built to his screenshot of the live app: MON–SUN
+header, September 2026 with 1 on a Tuesday and **5 as today's black pill**, weekends in red, October
+below with 1 on a Thursday. On the sheet only **10 September** and the close button do anything;
+any other tap blinks 10 Sep. Diffs at **2.60%**, the closest number in the file.
+
+**One thing Figma does not have, declared rather than left implicit:** the **empty** Home. Figma's 01
+is the filled screen, and the prototype's opening state exists only in the build. Rather than let
+that quietly break 01's parity number, `?filled` skips the clearing and `shot.sh` passes it, so the
+diff compares like with like — 01 still reads 11.96%, exactly where it was. **If the empty state
+should be a frame too, it is 01's own state and would be `01b`.**
+
+Verified by driving it: 19 assertions — starts empty, taps fill in order, tapping ahead does nothing,
+Search is inert until the form is complete, the toggle flips both ways, a wrong day blinks 10 Sep,
+25 screens, 25 rail rows, no JS errors.
+Severity:  major
+Layer:     moments
+Action:    Home done; the remaining screens are next, on his instruction
+

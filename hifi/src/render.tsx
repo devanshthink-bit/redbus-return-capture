@@ -1,4 +1,5 @@
 import S01 from "./screens/01";
+import S01A from "./screens/01a";
 import S02 from "./screens/02";
 import S03 from "./screens/03";
 import S03A from "./screens/03a";
@@ -25,6 +26,7 @@ import S16 from "./screens/16";
 
 export const SCREENS = [
   { id: "01", name: '01 · Home', C: S01 },
+  { id: "01a", name: '01a · Select date', C: S01A },
   { id: "02", name: '02 · Outbound bus list', C: S02 },
   { id: "03", name: '03 · Outbound seat map', C: S03 },
   { id: "03a", name: '03a · Seat map · sheet collapsed', C: S03A },

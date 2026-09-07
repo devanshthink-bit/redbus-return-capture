@@ -29,5 +29,5 @@ io.open(dst, 'w', encoding='utf-8').write(s.replace('</head>', strip, 1))
 PY
 "$CHROME" --headless=new --disable-gpu --hide-scrollbars --force-device-scale-factor=1 \
   --window-size=390,$H --virtual-time-budget=10000 \
-  --screenshot="$DIR/build/shots/$ID.png" "file://$TMP?screen=$ID" 2>/dev/null
+  --screenshot="$DIR/build/shots/$ID.png" "file://$TMP?screen=$ID&filled" 2>/dev/null
 echo "shot $ID -> 390x$H"

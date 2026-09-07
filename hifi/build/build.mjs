@@ -25,7 +25,7 @@ await build({
 });
 
 const { SCREENS } = require(out);
-if (SCREENS.length !== 24) throw new Error(`expected 24 screens, got ${SCREENS.length}`);
+if (SCREENS.length !== 25) throw new Error(`expected 25 screens, got ${SCREENS.length}`);
 
 // 2 · render each frame to static markup
 const rendered = SCREENS.map(({ id, name, C }) => {
@@ -41,6 +41,7 @@ const rendered = SCREENS.map(({ id, name, C }) => {
 //     arranged in the Figma section. Back is the chevron / close on the screen.
 const FORWARD = {
   '01':  ['[data-name="Button / Primary"]'],
+  '01a': ['[data-name="Sep 10"]'],
   '02':  ['[data-name="Card / Bus"]'],
   '03':  ['[data-name="Button / Primary"]'],
   '03a': ['[data-name="Bottom sheet · collapsed"]'],
