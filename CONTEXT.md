@@ -2027,9 +2027,23 @@ writing the temp page outside `hifi/` — where `app.css` and `assets/` do not r
 screen as unstyled text and still read 9.9%. **Pull the Figma reference after the last Figma edit**,
 not before; diffing a new build against an old render reads as a build defect.
 
-**Carried over on 6 Sep**, all seven diffed inside the baseline: 05 · 05a · 05b (mode toggle, the
-new rules, and the range **ends** in the accent), 06 · 06a (the narrowing heading), 08 (what
-declining Free Cancellation gives you), 11 (Change day inside the ticket card). 12 was already right.
+**Carried over on 6 Sep**, all diffed inside the baseline: 05 · 05a · 05b (mode toggle, the new
+rules, and the range **ends** in the accent), 06 · 06a (the narrowing heading, and the bar note
+Figma never had), 08 (what declining Free Cancellation gives you), 11 (Change day inside the ticket
+card). 12 was already right.
+
+**The build is 24 screens now, not 23.** `06b · Your return · day cannot change` is new — the trap
+state, which existed in v4 and in none of the frames. It lives in **Screens**, not States, because
+the build reads the Screens section only and a States frame would have left the drift in place under
+another name. It shows the **18–21 Sep** window, where the cheapest day is the one that cannot move;
+06 and 06a keep 11–17, where every day has a changeable bus. Adding a screen means four edits:
+`src/render.tsx`, the count guard and forward hotspot in `build.mjs`, and `HIFI_NAMES` in the root
+viewer.
+
+**The fixed-height bar trap appeared four times in one session** — frames 08, 06, 06a, 06b. A frame
+whose height is FIXED does not grow for a new child, it just overlaps what is under it. Check
+`primaryAxisSizingMode` before adding anything to a bar or a card. And renaming a cloned card does
+not move the selection ring: that is a stroke on the old node.
 
 ### How close it actually is
 
