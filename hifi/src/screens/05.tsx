@@ -110,32 +110,6 @@ function CalendarDay({ className, day = "10", fare = "₹910", noDateChange = fa
   );
 }
 
-type RowChoiceProps = {
-  className?: string;
-  detail?: string;
-  title?: string;
-};
-
-function RowChoice({ className, detail = "Pick the day you are coming back.", title = "I know my date" }: RowChoiceProps) {
-  return (
-    <div className={className || "content-stretch flex flex-col items-start relative w-[358px]"} data-node-id="607:3981" data-name="Row / Choice">
-      <div className="bg-white border border-[#d1d1d1] border-solid content-stretch flex gap-[12px] items-center p-[16px] relative rounded-[12px] shrink-0 w-full" data-node-id="607:3975" data-name="Row / Choice">
-        <div className="[word-break:break-word] bg-white content-stretch flex flex-[1_0_0] flex-col gap-[4px] items-start leading-[20px] min-w-px not-italic overflow-clip relative" data-node-id="607:3976" data-name="Text">
-          <p className="font-['Inter:Bold'] font-bold relative shrink-0 text-[#1d1d1d] text-[16px] w-full" data-node-id="607:3977">
-            {title}
-          </p>
-          <p className="font-['Inter:Regular'] font-normal relative shrink-0 text-[#636363] text-[14px] w-full" data-node-id="607:3978">
-            {detail}
-          </p>
-        </div>
-        <div className="border-[#767680] border-[1.5px] border-solid content-stretch flex items-center justify-center overflow-clip relative rounded-[11px] shrink-0 size-[22px]" data-node-id="607:3979" data-name="Radio">
-          <div className="bg-white relative rounded-[4px] shrink-0 size-[8px]" data-node-id="607:3980" data-name="Dot" />
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function IconChevronLeft({ className }: { className?: string }) {
   return (
     <div className={className || "relative size-[20px]"} data-node-id="33:93" data-name="Icon / Chevron Left">
@@ -186,10 +160,21 @@ export default function Component05ReturnPickYourDays() {
             When can you travel back?
           </p>
         </div>
-        <div className="content-stretch flex flex-col gap-[12px] items-start overflow-clip relative shrink-0 w-full" data-node-id="608:3974" data-name="Mode options">
-          <RowChoice className="content-stretch flex flex-col items-start relative shrink-0 w-full" />
-          <RowChoice className="content-stretch flex flex-col items-start relative shrink-0 w-full" detail="Mark a range. We book one day inside it." title="I’m not sure yet" />
+        <div className="bg-[#ededf2] border border-[#e4e4e4] border-solid content-stretch flex gap-[4px] items-start overflow-clip p-[4px] relative rounded-[24px] shrink-0 w-full" data-node-id="612:4010" data-name="Mode toggle">
+          <div className="content-stretch flex flex-[1_0_0] items-center justify-center min-w-px overflow-clip py-[11px] relative rounded-[20px]" data-node-id="612:4011" data-name="Segment / I know my date">
+            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[14px] text-center whitespace-nowrap" data-node-id="612:4012">
+              I know my date
+            </p>
+          </div>
+          <div className="content-stretch flex flex-[1_0_0] items-center justify-center min-w-px overflow-clip py-[11px] relative rounded-[20px]" data-node-id="612:4013" data-name="Segment / I’m not sure yet">
+            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[14px] text-center whitespace-nowrap" data-node-id="612:4014">
+              I’m not sure yet
+            </p>
+          </div>
         </div>
+        <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="612:4015">
+          Pick your day. Or mark a range, if your plans could still move.
+        </p>
         <div className="bg-white content-stretch flex flex-col items-start overflow-clip px-[20px] py-[16px] relative rounded-[16px] shrink-0 w-full" data-node-id="345:2709" data-name="Calendar">
           <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[16px] whitespace-nowrap" data-node-id="345:2710">
             September 2026
@@ -328,7 +313,7 @@ export default function Component05ReturnPickYourDays() {
             Skip
           </p>
         </div>
-        <ButtonPrimary className="bg-[var(--surface\/accent,#c54646)] content-stretch cursor-pointer drop-shadow-[0px_2px_3px_rgba(0,0,0,0.1)] flex flex-[1_0_0] gap-[10px] h-[48px] items-center justify-center min-w-px px-[20px] relative rounded-[var(--radius\/full,999px)]" label="Continue" showIcon={false} />
+        <ButtonPrimary className="bg-[var(--surface\/accent,#c54646)] content-stretch cursor-pointer drop-shadow-[0px_2px_3px_rgba(0,0,0,0.1)] flex flex-[1_0_0] gap-[10px] h-[48px] items-center justify-center min-w-px opacity-40 px-[20px] relative rounded-[var(--radius\/full,999px)]" label="Continue" showIcon={false} />
       </div>
     </div>
   );

@@ -872,24 +872,30 @@ not designed the complete screen?"* Three things were wrong at once.
   is coming, so it has to be the size of that list. Five cards now, in the build as well as in
   Figma, in both places that have one.
 
-### The return question is redBus's own chooser (8 Sep)
+### The return question, and what it took to make it answerable (8 Sep)
 
-`05`, `05a` and `05b` ask *When can you travel back?* with **two `Row / Choice` cards**, not a
-segmented control: white, 1px `#D1D1D1`, radius 12, bold title over a grey line, a 22pt radio on
-the right, selected = the ring fills `#C54646` and its white dot reads. That is redBus's own
-pattern, measured off `IMG_5203`/`IMG_5204`. Three matching corrections went with it:
+`05`, `05a` and `05b` ask *When can you travel back?* with a **segmented control** — `Mode toggle`,
+two `Segment / …` halves in a `#EDEDF2` track. **Neither half is selected until it is answered**,
+because 65.2% of travellers were unsure and a default would default against them; until then
+Continue sits at 40%.
 
-- **No dimmed primary.** A scan of all 85 captures for a wide pale-red control returns zero, so
-  Continue is solid red and the shell **blinks the question** when it is tapped with no answer.
+I replaced this with redBus's own two-card-and-radio pattern (its *Change of plans?* sheet) and
+**Devansh reversed it**: *"why did you change the toggle to this????? it was better."* The cards
+were better evidenced and worse in place — on a screen that already carries a question, a calendar
+and a rules card, two more cards is a third card layer. The segmented control is the design; the
+`Row / Choice` component stays on the Components page, unused.
+
+**Both the toggle and the calendar are live in the build.** Tapping a half selects it and lights
+Continue; tapping a day then goes forward — *I know my date* to 05b, *I'm not sure yet* to 05a.
+A day tapped before the question is answered blinks the question instead, because the answer is
+what a tap on a day means. On 05a and 05b, which already hold a day, a day tap blinks Continue.
+18–19 days are tappable per frame: past, sold-out and the outbound day are not.
+
+Two corrections from the same pass did survive, and both came off the captures:
+
 - **`text/weekend` `#BC361C`** on bookable Saturdays and Sundays, from `IMG_5223`. A different red
-  from the button's `#C54646`, and identical across all four week rows of the real picker.
+  from the button's `#C54646`, identical across all four week rows of the real picker.
 - **Content clearance 135 → 115** under the 99pt bar.
-
-The cards are live in the build: tapping one moves the ring, and on 05 the answer routes Continue —
-*I know my date* to 05b, *I'm not sure yet* to 05a. The calendar itself is still walk-only.
-
-**v4 has not been changed to match**, and that is declared rather than decided: the lo-fi still uses
-a segmented control and a disabled Continue. See the NOTE in `LOG.md` under 2026-09-08.
 
 The buttons on every other blank and error state were checked against the running build and match:
 S2 *Show all returns · Pick other days*, S7 *Try again · Continue without a return*, S3 *Pick another

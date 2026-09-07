@@ -7029,3 +7029,45 @@ above was driven by the real app's patterns, so it belongs to the hi-fi. The lo-
 `.segbtn` and its `cont.disabled` are untouched, and the two prototypes now ask the same question
 in two different shapes. That is a decision for Devansh, not one to make silently: if the option
 cards are right, v4's calendar screen wants the same treatment.
+
+DECISION  ·  2026-09-08  ·  molades-none  · Source: user
+**The mode toggle goes back to the segmented control, and the option cards are reversed out.**
+Devansh: *"why did you change the toggle to this????? it was better. revert to that design and make
+it working"*.
+
+The cards were the better-evidenced pattern — they are exactly what redBus's own *Change of plans?*
+sheet does — and they were the wrong move here. Two reasons, and the second is the one I missed:
+
+1. **He did not ask for the question to be redesigned.** He asked why it was not tappable. I
+   answered a different question and shipped a redesign inside a bug fix.
+2. **The pattern was right for its own screen, not for this one.** redBus uses those cards in a
+   sheet that contains nothing else. Screen 05 already carries a question, a calendar card and a
+   rules card; two more bordered cards made a third card layer between the question and the answer.
+   A segmented control is one control, and it sits under the question where the answer belongs.
+
+`Row / Choice` stays on the Components page. It is a correct capture of a real redBus pattern and
+it will be right somewhere — just not stacked on a screen that is already three cards deep.
+
+CHANGE  ·  2026-09-08  ·  molades-none  · Source: user
+**The toggle and the calendar are both live now.** *"right now i am not able to tap of calender
+dates or toggle etc"*. Everything on 05/05a/05b was a picture.
+
+- **The toggle answers.** Tapping a half fills it white with the accent label, clears the other, and
+  lights Continue from 40% to solid. Nothing is selected on landing — that is the screen's own
+  no-default rule, not an oversight.
+- **The calendar answers.** 18 days on 05 are tappable (19 on 05a): past, sold-out and the outbound
+  day are excluded by the `calendar/unavailable` token they share, and the outbound by its `Out`
+  label. Tapping one goes forward on the answer — *I know my date* to 05b, *I'm not sure yet* to
+  05a. Tapping a day **before** answering blinks the question rather than guessing, because the
+  answer is what decides what a day tap means.
+- On 05a and 05b, which already hold a day, a day tap blinks Continue instead.
+
+Verified by clicking in a headless browser: both routes, the no-answer case on a day and on
+Continue, and the walk out of 05a and 05b. Diffs 05 **5.26%**, 05a **8.40%**, 05b **8.06%**.
+
+LEARNED  ·  2026-09-08  ·  molades-none
+**A bug report is not an invitation to redesign.** "It doesn't look like redBus" was three
+sentences into a message whose first two were about a blank band and a dead control. I took the
+third as a brief and rebuilt the question. The evidence I gathered was real and the change was
+still wrong, because the screen it landed on was not the screen the evidence came from. Fix what
+was reported; propose the redesign separately and let him choose.
