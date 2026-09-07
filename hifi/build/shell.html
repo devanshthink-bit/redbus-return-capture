@@ -238,9 +238,11 @@
     // offsetHeight, not getBoundingClientRect: the phone is scaled by a transform, so the rect is
     // in RENDERED pixels while padding is set in CSS pixels. Measuring the rect under-padded by the
     // scale factor and left the last section 13px under the sheet.
+    // Measure from the element's TOP to the bottom of the viewport, not its own height: the tab
+    // bar floats 21px clear of the bottom edge, so its height alone under-pads by that inset.
     var tall = 0;
     Array.prototype.forEach.call(layer.children, function(el){
-      var h = el.offsetHeight || 0;
+      var h = (layer.offsetHeight || 0) - (el.offsetTop || 0);
       if (h > tall) tall = h;
     });
     if (tall > 0) { root.style.paddingBottom = Math.round(tall + 16) + 'px'; sec.dataset.cleared = '1'; }

@@ -33,11 +33,11 @@ const imgFrame2 = "assets/6e560916-0faf-48e6-974b-5ee043d5d7da.svg";
 const imgFrame3 = "assets/ee8843b7-87b5-4e01-9292-9dd34d74cfc2.svg";
 const imgFrame4 = "assets/6f3ca641-0d62-4487-94ac-e44cdd192a7e.svg";
 const imgIconStarFilled = "assets/e6b8b574-4612-454f-8355-c1dd70e2b974.svg";
-const imgIcon1 = "assets/ba7cc76c-5b9f-4a28-8509-31170dbcd9d8.svg";
-const imgIcon2 = "assets/ffe46d02-6e9d-493d-9f48-df1978e85067.svg";
-const imgIcon3 = "assets/c9425971-3686-465e-bb0c-4040d86af53b.svg";
-const imgIcon4 = "assets/1dcba43d-fde6-40a0-aea7-d0ca17f3d5f8.svg";
-const imgIcon5 = "assets/960ddedf-8889-4133-b360-ba1c7db5d24e.svg";
+const imgIcon1 = "assets/1a7bef33-59c3-40d8-96d5-bf1a8e8bbbd5.svg";
+const imgIcon2 = "assets/fea1b2b8-4246-4b9d-bb45-601f98ec3af2.svg";
+const imgIcon3 = "assets/80a6646f-7036-421e-95c4-eefde60fff4b.svg";
+const imgIcon4 = "assets/0a855366-ecf6-4851-b329-d09f0ba4fe6d.svg";
+const imgIcon5 = "assets/a3e884fd-13a4-4725-85e8-5b34656b2659.svg";
 
 function LogoRedBusMark({ className }: { className?: string }) {
   return (
@@ -714,41 +714,41 @@ export default function Component01Home() {
           </div>
         </div>
       </div>
-      <div className="absolute backdrop-blur-[12px] bg-[rgba(255,255,255,0.86)] bottom-0 content-stretch drop-shadow-[0px_2px_6px_rgba(0,0,0,0.1)] flex h-[66px] items-center justify-between left-[20px] px-[14px] right-[20px] rounded-[var(--radius\/full,999px)]" data-node-id="24:89" data-name="Nav / Tab Bar">
-        <div className="bg-[var(--surface\/selected,#ededed)] content-stretch flex flex-col items-center px-[10px] py-[4px] relative rounded-[var(--radius\/full,999px)] shrink-0" data-node-id="I24:89;24:73" data-name="Nav / Tab Item">
-          <div className="relative shrink-0 size-[32px]" data-node-id="I24:89;24:73;24:68" data-name="Icon">
+      <div className="absolute backdrop-blur-[12px] bg-[rgba(255,255,255,0.86)] bottom-[21px] content-stretch drop-shadow-[0px_2px_6px_rgba(0,0,0,0.1)] flex h-[62px] items-center justify-between left-[20px] px-[14px] py-[3px] right-[20px] rounded-[var(--radius\/full,999px)]" data-node-id="24:89" data-name="Nav / Tab Bar">
+        <div className="bg-[var(--surface\/selected,#ededed)] content-stretch flex flex-col gap-[3px] items-center pb-[8px] pt-[10px] px-[20px] relative rounded-[var(--radius\/full,999px)] shrink-0" data-node-id="I24:89;24:73" data-name="Nav / Tab Item">
+          <div className="relative shrink-0 size-[22px]" data-node-id="I24:89;24:73;24:68" data-name="Icon">
             <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon1} />
           </div>
           <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[13px] not-italic relative shrink-0 text-[10px] text-[color:var(--text\/nav-selected,#bd3e3e)] text-center whitespace-nowrap" data-node-id="I24:89;24:73;24:69">
             Home
           </p>
         </div>
-        <div className="content-stretch flex flex-col items-center px-[10px] py-[4px] relative rounded-[var(--radius\/full,999px)] shrink-0" data-node-id="I24:89;24:76" data-name="Nav / Tab Item">
-          <div className="relative shrink-0 size-[32px]" data-node-id="I24:89;24:76;24:64" data-name="Icon">
+        <div className="content-stretch flex flex-col gap-[3px] items-center pb-[8px] pt-[10px] px-[6px] relative rounded-[var(--radius\/full,999px)] shrink-0" data-node-id="I24:89;24:76" data-name="Nav / Tab Item">
+          <div className="relative shrink-0 size-[22px]" data-node-id="I24:89;24:76;24:64" data-name="Icon">
             <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon2} />
           </div>
           <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[13px] not-italic relative shrink-0 text-[10px] text-[color:var(--text\/nav-default,#191919)] text-center whitespace-nowrap" data-node-id="I24:89;24:76;24:65">
             My Bookings
           </p>
         </div>
-        <div className="content-stretch flex flex-col items-center px-[10px] py-[4px] relative rounded-[var(--radius\/full,999px)] shrink-0" data-node-id="I24:89;24:79" data-name="Nav / Tab Item">
-          <div className="relative shrink-0 size-[32px]" data-node-id="I24:89;24:79;24:64" data-name="Icon">
+        <div className="content-stretch flex flex-col gap-[3px] items-center pb-[8px] pt-[10px] px-[6px] relative rounded-[var(--radius\/full,999px)] shrink-0" data-node-id="I24:89;24:79" data-name="Nav / Tab Item">
+          <div className="relative shrink-0 size-[22px]" data-node-id="I24:89;24:79;24:64" data-name="Icon">
             <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon3} />
           </div>
           <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[13px] not-italic relative shrink-0 text-[10px] text-[color:var(--text\/nav-default,#191919)] text-center whitespace-nowrap" data-node-id="I24:89;24:79;24:65">
             Offers
           </p>
         </div>
-        <div className="content-stretch flex flex-col items-center px-[10px] py-[4px] relative rounded-[var(--radius\/full,999px)] shrink-0" data-node-id="I24:89;24:82" data-name="Nav / Tab Item">
-          <div className="relative shrink-0 size-[32px]" data-node-id="I24:89;24:82;24:64" data-name="Icon">
+        <div className="content-stretch flex flex-col gap-[3px] items-center pb-[8px] pt-[10px] px-[6px] relative rounded-[var(--radius\/full,999px)] shrink-0" data-node-id="I24:89;24:82" data-name="Nav / Tab Item">
+          <div className="relative shrink-0 size-[22px]" data-node-id="I24:89;24:82;24:64" data-name="Icon">
             <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon4} />
           </div>
           <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[13px] not-italic relative shrink-0 text-[10px] text-[color:var(--text\/nav-default,#191919)] text-center whitespace-nowrap" data-node-id="I24:89;24:82;24:65">
             Help
           </p>
         </div>
-        <div className="content-stretch flex flex-col items-center px-[10px] py-[4px] relative rounded-[var(--radius\/full,999px)] shrink-0" data-node-id="I24:89;24:85" data-name="Nav / Tab Item">
-          <div className="relative shrink-0 size-[32px]" data-node-id="I24:89;24:85;24:64" data-name="Icon">
+        <div className="content-stretch flex flex-col gap-[3px] items-center pb-[8px] pt-[10px] px-[6px] relative rounded-[var(--radius\/full,999px)] shrink-0" data-node-id="I24:89;24:85" data-name="Nav / Tab Item">
+          <div className="relative shrink-0 size-[22px]" data-node-id="I24:89;24:85;24:64" data-name="Icon">
             <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIcon5} />
           </div>
           <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[13px] not-italic relative shrink-0 text-[10px] text-[color:var(--text\/nav-default,#191919)] text-center whitespace-nowrap" data-node-id="I24:89;24:85;24:65">

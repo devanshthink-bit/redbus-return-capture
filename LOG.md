@@ -6863,3 +6863,42 @@ Measure the reference, do not eyeball it. "The nav doesn't match" was true for f
 reasons, and only one of them (the active pill) was visible without measuring. The icon size and
 the bar's vertical position were the ones actually causing the crowding, and both read as
 "looks about right" side by side until the pixel runs were counted.
+
+CHANGE  ·  2026-09-08  ·  molades-none  · Source: user
+**The bottom tab bar now matches the measurements.** Devansh: *"fix the bottom nav"*. The NOTE
+above measured it and could not apply it — the Figma MCP had lost its authorization. It is back,
+so the fix went in where it belongs: the `Nav / Tab Bar` and `Nav / Tab Item` components in Figma,
+then a re-pull of the two frames that use them, 01 and 12.
+
+| | was | is | real app |
+|---|---|---|---|
+| icon box | 32 | **22** | ink 18pt tall |
+| icon → label gap | 0 (py 4 either side) | **3**, with 10 above and 8 below | cap top 8.6pt under the icon |
+| bar height | 66 | **62** | 61.7 |
+| bar above the screen bottom | 0 | **21** | 21.3 |
+| active pill | hugged the item at px 10 | **px 20**, 69 × 56, full radius | 73.7 × 55.7 |
+
+The ten `Tab Icon / *` masters were resized 32 → 22 rather than the instances inside them, so
+nothing can drift per screen. Their children were already `SCALE`-constrained, which is the only
+reason a resize was safe — a `MIN` constraint would have left a 32pt glyph clipped inside a 22pt
+box and it would have looked like a bad export.
+
+Measured back off our own render: ink now sits **34–70pt** above the screen bottom against the
+real app's 33–67.7. The frame diffs are unchanged at the baseline — 01 **11.93%**, 12 **2.35%**.
+
+The non-selected items also lost padding, 10 → 6, to buy the wide selected pill room inside a
+350pt bar that is still `SPACE_BETWEEN`: the five items are 69 + 74 + 42 + 34 + 70 = 289 in 322 of
+inner width, so the gaps are 8.25 rather than the 0.25 that keeping 10 would have left.
+
+**One thing deliberately not copied.** In the real app the active oval nearly touches the bar's
+left end (4pt in) while the last item has 21pt of air on the right. Our bar keeps its symmetric
+14pt padding, so the oval starts 34pt in. Matching it would mean giving up the space-between
+distribution, and the item centres in the real bar do not fit any single rule — space-between,
+space-evenly and equal slots all miss two of the five by 15–30px. Recorded rather than guessed at.
+
+LEARNED  ·  2026-09-08  ·  molades-none
+A floating bar's clearance is measured from its **top edge to the bottom of the viewport**, not
+from its own height. `clearBottom()` in `build/shell.html` padded the scroller by the overlay's
+height, which was right while every pinned thing sat flush on the bottom edge. The moment the tab
+bar floated 21pt clear, that padding was 21 short. It now measures `layer.offsetHeight -
+el.offsetTop`, which is correct for a flush bar and for an inset one.

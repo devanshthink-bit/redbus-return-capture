@@ -1506,9 +1506,18 @@ offset from the frame's top. That is not how Figma resolves it. A fixed element 
 pins it to the bottom of the viewport when scrolling.
 
 Which means the placement that reads correctly on the static canvas is also the correct one for
-the prototype — there is no trade-off. Home's tab bar sits at `frameHeight − 66 − 21`, the bus
+the prototype — there is no trade-off. Home's tab bar sits at `frameHeight − 62 − 21`, the bus
 list's Ask Ray at `frameHeight − 43 − 96`, and the collapsed sheet flush on the frame's bottom
 edge, all with `vertical: MAX`.
+
+### The tab bar is measured, not drawn (8 Sep)
+
+`Nav / Tab Bar` is **62 tall, 350 wide, 21 clear of the bottom edge**; `Nav / Tab Item` is
+10 above / 8 below with a 3 gap, and the icon box is **22**, not 32. The active item is the same
+pill with 20 of horizontal padding instead of 6, so it reads as a wide oval behind icon *and*
+label — that is the shape the real app uses. Every number came off `RedBusScreenshots/IMG_4548.PNG`
+at 3x; the full table and the one thing deliberately not copied are in `LOG.md` under 2026-09-08.
+It is a component, so 01 and 12 both follow it — change it there, never on a frame.
 
 The round **Ask Ray** on 03a is an instance of the existing `Button / Ask Ray FAB`, bottom-right
 with a 20pt inset and `horizontal: MAX`, clear of the sheet. It was painted out of the capture
@@ -1728,7 +1737,8 @@ you would scroll past it; in a frame sized to its content there is nothing left 
 
 The fix is the one every mobile layout needs: the scrolling content carries **bottom padding equal
 to the height of the chrome that floats over it**, plus a little. Applied across the file — 111pt
-where a 99pt action bar sits, 78pt under a tab bar, 130pt under the review screen's taller pay bar,
+where a 99pt action bar sits, 83pt under a tab bar (62 of bar plus the 21 it floats clear of the
+bottom edge), 130pt under the review screen's taller pay bar,
 245–250pt under a bottom sheet.
 
 Two more caught in the same pass: **08 · Pay** overflowed its frame by 26pt and **11 · Ticket
