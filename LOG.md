@@ -6902,3 +6902,54 @@ from its own height. `clearBottom()` in `build/shell.html` padded the scroller b
 height, which was right while every pinned thing sat flush on the bottom edge. The moment the tab
 bar floated 21pt clear, that padding was 21 short. It now measures `layer.offsetHeight -
 el.offsetTop`, which is correct for a flush bar and for an inset one.
+
+CHANGE  ·  2026-09-08  ·  molades-none  · Source: user
+**Second pass on the tab bar: the spacing was still wrong, and I had only measured half of it.**
+Devansh: *"They still don't match at all. Why is it not floating in the prototype? Why is it stuck
+to the bottom?"* The floating part was already right — measured live in a browser, the bar sits
+**21.7pt clear of an 874pt viewport**, against the app's 20.7 — so what he was reading as "stuck"
+was the rest of the bar being wrong. Scaling the app's own screenshot to a 390 frame and measuring
+both said so:
+
+| in 390-frame points | real | after pass 1 | after pass 2 |
+|---|---|---|---|
+| tab centres | 59.8 · 126.4 · 197.6 · 256.0 · 321.0 | 67.5 · 147.5 · 214.0 · 260.5 · 321.0 | 59 · 128 · 197 · 257 · 324 |
+| tallest icon ink | 17.1 | 20.0 | 16 |
+| bar height | 59.8 | 62 | 60 |
+| active pill | 71.5 × 54 at x 24.3 | 67 × 58 at x 34 | 71 × 54 at x 23 |
+
+**Space-between with hugging items was the wrong model.** Solving the app's own centres says each
+item has a **44pt minimum width** — the tap target — with a **16pt gap** and the group **centred**,
+not stretched. That single change moved My Bookings 21pt. The selected pill is wider than its item
+(71.5 against 44) and its right edge nearly touches the next tab, which no flex distribution
+produces: it is a background that **overhangs into the gap**. So it is an absolutely-positioned
+rect at inset `0 −14` inside the item, not the item's own fill — the layout does not see it.
+
+CHANGE  ·  2026-09-08  ·  molades-none  · Source: user
+**The five tab icons are traced from the app now.** Devansh: *"Icons in the bottom tab are not
+matching with the exact icons in the real RedBus app."* They were near-misses drawn from memory —
+a house with no eaves, a thin outlined check, a squat speech bubble, and a My Account that was
+**inverted**: a filled disc with a white person where the app draws an outlined ring with a dark
+person inside it.
+
+Each is now **one vector potraced off the real screenshots** and placed at the ink size measured
+in them (~17.4pt in a 21pt box). Default and selected are separate traces where the app has both —
+Home from `IMG_4589` (default) and `IMG_4548` (selected), My Bookings the other way round, My
+Account from `IMG_4548` and `IMG_4591`. Offers and Help are never selected in any of the 90
+captures, so those two reuse the default trace in the accent colour.
+
+LEARNED  ·  2026-09-08  ·  molades-none
+**Supersample the grey, not the pixels.** The first trace repeated each source pixel 4× before
+thresholding, which only makes bigger squares — the outline then carries the source grid as visible
+stair-steps. Resizing the *greyscale* with LANCZOS and thresholding after gives a smooth boundary,
+and it cut the paths from 6–11k characters to 1.2–2.3k at the same time. `turdsize` then removes
+the antialiasing specks: at 6 the Home glyph came out with five subpaths, three of them 0.2pt
+flecks; at 64 it has the two the icon really has, and keeps the hairline under the roof, which is
+in the app too.
+
+LEARNED  ·  2026-09-08  ·  molades-none
+**`resize()` on a frame can shrink it to its content.** `f.resize(f.width, Math.round(f.height))`
+was meant to take 01 from 3518.92 to 3519 so the tab bar's bottom inset was a whole number. It
+returned **3504** — the frame's hug height — quietly losing 15pt off the bottom of Home. Set
+`primaryAxisSizingMode = 'FIXED'` first, and read the height back before trusting it. 01 is 3519
+now, 0.08pt off where it started, and that is deliberate.

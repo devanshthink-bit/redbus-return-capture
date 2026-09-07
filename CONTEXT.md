@@ -1512,12 +1512,21 @@ edge, all with `vertical: MAX`.
 
 ### The tab bar is measured, not drawn (8 Sep)
 
-`Nav / Tab Bar` is **62 tall, 350 wide, 21 clear of the bottom edge**; `Nav / Tab Item` is
-10 above / 8 below with a 3 gap, and the icon box is **22**, not 32. The active item is the same
-pill with 20 of horizontal padding instead of 6, so it reads as a wide oval behind icon *and*
-label — that is the shape the real app uses. Every number came off `RedBusScreenshots/IMG_4548.PNG`
-at 3x; the full table and the one thing deliberately not copied are in `LOG.md` under 2026-09-08.
-It is a component, so 01 and 12 both follow it — change it there, never on a frame.
+`Nav / Tab Bar` is **60 tall, 350 wide, 21 clear of the bottom edge**, items **centred** with a
+**16 gap**; `Nav / Tab Item` is **44 wide minimum** (the tap target), 10 above / 7 below with a
+3 gap, and the icon box is **21**, not 32. The selected pill is **not** the item's own fill — it
+is an absolutely-positioned rounded rect inset `0 −14`, so it overhangs into the gap the way the
+app's does without moving its neighbours. Measured against the app, everything now lands within
+1.5pt except the last tab's centre (3pt) — the table is in `LOG.md` under 2026-09-08.
+
+**The five icons are traced from the app**, not drawn: one vector each, potraced off
+`IMG_4548` / `IMG_4589` / `IMG_4591` and placed at the ink size measured in those captures
+(~17.4pt in a 21 box). The old ones were near-misses — the wrong roof, a thin check, and a
+My Account that was inverted (a filled disc with a white person, where the app draws an outlined
+ring with a dark person).
+
+Every number came off the screenshots at 3x. It is a component, so 01 and 12 both follow it —
+change it there, never on a frame.
 
 The round **Ask Ray** on 03a is an instance of the existing `Button / Ask Ray FAB`, bottom-right
 with a 20pt inset and `horizontal: MAX`, clear of the sheet. It was painted out of the capture
