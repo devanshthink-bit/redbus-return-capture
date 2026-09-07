@@ -6626,3 +6626,32 @@ sheet is what is wrong. **Not fixed here** — it is a content change across two
 operator, rating, times, date and bus photos, and it is not what he asked for in this round.
 Declared so it is not discovered a third time.
 
+
+CHANGE · 2026-09-06 · molades-build · Source: user
+**The seat-map sheets are the booked bus now.** *"Make it Laxmi."* 02's card — the only one that
+goes anywhere — is Laxmi Holidays, 23:55 → 08:00, 4.5 from 200. The bus-details sheet on 03 and 03a
+said International Tourist Centre, 23:15 – 08:15, 4.6 from 231, and carried Primo branding that the
+Laxmi card does not have.
+
+Changed on both, in Figma and the build: the operator, the times and date, the rating and its vote
+count, the boarding and dropping times so they agree with screen 04, and **the whole cancellation
+ladder**, which is anchored on the departure and so shifted with it — *Until 07 Sep, 23:55* through
+*After 10 Sep, 11:55*. The Primo logo beside the operator, the Primo thumbnail in the collapsed
+sheet and 03a's entire **This is a Primo** section are gone: Laxmi is not a Primo bus.
+
+**A leftover the diff found, not the eye.** 03a's cancellation paragraph still read *"service start
+date + time at :09-09-2026 23:15"* — buried in body copy, invisible in a screenshot, and it only
+surfaced because the number moved.
+
+**And a mistake inside the fix.** Sweeping the frame with a blanket `09 Sep → 10 Sep` ran over two
+ladder rows I had already set correctly and moved their **second** date too, turning
+*08 Sep – 09 Sep* into *08 Sep – 10 Sep*. **A pattern replace does not know which text is already
+right.** Set explicitly instead, then read the whole ladder back to check.
+
+**Left as it is, declared:** the bus photos on both sheets are still ITC's purple coach, one of them
+with `iTC BUS` on the side. There is no Laxmi photography in the asset set, and removing the gallery
+would take a real part of the screen away.
+Severity:  major
+Layer:     things
+Action:    done
+

@@ -1,4 +1,3 @@
-const imgArtPrimo = "assets/180e720d-ef38-40a2-babe-7815bb8770c7.png";
 const imgStar = "assets/5defeabb-4b51-4462-9a95-e9a44e39c85f.svg";
 const imgStateWomenOnly = "assets/233a8b3c-0b6a-4bae-8b5c-62101f19c57c.svg";
 const imgStateBookedFemale = "assets/5c327726-ad21-418b-b3e4-b417bc8d4dc6.svg";
@@ -13,14 +12,6 @@ const imgPhoto = "assets/e1493517-bca5-4aaa-976b-200125ff5ebf.png";
 const imgStatusIcons = "assets/091fbdca-8e2e-4f59-80c8-bfdc341f332f.svg";
 const imgArtSteeringWheel = "assets/15e65345-49df-474e-be45-ae631f3e831b.svg";
 const imgSparkle = "assets/8dc1da91-cd71-4fd5-abfb-741575eac530.svg";
-
-function ArtPrimo({ className }: { className?: string }) {
-  return (
-    <div className={className || "h-[32.67px] relative w-[59.33px]"} data-node-id="74:272" data-name="Art / Primo">
-      <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgArtPrimo} />
-    </div>
-  );
-}
 
 type RatingBadgeProps = {
   className?: string;
@@ -546,33 +537,29 @@ export default function Component03OutboundSeatMap() {
           </div>
         </div>
       </div>
-      <div className="absolute bottom-[278.56px] overflow-clip right-[20px] rounded-[var(--radius\/full,999px)] shadow-[0px_0px_16px_0px_rgba(107,61,140,0.28)] size-[48px]" data-node-id="196:1876" style={{ backgroundImage: "linear-gradient(135deg, rgb(197, 70, 70) 0%, rgb(121, 65, 224) 71.429%)" }} data-name="Button / Ask Ray FAB">
+      <div className="absolute bottom-[94px] overflow-clip right-[20px] rounded-[var(--radius\/full,999px)] shadow-[0px_0px_16px_0px_rgba(107,61,140,0.28)] size-[48px]" data-node-id="196:1876" style={{ backgroundImage: "linear-gradient(135deg, rgb(197, 70, 70) 0%, rgb(121, 65, 224) 71.429%)" }} data-name="Button / Ask Ray FAB">
         <div className="absolute left-[11px] size-[26px] top-[11px]" data-node-id="I196:1876;63:230" data-name="Sparkle">
           <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgSparkle} />
         </div>
       </div>
-      <div className="absolute bg-white bottom-0 content-stretch flex flex-col h-[232.56px] items-start left-0 overflow-clip pt-[9px] px-[16px] right-0 rounded-tl-[20px] rounded-tr-[20px] shadow-[0px_-4px_16px_0px_rgba(0,0,0,0.12)]" data-node-id="267:2400" data-name="Bottom sheet · collapsed">
+      <div className="absolute bg-white bottom-[0.44px] content-stretch flex flex-col h-[232.56px] items-start left-0 overflow-clip pt-[9px] px-[16px] right-0 rounded-tl-[20px] rounded-tr-[20px] shadow-[0px_-4px_16px_0px_rgba(0,0,0,0.12)]" data-node-id="267:2400" data-name="Bottom sheet · collapsed">
         <div className="content-stretch flex items-start justify-center overflow-clip pb-[12px] relative shrink-0 w-full" data-node-id="267:2401" data-name="Handle bar">
           <div className="bg-[#e5e5e7] h-[4.5px] relative rounded-[999px] shrink-0 w-[34px]" data-node-id="267:2402" data-name="Rectangle" />
         </div>
         <div className="content-stretch flex gap-[8px] items-center overflow-clip relative shrink-0 w-full" data-node-id="267:2403" data-name="Operator">
-          <div className="content-stretch flex flex-[1_0_0] gap-[6px] items-center min-w-px overflow-clip relative" data-node-id="267:2404" data-name="Name">
-            <ArtPrimo className="h-[33px] relative shrink-0 w-[59px]" />
+          <div className="content-stretch flex flex-[1_0_0] items-center min-w-px overflow-clip relative" data-node-id="267:2404" data-name="Name">
             <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Semi_Bold'] font-semibold leading-[24px] min-w-px not-italic relative text-[18px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="267:2406">
-              International Tourist Centre
+              Laxmi Holidays Pvt Ltd
             </p>
           </div>
-          <RatingBadge className="bg-[var(--surface\/positive-subtle,#e0f3d9)] content-stretch flex flex-col items-center overflow-clip relative rounded-[var(--radius\/6,6px)] shrink-0 w-[47px]" count="231" score="4.6" />
+          <RatingBadge className="bg-[var(--surface\/positive-subtle,#e0f3d9)] content-stretch flex flex-col items-center overflow-clip relative rounded-[var(--radius\/6,6px)] shrink-0 w-[47px]" count="200" score="4.5" />
         </div>
         <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="267:2413">
-          23:15 - 08:15 · Wed, 09 Sep
+          23:55 - 08:00 · Thu, 10 Sep
         </p>
-        <div className="content-stretch flex gap-[8px] items-start overflow-clip pt-[7px] relative shrink-0 w-full" data-node-id="267:2414" data-name="Preview">
+        <div className="content-stretch flex items-start overflow-clip pt-[7px] relative shrink-0 w-full" data-node-id="267:2414" data-name="Preview">
           <div className="h-[47px] relative rounded-[8px] shrink-0 w-[117px]" data-node-id="267:2415" data-name="Photo">
             <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none rounded-[8px] size-full" src={imgPhoto} />
-          </div>
-          <div className="bg-white border border-[#e4e4e4] border-solid content-stretch flex h-[47px] items-center justify-center overflow-clip px-[8px] py-[5px] relative rounded-[8px] shrink-0 w-[94px]" data-node-id="267:2416" data-name="Rising star">
-            <ArtPrimo className="h-[33px] relative shrink-0 w-[59px]" />
           </div>
         </div>
         <div className="content-stretch flex gap-[22px] items-center overflow-clip pt-[25px] relative shrink-0 w-full" data-node-id="267:2419" data-name="Tabs">

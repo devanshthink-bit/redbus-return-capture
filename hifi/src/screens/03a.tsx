@@ -1,4 +1,3 @@
-const imgArtPrimoOnNavy = "assets/fa5d30e0-7fdf-4efa-a4d8-a3f163de5175.png";
 const imgIconThumbUp = "assets/593709e2-3563-49c7-8618-8c4fcaad19b5.svg";
 const imgIconStarFilled = "assets/ef5bcd8b-c7a5-4459-960c-6aed312a0643.svg";
 const imgIconTickCircle = "assets/343d22d4-f15a-45ab-b99f-319546f02c5c.svg";
@@ -25,19 +24,10 @@ const imgGroup = "assets/05ec3d48-9c70-4587-b109-b48fc2b22bbf.svg";
 const imgStar = "assets/5defeabb-4b51-4462-9a95-e9a44e39c85f.svg";
 const imgPhoto1 = "assets/0f66b95e-98e1-44d0-8929-705749334f99.png";
 const imgPhoto2 = "assets/fc0563d5-0e5b-44f3-b0bd-c85c12d69274.png";
-const imgArtPrimoBus = "assets/24fa5737-e1fd-47ad-a028-9404700b08b7.png";
 const imgStatusIcons = "assets/091fbdca-8e2e-4f59-80c8-bfdc341f332f.svg";
 const imgCollapse = "assets/994465d6-9ff2-4e4a-9385-6fb282837d3e.svg";
 const imgVector = "assets/38cf441f-3b17-47cf-be3b-d4c07144fd06.svg";
 const imgIconStarFilled1 = "assets/d6088563-b5ed-4a2a-904b-a4c162ee8b78.svg";
-
-function ArtPrimoOnNavy({ className }: { className?: string }) {
-  return (
-    <div className={className || "h-[32.2px] relative w-[60px]"} data-node-id="224:1872" data-name="Art / Primo · on navy">
-      <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgArtPrimoOnNavy} />
-    </div>
-  );
-}
 
 function IconThumbUp({ className }: { className?: string }) {
   return (
@@ -413,16 +403,15 @@ export default function Component03ASeatMapSheetFull() {
           <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgCollapse} />
         </div>
         <div className="content-stretch flex gap-[8px] items-start overflow-clip pt-[8px] relative shrink-0 w-full" data-node-id="248:1806" data-name="Operator">
-          <div className="content-stretch flex flex-[1_0_0] gap-[6px] items-center min-w-px overflow-clip relative" data-node-id="248:1807" data-name="Name">
-            <ArtPrimo className="h-[33px] relative shrink-0 w-[59px]" />
+          <div className="content-stretch flex flex-[1_0_0] items-center min-w-px overflow-clip relative" data-node-id="248:1807" data-name="Name">
             <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Semi_Bold'] font-semibold leading-[24px] min-w-px not-italic relative text-[18px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="248:1809">
-              International Tourist Centre
+              Laxmi Holidays Pvt Ltd
             </p>
           </div>
-          <RatingBadge className="bg-[var(--surface\/positive-subtle,#e0f3d9)] content-stretch flex flex-col items-center overflow-clip relative rounded-[var(--radius\/6,6px)] shrink-0 w-[47px]" count="231" score="4.6" />
+          <RatingBadge className="bg-[var(--surface\/positive-subtle,#e0f3d9)] content-stretch flex flex-col items-center overflow-clip relative rounded-[var(--radius\/6,6px)] shrink-0 w-[47px]" count="200" score="4.5" />
         </div>
         <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[22px] min-w-full not-italic relative shrink-0 text-[16px] text-[color:var(--text\/secondary,#636363)] w-[min-content]" data-node-id="248:1816">
-          23:15 - 08:15 · Wed, 09 Sep
+          23:55 - 08:00 · Thu, 10 Sep
         </p>
         <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[22px] min-w-full not-italic relative shrink-0 text-[16px] text-[color:var(--text\/secondary,#636363)] w-[min-content]" data-node-id="248:1817">
           Bharat Benz A/C Seater /Sleeper (2+1)
@@ -478,17 +467,17 @@ export default function Component03ASeatMapSheetFull() {
         </p>
         <div className="border border-[#e9eaf5] border-solid content-stretch flex flex-col items-start overflow-clip relative rounded-[12px] shrink-0 w-full" data-node-id="252:1848" data-name="Table">
           <RowCancellation className="bg-[#f2f1f7] border-[#e9eaf5] border-b border-solid content-stretch flex items-start relative shrink-0 w-full" />
-          <RowCancellation className="bg-[#e9eaf5] border-[#e9eaf5] border-b border-solid content-stretch flex items-start relative shrink-0 w-full" state="Highlighted" />
-          <RowCancellation className="bg-white border-[#e9eaf5] border-b border-solid content-stretch flex items-start relative shrink-0 w-full" state="Default" when="48h before departure" whenDetail="06 Sep, 23:15 - 07 Sep, 23:15" />
-          <RowCancellation className="bg-white border-[#e9eaf5] border-b border-solid content-stretch flex items-start relative shrink-0 w-full" state="Default" when="24h before departure" whenDetail="07 Sep, 23:15 - 08 Sep, 23:15" />
-          <RowCancellation className="bg-white border-[#e9eaf5] border-b border-solid content-stretch flex items-start relative shrink-0 w-full" state="Default" when="12h before departure" whenDetail="08 Sep, 23:15 - 09 Sep, 11:15" without="50% refund" />
+          <RowCancellation className="bg-[#e9eaf5] border-[#e9eaf5] border-b border-solid content-stretch flex items-start relative shrink-0 w-full" state="Highlighted" whenDetail="Until 07 Sep, 23:55" />
+          <RowCancellation className="bg-white border-[#e9eaf5] border-b border-solid content-stretch flex items-start relative shrink-0 w-full" state="Default" when="48h before departure" whenDetail="07 Sep, 23:55 - 08 Sep, 23:55" />
+          <RowCancellation className="bg-white border-[#e9eaf5] border-b border-solid content-stretch flex items-start relative shrink-0 w-full" state="Default" when="24h before departure" whenDetail="08 Sep, 23:55 - 09 Sep, 23:55" />
+          <RowCancellation className="bg-white border-[#e9eaf5] border-b border-solid content-stretch flex items-start relative shrink-0 w-full" state="Default" when="12h before departure" whenDetail="09 Sep, 23:55 - 10 Sep, 11:55" without="50% refund" />
           <div className="bg-white border-0 border-[#e9eaf5] border-solid content-stretch flex items-start relative shrink-0 w-full" data-node-id="252:1904" data-name="Row / Cancellation">
             <div className="[word-break:break-word] border-[#e9eaf5] border-r border-solid content-stretch flex flex-col gap-[3px] items-start not-italic overflow-clip pl-[14px] pr-[12px] py-[10px] relative self-stretch shrink-0 w-[155px]" data-node-id="I252:1904;246:1801" data-name="Cell / When">
               <p className="font-['Inter:Medium'] font-medium leading-[22px] relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="I252:1904;246:1802">
                 Less than 12h before departure
               </p>
               <p className="font-['Inter:Regular'] font-normal leading-[20px] relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="I252:1904;246:1803">
-                After 09 Sep, 23:15
+                After 10 Sep, 11:55
               </p>
             </div>
             <div className="border-[#e9eaf5] border-r border-solid content-stretch flex flex-col items-start overflow-clip px-[12px] py-[10px] relative self-stretch shrink-0 w-[103px]" data-node-id="I252:1904;246:1804" data-name="Cell / Without">
@@ -523,7 +512,7 @@ export default function Component03ASeatMapSheetFull() {
           * Cancellation charges are computed on a per seat basis. Above cancellation fare is calculated based on seat fare of ₹ 1299
         </p>
         <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="252:1921">
-          * Cancellation charges are calculated based on service start date + time at :09-09-2026 23:15
+          * Cancellation charges are calculated based on service start date + time at :10-09-2026 23:55
         </p>
         <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="252:1922">{` * Ticket cannot be cancelled after scheduled bus departure time from the first boarding point`}</p>
         <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="252:1923">
@@ -656,8 +645,8 @@ export default function Component03ASeatMapSheetFull() {
         <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="255:1983">
           Delhi
         </p>
-        <RowStop className="content-stretch flex items-start relative shrink-0 w-full" />
-        <RowStop address="ITC Lounge Metro Pillar No 215 Opp- Anand Vihar ISBT" className="content-stretch flex items-start relative shrink-0 w-full" name="Anand Vihar Itc Lounge" rail="Middle" time="23:59" />
+        <RowStop className="content-stretch flex items-start relative shrink-0 w-full" date="10 Sep" time="23:55" />
+        <RowStop address="ITC Lounge Metro Pillar No 215 Opp- Anand Vihar ISBT" className="content-stretch flex items-start relative shrink-0 w-full" date="10 Sep" name="Anand Vihar Itc Lounge" rail="Middle" time="23:59" />
         <RowStop address="Sector 62 Noida Near Foot Over Bridge ,Towards To Hapur (UP)" className="content-stretch flex items-start relative shrink-0 w-full" date="10 Sep" name="Noida" rail="Middle" time="00:20" />
         <div className="content-stretch flex items-start relative shrink-0 w-full" data-node-id="255:2014" data-name="Row / Stop">
           <div className="[word-break:break-word] content-stretch flex flex-col gap-[2px] items-end not-italic overflow-clip pb-[14px] pt-px relative shrink-0 text-right w-[52px]" data-node-id="I255:2014;247:1814" data-name="Time">
@@ -689,7 +678,7 @@ export default function Component03ASeatMapSheetFull() {
         <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="255:2025">
           Nainital
         </p>
-        <RowStop address="Tallital Bus Stand ( Drop By Cab Or Mini Bus From Haldwani To Nainital )" className="content-stretch flex items-start relative shrink-0 w-full" date="10 Sep" name="Nainital Mall Road" rail="Only" time="08:15" />
+        <RowStop address="Tallital Bus Stand ( Drop By Cab Or Mini Bus From Haldwani To Nainital )" className="content-stretch flex items-start relative shrink-0 w-full" date="10 Sep" name="Nainital Mall Road" rail="Only" time="08:00" />
       </div>
       <div className="h-[8px] relative shrink-0 w-full" data-node-id="557:3962" data-name="Spacer" />
       <div className="bg-white content-stretch flex flex-col gap-[6px] items-start overflow-clip pb-[22px] pt-[20px] px-[16px] relative shrink-0 w-full" data-node-id="248:1788" data-name="Rest stop">
@@ -769,7 +758,7 @@ export default function Component03ASeatMapSheetFull() {
                 <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconStarFilled1} />
               </div>
               <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[34px] not-italic relative shrink-0 text-[#278534] text-[26px] whitespace-nowrap" data-node-id="257:2077">
-                4.6
+                4.5
               </p>
             </div>
             <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="257:2078">
@@ -851,24 +840,6 @@ export default function Component03ASeatMapSheetFull() {
           <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[20px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="257:2156">
             Read all 57 reviews
           </p>
-        </div>
-      </div>
-      <div className="h-[8px] relative shrink-0 w-full" data-node-id="557:3959" data-name="Spacer" />
-      <div className="bg-white content-stretch flex flex-col gap-[14px] items-start overflow-clip pb-[22px] pt-[20px] px-[16px] relative shrink-0 w-full" data-node-id="248:1791" data-name="This is a Primo">
-        <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[26px] not-italic relative shrink-0 text-[20px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="258:2121">
-          This is a Primo
-        </p>
-        <div className="bg-[#1b3874] h-[239px] overflow-clip relative rounded-[16px] shrink-0 w-full" data-node-id="258:2122" data-name="Card / Primo">
-          <div className="absolute bottom-0 h-[114px] left-0 right-0" data-node-id="258:2123" data-name="Art / Primo bus">
-            <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgArtPrimoBus} />
-          </div>
-          <p className="[word-break:break-word] absolute font-['Inter:Semi_Bold'] font-semibold leading-[24px] left-[18px] not-italic text-[18px] text-white top-[20px] w-[240px]" data-node-id="258:2124">
-            International Tourist Centre
-          </p>
-          <p className="[word-break:break-word] absolute font-['Inter:Regular'] font-normal leading-[22px] left-[18px] not-italic text-[16px] text-white top-[48px] whitespace-nowrap" data-node-id="258:2125">
-            A Rising Star on redBus
-          </p>
-          <ArtPrimoOnNavy className="absolute h-[32px] right-[30px] top-[18px] w-[60px]" />
         </div>
       </div>
     </div>
