@@ -6094,3 +6094,80 @@ Severity:  major
 Layer:     moments
 Action:    built
 
+
+DECISION · 2026-09-06 · molades-build · Source: user
+**Figma and the hi-fi build are never allowed to disagree, in any chat.** His instruction:
+*"whenever we make some changes in the Hi-fi UI in Figma, those same changes are also made in the
+hi-fi prototype build as well everytime, even if i ask for it in different chats. i want figma ui
+screens and hi-fi prototype consistent always so that nothing is missed."*
+
+Written into `CLAUDE.md`, which is read at the start of every session, and into a new
+`hifi/build/SYNC.md` carrying the six-step loop: change in Figma → re-pull the frame → rewrite the
+asset URLs → rebuild → **render and diff** → commit both together.
+
+**The rule is made checkable rather than only written.** The parity harness already existed —
+`build/ref/*_figma.png` against `build/shots/*.png` through `build/diff.py` — so the last step is a
+number, not a promise. If the build cannot be regenerated in a session, the instruction is to say so
+and log a `NOTE` naming the frames that are ahead. **An undeclared drift is the failure this rule
+exists to prevent; a declared one is just work outstanding.**
+Severity:  major
+Layer:     the bet
+Action:    written
+
+CHANGE · 2026-09-06 · molades-build · Source: user
+**Every v4 session fix is now in Figma and in the hi-fi build.** Eight frames looked at, seven
+changed, each diffed against a fresh Figma render:
+
+| Frame | What changed | Differing |
+|---|---|---|
+| 05 | mode toggle, unanswered; hint moved below it | 5.23% |
+| 05a | toggle with *I'm not sure yet* lifted; the five v4 rules; range **ends** set to `State=Selected` | 8.35% |
+| 05b | toggle with *I know my date* lifted; the four fixed-mode rules | 8.01% |
+| 06 | *Now pick one of your 7 days* heading | 5.18% |
+| 06a | same heading | 6.81% |
+| 08 | what declining Free Cancellation gives you, and that the fee is not refunded | 7.41% |
+| 11 | Change day row moved **inside** the ticket card | 5.38% |
+| 12 | already correct — the row was inside the booking card and the caption already read *Any date* | — |
+
+Baseline is **mean 5.2%, worst 12.4%** (CONTEXT §21), so all seven sit inside it. Every profile is
+a ramp, not a step: the residue is the documented type-metric accumulation, and on 05a it shows as
+one long line wrapping a word earlier in the build than in Figma. Content was compared crop by crop
+and matches.
+
+**Two things Figma was already behind on, found by looking rather than by being told.** 05a drew all
+seven days of a marked range in one tint, where v4 draws the two **ends** in the full accent — the
+range read as an undifferentiated block, which is the thing Sai could not count. And 11's Change day
+row was a second card after the ticket, which is Vivek's *"detached and floating outside"*.
+
+All copy was read out of the running v4 build rather than retyped, the way §18 already requires.
+Severity:  major
+Layer:     looks
+Action:    done
+
+LEARNED · 2026-09-06 · molades-build
+**Three ways to get a parity number that means nothing, all hit in one session.**
+
+1. **Shooting through the presentation shell.** The shell scales the phone into an 844-high stage,
+   so the screenshot measured the shell, not the design — 10.9%, and the page was clipped.
+2. **Writing the temp page outside the directory.** `app.css` and `assets/` are referenced
+   relatively; from `$TMPDIR` neither resolved, the screen rendered as **unstyled text**, and the
+   diff still returned a plausible-looking 9.9%. A number that looks like the baseline is not
+   evidence that anything was compared.
+3. **Diffing against a stale reference.** I swapped 05a's range ends in Figma *after* downloading
+   its render, then diffed the new build against the old picture and read the difference as a build
+   defect. **The reference must be pulled after the last Figma edit** — which is exactly what
+   SYNC.md step 5 says, written by me an hour earlier.
+
+`build/shot.sh` now fixes 1 and 2 permanently. **The general shape: a harness that is wrong in the
+same direction as the thing it measures reports success.** Same class as the `size-full` defect on
+5 Sep, where the screenshot harness gave each frame an explicit height and so never had the geometry
+that breaks.
+
+**And a fourth, in the code.** Lifting a block out of `11.tsx` by counting `<div` against `</div>`
+overshot, because a self-closing `<div … />` opens and closes on one line — the row landed at the
+bottom of the page instead of inside the ticket. The diff caught it at 14.96%; the fix counts
+`/>`-terminated tags. **A brace-matcher that ignores self-closing tags is not a matcher.**
+Severity:  major
+Layer:     steps
+Action:    fixed
+

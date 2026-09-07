@@ -187,14 +187,26 @@ export default function Component05BReturnOneDayPicked() {
             Delhi → Nainital · Thu, 10 Sep · 23:55
           </p>
         </div>
-        <div className="[word-break:break-word] content-stretch flex flex-col gap-[4px] items-start not-italic relative shrink-0 w-full" data-node-id="91:542" data-name="Question">
-          <p className="font-['Inter:Bold'] font-bold leading-[25px] relative shrink-0 text-[20px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="91:543">
+        <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-node-id="91:542" data-name="Question">
+          <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[25px] not-italic relative shrink-0 text-[20px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="91:543">
             When can you travel back?
           </p>
-          <p className="font-['Inter:Regular'] font-normal leading-[20px] relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="91:544">
-            Shaded days are within 7 days of your pick.
-          </p>
         </div>
+        <div className="bg-[#ededf2] border border-[#e4e4e4] border-solid content-stretch flex gap-[4px] items-start overflow-clip p-[4px] relative rounded-[24px] shrink-0 w-full" data-node-id="512:3849" data-name="Mode toggle">
+          <div className="bg-white content-stretch flex flex-[1_0_0] items-center justify-center min-w-px overflow-clip py-[11px] relative rounded-[20px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.12)]" data-node-id="512:3850" data-name="Segment / I know my date">
+            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#c54646] text-[14px] text-center whitespace-nowrap" data-node-id="512:3851">
+              I know my date
+            </p>
+          </div>
+          <div className="content-stretch flex flex-[1_0_0] items-center justify-center min-w-px overflow-clip py-[11px] relative rounded-[20px]" data-node-id="512:3852" data-name="Segment / I’m not sure yet">
+            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#636363] text-[14px] text-center whitespace-nowrap" data-node-id="512:3853">
+              I’m not sure yet
+            </p>
+          </div>
+        </div>
+        <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="91:544">
+          Tap another day to change it.
+        </p>
         <div className="bg-white content-stretch flex flex-col items-start overflow-clip px-[20px] py-[16px] relative rounded-[16px] shrink-0 w-full" data-node-id="347:2873" data-name="Calendar">
           <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[16px] whitespace-nowrap" data-node-id="347:2874">
             September 2026
@@ -283,20 +295,36 @@ export default function Component05BReturnOneDayPicked() {
           </p>
         </div>
         <div className="bg-[var(--surface\/default,white)] content-stretch flex flex-col items-start p-[16px] relative rounded-[var(--radius\/12,12px)] shrink-0 w-full" data-node-id="91:608" data-name="Rules">
-          <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[21px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="91:795">
-            We’ll book Mon, 14 Sep · ₹800
+          <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[16px] w-full" data-node-id="512:3873">
+            We’ll book Mon, 14 Sep · from ₹800
           </p>
-          <div className="h-[4px] relative shrink-0 w-full" data-node-id="91:796" data-name="gap" />
-          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="91:797">
-            You can change the date once after booking, to any date. Pay any price difference.
+          <div className="h-[4px] relative shrink-0 w-full" data-node-id="512:3874" data-name="gap" />
+          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#636363] text-[14px] w-full" data-node-id="512:3875">
+            You choose the bus, seat and stops before you pay.
           </p>
-          <div className="h-[16px] relative shrink-0 w-full" data-node-id="91:798" data-name="gap" />
-          <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[21px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/accent,#c54646)] w-full" data-node-id="91:799">
-            Not sure? Tap a second day
+          <div className="h-[16px] relative shrink-0 w-full" data-node-id="512:3876" data-name="gap" />
+          <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[16px] w-full" data-node-id="512:3877">
+            Most buses that day can change the date once
           </p>
-          <div className="h-[4px] relative shrink-0 w-full" data-node-id="91:800" data-name="gap" />
-          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="91:801">
-            Up to 7 days apart. That is only how we pick your day — your ticket can still move to any date.
+          <div className="h-[4px] relative shrink-0 w-full" data-node-id="512:3878" data-name="gap" />
+          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#636363] text-[14px] w-full" data-node-id="512:3879">
+            To any date, not just this week. Not all buses do — you pick the bus next.
+          </p>
+          <div className="h-[16px] relative shrink-0 w-full" data-node-id="512:3880" data-name="gap" />
+          <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[16px] w-full" data-node-id="512:3881">
+            No refund on a cheaper day
+          </p>
+          <div className="h-[4px] relative shrink-0 w-full" data-node-id="512:3882" data-name="gap" />
+          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#636363] text-[14px] w-full" data-node-id="512:3883">
+            You only pay when the new day costs more.
+          </p>
+          <div className="h-[16px] relative shrink-0 w-full" data-node-id="512:3884" data-name="gap" />
+          <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#a45729] text-[16px] w-full" data-node-id="512:3885">
+            Change the date and you cannot cancel
+          </p>
+          <div className="h-[4px] relative shrink-0 w-full" data-node-id="512:3886" data-name="gap" />
+          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#636363] text-[14px] w-full" data-node-id="512:3887">
+            Cancel before you change it and the usual refund applies. After a change, neither.
           </p>
         </div>
       </div>

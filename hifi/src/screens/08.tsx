@@ -323,6 +323,21 @@ export default function Component08ReviewYourTrip() {
               <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgRadio} />
             </div>
           </div>
+          <div className="content-stretch flex flex-col gap-[4px] items-start pt-[16px] relative shrink-0 w-full" data-node-id="516:3805" data-name="What declining gives you">
+            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[16px] w-full" data-node-id="516:3806">
+              Without it, you still get a part refund
+            </p>
+            <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#636363] text-[14px] w-full" data-node-id="516:3807">
+              How much depends on how early you cancel. With it, you get the full fare back.
+            </p>
+            <div className="h-[16px] relative shrink-0 w-full" data-node-id="516:3808" data-name="gap" />
+            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[16px] w-full" data-node-id="516:3809">
+              The fee itself is not refunded
+            </p>
+            <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#636363] text-[14px] w-full" data-node-id="516:3810">
+              You get the ticket price back, not the ₹60.
+            </p>
+          </div>
         </div>
       </div>
       <div className="content-stretch flex flex-col items-start pt-[30px] px-[16px] relative shrink-0 w-full" data-node-id="214:2070" data-name="Free date change wrap">

@@ -36,11 +36,12 @@ type CalendarDayProps = {
   day?: string;
   fare?: string;
   noDateChange?: boolean;
-  state?: "Default" | "Out" | "Unavailable" | "Full" | "In reach";
+  state?: "Default" | "Out" | "Unavailable" | "Full" | "In reach" | "Selected";
 };
 
 function CalendarDay({ className, day = "10", fare = "₹910", noDateChange = false, state = "Default" }: CalendarDayProps) {
   const isDefault = state === "Default";
+  const isSelected = state === "Selected";
   const isFull = state === "Full";
   const isInReach = state === "In reach";
   const isOut = state === "Out";
@@ -104,6 +105,21 @@ function CalendarDay({ className, day = "10", fare = "₹910", noDateChange = fa
       )}
       {isFull && noDateChange && (
         <div className="absolute right-[10px] size-[5px] top-[6px]" data-node-id="82:325" data-name="No change dot">
+          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgNoChangeDot} />
+        </div>
+      )}
+      {isSelected && (
+        <>
+          <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[20px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/on-accent,white)] whitespace-nowrap" data-node-id="82:308">
+            {day}
+          </p>
+          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[12px] text-[color:var(--text\/on-accent,white)] whitespace-nowrap" data-node-id="82:309">
+            {fare}
+          </p>
+        </>
+      )}
+      {isSelected && noDateChange && (
+        <div className="absolute right-[10px] size-[5px] top-[6px]" data-node-id="82:310" data-name="No change dot">
           <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgNoChangeDot} />
         </div>
       )}
@@ -171,14 +187,26 @@ export default function Component05AReturnWindowChosen() {
             Delhi → Nainital · Thu, 10 Sep · 23:55
           </p>
         </div>
-        <div className="[word-break:break-word] content-stretch flex flex-col gap-[4px] items-start not-italic relative shrink-0 w-full" data-node-id="88:416" data-name="Question">
-          <p className="font-['Inter:Bold'] font-bold leading-[25px] relative shrink-0 text-[20px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="88:417">
+        <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-node-id="88:416" data-name="Question">
+          <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[25px] not-italic relative shrink-0 text-[20px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="88:417">
             When can you travel back?
           </p>
-          <p className="font-['Inter:Regular'] font-normal leading-[20px] relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="88:418">
-            Tap any day to start again.
-          </p>
         </div>
+        <div className="bg-[#ededf2] border border-[#e4e4e4] border-solid content-stretch flex gap-[4px] items-start overflow-clip p-[4px] relative rounded-[24px] shrink-0 w-full" data-node-id="512:3844" data-name="Mode toggle">
+          <div className="content-stretch flex flex-[1_0_0] items-center justify-center min-w-px overflow-clip py-[11px] relative rounded-[20px]" data-node-id="512:3845" data-name="Segment / I know my date">
+            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#636363] text-[14px] text-center whitespace-nowrap" data-node-id="512:3846">
+              I know my date
+            </p>
+          </div>
+          <div className="bg-white content-stretch flex flex-[1_0_0] items-center justify-center min-w-px overflow-clip py-[11px] relative rounded-[20px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.12)]" data-node-id="512:3847" data-name="Segment / I’m not sure yet">
+            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#c54646] text-[14px] text-center whitespace-nowrap" data-node-id="512:3848">
+              I’m not sure yet
+            </p>
+          </div>
+        </div>
+        <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="88:418">
+          Fri, 11 Sep to Thu, 17 Sep · 7 days marked. Tap any day to start again.
+        </p>
         <div className="bg-white content-stretch flex flex-col items-start overflow-clip px-[20px] py-[16px] relative rounded-[16px] shrink-0 w-full" data-node-id="347:2706" data-name="Calendar">
           <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[16px] whitespace-nowrap" data-node-id="347:2707">
             September 2026
@@ -222,7 +250,7 @@ export default function Component05AReturnWindowChosen() {
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="8" fare=" " state="Unavailable" />
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="9" fare=" " state="Unavailable" />
               <CalendarDay className="bg-[var(--colour\/neutral\/150,#e9eaf6)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" fare="Out" state="Out" />
-              <CalendarDay className="bg-[var(--calendar\/reach-band,#fbf4f4)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="11" fare="₹1,260" state="In reach" />
+              <CalendarDay className="[word-break:break-word] bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px not-italic relative rounded-[var(--radius\/10,10px)] text-[color:var(--text\/on-accent,white)] whitespace-nowrap" day="11" fare="₹1,260" state="Selected" />
               <CalendarDay className="bg-[var(--calendar\/reach-band,#fbf4f4)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="12" fare="₹1,140" state="In reach" />
               <CalendarDay className="bg-[var(--calendar\/reach-band,#fbf4f4)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="13" fare="Full" state="In reach" />
             </div>
@@ -230,7 +258,7 @@ export default function Component05AReturnWindowChosen() {
               <CalendarDay className="bg-[var(--calendar\/reach-band,#fbf4f4)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="14" fare="₹800" state="In reach" />
               <CalendarDay className="bg-[var(--calendar\/reach-band,#fbf4f4)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="15" fare="₹860" state="In reach" />
               <CalendarDay className="bg-[var(--calendar\/reach-band,#fbf4f4)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="16" fare="₹860" state="In reach" />
-              <CalendarDay className="bg-[var(--calendar\/reach-band,#fbf4f4)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="17" fare="₹970" state="In reach" />
+              <CalendarDay className="[word-break:break-word] bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px not-italic relative rounded-[var(--radius\/10,10px)] text-[color:var(--text\/on-accent,white)] whitespace-nowrap" day="17" fare="₹970" state="Selected" />
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="18" fare="₹1,050" />
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="19" fare="₹1,190" />
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="20" fare="₹870" />
@@ -267,20 +295,44 @@ export default function Component05AReturnWindowChosen() {
           </p>
         </div>
         <div className="bg-[var(--surface\/default,white)] content-stretch flex flex-col items-start p-[16px] relative rounded-[var(--radius\/12,12px)] shrink-0 w-full" data-node-id="88:482" data-name="Rules">
-          <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[21px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="88:610">
-            Next, pick your day
+          <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[16px] w-full" data-node-id="512:3854">
+            We book one day, not all 7
           </p>
-          <div className="h-[4px] relative shrink-0 w-full" data-node-id="88:611" data-name="gap" />
-          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="88:612">
-            Cheapest: Mon, 14 Sep ₹800. Your last day: Thu, 17 Sep ₹970.
+          <div className="h-[4px] relative shrink-0 w-full" data-node-id="512:3855" data-name="gap" />
+          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#636363] text-[14px] w-full" data-node-id="512:3856">
+            One seat, one fare, one day. You pick which day next.
           </p>
-          <div className="h-[16px] relative shrink-0 w-full" data-node-id="88:613" data-name="gap" />
-          <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[21px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="88:614">
+          <div className="h-[16px] relative shrink-0 w-full" data-node-id="512:3857" data-name="gap" />
+          <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[16px] w-full" data-node-id="512:3858">
+            Cheapest is Mon, 14 Sep · ₹800
+          </p>
+          <div className="h-[4px] relative shrink-0 w-full" data-node-id="512:3859" data-name="gap" />
+          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#636363] text-[14px] w-full" data-node-id="512:3860">
+            Your last day, Thu, 17 Sep, is ₹970.
+          </p>
+          <div className="h-[16px] relative shrink-0 w-full" data-node-id="512:3861" data-name="gap" />
+          <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[16px] w-full" data-node-id="512:3862">
             You can change the date once, to any date
           </p>
-          <div className="h-[4px] relative shrink-0 w-full" data-node-id="88:615" data-name="gap" />
-          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="88:616">
-            Not just this week. Pay the difference if it costs more. No refund if it costs less.
+          <div className="h-[4px] relative shrink-0 w-full" data-node-id="512:3863" data-name="gap" />
+          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#636363] text-[14px] w-full" data-node-id="512:3864">
+            Not just this week. Pay the difference if it costs more.
+          </p>
+          <div className="h-[16px] relative shrink-0 w-full" data-node-id="512:3865" data-name="gap" />
+          <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[16px] w-full" data-node-id="512:3866">
+            No refund on a cheaper day
+          </p>
+          <div className="h-[4px] relative shrink-0 w-full" data-node-id="512:3867" data-name="gap" />
+          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#636363] text-[14px] w-full" data-node-id="512:3868">
+            You only pay when the new day costs more.
+          </p>
+          <div className="h-[16px] relative shrink-0 w-full" data-node-id="512:3869" data-name="gap" />
+          <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#a45729] text-[16px] w-full" data-node-id="512:3870">
+            Change the date and you cannot cancel
+          </p>
+          <div className="h-[4px] relative shrink-0 w-full" data-node-id="512:3871" data-name="gap" />
+          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#636363] text-[14px] w-full" data-node-id="512:3872">
+            Cancel before you change it and the usual refund applies. After a change, neither.
           </p>
         </div>
       </div>

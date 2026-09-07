@@ -185,6 +185,26 @@ export default function Component11TicketDetails() {
               Ticket details
             </p>
           </div>
+          <div className="content-stretch flex gap-[12px] items-center p-[16px] relative border-[var(--border\/subtle,#e4e4e4)] border-solid border-t shrink-0 w-full" data-node-id="127:1371" data-name="Change day">
+            <div className="content-stretch flex flex-[1_0_0] flex-col gap-[4px] items-start min-w-px relative" data-node-id="I127:1371;116:1175" data-name="Text">
+              <a className="[word-break:break-word] block cursor-pointer font-['Inter:Bold'] font-bold leading-[0] min-w-full not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] w-[min-content]" data-node-id="I127:1371;116:1176">
+                <p className="leading-[22px]">Change your return day</p>
+              </a>
+              <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[18px] min-w-full not-italic relative shrink-0 text-[13px] text-[color:var(--text\/secondary,#636363)] w-[min-content]" data-node-id="I127:1371;116:1177">
+                Any date, earlier or later. Pay only the price difference.
+              </p>
+              <div className="bg-[var(--colour\/neutral\/150,#e9eaf6)] content-stretch flex items-start px-[8px] py-[4px] relative rounded-[var(--radius\/4,4px)] shrink-0" data-node-id="I127:1371;116:1178" data-name="Balance">
+                <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[16px] not-italic relative shrink-0 text-[12px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="I127:1371;116:1179">
+                  1 change left
+                </p>
+              </div>
+            </div>
+            <div className="relative shrink-0 size-[20px]" data-node-id="I127:1371;116:1180" data-name="Icon / Chevron Right">
+              <div className="absolute left-0 size-[20px] top-0" data-node-id="I127:1371;116:1180;116:1172" data-name="glyph">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgGlyph} />
+              </div>
+            </div>
+          </div>
         </div>
         <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] min-w-full not-italic relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] text-center w-[min-content]" data-node-id="127:1362">
           Bus number and tracking details will be shared on the day of journey on +*********499
@@ -201,26 +221,6 @@ export default function Component11TicketDetails() {
           </div>
           <div className="relative shrink-0 size-[20px]" data-node-id="127:1368" data-name="Icon / Chevron Right">
             <div className="absolute left-0 size-[20px] top-0" data-node-id="I127:1368;116:1172" data-name="glyph">
-              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgGlyph} />
-            </div>
-          </div>
-        </div>
-        <div className="bg-[var(--surface\/default,white)] content-stretch drop-shadow-[0px_8px_12px_rgba(0,0,0,0.07),0px_2px_3px_rgba(0,0,0,0.05)] flex gap-[12px] items-center p-[16px] relative rounded-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="127:1371" data-name="Change day">
-          <div className="content-stretch flex flex-[1_0_0] flex-col gap-[4px] items-start min-w-px relative" data-node-id="I127:1371;116:1175" data-name="Text">
-            <a className="[word-break:break-word] block cursor-pointer font-['Inter:Bold'] font-bold leading-[0] min-w-full not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] w-[min-content]" data-node-id="I127:1371;116:1176">
-              <p className="leading-[22px]">Change your return day</p>
-            </a>
-            <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[18px] min-w-full not-italic relative shrink-0 text-[13px] text-[color:var(--text\/secondary,#636363)] w-[min-content]" data-node-id="I127:1371;116:1177">
-              Any date, earlier or later. Pay only the price difference.
-            </p>
-            <div className="bg-[var(--colour\/neutral\/150,#e9eaf6)] content-stretch flex items-start px-[8px] py-[4px] relative rounded-[var(--radius\/4,4px)] shrink-0" data-node-id="I127:1371;116:1178" data-name="Balance">
-              <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[16px] not-italic relative shrink-0 text-[12px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="I127:1371;116:1179">
-                1 change left
-              </p>
-            </div>
-          </div>
-          <div className="relative shrink-0 size-[20px]" data-node-id="I127:1371;116:1180" data-name="Icon / Chevron Right">
-            <div className="absolute left-0 size-[20px] top-0" data-node-id="I127:1371;116:1180;116:1172" data-name="glyph">
               <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgGlyph} />
             </div>
           </div>

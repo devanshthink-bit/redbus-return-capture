@@ -73,6 +73,9 @@ export default function Component06YourReturnPickADay() {
         </div>
       </div>
       <div className="content-stretch flex flex-col gap-[16px] items-start pb-[135px] pt-[13px] px-[16px] relative shrink-0 w-full" data-node-id="99:661" data-name="Content">
+        <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[25px] not-italic relative shrink-0 text-[20px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="514:3850" data-name="Question">
+          Now pick one of your 7 days
+        </p>
         <div className="[word-break:break-word] content-stretch flex flex-col gap-[4px] items-start not-italic relative shrink-0 w-full" data-node-id="99:662" data-name="Lead">
           <p className="font-['Inter:Bold'] font-bold leading-[24px] relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="99:663">
             Pick your return day.
