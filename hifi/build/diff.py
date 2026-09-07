@@ -1,5 +1,15 @@
 import sys
 from PIL import Image, ImageChops
+import os, time
+# A stale reference is the third way to get a meaningless number: edit Figma, diff against the
+# render you downloaded BEFORE that edit, and read your own change as a build defect. SYNC.md
+# step 5 says pull the reference last; this makes it a check instead of a rule you can forget.
+_ref, _shot = sys.argv[1], sys.argv[2]
+if os.path.exists(_ref) and os.path.exists(_shot):
+    _age = os.path.getmtime(_shot) - os.path.getmtime(_ref)
+    if _age > 900:
+        print("STALE REFERENCE? %s is %d min older than the build shot. Re-pull it from Figma "
+              "before trusting this number." % (os.path.basename(_ref), _age // 60))
 a=Image.open(sys.argv[1]).convert('RGB'); b=Image.open(sys.argv[2]).convert('RGB')
 if a.size!=b.size:
     print(f"SIZE {a.size} vs {b.size}"); 

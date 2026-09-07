@@ -6171,3 +6171,43 @@ Severity:  major
 Layer:     steps
 Action:    fixed
 
+
+CHANGE · 2026-09-06 · molades-build · Source: user
+**"Are all fixed?" — checking properly turned up two more.** He asked whether everything I had
+listed was actually fixed. The four I named were: 05a's flat range tint, 11's detached change row,
+and the two harness traps. All four verified in the files rather than from memory. But going back
+through v4 string by string instead of frame by frame found **two things I had carried across
+incompletely and had not declared**, which is precisely what the rule written this morning exists
+to stop.
+
+1. **The day-list bar note was never in Figma at all.** v4's bar carries *"You choose the bus, seat
+   and stops before you pay. The date can change later, to any day."* — the one place that says the
+   choice is not over, and where *to any day* is stated. Figma's action bar had only the summary and
+   the button. Added to 06 and 06a and to the build.
+2. **The trap state has no hi-fi frame.** *Cannot change this date*, *cannot change this date later*
+   and **Book a fixed date** exist in v4 and in **none of the 23 frames**. I had reported it as "not
+   applicable" because no day in the 11–17 Sep window is fully non-changeable — true of that window,
+   and the wrong conclusion to draw from it. It is the fix for the blocker Sai walked into, and by
+   §18's own rule (*a state earns a frame only where the design changes*) it earns one: the pill
+   changes colour, the sub-line changes, the bar note changes and the primary button changes its
+   label. **Left undone and declared here rather than quietly skipped.**
+
+Three Figma layout traps hit adding the bar note, all the same shape as ones already logged: a
+FIXED-height bar does not grow for a new child (frame 08, an hour earlier); `counterAxisSizingMode`
+left hugging made `FILL` resolve to the note's own 514px and the bar grew wider than the phone; and
+`node.query('[name=Bar note]')` matches nothing when the name contains a space, returning null.
+Severity:  major
+Layer:     things
+Action:    bar note fixed; the trap-state frame is outstanding
+
+DECISION · 2026-09-06 · molades-build
+**The stale-reference rule is now a check, not a rule.** Two of the three bad parity numbers were
+already fixed in code by `build/shot.sh`; the third — diffing against a Figma render downloaded
+before the last Figma edit — was guarded only by a sentence in `SYNC.md`, which I had written an
+hour before violating it. `diff.py` now prints **STALE REFERENCE?** when the build shot is more than
+fifteen minutes newer than the reference it is being compared against. A rule you can forget is not
+a control.
+Severity:  minor
+Layer:     steps
+Action:    fixed
+

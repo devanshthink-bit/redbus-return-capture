@@ -393,16 +393,21 @@ export default function Component06AYourReturnDayChosen() {
           </div>
         </div>
       </div>
-      <div className="absolute bg-[var(--surface\/default,white)] border-[var(--border\/divider,#e6e6e6)] border-solid border-t bottom-0 content-stretch flex items-center justify-between left-0 pb-[31px] pt-[20px] px-[16px] right-0" data-node-id="100:740" data-name="Action bar">
-        <div className="[word-break:break-word] content-stretch flex flex-col gap-[2px] items-start not-italic relative shrink-0 whitespace-nowrap" data-node-id="100:741" data-name="Summary">
-          <p className="font-['Inter:Regular'] font-normal leading-[16px] relative shrink-0 text-[12px] text-[color:var(--text\/secondary,#636363)]" data-node-id="100:742">
-            Return · Thu, 17 Sep · 23:55
-          </p>
-          <p className="font-['Inter:Bold'] font-bold leading-[22px] relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="100:743">
-            ₹1,120
-          </p>
+      <div className="absolute bg-[var(--surface\/default,white)] border-[var(--border\/divider,#e6e6e6)] border-solid border-t bottom-0 content-stretch flex flex-col items-center justify-between left-0 pb-[31px] pt-[20px] px-[16px] right-0" data-node-id="100:740" data-name="Action bar">
+        <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#636363] text-[12px] w-full" data-node-id="519:3808">
+          You choose the bus, seat and stops before you pay. The date can change later, to any day.
+        </p>
+        <div className="content-stretch flex gap-[16px] items-center overflow-clip relative shrink-0 w-full" data-node-id="519:3807" data-name="Action row">
+          <div className="[word-break:break-word] content-stretch flex flex-col gap-[2px] items-start not-italic relative shrink-0 whitespace-nowrap" data-node-id="100:741" data-name="Summary">
+            <p className="font-['Inter:Regular'] font-normal leading-[16px] relative shrink-0 text-[12px] text-[color:var(--text\/secondary,#636363)]" data-node-id="100:742">
+              Return · Thu, 17 Sep · 23:55
+            </p>
+            <p className="font-['Inter:Bold'] font-bold leading-[22px] relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="100:743">
+              ₹1,120
+            </p>
+          </div>
+          <ButtonPrimary className="bg-[var(--surface\/accent,#c54646)] content-stretch cursor-pointer drop-shadow-[0px_2px_3px_rgba(0,0,0,0.1)] flex gap-[10px] h-[48px] items-center justify-center px-[20px] relative rounded-[var(--radius\/full,999px)] shrink-0 w-[176px]" label="Review trip" showIcon={false} />
         </div>
-        <ButtonPrimary className="bg-[var(--surface\/accent,#c54646)] content-stretch cursor-pointer drop-shadow-[0px_2px_3px_rgba(0,0,0,0.1)] flex gap-[10px] h-[48px] items-center justify-center px-[20px] relative rounded-[var(--radius\/full,999px)] shrink-0 w-[176px]" label="Review trip" showIcon={false} />
       </div>
     </div>
   );
