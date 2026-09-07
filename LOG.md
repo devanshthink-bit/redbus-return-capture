@@ -6655,3 +6655,40 @@ Severity:  major
 Layer:     things
 Action:    done
 
+
+CRITIQUE · 2026-09-06 · molades-build · Source: user
+**The search field grew as you filled it.** *"Why is the height of the input field changing while
+entering the locations? It should be the same as before entering and after entering."*
+
+Empty draws **one** line — the field's name in the value slot, with the label hidden. Filled draws
+**two** — label above value. Nothing held the row's height between the two, so From and To grew
+by a line as they were answered and the card jumped.
+
+The row now reserves the filled height and centres the single line inside it: all three sit at 50px
+(the date row is 49, one pixel off because of its Today/Tomorrow chips). **Hiding an element does
+not reserve its space, and a two-state field has to be sized for the taller state.**
+Severity:  major
+Layer:     looks
+Action:    fixed
+
+DECISION · 2026-09-06 · molades-build · Source: user
+**Sliding is for things that slide.** *"why did you apply sliding animation in every interaction? It
+is very fast. Just apply smooth interaction. Don't apply sliding in everything. Only in bottom
+sheets or things like that."*
+
+He is right and I overreached. Asked for smoothness, I gave every screen change a left/right slide
+borrowed from iOS push navigation — which this prototype is not: it is a single phone frame where
+screens replace each other. The slide read as motion for its own sake, and at 300ms it was quick
+enough to feel like a flick rather than a transition.
+
+Now: **a screen change is a 240ms fade.** Only things that actually travel do: a sheet rises 28px
+over 380ms, and the price sheet slides up over the same. Tabs, toggles, segments and radios keep
+their 200ms colour and position transitions, and `prefers-reduced-motion` still turns it all off.
+
+**The rule worth keeping: motion should describe what is happening, not decorate it.** A sheet
+arrives from the bottom because that is where it lives. A screen that simply replaces another has
+no direction to describe, so giving it one is noise.
+Severity:  major
+Layer:     moments
+Action:    fixed
+

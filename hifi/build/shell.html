@@ -105,6 +105,9 @@
   .hf-empty{min-height:20px}
   .hf-ph{color:#8a8a8f!important;font-weight:400!important}
   .hf-hidelabel{display:none!important}
+  /* Empty shows one line, filled shows label + value. Without a floor the row grew as you typed
+     into it. Reserve the filled height and centre the single line inside it. */
+  .hf-fieldbox{min-height:38px;justify-content:center}
   .hf-toggle-on{background:#C54646!important}
   .hf-toggle-on>*{left:24px!important}
   @keyframes hf-blink{
@@ -113,15 +116,13 @@
   }
   .hf-blink{animation:hf-blink 800ms ease-in-out 3;border-radius:8px;position:relative;z-index:5}
   @keyframes hf-slideup{from{transform:translateY(100%)}to{transform:translateY(0)}}
-  .hf-slideup{animation:hf-slideup 340ms cubic-bezier(.22,1,.36,1)}
-  /* Screens should arrive, not appear. Forward comes in from the right, back from the left, and a
-     sheet rises -- the same grammar iOS uses, so nothing reads as a jump cut. */
-  @keyframes hf-in-fwd {from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:none}}
-  @keyframes hf-in-back{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:none}}
-  @keyframes hf-in-up  {from{opacity:0;transform:translateY(26px)} to{opacity:1;transform:none}}
-  .hf-in-fwd {animation:hf-in-fwd  300ms cubic-bezier(.22,1,.36,1)}
-  .hf-in-back{animation:hf-in-back 300ms cubic-bezier(.22,1,.36,1)}
-  .hf-in-up  {animation:hf-in-up   340ms cubic-bezier(.22,1,.36,1)}
+  .hf-slideup{animation:hf-slideup 380ms cubic-bezier(.22,1,.36,1)}
+  /* Sliding is for things that slide. A screen change is a settle, not a swipe -- the left/right
+     slide on every navigation read as motion for its own sake. Only a sheet travels now. */
+  @keyframes hf-in   {from{opacity:0} to{opacity:1}}
+  @keyframes hf-in-up{from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:none}}
+  .hf-in-fwd,.hf-in-back{animation:hf-in 240ms ease-out}
+  .hf-in-up  {animation:hf-in-up 380ms cubic-bezier(.22,1,.36,1)}
   /* and the small things settle rather than snap */
   .hf-viewport .scroll{scroll-behavior:smooth}
   [data-name^="Tab / "],[data-name="Toggle / iOS"],[data-name="Toggle / iOS"]>*,
@@ -349,10 +350,12 @@
     function clear(el, lbl, placeholder){
       el.textContent = placeholder; el.classList.add('hf-ph');
       if (lbl) lbl.classList.add('hf-hidelabel');
+      if (el.parentElement) el.parentElement.classList.add('hf-fieldbox');
     }
     function fill(el, v, lbl){
       el.textContent = v; el.classList.remove('hf-ph');
       if (lbl) lbl.classList.remove('hf-hidelabel');
+      if (el.parentElement) el.parentElement.classList.add('hf-fieldbox');
     }
     function targetEl(){ return step === 0 ? rowFrom : step === 1 ? rowTo : search; }
 
