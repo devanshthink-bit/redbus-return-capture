@@ -6692,3 +6692,44 @@ Severity:  major
 Layer:     moments
 Action:    fixed
 
+
+CHANGE  ·  2026-09-07  ·  molades-none  · Source: user
+Boarding and dropping points rebuilt against the real app, in Figma and the build together.
+Devansh: *"a lot of things don't match with the real app screen"*. Five things did not:
+the selected tab filled the track edge to edge instead of floating on it (4px padding on the
+Track now); the prompt and the search field sat on the grey page when the real app puts them on
+a white block above the cards (new `Find` frame, cloned to 04a so the two cannot drift); the
+search and locate icons were typed glyphs `⌕` and `◉` (real `Icon / Search` instance, and a
+`Icon / Locate` crosshair drawn — the set had no locate icon); cards at radius 12 against the
+real 16; radios at 22 and pale against the real 26 and darker.
+04 diff 9.8%, 04a 5.8% — both a ramp, no step.
+
+LEARNED  ·  2026-09-07  ·  molades-none
+An icon component carries the colour it was drawn for. `Icon / Search` is white — it was built
+for the dark search bar — so dropping it into a white field rendered nothing at all, while the
+instance reported present, visible, and the right size. Nothing in the node tree looked wrong.
+Check the paint, not just the presence.
+
+CHANGE  ·  2026-09-07  ·  molades-none  · Source: user
+The tab switch now moves only what is under the tabs.
+Devansh: *"On switching from boarding to drop point in the toggle, only things below this toggle
+change. Everything above remains the same."* 04 and 04a are two screens to the prototype but one
+screen with a control on it to the eye, so `go()` gained a `TABPAIR` map: on a move between the
+two halves of one tab control it skips the screen-level animation and fades only the siblings
+after `[data-name="Tabs"]`. Verified: header and tabs carry no animation class and the tab strip
+sits at the same y before and after.
+
+CHANGE  ·  2026-09-07  ·  molades-none  · Source: user
+The radio dot no longer slides up.
+Devansh: *"Why, on the radio button in pickup and drop points, is the sliding animation coming?
+Doesn't make any sense."* It was reusing `hf-in-up`, which travels 28px. A radio dot does not
+travel — it is either set or not. Replaced with `hf-dot`, a 160ms fade and scale from 0.6.
+
+LEARNED  ·  2026-09-07  ·  molades-none
+`build/shot.sh` exists for a reason. Shooting `app.html?screen=NN` with Chrome directly catches
+the shell's `fit()` scaling, so the frame comes out shifted and zoomed and the diff reads 17%
+with a 40% band — a bug that is not in the screen. `shot.sh` strips the shell first. Same run
+through it read 9.8%, a clean ramp.
+Also: `set -- $s` does not word-split in zsh, so a loop over `"04 953"` wrote a file called
+`04 953.png` and left the real `04.png` stale from an earlier run. A diff against a file you did
+not just write is the stale-reference trap wearing a different hat.

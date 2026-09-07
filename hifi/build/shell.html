@@ -130,8 +130,10 @@
     transition:background-color 200ms ease, color 200ms ease, box-shadow 200ms ease,
                left 220ms cubic-bezier(.22,1,.36,1), opacity 200ms ease}
   .hf-radio-on{position:relative}
+  /* A radio dot does not travel -- it is either set or not. It fades in on the spot. */
+  @keyframes hf-dot{from{opacity:0;transform:scale(.6)} to{opacity:1;transform:none}}
   .hf-radio-on::after{content:'';position:absolute;inset:5px;border-radius:50%;
-    background:#C54646;animation:hf-in-up 200ms ease}
+    background:#C54646;animation:hf-dot 160ms ease-out}
   @media (prefers-reduced-motion:reduce){
     .hf-in-fwd,.hf-in-back,.hf-in-up,.hf-slideup,.hf-blink{animation:none}
   }
@@ -260,8 +262,20 @@
   });
 
   // 3 · navigation
+  // the two halves of one tab control, keyed both ways
+  var TABPAIR = { '04': '04a', '04a': '04' };
+  function belowTabs(sec){
+    var root = sec.querySelector('.scroll > div');
+    if (!root) return [];
+    var kids = Array.prototype.slice.call(root.children);
+    var t = -1;
+    kids.forEach(function(el, k){ if (el.getAttribute('data-name') === 'Tabs') t = k; });
+    return t < 0 ? [] : kids.slice(t + 1);
+  }
+
   function go(i){
     if (i < 0 || i >= screens.length) return;
+    var from = ORDER[at];
     var dir = i >= at ? 1 : -1;
     screens[at].hidden = true;
     at = i;
@@ -277,11 +291,20 @@
     nextB.disabled = at === screens.length - 1;
     if (history.replaceState) history.replaceState(null, '', '#' + ORDER[at]);
     document.title = NAMES[at] + ' — redBus hi-fi';
-    // a sheet rises; every other screen slides the way you are travelling
-    var anim = OVERLAY[ORDER[at]] ? 'hf-in-up' : (dir >= 0 ? 'hf-in-fwd' : 'hf-in-back');
-    sec.classList.remove('hf-in-fwd','hf-in-back','hf-in-up');
-    void sec.offsetWidth;
-    sec.classList.add(anim);
+    // Two screens that are the two halves of one tab control are not two screens to the eye.
+    // Switching the tab must leave the header and the tabs sitting still, exactly as they do in
+    // the real app, and change only what is under them.
+    if (TABPAIR[from] === ORDER[at]) {
+      belowTabs(sec).forEach(function(el){
+        el.classList.remove('hf-in-fwd'); void el.offsetWidth; el.classList.add('hf-in-fwd');
+      });
+    } else {
+      // a sheet rises; every other screen fades in
+      var anim = OVERLAY[ORDER[at]] ? 'hf-in-up' : (dir >= 0 ? 'hf-in-fwd' : 'hf-in-back');
+      sec.classList.remove('hf-in-fwd','hf-in-back','hf-in-up');
+      void sec.offsetWidth;
+      sec.classList.add(anim);
+    }
     // a price sheet is a sheet: it comes up from the bottom rather than being there already
     var sheet = sec.querySelector('.overlay [data-name="Bottom sheet"]');
     if (sheet) { sheet.classList.remove('hf-slideup'); void sheet.offsetWidth; sheet.classList.add('hf-slideup'); }
