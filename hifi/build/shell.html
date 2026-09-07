@@ -141,6 +141,19 @@
   .hf-seg-off{background:transparent!important;box-shadow:none!important}
   .hf-seg-off p{color:#636363!important}
   .hf-live{opacity:1!important}
+  /* Painting the picked day onto the frame you land on. hf-day-off resets a cell to its own
+     resting colours -- which are not one colour: a weekend number is #BC361C and a past or
+     sold-out one #9A9AA4 -- and sel/band come after it so they win the background. */
+  .hf-day-off{background:transparent!important}
+  .hf-day-off > p:first-child{color:#1d1d1d!important}
+  .hf-day-off > p:last-child{color:#636363!important}
+  .hf-day-off.hf-day-wknd > p:first-child{color:#bc361c!important}
+  .hf-day-off.hf-day-mute > p:first-child{color:#9a9aa4!important}
+  .hf-day-off.hf-day-mute > p:last-child{color:#9a9aa4!important}
+  .hf-day-band{background:#fbf4f4!important}
+  .hf-day-sel{background:#c54646!important}
+  .hf-day-sel > p:first-child{color:#fff!important}
+  .hf-day-sel > p:last-child{color:#fff!important}
   .hf-radio-on{position:relative}
   /* A radio dot does not travel -- it is either set or not. It fades in on the spot. */
   @keyframes hf-dot{from{opacity:0;transform:scale(.6)} to{opacity:1;transform:none}}
@@ -554,14 +567,82 @@
     }, true);
   })();
 
-  // 05 / 05a / 05b · the return question, and the calendar under it. Neither is a decoration:
-  //      answering moves the segment and lights Continue, and a day is what takes you forward --
-  //      "I know my date" to the single-day frame, "I'm not sure yet" to the window one. Tapping a
-  //      day before answering blinks the question instead, because the answer is what a tap means.
-  (function modeChoice(){
+  // 05 / 05a / 05b · the return question and the calendar under it, both live.
+  //      The answer decides what a day tap means, so the tap carries the day forward and the frame
+  //      you land on is repainted around it -- otherwise every date lands on the one day the frame
+  //      was drawn with, which is what "only 14 is selected" was.
+  (function returnPicker(){
     var idx = ['05','05a','05b'].map(function(k){ return ORDER.indexOf(k); });
     var i05 = idx[0], i05a = idx[1], i05b = idx[2];
     if (i05 < 0) return;
+
+    // 14 September 2026 is a Monday; the whole calendar hangs off that.
+    var DOW = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    function dow(d){ return DOW[((d - 7) % 7 + 7) % 7]; }
+    function label(d){ return dow(d) + ', ' + d + ' Sep'; }
+
+    function cells(sec){
+      return [].slice.call(sec.querySelectorAll('[data-name="Sep grid"] [data-name="Week"] > div'));
+    }
+    function num(c){ var p = c.querySelector('p'); var t = p ? p.textContent.trim() : ''; return /^\d+$/.test(t) ? +t : 0; }
+    function fare(c){ var ps = c.querySelectorAll('p'); return ps[1] ? ps[1].textContent.trim() : ''; }
+    function money(c){ var f = fare(c); return /^₹/.test(f) ? +f.replace(/[₹,]/g,'') : 0; }
+    function mute(c){ return /unavailable/.test(c.className + ' ' + c.innerHTML); }
+    function out(c){ return /Out/.test(c.textContent || ''); }
+    function wknd(c){ return /weekend/.test(c.innerHTML); }
+    function bookable(c){ return num(c) > 0 && !mute(c) && !out(c); }
+    function setText(sec, id, txt){
+      var el = sec.querySelector('[data-node-id="' + id + '"]');
+      if (el) el.textContent = txt;
+    }
+
+    // Repaint a frame's calendar around one pick. Everything is reset first: a selection that only
+    // adds is a selection that accumulates, which is the bug the boarding points already had.
+    function paint(sec, mode, start){
+      var cs = cells(sec), byDay = {};
+      cs.forEach(function(c){
+        var d = num(c);
+        if (!d || out(c)) return;                       // the outbound day keeps its own marker
+        byDay[d] = c;
+        c.classList.remove('hf-day-sel','hf-day-band');
+        c.classList.add('hf-day-off');
+        c.classList.toggle('hf-day-wknd', wknd(c));
+        c.classList.toggle('hf-day-mute', mute(c));
+      });
+      var end = mode === 'fixed' ? start : Math.min(start + 6, 30);
+      for (var d = start; d <= end; d++) {
+        var c = byDay[d]; if (!c) continue;
+        if (d === start || (mode !== 'fixed' && d === end)) {
+          c.classList.remove('hf-day-off','hf-day-wknd','hf-day-mute');
+          c.classList.add('hf-day-sel');
+        } else {
+          c.classList.add('hf-day-band');
+        }
+      }
+      if (mode === 'fixed') {
+        var pick = byDay[start];
+        setText(sec, '512:3873', 'We’ll book ' + label(start) + ' · from ' + fare(pick));
+        return;
+      }
+      // the window: the count, the cheapest inside it, and the day it actually books
+      var n = 0, cheap = 0, cheapDay = 0;
+      for (var k = start; k <= end; k++) {
+        var cc = byDay[k]; if (!cc) continue;
+        n++;
+        if (bookable(cc) && (!cheap || money(cc) < cheap)) { cheap = money(cc); cheapDay = k; }
+      }
+      setText(sec, '88:418', label(start) + ' to ' + label(end) + ' · ' + n +
+                             ' days marked. Tap any day to start again.');
+      setText(sec, '512:3854', 'We book one day, not all ' + n);
+      if (cheapDay) setText(sec, '512:3858', 'Cheapest is ' + label(cheapDay) + ' · ' + fare(byDay[cheapDay]));
+      var last = byDay[end];
+      if (last) setText(sec, '512:3860', 'Your last day, ' + label(end) + ', is ' + fare(last) + '.');
+    }
+
+    // A day tap can jump 05 -> 05b, which the linear order has no edge for, so Back has to know
+    // it came from the question rather than walking to 05a.
+    var jumped = false;
+
     idx.forEach(function(i){
       if (i < 0) return;
       var sec    = screens[i];
@@ -569,16 +650,9 @@
       if (!toggle) { console.warn('no mode toggle on ' + ORDER[i]); return; }
       var segs = [].slice.call(toggle.querySelectorAll('[data-name^="Segment / "]'));
       var cont = sec.querySelector('[data-name="Button / Primary"]');
-      // A day is bookable unless it is past, sold out, or the outbound itself. The unavailable
-      // states carry the calendar/unavailable token, which is the only thing they have in common.
-      var days = [].slice.call(sec.querySelectorAll('[data-name="Sep grid"] [data-name="Week"] > div'))
-        .filter(function(c){
-          var t = (c.textContent || '').trim();
-          if (!/^\d/.test(t)) return false;
-          if (/unavailable/.test(c.className + ' ' + c.innerHTML)) return false;
-          if (/Out/.test(t)) return false;
-          return true;
-        });
+      var hint = sec.querySelector('[data-name="Hint"]') ||
+                 sec.querySelector('[data-node-id="612:4015"]');
+      var days = cells(sec).filter(bookable);
       segs.forEach(function(x){ x.classList.add('hf-hot'); });
       days.forEach(function(x){ x.classList.add('hf-hot'); });
 
@@ -595,16 +669,24 @@
           x.classList.toggle('hf-seg-off', j !== k);
         });
         if (cont) cont.classList.add('hf-live');
+        if (hint && ORDER[i] === '05') hint.textContent = k === 0
+          ? 'Tap the day you’ll travel back.'
+          : 'Tap the first day you could travel back.';
       }
       if (chosen() >= 0 && cont) cont.classList.add('hf-live');
-      function askFirst(){
-        blinkAt(toggle);
-        if (toggle.scrollIntoView) toggle.scrollIntoView({ block: 'nearest' });
+
+      function forward(k, d){
+        var to = k === 0 ? i05b : i05a;
+        if (to >= 0 && d) paint(screens[to], k === 0 ? 'fixed' : 'window', d);
+        if (ORDER[i] === '05') jumped = true;
+        go(to);
       }
-      function forward(k){ go(k === 0 ? i05b : i05a); }
 
       sec.addEventListener('click', function(e){
-        if (e.target.closest && e.target.closest('.hf-back')) return;
+        if (e.target.closest && e.target.closest('.hf-back')) {
+          if (jumped && ORDER[i] !== '05') { e.preventDefault(); e.stopPropagation(); jumped = false; go(i05); }
+          return;
+        }
         var seg = e.target.closest('[data-name^="Segment / "]');
         if (seg && segs.indexOf(seg) >= 0) {
           e.preventDefault(); e.stopPropagation(); pick(segs.indexOf(seg)); return;
@@ -613,15 +695,14 @@
         if (day && days.indexOf(day) >= 0) {
           e.preventDefault(); e.stopPropagation();
           var k = chosen();
-          if (k < 0) { askFirst(); return; }
-          if (ORDER[i] === '05') { forward(k); return; }
-          if (cont) blinkAt(cont);                       // 05a and 05b already hold a day
+          if (k < 0) { blinkAt(toggle); if (toggle.scrollIntoView) toggle.scrollIntoView({block:'nearest'}); return; }
+          forward(k, num(day));
           return;
         }
         if (cont && cont.contains(e.target)) {
           var c = chosen();
-          if (c < 0) { e.preventDefault(); e.stopPropagation(); askFirst(); return; }
-          if (ORDER[i] === '05') { e.preventDefault(); e.stopPropagation(); forward(c); }
+          if (c < 0) { e.preventDefault(); e.stopPropagation(); blinkAt(toggle); return; }
+          if (ORDER[i] === '05') { e.preventDefault(); e.stopPropagation(); forward(c, 0); }
         }
       }, true);
     });

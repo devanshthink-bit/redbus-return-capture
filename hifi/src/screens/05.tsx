@@ -162,18 +162,18 @@ export default function Component05ReturnPickYourDays() {
         </div>
         <div className="bg-[#ededf2] border border-[#e4e4e4] border-solid content-stretch flex gap-[4px] items-start overflow-clip p-[4px] relative rounded-[24px] shrink-0 w-full" data-node-id="612:4010" data-name="Mode toggle">
           <div className="content-stretch flex flex-[1_0_0] items-center justify-center min-w-px overflow-clip py-[11px] relative rounded-[20px]" data-node-id="612:4011" data-name="Segment / I know my date">
-            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[14px] text-center whitespace-nowrap" data-node-id="612:4012">
+            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#636363] text-[14px] text-center whitespace-nowrap" data-node-id="612:4012">
               I know my date
             </p>
           </div>
-          <div className="content-stretch flex flex-[1_0_0] items-center justify-center min-w-px overflow-clip py-[11px] relative rounded-[20px]" data-node-id="612:4013" data-name="Segment / I’m not sure yet">
-            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[14px] text-center whitespace-nowrap" data-node-id="612:4014">
+          <div className="bg-white content-stretch flex flex-[1_0_0] items-center justify-center min-w-px overflow-clip py-[11px] relative rounded-[20px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.12)]" data-node-id="612:4013" data-name="Segment / I’m not sure yet">
+            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#c54646] text-[14px] text-center whitespace-nowrap" data-node-id="612:4014">
               I’m not sure yet
             </p>
           </div>
         </div>
         <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="612:4015">
-          Pick your day. Or mark a range, if your plans could still move.
+          Tap the first day you could travel back.
         </p>
         <div className="bg-white content-stretch flex flex-col items-start overflow-clip px-[20px] py-[16px] relative rounded-[16px] shrink-0 w-full" data-node-id="345:2709" data-name="Calendar">
           <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[16px] whitespace-nowrap" data-node-id="345:2710">
@@ -313,7 +313,7 @@ export default function Component05ReturnPickYourDays() {
             Skip
           </p>
         </div>
-        <ButtonPrimary className="bg-[var(--surface\/accent,#c54646)] content-stretch cursor-pointer drop-shadow-[0px_2px_3px_rgba(0,0,0,0.1)] flex flex-[1_0_0] gap-[10px] h-[48px] items-center justify-center min-w-px opacity-40 px-[20px] relative rounded-[var(--radius\/full,999px)]" label="Continue" showIcon={false} />
+        <ButtonPrimary className="bg-[var(--surface\/accent,#c54646)] content-stretch cursor-pointer drop-shadow-[0px_2px_3px_rgba(0,0,0,0.1)] flex flex-[1_0_0] gap-[10px] h-[48px] items-center justify-center min-w-px px-[20px] relative rounded-[var(--radius\/full,999px)]" label="Continue" showIcon={false} />
       </div>
     </div>
   );

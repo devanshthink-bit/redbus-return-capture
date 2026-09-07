@@ -7071,3 +7071,56 @@ sentences into a message whose first two were about a blank band and a dead cont
 third as a brief and rebuilt the question. The evidence I gathered was real and the change was
 still wrong, because the screen it landed on was not the screen the evidence came from. Fix what
 was reported; propose the redesign separately and let him choose.
+
+DECISION  ·  2026-09-08  ·  molades-none  · Source: user
+**05 opens with an answer: *I'm not sure yet*.** Devansh: *"when none are selected user will never
+know its a toggle can we atleast make one active along with reasoning why"*. He is right about the
+affordance — a segmented control with neither half filled reads as two labels, not a control, and
+nothing on the screen tells you a tap is available.
+
+**The reason it is *I'm not sure yet* and not the other half:** 65.2% of the qualified survey said
+*"wasn't sure of my exact return date"* — the largest single reason anyone gave. The whole feature
+exists for that traveller. Defaulting to *I know my date* would default against the segment the
+product is for, which is exactly why §8 said no default at all; defaulting to the majority answer
+does not. It also fits §8's other half — the seat and points **do** carry defaults, "because a
+defensible default exists and a wrong one is free to fix". Correcting this one is one tap, before
+anything is held or paid for.
+
+**What it costs, stated plainly:** the screen no longer *learns* which kind of traveller this is,
+it assumes. Someone who does know their date now gets a 7-day window on their first tap and has to
+undo it. That is the trade he is making for the affordance, and it is his to make.
+
+Continue is live from the start now, so the 40% state is gone with it. **v4 still has no default
+answer** — the divergence noted earlier stands and grows by one.
+
+CHANGE  ·  2026-09-08  ·  molades-none  · Source: user
+**The picked day follows the tap now.** Devansh: *"why m i not able to select any date, only 14 is
+selected in both toggles why??"* Because 05a and 05b are **drawings of one example** — 05b was
+drawn with Mon 14 picked and 05a with the 11–17 window — and every date landed on the same picture.
+
+The shell now repaints the frame it sends you to, around the day you actually tapped:
+
+- **Fixed** — the chip moves to your day and the line under the calendar is rewritten:
+  *We'll book Fri, 18 Sep · from ₹1,050*, read out of that day's own cell.
+- **Window** — the band runs from your day to six days later (clamped at the 30th), both ends in
+  the accent, and four derived lines are rewritten: the hint's two dates and the count, *We book
+  one day, not all N*, *Cheapest is …* (the minimum fare inside the band, skipping sold-out days)
+  and *Your last day, …, is ₹N*.
+- Every cell is **reset first**. A selection that only adds is a selection that accumulates, which
+  is the bug the boarding points already had once.
+- Resetting is not one colour: a weekend number goes back to `#BC361C`, a past or sold-out one to
+  `#9A9AA4`, everything else to `#1D1D1D`. That is why the reset is three classes and not one.
+- 14 September 2026 is a Monday, and every weekday label is derived from that. Checked against the
+  frames' own copy: 11 → Fri, 17 → Thu, 22 → Tue, 24 → Thu, 30 → Wed.
+
+**Back needed teaching too.** A day tap can jump 05 → 05b, an edge the linear canvas order does not
+have, so Back from 05b walked to 05a. It returns to the question now when that is where you came
+from.
+
+LEARNED  ·  2026-09-08  ·  molades-none
+**A frame is an example, and a prototype that only shows the example is not testable.** Every date
+on 05's calendar was live in the sense that it navigated, and dead in the sense that it always
+showed 14 September. In a session that reads as the prototype ignoring you — worse than a control
+that plainly does nothing, because it appears to respond. The fix is not more frames: it is to
+carry the tap forward and repaint the one frame around it, deriving every number from what the
+frame already holds rather than from a second table that can drift.

@@ -885,11 +885,20 @@ were better evidenced and worse in place — on a screen that already carries a 
 and a rules card, two more cards is a third card layer. The segmented control is the design; the
 `Row / Choice` component stays on the Components page, unused.
 
-**Both the toggle and the calendar are live in the build.** Tapping a half selects it and lights
-Continue; tapping a day then goes forward — *I know my date* to 05b, *I'm not sure yet* to 05a.
-A day tapped before the question is answered blinks the question instead, because the answer is
-what a tap on a day means. On 05a and 05b, which already hold a day, a day tap blinks Continue.
-18–19 days are tappable per frame: past, sold-out and the outbound day are not.
+**05 opens with an answer: *I'm not sure yet*** (8 Sep, at Devansh's request). Neither half filled
+did not read as a control. The majority answer is the defensible one — 65.2% of the survey did not
+know their return date — and correcting it is one tap. The cost is that the screen now assumes
+rather than learns, and someone who does know their date gets a window on their first tap. **v4
+still has no default.**
+
+**Both the toggle and the calendar are live, and the pick follows the tap.** Tapping a half selects
+it and rewrites the hint; tapping a day goes forward on the answer — *I know my date* to 05b,
+*I'm not sure yet* to 05a — and **repaints the frame it lands on around that day**: the chip or the
+7-day band moves, and every line naming a date or a fare is recomputed from the cells themselves
+(*We'll book …*, the hint's two dates, *We book one day, not all N*, *Cheapest is …*, *Your last
+day …*). Without that, every date landed on the one day the frame was drawn with. Back from 05b
+returns to 05 when a day tap is what jumped there. 18–19 days are tappable per frame: past,
+sold-out and the outbound day are not.
 
 Two corrections from the same pass did survive, and both came off the captures:
 
