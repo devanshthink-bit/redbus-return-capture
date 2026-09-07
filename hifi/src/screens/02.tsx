@@ -710,7 +710,7 @@ export default function Component02OutboundBusList() {
       </div>
       <div className="bg-gradient-to-r content-stretch flex flex-col from-[#1b3874] gap-[6px] h-[267.22px] items-center overflow-clip pt-[16px] px-[16px] relative shrink-0 to-[#741e42] via-[#2d3768] via-[45%] w-full" data-node-id="183:1626" data-name="primowed">
         <div className="content-stretch flex gap-[8px] items-center overflow-clip relative shrink-0" data-node-id="286:2457" data-name="Title">
-          <ArtPrimoOnNavy className="h-[32px] relative shrink-0 w-[66px]" />
+          <ArtPrimoOnNavy className="h-[32px] relative shrink-0 w-[60px]" />
           <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[24px] not-italic relative shrink-0 text-[18px] text-white whitespace-nowrap" data-node-id="286:2459">
             Wednesdays
           </p>

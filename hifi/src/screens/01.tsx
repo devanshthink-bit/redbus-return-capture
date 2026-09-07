@@ -1,6 +1,6 @@
 const imgLogoRedBusMark = "assets/24678315-8076-42a5-adf4-048efb56feb5.png";
-const imgIconBus = "assets/1ab58a8d-210f-4036-a41c-53d5ebb0f374.svg";
-const imgArtWallet = "assets/009cfb72-a2f3-43f5-a4a0-31a90cb5463f.png";
+const imgIconBus = "assets/550e0797-aedd-4962-964f-1c86e8440304.svg";
+const imgArtWallet = "assets/f78dbdd1-07f6-4431-aa6c-36db9c60a7f9.png";
 const imgArtAvatarWomen = "assets/2e80c296-3987-4197-9648-a36d3013e11e.png";
 const imgArtTileMetro = "assets/c848d6c6-ecdb-4a5e-bbb4-723a458ff3b9.png";
 const imgArtTileHotels = "assets/f95caae6-d768-414f-a6b8-435dab1294e4.png";
@@ -17,11 +17,11 @@ const imgPhoto2 = "assets/9ae3f3e4-0d38-4122-86dd-2fcc66ac592d.png";
 const imgCrest = "assets/9c0b94be-e9f7-40b1-87a9-94b13074a86c.png";
 const imgCrest1 = "assets/4b8eb3ba-fd14-4795-a00f-6b337492628f.png";
 const imgWhatsnew = "assets/04dcc207-8f42-4412-aff6-f561a84b1c8b.png";
-const imgStatusIcons = "assets/6760601c-76c5-45ee-b3ce-7cea22ce0518.svg";
-const imgIcon = "assets/022ac74d-2b00-43d7-8f6f-5554dc8d5d22.svg";
+const imgStatusIcons = "assets/091fbdca-8e2e-4f59-80c8-bfdc341f332f.svg";
+const imgIcon = "assets/8b1dbaae-1b05-4657-bb9a-3b69452dc009.svg";
 const imgArrows = "assets/cb00b3f2-7707-4c55-8a7f-5064aa651dc5.svg";
-const imgGlyph = "assets/0a7fcc88-a71e-4188-a701-8611a8813150.svg";
-const imgArtSunburst = "assets/6936741a-edef-4ffe-a7ac-4d9933cd5625.svg";
+const imgGlyph = "assets/f987e112-3f21-4093-9c91-abca9b06aa32.svg";
+const imgArtSunburst = "assets/bda687c1-0447-4e49-97f2-130fc4c62373.svg";
 const imgFrame = "assets/5b2e3aa2-2477-4b36-8908-390be8c387b8.svg";
 const imgDot = "assets/db707fce-bb98-47c2-bc37-8e64d7c1bcbc.svg";
 const imgDot1 = "assets/c8d8152d-b4e2-4fa8-a1b4-0ac3b30dcd84.svg";
@@ -32,12 +32,12 @@ const imgFrame1 = "assets/c607fe5f-cb39-4c87-a88e-2ed1a5aa7bc5.svg";
 const imgFrame2 = "assets/6e560916-0faf-48e6-974b-5ee043d5d7da.svg";
 const imgFrame3 = "assets/ee8843b7-87b5-4e01-9292-9dd34d74cfc2.svg";
 const imgFrame4 = "assets/6f3ca641-0d62-4487-94ac-e44cdd192a7e.svg";
-const imgIconStarFilled = "assets/ca8eb380-a72d-4125-abaf-21a890f26e4f.svg";
+const imgIconStarFilled = "assets/e6b8b574-4612-454f-8355-c1dd70e2b974.svg";
 const imgIcon1 = "assets/ba7cc76c-5b9f-4a28-8509-31170dbcd9d8.svg";
 const imgIcon2 = "assets/ffe46d02-6e9d-493d-9f48-df1978e85067.svg";
 const imgIcon3 = "assets/c9425971-3686-465e-bb0c-4040d86af53b.svg";
 const imgIcon4 = "assets/1dcba43d-fde6-40a0-aea7-d0ca17f3d5f8.svg";
-const imgIcon5 = "assets/b6e22c1a-6c8a-4ca1-a0ce-a0798c163427.svg";
+const imgIcon5 = "assets/960ddedf-8889-4133-b360-ba1c7db5d24e.svg";
 
 function LogoRedBusMark({ className }: { className?: string }) {
   return (
@@ -362,7 +362,7 @@ export default function Component01Home() {
                 <div className="absolute left-[-34px] size-[120px] top-[-42px]" data-node-id="271:2408" data-name="Blob">
                   <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgBlob} />
                 </div>
-                <ArtWallet className="absolute left-0 size-[34px] top-[2px]" />
+                <ArtWallet className="absolute left-0 size-[30px] top-[2px]" />
               </div>
               <div className="flex-[1_0_0] h-px min-w-px relative" data-node-id="271:2411" data-name="Frame" />
               <div className="bg-[#f2f1f7] content-stretch flex items-start overflow-clip px-[10px] py-[5px] relative rounded-[999px] shrink-0" data-node-id="271:2412" data-name="Pill">
@@ -470,7 +470,7 @@ export default function Component01Home() {
               </div>
             </div>
             <div className="bg-[#f2d9d5] content-stretch flex gap-[8px] items-center justify-center overflow-clip py-[12px] relative rounded-[10px] shrink-0 w-full" data-node-id="273:2430" data-name="Book trains now">
-              <IconBus className="relative shrink-0 size-[20px]" />
+              <IconBus className="relative shrink-0 size-[24px]" />
               <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[18px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="273:2438">
                 Book trains now
               </p>
@@ -629,7 +629,7 @@ export default function Component01Home() {
                     APSRTC
                   </p>
                   <div className="bg-[#468443] content-stretch flex gap-[3px] items-center overflow-clip pl-[6px] pr-[7px] py-[3px] relative rounded-[5px] shrink-0" data-node-id="276:2418" data-name="Rating">
-                    <div className="relative shrink-0 size-[12px]" data-node-id="276:2419" data-name="Icon / Star Filled">
+                    <div className="relative shrink-0 size-[24px]" data-node-id="276:2419" data-name="Icon / Star Filled">
                       <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconStarFilled} />
                     </div>
                     <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[16px] not-italic relative shrink-0 text-[12px] text-white whitespace-nowrap" data-node-id="276:2421">
@@ -648,7 +648,7 @@ export default function Component01Home() {
                 1539 services including Garuda, Garuda Plus and more
               </p>
               <div className="bg-[#f2f1f7] content-stretch flex gap-[8px] items-center overflow-clip px-[10px] py-[8px] relative rounded-[8px] shrink-0 w-full" data-node-id="276:2426" data-name="Partner">
-                <LogoRedBusMark className="h-[20px] relative shrink-0 w-[32px]" />
+                <LogoRedBusMark className="h-[23px] relative shrink-0 w-[36px]" />
                 <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Medium'] font-medium leading-[20px] min-w-px not-italic relative text-[14px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="276:2428">
                   Official booking partner of APSRTC
                 </p>
@@ -671,7 +671,7 @@ export default function Component01Home() {
                     GSRTC
                   </p>
                   <div className="bg-[#468443] content-stretch flex gap-[3px] items-center overflow-clip pl-[6px] pr-[7px] py-[3px] relative rounded-[5px] shrink-0" data-node-id="276:2437" data-name="Rating">
-                    <div className="relative shrink-0 size-[12px]" data-node-id="276:2438" data-name="Icon / Star Filled">
+                    <div className="relative shrink-0 size-[24px]" data-node-id="276:2438" data-name="Icon / Star Filled">
                       <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconStarFilled} />
                     </div>
                     <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[16px] not-italic relative shrink-0 text-[12px] text-white whitespace-nowrap" data-node-id="276:2440">
@@ -690,7 +690,7 @@ export default function Component01Home() {
                 1450 services including Volvo, Sleeper and more
               </p>
               <div className="bg-[#f2f1f7] content-stretch flex gap-[8px] items-center overflow-clip px-[10px] py-[8px] relative rounded-[8px] shrink-0 w-full" data-node-id="276:2445" data-name="Partner">
-                <LogoRedBusMark className="h-[20px] relative shrink-0 w-[32px]" />
+                <LogoRedBusMark className="h-[23px] relative shrink-0 w-[36px]" />
                 <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Medium'] font-medium leading-[20px] min-w-px not-italic relative text-[14px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="276:2447">
                   Official booking partner of GSRTC
                 </p>

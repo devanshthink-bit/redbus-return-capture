@@ -1,4 +1,4 @@
-const imgArtPrimoOnNavy = "assets/492d7b81-126b-4dc0-b1ea-7b0976c71d18.png";
+const imgArtPrimoOnNavy = "assets/fa5d30e0-7fdf-4efa-a4d8-a3f163de5175.png";
 const imgIconThumbUp = "assets/593709e2-3563-49c7-8618-8c4fcaad19b5.svg";
 const imgIconStarFilled = "assets/ef5bcd8b-c7a5-4459-960c-6aed312a0643.svg";
 const imgIconTickCircle = "assets/343d22d4-f15a-45ab-b99f-319546f02c5c.svg";
@@ -17,17 +17,17 @@ const imgIconPolicyRoute = "assets/437889eb-1cef-49e9-a523-f59e7e62cd8f.svg";
 const imgIconPolicyPets = "assets/6bf5a3b1-e366-4051-bd82-d6f1cac74610.svg";
 const imgIconPolicyLuggage = "assets/b2c1e6b6-c264-42ee-8601-87d3f606e151.svg";
 const imgIconPolicyChild = "assets/c676aee4-a118-4a6b-9af5-21b7927868de.svg";
-const imgGlyph = "assets/362ba083-fab2-417d-accd-66574bd0bea1.svg";
-const imgArtPrimo = "assets/1637499b-d967-4b1d-b99d-940507154fb6.png";
-const imgArtSunburst = "assets/456916d6-6dc9-43d2-ad53-969b99e885b3.svg";
+const imgGlyph = "assets/edce27a9-3c0c-4a11-9460-bdf39d04e716.svg";
+const imgArtPrimo = "assets/180e720d-ef38-40a2-babe-7815bb8770c7.png";
+const imgArtSunburst = "assets/5944e4a4-ea2f-491d-8636-0d59ddaed320.svg";
 const imgArtLaurel = "assets/f72f3b5e-b4c9-47a9-bbd0-40f8ed17040a.svg";
 const imgGroup = "assets/05ec3d48-9c70-4587-b109-b48fc2b22bbf.svg";
-const imgStar = "assets/358bb95a-b08a-4670-a58e-6d4681ee5cd8.svg";
+const imgStar = "assets/5defeabb-4b51-4462-9a95-e9a44e39c85f.svg";
 const imgPhoto1 = "assets/0f66b95e-98e1-44d0-8929-705749334f99.png";
 const imgPhoto2 = "assets/fc0563d5-0e5b-44f3-b0bd-c85c12d69274.png";
 const imgArtPrimoBus = "assets/24fa5737-e1fd-47ad-a028-9404700b08b7.png";
-const imgStatusIcons = "assets/8f545a61-af61-4080-ae94-c3c1137acf49.svg";
-const imgCollapse = "assets/62b4891e-58c6-4837-9429-572159077cac.svg";
+const imgStatusIcons = "assets/091fbdca-8e2e-4f59-80c8-bfdc341f332f.svg";
+const imgCollapse = "assets/994465d6-9ff2-4e4a-9385-6fb282837d3e.svg";
 const imgVector = "assets/38cf441f-3b17-47cf-be3b-d4c07144fd06.svg";
 const imgIconStarFilled1 = "assets/d6088563-b5ed-4a2a-904b-a4c162ee8b78.svg";
 
@@ -409,12 +409,12 @@ export default function Component03BSeatMapSheetFull() {
         </div>
       </div>
       <div className="bg-white content-stretch flex flex-col gap-[6px] items-start overflow-clip pb-[24px] pt-[10px] px-[16px] relative shrink-0 w-full" data-node-id="248:1780" data-name="Sheet header">
-        <div className="relative shrink-0 size-[24px]" data-node-id="258:2127" data-name="Collapse">
+        <div className="relative shrink-0 size-[20px]" data-node-id="258:2127" data-name="Collapse">
           <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgCollapse} />
         </div>
         <div className="content-stretch flex gap-[8px] items-start overflow-clip pt-[8px] relative shrink-0 w-full" data-node-id="248:1806" data-name="Operator">
           <div className="content-stretch flex flex-[1_0_0] gap-[6px] items-center min-w-px overflow-clip relative" data-node-id="248:1807" data-name="Name">
-            <ArtPrimo className="h-[29px] relative shrink-0 w-[52px]" />
+            <ArtPrimo className="h-[33px] relative shrink-0 w-[59px]" />
             <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Semi_Bold'] font-semibold leading-[24px] min-w-px not-italic relative text-[18px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="248:1809">
               International Tourist Centre
             </p>
@@ -453,11 +453,11 @@ export default function Component03BSeatMapSheetFull() {
       <div className="content-stretch flex flex-col items-start overflow-clip pb-[8px] px-[16px] relative shrink-0 w-full" data-node-id="248:1781" data-name="Highlights">
         <div className="bg-white content-stretch flex gap-[12px] h-[64px] items-center overflow-clip pl-[12px] relative rounded-[14px] shrink-0 w-full" data-node-id="251:1802" data-name="Card / Top 5%">
           <div className="content-stretch flex gap-[2px] items-center overflow-clip relative shrink-0" data-node-id="251:1803" data-name="Top 5%">
-            <ArtLaurelMirrored className="h-[34px] relative shrink-0 w-[22px]" />
+            <ArtLaurelMirrored className="h-[40px] relative shrink-0 w-[26px]" />
             <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[20px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="251:1815">
               Top 5%
             </p>
-            <ArtLaurel className="h-[34px] relative shrink-0 w-[22px]" />
+            <ArtLaurel className="h-[40px] relative shrink-0 w-[26px]" />
           </div>
           <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Regular'] font-normal leading-[22px] min-w-px not-italic relative text-[16px] text-[color:var(--text\/secondary,#636363)]" data-node-id="251:1827">
             One of the best on this route
@@ -465,8 +465,8 @@ export default function Component03BSeatMapSheetFull() {
           <div className="h-full overflow-clip relative shrink-0 w-[96px]" data-node-id="251:1828" data-name="Primo burst">
             <ArtSunburst className="-translate-x-1/2 -translate-y-1/2 absolute left-[calc(50%+35px)] size-[150px] top-[calc(50%+3px)]" />
             <div className="absolute bg-gradient-to-r bottom-0 from-white left-0 to-[rgba(255,255,255,0)] top-0 w-[30px]" data-node-id="251:1882" data-name="Fade" />
-            <ArtPrimo className="-translate-x-1/2 -translate-y-1/2 absolute h-[36px] left-[calc(50%-2px)] top-[calc(50%-6px)] w-[64px]" />
-            <IconChevronRight className="absolute bottom-[4px] right-[8px] size-[16px]" />
+            <ArtPrimo className="-translate-x-1/2 -translate-y-1/2 absolute h-[33px] left-[calc(50%-4.5px)] top-[calc(50%-7.5px)] w-[59px]" />
+            <IconChevronRight className="absolute bottom-0 right-[4px] size-[20px]" />
           </div>
         </div>
       </div>
@@ -768,7 +768,7 @@ export default function Component03BSeatMapSheetFull() {
           </div>
         </div>
         <div className="content-stretch flex gap-[8px] items-center justify-center overflow-clip relative shrink-0 w-full" data-node-id="257:2079" data-name="Verified">
-          <IconTickCircle className="relative shrink-0 size-[22px]" />
+          <IconTickCircle className="relative shrink-0 size-[24px]" />
           <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[22px] not-italic relative shrink-0 text-[#278534] text-[16px] whitespace-nowrap" data-node-id="257:2083">
             Real feedback from verified travelers
           </p>
@@ -857,7 +857,7 @@ export default function Component03BSeatMapSheetFull() {
           <p className="[word-break:break-word] absolute font-['Inter:Regular'] font-normal leading-[22px] left-[18px] not-italic text-[16px] text-white top-[48px] whitespace-nowrap" data-node-id="258:2125">
             A Rising Star on redBus
           </p>
-          <ArtPrimoOnNavy className="absolute h-[40px] right-[16px] top-[18px] w-[74px]" />
+          <ArtPrimoOnNavy className="absolute h-[32px] right-[30px] top-[18px] w-[60px]" />
         </div>
       </div>
     </div>

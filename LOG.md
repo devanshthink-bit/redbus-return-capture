@@ -6302,3 +6302,59 @@ Severity:  minor
 Layer:     steps
 Action:    added
 
+
+CRITIQUE · 2026-09-06 · molades-build · Source: user
+**Audited all 24 frames for the seat defect's whole class: 701 instances, every one measured against
+its own component master.** He asked for it after the seat fix — *"check all other screens for such
+inconsistencies"* — and the sweep found the disease had a clear boundary. **Almost every deviation
+sat on 01, 02, 03, 03a, 03b and 08a, which §19–20 records as the screens built from long screenshots
+of the real app.** 08a inherited its two from 03, being a clone. No screen built from scratch had a
+single one.
+
+**Fixed:**
+
+- **The `Edit` action in the nav was 51×20 on 06, 06a and 06b.** Master is 51×**44**, and every other
+  text action in the file — *Skip*, *Change seat*, *Go back* — is 44 tall. This one was **20px**,
+  under half the 44×44 minimum §10's craft check enforces, and it was **not** on a traced screen: it
+  came in with the day-list frames. The cause was `HUG/HUG`, so it hugged its label and ignored the
+  master's fixed height. It now measures **52** live, because `Nav / Top Bar` is itself an instance
+  and its descendants inherit from the component rather than taking a resize.
+- **`Nav / Top Bar` had two heights, 63 on seventeen screens and 75 on three.** 02 earns its 75 — the
+  trailing slot holds a real 71×52 date chip. On **03a and 08 the slot was empty**, so those two were
+  12px taller than everything else for nothing. Both to 63. That also means 03 and 03a finally agree.
+- **17 icons, logos and art marks reset to master**, including **the redBus logo drawn at two sizes on
+  the Home screen** (36×23 and 32×20), Star Filled at 12 against a 24 master, `Art / Primo` at four
+  different sizes across three screens.
+- **`Button / Primary` at 47px on 03 and 08a.** 46 is the master and 48 is what eleven screens use;
+  both are defensible round numbers. **47 is neither** — it is what a component becomes when it is
+  nudged onto a screenshot, exactly like the seats.
+
+**Not fixed, because they are not defects — checked rather than assumed.** 29 icons stay off-master,
+and every one is sized by the component that *contains* it: `Row / Policy` at 22, `Chip / Feature` at
+18, `Chip / Praise` at 16, `Row / Rating bar` at 18, `Icon / Chevron Right` at 18 inside the
+tripReward strip. **Every group is internally consistent across all its instances.** A component
+setting its own icon scale is design; the same component at two sizes in one place is the bug.
+Likewise `Card / Bus` heights on 02 (160→277) are `FIXED/HUG` and content-driven, and its two 330-wide
+cards sit in a side-scrolling carousel where a narrower card is the point.
+
+**The check that actually names the defect** is not "off master" — it is **the same component at two
+sizes inside the same host**. That query now returns **empty across all 24 frames**. It is the one
+worth re-running, because it separates a design decision from a mistake without judgement.
+Severity:  major
+Layer:     looks
+Action:    fixed
+
+CHANGE · 2026-09-06 · molades-build · Source: user
+**Ten frames carried into the build and re-diffed**, all inside the baseline: 01 11.96% · 02 5.84% ·
+03 5.35% · 03a 5.62% · 03b 8.58% · 06 6.51% · 06a 6.90% · 06b 7.76% · 08 7.45% · 08a 6.11%. §21's
+recorded baseline is mean 5.2% with 01 and 03b the worst at 12.4%, so 01's 11.96% is where it has
+always sat.
+
+**02 could not be pulled whole** — `get_design_context` returned sparse metadata instead of code and
+asked for sub-node calls. Its single change (one art mark, 66→60 wide) was patched directly and the
+diff verifies it. Same for the other single-property screens. **03b, 01, 03a were re-pulled in full
+through `build/pull.py`**, which reused 83 of 87 assets and added 4.
+Severity:  minor
+Layer:     things
+Action:    done
+

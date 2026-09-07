@@ -112,7 +112,7 @@ export default function Component03ASeatMapSheetCollapsed() {
             </div>
           </div>
         </div>
-        <div className="h-[75px] relative shrink-0 w-full" data-node-id="193:1860" data-name="Nav / Top Bar">
+        <div className="h-[63px] relative shrink-0 w-full" data-node-id="193:1860" data-name="Nav / Top Bar">
           <div className="-translate-y-1/2 absolute bg-[var(--surface\/default,white)] drop-shadow-[0px_2px_3px_rgba(0,0,0,0.1)] left-[13px] rounded-[var(--radius\/full,999px)] size-[38px] top-1/2" data-node-id="I193:1860;34:88" data-name="Back">
             <IconChevronLeft className="absolute left-[9px] size-[20px] top-[9px]" />
           </div>
@@ -558,7 +558,7 @@ export default function Component03ASeatMapSheetCollapsed() {
         </div>
         <div className="content-stretch flex gap-[8px] items-center overflow-clip relative shrink-0 w-full" data-node-id="267:2403" data-name="Operator">
           <div className="content-stretch flex flex-[1_0_0] gap-[6px] items-center min-w-px overflow-clip relative" data-node-id="267:2404" data-name="Name">
-            <ArtPrimo className="h-[29px] relative shrink-0 w-[52px]" />
+            <ArtPrimo className="h-[33px] relative shrink-0 w-[59px]" />
             <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Semi_Bold'] font-semibold leading-[24px] min-w-px not-italic relative text-[18px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="267:2406">
               International Tourist Centre
             </p>
@@ -573,7 +573,7 @@ export default function Component03ASeatMapSheetCollapsed() {
             <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none rounded-[8px] size-full" src={imgPhoto} />
           </div>
           <div className="bg-[#e8e9f3] content-stretch flex flex-col gap-px h-[47px] items-start overflow-clip px-[8px] py-[5px] relative rounded-[8px] shrink-0 w-[94px]" data-node-id="267:2416" data-name="Rising star">
-            <ArtPrimo className="h-[20px] relative shrink-0 w-[46px]" />
+            <ArtPrimo className="h-[33px] relative shrink-0 w-[59px]" />
             <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="267:2418">
               A rising star
             </p>

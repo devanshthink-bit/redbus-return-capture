@@ -532,7 +532,7 @@ export default function Component03OutboundSeatMap() {
           </div>
         </div>
         <div className="content-stretch flex flex-col items-start pt-[23.6px] px-[16px] relative shrink-0 w-full" data-node-id="76:298" data-name="Action">
-          <ButtonPrimary className="bg-[var(--surface\/accent,#c54646)] content-stretch cursor-pointer drop-shadow-[0px_2px_3px_rgba(0,0,0,0.1)] flex gap-[10px] h-[47px] items-center justify-center px-[20px] relative rounded-[var(--radius\/full,999px)] shrink-0 w-full" label="Select boarding & dropping points" showIcon={false} />
+          <ButtonPrimary className="bg-[var(--surface\/accent,#c54646)] content-stretch cursor-pointer drop-shadow-[0px_2px_3px_rgba(0,0,0,0.1)] flex gap-[10px] h-[48px] items-center justify-center px-[20px] relative rounded-[var(--radius\/full,999px)] shrink-0 w-full" label="Select boarding & dropping points" showIcon={false} />
         </div>
       </div>
     </div>

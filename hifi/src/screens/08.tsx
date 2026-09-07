@@ -62,7 +62,7 @@ export default function Component08ReviewYourTrip() {
             </div>
           </div>
         </div>
-        <div className="h-[75px] relative shrink-0 w-full" data-node-id="212:2041" data-name="Nav / Top Bar">
+        <div className="h-[63px] relative shrink-0 w-full" data-node-id="212:2041" data-name="Nav / Top Bar">
           <div className="-translate-y-1/2 absolute bg-[var(--surface\/default,white)] drop-shadow-[0px_2px_3px_rgba(0,0,0,0.1)] left-[13px] rounded-[var(--radius\/full,999px)] size-[38px] top-1/2" data-node-id="I212:2041;34:88" data-name="Back">
             <IconChevronLeft className="absolute left-[9px] size-[20px] top-[9px]" />
           </div>
