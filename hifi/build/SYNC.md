@@ -87,6 +87,26 @@ Say so in the reply, and write a `NOTE` in `LOG.md` naming every frame that is n
 build. **Undeclared drift is the failure this rule exists to prevent** — a declared one is just
 work outstanding.
 
+## The audit that names an off-master component
+
+Run this after touching any frame that was ever traced from a screenshot — 01, 02, 03, 03a, 03b and
+08a all were. For every instance, compare its size with its own component master.
+
+**"Off master" is the wrong test on its own.** 29 icons in this file are legitimately off master
+because the component that *contains* them sets the scale: `Row / Policy` at 22, `Chip / Feature` at
+18, `Chip / Praise` at 16. That is design.
+
+**The test that finds the bug is: the same component at two sizes inside the same host.** Group every
+instance by `enclosing component :: component`, and report any group with more than one size. It
+separates a decision from a mistake without needing judgement, and it is what the seat defect looked
+like — identical seats in one grid at 25×25, 30×62 and 31×68. It currently returns **empty** across
+all 24 frames; keep it that way.
+
+Two other things the sweep is good for: **tap targets** — every `Button / Text action` should measure
+44 or more (one was 20, because `HUG/HUG` makes an instance ignore its master's fixed height) — and
+**odd numbers**. A component at 47px when the file uses 46 and 48 was nudged onto a backdrop; round
+values are decisions, 47 is a symptom.
+
 ## Which frames track which lo-fi screens
 
 | Figma | Prototype | Watch it when v4 changes |
