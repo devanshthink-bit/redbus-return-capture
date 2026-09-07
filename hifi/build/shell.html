@@ -196,6 +196,28 @@
     });
   });
 
+  // Whatever was pinned now covers the bottom of the scroller. Without clearance the last section
+  // cannot be scrolled clear of it -- "Know your seat types" stops under the price sheet -- and the
+  // gap between the end of the content and the sheet reads as a grey band. CONTEXT §18 records this
+  // for fixed bars; it is the same rule for sheets.
+  // It has to run when the screen is VISIBLE: a hidden element measures 0, so doing it at init
+  // padded nothing.
+  function clearBottom(sec){
+    if (sec.dataset.cleared) return;
+    var layer = sec.querySelector('.overlay');
+    var root  = sec.querySelector('.scroll > div');
+    if (!layer || !root) return;
+    // offsetHeight, not getBoundingClientRect: the phone is scaled by a transform, so the rect is
+    // in RENDERED pixels while padding is set in CSS pixels. Measuring the rect under-padded by the
+    // scale factor and left the last section 13px under the sheet.
+    var tall = 0;
+    Array.prototype.forEach.call(layer.children, function(el){
+      var h = el.offsetHeight || 0;
+      if (h > tall) tall = h;
+    });
+    if (tall > 0) { root.style.paddingBottom = Math.round(tall + 16) + 'px'; sec.dataset.cleared = '1'; }
+  }
+
   // 2 · hotspots
   function markHot(sec, sel, kind, fn){
     if (!sel) return 0;
@@ -224,6 +246,7 @@
     var sec = screens[at];
     sec.hidden = false;
     sec.querySelector('.scroll').scrollTop = 0;
+    clearBottom(sec);
     rows.forEach(function(r, k){ r.setAttribute('aria-current', String(k === at)); });
     var cur = rows[at];
     if (cur && cur.scrollIntoView) cur.scrollIntoView({ block: 'nearest' });
@@ -396,12 +419,18 @@
     var sheet = screens[i03].querySelector('[data-name="Bottom sheet · collapsed"]');
     if (!sheet) { console.warn('no collapsed sheet on 03'); return; }
     var y0 = null;
-    sheet.addEventListener('pointerdown', function(e){ y0 = e.clientY; });
+    sheet.addEventListener('pointerdown', function(e){
+      y0 = e.clientY;
+      // Without capture, pointermove stops firing the instant the pointer leaves the sheet -- and
+      // pulling UP leaves it immediately, so the gesture never completed. This is why the handle
+      // felt dead.
+      if (sheet.setPointerCapture) { try { sheet.setPointerCapture(e.pointerId); } catch (err) {} }
+    });
     sheet.addEventListener('pointermove', function(e){
       if (y0 === null) return;
       if (y0 - e.clientY > 40) { y0 = null; go(i03a); }
     });
-    ['pointerup','pointercancel','pointerleave'].forEach(function(ev){
+    ['pointerup','pointercancel'].forEach(function(ev){
       sheet.addEventListener(ev, function(){ y0 = null; });
     });
   })();

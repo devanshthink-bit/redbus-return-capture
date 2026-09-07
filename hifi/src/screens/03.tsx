@@ -571,11 +571,8 @@ export default function Component03OutboundSeatMap() {
           <div className="h-[47px] relative rounded-[8px] shrink-0 w-[117px]" data-node-id="267:2415" data-name="Photo">
             <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none rounded-[8px] size-full" src={imgPhoto} />
           </div>
-          <div className="bg-[#e8e9f3] content-stretch flex flex-col gap-px h-[47px] items-start overflow-clip px-[8px] py-[5px] relative rounded-[8px] shrink-0 w-[94px]" data-node-id="267:2416" data-name="Rising star">
+          <div className="bg-white border border-[#e4e4e4] border-solid content-stretch flex h-[47px] items-center justify-center overflow-clip px-[8px] py-[5px] relative rounded-[8px] shrink-0 w-[94px]" data-node-id="267:2416" data-name="Rising star">
             <ArtPrimo className="h-[33px] relative shrink-0 w-[59px]" />
-            <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="267:2418">
-              A rising star
-            </p>
           </div>
         </div>
         <div className="content-stretch flex gap-[22px] items-center overflow-clip pt-[25px] relative shrink-0 w-full" data-node-id="267:2419" data-name="Tabs">

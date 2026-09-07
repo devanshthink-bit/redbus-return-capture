@@ -393,9 +393,9 @@ function RatingBadge({ className, count = "178", score = "4.7" }: RatingBadgePro
   );
 }
 
-export default function Component03BSeatMapSheetFull() {
+export default function Component03ASeatMapSheetFull() {
   return (
-    <div className="bg-[#f0eff5] content-stretch flex flex-col gap-[8px] items-start relative size-full" data-node-id="193:1872" data-name="03b · Seat map · sheet full">
+    <div className="bg-[#f0eff5] content-stretch flex flex-col items-start relative size-full" data-node-id="193:1872" data-name="03a · Seat map · sheet full">
       <div className="bg-[var(--surface\/default,white)] content-stretch flex flex-col items-start relative shrink-0 w-full" data-node-id="193:1873" data-name="Header">
         <div className="content-stretch flex h-[47px] items-center justify-between pb-[14px] pl-[27px] pr-[14px] pt-[12px] relative shrink-0 w-full" data-node-id="193:1874" data-name="Status Bar / Light">
           <p className="[word-break:break-word] font-['Inter:Semi_Bold'] font-semibold leading-[21px] not-italic relative shrink-0 text-[17px] text-[color:var(--text\/primary,#1d1d1d)] tracking-[-0.4px] whitespace-nowrap" data-node-id="I193:1874;13:3">
@@ -450,6 +450,7 @@ export default function Component03BSeatMapSheetFull() {
           <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="248:1826">{`Boarding & dropping`}</p>
         </div>
       </div>
+      <div className="h-[8px] relative shrink-0 w-full" data-node-id="557:3969" data-name="Spacer" />
       <div className="content-stretch flex flex-col items-start overflow-clip pb-[8px] px-[16px] relative shrink-0 w-full" data-node-id="248:1781" data-name="Highlights">
         <div className="bg-white content-stretch flex gap-[12px] h-[64px] items-center overflow-clip pl-[12px] relative rounded-[14px] shrink-0 w-full" data-node-id="251:1802" data-name="Card / Top 5%">
           <div className="content-stretch flex gap-[2px] items-center overflow-clip relative shrink-0" data-node-id="251:1803" data-name="Top 5%">
@@ -470,6 +471,7 @@ export default function Component03BSeatMapSheetFull() {
           </div>
         </div>
       </div>
+      <div className="h-[8px] relative shrink-0 w-full" data-node-id="557:3968" data-name="Spacer" />
       <div className="bg-white content-stretch flex flex-col gap-[16px] items-start overflow-clip px-[16px] py-[20px] relative shrink-0 w-full" data-node-id="248:1782" data-name="Cancellation and refund policy">
         <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[26px] not-italic relative shrink-0 text-[20px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="252:1847">
           Cancellation and refund policy
@@ -531,6 +533,7 @@ export default function Component03BSeatMapSheetFull() {
           * For group bookings cancellation of individual seats is not allowed.
         </p>
       </div>
+      <div className="h-[8px] relative shrink-0 w-full" data-node-id="557:3967" data-name="Spacer" />
       <div className="bg-white content-stretch flex flex-col gap-[14px] items-start overflow-clip px-[16px] py-[20px] relative shrink-0 w-full" data-node-id="248:1783" data-name="Date change policy">
         <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[26px] not-italic relative shrink-0 text-[20px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="253:1907">
           Date change policy
@@ -541,6 +544,7 @@ export default function Component03BSeatMapSheetFull() {
           </p>
         </div>
       </div>
+      <div className="h-[8px] relative shrink-0 w-full" data-node-id="557:3966" data-name="Spacer" />
       <div className="bg-white content-stretch flex flex-col gap-[18px] items-start overflow-clip px-[16px] py-[20px] relative shrink-0 w-full" data-node-id="248:1784" data-name="Other policies">
         <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[26px] not-italic relative shrink-0 text-[20px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="253:1910">
           Other policies
@@ -626,6 +630,7 @@ export default function Component03BSeatMapSheetFull() {
           </div>
         </div>
       </div>
+      <div className="h-[8px] relative shrink-0 w-full" data-node-id="557:3965" data-name="Spacer" />
       <div className="bg-white content-stretch flex flex-col gap-[4px] items-start overflow-clip px-[16px] py-[20px] relative shrink-0 w-full" data-node-id="248:1785" data-name="Bus route">
         <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[26px] not-italic relative shrink-0 text-[20px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="255:1976">
           Bus route
@@ -643,6 +648,7 @@ export default function Component03BSeatMapSheetFull() {
           </p>
         </div>
       </div>
+      <div className="h-[8px] relative shrink-0 w-full" data-node-id="557:3964" data-name="Spacer" />
       <div className="bg-white content-stretch flex flex-col items-start overflow-clip pb-[6px] pt-[20px] px-[16px] relative shrink-0 w-full" data-node-id="248:1786" data-name="Boarding points">
         <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[26px] not-italic relative shrink-0 text-[20px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="255:1982">
           Boarding points
@@ -675,6 +681,7 @@ export default function Component03BSeatMapSheetFull() {
           </div>
         </div>
       </div>
+      <div className="h-[8px] relative shrink-0 w-full" data-node-id="557:3963" data-name="Spacer" />
       <div className="bg-white content-stretch flex flex-col items-start overflow-clip pb-[6px] pt-[20px] px-[16px] relative shrink-0 w-full" data-node-id="248:1787" data-name="Dropping point">
         <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[26px] not-italic relative shrink-0 text-[20px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="255:2024">
           Dropping point
@@ -684,6 +691,7 @@ export default function Component03BSeatMapSheetFull() {
         </p>
         <RowStop address="Tallital Bus Stand ( Drop By Cab Or Mini Bus From Haldwani To Nainital )" className="content-stretch flex items-start relative shrink-0 w-full" date="10 Sep" name="Nainital Mall Road" rail="Only" time="08:15" />
       </div>
+      <div className="h-[8px] relative shrink-0 w-full" data-node-id="557:3962" data-name="Spacer" />
       <div className="bg-white content-stretch flex flex-col gap-[6px] items-start overflow-clip pb-[22px] pt-[20px] px-[16px] relative shrink-0 w-full" data-node-id="248:1788" data-name="Rest stop">
         <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[26px] not-italic relative shrink-0 text-[20px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="256:2020">
           Rest stop
@@ -701,6 +709,7 @@ export default function Component03BSeatMapSheetFull() {
           <ChipPraise className="bg-[#bbf0b8] content-stretch flex gap-[6px] items-center px-[12px] py-[4px] relative rounded-[999px] shrink-0" label="Safety" />
         </div>
       </div>
+      <div className="h-[8px] relative shrink-0 w-full" data-node-id="557:3961" data-name="Spacer" />
       <div className="bg-white content-stretch flex flex-col gap-[14px] items-start overflow-clip pb-[22px] pt-[20px] px-[16px] relative shrink-0 w-full" data-node-id="248:1789" data-name="Bus features">
         <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[26px] not-italic relative shrink-0 text-[20px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="256:2038">
           Bus features
@@ -750,6 +759,7 @@ export default function Component03BSeatMapSheetFull() {
           </div>
         </div>
       </div>
+      <div className="h-[8px] relative shrink-0 w-full" data-node-id="557:3960" data-name="Spacer" />
       <div className="bg-white content-stretch flex flex-col gap-[14px] items-start overflow-clip pb-[22px] pt-[20px] px-[16px] relative shrink-0 w-full" data-node-id="248:1790" data-name="Ratings & reviews">
         <div className="content-stretch flex items-center overflow-clip relative shrink-0 w-full" data-node-id="257:2071" data-name="Header">
           <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Bold'] font-bold leading-[26px] min-w-px not-italic relative text-[20px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="257:2072">{`Ratings & reviews`}</p>
@@ -843,6 +853,7 @@ export default function Component03BSeatMapSheetFull() {
           </p>
         </div>
       </div>
+      <div className="h-[8px] relative shrink-0 w-full" data-node-id="557:3959" data-name="Spacer" />
       <div className="bg-white content-stretch flex flex-col gap-[14px] items-start overflow-clip pb-[22px] pt-[20px] px-[16px] relative shrink-0 w-full" data-node-id="248:1791" data-name="This is a Primo">
         <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[26px] not-italic relative shrink-0 text-[20px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="258:2121">
           This is a Primo

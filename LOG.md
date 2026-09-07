@@ -6514,3 +6514,53 @@ Severity:  major
 Layer:     steps
 Action:    done
 
+
+CRITIQUE · 2026-09-06 · molades-build · Source: user
+**Four defects on the seat map, all found by him using it. Three had one cause each; one is still open.**
+
+**1 · The handle would not pull.** *"Pulling this handle should open."* The drag listened for
+`pointermove` on the sheet — and pulling **up** takes the pointer off the sheet on the first frame,
+so the event stopped firing before the 40px threshold. It only ever worked if you dragged up while
+staying inside the sheet, which is not a pull. `setPointerCapture` on `pointerdown` fixes it.
+**The class: a drag that leaves the element it started on needs pointer capture, and an upward drag
+from a bottom sheet always leaves it.**
+
+**2 · The grey border.** *"Why is there a gray border in both Figma and the prototype?"* The full
+sheet frame stacks its sections with `itemSpacing: 8` and its own page colour shows through every
+gap — including the one between the status bar and the top of the sheet, where it reads as a border
+rather than a separator. Setting spacing to 0 removed **all** of them, which flattened the card
+separation, so the gaps are back as explicit `Spacer` frames everywhere except under the header.
+
+**3 · The Primo thumbnail.** *"why is this graphic cut? There is something wrong in this promo
+graphic."* A 47px tile holding a 33px logo **and** a 20px caption — 53 into 47, so the caption was
+sliced through the middle. And the logo asset carries its own white box, which showed as a rectangle
+on the lavender tile. It is now a white tile with a hairline border and the logo centred; the full
+line *"A Rising Star on redBus"* already appears in the expanded sheet, so nothing is lost.
+
+**4 · The list stopped under the price sheet.** *"I'm not able to scroll beyond the 'Know Your seat
+types' heading when the price bottom sheet is open."* The shell lifts pinned bars into an overlay
+but never gave the scroller clearance for them, so the last section could not be scrolled past the
+sheet — and the empty strip between the end of the content and the sheet is the *other* grey band he
+saw. `CONTEXT.md` §18 records this for fixed bars; it is the same rule for sheets.
+
+**Two mistakes inside that one fix, both caught by asserting rather than looking.**
+- Measuring at init returned **0** for every screen, because they are hidden and a hidden element
+  has no height. The measurement has to happen when the screen is shown.
+- Then it under-padded by 15px, because `getBoundingClientRect()` returns **rendered** pixels — the
+  phone is scaled by a transform — while `padding` is set in **CSS** pixels. `offsetHeight` is the
+  one that ignores the transform. **A number measured through a transform is not the number you can
+  set.**
+Severity:  major
+Layer:     steps
+Action:    1–4 fixed
+
+NOTE · 2026-09-06 · molades-build
+**Still open: the seat map is 42px wider than the phone.** `Decks` is 432 wide — padding 16 + deck
+200 + gap 16 + deck 200 — inside a 390 frame, so screens **03, 03b and 08a** scroll sideways and the
+upper deck's last column sits off the edge. Every other screen measures 0.
+
+Not fixed, because it is not a one-line change: the decks have to come down to about 171 each, which
+reflows the seat grid, and I do not have a real-app screenshot of a two-deck seat map to say whether
+redBus fits both decks or stacks them. **Declared rather than quietly left** — it is the most likely
+cause of anything looking cut on those three screens.
+
