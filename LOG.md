@@ -6733,3 +6733,32 @@ through it read 9.8%, a clean ramp.
 Also: `set -- $s` does not word-split in zsh, so a loop over `"04 953"` wrote a file called
 `04 953.png` and left the real `04.png` stale from an earlier run. A diff against a file you did
 not just write is the stale-reference trap wearing a different hat.
+
+CHANGE  ·  2026-09-07  ·  molades-none  · Source: user
+The blink no longer reshapes what it points at.
+Devansh: *"When clicking outside why the button corner radius is changing?"* — `.hf-blink` carried
+`border-radius:8px` so the halo would have soft corners on a square element. That is the
+element's own property, so it overwrote whatever radius was already there: the Search buses
+button went from a 999px pill to an 8px box for the 2.4s of the blink, and the Laxmi card from
+16px to 8px.
+The halo is a box-shadow and a box-shadow already follows the element's radius, so the rule was
+never needed for rounded targets. `blinkAt()` now adds the 8px only when the computed radius is
+`0px`, and clears it afterwards. Five call sites now go through the one helper.
+
+LEARNED  ·  2026-09-07  ·  molades-none
+Do not clean up after an animation with `animationend`. The browser pane runs the page in a
+hidden tab, animations never start there, the event never fires, and the inline style I set for
+the length of the blink would have stuck for the life of the page. A `setTimeout` matched to the
+animation length always fires. The test that caught it was checking the cleanup, not the effect —
+worth doing both.
+
+NOTE  ·  2026-09-07  ·  molades-none
+The build did NOT drift from Figma. Devansh reported the prototype not matching the Figma
+screens; measured, all 26 screens match on structure (every top-level block, name for name, in
+order) and all 26 diffs sit inside the baseline — worst 01 at 12.0% and 03a at 11.7%, both tall
+screens where text drift accumulates. The live site serves the current build. The thing he was
+actually looking at was the blink squaring the button.
+Also caught while checking: the Pages URL is
+`devanshthink-bit.github.io/redbus-return-capture/`, not `/RedBus/`. A curl against the wrong
+path 404s with a 9KB "Site not found" page, and comparing its md5 to the build reads exactly
+like a stale deploy. Check the status code before believing a hash mismatch.
