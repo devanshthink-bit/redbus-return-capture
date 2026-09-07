@@ -5,6 +5,7 @@ import S03 from "./screens/03";
 import S03A from "./screens/03a";
 import S03B from "./screens/03b";
 import S04 from "./screens/04";
+import S04A from "./screens/04a";
 import S05 from "./screens/05";
 import S05A from "./screens/05a";
 import S05B from "./screens/05b";
@@ -31,7 +32,8 @@ export const SCREENS = [
   { id: "03", name: '03 · Outbound seat map', C: S03 },
   { id: "03a", name: '03a · Seat map · sheet full', C: S03A },
   { id: "03b", name: '03b · Seat map · seat selected', C: S03B },
-  { id: "04", name: '04 · Boarding & dropping points', C: S04 },
+  { id: "04", name: '04 · Board & drop · boarding', C: S04 },
+  { id: "04a", name: '04a · Board & drop · dropping', C: S04A },
   { id: "05", name: '05 · Return · pick your days', C: S05 },
   { id: "05a", name: '05a · Return · window chosen', C: S05A },
   { id: "05b", name: '05b · Return · one day picked', C: S05B },

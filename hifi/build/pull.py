@@ -16,10 +16,15 @@ result, sid = sys.argv[1], sys.argv[2]
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 assets = os.path.join(root, 'assets')
 
-parts = json.load(open(result))
-code = next((p['text'] for p in parts
-             if p.get('type') == 'text' and 'export default function' in p.get('text', '')), None)
-if code is None:
+# A raw .tsx works too: a small frame comes back inline rather than persisted to a JSON file,
+# and the asset rewrite is the same job either way.
+if result.endswith('.tsx'):
+    code = open(result).read()
+else:
+    parts = json.load(open(result))
+    code = next((p['text'] for p in parts
+                 if p.get('type') == 'text' and 'export default function' in p.get('text', '')), None)
+if code is None or 'export default function' not in code:
     sys.exit('no code block in ' + result)
 
 # what we already have, by content hash

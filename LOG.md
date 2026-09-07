@@ -6564,3 +6564,65 @@ reflows the seat grid, and I do not have a real-app screenshot of a two-deck sea
 redBus fits both decks or stacks them. **Declared rather than quietly left** — it is the most likely
 cause of anything looking cut on those three screens.
 
+
+CHANGE · 2026-09-06 · molades-build · Source: user
+**Boarding and dropping points rebuilt to the real app, as two tabbed screens.** He sent both tabs
+from the live app and asked for them exactly. The old 04 was a single screen with one boarding row,
+one dropping row and a Proceed bar — nothing like it.
+
+Now **04 · Board & drop · boarding** and **04a · Board & drop · dropping**: a tab track with two
+two-line tabs, a *"Find the closest boarding point to"* prompt, a search field with a locate button,
+a green-gradient **Your preferred boarding point** card, and *All boarding points in Delhi* with four
+points. The dropping tab carries the one Nainital point with its amber *"Might require you to change
+the vehicle"*.
+
+**The times are ours, not the screenshot's.** He said it plainly mid-build: *"Match the timing of the
+first boarding point and the drop point exactly this"* — **23:55 / 10 Sep** and **08:00 / 11 Sep**,
+which is the Laxmi bus this case study books. The three downstream stops keep the screenshot's
+offsets from the first: 00:39, 01:00, 01:10.
+
+**No Proceed bar, deliberately.** Neither screenshot has one, and none is needed: picking a boarding
+point moves to the dropping tab, and picking the drop point continues. That is the real screen's own
+logic — the bar only exists once both halves are answered, and by then you have already moved on.
+
+**04a joins the OVERLAY set.** It is a tab, not a step, so prev / next / Back run 04 ↔ 05 and the tabs
+switch between the two.
+
+**Prototype-only, declared:** the filled radio. Figma has both tabs with nothing selected, exactly as
+screenshotted; the selected state is a `hf-radio-on` class the shell adds on tap.
+Severity:  major
+Layer:     things
+Action:    done
+
+DECISION · 2026-09-06 · molades-build · Source: user
+**Everything now arrives rather than appears.** *"make all interactions in the prototype really
+smooth and just like a real app feels. Don't make it immediate. It feels awkward."*
+
+One grammar, borrowed from iOS so nothing reads as a jump cut:
+
+- **Forward** slides in from the right, **back** from the left — 300ms on `cubic-bezier(.22,1,.36,1)`.
+  `go()` knows the direction because it compares the new index with the old.
+- **A sheet rises.** Anything in `OVERLAY` — the date picker, the bus-details sheet, the dropping tab
+  — comes up 26px instead of sideways, at 340ms. The price sheet already did.
+- **The small things settle**: tabs, toggles, segments and radios transition their colour, shadow and
+  knob position over 200ms rather than switching between frames.
+- **Scrolling glides.** `scroll-behavior: smooth` on every scroller, so the blink's
+  `scrollIntoView` no longer teleports.
+- **A selection is allowed to be seen before the screen changes** — picking a boarding point fills
+  its radio and waits 220ms before moving on. Instant navigation hid the feedback entirely.
+- **`prefers-reduced-motion` turns all of it off.** Someone who has asked their phone to stop moving
+  things should not be overruled by a prototype.
+Severity:  major
+Layer:     moments
+Action:    done
+
+NOTE · 2026-09-06 · molades-build
+**Found while matching the times: the seat-map sheet names the wrong bus.** 02's card — the only one
+that goes anywhere — is **Laxmi Holidays, 23:55 → 08:00**. The bus-details sheet on 03 and 03a says
+**International Tourist Centre · 23:15 - 08:15 · Wed, 09 Sep**, and 03a's photos are ITC's.
+
+His instruction to use 23:55 / 08:00 on the boarding screen settles which one is the trip, so the
+sheet is what is wrong. **Not fixed here** — it is a content change across two frames including the
+operator, rating, times, date and bus photos, and it is not what he asked for in this round.
+Declared so it is not discovered a third time.
+

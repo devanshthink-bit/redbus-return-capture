@@ -114,6 +114,26 @@
   .hf-blink{animation:hf-blink 800ms ease-in-out 3;border-radius:8px;position:relative;z-index:5}
   @keyframes hf-slideup{from{transform:translateY(100%)}to{transform:translateY(0)}}
   .hf-slideup{animation:hf-slideup 340ms cubic-bezier(.22,1,.36,1)}
+  /* Screens should arrive, not appear. Forward comes in from the right, back from the left, and a
+     sheet rises -- the same grammar iOS uses, so nothing reads as a jump cut. */
+  @keyframes hf-in-fwd {from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:none}}
+  @keyframes hf-in-back{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:none}}
+  @keyframes hf-in-up  {from{opacity:0;transform:translateY(26px)} to{opacity:1;transform:none}}
+  .hf-in-fwd {animation:hf-in-fwd  300ms cubic-bezier(.22,1,.36,1)}
+  .hf-in-back{animation:hf-in-back 300ms cubic-bezier(.22,1,.36,1)}
+  .hf-in-up  {animation:hf-in-up   340ms cubic-bezier(.22,1,.36,1)}
+  /* and the small things settle rather than snap */
+  .hf-viewport .scroll{scroll-behavior:smooth}
+  [data-name^="Tab / "],[data-name="Toggle / iOS"],[data-name="Toggle / iOS"]>*,
+  [data-name^="Segment / "],[data-name="Radio"]{
+    transition:background-color 200ms ease, color 200ms ease, box-shadow 200ms ease,
+               left 220ms cubic-bezier(.22,1,.36,1), opacity 200ms ease}
+  .hf-radio-on{position:relative}
+  .hf-radio-on::after{content:'';position:absolute;inset:5px;border-radius:50%;
+    background:#C54646;animation:hf-in-up 200ms ease}
+  @media (prefers-reduced-motion:reduce){
+    .hf-in-fwd,.hf-in-back,.hf-in-up,.hf-slideup,.hf-blink{animation:none}
+  }
   body.hf-embed .hf-stage{height:auto;display:block;overflow:visible}
   body.hf-embed .hf-device{
     border-radius:0;box-shadow:none;
@@ -178,7 +198,7 @@
 
   // 01a is a bottom sheet, not a step: it opens from the date row on Home and closes back to it.
   // Leaving it in the linear order meant Back from the bus list landed on an open calendar.
-  var OVERLAY = { '01a': 1, '03a': 1 };
+  var OVERLAY = { '01a': 1, '03a': 1, '04a': 1 };
   function nextOf(i){ i += 1; while (screens[i] && OVERLAY[ORDER[i]]) i += 1; return i; }
   function prevOf(i){ i -= 1; while (screens[i] && OVERLAY[ORDER[i]]) i -= 1; return i; }
 
@@ -241,6 +261,7 @@
   // 3 · navigation
   function go(i){
     if (i < 0 || i >= screens.length) return;
+    var dir = i >= at ? 1 : -1;
     screens[at].hidden = true;
     at = i;
     var sec = screens[at];
@@ -255,6 +276,11 @@
     nextB.disabled = at === screens.length - 1;
     if (history.replaceState) history.replaceState(null, '', '#' + ORDER[at]);
     document.title = NAMES[at] + ' — redBus hi-fi';
+    // a sheet rises; every other screen slides the way you are travelling
+    var anim = OVERLAY[ORDER[at]] ? 'hf-in-up' : (dir >= 0 ? 'hf-in-fwd' : 'hf-in-back');
+    sec.classList.remove('hf-in-fwd','hf-in-back','hf-in-up');
+    void sec.offsetWidth;
+    sec.classList.add(anim);
     // a price sheet is a sheet: it comes up from the bottom rather than being there already
     var sheet = sec.querySelector('.overlay [data-name="Bottom sheet"]');
     if (sheet) { sheet.classList.remove('hf-slideup'); void sheet.offsetWidth; sheet.classList.add('hf-slideup'); }
@@ -411,6 +437,39 @@
 
   // 03a · the full bus-details sheet closes back to the seat map, it does not go forward
   onlyOne('03a', '[data-name="Collapse"]', function(){ go(ORDER.indexOf('03')); });
+
+  // 04 · board & drop. Any boarding point can be picked; picking one moves you to the drop tab,
+  //      which is what the real screen does once the first half is answered.
+  (function boardDrop(){
+    var i04 = ORDER.indexOf('04'), i04a = ORDER.indexOf('04a'), i05 = ORDER.indexOf('05');
+    if (i04 < 0 || i04a < 0) return;
+    var b = screens[i04], d = screens[i04a];
+    function pick(el){
+      var r = el.querySelector('[data-name="Radio"]');
+      if (r) r.classList.add('hf-radio-on');
+    }
+    b.addEventListener('click', function(e){
+      if (e.target.closest && e.target.closest('.hf-back')) return;
+      e.preventDefault(); e.stopPropagation();
+      var pt  = e.target.closest('[data-name^="Point / "]');
+      var tab = e.target.closest('[data-name="Tab / Dropping Points"]');
+      if (pt)  { pick(pt); setTimeout(function(){ go(i04a); }, 220); return; }
+      if (tab) { go(i04a); return; }
+      var first = b.querySelector('[data-name^="Point / "]');
+      if (first) { first.classList.remove('hf-blink'); void first.offsetWidth; first.classList.add('hf-blink');
+                   if (first.scrollIntoView) first.scrollIntoView({block:'nearest'}); }
+    }, true);
+    d.addEventListener('click', function(e){
+      if (e.target.closest && e.target.closest('.hf-back')) return;
+      e.preventDefault(); e.stopPropagation();
+      var pt  = e.target.closest('[data-name^="Point / "]');
+      var tab = e.target.closest('[data-name="Tab / Boarding Points"]');
+      if (pt)  { pick(pt); setTimeout(function(){ go(i05); }, 260); return; }
+      if (tab) { go(i04); return; }
+      var only = d.querySelector('[data-name^="Point / "]');
+      if (only) { only.classList.remove('hf-blink'); void only.offsetWidth; only.classList.add('hf-blink'); }
+    }, true);
+  })();
 
   // and the full sheet opens only by pulling the collapsed one up -- a tap will not do it
   (function pullSheet(){
