@@ -6398,3 +6398,37 @@ Severity:  major
 Layer:     moments
 Action:    Home done; the remaining screens are next, on his instruction
 
+
+CHANGE · 2026-09-06 · molades-build · Source: user
+**An empty field shows its own name, not a label over a blank line.** He sent the real app's Home
+with From and To empty: there is no small grey label above nothing — the field's **name sits in the
+value slot**, grey and regular weight, and the label is not drawn at all. My first pass had kept the
+13px label and left the value blank, which reads as a rendering failure rather than an empty field.
+
+`clear()` now writes the placeholder into the value and hides the label; `fill()` restores both.
+
+**The date does not open empty.** *"in the date, write 10 September"* — the real app always carries a
+date, and this trip's date is 10 September, so Home is truthful before it is touched. That changes
+the sequence: **From → To**, and once both cities are in, **the date row and Search are both live**.
+Opening the calendar is a change to a real value rather than a blank to fill, which is what the real
+app does. Tapping the date before the cities still blinks the field that is due.
+
+CRITIQUE · 2026-09-06 · molades-build · Source: user
+**A sheet in the linear order sends Back to the wrong place.** *"when I go to the next screen and
+come back, why is calendar of home open?"* — because `01a` was inserted between `01` and `02` in
+`ORDER`, and Back, prev, next and the arrow keys all move by **index**. From the bus list, one step
+back was the calendar.
+
+`01a` is a **bottom sheet**, not a step: it opens from Home's date row and closes back to it.
+`OVERLAY` now names it and `nextOf()` / `prevOf()` skip over it, so linear navigation goes 01 ↔ 02
+while the sheet stays reachable from its own trigger and from the rail.
+
+**The class: adding a screen to a linear order gives it linear neighbours.** Anything that is opened
+rather than navigated to — a sheet, a modal, a picker — has to be excluded from that order at the
+same time it is added, or the screen before and after it silently acquire a wrong route. The forward
+click-through would not have caught this; only walking *back* does, which is `CONTEXT.md` §9.7
+turning up in a new place.
+Severity:  major
+Layer:     steps
+Action:    fixed
+
