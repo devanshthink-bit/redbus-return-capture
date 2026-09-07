@@ -6804,3 +6804,28 @@ usual, so the asset localisation and the no-remote-URL check are unchanged. It i
 from "never hand-edit a screen file" and it is recorded here because of that. The diff against a
 fresh Figma render is what actually proves the file, and it is the same diff either way.
 03's change was one padding value and was made in the file directly, for the same reason.
+
+CHANGE  ·  2026-09-08  ·  molades-none  · Source: user
+Three faults on the boarding points screen, all in the shell, none needing Figma.
+Devansh: *"why multiple are getting selected and scrolling of content below toggle is too fast
+and blink border all around isnt visible, its getting cut from many sides"*.
+
+- **Several radios filled at once.** `pick()` set `hf-radio-on` and never cleared it, so every
+  point ever tapped stayed filled. It now clears the whole screen first. A radio group is a
+  group because choosing one un-chooses the rest; without that it is a row of checkboxes.
+- **The content raced up the page on a tab switch.** `go()` resets the scroll to the top, and
+  `.hf-viewport .scroll` carries `scroll-behavior:smooth`, so the reset became a visible fast
+  scroll — worst exactly where it was reported, because the header and tabs are supposed to be
+  sitting still there. A new screen *starts* at the top; it does not scroll there. The reset is
+  now instant, and smooth scrolling still applies to real scrolling.
+- **The blink ring was cut off.** It was an outward `box-shadow` spread, and nearly every Figma
+  frame is `overflow-clip`, so the card, the section and the screen each took a side off it. A
+  full-bleed row lost both ends. It is an inset ring now — drawn inside the element's own box,
+  so nothing above it can clip it.
+
+LEARNED  ·  2026-09-08  ·  molades-none
+An outward glow is the wrong tool in a tree of clipping frames. Anything that paints beyond an
+element's own box — halo, outline, focus ring, drop shadow used as emphasis — is at the mercy of
+every `overflow-clip` ancestor, and Figma gives almost every frame one. Draw emphasis inside the
+box. The bug is invisible on a centred card and obvious on a full-bleed row, so it survives
+casual checking.
