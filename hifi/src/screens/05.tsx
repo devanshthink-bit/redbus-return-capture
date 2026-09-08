@@ -298,6 +298,14 @@ export default function Component05ReturnPickYourDays() {
           </p>
         </div>
         <div className="bg-[var(--surface\/default,white)] content-stretch flex flex-col items-start p-[16px] relative rounded-[var(--radius\/12,12px)] shrink-0 w-full" data-node-id="85:408" data-name="Rules">
+          <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[21px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="621:3974">
+            We book one day, not the whole week
+          </p>
+          <div className="h-[4px] relative shrink-0 w-full" data-node-id="621:3975" data-name="gap" />
+          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="621:3976">
+            One seat, one fare, one day. You pick which day next.
+          </p>
+          <div className="h-[16px] relative shrink-0 w-full" data-node-id="621:3977" data-name="gap" />
           <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[21px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="85:409">
             Prices can go up
           </p>

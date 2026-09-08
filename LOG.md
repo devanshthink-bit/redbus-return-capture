@@ -7135,3 +7135,52 @@ the thing the button you just pressed is called.
 The hi-fi build's own sidebar kicker and page title still say *high fidelity*. Both live inside the
 iframe, which runs in embed mode with the panel hidden, so neither is on screen anywhere — left
 alone rather than changed on spec.
+
+CHANGE  ·  2026-09-09  ·  molades-none  · Source: user
+**Audit of the toggle round trip, checked against v4.** Devansh: *"when u mistakenly changed toggle
+to two cards with radio button an then reverted to toggle again, check if u didnt miss anything
+doing it. Check from v4"*. Eight checks; two things were wrong and both are fixed.
+
+Clean:
+
+- **Copy.** Every visible string on 05/05a/05b diffed against the commit before the cards. Nothing
+  lost. The only additions are the weekend day cells, which stopped being anonymous component calls
+  and now carry their own `data-name`
+- **Structure.** The `data-name` sequence is identical, and `Content`'s child order is unchanged:
+  Onward journey · Question · Mode toggle · Hint · Calendar · Rules
+- **Geometry.** The rebuilt toggle measures what the deleted one did — 358 × 47, radius 24,
+  `#EDEDF2`, 1px stroke, two 173 × 39 halves
+- **Prototype connections.** All three frames still connect `Button / Primary` → 99:636. The toggle
+  never carried a reaction; the file has 43 elsewhere and none of them was on it
+- **No dead code.** `hf-choice-*`, `Row / Choice` and `Mode options` are gone from the shell and
+  from all three screen files
+
+Wrong, and fixed:
+
+- **`Row / Choice` was loose on the Components page** — parented to the page rather than a section,
+  at x 2046, with zero instances. §18 records that page being rebuilt into eleven sections with
+  zero overlaps asserted, and I had undone it. It is filed under **Rows** now, and growing that
+  section by 124 pushed Cards, Seat map and Calendar down to keep the 96pt gutter. Re-asserted:
+  no overlaps
+- **05's rules did not follow the new default answer.** v4 shows `oneDayRule(0) + priceRule` while
+  the answer is *I'm not sure yet*, and `priceRule` alone with a fixed date. Since 05 now opens on
+  *I'm not sure yet*, it was showing only *Prices can go up* — v4's no-answer-yet state, which 05
+  no longer has. **We book one day, not the whole week** / *One seat, one fare, one day. You pick
+  which day next.* is on the frame now, and the shell hides it when *I know my date* is picked, the
+  same way it already swaps the hint
+
+Still different from v4, both predating this and neither a defect of the revert:
+
+- **No month arrows.** v4's calendar has ‹ › and `calStep()`, and reaches 10 Oct (`LAST_BOOKABLE`
+  40). The hi-fi draws September only. A real gap if anyone tests a date in October
+- **Weekday header.** v4 uses single letters, the hi-fi `MON…SUN`. The hi-fi is right — that is what
+  `IMG_5223` shows — and v4 is the simplification
+
+Diffs after the fix: 05 **5.72%**, 05a **8.40%**, 05b **8.06%**.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**Reverting a design is not reverting a change.** The toggle came back byte-identical, and two
+things still did not: a component left parented to a page instead of a section, and a rules block
+that was correct for the state the screen used to open in. Neither shows up in a diff of the thing
+you reverted. Ask instead what the change *touched* — other files, other pages, and any state that
+moved while it was in place.

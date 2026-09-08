@@ -672,6 +672,14 @@
         if (hint && ORDER[i] === '05') hint.textContent = k === 0
           ? 'Tap the day you’ll travel back.'
           : 'Tap the first day you could travel back.';
+        // v4 shows the one-day rule only while the answer is "not sure": with a fixed date there
+        // is no week to explain. The rules block has to follow the answer, not just the hint.
+        if (ORDER[i] === '05') {
+          ['621:3974','621:3975','621:3976','621:3977'].forEach(function(id){
+            var el = sec.querySelector('[data-node-id="' + id + '"]');
+            if (el) el.style.display = (k === 0) ? 'none' : '';
+          });
+        }
       }
       if (chosen() >= 0 && cont) cont.classList.add('hf-live');
 
