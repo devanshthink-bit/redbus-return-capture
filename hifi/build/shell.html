@@ -576,15 +576,25 @@
     var i05 = idx[0], i05a = idx[1], i05b = idx[2];
     if (i05 < 0) return;
 
-    // 14 September 2026 is a Monday; the whole calendar hangs off that.
-    var DOW = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-    function dow(d){ return DOW[((d - 7) % 7 + 7) % 7]; }
-    function label(d){ return dow(d) + ', ' + d + ' Sep'; }
+    // v4's own day index: 1 = 1 Sep, 31 = 1 Oct, 40 = 10 Oct and the last bookable day. The
+    // calendar shows both months, so a window can cross the boundary and a bare day number cannot
+    // carry it -- 12 is two different days.
+    var DOW = ['Tue','Wed','Thu','Fri','Sat','Sun','Mon'];   // 1 Sep 2026 is a Tuesday
+    var SEP_LEN = 30, LAST = 40;
+    function dow(i){ return DOW[((i - 1) % 7 + 7) % 7]; }
+    function label(i){ return dow(i) + ', ' + (i <= SEP_LEN ? i + ' Sep' : (i - SEP_LEN) + ' Oct'); }
 
     function cells(sec){
-      return [].slice.call(sec.querySelectorAll('[data-name="Sep grid"] [data-name="Week"] > div'));
+      return [].slice.call(sec.querySelectorAll(
+        '[data-name="Sep grid"] [data-name="Week"] > div, [data-name="Oct grid"] [data-name="Week"] > div'));
     }
-    function num(c){ var p = c.querySelector('p'); var t = p ? p.textContent.trim() : ''; return /^\d+$/.test(t) ? +t : 0; }
+    function idxOf(c){
+      var p = c.querySelector('p'); var t = p ? p.textContent.trim() : '';
+      if (!/^\d+$/.test(t)) return 0;
+      var g = c.closest('[data-name="Oct grid"]');
+      return g ? SEP_LEN + (+t) : +t;
+    }
+    function num(c){ return idxOf(c); }
     function fare(c){ var ps = c.querySelectorAll('p'); return ps[1] ? ps[1].textContent.trim() : ''; }
     function money(c){ var f = fare(c); return /^₹/.test(f) ? +f.replace(/[₹,]/g,'') : 0; }
     function mute(c){ return /unavailable/.test(c.className + ' ' + c.innerHTML); }
@@ -609,7 +619,7 @@
         c.classList.toggle('hf-day-wknd', wknd(c));
         c.classList.toggle('hf-day-mute', mute(c));
       });
-      var end = mode === 'fixed' ? start : Math.min(start + 6, 30);
+      var end = mode === 'fixed' ? start : Math.min(start + 6, LAST);
       for (var d = start; d <= end; d++) {
         var c = byDay[d]; if (!c) continue;
         if (d === start || (mode !== 'fixed' && d === end)) {

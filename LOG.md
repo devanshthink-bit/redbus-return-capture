@@ -7184,3 +7184,43 @@ things still did not: a component left parented to a page instead of a section, 
 that was correct for the state the screen used to open in. Neither shows up in a diff of the thing
 you reverted. Ask instead what the change *touched* — other files, other pages, and any state that
 moved while it was in place.
+
+CHANGE  ·  2026-09-09  ·  molades-none  · Source: user
+**The hi-fi calendar reaches October now.** The gap named in yesterday's audit: v4 books to
+**Sat 10 Oct** (`LAST_BOOKABLE = OUT_DAY + HORIZON` = 40) and the hi-fi drew September only, so a
+participant asking for an October date had nowhere to tap.
+
+**No month arrows.** v4 pages months with `‹ ›` and `calStep()`; the real app does not. `IMG_5223`
+shows the weekday header pinned above the month label, which is the iOS continuously-scrolling
+picker — months stack, you scroll. So October is a second label and grid **inside the same calendar
+card**, under September. Nothing new to learn, and no control the app does not have.
+
+**Every October value came out of v4, not out of my head.** The running prototype was driven
+headless and asked for `SEAT[d]`, `minFareOn(d)`, `MOVABLE(d)` and `busesOn(d)` for every day from
+the outbound to `LAST_BOOKABLE`: 1 Oct ₹770 · 2 Oct ₹1,120 *no date change* · **3 Oct Full** ·
+4 Oct ₹1,100 · 5 Oct ₹920 · 6 Oct ₹650 · 7 Oct ₹710 · 8 Oct ₹710 · 9 Oct ₹1,140 · 10 Oct ₹1,170,
+and 11–31 Oct struck out as beyond the booking window. The same harvest **verified September**:
+every fare, both sold-out days and the one no-change day already on the frames match v4 exactly.
+
+**The first harvest was wrong and would have shipped a lie.** I tested sold-out as
+`busesOn(d).length === 0`, which put 13 Sep at ₹960 and 23 Sep at ₹880 and gave 3 Oct a fare.
+v4's own test is `!SEAT[d]` — *the bus runs, every seat on it is gone* — a different thing. The tell
+was `CONTEXT` §19 naming 13 Sep, 23 Sep and 3 Oct as the sold-out days; without that line I would
+have believed my own numbers.
+
+**Two months mean a day number is no longer a day.** 12 is two different dates, so the shell now
+carries v4's own 1–40 index — `1 = 1 Sep`, `31 = 1 Oct`, `40 = 10 Oct` — derived from which grid a
+cell sits in. Weekday labels come off `DOW[(i-1)%7]` with `1 Sep 2026` a Tuesday, the same line v4
+uses. A window that crosses the boundary now works: 28 Sep → 4 Oct reads *Mon, 28 Sep to Sun, 4 Oct
+· 7 days marked*, and one that runs off the end clamps — 6 Oct → *Sat, 10 Oct · 5 days marked*.
+
+27 days are tappable across both months (18 in September, 9 in October). Diffs 05 **5.95%**,
+05a **8.03%**, 05b **7.78%**; clearance above the bar still 31 on all three.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**Harvest the data from the thing that computes it, and check the harvest against something you
+did not write.** Retyping thirty fares would have been slower and wrong; running v4 headless and
+reading its own accessors took one script. But the accessor I *chose* was wrong, and the only
+reason I caught it is that `CONTEXT` already named which days are sold out. A harvest needs a
+witness — a number written down somewhere else — or it is just a faster way to be confident about
+the wrong thing.
