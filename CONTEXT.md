@@ -68,7 +68,7 @@ on push. `raw/` (interview transcripts) is gitignored.
 | `frozen/v1.html` · `frozen/v2.html` · `frozen/prototype.html` | the other frozen builds |
 | `v1.html` · `v2.html` · `v3.html` · `prototype.html` | redirects to `/?version=N` |
 | `component-sheet.html` | Design-language component sheet |
-| `hifi/` | **The hi-fi prototype** — the 23 Figma frames as working code, shown inside the root viewer. `app.html` and `app.css` are generated, `index.html` is a redirect; see §21 |
+| `hifi/` | **The hi-fi prototype** — the 26 Figma frames as working code, shown inside the root viewer. `app.html` and `app.css` are generated, `index.html` is a redirect; see §21 |
 
 **Source material** (not in the repo): `/Users/devansh/Downloads/RedBus Case Docs/` — 8 interview
 transcripts, scope card and research plan PDFs, `redfigjam.pdf`, `PAM03L08.pdf`, and two screenshot
@@ -741,20 +741,24 @@ v4, not v3.** What changed in Figma, and the node ids, in case it has to be done
 ### The flow, frame by frame — read this before rebuilding a screen in code
 
 Every hi-fi frame, the prototype screen it is, and what moves you off it. Derived from the build,
-not from memory. **21 frames = 16 screens + 5 state variants.**
+not from memory. **26 frames = 16 screens + 10 state variants** (01a · 03a · 03b · 04a · 05a ·
+05b · 06a · 06b · 08a · 08b). Counted off the Figma section and `src/render.tsx`, 2026-09-09.
 
 | # · Frame | Prototype | Control | Goes to |
 |---|---|---|---|
-| 01 · Home | `s-home` | Search buses | 02 |
+| 01 · Home | `s-home` | From, To, then Search buses | 02 |
+| 01a · Select date | — | *sheet off Home's date row*; Sep 10 or Close | back to 01 |
 | 02 · Outbound bus list | `s-obuses` | a bus card | 03 |
 | 03 · Outbound seat map | `s-oseat` | **the bookable seat** | 03b |
 | 03a · Seat map · sheet full | — | *opened by pulling 03's sheet up*; Collapse | back to 03 |
 | 03b · Seat map · seat selected | `s-oseat` | Select points | 04 |
-| 04 · Boarding & dropping points | `s-outpoints` | Proceed | 05 |
+| 04 · Board & drop · boarding | `s-outpoints` | a boarding point, or the Dropping tab | 04a |
+| 04a · Board & drop · dropping | `s-outpoints` | a dropping point | 05 |
 | 05 · Return · pick your days | `s-window` | Continue | 06 |
 | 05a / 05b | — | *states of 05* — window chosen / one day picked | — |
 | 06 · Your return · pick a day | `s-picked` | tap a day | 06a |
 | 06a · Your return · day chosen | `s-picked` | Review trip · All N buses | 08 · 07 |
+| 06b · Your return · day cannot change | `s-picked` | Continue | 08 |
 | 07 · Choose your bus | `s-bus` | Use this bus | **whichever opened it** — 06a or 08 |
 | 08 · Review your trip | `s-review` | Pay now · Change bus · Change seat · Change points | 09 · 07 · 08a · 08b |
 | 08a · Return seat | `s-seat` | Select points | 08 |
@@ -2033,8 +2037,8 @@ Images kept on 03b: two bus photographs, the Primo bus illustration, three small
 ## 21 · The hi-fi prototype in code — `/hifi/` (4 Sep 2026)
 
 §20 said the Figma screens were going to become "a coded working prototype run on real phones".
-This is that. All **23 frames** of *Screens · redBus return capture (iPhone 14)*, at 390 × 844,
-walked in the order they are arranged on the canvas.
+This is that. All **26 frames** of *Screens · redBus return capture (iPhone 14)*, at 390 × 844,
+walked in the order they are arranged on the canvas. It began at 23; 01a, 04a and 06b came later.
 
 **It lives inside the root viewer, behind a Lo-fi / Hi-fi switch, and the hi-fi is what opens.**
 It was briefly its own URL; he asked for one link instead — *"make this hi-fi prototype as a
@@ -2119,13 +2123,17 @@ rules, and the range **ends** in the accent), 06 · 06a (the narrowing heading, 
 Figma never had), 08 (what declining Free Cancellation gives you), 11 (Change day inside the ticket
 card). 12 was already right.
 
-**The build is 24 screens now, not 23.** `06b · Your return · day cannot change` is new — the trap
-state, which existed in v4 and in none of the frames. It lives in **Screens**, not States, because
-the build reads the Screens section only and a States frame would have left the drift in place under
-another name. It shows the **18–21 Sep** window, where the cheapest day is the one that cannot move;
-06 and 06a keep 11–17, where every day has a changeable bus. Adding a screen means four edits:
-`src/render.tsx`, the count guard and forward hotspot in `build.mjs`, and `HIFI_NAMES` in the root
-viewer.
+**The build is 26 screens.** It shipped at 23 and grew by three, each for its own reason:
+`06b · Your return · day cannot change` (6 Sep) is the trap state, which existed in v4 and in none
+of the frames; `01a · Select date` is the calendar sheet off Home's date row; `04a · Board & drop ·
+dropping` is the second half of the boarding-points tab control. All three live in **Screens**, not
+States, because the build reads the Screens section only and a States frame would have left the
+drift in place under another name. 06b shows the **18–21 Sep** window, where the cheapest day is the
+one that cannot move; 06 and 06a keep 11–17, where every day has a changeable bus.
+
+Adding a screen means four edits: `src/render.tsx`, the count guard and forward hotspot in
+`build.mjs`, and `HIFI_NAMES` in the root viewer. **A sheet is not a step** — 01a, 03a and 04a are
+listed in `OVERLAY` in `build/shell.html`, so prev / next / Back / arrow keys skip them.
 
 **The fixed-height bar trap appeared four times in one session** — frames 08, 06, 06a, 06b. A frame
 whose height is FIXED does not grow for a new child, it just overlaps what is under it. Check
@@ -2138,8 +2146,24 @@ Two checks, because each is blind to what the other sees.
 
 | | |
 |---|---|
-| **Geometry** | 1,730 nodes matched by `data-node-id` against the Figma metadata. **Three** blocks off by more than 4px |
-| **Pixels** | all 23 frames rendered headless at native size, diffed against Figma's own renders: **mean 5.2%** of pixels differing, **worst 12.4%** (01 and 03b, the tallest), **≤12px** cumulative drift over a 3,519px screen |
+| **Geometry** | 1,730 nodes matched by `data-node-id` against the Figma metadata. **Three** blocks off by more than 4px. **Last run 4 Sep on the 23-frame build, and not re-run since — 01a, 04a and 06b have never been geometry-checked.** Treat the number as history, not as current |
+| **Pixels** | **current.** All 26 frames re-rendered headless at native size on 2026-09-09 and diffed against Figma renders pulled the same hour: **mean 5.63%** of pixels differing, **median 5.54%**, best **1.28%** (08b), worst **11.99%** (01) and **11.69%** (03a) — the two tallest. Only four frames sit above 8%: 01, 03a, **04 (9.82%)** and **05a (8.06%)** |
+
+**The full 26 (9 Sep), for the next person who needs a baseline to compare against:**
+
+```
+01  11.99   01a  2.60   02  5.84   03  4.80   03a 11.69   03b  4.77
+04   9.82   04a  5.77   05  5.20   05a 8.06   05b  7.54   06   6.51
+06a  6.90   06b  7.76   07  5.71   08  7.45   08a  5.21   08b  1.28
+09   1.78   10   2.40   11  5.38   12  2.35   13   4.87   14   6.93
+15   1.30   16   2.58
+```
+
+**The mean moved 5.2 → 5.63 without anything getting worse.** The three frames added since the
+first run — 01a, 04a, 06b — are not what did it either; 01a and 04a are among the better ones. It is
+that the old figure covered 23 frames and this one covers 26, and 04 at 9.82% (logged 7 Sep as a
+clean ramp) is now inside the average. **Do not read a change in the mean as a regression without
+checking the per-frame list**, which is why the list is written down.
 
 **It is not pixel-identical and must not be described as such.** The residue is glyph
 rasterisation plus sub-pixel line-height accumulation — the same effect §20 records as rendered

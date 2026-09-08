@@ -7404,3 +7404,39 @@ would have started pointing at nothing. `SYNC.md` step 2 says never hand-edit a 
 that rule assumes a pull is lossless. It is not, for any frame holding a deliberately hidden state.
 Either make it visible for the pull and re-hide it after, or patch the property in place and prove
 the patch against a pull, which is what was done here. Frames affected: **05, 05a, 05b**.
+
+CHANGE  ·  2026-09-09  ·  molades-none  · Source: user
+**The docs said 21, 23 and 24 screens for a build that has 26.** Devansh: *"yes"*, to fixing the
+stale counts. Every count was checked against the Figma section and `src/render.tsx` rather than
+carried forward, and the answer is **26 = 16 screens + 10 state variants** (01a · 03a · 03b · 04a ·
+05a · 05b · 06a · 06b · 08a · 08b).
+
+Five places were wrong, and they were wrong in three different ways:
+
+- `CONTEXT` §18 *"21 frames = 16 screens + 5 state variants"*, with a flow table missing 01a, 04a
+  and 06b outright, and 04 still listed as one screen when it is a tab pair
+- `CONTEXT` §21 *"All 23 frames"* and *"The build is 24 screens now, not 23"* — the second written
+  when 06b was added and never touched again as 01a and 04a followed
+- `CONTEXT` §3 and `CLAUDE.md` file tables, *"the 23 Figma frames as working code"*
+- `SYNC.md` *"currently returns empty across all 24 frames"*
+
+**The parity figures were stale in a worse way than the counts.** §21 quoted *mean 5.2%, worst
+12.4%* over 23 frames — a number no longer describing the thing it names. Rather than re-label it,
+all 26 frames were re-rendered and diffed against Figma renders pulled the same hour: **mean
+5.63%, median 5.54%**, best 1.28% (08b), worst 11.99% (01) and 11.69% (03a). Four frames sit above
+8%: 01, 03a, 04 (9.82%, logged 7 Sep as a clean ramp) and 05a (8.06%). The per-frame list is now
+written into §21, because a mean over a changing set of frames is not a baseline anyone can compare
+against — 5.2 → 5.63 with nothing having got worse is exactly the trap.
+
+**The geometry check was left as history, not refreshed.** It has not run since 4 Sep and has never
+seen 01a, 04a or 06b. §21 now says so in the table rather than letting the 1,730-node figure read as
+current. Marked, not quietly dropped.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**A count in prose is a cache, and nothing invalidates it.** Three screens were added across three
+sessions; each session updated the one sentence it was looking at and left the other four. The
+sentence that survived longest — *"the build is 24 screens now, not 23"* — was written to correct a
+stale count and became one itself, which is the tell: a number phrased as a correction is still just
+a number. Anything derived from the file (frame counts, node counts, diff percentages) should either
+be regenerated when it is quoted or carry the date and scope it was measured at. §21's parity row
+now does both, and its geometry row admits it has neither.

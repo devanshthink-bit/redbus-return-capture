@@ -55,7 +55,7 @@ Do not start work, answer a question about the project, or change a file until y
   builds, byte-for-byte. Only the viewer loads them, in an iframe
 - `v1.html` · `v2.html` · `v3.html` · `prototype.html` — **redirects** to `/?version=N`, so an old
   link opens the viewer on the version it asked for instead of a bare prototype
-- `hifi/app.html` — **the hi-fi prototype: the 23 Figma frames as working code.** Shown *inside*
+- `hifi/app.html` — **the hi-fi prototype: the 26 Figma frames as working code.** Shown *inside*
   the root viewer, behind a **Lo-fi / Hi-fi** switch, and the hi-fi is what opens on landing. Only
   the viewer's iframe reaches it, exactly as only the iframe reaches `frozen/`.
   `hifi/app.html` and `hifi/app.css` are **generated** — rebuild with `node hifi/build/build.mjs`
