@@ -269,18 +269,39 @@ export default function Component05BReturnOneDayPicked() {
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="8" fare=" " state="Unavailable" />
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="9" fare=" " state="Unavailable" />
               <CalendarDay className="bg-[var(--colour\/neutral\/150,#e9eaf6)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" fare="Out" state="Out" />
-              <CalendarDay className="bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="11" fare="₹1,260" state="In reach" />
-              <CalendarDay className="bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="12" fare="₹1,140" state="In reach" />
+              <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="11" fare="₹1,260" />
+              <div className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" data-node-id="347:2899" data-name="12">
+                <p className="font-['Inter:Medium'] font-medium leading-[20px] relative shrink-0 text-[16px] text-[color:var(--text\/weekend,#bc361c)]" data-node-id="I347:2899;82:303">
+                  12
+                </p>
+                <p className="font-['Inter:Regular'] font-normal leading-[14px] relative shrink-0 text-[12px] text-[color:var(--text\/secondary,#636363)]" data-node-id="I347:2899;82:304">
+                  ₹1,140
+                </p>
+              </div>
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="13" fare="Full" state="Full" />
             </div>
             <div className="[word-break:break-word] content-stretch flex gap-[4px] items-start not-italic overflow-clip relative shrink-0 w-full whitespace-nowrap" data-node-id="347:2901" data-name="Week">
               <CalendarDay className="bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--text\/on-accent,white)]" day="14" fare="₹800" state="Selected" />
-              <CalendarDay className="bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="15" fare="₹860" state="In reach" />
-              <CalendarDay className="bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="16" fare="₹860" state="In reach" />
-              <CalendarDay className="bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="17" fare="₹970" state="In reach" />
-              <CalendarDay className="bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="18" fare="₹1,050" state="In reach" />
-              <CalendarDay className="bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="19" fare="₹1,190" state="In reach" />
-              <CalendarDay className="bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="20" fare="₹870" state="In reach" />
+              <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="15" fare="₹860" />
+              <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="16" fare="₹860" />
+              <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="17" fare="₹970" />
+              <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="18" fare="₹1,050" />
+              <div className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" data-node-id="347:2907" data-name="19">
+                <p className="font-['Inter:Medium'] font-medium leading-[20px] relative shrink-0 text-[16px] text-[color:var(--text\/weekend,#bc361c)]" data-node-id="I347:2907;82:303">
+                  19
+                </p>
+                <p className="font-['Inter:Regular'] font-normal leading-[14px] relative shrink-0 text-[12px] text-[color:var(--text\/secondary,#636363)]" data-node-id="I347:2907;82:304">
+                  ₹1,190
+                </p>
+              </div>
+              <div className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" data-node-id="347:2908" data-name="20">
+                <p className="font-['Inter:Medium'] font-medium leading-[20px] relative shrink-0 text-[16px] text-[color:var(--text\/weekend,#bc361c)]" data-node-id="I347:2908;82:303">
+                  20
+                </p>
+                <p className="font-['Inter:Regular'] font-normal leading-[14px] relative shrink-0 text-[12px] text-[color:var(--text\/secondary,#636363)]" data-node-id="I347:2908;82:304">
+                  ₹870
+                </p>
+              </div>
             </div>
             <div className="content-stretch flex gap-[4px] items-start overflow-clip relative shrink-0 w-full" data-node-id="347:2909" data-name="Week">
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="21" fare="₹740" noDateChange />

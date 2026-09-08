@@ -7285,3 +7285,25 @@ v4's rule: leaving it out broke the range in two.
 deleted, in case the tint comes back.
 
 Diffs 05a **8.14%**, 05b **8.08%**.
+
+CHANGE  ·  2026-09-09  ·  molades-none  · Source: user
+**05b showed ten days selected on a screen whose whole point is one day.** Devansh: *"why are we
+showing so many dates selected in i know my date calender in figma"*. My own doing, one change
+earlier: 05b was drawn with 14 picked **and 11–20 in the reach band** — v4 tints the reachable days
+whenever a single day is chosen — and turning the reach tint into the full accent turned that tint
+into ten selected days.
+
+The reach band has no business on the fixed-date frame: with a date named there is no window to
+show. All eight In-reach cells on 05b are back to Default, weekend red restored on 12, 19 and 20,
+and only **14** is the accent. 05a keeps its band, which is the window and is what it is for.
+
+The running build was already right — `paint()` bands only between the two ends, and with one pick
+both ends are the same day. This was the frame, not the behaviour, which is exactly why the frame
+still has to be looked at. Diff 05b **7.62%**.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**A shared variant carries a change into every state that uses it.** `State=In reach` meant two
+different things on two frames — *inside the window you chose* on 05a, and *within reach of the day
+you chose* on 05b. Restyling it for the first silently restyled the second. Before changing a
+variant, list the frames that use it and say out loud what it means on each; if the answers differ,
+it is two variants wearing one name.
