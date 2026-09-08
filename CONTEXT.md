@@ -897,8 +897,25 @@ it and rewrites the hint; tapping a day goes forward on the answer — *I know m
 7-day band moves, and every line naming a date or a fare is recomputed from the cells themselves
 (*We'll book …*, the hint's two dates, *We book one day, not all N*, *Cheapest is …*, *Your last
 day …*). Without that, every date landed on the one day the frame was drawn with. Back from 05b
-returns to 05 when a day tap is what jumped there. 18–19 days are tappable per frame: past,
-sold-out and the outbound day are not.
+returns to 05 when a day tap is what jumped there.
+
+**The calendar carries both months (9 Sep).** v4 books to **Sat 10 Oct** (`LAST_BOOKABLE` 40), so
+September alone left an October date with nowhere to tap. **October sits under September inside the
+same card — no arrows**, because the real app has none: `IMG_5223` shows the weekday header pinned
+above the month label, which is the continuously-scrolling picker. Every October value was harvested
+from v4 driven headless (1 Oct ₹770 … 10 Oct ₹1,170, **3 Oct Full**, 2 Oct no date change, 11–31
+struck out), and the same harvest verified September against what was already drawn.
+
+Sold-out is `!SEAT[d]` — *the bus runs, every seat is gone* — **not** `busesOn(d).length === 0`.
+Getting that wrong priced 13 Sep, 23 Sep and 3 Oct as bookable, and only §19's list of sold-out days
+caught it.
+
+Two months mean a day number is no longer a day, so the shell carries **v4's own 1–40 index**
+(`1 = 1 Sep`, `31 = 1 Oct`, `40 = 10 Oct`) and derives weekdays from `DOW[(i-1)%7]` with 1 Sep 2026
+a Tuesday. A window crossing the boundary works, and one running off the end clamps.
+
+**27 days are tappable** across both months — 18 in September, 9 in October. Past days, sold-out
+days and the outbound are not.
 
 Two corrections from the same pass did survive, and both came off the captures:
 
