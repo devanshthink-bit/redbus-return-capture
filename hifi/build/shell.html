@@ -144,20 +144,24 @@
   /* Painting the picked day onto the frame you land on. hf-day-off resets a cell to its own
      resting colours -- which are not one colour: a weekend number is #BC361C and a past or
      sold-out one #9A9AA4 -- and sel/band come after it so they win the background. */
+  /* nth-of-type, not first-/last-child: a day whose bus allows no date change carries a dot as a
+     third child, so `p:last-child` matched nothing there and the fare kept its grey on the red
+     band -- 21 Sep and 2 Oct were unreadable inside a chosen window. Each state renders exactly
+     two <p>s, the number then the fare, whether or not the dot is present. */
   .hf-day-off{background:transparent!important}
-  .hf-day-off > p:first-child{color:#1d1d1d!important}
-  .hf-day-off > p:last-child{color:#636363!important}
-  .hf-day-off.hf-day-wknd > p:first-child{color:#bc361c!important}
-  .hf-day-off.hf-day-mute > p:first-child{color:#9a9aa4!important}
-  .hf-day-off.hf-day-mute > p:last-child{color:#9a9aa4!important}
+  .hf-day-off > p:nth-of-type(1){color:#1d1d1d!important}
+  .hf-day-off > p:nth-of-type(2){color:#636363!important}
+  .hf-day-off.hf-day-wknd > p:nth-of-type(1){color:#bc361c!important}
+  .hf-day-off.hf-day-mute > p:nth-of-type(1){color:#9a9aa4!important}
+  .hf-day-off.hf-day-mute > p:nth-of-type(2){color:#9a9aa4!important}
   /* The days between the two ends are the window, not a hint of one: same red, same white ink. */
   .hf-day-band{background:#c54646!important}
-  .hf-day-band > p:first-child{color:#fff!important}
-  .hf-day-band > p:last-child{color:#fff!important}
+  .hf-day-band > p:nth-of-type(1){color:#fff!important}
+  .hf-day-band > p:nth-of-type(2){color:#fff!important}
   .hf-day-dim{opacity:.32!important;pointer-events:none}
   .hf-day-sel{background:#c54646!important}
-  .hf-day-sel > p:first-child{color:#fff!important}
-  .hf-day-sel > p:last-child{color:#fff!important}
+  .hf-day-sel > p:nth-of-type(1){color:#fff!important}
+  .hf-day-sel > p:nth-of-type(2){color:#fff!important}
   .hf-radio-on{position:relative}
   /* A radio dot does not travel -- it is either set or not. It fades in on the spot. */
   @keyframes hf-dot{from{opacity:0;transform:scale(.6)} to{opacity:1;transform:none}}

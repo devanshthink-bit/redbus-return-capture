@@ -7350,3 +7350,57 @@ was still right.** Continue genuinely does nothing visible with no date picked �
 calendar, which at the viewer's scale is easy to miss — so pressing it and then clicking the next
 screen in the rail is exactly how someone lands on the stale frame. Reproducing the symptom rather
 than the explanation is what separated the two.
+
+CHANGE  ·  2026-09-09  ·  molades-none  · Source: user
+**The fare vanished on a no-date-change day inside a chosen window, and the calendar prices are a
+step smaller.** Devansh, on a screenshot of 21 Sep sitting in a red band with an unreadable price:
+*"why price on 21 is not showing, also in figma and hifi proto make prices font size in calender
+little smaller so that it looks good to the eye"*.
+
+**The price.** Not a paint bug — a selector bug. `.hf-day-band > p:last-child` and its five
+siblings assumed the cell's last child was the fare. A day whose bus allows no date change carries
+a **third** child, the grey dot, so `p:last-child` matched nothing there and the fare kept its
+`#636363` on the red band. Only 21 Sep and 2 Oct have the dot, which is why it looked like one
+broken cell rather than a rule. All six rules are `nth-of-type(1)` / `nth-of-type(2)` now: each
+state renders exactly two `<p>`s, the number then the fare, dot or no dot. Verified by computed
+colour — every day in an 18–24 window, 21 included, reads `rgb(255,255,255)`.
+
+**The size.** `Calendar / Day`'s Fare text, all seven variants, **12 → 11px** in Figma, with the
+line height held at 14 so the 52pt cell does not move. Changed on the component, so 05, 05a, 05b
+and **13 · Change day** all follow — 120 fare texts, no instance overrides left at 12, every frame
+height unchanged.
+
+**11 is off the documented scale.** `CONTEXT` §16 fixes the type ramp at 20/18/16/14/12 and says
+17 and 15 must not come back. This adds an 11 below the floor. The ramp was measured off the app's
+own screens, and the app has no fare under a calendar day to measure — that row is ours — so the
+scale has nothing to say about it. Recorded rather than waved through: if the floor is to hold, 12
+is the only legal size and the answer is a different fix.
+
+The four screen files were **not** re-pulled wholesale, and this is a deviation worth naming. The
+October grid is in each file behind a `hidden` attribute; it is hidden in Figma too, so
+`get_design_context` omits it, and a straight re-pull would have deleted October and broken the
+month arrows. Instead the seven Fare node ids were patched from 12 to 11 in place, then checked
+against a fresh pull of 05: the component-level line is byte-identical to what Figma now generates,
+and the instance paths match one for one, with only the two October cells extra. Same bytes, plus
+the thing the pull cannot give back.
+
+Diffs after, all against references re-pulled after the last Figma edit: 05 **5.20%**, 05a
+**8.06%**, 05b **7.54%**, 13 **4.87%** — every one level with or better than before. Forward walk
+01 → 16 unchanged.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**`:first-child` and `:last-child` are claims about the markup, not about the content.** Six rules
+said "the fare is the last child" and that was true on 28 of 30 cells. The two where it was false
+are exactly the two carrying an optional extra element, which is the general shape of this bug: a
+conditional child silently reindexes every positional selector above it. `nth-of-type` counts only
+the tag you name, so an added `<div>` cannot move a `<p>`. Reach for it whenever a component has
+optional children.
+
+NOTE  ·  2026-09-09  ·  molades-none
+**A hidden node is invisible to `get_design_context`, so a re-pull can silently delete work.** The
+October grid exists in Figma but is hidden — the shell's month arrows reveal it — and the pull came
+back with the September grid only. Nothing errors; the file just comes back shorter, and the arrows
+would have started pointing at nothing. `SYNC.md` step 2 says never hand-edit a screen file, and
+that rule assumes a pull is lossless. It is not, for any frame holding a deliberately hidden state.
+Either make it visible for the pull and re-hide it after, or patch the property in place and prove
+the patch against a pull, which is what was done here. Frames affected: **05, 05a, 05b**.

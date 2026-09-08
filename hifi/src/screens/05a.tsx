@@ -54,7 +54,7 @@ function CalendarDay({ className, day = "10", fare = "₹910", noDateChange = fa
           <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[20px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="82:303">
             {day}
           </p>
-          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[12px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="82:304">
+          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="82:304">
             {fare}
           </p>
         </>
@@ -69,7 +69,7 @@ function CalendarDay({ className, day = "10", fare = "₹910", noDateChange = fa
           <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[20px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="82:313">
             {day}
           </p>
-          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[12px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="82:314">
+          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="82:314">
             {fare}
           </p>
         </>
@@ -84,7 +84,7 @@ function CalendarDay({ className, day = "10", fare = "₹910", noDateChange = fa
           <p className="[text-decoration-skip-ink:none] [text-underline-position:from-font] [word-break:break-word] decoration-from-font decoration-solid font-['Inter:Medium'] font-medium leading-[20px] line-through not-italic relative shrink-0 text-[16px] text-[color:var(--calendar\/unavailable,#9a9aa4)] whitespace-nowrap" data-node-id="82:318">
             {day}
           </p>
-          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[12px] text-[color:var(--calendar\/unavailable,#9a9aa4)] whitespace-nowrap" data-node-id="82:319">
+          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--calendar\/unavailable,#9a9aa4)] whitespace-nowrap" data-node-id="82:319">
             {fare}
           </p>
         </>
@@ -99,7 +99,7 @@ function CalendarDay({ className, day = "10", fare = "₹910", noDateChange = fa
           <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[20px] not-italic relative shrink-0 text-[16px] text-[color:var(--calendar\/unavailable,#9a9aa4)] whitespace-nowrap" data-node-id="82:323">
             {day}
           </p>
-          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[12px] text-[color:var(--calendar\/unavailable,#9a9aa4)] whitespace-nowrap" data-node-id="82:324">
+          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--calendar\/unavailable,#9a9aa4)] whitespace-nowrap" data-node-id="82:324">
             {fare}
           </p>
         </>
@@ -114,7 +114,7 @@ function CalendarDay({ className, day = "10", fare = "₹910", noDateChange = fa
           <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[20px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/on-accent,white)] whitespace-nowrap" data-node-id="82:308">
             {day}
           </p>
-          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[12px] text-[color:var(--text\/on-accent,white)] whitespace-nowrap" data-node-id="82:309">
+          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/on-accent,white)] whitespace-nowrap" data-node-id="82:309">
             {fare}
           </p>
         </>
@@ -129,7 +129,7 @@ function CalendarDay({ className, day = "10", fare = "₹910", noDateChange = fa
           <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[20px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/on-accent,white)] whitespace-nowrap" data-node-id="91:527">
             {day}
           </p>
-          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[12px] text-[color:var(--text\/on-accent,white)] whitespace-nowrap" data-node-id="91:528">
+          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[14px] not-italic relative shrink-0 text-[11px] text-[color:var(--text\/on-accent,white)] whitespace-nowrap" data-node-id="91:528">
             {fare}
           </p>
         </>
@@ -283,7 +283,7 @@ export default function Component05AReturnWindowChosen() {
                 <p className="font-['Inter:Medium'] font-medium leading-[20px] relative shrink-0 text-[16px] text-[color:var(--text\/weekend,#bc361c)]" data-node-id="I347:2740;82:303">
                   19
                 </p>
-                <p className="font-['Inter:Regular'] font-normal leading-[14px] relative shrink-0 text-[12px] text-[color:var(--text\/secondary,#636363)]" data-node-id="I347:2740;82:304">
+                <p className="font-['Inter:Regular'] font-normal leading-[14px] relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)]" data-node-id="I347:2740;82:304">
                   ₹1,190
                 </p>
               </div>
@@ -291,7 +291,7 @@ export default function Component05AReturnWindowChosen() {
                 <p className="font-['Inter:Medium'] font-medium leading-[20px] relative shrink-0 text-[16px] text-[color:var(--text\/weekend,#bc361c)]" data-node-id="I347:2741;82:303">
                   20
                 </p>
-                <p className="font-['Inter:Regular'] font-normal leading-[14px] relative shrink-0 text-[12px] text-[color:var(--text\/secondary,#636363)]" data-node-id="I347:2741;82:304">
+                <p className="font-['Inter:Regular'] font-normal leading-[14px] relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)]" data-node-id="I347:2741;82:304">
                   ₹870
                 </p>
               </div>
@@ -306,7 +306,7 @@ export default function Component05AReturnWindowChosen() {
                 <p className="font-['Inter:Medium'] font-medium leading-[20px] relative shrink-0 text-[16px] text-[color:var(--text\/weekend,#bc361c)]" data-node-id="I347:2748;82:303">
                   26
                 </p>
-                <p className="font-['Inter:Regular'] font-normal leading-[14px] relative shrink-0 text-[12px] text-[color:var(--text\/secondary,#636363)]" data-node-id="I347:2748;82:304">
+                <p className="font-['Inter:Regular'] font-normal leading-[14px] relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)]" data-node-id="I347:2748;82:304">
                   ₹1,240
                 </p>
               </div>
@@ -314,7 +314,7 @@ export default function Component05AReturnWindowChosen() {
                 <p className="font-['Inter:Medium'] font-medium leading-[20px] relative shrink-0 text-[16px] text-[color:var(--text\/weekend,#bc361c)]" data-node-id="I347:2749;82:303">
                   27
                 </p>
-                <p className="font-['Inter:Regular'] font-normal leading-[14px] relative shrink-0 text-[12px] text-[color:var(--text\/secondary,#636363)]" data-node-id="I347:2749;82:304">
+                <p className="font-['Inter:Regular'] font-normal leading-[14px] relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)]" data-node-id="I347:2749;82:304">
                   ₹810
                 </p>
               </div>
@@ -341,7 +341,7 @@ export default function Component05AReturnWindowChosen() {
             <p className="font-['Inter:Medium'] font-medium leading-[20px] relative shrink-0 text-[16px] text-[color:var(--text\/weekend,#bc361c)]" data-node-id="I626:4230;82:303">
               4
             </p>
-            <p className="font-['Inter:Regular'] font-normal leading-[14px] relative shrink-0 text-[12px] text-[color:var(--text\/secondary,#636363)]" data-node-id="I626:4230;82:304">
+            <p className="font-['Inter:Regular'] font-normal leading-[14px] relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)]" data-node-id="I626:4230;82:304">
               ₹1,100
             </p>
           </div>
@@ -356,7 +356,7 @@ export default function Component05AReturnWindowChosen() {
             <p className="font-['Inter:Medium'] font-medium leading-[20px] relative shrink-0 text-[16px] text-[color:var(--text\/weekend,#bc361c)]" data-node-id="I626:4255;82:303">
               10
             </p>
-            <p className="font-['Inter:Regular'] font-normal leading-[14px] relative shrink-0 text-[12px] text-[color:var(--text\/secondary,#636363)]" data-node-id="I626:4255;82:304">
+            <p className="font-['Inter:Regular'] font-normal leading-[14px] relative shrink-0 text-[11px] text-[color:var(--text\/secondary,#636363)]" data-node-id="I626:4255;82:304">
               ₹1,170
             </p>
           </div>

@@ -26,6 +26,12 @@ it came from, which is the exact failure this whole document exists to stop.
 python3 build/pull.py <mcp-result.json> <NN>
 ```
 
+**A hidden node does not come back.** `get_design_context` omits anything invisible in Figma, so a
+straight re-pull of a frame holding a deliberately hidden state **deletes that state** — no error,
+just a shorter file. 05, 05a and 05b each carry an `Oct grid` that the month arrows reveal, and it
+is hidden in Figma. Before re-pulling one of those, either make the hidden node visible and re-hide
+it after, or patch the property in place and prove the patch against a pull of the same frame.
+
 `pull.py` extracts the code block **and** rewrites every Figma asset URL to a local file, deduping
 by content hash — a re-pull returns fresh UUIDs for identical bytes, so without that `assets/`
 grows a new copy of the same icon every time. It exits non-zero if any `figma.com/api` URL survives,
