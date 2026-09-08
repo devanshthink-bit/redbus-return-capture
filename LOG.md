@@ -7593,3 +7593,37 @@ Second: **a default that is right on the drawn example is invisible.** 06a's bad
 wrong for two operators out of three and right for the one the frame happened to use. Any node left
 unwritten by a builder inherits the example's value, so the audit question is not "does it render"
 but "which nodes did I never assign", and every one of those is a bug waiting for different input.
+
+CHANGE  ·  2026-09-09  ·  molades-none  · Source: user
+**Tapping a day lands on that day, not on the top of the screen.** Devansh: *"when any date is
+tapped i want it to smoothly scroll till top so that user can clearly see all inside it"*.
+
+`go()` resets the scroll to 0 on a real step, so 06a opened at its own header with the picked card
+and the bus fold — the bus, the seat, the price, the answer to the tap — a screen and a half below.
+`__openDay` now smooth-scrolls the chosen row to **12px from the top** after the frame is built,
+clamping at the end of the page. Measured on five cases: 11, 14, 26 land at exactly 12; 17 and 21
+are the last thing on their page so they clamp at 144 and 115. **The fold is fully visible in all
+five**, which is the point of the request.
+
+**The first version was wrong in a way that read as nearly right, and it is a repeat.** I computed
+the target from `getBoundingClientRect()` and applied it to `scrollTop`. The phone is scaled by
+`--hf-s`, so a rect is in **scaled** pixels and `scrollTop` is in **layout** pixels: the scroll came
+up short by exactly the scale factor — asked for 345, moved 309, left the row 48px down instead of
+12. `CONTEXT` §10 already records this exact mistake from 4 Sep, in the other direction. It is
+`offsetTop` accumulated up the `offsetParent` chain now, which ignores transforms, so both sides of
+the sum are layout pixels.
+
+Forward walk 01 → 16 unchanged. All 26 parity diffs re-run: none moved.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**`getBoundingClientRect()` and `scrollTop` are not the same unit whenever anything above the
+element is transformed.** A rect is what you see; `scrollTop`, `offsetTop` and `offsetHeight` are
+what the layout says. This build scales the whole phone, so every rect in it is off by that factor —
+and the failure is proportional, which means it looks like a small alignment slip rather than a unit
+error. Rule for this codebase: **any arithmetic that ends in `scrollTop` must start in `offsetTop`.**
+
+Second, on the harness: `scroll-behavior: smooth` makes even a plain `el.scrollTop = n` animate, and
+headless never runs the animation — so the assignment appears to be *refused*, returning 0 on a
+scroller with 1,159px of room. Verifying a scroll means forcing `scrollBehavior = 'auto'` first. That
+is the third time an animation has produced a fake result in this harness; the pattern is that
+anything the browser defers cannot be measured in the same breath as the code that requested it.

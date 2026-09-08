@@ -1223,6 +1223,25 @@
     window.__openDay = function(d){
       RETURN.chosen = d;
       go(movCount(d) === 0 ? i06b : i06a);
+      // Land on the day they tapped, not on the top of the screen. The row is the thing they
+      // chose and the fold under it is the answer -- the bus, the seat, the price -- so a screen
+      // that opens at its own header hides both and asks them to go looking. go() has already
+      // reset the scroll to 0, so this animates down from there.
+      var sec = screens[at];
+      var row = sec.querySelector('[data-name="Day \u00b7 ' + label(d) + '"]');
+      var sc  = sec.querySelector('.scroll');
+      if (!row || !sc) return;
+      // offsetTop, not getBoundingClientRect. The phone is scaled by --hf-s, so a rect is in
+      // scaled pixels while scrollTop is in layout pixels -- mixing them scrolls short by exactly
+      // the scale factor, which reads as "nearly right" and is the trap CONTEXT §10 already
+      // records. offsetTop ignores transforms, so both sides of this sum are layout pixels.
+      function absTop(el){ var y = 0; for (var n = el; n; n = n.offsetParent) y += n.offsetTop; return y; }
+      var to  = absTop(row) - absTop(sc) - 12;
+      var max = sc.scrollHeight - sc.clientHeight;
+      to = Math.max(0, Math.min(to, max));
+      // No rAF: go() rebuilt the rows and ran clearBottom synchronously, so the geometry is
+      // settled. scrollTo, not scrollIntoView, which scrolls every ancestor it can reach.
+      sc.scrollTo({ top: to, behavior: 'smooth' });
     };
   })();
 
