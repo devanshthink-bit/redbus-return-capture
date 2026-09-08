@@ -7124,3 +7124,14 @@ showed 14 September. In a session that reads as the prototype ignoring you — w
 that plainly does nothing, because it appears to respond. The fix is not more frames: it is to
 carry the tap forward and repaint the one frame around it, deriving every number from what the
 frame already holds rather than from a second table that can drift.
+
+CHANGE  ·  2026-09-08  ·  molades-none  · Source: user
+**The fidelity switch says Hi-fi / Lo-fi again.** Devansh: *"make it hi-fi and lo-fi"*. This
+reverses his own instruction of earlier today (*"write these hi fideliety and low fideliety full
+names"*), which is his to reverse — the short forms fit the pill and the note reads the same either
+way. Changed on the two buttons and on the bold lead-in of the note under them, so the note names
+the thing the button you just pressed is called.
+
+The hi-fi build's own sidebar kicker and page title still say *high fidelity*. Both live inside the
+iframe, which runs in embed mode with the panel hidden, so neither is on screen anywhere — left
+alone rather than changed on spec.
