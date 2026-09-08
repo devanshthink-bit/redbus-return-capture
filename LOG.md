@@ -7540,3 +7540,56 @@ Second: the frames are the design, and they are also **examples**. 06 is drawn f
 189. Any frame carrying specimen data is a screen that must be rebuilt from state before anyone
 tests it, and the way to know which is to ask what the frame would say if the traveller answered
 differently.
+
+CHANGE  ·  2026-09-09  ·  molades-none  · Source: user
+**06a and 06b are rebuilt around the day actually tapped.** Devansh: *"yes do them as well"*, on the
+gap left by the previous change — the two chosen-day frames still showed Thu 17 Sep whatever the
+traveller picked.
+
+Both frames are drawn around one example — 06a on **Thu 17** out of 11–17, 06b on **Mon 21** out of
+18–21 — and both now rebuild from `RETURN`. Which one you land on is a property of the day, not of
+the canvas order: **06b exists because a day whose buses allow no date change is a different design**,
+not the same one with a rule crossed out. `movCount(d) === 0` decides, and it is true on exactly two
+days in the whole booking window, 21 Sep and 2 Oct.
+
+What is rebuilt: every day row with its fare, bus line and delta against the picked day; *Your pick*
+and the accent ring on the chosen row; the Cheapest, Cannot-change and Different-seat chips; the
+**bus fold** — times, duration, seats and singles, fare, operator, vehicle, rating and vote count,
+the Free Cancellation and date-change pills, the seat line; the one trade row under *OTHER BUSES
+THAT DAY*; the *All N buses on …* link; the nav subtitle, the lead and the bottom bar.
+
+Data harvested from **v4 driven headless**: every service that runs each day with its times, fare,
+seats, singles, rating, votes and whether it allows a date change. Not a second table — the numbers
+v4 itself computes.
+
+**The check that actually proves it: feed the builder each frame's own example and it regenerates
+that frame.** Asking for 11–17 and tapping Thu 17 reproduces 06a line for line, fold and trade row
+included; asking for 18–21 and tapping Mon 21 reproduces 06b, down to *₹30 less · 19:45 — 03:50 ·
+★ 4.2 (420) · cannot change date*. A third case, 18–21 tapping **Fri 18**, lands on 06a with RS Yadav
+23:40 → 07:45, ₹1,090, 4.5 (315), 20 seats (8 single) — matching v4 exactly, and proving the rating
+badge moves rather than keeping the frame's Laxmi 4.7.
+
+Two things found while building it:
+
+- **06a's rating badge renders with bare node ids** (`36:121`, `36:122`) where 06b's carry the full
+  instance path. The same component, two id shapes, because one instance passes props and the other
+  takes defaults. Left unset, 06a would have shown **4.7 (178)** for every operator — and it would
+  have looked right on the day the frame was drawn for, which is how it survives review
+- **The Different-seat chip is suppressed on the picked row.** Its seat is stated in the fold
+  directly beneath it, which is 06b's own design; the chip would say it twice
+
+All 26 parity diffs re-run: **not one moved** — a cold render has nothing picked, so `build()`
+returns early and each frame keeps the example it was drawn with. Forward walk 01 → 16 unchanged.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**The strongest test of a builder that replaces a drawn frame is whether it can redraw that frame.**
+Every number in 06a and 06b was already committed to by a designer, independently, for a specific
+window and day. Feeding those same inputs back turns the frame into an oracle: 45 strings across two
+screens either come out identical or they do not. It found nothing wrong on the second run, and on
+the first it caught the rating, which no amount of "does this look right" would have — 4.7 (178) is
+plausible on every screen and correct on one.
+
+Second: **a default that is right on the drawn example is invisible.** 06a's badge would have been
+wrong for two operators out of three and right for the one the frame happened to use. Any node left
+unwritten by a builder inherits the example's value, so the audit question is not "does it render"
+but "which nodes did I never assign", and every one of those is a bug waiting for different input.

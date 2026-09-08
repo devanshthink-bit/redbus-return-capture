@@ -996,9 +996,10 @@
         }
         row.setAttribute('data-name', 'Day \u00b7 ' + label(d2));
         row.classList.add('hf-hot');
-        (function(el){ el.addEventListener('click', function(e){
-          e.preventDefault(); e.stopPropagation(); go(nextOf(i06));
-        }, true); })(row);
+        (function(el, dd){ el.addEventListener('click', function(e){
+          e.preventDefault(); e.stopPropagation();
+          if (window.__openDay) window.__openDay(dd); else go(nextOf(i06));
+        }, true); })(row, d2);
         list.appendChild(row);
       }
 
@@ -1042,6 +1043,186 @@
     if (i09 >= 0) ON_ENTER['09'] = function(sec){
       var t = q(sec, 'I109:988;34:91');
       if (t) t.textContent = 'Pay ' + money(RETURN.skipped ? ONE : BOTH);
+    };
+  })();
+
+
+  // 06a / 06b · the chosen day. Both frames are drawn around one example -- 06a on Thu 17 Sep out
+  //      of 11-17, 06b on Mon 21 out of 18-21 -- and both are rebuilt here around the day actually
+  //      tapped. Which frame you land on is a property of that day: 06b exists because a day whose
+  //      buses allow no date change is a different design, not the same one with a rule crossed out.
+  //
+  //      BUSES is harvested from v4 driven headless: every service that runs each day with its
+  //      times, fare, seats, rating and whether it can change date. Same numbers v4 computes.
+  (function chosenDay(){
+    var i06 = ORDER.indexOf('06'), i06a = ORDER.indexOf('06a'), i06b = ORDER.indexOf('06b');
+    if (i06a < 0 || i06b < 0) return;
+    var B = {"ops":["Laxmi Holidays Pvt Ltd","RS Yadav Smart Bus","International Tourist Centre"],"veh":["Bharat Benz A/C Seater /Sleeper (2+1)","A/C Seater / Sleeper (2+1)","VE A/C Sleeper (2+1)"],"days":{"11":[1260,0,"U3",0,[["23:55","08:00",1260,1,60,28,3,"8h 5m",4.7,178,0]]],"12":[1140,0,"U3",1,[["21:15","05:40",1140,1,0,9,5,"8h 25m",4.5,315,1],["23:40","07:45",1180,1,60,6,5,"8h 5m",4.5,315,1]]],"13":[960,1,null,1,[["20:30","04:35",1070,1,60,11,7,"8h 5m",4.7,178,0],["22:15","06:20",1120,1,0,12,4,"8h 5m",4.7,178,0],["23:10","07:20",960,0,60,20,7,"8h 10m",4.2,420,2]]],"14":[800,0,"U4",3,[["19:45","03:50",800,0,0,9,9,"8h 5m",4.2,420,2],["21:15","05:40",880,1,0,7,6,"8h 25m",4.5,315,1],["23:10","07:20",830,0,60,10,3,"8h 10m",4.2,420,2],["23:55","08:00",1030,1,60,26,9,"8h 5m",4.7,178,0]]],"15":[860,0,"U4",3,[["20:30","04:35",970,1,60,37,8,"8h 5m",4.7,178,0],["23:10","07:20",860,0,60,23,8,"8h 10m",4.2,420,2],["23:40","07:45",950,1,60,13,2,"8h 5m",4.5,315,1],["23:55","08:00",1060,1,60,39,5,"8h 5m",4.7,178,0]]],"16":[860,0,"U4",6,[["19:45","03:50",860,0,0,17,10,"8h 5m",4.2,420,2],["20:30","04:35",1000,1,60,7,4,"8h 5m",4.7,178,0],["21:15","05:40",940,1,0,5,7,"8h 25m",4.5,315,1],["22:15","06:20",1050,1,0,14,10,"8h 5m",4.7,178,0],["23:10","07:20",890,0,60,13,4,"8h 10m",4.2,420,2],["23:40","07:45",980,1,60,26,7,"8h 5m",4.5,315,1],["23:55","08:00",1090,1,60,11,10,"8h 5m",4.7,178,0]]],"17":[970,0,"U4",4,[["20:30","04:35",1030,1,60,20,9,"8h 5m",4.7,178,0],["21:15","05:40",970,1,0,18,3,"8h 25m",4.5,315,1],["22:15","06:20",1080,1,0,27,6,"8h 5m",4.7,178,0],["23:40","07:45",1010,1,60,7,3,"8h 5m",4.5,315,1],["23:55","08:00",1120,1,60,24,6,"8h 5m",4.7,178,0]]],"18":[1050,0,"U4",2,[["21:15","05:40",1050,1,0,31,8,"8h 25m",4.5,315,1],["22:15","06:20",1160,1,0,40,2,"8h 5m",4.7,178,0],["23:40","07:45",1090,1,60,20,8,"8h 5m",4.5,315,1]]],"19":[1190,0,"U4",1,[["22:15","06:20",1190,1,0,16,7,"8h 5m",4.7,178,0],["23:55","08:00",1230,1,60,9,7,"8h 5m",4.7,178,0]]],"20":[870,0,"U4",3,[["19:45","03:50",870,0,0,15,3,"8h 5m",4.2,420,2],["20:30","04:35",1010,1,60,16,6,"8h 5m",4.7,178,0],["22:15","06:20",1060,1,0,29,3,"8h 5m",4.7,178,0],["23:55","08:00",1100,1,60,22,3,"8h 5m",4.7,178,0]]],"21":[740,0,"U3",1,[["19:45","03:50",740,0,0,10,8,"8h 5m",4.2,420,2],["23:10","07:20",770,0,60,9,2,"8h 10m",4.2,420,2]]],"22":[1000,0,"U3",0,[["23:55","08:00",1000,1,60,7,4,"8h 5m",4.7,178,0]]],"23":[880,1,null,1,[["21:15","05:40",880,1,0,12,6,"8h 25m",4.5,315,1],["23:40","07:45",920,1,60,21,6,"8h 5m",4.5,315,1]]],"24":[860,0,"U3",1,[["20:30","04:35",970,1,60,25,8,"8h 5m",4.7,178,0],["22:15","06:20",1020,1,0,7,5,"8h 5m",4.7,178,0],["23:10","07:20",860,0,60,25,8,"8h 10m",4.2,420,2]]],"25":[1180,0,"U3",3,[["19:45","03:50",1180,0,0,8,10,"8h 5m",4.2,420,2],["21:15","05:40",1260,1,0,10,7,"8h 25m",4.5,315,1],["23:10","07:20",1210,0,60,15,4,"8h 10m",4.2,420,2],["23:55","08:00",1410,1,60,5,10,"8h 5m",4.7,178,0]]],"26":[1240,0,"U4",3,[["20:30","04:35",1350,1,60,8,9,"8h 5m",4.7,178,0],["23:10","07:20",1240,0,60,5,9,"8h 10m",4.2,420,2],["23:40","07:45",1330,1,60,28,3,"8h 5m",4.5,315,1],["23:55","08:00",1440,1,60,18,6,"8h 5m",4.7,178,0]]],"27":[810,0,"U4",6,[["19:45","03:50",810,0,0,16,2,"8h 5m",4.2,420,2],["20:30","04:35",950,1,60,21,5,"8h 5m",4.7,178,0],["21:15","05:40",890,1,0,8,8,"8h 25m",4.5,315,1],["22:15","06:20",1000,1,0,9,2,"8h 5m",4.7,178,0],["23:10","07:20",840,0,60,18,5,"8h 10m",4.2,420,2],["23:40","07:45",930,1,60,9,8,"8h 5m",4.5,315,1],["23:55","08:00",1040,1,60,31,2,"8h 5m",4.7,178,0]]],"28":[760,0,"U4",4,[["20:30","04:35",820,1,60,34,10,"8h 5m",4.7,178,0],["21:15","05:40",760,1,0,21,4,"8h 25m",4.5,315,1],["22:15","06:20",870,1,0,22,7,"8h 5m",4.7,178,0],["23:40","07:45",800,1,60,22,4,"8h 5m",4.5,315,1],["23:55","08:00",910,1,60,44,7,"8h 5m",4.7,178,0]]],"29":[790,0,"U4",2,[["21:15","05:40",790,1,0,6,9,"8h 25m",4.5,315,1],["22:15","06:20",900,1,0,35,3,"8h 5m",4.7,178,0],["23:40","07:45",830,1,60,35,9,"8h 5m",4.5,315,1]]],"30":[930,0,"U4",1,[["22:15","06:20",930,1,0,11,8,"8h 5m",4.7,178,0],["23:55","08:00",970,1,60,29,8,"8h 5m",4.7,178,0]]],"31":[770,0,"U4",3,[["19:45","03:50",770,0,0,14,4,"8h 5m",4.2,420,2],["20:30","04:35",910,1,60,30,7,"8h 5m",4.7,178,0],["22:15","06:20",960,1,0,24,4,"8h 5m",4.7,178,0],["23:55","08:00",1000,1,60,42,4,"8h 5m",4.7,178,0]]],"32":[1120,0,"U4",1,[["19:45","03:50",1120,0,0,9,9,"8h 5m",4.2,420,2],["23:10","07:20",1150,0,60,14,3,"8h 10m",4.2,420,2]]],"33":[1380,1,null,0,[["23:55","08:00",1380,1,60,27,5,"8h 5m",4.7,178,0]]],"34":[1100,0,"U3",1,[["21:15","05:40",1100,1,0,15,7,"8h 25m",4.5,315,1],["23:40","07:45",1140,1,60,4,7,"8h 5m",4.5,315,1]]],"35":[920,0,"U3",1,[["20:30","04:35",1030,1,60,39,9,"8h 5m",4.7,178,0],["22:15","06:20",1080,1,0,39,6,"8h 5m",4.7,178,0],["23:10","07:20",920,0,60,7,9,"8h 10m",4.2,420,2]]],"36":[650,0,"U3",3,[["19:45","03:50",650,0,0,7,2,"8h 5m",4.2,420,2],["21:15","05:40",730,1,0,13,8,"8h 25m",4.5,315,1],["23:10","07:20",680,0,60,20,5,"8h 10m",4.2,420,2],["23:55","08:00",880,1,60,25,2,"8h 5m",4.7,178,0]]],"37":[710,0,"U3",3,[["20:30","04:35",820,1,60,22,10,"8h 5m",4.7,178,0],["23:10","07:20",710,0,60,10,10,"8h 10m",4.2,420,2],["23:40","07:45",800,1,60,11,4,"8h 5m",4.5,315,1],["23:55","08:00",910,1,60,38,7,"8h 5m",4.7,178,0]]],"38":[710,0,"U4",6,[["19:45","03:50",710,0,0,15,3,"8h 5m",4.2,420,2],["20:30","04:35",850,1,60,35,6,"8h 5m",4.7,178,0],["21:15","05:40",790,1,0,11,9,"8h 25m",4.5,315,1],["22:15","06:20",900,1,0,4,3,"8h 5m",4.7,178,0],["23:10","07:20",740,0,60,23,6,"8h 10m",4.2,420,2],["23:40","07:45",830,1,60,24,9,"8h 5m",4.5,315,1],["23:55","08:00",940,1,60,10,3,"8h 5m",4.7,178,0]]],"39":[1140,0,"U4",4,[["20:30","04:35",1200,1,60,5,2,"8h 5m",4.7,178,0],["21:15","05:40",1140,1,0,24,5,"8h 25m",4.5,315,1],["22:15","06:20",1250,1,0,17,8,"8h 5m",4.7,178,0],["23:40","07:45",1180,1,60,5,5,"8h 5m",4.5,315,1],["23:55","08:00",1290,1,60,23,8,"8h 5m",4.7,178,0]]],"40":[1170,0,"U4",2,[["21:15","05:40",1170,1,0,9,10,"8h 25m",4.5,315,1],["22:15","06:20",1280,1,0,30,4,"8h 5m",4.7,178,0],["23:40","07:45",1210,1,60,18,10,"8h 5m",4.5,315,1]]]}};
+    var ONWARD_SEAT = 'U4', ONWARD_DEP = '23:55';
+    var DOW = ['Tue','Wed','Thu','Fri','Sat','Sun','Mon'], SEP_LEN = 30;
+    function dow(i){ return DOW[((i - 1) % 7 + 7) % 7]; }
+    function label(i){ return dow(i) + ', ' + (i <= SEP_LEN ? i + ' Sep' : (i - SEP_LEN) + ' Oct'); }
+    function money(n){ return '\u20b9' + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+    function day(d){ return B.days[d]; }
+    function busesOf(d){ var r = day(d); return r ? r[4] : []; }
+    function defBus(d){ var r = day(d); return r ? r[4][r[3]] : null; }
+    function movCount(d){ var c = 0; busesOf(d).forEach(function(b){ if (b[3]) c++; }); return c; }
+
+    var MAP = {
+      '06a': { sub:'I100:720;34:92', question:'514:3851', lead1:'100:723', lead2:'100:724',
+               dep:'I413:2910;39:113', arr:'I413:2910;39:115', meta:'I413:2910;39:116',
+               fare:'I413:2910;39:118', op:'I413:2910;39:123', veh:'I413:2910;39:125',
+               rate:'36:121', votes:'36:122',
+               seat:'413:2962', fcPill:'413:2964', closePill:'413:2966',
+               trade:'413:2969', tradeDelta:'413:2973', tradeLine:'413:2974',
+               otherHead:'413:2968', allLink:'413:2975',
+               barLine:'100:742', barFare:'100:743', caps:true },
+      '06b': { sub:'I521:3808;34:92', question:'521:3810', lead1:'521:3812', lead2:'521:3813',
+               rule1:'522:3872', rule2:'522:3874',
+               dep:'I521:3882;39:113', arr:'I521:3882;39:115', meta:'I521:3882;39:116',
+               fare:'I521:3882;39:118', op:'I521:3882;39:123', veh:'I521:3882;39:125',
+               rate:'I521:3882;39:126;36:121', votes:'I521:3882;39:126;36:122',
+               noChange:'I521:3882;39:132',
+               seat:'521:3884', fcPill:'521:3886', closePill:'521:3888',
+               trade:'521:3891', tradeDelta:'521:3895', tradeLine:'521:3896',
+               otherHead:'521:3890', allLink:'521:3897',
+               barLine:'521:3902', barFare:'521:3903', caps:false }
+    };
+
+    // one row template for every day, taken from 06a's most regular card (label/fare, a detail row
+    // carrying the bus line and the delta, and a chip row). Four of the frame's own cards keep the
+    // bus line as a direct child instead -- CONTEXT §18 -- so cloning "whichever row" would give
+    // two different shapes.
+    var src06a = screens[i06a];
+    var TPL = src06a.querySelector('[data-node-id="411:2989"]');
+    var TPL_SOLD = src06a.querySelector('[data-node-id="411:2982"]');
+    if (!TPL || !TPL_SOLD) { console.warn('06a: missing row template'); return; }
+    TPL = TPL.cloneNode(true); TPL_SOLD = TPL_SOLD.cloneNode(true);
+
+    function q(sec, id){ return sec.querySelector('[data-node-id="' + id + '"]'); }
+    function set(sec, id, txt){ var e = q(sec, id); if (e) e.textContent = txt; }
+    function show(sec, id, on){ var e = q(sec, id); if (e) e.hidden = !on; }
+    function busLine(n, mov){
+      if (mov === 0) return n + (n === 1 ? ' bus' : ' buses') + ' \u00b7 cannot change this date later';
+      if (mov === n) return n === 1 ? '1 bus \u00b7 can change date' : n + ' buses \u00b7 all can change date';
+      return n + ' buses \u00b7 ' + mov + ' can change date';
+    }
+    function chip(from, text, amber){
+      var c = from.cloneNode(true);
+      c.className = amber ? c.className.replace('bg-[#e9eaf6]', 'bg-[#f6ede6]')
+                          : c.className.replace('bg-[#f6ede6]', 'bg-[#e9eaf6]');
+      var t = c.querySelector('p');
+      t.className = amber ? t.className.replace('text-[#1d1d1d]', 'text-[#a45729]')
+                          : t.className.replace('text-[#a45729]', 'text-[#1d1d1d]');
+      t.textContent = text; return c;
+    }
+
+    function build(id, sec){
+      var m = MAP[id], pick = RETURN.pick, chosen = RETURN.chosen;
+      if (!pick.length || !chosen) return;
+      var a = pick[0], b = pick.length > 1 ? pick[1] : pick[0];
+      var days = sec.querySelector('[data-name="Days"]');
+      var fold = sec.querySelector('[data-name="Bus fold"]');
+      if (!days || !fold) return;
+
+      var cheap = 0;
+      for (var d = a; d <= b; d++){ var r = day(d); if (r && !r[1] && (!cheap || r[0] < day(cheap)[0])) cheap = d; }
+      var mine = day(chosen), myFloor = mine ? mine[0] : 0;
+
+      while (days.firstChild) days.removeChild(days.firstChild);
+      for (var d2 = a; d2 <= b; d2++){
+        var r2 = day(d2); if (!r2) continue;
+        var floor = r2[0], sold = r2[1], seat = r2[2];
+        var list = r2[4], n = list.length, mov = movCount(d2), row;
+        if (sold) {
+          row = TPL_SOLD.cloneNode(true);
+          var db = defBus(d2);
+          var h = row.children[0].querySelectorAll('p');
+          h[0].textContent = label(d2) + ' \u00b7 ' + db[0];
+          h[1].textContent = money(floor);
+          row.children[1].querySelectorAll('p')[0].textContent = B.ops[db[10]];
+        } else {
+          row = TPL.cloneNode(true);
+          var h2 = row.children[0].querySelectorAll('p');
+          h2[0].textContent = label(d2);
+          h2[1].textContent = 'from ' + money(floor);
+          var det = row.children[1].querySelectorAll('p');
+          det[0].textContent = busLine(n, mov);
+          if (d2 === chosen) { det[1].textContent = 'Your pick';
+            row.className = row.className.replace('bg-white', 'bg-white border-2 border-[#c54646] border-solid'); }
+          else if (floor === myFloor) det[1].hidden = true;
+          else det[1].textContent = floor > myFloor ? money(floor - myFloor) + ' more'
+                                                    : money(myFloor - floor) + ' cheaper';
+          var tags = row.children[2], tpl = tags.children[0];
+          while (tags.firstChild) tags.removeChild(tags.firstChild);
+          if (d2 === cheap) tags.appendChild(chip(tpl, '\u21bb Cheapest', false));
+          if (mov === 0) tags.appendChild(chip(tpl, '\u21bb Cannot change this date', true));
+          if (seat !== ONWARD_SEAT && d2 !== chosen)
+            tags.appendChild(chip(tpl, '\u21bb Different seat \u2014 ' + ONWARD_SEAT + ' taken', true));
+          tags.hidden = !tags.children.length;
+        }
+        row.setAttribute('data-name', 'Day \u00b7 ' + label(d2));
+        days.appendChild(row);
+        if (d2 === chosen) days.appendChild(fold);        // the fold belongs under the day it is for
+      }
+
+      // the fold: the day's default service, which is the one closest to the onward departure
+      var bus = defBus(chosen), seatOf = mine[2];
+      set(sec, m.dep, bus[0]); set(sec, m.arr, bus[1]);
+      set(sec, m.meta, bus[7] + ' \u00b7 ' + bus[5] + (m.caps ? ' Seats (' : ' seats (') +
+                       bus[6] + (m.caps ? ' Single)' : ' single)'));
+      set(sec, m.fare, money(bus[2]));
+      set(sec, m.op, B.ops[bus[10]]); set(sec, m.veh, B.veh[bus[10]]);
+      if (m.rate)  set(sec, m.rate, bus[8].toFixed(1));
+      if (m.votes) set(sec, m.votes, String(bus[9]));
+      if (m.noChange) show(sec, m.noChange, !bus[3]);
+      set(sec, m.seat, seatOf === ONWARD_SEAT
+        ? 'Seat ' + ONWARD_SEAT + ' \u2014 same as your onward'
+        : 'Seat ' + seatOf + ' \u2014 ' + ONWARD_SEAT + ' is taken on this bus');
+      show(sec, m.fcPill, !!bus[4]);
+      show(sec, m.closePill, true);
+
+      // one alternative: the cheapest other service that day, stating what it wins and what it costs
+      var alt = null, all = busesOf(chosen);
+      all.forEach(function(x){ if (x !== bus && (!alt || x[2] < alt[2])) alt = x; });
+      show(sec, m.otherHead, !!alt);
+      show(sec, m.trade, !!alt);
+      if (alt) {
+        var diff = alt[2] - bus[2];
+        set(sec, m.tradeDelta, diff === 0 ? 'same price'
+          : diff < 0 ? money(-diff) + ' less' : money(diff) + ' more');
+        set(sec, m.tradeLine, alt[0] + ' \u2014 ' + alt[1] + ' \u00b7 \u2605 ' + alt[8].toFixed(1) +
+            ' (' + alt[9] + ')' + (alt[3] ? '' : ' \u00b7 cannot change date'));
+      }
+      var link = q(sec, m.allLink);
+      if (link) { link.hidden = all.length < 2;
+        var lp = link.querySelector('p');
+        if (lp) lp.textContent = 'All ' + all.length + ' buses on ' + label(chosen) + ' \u2192'; }
+
+      // heads, rules and the bar
+      var count = b - a + 1;
+      set(sec, m.sub, 'Nainital \u2192 Delhi \u00b7 ' + (a === b ? label(a) : label(a) + ' \u2013 ' + label(b)));
+      set(sec, m.question, RETURN.mode === 'fixed' ? 'Your return day'
+                         : 'Now pick one of your ' + count + (count === 1 ? ' day' : ' days'));
+      if (chosen === b && RETURN.mode !== 'fixed') {
+        set(sec, m.lead1, label(chosen) + ', your last day.');
+        set(sec, m.lead2, bus[3] ? 'You never need to change it.' : 'You cannot change this date later.');
+      } else {
+        set(sec, m.lead1, label(chosen) + '.');
+        set(sec, m.lead2, bus[3] ? 'You can move this date once, free.' : 'You cannot change this date later.');
+      }
+      if (m.rule2) set(sec, m.rule2, 'No bus on ' + label(chosen) + ' offers a date change.');
+      set(sec, m.barLine, 'Return \u00b7 ' + label(chosen) + ' \u00b7 ' + bus[0]);
+      set(sec, m.barFare, money(bus[2]));
+    }
+
+    ON_ENTER['06a'] = function(sec){ build('06a', sec); };
+    ON_ENTER['06b'] = function(sec){ build('06b', sec); };
+
+    // which frame a day opens is the day's own property
+    window.__openDay = function(d){
+      RETURN.chosen = d;
+      go(movCount(d) === 0 ? i06b : i06a);
     };
   })();
 
