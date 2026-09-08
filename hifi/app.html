@@ -311,8 +311,14 @@
   // 01a is a bottom sheet, not a step: it opens from the date row on Home and closes back to it.
   // Leaving it in the linear order meant Back from the bus list landed on an open calendar.
   var OVERLAY = { '01a': 1, '03a': 1, '04a': 1 };
-  function nextOf(i){ i += 1; while (screens[i] && OVERLAY[ORDER[i]]) i += 1; return i; }
-  function prevOf(i){ i -= 1; while (screens[i] && OVERLAY[ORDER[i]]) i -= 1; return i; }
+  // Frames the linear walk must step over. Overlays are sheets that close back to their opener;
+  // 05a and 05b are not steps at all -- they are the two answered states of the calendar, and the
+  // picker moves between them itself. Left in the order, Continue on 05a walked to 05b, so a
+  // traveller who gave a window landed on the single-date frame and read it as the prototype
+  // ignoring them. The rail still reaches all of them; only next / prev / arrow keys skip.
+  var SKIP = { '01a': 1, '03a': 1, '04a': 1, '05a': 1, '05b': 1 };
+  function nextOf(i){ i += 1; while (screens[i] && SKIP[ORDER[i]]) i += 1; return i; }
+  function prevOf(i){ i -= 1; while (screens[i] && SKIP[ORDER[i]]) i -= 1; return i; }
 
   // 1 · Figma pins bottom bars, tab bars, sheets and the FAB to the viewport
   //     ("Fixed position when scrolling"). Here they are absolute children of a
@@ -425,6 +431,13 @@
   // same navigation.
   var QUIET = false;
   function goQuiet(i){ QUIET = true; try { go(i); } finally { QUIET = false; } }
+
+  // What the traveller answered on the calendar. The picker owns it; screens after the calendar
+  // read it, so 06 can show the window they actually chose rather than the one it was drawn with.
+  var RETURN = { mode: 'unsure', pick: [] };
+  // Screens that have to rebuild themselves from that answer register here. go() calls the hook
+  // after the frame is on screen and clearBottom has run, so a hook may change the content height.
+  var ON_ENTER = {};
   function go(i){
     if (i < 0 || i >= screens.length) return;
     var from = ORDER[at];
@@ -472,6 +485,7 @@
     // a price sheet is a sheet: it comes up from the bottom rather than being there already
     var sheet = sec.querySelector('.overlay [data-name="Bottom sheet"]');
     if (sheet) { sheet.classList.remove('hf-slideup'); void sheet.offsetWidth; sheet.classList.add('hf-slideup'); }
+    if (ON_ENTER[ORDER[at]]) { ON_ENTER[ORDER[at]](sec); clearBottom(sec); }
   }
   rows.forEach(function(r){ r.addEventListener('click', function(){ go(+r.dataset.go); }); });
   prevB.addEventListener('click', function(){ go(prevOf(at)); });
@@ -790,6 +804,7 @@
     function paintAll(){ idx.forEach(function(k){ if (k >= 0) paint(screens[k]); }); }
 
     function render(){
+      RETURN.mode = mode; RETURN.pick = pick.slice();
       var to = frameFor();
       if (to !== at) goQuiet(to);
       paintAll();
@@ -860,12 +875,25 @@
           return;
         }
 
+        // Skip is a real way out, not a dead label: it books the onward alone. §8 -- "the return
+        // step is skippable with a real Skip that goes somewhere different", and the guardrail
+        // depends on it. It goes to Review, which then has to stop claiming a return.
+        var skip = e.target.closest('[data-name="Button / Text action"]');
+        if (skip && sec.contains(skip)) {
+          e.preventDefault(); e.stopPropagation();
+          RETURN.skipped = true; RETURN.mode = mode; RETURN.pick = pick.slice();
+          go(ORDER.indexOf('08'));
+          return;
+        }
+
         if (cont && cont.contains(e.target)) {
           if (!pick.length) {
             e.preventDefault(); e.stopPropagation();
             var cal = sec.querySelector('[data-name="Calendar"]');
             if (cal) { blinkAt(cal); if (cal.scrollIntoView) cal.scrollIntoView({block:'nearest'}); }
+            return;
           }
+          RETURN.skipped = false;
         }
       }, true);
     });
@@ -875,6 +903,146 @@
     // two on load would wipe the very states they were drawn to show, and the parity renders
     // (build/shot.sh loads app.html?screen=05a cold) would be measuring a blank calendar.
     paint(screens[i05]);
+  })();
+
+
+  // 06 · Your return -- the day list is the window the traveller actually picked, not the one the
+  //      frame was drawn with. The frame ships as an example (Fri 11 - Thu 17); every row is
+  //      rebuilt from RETURN, using two of its own rows as templates so nothing is styled here.
+  //
+  //      DAYS is harvested from v4 driven headless -- fare, how many buses run, how many of them
+  //      allow a date change, the seat that day would give, and the day's default service. The
+  //      same numbers v4 computes, not a second table that can drift: `[fare, buses, movable,
+  //      seat, operator, departure]`, keyed by v4's own 1-40 index.
+  (function dayList(){
+    var i06 = ORDER.indexOf('06'); if (i06 < 0) return;
+    var sec = screens[i06];
+    var DAYS = {11:[1260,1,1,"U3","Laxmi Holidays Pvt Ltd","23:55"],12:[1140,2,2,"U3","RS Yadav Smart Bus","23:40"],13:[960,3,2,null,"Laxmi Holidays Pvt Ltd","22:15"],14:[800,4,2,"U4","Laxmi Holidays Pvt Ltd","23:55"],15:[860,4,3,"U4","Laxmi Holidays Pvt Ltd","23:55"],16:[860,7,5,"U4","Laxmi Holidays Pvt Ltd","23:55"],17:[970,5,5,"U4","Laxmi Holidays Pvt Ltd","23:55"],18:[1050,3,3,"U4","RS Yadav Smart Bus","23:40"],19:[1190,2,2,"U4","Laxmi Holidays Pvt Ltd","23:55"],20:[870,4,3,"U4","Laxmi Holidays Pvt Ltd","23:55"],21:[740,2,0,"U3","International Tourist Centre","23:10"],22:[1000,1,1,"U3","Laxmi Holidays Pvt Ltd","23:55"],23:[880,2,2,null,"RS Yadav Smart Bus","23:40"],24:[860,3,2,"U3","Laxmi Holidays Pvt Ltd","22:15"],25:[1180,4,2,"U3","Laxmi Holidays Pvt Ltd","23:55"],26:[1240,4,3,"U4","Laxmi Holidays Pvt Ltd","23:55"],27:[810,7,5,"U4","Laxmi Holidays Pvt Ltd","23:55"],28:[760,5,5,"U4","Laxmi Holidays Pvt Ltd","23:55"],29:[790,3,3,"U4","RS Yadav Smart Bus","23:40"],30:[930,2,2,"U4","Laxmi Holidays Pvt Ltd","23:55"],31:[770,4,3,"U4","Laxmi Holidays Pvt Ltd","23:55"],32:[1120,2,0,"U4","International Tourist Centre","23:10"],33:[1380,1,1,null,"Laxmi Holidays Pvt Ltd","23:55"],34:[1100,2,2,"U3","RS Yadav Smart Bus","23:40"],35:[920,3,2,"U3","Laxmi Holidays Pvt Ltd","22:15"],36:[650,4,2,"U3","Laxmi Holidays Pvt Ltd","23:55"],37:[710,4,3,"U3","Laxmi Holidays Pvt Ltd","23:55"],38:[710,7,5,"U4","Laxmi Holidays Pvt Ltd","23:55"],39:[1140,5,5,"U4","Laxmi Holidays Pvt Ltd","23:55"],40:[1170,3,3,"U4","RS Yadav Smart Bus","23:40"]};
+    var ONWARD_SEAT = 'U4';                       // v4's outSeat() for this booking
+    var DOW = ['Tue','Wed','Thu','Fri','Sat','Sun','Mon'];   // 1 Sep 2026 is a Tuesday
+    var SEP_LEN = 30;
+    function dow(i){ return DOW[((i - 1) % 7 + 7) % 7]; }
+    function label(i){ return dow(i) + ', ' + (i <= SEP_LEN ? i + ' Sep' : (i - SEP_LEN) + ' Oct'); }
+    function money(n){ return '\u20b9' + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+
+    var list = sec.querySelector('[data-name="Days"]');
+    var lead = sec.querySelector('[data-node-id="514:3850"]');
+    var sub  = sec.querySelector('[data-node-id="I99:651;34:92"]');
+    if (!list) { console.warn('06: no Days container'); return; }
+
+    // two of the frame's own rows, kept as templates before anything is emptied
+    var rows = Array.prototype.slice.call(list.children);
+    function byName(pre){ for (var i=0;i<rows.length;i++){
+      var n = rows[i].getAttribute('data-name') || ''; if (n.indexOf(pre) === 0) return rows[i]; } return null; }
+    var TPL_ROW  = byName('Day \u00b7 Fri, 11 Sep');     // label/fare, bus line, one tag chip
+    var TPL_SOLD = byName('Day \u00b7 Sun, 13 Sep');     // label/time, fare, operator, No seats left
+    if (!TPL_ROW || !TPL_SOLD) { console.warn('06: missing row template'); return; }
+    TPL_ROW = TPL_ROW.cloneNode(true); TPL_SOLD = TPL_SOLD.cloneNode(true);
+
+    function busLine(n, mov){
+      if (mov === 0) return n + (n === 1 ? ' bus' : ' buses') + ' \u00b7 cannot change this date later';
+      if (mov === n) return n === 1 ? '1 bus \u00b7 can change date'
+                                    : n + ' buses \u00b7 all can change date';
+      return n + ' buses \u00b7 ' + mov + ' can change date';
+    }
+
+    // the chip the template carries is the amber one; Cheapest is the lavender tone
+    function chip(from, text, amber){
+      var c = from.cloneNode(true);
+      c.className = amber ? c.className.replace('bg-[#e9eaf6]', 'bg-[#f6ede6]')
+                          : c.className.replace('bg-[#f6ede6]', 'bg-[#e9eaf6]');
+      var t = c.querySelector('p');
+      t.className = amber ? t.className.replace('text-[#1d1d1d]', 'text-[#a45729]')
+                          : t.className.replace('text-[#a45729]', 'text-[#1d1d1d]');
+      t.textContent = text;
+      return c;
+    }
+
+    function build(){
+      var pick = RETURN.pick, mode = RETURN.mode;
+      if (!pick.length) return;                              // nothing answered yet: leave the example
+      var a = pick[0], b = pick.length > 1 ? pick[1] : pick[0];
+
+      // the cheapest bookable day in the window, by the same floor v4 ranks on
+      var cheap = 0;
+      for (var d = a; d <= b; d++){ var r = DAYS[d];
+        if (r && r[3] && (!cheap || r[0] < DAYS[cheap][0])) cheap = d; }
+
+      while (list.firstChild) list.removeChild(list.firstChild);
+      for (var d2 = a; d2 <= b; d2++){
+        var r2 = DAYS[d2]; if (!r2) continue;
+        var fare = r2[0], n = r2[1], mov = r2[2], seat = r2[3], op = r2[4], dep = r2[5];
+        var row;
+        if (!seat) {
+          // sold out: the bus runs and every seat on it is gone -- v4's own test, and the row
+          // names the service rather than a floor price you cannot buy
+          row = TPL_SOLD.cloneNode(true);
+          var h = row.children[0].querySelectorAll('p');
+          h[0].textContent = label(d2) + ' \u00b7 ' + dep;
+          h[1].textContent = money(fare);
+          row.children[1].querySelectorAll('p')[0].textContent = op;
+        } else {
+          row = TPL_ROW.cloneNode(true);
+          var h2 = row.children[0].querySelectorAll('p');
+          h2[0].textContent = label(d2);
+          h2[1].textContent = 'from ' + money(fare);
+          row.children[1].querySelectorAll('p')[0].textContent = busLine(n, mov);
+          var tags = row.children[2], tpl = tags.children[0];
+          while (tags.firstChild) tags.removeChild(tags.firstChild);
+          if (d2 === cheap) tags.appendChild(chip(tpl, '\u21bb Cheapest', false));
+          if (mov === 0) tags.appendChild(chip(tpl, '\u21bb Cannot change this date', true));
+          if (seat !== ONWARD_SEAT) tags.appendChild(chip(tpl, '\u21bb Different seat \u2014 ' + ONWARD_SEAT + ' taken', true));
+          tags.hidden = !tags.children.length;      // an empty auto-layout row still takes its gap
+        }
+        row.setAttribute('data-name', 'Day \u00b7 ' + label(d2));
+        row.classList.add('hf-hot');
+        (function(el){ el.addEventListener('click', function(e){
+          e.preventDefault(); e.stopPropagation(); go(nextOf(i06));
+        }, true); })(row);
+        list.appendChild(row);
+      }
+
+      var count = b - a + 1;
+      if (lead) lead.textContent = mode === 'fixed'
+        ? 'Your return day'
+        : 'Now pick one of your ' + count + (count === 1 ? ' day' : ' days');
+      if (sub) sub.textContent = 'Nainital \u2192 Delhi \u00b7 ' + (
+        a === b ? label(a)
+                : label(a).replace(/,\s\d+.*$/, ', ' + (a <= SEP_LEN ? a + ' Sep' : (a - SEP_LEN) + ' Oct'))
+                  + ' \u2013 ' + label(b));
+    }
+    ON_ENTER['06'] = build;
+  })();
+
+
+  // 08 / 09 · a skipped return has to be gone from Review, not just unmentioned. The frame draws
+  //      two legs and one total; Skip books the onward alone, so the return leg, its divider, its
+  //      actions and the Free date change card come out, the ONWARD tag goes with them (the real
+  //      app draws no tag when there is one leg), and every amount drops to the onward fare.
+  //      Money has to agree across screens -- CONTEXT §10 -- so 09's nav title moves with it.
+  (function skipReturn(){
+    var i08 = ORDER.indexOf('08'), i09 = ORDER.indexOf('09');
+    if (i08 < 0) return;
+    var BOTH = 2919, ONE = 1599, GUARANTEE = 500;   // v4's worked example: 1,599 onward + 1,320 return
+    function money(n){ return '\u20b9' + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+    function q(sec, id){ return sec.querySelector('[data-node-id="' + id + '"]'); }
+
+    ON_ENTER['08'] = function(sec){
+      var off = !!RETURN.skipped;
+      ['212:2073', '212:2074', '221:1871', '214:2070'].forEach(function(id){
+        var el = q(sec, id); if (el) el.hidden = off;
+      });
+      var onward = q(sec, '212:2063');  if (onward) onward.hidden = off;      // the ONWARD tag
+      var total  = off ? ONE : BOTH;
+      var t1 = q(sec, '214:2083'); if (t1) t1.textContent =
+        "You'll get " + money(total + GUARANTEE) + ' refund if bus gets cancelled';
+      var t2 = q(sec, '214:2086'); if (t2) t2.textContent = money(total);
+      var t3 = q(sec, '215:2049'); if (t3) t3.textContent = money(total);
+    };
+    if (i09 >= 0) ON_ENTER['09'] = function(sec){
+      var t = q(sec, 'I109:988;34:91');
+      if (t) t.textContent = 'Pay ' + money(RETURN.skipped ? ONE : BOTH);
+    };
   })();
 
   // and the full sheet opens only by pulling the collapsed one up -- a tap will not do it

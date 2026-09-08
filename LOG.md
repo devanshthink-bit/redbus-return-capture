@@ -7487,3 +7487,56 @@ Second, on how it survived a week: the 9 Sep entry says *"Verified: a pick lands
 Continue with hf-in-fwd."* That was true, and it was half the claim. The change had two effects and
 the check covered one. **When a fix is stated as two things, the test has to assert both** — the one
 that goes unasserted is the one that was never working.
+
+CHANGE  ·  2026-09-09  ·  molades-none  · Source: user
+**The day list is the window the traveller actually picked, and Skip is a real way out.** Devansh:
+*"after the calender screen the next screen is not responding to the real date or window i selected,
+even if different cases of figma screens arent there but we do have 1 using that make the prototype
+give next screen exactly according to what user has selected in calender. and also skip button on
+calender screen is not tappable"*.
+
+**A flow bug came out first, and it was probably what he was actually seeing.** `nextOf()` stepped
+over overlays only, so Continue on **05a walked to 05b** — a traveller who gave a window landed on
+the *single-date* frame. 05a and 05b are not steps; they are the two answered states of the
+calendar, and the picker moves between them itself. They are in `SKIP` now with the three overlays,
+so next / prev / arrow keys go 05 → 06. The rail still reaches every frame.
+
+**06 rebuilds itself from the answer.** The frame ships drawn for 11–17 Sep; every row is now built
+from `RETURN`, using two of 06's own rows as templates so nothing is styled in the shell. The data
+is harvested from **v4 driven headless** — fare, buses that day, how many allow a date change, the
+seat that day gives, and the day's default service — keyed by v4's own 1–40 index, so there is no
+second table to drift. Checked against the frames it was drawn from: 11 *1 bus · can change date*,
+12 *2 buses · all can change date*, 14 *4 buses · 2 can change date*, 17 *5 buses · all can change
+date*, 13 sold out at 22:15 Laxmi. And against **06b**, which was drawn for a different window
+entirely: asking for 18–21 now reproduces 06b's own four rows, *2 buses · cannot change this date
+later* included.
+
+**Skip books the onward alone.** It was wired to nothing at all. §8 says the return step is
+skippable with a real Skip that goes somewhere different and that the guardrail depends on it, so it
+goes to Review — and Review then has to stop claiming a return. The return leg, its divider, its
+actions and the *Free date change* card come out; the **ONWARD** tag goes with them, because the
+real app draws no leg tag when there is one leg; and every amount drops to the onward fare.
+**Money agrees across screens** (§10): 08's refund line, ticket total and pay bar read ₹2,099 /
+₹1,599 / ₹1,599, and 09's nav title *Pay ₹1,599*. Picking a return afterwards puts all of it back.
+
+**Cold renders are untouched, deliberately.** `build()` returns early with nothing picked, so a
+parity shot of 06 still shows the frame's own example. All 26 diffs re-run: **not one moved**.
+Forward walk now 01 → 06 → 16 with 05b no longer in the linear path.
+
+**Still drawn, not derived — say so before a session.** 06a and 06b keep their example rows and
+their *YOUR BUS* fold, so tapping a day on 06 lands on a screen showing Thu 17 Sep whatever was
+chosen. That is the same class of defect one screen further on, and it needs the bus detail per day
+harvested the same way.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**A state frame left in the linear order becomes a step, and it will be walked into.** 05a and 05b
+sat between 05 and 06 on the canvas because that is where a designer puts variants. `nextOf()` reads
+the canvas as the flow, so Continue on the window frame advanced to the single-date frame — and it
+looked exactly like the prototype ignoring the answer, which is how it was reported. The forward
+walk never caught it because the walk enters 05, answers, and leaves from whichever frame it lands
+on; it never pressed Continue *on 05a*. **A linear walk cannot test a branch it never stands on.**
+
+Second: the frames are the design, and they are also **examples**. 06 is drawn for one window out of
+189. Any frame carrying specimen data is a screen that must be rebuilt from state before anyone
+tests it, and the way to know which is to ask what the frame would say if the traveller answered
+differently.
