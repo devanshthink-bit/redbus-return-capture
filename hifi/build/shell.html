@@ -150,7 +150,10 @@
   .hf-day-off.hf-day-wknd > p:first-child{color:#bc361c!important}
   .hf-day-off.hf-day-mute > p:first-child{color:#9a9aa4!important}
   .hf-day-off.hf-day-mute > p:last-child{color:#9a9aa4!important}
-  .hf-day-band{background:#fbf4f4!important}
+  /* The days between the two ends are the window, not a hint of one: same red, same white ink. */
+  .hf-day-band{background:#c54646!important}
+  .hf-day-band > p:first-child{color:#fff!important}
+  .hf-day-band > p:last-child{color:#fff!important}
   .hf-day-dim{opacity:.32!important;pointer-events:none}
   .hf-day-sel{background:#c54646!important}
   .hf-day-sel > p:first-child{color:#fff!important}
@@ -650,7 +653,8 @@
           if (!m[i]) continue;
           if (i === a || i === b) { m[i].classList.remove('hf-day-off','hf-day-wknd','hf-day-mute');
                                     m[i].classList.add('hf-day-sel'); }
-          else m[i].classList.add('hf-day-band');
+          else { m[i].classList.remove('hf-day-off','hf-day-wknd','hf-day-mute');
+                 m[i].classList.add('hf-day-band'); }
         }
       }
       // the copy each frame carries

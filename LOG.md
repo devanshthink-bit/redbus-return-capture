@@ -7266,3 +7266,22 @@ nothing like each other on screen.** Moving 05 → 05a is the right model for th
 wrong model for the moment: the traveller tapped a date inside a calendar, not a link to another
 page. Any state change that a person reads as *this screen changed* must not carry the animation
 that says *you went somewhere*.
+
+CHANGE  ·  2026-09-09  ·  molades-none  · Source: user
+**The days inside the window are the accent, not a tint.** Devansh: *"make all dates inside window
+normal red instead of pale red"*. `State=In reach` on `Calendar / Day` was `#FBF4F4` with
+`#3A3A44` ink; it is `#C54646` with white ink now, the same as the two ends, so a chosen window
+reads as one solid block rather than two red caps with a wash between them.
+
+Changed once, on the variant, so both frames that use it follow — 05a's 12–16 and 05b's reach band.
+The runtime paint matches: `hf-day-band` had to *remove* `hf-day-off` as well as add itself, or a
+weekend inside the window kept `#BC361C` on red. Verified by computed style: every cell from 14 to
+20 reads `rgb(197,70,70)` with white on both lines.
+
+A sold-out day inside the window keeps its place — 13 Sep shows *Full* in white on red — which is
+v4's rule: leaving it out broke the range in two.
+
+`--calendar/reach-band` and `--calendar/reach-ink` are now unused. Left in the file rather than
+deleted, in case the tint comes back.
+
+Diffs 05a **8.14%**, 05b **8.08%**.
