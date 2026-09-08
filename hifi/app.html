@@ -429,16 +429,22 @@
     if (i < 0 || i >= screens.length) return;
     var from = ORDER[at];
     var dir = i >= at ? 1 : -1;
+    // Read the outgoing scroll BEFORE hiding it. `hidden` is display:none, and a display:none
+    // scroller reports -- and forgets -- scrollTop 0, so reading it afterwards always returned 0
+    // and every quiet move slammed back to the top. Picking a date is not a page change, and the
+    // calendar has to stay under the finger that tapped it.
+    var keep = QUIET ? screens[at].querySelector('.scroll').scrollTop : 0;
     screens[at].hidden = true;
     at = i;
     var sec = screens[at];
     sec.hidden = false;
     var sc = sec.querySelector('.scroll');
-    var keep = QUIET ? screens[ORDER.indexOf(from)].querySelector('.scroll').scrollTop : 0;
+    // after clearBottom, not before: it is what settles the scroller's full height, and a
+    // scrollTop set against the short version gets clamped.
+    clearBottom(sec);
     sc.style.scrollBehavior = 'auto';
     sc.scrollTop = keep;
     sc.style.scrollBehavior = '';
-    clearBottom(sec);
     rows.forEach(function(r, k){ r.setAttribute('aria-current', String(k === at)); });
     var cur = rows[at];
     if (cur && cur.scrollIntoView) cur.scrollIntoView({ block: 'nearest' });

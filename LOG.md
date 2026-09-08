@@ -7440,3 +7440,50 @@ stale count and became one itself, which is the tell: a number phrased as a corr
 a number. Anything derived from the file (frame counts, node counts, diff percentages) should either
 be regenerated when it is quoted or carry the date and scope it was measured at. §21's parity row
 now does both, and its geometry row admits it has neither.
+
+CHANGE  ·  2026-09-09  ·  molades-none  · Source: user
+**Tapping a date threw the page back to the top.** Devansh: *"when i am tapping any date in both
+calenders by scrolling to center whole ui is jumping to move calender down why?"*, with a screenshot
+of 05b scrolled to the calendar and a second of the same screen back at the status bar.
+
+The 9 Sep change said picking a date is not a page change and gave the picker `goQuiet()`, which
+skips the entry animation and carries the scroll position across. The animation half worked. The
+scroll half never did, and the reason is one line of ordering in `go()`:
+
+```js
+screens[at].hidden = true;                                     // outgoing frame hidden
+at = i;
+var keep = QUIET ? screens[...from].querySelector('.scroll').scrollTop : 0;   // reads 0
+```
+
+`hidden` is `display:none`, and a `display:none` scroller reports **and forgets** `scrollTop 0`. So
+`keep` was read out of an element that had already been torn down, came back 0 every time, and the
+incoming frame was set to the top. Measured before the fix: scroll 290, tap a day, **scroll 0**.
+Tapping a second day held position, because that move stays on one frame and never calls `go()` —
+which is exactly why it looked intermittent.
+
+The read now happens before the hide, and the write happens **after** `clearBottom()` rather than
+before it, because `clearBottom` is what settles the scroller's full height and a `scrollTop` set
+against the short version gets clamped. Verified on both paths: fixed 05 → 05b and window
+05 → 05a both hold 290, and the calendar's own on-screen top is unchanged across every tap.
+
+All 26 parity diffs re-run afterwards and identical to the baseline recorded earlier today — mean
+5.63%, no frame moved. Forward walk 01 → 16 unchanged.
+
+**One real shift is left, and it is content, not scrolling.** On the window path the first tap
+changes the hint from one line to two — *Now tap your last day. Only days within 7 of the first can
+be picked.* — which pushes the calendar down **18px**. That is the copy growing, not the page
+jumping, and removing it means either shorter copy or reserving two lines on the frame. Left as it
+is, flagged for Devansh.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**A `display:none` element is not a place to read layout from — including the layout you are in the
+middle of moving.** `scrollTop`, `offsetTop`, `getBoundingClientRect()` all collapse to zero the
+instant `hidden` goes on, and zero is a plausible-looking number, so nothing throws. Any handoff
+between two elements — scroll position, size, selection, focus — has to **read the outgoing one
+before hiding it**, not after.
+
+Second, on how it survived a week: the 9 Sep entry says *"Verified: a pick lands with anim=none,
+Continue with hf-in-fwd."* That was true, and it was half the claim. The change had two effects and
+the check covered one. **When a fix is stated as two things, the test has to assert both** — the one
+that goes unasserted is the one that was never working.
