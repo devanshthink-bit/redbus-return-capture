@@ -7307,3 +7307,46 @@ different things on two frames — *inside the window you chose* on 05a, and *wi
 you chose* on 05b. Restyling it for the first silently restyled the second. Before changing a
 variant, list the frames that use it and say out loud what it means on each; if the answers differ,
 it is two variants wearing one name.
+
+CHANGE  ·  2026-09-09  ·  molades-none  · Source: user
+**The calendar and the toggle could disagree, because only one of the three frames was ever
+repainted.** Devansh, on a screenshot of 05a showing *I know my date* above a six-day red window:
+*"when i clicked continue without selecting any date why this is coming?"*
+
+Continue was not the cause — it is correctly blocked with nothing picked, verified both from a
+fresh load and after clearing a window. The cause is that `paint()` in `returnPicker` only ever
+touched the frame you were standing on, while the segmented-toggle handler explicitly looped over
+**all three** frames to update the segments. So the toggle was always current and the calendar was
+not. Pick a window (lands 05a), tap *I know my date* (clears the pick, moves to 05), then reach 05a
+again by any route — the viewer's screen list, the arrows, Back from 06 — and it still carries the
+window it was painted with, under a toggle that now says the opposite.
+
+`render()` calls `paintAll()` now, which paints all three. The hint under the question was three
+separate writes to three node ids — 05 on `612:4015`, 05a on `88:418`, 05b on `512:3873` — each
+only firing in the state its own frame represents; it is one `hintText` derived from `mode` and
+`pick` and written to whichever node the frame has.
+
+**Cold load still paints 05 alone, deliberately.** 05a and 05b are *drawn* holding their own
+examples, and `build/shot.sh` loads `app.html?screen=05a` with nothing tapped — painting all three
+on load would blank the very state the frame exists to show and the parity render would be
+measuring an empty calendar. `render()` is reached only from the two tap handlers, so the sync
+starts at the first interaction, which is also where the bug started.
+
+No Figma change: the frames are untouched and the sync rule is not in play. Diffs after — 05
+**5.28%**, 05a **8.14%**, 05b **7.62%** — level with or better than the last recorded run. Full
+forward walk 01 → 16 unchanged.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**When one screen is three frames, a state change has to reach every frame, not the visible one.**
+The toggle handler already knew this — it loops all three — and the calendar painter did not, which
+is why the two could contradict each other. The tell was there in the code: two writers for one
+state, one of them enumerating the frames and one of them not. Any time a build uses several frames
+as states of a single screen, the question is not "did I repaint" but "did I repaint *all of them*",
+because the user can arrive at any one of them by a route the flow does not own — a rail, an arrow,
+a Back.
+
+Second thing worth keeping: **the reported cause and the real cause were different, and the report
+was still right.** Continue genuinely does nothing visible with no date picked — it blinks the
+calendar, which at the viewer's scale is easy to miss — so pressing it and then clicking the next
+screen in the rail is exactly how someone lands on the stale frame. Reproducing the symptom rather
+than the explanation is what separated the two.

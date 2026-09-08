@@ -657,30 +657,35 @@
                  m[i].classList.add('hf-day-band'); }
         }
       }
-      // the copy each frame carries
-      if (mode === 'fixed' && pick.length) {
-        setText(sec, '512:3873', 'We’ll book ' + label(pick[0]) + ' · from ' + fare(m[pick[0]]));
-      }
-      if (mode === 'unsure' && pick.length === 2) {
+      // The line under the question says what state we are in, and each frame carries it on its
+      // own node -- 05 on 612:4015, 05a on 88:418, 05b on 512:3873. One state, one sentence,
+      // written to whichever node this frame has: every frame is repainted on every change
+      // (see paintAll), so a frame reached from the rail can never show a window the toggle
+      // says was never asked for. That mismatch is what shipped -- the toggle was repainted on
+      // all three frames and the calendar on only one.
+      var hintText;
+      if (mode === 'fixed') {
+        hintText = pick.length
+          ? 'We’ll book ' + label(pick[0]) + ' · from ' + fare(m[pick[0]])
+          : 'Tap the day you’ll travel back.';
+      } else if (!pick.length) {
+        hintText = 'Tap the first day you could travel back.';
+      } else if (pick.length === 1) {
+        hintText = 'Now tap your last day. Only days within ' + REACH + ' of the first can be picked.';
+      } else {
         var n2 = 0, cheap = 0, cheapDay = 0;
         for (i = pick[0]; i <= pick[1]; i++) {
           var c2 = m[i]; if (!c2) continue;
           n2++;
           if (bookable(c2) && (!cheap || money(c2) < cheap)) { cheap = money(c2); cheapDay = i; }
         }
-        setText(sec, '88:418', label(pick[0]) + ' to ' + label(pick[1]) + ' · ' + n2 +
-                               ' days marked. Tap any day to start again.');
+        hintText = label(pick[0]) + ' to ' + label(pick[1]) + ' · ' + n2 +
+                   ' days marked. Tap any day to start again.';
         setText(sec, '512:3854', 'We book one day, not all ' + n2);
         if (cheapDay) setText(sec, '512:3858', 'Cheapest is ' + label(cheapDay) + ' · ' + fare(m[cheapDay]));
         if (m[pick[1]]) setText(sec, '512:3860', 'Your last day, ' + label(pick[1]) + ', is ' + fare(m[pick[1]]) + '.');
       }
-      // the hint, in v4's own words
-      var hint = sec.querySelector('[data-node-id="612:4015"]');
-      if (hint) hint.textContent = mode === 'fixed'
-        ? (pick.length ? 'Tap another day to change it.' : 'Tap the day you’ll travel back.')
-        : (!pick.length ? 'Tap the first day you could travel back.'
-          : pick.length === 1 ? 'Now tap your last day. Only days within ' + REACH + ' of the first can be picked.'
-          : 'Tap any day to start again.');
+      ['612:4015', '88:418', '512:3873'].forEach(function(id){ setText(sec, id, hintText); });
       showMonth(sec, month);
     }
 
@@ -696,10 +701,12 @@
       if (n) n.style.opacity = (m === 'Oct') ? 0.3 : 1;
     }
 
+    function paintAll(){ idx.forEach(function(k){ if (k >= 0) paint(screens[k]); }); }
+
     function render(){
       var to = frameFor();
       if (to !== at) goQuiet(to);
-      paint(screens[at]);
+      paintAll();
     }
 
     idx.forEach(function(i){
@@ -777,7 +784,10 @@
       }, true);
     });
 
-    // the frames open on their own state; the picker owns it from the first tap
+    // The frames open on their own drawn example -- 05a with its window, 05b with its day -- and
+    // the picker owns all three from the first tap. Only 05 is painted here: painting the other
+    // two on load would wipe the very states they were drawn to show, and the parity renders
+    // (build/shot.sh loads app.html?screen=05a cold) would be measuring a blank calendar.
     paint(screens[i05]);
   })();
 
