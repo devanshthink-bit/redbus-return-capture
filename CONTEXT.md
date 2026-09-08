@@ -899,12 +899,24 @@ it and rewrites the hint; tapping a day goes forward on the answer — *I know m
 day …*). Without that, every date landed on the one day the frame was drawn with. Back from 05b
 returns to 05 when a day tap is what jumped there.
 
-**The calendar carries both months (9 Sep).** v4 books to **Sat 10 Oct** (`LAST_BOOKABLE` 40), so
-September alone left an October date with nowhere to tap. **October sits under September inside the
-same card — no arrows**, because the real app has none: `IMG_5223` shows the weekday header pinned
-above the month label, which is the continuously-scrolling picker. Every October value was harvested
-from v4 driven headless (1 Oct ₹770 … 10 Oct ₹1,170, **3 Oct Full**, 2 Oct no date change, 11–31
-struck out), and the same harvest verified September against what was already drawn.
+**The calendar reaches October, one month at a time (9 Sep).** v4 books to **Sat 10 Oct**
+(`LAST_BOOKABLE` 40), so September alone left an October date with nowhere to tap. The header is
+**`‹ September 2026 ›`** — v4's own arrangement, two 44pt targets — and the October grid sits in the
+frame **hidden**, swapped in by the arrows. Stacking both months was tried first, copying the real
+app's continuously-scrolling picker, and it put 21 struck-out October days on screen; that pattern
+belongs in a sheet holding nothing else, not in a card inside a scrolling page. Every October value
+was harvested from v4 driven headless (1 Oct ₹770 … 10 Oct ₹1,170, **3 Oct Full**, 2 Oct no date
+change, 11–31 struck out), and the same harvest verified September against what was already drawn.
+
+**The window is two taps, as it is in v4.** *Tap the first day you could travel back*, which narrows
+the calendar to the 7-day reach and dims the rest, then *Now tap your last day*. Picking seven days
+automatically from one tap was tried and reversed — the window is the traveller saying how far their
+plans can move, and choosing it for them removes the only thing the screen asks. Changing the answer
+clears the pick, the same as `pickMode` in v4.
+
+**Moving between the three frames is quiet.** They are three states of one screen, so `goQuiet()`
+skips the entry animation and keeps the scroll position; picking a date read as a page change
+otherwise. Continue still animates, because that is a step.
 
 Sold-out is `!SEAT[d]` — *the bus runs, every seat is gone* — **not** `busesOn(d).length === 0`.
 Getting that wrong priced 13 Sep, 23 Sep and 3 Oct as bookable, and only §19's list of sold-out days

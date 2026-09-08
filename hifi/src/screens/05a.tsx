@@ -1,3 +1,4 @@
+const imgChevronRight = "assets/edce27a9-3c0c-4a11-9460-bdf39d04e716.svg";
 const imgGlyph = "assets/e7730637-efbf-4275-9c3f-3157d2719ecc.svg";
 const imgNoChangeDot = "assets/49f2b78a-388d-4975-8647-f3b3bd660e10.svg";
 const imgIconChevronLeft = "assets/250a59ad-4140-41b4-90e6-4930abfb91ac.svg";
@@ -142,6 +143,16 @@ function CalendarDay({ className, day = "10", fare = "₹910", noDateChange = fa
   );
 }
 
+function IconChevronRight({ className }: { className?: string }) {
+  return (
+    <div className={className || "relative size-[20px]"} data-node-id="116:1171" data-name="Icon / Chevron Right">
+      <div className="absolute left-0 size-[20px] top-0" data-node-id="116:1172" data-name="glyph">
+        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgChevronRight} />
+      </div>
+    </div>
+  );
+}
+
 function IconChevronLeft({ className }: { className?: string }) {
   return (
     <div className={className || "relative size-[20px]"} data-node-id="33:93" data-name="Icon / Chevron Left">
@@ -208,9 +219,17 @@ export default function Component05AReturnWindowChosen() {
           Fri, 11 Sep to Thu, 17 Sep · 7 days marked. Tap any day to start again.
         </p>
         <div className="bg-white content-stretch flex flex-col items-start overflow-clip px-[20px] py-[16px] relative rounded-[16px] shrink-0 w-full" data-node-id="347:2706" data-name="Calendar">
+        <div className="content-stretch flex items-center justify-between relative shrink-0 w-full" data-node-id="626:4347" data-name="Month row">
+          <div className="content-stretch flex items-center justify-center opacity-30 overflow-clip relative shrink-0 size-[44px]" data-node-id="626:4348" data-name="Prev month">
+            <IconChevronLeft className="relative shrink-0 size-[20px]" />
+          </div>
           <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[16px] whitespace-nowrap" data-node-id="347:2707">
             September 2026
           </p>
+          <div className="content-stretch flex items-center justify-center overflow-clip relative shrink-0 size-[44px]" data-node-id="626:4351" data-name="Next month">
+            <IconChevronRight className="relative shrink-0 size-[20px]" />
+          </div>
+        </div>
           <div className="[word-break:break-word] content-stretch flex font-['Inter:Semi_Bold'] font-semibold gap-[4px] items-start leading-[normal] not-italic overflow-clip pb-[10px] pt-[14px] relative shrink-0 text-[#636363] text-[11px] text-center tracking-[0.22px] w-full" data-node-id="347:2708" data-name="Weekdays">
             <p className="flex-[1_0_0] min-w-px relative" data-node-id="347:2709">
               MON
@@ -310,44 +329,40 @@ export default function Component05AReturnWindowChosen() {
               <div className="flex-[1_0_0] h-[52px] min-w-px relative" data-node-id="347:2757" data-name="—" />
             </div>
           </div>
-        <div className="h-[20px] relative shrink-0 w-full" data-node-id="623:4110" data-name="gap" />
-        <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[16px] whitespace-nowrap" data-node-id="623:4111">
-          October 2026
-        </p>
-        <div className="content-stretch flex flex-col gap-[4px] items-start overflow-clip pt-[12px] relative shrink-0 w-full" data-node-id="623:4112" data-name="Oct grid">
-          <div className="content-stretch flex gap-[4px] items-start overflow-clip relative shrink-0 w-full" data-node-id="623:4113" data-name="Week">
-          <div className="flex-[1_0_0] h-[52px] min-w-px relative" data-node-id="623:4114" data-name="—" />
-          <div className="flex-[1_0_0] h-[52px] min-w-px relative" data-node-id="623:4115" data-name="—" />
-          <div className="flex-[1_0_0] h-[52px] min-w-px relative" data-node-id="623:4116" data-name="—" />
+        <div hidden className="content-stretch flex flex-col gap-[4px] items-start overflow-clip pt-[12px] relative shrink-0 w-full" data-node-id="623:4112" data-name="Oct grid">
+          <div className="content-stretch flex gap-[4px] items-start overflow-clip relative shrink-0 w-full" data-node-id="626:4214" data-name="Week">
+          <div className="flex-[1_0_0] h-[52px] min-w-px relative" data-node-id="626:4215" data-name="—" />
+          <div className="flex-[1_0_0] h-[52px] min-w-px relative" data-node-id="626:4216" data-name="—" />
+          <div className="flex-[1_0_0] h-[52px] min-w-px relative" data-node-id="626:4217" data-name="—" />
           <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="1" fare="₹770" />
           <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="2" fare="₹1,120" noDateChange />
           <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="3" fare="Full" state="Full" />
-          <div className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" data-node-id="623:4129" data-name="4">
-            <p className="font-['Inter:Medium'] font-medium leading-[20px] relative shrink-0 text-[16px] text-[color:var(--text\/weekend,#bc361c)]" data-node-id="I623:4129;82:303">
+          <div className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" data-node-id="626:4230" data-name="4">
+            <p className="font-['Inter:Medium'] font-medium leading-[20px] relative shrink-0 text-[16px] text-[color:var(--text\/weekend,#bc361c)]" data-node-id="I626:4230;82:303">
               4
             </p>
-            <p className="font-['Inter:Regular'] font-normal leading-[14px] relative shrink-0 text-[12px] text-[color:var(--text\/secondary,#636363)]" data-node-id="I623:4129;82:304">
+            <p className="font-['Inter:Regular'] font-normal leading-[14px] relative shrink-0 text-[12px] text-[color:var(--text\/secondary,#636363)]" data-node-id="I626:4230;82:304">
               ₹1,100
             </p>
           </div>
           </div>
-          <div className="content-stretch flex gap-[4px] items-start overflow-clip relative shrink-0 w-full" data-node-id="623:4133" data-name="Week">
+          <div className="content-stretch flex gap-[4px] items-start overflow-clip relative shrink-0 w-full" data-node-id="626:4234" data-name="Week">
           <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="5" fare="₹920" />
           <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="6" fare="₹650" />
           <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="7" fare="₹710" />
           <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="8" fare="₹710" />
           <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="9" fare="₹1,140" />
-          <div className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" data-node-id="623:4154" data-name="10">
-            <p className="font-['Inter:Medium'] font-medium leading-[20px] relative shrink-0 text-[16px] text-[color:var(--text\/weekend,#bc361c)]" data-node-id="I623:4154;82:303">
+          <div className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" data-node-id="626:4255" data-name="10">
+            <p className="font-['Inter:Medium'] font-medium leading-[20px] relative shrink-0 text-[16px] text-[color:var(--text\/weekend,#bc361c)]" data-node-id="I626:4255;82:303">
               10
             </p>
-            <p className="font-['Inter:Regular'] font-normal leading-[14px] relative shrink-0 text-[12px] text-[color:var(--text\/secondary,#636363)]" data-node-id="I623:4154;82:304">
+            <p className="font-['Inter:Regular'] font-normal leading-[14px] relative shrink-0 text-[12px] text-[color:var(--text\/secondary,#636363)]" data-node-id="I626:4255;82:304">
               ₹1,170
             </p>
           </div>
           <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="11" fare=" " state="Unavailable" />
           </div>
-          <div className="content-stretch flex gap-[4px] items-start overflow-clip relative shrink-0 w-full" data-node-id="623:4162" data-name="Week">
+          <div className="content-stretch flex gap-[4px] items-start overflow-clip relative shrink-0 w-full" data-node-id="626:4263" data-name="Week">
           <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="12" fare=" " state="Unavailable" />
           <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="13" fare=" " state="Unavailable" />
           <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="14" fare=" " state="Unavailable" />
@@ -356,7 +371,7 @@ export default function Component05AReturnWindowChosen() {
           <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="17" fare=" " state="Unavailable" />
           <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="18" fare=" " state="Unavailable" />
           </div>
-          <div className="content-stretch flex gap-[4px] items-start overflow-clip relative shrink-0 w-full" data-node-id="623:4191" data-name="Week">
+          <div className="content-stretch flex gap-[4px] items-start overflow-clip relative shrink-0 w-full" data-node-id="626:4292" data-name="Week">
           <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="19" fare=" " state="Unavailable" />
           <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="20" fare=" " state="Unavailable" />
           <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="21" fare=" " state="Unavailable" />
@@ -365,14 +380,14 @@ export default function Component05AReturnWindowChosen() {
           <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="24" fare=" " state="Unavailable" />
           <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="25" fare=" " state="Unavailable" />
           </div>
-          <div className="content-stretch flex gap-[4px] items-start overflow-clip relative shrink-0 w-full" data-node-id="623:4220" data-name="Week">
+          <div className="content-stretch flex gap-[4px] items-start overflow-clip relative shrink-0 w-full" data-node-id="626:4321" data-name="Week">
           <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="26" fare=" " state="Unavailable" />
           <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="27" fare=" " state="Unavailable" />
           <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="28" fare=" " state="Unavailable" />
           <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="29" fare=" " state="Unavailable" />
           <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="30" fare=" " state="Unavailable" />
           <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="31" fare=" " state="Unavailable" />
-          <div className="flex-[1_0_0] h-[52px] min-w-px relative" data-node-id="623:4245" data-name="—" />
+          <div className="flex-[1_0_0] h-[52px] min-w-px relative" data-node-id="626:4346" data-name="—" />
           </div>
         </div>
           <div className="content-stretch flex gap-[7px] items-center overflow-clip pt-[12px] relative shrink-0 w-full" data-node-id="347:2758" data-name="Legend">

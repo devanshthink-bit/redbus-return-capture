@@ -7224,3 +7224,45 @@ reading its own accessors took one script. But the accessor I *chose* was wrong,
 reason I caught it is that `CONTEXT` already named which days are sold out. A harvest needs a
 witness — a number written down somewhere else — or it is just a faster way to be confident about
 the wrong thing.
+
+DECISION  ·  2026-09-09  ·  molades-none  · Source: user
+**One month with arrows, not two months stacked.** Devansh: *"why show both month together in one
+screen??"*, then *"no in calenders there is arrow to go to next month"*. I had copied the real
+app's continuously-scrolling picker and it put **21 struck-out October days** on the screen — a
+pattern that is right in a sheet that holds nothing else, and wrong in a card sitting inside a
+scrolling page. The month header is now `‹ September 2026 ›` — v4's own arrangement, two 44pt
+targets — and one month shows at a time. October is in the frame, hidden, and the arrows swap it.
+
+CHANGE  ·  2026-09-09  ·  molades-none  · Source: user
+**The window is the traveller's two taps again, not one tap and my arithmetic.** Devansh:
+*"why are we selecting 7 days starting from selected date?? we used to give to user to select
+window. why are u reinventing this now by urself?????????"*. He is right and it was mine: v4 takes
+**two taps** — *"Tap the first day you could travel back"*, then *"Now tap your last day. Only days
+within 7 of the first can be picked."* — and I had replaced it with an automatic seven days from
+whichever day was tapped. That is not a smaller version of the feature, it is a different one: the
+window is the traveller telling us how far their plans can move, and picking it for them removes
+the only thing this screen asks.
+
+Rebuilt to v4's own logic:
+
+- **First tap** marks the day and **narrows the calendar** to the 7-day reach — 50 days dim, exactly
+  as v4 disables them — and the hint becomes *Now tap your last day*
+- **Second tap** closes the range, either side of the first, and the copy fills in from the cells:
+  *Mon, 14 Sep to Sun, 20 Sep · 7 days marked*, the cheapest inside it, the last day and its fare
+- **Changing the answer clears the pick**, because the answer decides what a tap means — v4's
+  `pickMode` does the same
+- *I know my date* is still one tap
+
+CHANGE  ·  2026-09-09  ·  molades-none  · Source: user
+**Picking a date no longer flickers the screen.** *"on clicking on any date in calender why whole
+ui is flickkering?"* Because every pick was a **navigation**: 05 → 05a or 05b, with the entry
+animation and a scroll reset. The three frames are three states of one screen, so `goQuiet()` now
+moves between them with no animation and the scroll position kept. A real step — Continue — still
+animates. Verified: a pick lands with `anim=none`, Continue with `hf-in-fwd`.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**When the build has frames for the states, "navigate" and "update" look the same in code and
+nothing like each other on screen.** Moving 05 → 05a is the right model for the state, and the
+wrong model for the moment: the traveller tapped a date inside a calendar, not a link to another
+page. Any state change that a person reads as *this screen changed* must not carry the animation
+that says *you went somewhere*.
