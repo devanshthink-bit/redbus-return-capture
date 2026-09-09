@@ -8289,3 +8289,34 @@ property.** Every card cloned from another card came out 76pt tall no matter wha
 *then* setting HUG, fixed all eight. Same fault as the UPI card on 09 earlier the same day, so it is
 the rule and not an accident: **after appending to a cloned auto-layout frame, re-append its children
 before trusting its height.**
+
+DECISION  ·  2026-09-09  ·  molades-none  ·  Source: user
+**The return leg's board & drop screen is a tab pair now, like the outbound's.** Devansh asked to
+"update this pickup and drop point screen since we are using a different one", which read two ways —
+restyle the bespoke single page, or give it the real app's structure. He chose the structure:
+**08b · Return boarding** and a new **08c · Return dropping**, cloned from 04 and 04a so the design
+language is not a copy but the same components.
+
+08b now carries the tab pair, "Find the closest boarding point to" with the search field and locate
+button, the green **Your preferred boarding point** strip, and **All boarding points in Nainital**
+with four stops down the hill. 08c carries **All dropping points in Delhi** — Anand Vihar ISBT at
+07:30 and ISBT Kashmiri Gate at 08:00, *where you started*.
+
+**The Proceed bar is gone**, because 04 and 04a have none: the list is the control. So the flow
+changed with the design — 08b advances on the **Dropping Points** tab, 08c on a point. Click-through
+verified: 08b → 08c → 09, Back from 09 → 08c.
+
+Parity: 08b **8.25%**, 08c **5.82%** — the same family as their sources (04 **9.82%**, 04a **5.77%**),
+which is the point.
+
+NOTE  ·  2026-09-09  ·  molades-none
+**The hi-fi is 27 screens.** Adding 08c took the four edits `CLAUDE.md` names: `src/render.tsx`, the
+count guard *and* the forward hotspot in `build.mjs`, and `HIFI_NAMES` in the root viewer. All four
+counts in the docs were moved with it.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**A cloned frame does not expose its instances' internals until it is parented — and `findOne` does
+not force the load, `findAll` does.** `clone()` then `findOne(n => n.name === 'Subtitle')` returned
+null on a copy of 04 whose original has that node; the same search with `findAll` after
+`appendChild` found it. Every text on the two new frames is set through `findAll(...)[0]` for that
+reason.

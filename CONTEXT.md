@@ -741,8 +741,8 @@ v4, not v3.** What changed in Figma, and the node ids, in case it has to be done
 ### The flow, frame by frame — read this before rebuilding a screen in code
 
 Every hi-fi frame, the prototype screen it is, and what moves you off it. Derived from the build,
-not from memory. **26 frames = 16 screens + 10 state variants** (01a · 03a · 03b · 04a · 05a ·
-05b · 06a · 06b · 08a · 08b). Counted off the Figma section and `src/render.tsx`, 2026-09-09.
+not from memory. **27 frames = 16 screens + 11 state variants** (01a · 03a · 03b · 04a · 05a ·
+05b · 06a · 06b · 08a · 08b · 08c). Counted off the Figma section and `src/render.tsx`, 2026-09-09.
 
 | # · Frame | Prototype | Control | Goes to |
 |---|---|---|---|
@@ -762,7 +762,8 @@ not from memory. **26 frames = 16 screens + 10 state variants** (01a · 03a · 0
 | 07 · Choose your bus | `s-bus` | Use this bus | **whichever opened it** — 06a or 08 |
 | 08 · Review your trip | `s-review` | Pay now · Change bus · Change seat · Change points | 09 · 07 · 08a · 08b |
 | 08a · Return seat | `s-seat` | Select points | 08 |
-| 08b · Return points | `s-points` | Proceed | 08 |
+| 08b · Return boarding | `s-points` | Dropping Points tab | 08c |
+| 08c · Return dropping | `s-points` | a dropping point | 09 |
 | 09 · Pay | `s-pay` | a payment method | 10 |
 | 10 · Booking confirmed | `s-done2` | View ticket | 11 |
 | 11 · Ticket details | `s-ticket` | Change your return day | 13 |
@@ -2037,8 +2038,9 @@ Images kept on 03b: two bus photographs, the Primo bus illustration, three small
 ## 21 · The hi-fi prototype in code — `/hifi/` (4 Sep 2026)
 
 §20 said the Figma screens were going to become "a coded working prototype run on real phones".
-This is that. All **26 frames** of *Screens · redBus return capture (iPhone 14)*, at 390 × 844,
-walked in the order they are arranged on the canvas. It began at 23; 01a, 04a and 06b came later.
+This is that. All **27 frames** of *Screens · redBus return capture (iPhone 14)*, at 390 × 844,
+walked in the order they are arranged on the canvas. It began at 23; 01a, 04a, 06b and 08c came
+later.
 
 **It lives inside the root viewer, behind a Lo-fi / Hi-fi switch, and the hi-fi is what opens.**
 It was briefly its own URL; he asked for one link instead — *"make this hi-fi prototype as a
@@ -2123,12 +2125,14 @@ rules, and the range **ends** in the accent), 06 · 06a (the narrowing heading, 
 Figma never had), 08 (what declining Free Cancellation gives you), 11 (Change day inside the ticket
 card). 12 was already right.
 
-**The build is 26 screens.** It shipped at 23 and grew by three, each for its own reason:
+**The build is 27 screens.** It shipped at 23 and grew by four, each for its own reason:
 `06b · Your return · day cannot change` (6 Sep) is the trap state, which existed in v4 and in none
 of the frames; `01a · Select date` is the calendar sheet off Home's date row; `04a · Board & drop ·
 dropping` is the second half of the boarding-points tab control. All three live in **Screens**, not
 States, because the build reads the Screens section only and a States frame would have left the
-drift in place under another name. 06b shows the **18–21 Sep** window, where the cheapest day is the
+drift in place under another name. `08c · Return dropping` (9 Sep) is the fourth: the return leg's
+board-and-drop screen was a bespoke single page, and Devansh asked for the real app's design, which
+is a **tab pair** — so 08b was rebuilt from 04 and 08c from 04a. 06b shows the **18–21 Sep** window, where the cheapest day is the
 one that cannot move; 06 and 06a keep 11–17, where every day has a changeable bus.
 
 Adding a screen means four edits: `src/render.tsx`, the count guard and forward hotspot in
@@ -2147,16 +2151,16 @@ Two checks, because each is blind to what the other sees.
 | | |
 |---|---|
 | **Geometry** | 1,730 nodes matched by `data-node-id` against the Figma metadata. **Three** blocks off by more than 4px. **Last run 4 Sep on the 23-frame build, and not re-run since — 01a, 04a and 06b have never been geometry-checked.** Treat the number as history, not as current |
-| **Pixels** | **current.** All 26 frames re-rendered headless at native size on 2026-09-09 and diffed against Figma renders pulled the same hour: **mean 5.72%** of pixels differing, best **1.28%** (08b), worst **11.99%** (01) and **11.69%** (03a) — the two tallest. Six frames sit above 8%: 01, 03a, **04 (9.82%)**, **05a (8.06%)**, **06a (8.43%)** and **06b (8.74%)** |
+| **Pixels** | **current.** 26 of the 27 frames were re-rendered headless at native size on 2026-09-09 and diffed against Figma renders pulled the same hour. Three frames were rebuilt later that day and carry their own fresh numbers: **09 · 1.96%** (1681pt), **11 · 11.22%** (4020pt), **08b · 8.25%** and **08c · 5.82%**. **Do not compare 11's number with its old 5.38%** — the frame is four and a half times taller and half of it is photographic, so a 1px accumulated drift turns every pixel of a photo different. Read its bands for *steps*, not its percentage. Of the rest, worst are **11.99%** (01) and **11.69%** (03a) — the two tallest — with 04, 05a, 06a and 06b above 8% |
 
-**The full 26 (9 Sep), for the next person who needs a baseline to compare against:**
+**The full 27 (9 Sep), for the next person who needs a baseline to compare against:**
 
 ```
 01  11.99   01a  2.60   02  5.84   03  4.80   03a 11.69   03b  4.77
 04   9.82   04a  5.77   05  5.20   05a 8.06   05b  7.54   06   5.79
-06a  8.43   06b  8.83   07  6.15   08  7.45   08a  5.21   08b  1.28
-09   1.78   10   2.40   11  5.38   12  2.35   13   4.87   14   6.93
-15   1.30   16   2.58
+06a  8.43   06b  8.83   07  6.15   08  7.45   08a  5.21   08b  8.25
+08c  5.82   09  1.96   10   2.40   11 11.22   12  2.35   13   4.87
+14   6.93   15  1.30   16   2.58
 ```
 
 **06, 06a and 06b read higher than the run above and nothing got worse.** The day cards were

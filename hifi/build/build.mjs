@@ -25,7 +25,7 @@ await build({
 });
 
 const { SCREENS } = require(out);
-if (SCREENS.length !== 26) throw new Error(`expected 26 screens, got ${SCREENS.length}`);
+if (SCREENS.length !== 27) throw new Error(`expected 27 screens, got ${SCREENS.length}`);
 
 // 2 · render each frame to static markup
 const rendered = SCREENS.map(({ id, name, C }) => {
@@ -57,7 +57,8 @@ const FORWARD = {
   '07':  ['[data-name="Button / Primary"]'],
   '08':  ['[data-name="Button / Primary"]'],
   '08a': ['[data-name="Button / Primary"]'],
-  '08b': ['[data-name="Button / Primary"]'],
+  '08b': ['[data-name="Tab / Dropping Points"]'],
+  '08c': ['[data-name="Point / ISBT Kashmiri Gate"]'],
   '09':  ['[data-name="Row / Payment method"]'],
   '10':  ['[data-name="Button / Primary"]'],
   '11':  ['[data-name="Change day"]'],
