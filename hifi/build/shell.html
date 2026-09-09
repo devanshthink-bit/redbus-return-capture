@@ -1280,8 +1280,11 @@
         }
         if (i === pick) row.className = row.className + ' hf-bus-on';
         row.classList.add('hf-hot');
+        // Picking here selects the bus and stays: the ring moves, the bar takes the new fare, and
+        // Review trip goes straight on to the review screen. It used to bounce back to the day
+        // list, which made choosing from the full list cost two extra screens to undo.
         (function(node, idx){ node.addEventListener('click', function(e){
-          e.preventDefault(); e.stopPropagation(); window.__pickBus(idx, true);
+          e.preventDefault(); e.stopPropagation(); window.__pickBus(idx);
         }, true); })(row, i);
         holder.insertBefore(row, anchor);
       });
@@ -1367,6 +1370,17 @@
       if (!e.target.closest || !e.target.closest('.hf-back')) return;
       e.preventDefault(); e.stopPropagation();
       go(RETURN.chosen ? chosenFrame(RETURN.chosen) : i06);
+    }, true);
+
+    // Back from Review goes to the day list with the day still chosen -- v4's backToDays(), which
+    // returns to s-picked, not to the unchosen list. prevOf(08) is 06, and entering 06 clears the
+    // pick, so walking the canvas order threw the choice away on the way back.
+    var i08 = ORDER.indexOf('08');
+    if (i08 >= 0) screens[i08].addEventListener('click', function(e){
+      if (!e.target.closest || !e.target.closest('.hf-back')) return;
+      if (!RETURN.chosen) return;                    // no return chosen: the ordinary Back is right
+      e.preventDefault(); e.stopPropagation();
+      go(chosenFrame(RETURN.chosen));
     }, true);
 
     // 06 with no day chosen has nothing to review. v4 keeps its primary disabled; redBus ships no

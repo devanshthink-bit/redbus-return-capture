@@ -8203,3 +8203,28 @@ primary control and the parity sweep never interacts at all, so neither one has 
 row or a card on 07. Two full sweeps passed over a completely dead control. A suite that only walks
 the happy path certifies the happy path — `CONTEXT` §21 now says so, and names the third check that
 belongs beside them.
+
+CHANGE  ·  2026-09-09  ·  molades-none  · Source: user
+**Picking a bus on the full list stays there, and Review trip goes straight to Review.** Devansh:
+*"When a user selects any bus from here and clicks on 'Review Trip', directly go to the review trip
+screen."*
+
+Tapping a card on 07 used to bounce back to the day list. That is two screens to undo: the traveller
+opened the full list precisely to compare, and choosing threw them out of it. Now the tap **selects
+in place** — the ring moves, the bar takes the new fare — and `Review trip` goes on to 08. Verified
+across a seven-bus day: card 3 → ringed 21:15, bar ₹940; card 6 → ringed 23:40, bar ₹980; Review
+trip → 08.
+
+**And Back from Review was losing the choice.** `prevOf(08)` is 06, and entering 06 clears the
+chosen day, so coming back from Review dropped the day *and* the bus. v4's `backToDays()` returns to
+`s-picked` — the day list with the day still held — so Back from 08 now goes to the chosen frame
+whenever there is one. Checked on the full path: pick a day, open the list, take the 6th bus, Review
+trip, Back → **06a still holding 23:40 ₹980**.
+
+Walk 01 → 16 unchanged, no JS errors, all 26 parity diffs unmoved.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**A screen that exists to compare must not eject you for choosing.** The bounce was not a bug in the
+usual sense — `__pickBus(i, true)` did exactly what it was written to do — it was the wrong model:
+"choosing is a step" rather than "choosing is a selection". The tell was in the cost, not the code:
+undoing the choice took two more screens than making it.
