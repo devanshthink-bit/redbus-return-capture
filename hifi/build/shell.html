@@ -405,6 +405,11 @@
   // What the traveller answered on the calendar. The picker owns it; screens after the calendar
   // read it, so 06 can show the window they actually chose rather than the one it was drawn with.
   var RETURN = { mode: 'unsure', pick: [] };
+  // Which screen a change was started from. Review's Change bus / seat / points open screens
+  // that are also steps of the booking flow, so without this, finishing one walked you
+  // onwards instead of back: Change seat ended on the points screen and Change points ended
+  // on Pay. A detour returns you to where you asked for the change.
+  var DETOUR = null;
   // Screens that have to rebuild themselves from that answer register here. go() calls the hook
   // after the frame is on screen and clearBottom has run, so a hook may change the content height.
   var ON_ENTER = {};
@@ -716,7 +721,9 @@
           var other = screenOf(leg.pair);
           if (other) markRadio(other, POINTS[leg.slot].name);
           paint();
-          var to = ORDER.indexOf(leg.next);
+          // the last screen of a leg ends the change, so it answers to whoever opened it
+          var nextId = (id === '08c' || id === '04a') && DETOUR ? DETOUR : leg.next;
+          var to = ORDER.indexOf(nextId);
           if (to >= 0) setTimeout(function(){ go(to); }, 220);
           return;
         }
@@ -1299,6 +1306,13 @@
       }
       set(sec, m.barLine, 'Return \u00b7 ' + label(chosen) + ' \u00b7 ' + bus[0]);
       set(sec, m.barFare, money(bus[2]));
+      // Review reads these. It has to show the return the traveller holds, not the drawn example,
+      // and the date logic lives here where label() is -- copying it there would be a second
+      // source for the same fact. A bus whose arrival reads earlier than its departure lands the
+      // next day, which is how every overnight service on this route runs.
+      RETURN.fare     = bus[2];
+      RETURN.depLabel = label(chosen) + ' \u00b7 ' + bus[0];
+      RETURN.arrLabel = label(bus[1] < bus[0] ? chosen + 1 : chosen) + ' \u00b7 ' + bus[1];
       return bus;
     }
 
@@ -1491,13 +1505,20 @@
     // Back from Review goes to the day list with the day still chosen -- v4's backToDays(), which
     // returns to s-picked, not to the unchosen list. prevOf(08) is 06, and entering 06 clears the
     // pick, so walking the canvas order threw the choice away on the way back.
-    var i08 = ORDER.indexOf('08');
-    if (i08 >= 0) screens[i08].addEventListener('click', function(e){
-      if (!e.target.closest || !e.target.closest('.hf-back')) return;
-      if (!RETURN.chosen) return;                    // no return chosen: the ordinary Back is right
-      e.preventDefault(); e.stopPropagation();
-      go(chosenFrame(RETURN.chosen));
-    }, true);
+    // 07 answers the same way. It is reached from the fold's "All N buses" link, so Back belongs to
+    // the day list still holding the day -- prevOf(07) is 06, which clears the pick on arrival and
+    // loses the very thing you opened the list to compare against.
+    var i08 = ORDER.indexOf('08'), i07b = ORDER.indexOf('07');
+    [i08, i07b].forEach(function(ix){
+      if (ix < 0) return;
+      screens[ix].addEventListener('click', function(e){
+        if (!e.target.closest || !e.target.closest('.hf-back')) return;
+        if (DETOUR) return;                          // a change answers to the screen that started it
+        if (!RETURN.chosen) return;                  // no return chosen: the ordinary Back is right
+        e.preventDefault(); e.stopPropagation();
+        go(chosenFrame(RETURN.chosen));
+      }, true);
+    });
 
     // 06 with no day chosen has nothing to review. v4 keeps its primary disabled; redBus ships no
     // dimmed primary (85 captures, zero), so it blinks the list instead -- the same answer the
@@ -1511,6 +1532,51 @@
         if (days && days.firstChild) blinkAt(days.firstChild);
       }, true);
     });
+  })();
+
+  // 08a / 08b / 08c / 07 · a change opened from Review ends at Review, and so does Back. These four
+  //      are steps of the booking flow *and* the answers to Review's three change links, and until
+  //      now only the flow reading existed: Continue on 08a walked to the points screen and picking
+  //      a point on 08c walked to Pay, so asking to change one thing pushed you forward through
+  //      everything after it. Same shape as 07's bounce, opposite direction.
+  (function detour(){
+    var iBack = ORDER.indexOf('08');
+    if (iBack < 0) return;
+    ['07', '08a', '08b', '08c'].forEach(function(id){
+      var i = ORDER.indexOf(id); if (i < 0) return;
+      var sec = screens[i];
+      // Back, on any of them, answers to the screen the change was started from
+      sec.addEventListener('click', function(e){
+        if (!DETOUR) return;
+        if (!e.target.closest || !e.target.closest('.hf-back')) return;
+        e.preventDefault(); e.stopPropagation();
+        go(ORDER.indexOf(DETOUR));
+      }, true);
+    });
+    // Review's primary says "Pay now", and it walked to the return seat map, because the flow map
+    // can only say "go to the next screen". CONTEXT §18 has always had 08 -> 09 for this control;
+    // 08a, 08b and 08c are reached from the three change links beside it. This is also why Pay's
+    // View details could not be reached by tapping through: the button never arrived at Pay.
+    var i09 = ORDER.indexOf('09'), i08p = ORDER.indexOf('08');
+    if (i09 >= 0 && i08p >= 0) {
+      var payNow = screens[i08p].querySelector('[data-name="Button / Primary"]');
+      if (payNow) payNow.addEventListener('click', function(e){
+        e.preventDefault(); e.stopPropagation(); go(i09);
+      }, true);
+      else console.warn('08: no primary');
+    }
+
+    // and Continue on the return seat map finishes the change rather than walking on to points
+    var i08a = ORDER.indexOf('08a');
+    if (i08a >= 0) {
+      var cta = screens[i08a].querySelector('[data-name="Button / Primary"]');
+      if (cta) cta.addEventListener('click', function(e){
+        if (!DETOUR) return;
+        e.preventDefault(); e.stopPropagation();
+        go(ORDER.indexOf(DETOUR));
+      }, true);
+      else console.warn('08a: no primary');
+    }
   })();
 
   // 09 / 09a · "View details" opens the booking-details sheet, and the × closes it. A sheet is not
@@ -1556,6 +1622,7 @@
       el.classList.add('hf-hot');
       el.addEventListener('click', function(e){
         e.preventDefault(); e.stopPropagation();
+        DETOUR = '08';
         var to = ORDER.indexOf(TO[node]);
         if (to >= 0) go(to);
       }, true);
@@ -1576,19 +1643,27 @@
 
     ON_ENTER['08'] = function(sec){
       var off = !!RETURN.skipped;
+      DETOUR = null;                       // arriving here ends any change that was started here
       ['212:2073', '212:2074', '221:1871', '214:2070'].forEach(function(id){
         var el = q(sec, id); if (el) el.hidden = off;
       });
       var onward = q(sec, '212:2063');  if (onward) onward.hidden = off;      // the ONWARD tag
-      var total  = off ? ONE : BOTH;
+      // the return leg reads from the bus actually chosen, and the money follows it
+      if (!off && RETURN.depLabel) {
+        var d = q(sec, '212:2078'); if (d) d.textContent = RETURN.depLabel;
+        var a = q(sec, '212:2083'); if (a) a.textContent = RETURN.arrLabel;
+      }
+      var ret    = (!off && RETURN.fare) ? RETURN.fare : (BOTH - ONE);
+      var total  = off ? ONE : ONE + ret;
       var t1 = q(sec, '214:2083'); if (t1) t1.textContent =
         "You'll get " + money(total + GUARANTEE) + ' refund if bus gets cancelled';
       var t2 = q(sec, '214:2086'); if (t2) t2.textContent = money(total);
       var t3 = q(sec, '215:2049'); if (t3) t3.textContent = money(total);
     };
     if (i09 >= 0) ON_ENTER['09'] = function(sec){
+      var ret = (!RETURN.skipped && RETURN.fare) ? RETURN.fare : (BOTH - ONE);
       var t = q(sec, 'I109:988;34:91');
-      if (t) t.textContent = 'Pay ' + money(RETURN.skipped ? ONE : BOTH);
+      if (t) t.textContent = 'Pay ' + money(RETURN.skipped ? ONE : ONE + ret);
     };
   })();
 

@@ -761,6 +761,7 @@ not from memory. **28 frames = 16 screens + 12 state variants** (01a · 03a · 0
 | 06b · Your return · day cannot change | `s-picked` | Continue | 08 |
 | 07 · Choose your bus | `s-bus` | Use this bus | **whichever opened it** — 06a or 08 |
 | 08 · Review your trip | `s-review` | Pay now · Change bus · Change seat · Change points | 09 · 07 · 08a · 08b |
+| ↳ *a change opened from Review ends at Review* — 07's Review trip, 08a's Continue, 08c's point, and Back on any of them | | | 08 |
 | 08a · Return seat | `s-seat` | Select points | 08 |
 | 08b · Return boarding | `s-points` | Dropping Points tab | 08c |
 | 08c · Return dropping | `s-points` | a dropping point | 09 |

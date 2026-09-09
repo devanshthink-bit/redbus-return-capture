@@ -8469,3 +8469,62 @@ NOTE  ·  2026-09-09  ·  molades-none
 **The hi-fi is 28 screens.** `09a` reuses a name that was deleted long ago: §20's "three fake scroll
 positions" records an older `09a` that was 09 shifted to `y = −354`. Nothing in the new frame
 descends from it; CONTEXT §21 now says so, so nobody reads the old entry as history of this one.
+
+CHANGE  ·  2026-09-09  ·  molades-none  ·  Source: user
+**A change opened from Review now ends at Review.** Devansh: *"On clicking on Change Points, why am
+I redirected to the payment screen? On clicking on Change Seats, why am I redirected to the
+pickup/drop point screen? … it should only open these three screens to update the details on this
+page."* And, mid-turn: *"show the updated ones in the review screen, and also make sure all back
+buttons work properly."*
+
+The links went to the right screens. **What was wrong is what happened next.** 08a, 08b and 08c are
+steps of the booking flow *and* the answers to Review's three change links, and only the flow
+reading existed — Continue on 08a walked to the points screen, and picking a point on 08c walked to
+Pay. So asking to change one thing pushed you forward through everything after it. Same shape as
+07's bounce three commits ago, in the other direction.
+
+A `DETOUR` flag now records which screen a change was started from. While it is set, the last screen
+of the change — 07's *Review trip*, 08a's *Continue*, 08c's point — returns there, and so does Back
+on any of the four. Arriving at Review clears it, so the ordinary walk 08 → 08a → 08b → 08c → 09 is
+untouched.
+
+**And Review shows what changed.** The points already flowed through. The return's day, its
+departure and arrival, and the amount now come from the bus actually held: `buildFold` publishes
+`RETURN.fare`, `depLabel` and `arrLabel` — computed where `label()` already lives, rather than
+duplicating the date logic at the other end. Taking the cheap bus on Mon 14 Sep moves Review from
+*23:55 / 08:00 / ₹2,919* to *19:45 / 03:50 / ₹2,399*.
+
+**The seat is the one thing a change cannot show on Review, because Review never shows a seat.**
+Declared rather than invented.
+
+CHANGE  ·  2026-09-09  ·  molades-none  ·  Source: user
+**"Pay now" now pays.** Review's primary is labelled *Pay now* and it walked to the return seat map,
+because the flow map can only say "go to the next screen" and 08a is next in canvas order. CONTEXT
+§18 has said 08 → 09 for that control since the flow table was written; 08a, 08b and 08c are reached
+from the three change links beside it.
+
+**This is also the answer to the third thing Devansh reported** — *"I am not able to click on view
+details"*. View details lives on Pay. He tapped the button that says Pay now, landed on the seat map,
+and never arrived at the screen the sheet opens from.
+
+**Money follows.** 09's nav title read `BOTH` while Review had already moved, so the two disagreed
+the moment a different return bus was picked — the exact failure CONTEXT §10 names. Both now read
+`ONE + RETURN.fare`. Checked: Review ₹2,629 and *Pay ₹2,629* on the same choice.
+
+CHANGE  ·  2026-09-09  ·  molades-none  ·  Source: user
+**Back audited on all 28 screens.** Every one either lands where it should or has no back control by
+design (01, 10, 12, 16 are entries or endings; 01a and 03a are sheets with their own close). One
+real gap: **Back on 07 went to 06**, which clears the chosen day on arrival — losing the very thing
+the full bus list was opened to compare against. 07 now answers the way 08 already did, to the day
+list still holding the day. Verified: open a day → *All 4 buses* → 07 → Back → **06a with the fold
+still open**.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**A screen that is both a step and a destination needs to know which one it is being right now.**
+08a, 08b, 08c and 07 are each reachable two ways, and a single `next` per screen can only serve one
+of them. The tell is a control whose label describes an ending — *Continue*, *Review trip*, *Pay
+now* — landing somewhere that is not an ending.
+
+**And a state matrix cannot see this.** Every screen rendered correctly in every state; the fault was
+entirely in where one tap led, which only a click-through walk that goes *in* and then *out* of a
+detour can catch.
