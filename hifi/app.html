@@ -1224,9 +1224,18 @@
       var all = busesOf(chosen), pick = busIdx();
       var content = sec.querySelector('[data-name="Content"]'); if (!content) return;
       [].slice.call(content.querySelectorAll('[data-hf-bus]')).forEach(function(x){ x.parentNode.removeChild(x); });
-      var anchor = content.querySelector('[data-node-id="367:2682"]');
+      // The frame is DRAWN with four example cards, not one. Hiding only the first left the other
+      // three sitting under the real list -- a day with two buses showed five, three of them the
+      // example's own fares with "Onwards" on them. Hide every drawn card, found by structure so
+      // the count cannot go stale if the frame gains or loses one.
+      var anchor = null;
+      [].slice.call(content.children).forEach(function(el){
+        if (el.hasAttribute('data-hf-bus')) return;                    // one of ours
+        if (!el.querySelector('[data-name="Card / Bus"]')) return;      // not a card
+        el.hidden = true;
+        if (!anchor) anchor = el;
+      });
       var holder = anchor ? anchor.parentNode : content;
-      if (anchor) anchor.hidden = true;
       var cheapest = all.map(function(b,i){ return i; })
                         .sort(function(a,b){ return all[a][2] - all[b][2]; })[0];
       all.forEach(function(b, i){

@@ -7897,3 +7897,40 @@ because a headless tab does not advance animations — the third time that has p
 reading today. What did answer it was watching the *cause* instead of the effect: a `MutationObserver`
 on `hidden` and `class`, which are set by real code and do not depend on the compositor running.
 **When the effect cannot be measured, assert on the thing that would produce it.**
+
+CHANGE  ·  2026-09-09  ·  molades-none  · Source: user
+**"All 2 buses" opened a list of five.** Devansh: *"when it says all 2 buses then in next screen why
+so many buses??? have u done it in all dates??"* — and yes, it was every date.
+
+07 is **drawn with four example cards**, not one. My builder inserted the day's real services and
+hid the frame's original — but only the first of them, found by node id. The other three stayed
+visible underneath, still showing Mon 14's example: ₹880 RS Yadav, ₹830 ITC, ₹1,030 Laxmi, each with
+the outbound list's **Onwards** label on it. So every day showed its own buses followed by three
+that belong to no day at all.
+
+Now every drawn card is hidden, and found **by structure** — any direct child of Content that holds
+a `Card / Bus` and is not one of ours — so the frame gaining or losing an example cannot break it
+again. That is what the id-based version could not do: it was correct for exactly the number of
+cards the frame had on the day I wrote it.
+
+Checked across a whole window rather than the one day reported: **7 of 7 days match**, the link, the
+heading and the card count agreeing on each — 14 Sep 4, 15 Sep 4, 16 Sep 7, 17 Sep 5, 18 Sep 3,
+**19 Sep 2** (the reported case), 20 Sep 4. Content verified against v4 on two of them: Sat 19 is
+22:15 ₹1,190 and 23:55 ₹1,230; Mon 21 (through 06b) is 19:45 ₹740 and 23:10 ₹770. **Onwards** is
+hidden on every card.
+
+Walk 01 → 16 unchanged. All 26 parity diffs unmoved — a cold render has no chosen day, so the hook
+returns early and 07 still renders its four drawn examples for the Figma comparison.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**Hiding "the placeholder" by id assumes there is one of it.** Every other frame I have rebuilt this
+session had a single example row to stand aside — one day card, one trade row — and 07 has four. I
+wrote the same line I had written four times before without checking, and the result was a screen
+that looked plausible on the day the example happened to match and wrong on every other. **Count the
+things you are replacing before you write the code that replaces them**, and prefer a structural
+test to a node id: the id is right once, the structure stays right.
+
+Second, on how it got past me: I verified 07 the day I built it by opening it on **Wed 16 Sep, which
+has seven buses** — more than the four examples, so the real cards pushed the leftovers off the
+bottom of what I dumped. The bug needed a day with *fewer* buses than the frame draws. **A list
+builder has to be tested at a length shorter than the placeholder, not longer.**
