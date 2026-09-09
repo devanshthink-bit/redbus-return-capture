@@ -8228,3 +8228,27 @@ LEARNED  ·  2026-09-09  ·  molades-none
 usual sense — `__pickBus(i, true)` did exactly what it was written to do — it was the wrong model:
 "choosing is a step" rather than "choosing is a selection". The tell was in the cost, not the code:
 undoing the choice took two more screens than making it.
+
+CHANGE  ·  2026-09-09  ·  molades-none  ·  Source: user
+**09 · Pay is now the whole scrolling screen the real app shows.** Devansh sent two full-page
+screenshots — `Picsew_Pay.HEIC` and `Picsew_TicketDetails.HEIC` — and asked for the complete scroll
+in Figma *and* the build, in redBus's own design language.
+
+Pay was one viewport: header, Review booking, trust row, wallet, UPI. It now carries, in the real
+app's order: **Apply Coupon**, **Preferred Options**, UPI with a fifth **Enter UPI ID** row,
+**CRED pay**, **Pay using card** (with the Visa / Mastercard / RuPay strip), **Net banking** and
+**Have a redBus gift card?**. 869 → 1681pt.
+
+Five line icons were drawn as components rather than borrowed — `Icon / Card`, `Globe`, `Gift`,
+`Cancel`, `List`, `Directions`, `Phone`, `Play` — and three marks were lifted from the screenshot
+Devansh supplied: `Logo / CRED pay`, `Logo / UPI`, `Art / Card networks`.
+
+Parity: **09 reads 1.96% different** over 1681pt, no step in the bands. Walk 01 → 16 unchanged,
+one screen visible, no JS errors.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**An auto-layout frame does not always reflow when you append to it.** The UPI card was set to HUG,
+reported `layoutSizingVertical: 'HUG'`, and still measured 307 against 368pt of children — the fifth
+row hung outside the white card in the render while every property read back correct. Re-appending
+the two new children forced the reflow and the height snapped to 368. **Trust the render, not the
+property read**: the frame said HUG and was lying.
