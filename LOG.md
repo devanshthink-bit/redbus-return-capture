@@ -7856,3 +7856,44 @@ Second: **the same three-state confusion has now produced four bugs** — Contin
 stepping to a sibling. Every one came from state frames living in a linear order. `SKIP` and
 `BACK_AS` are the two halves of the answer: a state frame is not somewhere you go next, and it is
 not somewhere you came from.
+
+CHANGE  ·  2026-09-09  ·  molades-none  · Source: user
+**A day would not re-open after being closed, and re-opening flickered.** Devansh: *"now when i
+click on date card again its not even opening after closing it, and its not closing being at same
+position and whole screen is flickering"*. A regression from the close-in-place change, and two
+separate causes.
+
+**The fold was being destroyed.** It is a child of the `Days` container, so `buildRows`'s
+`while (days.firstChild) removeChild` took it out of the DOM along with the rows. Re-inserting it
+was inside `if (d === chosen)`, so on a close — where nothing is chosen — it was detached and never
+put back. The next open set the ring and the state correctly and had **no fold left to show**, which
+is exactly "not even opening". The section now remembers it (`sec.__fold`) and it is always
+re-attached, hidden when no day is chosen.
+
+**Re-opening called `go()` on the frame it was already standing on.** `__openDay` navigated
+unconditionally, so after a close — which stays on 06a — opening again ran `go(i06a)` with
+`at === i06a`: the section was hidden and re-shown, the entry animation class re-applied and the
+scroll reset. That is the flicker, and the lost position with it. Opening on the frame you are
+already on is a repaint now, the same branch a bus swap uses.
+
+Verified over five open/close cycles on two different days: the fold shows the right service each
+time (23:55 for Wed 16, 23:40 for Fri 18), the card returns to its tap position every time (548,
+747), and a `MutationObserver` on the frame records **no `hidden` toggle and no class write** on
+either a close or a re-open — the frame never re-enters, so there is nothing to animate.
+
+Walk 01 → 16 unchanged. All 26 parity diffs unmoved.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**Clearing a container destroys everything in it, including the parts that were not rows.** The fold
+had lived inside `Days` since it was built — deliberately, so it could sit under the day it belongs
+to — and every rebuild since has been quietly re-adopting it, which worked only while something was
+always chosen. The moment a state existed where nothing was chosen, the re-adopt was skipped and the
+node was gone. **A wipe-and-rebuild loop needs an explicit answer for every child it did not create**,
+not just for the ones the happy path puts back.
+
+**`getAnimations()` cannot tell a restart from a never-started animation in this harness.** Checking
+for the flicker directly returned `hf-in running t=0ms` on every step, before and after the fix,
+because a headless tab does not advance animations — the third time that has produced a useless
+reading today. What did answer it was watching the *cause* instead of the effect: a `MutationObserver`
+on `hidden` and `class`, which are set by real code and do not depend on the compositor running.
+**When the effect cannot be measured, assert on the thing that would produce it.**

@@ -1059,7 +1059,11 @@
       var pick = RETURN.pick; if (!pick.length) return null;
       var a = pick[0], b = pick.length > 1 ? pick[1] : pick[0];
       var days = sec.querySelector('[data-name="Days"]'); if (!days) return null;
-      var fold = sec.querySelector('[data-name="Bus fold"]');
+      // The fold is a child of Days, so the clear loop below takes it out of the DOM with the
+      // rows. Closing a day left it detached and the next open had nothing to show -- the ring
+      // came back and the bus card did not. Remember it on the section and always re-attach.
+      var fold = sec.querySelector('[data-name="Bus fold"]') || sec.__fold;
+      if (fold) sec.__fold = fold;
       var cheap = cheapestIn(a, b), spread = hasSpread(a, b), count = b - a + 1;
       var mine = chosen ? day(chosen) : null, myFloor = mine ? mine[0] : 0;
 
@@ -1113,7 +1117,8 @@
         days.appendChild(row);
         if (fold && d === chosen) days.appendChild(fold);
       }
-      if (fold) fold.hidden = !chosen;
+      // with nothing chosen it belongs to no row, but it still has to stay in the tree
+      if (fold) { if (!fold.parentNode) days.appendChild(fold); fold.hidden = !chosen; }
       return { a:a, b:b, count:count, cheap:cheap };
     }
 
@@ -1273,7 +1278,14 @@
       var wrow = was.querySelector('[data-name="Day \u00b7 ' + label(d) + '"]');
       RETURN.tapAt = (wrow && wsc) ? absTop(wrow) - absTop(wsc) - wsc.scrollTop : null;
       RETURN.chosen = d; RETURN.bus = null;            // a new day proposes its own default bus
-      go(chosenFrame(d));
+      var to = chosenFrame(d);
+      if (to === at) {
+        // already standing on this frame -- after a close, or picking another day of the same
+        // kind. go() would hide and re-show the same section, replaying the entry animation,
+        // which reads as the whole screen flickering.
+        var here = screens[at];
+        if (ON_ENTER[ORDER[at]]) { ON_ENTER[ORDER[at]](here); clearBottom(here); }
+      } else go(to);
       var sec = screens[at];
       var row = sec.querySelector('[data-name="Day \u00b7 ' + label(d) + '"]');
       var sc  = sec.querySelector('.scroll');
