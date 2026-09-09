@@ -1193,9 +1193,11 @@
       heads(sec, MAP['06'], info, 0, null);
     };
     function enterChosen(id){ return function(sec){
-      var chosen = RETURN.chosen; if (!chosen) return;
-      var info = buildRows(sec, chosen); if (!info) return;
-      var bus = buildFold(sec, MAP[id], chosen);
+      var chosen = RETURN.chosen;
+      var info = buildRows(sec, chosen); if (!info) return;   // nothing answered: keep the example
+      // With no day chosen this frame renders exactly what 06 renders -- same rows, no deltas, no
+      // ring, fold hidden. That is what lets a close happen in place: see __closeDay.
+      var bus = chosen ? buildFold(sec, MAP[id], chosen) : null;
       heads(sec, MAP[id], info, chosen, bus);
     }; }
     ON_ENTER['06a'] = enterChosen('06a');
@@ -1247,8 +1249,19 @@
     };
 
     function chosenFrame(d){ return movCount(d) === 0 ? i06b : i06a; }
+    // offsetTop, not getBoundingClientRect: the phone is scaled by --hf-s, so a rect is in scaled
+    // pixels while scrollTop is in layout pixels. CONTEXT §10 records that mix-up.
+    function absTop(el){ var y = 0; for (var n = el; n; n = n.offsetParent) y += n.offsetTop; return y; }
 
     window.__openDay = function(d){
+      // Where the card sat when the finger landed on it. Closing puts it back there: the fold is
+      // ~470px, so once it is gone the page is shorter than the scroll position the open state was
+      // read at, and no arithmetic can hold the card where the OPEN screen had it -- 06's whole
+      // range is 329 where that would need 676. The tap position is always reachable, because the
+      // page it was measured on is the page the close returns to.
+      var was = screens[at], wsc = was.querySelector('.scroll');
+      var wrow = was.querySelector('[data-name="Day \u00b7 ' + label(d) + '"]');
+      RETURN.tapAt = (wrow && wsc) ? absTop(wrow) - absTop(wsc) - wsc.scrollTop : null;
       RETURN.chosen = d; RETURN.bus = null;            // a new day proposes its own default bus
       go(chosenFrame(d));
       var sec = screens[at];
@@ -1257,7 +1270,6 @@
       if (!row || !sc) return;
       // offsetTop, not getBoundingClientRect: the phone is scaled by --hf-s, so a rect is in
       // scaled pixels while scrollTop is in layout pixels. CONTEXT §10 records that mix-up.
-      function absTop(el){ var y = 0; for (var n = el; n; n = n.offsetParent) y += n.offsetTop; return y; }
       // Centre the day and its fold, rather than pinning the card to the top edge. The two are one
       // block -- the day you chose and what that day gives you -- and a block hard against the top
       // of the screen reads as the page having scrolled past something. Taller than the viewport,
@@ -1273,7 +1285,33 @@
       var to = Math.max(0, Math.min(top - pad, sc.scrollHeight - sc.clientHeight));
       sc.scrollTo({ top: to, behavior: 'smooth' });
     };
-    window.__closeDay = function(){ RETURN.chosen = 0; RETURN.bus = null; go(i06); };
+    // Closing a day is the fold collapsing, not a page change. The card the finger is on must not
+    // move: measure where it sits in the visible area, go quietly to 06, then put the same day's
+    // row back at the same offset. go() would have reset the scroll to 0 and played the entry
+    // animation, which read as the whole screen refreshing and jumping somewhere else.
+    // Closing the open day collapses its fold where the traveller is standing. It does NOT go back
+    // to 06, and the reason is arithmetic: the fold is ~470px, so removing it makes the page
+    // shorter than the scroll position it was read at -- 06's entire range is 329 where holding
+    // the card still needed 676. Any route through go() therefore ends at the bottom of a shorter
+    // page with the card 350-420px lower than the finger left it. Repainting in place moves
+    // nothing above the card at all, because the only thing that changes is below it.
+    window.__closeDay = function(){
+      var d = RETURN.chosen, at0 = RETURN.tapAt;
+      RETURN.chosen = 0; RETURN.bus = null;
+      var sec = screens[at], id = ORDER[at];
+      if (ON_ENTER[id]) { ON_ENTER[id](sec); clearBottom(sec); }
+      if (at0 == null || !d) return;
+      var sc = sec.querySelector('.scroll');
+      var row = sec.querySelector('[data-name="Day \u00b7 ' + label(d) + '"]');
+      if (!sc || !row) return;
+      var to = Math.max(0, Math.min(absTop(row) - absTop(sc) - at0, sc.scrollHeight - sc.clientHeight));
+      // instant, not smooth: the card is going back under the finger that just tapped it, and the
+      // scroller carries scroll-behavior:smooth, which would animate a plain assignment.
+      var prev = sc.style.scrollBehavior;
+      sc.style.scrollBehavior = 'auto';
+      sc.scrollTop = to;
+      sc.style.scrollBehavior = prev;
+    };
     // Swapping the bus from the fold is a change to what is on screen, not a step: repaint in
     // place so the page does not animate or lose its scroll. From 07 it IS a step back.
     window.__pickBus = function(i, back){
@@ -1295,13 +1333,15 @@
     // 06 with no day chosen has nothing to review. v4 keeps its primary disabled; redBus ships no
     // dimmed primary (85 captures, zero), so it blinks the list instead -- the same answer the
     // calendar gives Continue with no date.
-    screens[i06].addEventListener('click', function(e){
-      var b = e.target.closest && e.target.closest('[data-name="Button / Primary"]');
-      if (!b || RETURN.chosen) return;
-      e.preventDefault(); e.stopPropagation();
-      var days = screens[i06].querySelector('[data-name="Days"]');
-      if (days && days.firstChild) blinkAt(days.firstChild);
-    }, true);
+    [i06, i06a, i06b].forEach(function(ix){
+      screens[ix].addEventListener('click', function(e){
+        var b = e.target.closest && e.target.closest('[data-name="Button / Primary"]');
+        if (!b || RETURN.chosen) return;
+        e.preventDefault(); e.stopPropagation();
+        var days = screens[ix].querySelector('[data-name="Days"]');
+        if (days && days.firstChild) blinkAt(days.firstChild);
+      }, true);
+    });
   })();
 
   // 08 / 09 · a skipped return has to be gone from Review, not just unmentioned. The frame draws

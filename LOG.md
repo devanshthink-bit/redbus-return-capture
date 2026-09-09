@@ -7769,3 +7769,47 @@ covers a slice of the frame, and `clientHeight` counts it. The same distinction 
 function — `clearBottom()` computed it to pad the scroller — and the centring re-derived the wrong
 one instead of reusing it. When a measurement about visible space already exists in the file, the
 new feature should call it, not measure again.
+
+CHANGE  ·  2026-09-09  ·  molades-none  · Source: user
+**Closing the open day collapses it where you are, and puts the card back under the finger that
+tapped it.** Devansh: *"when i tap on opened date card it shud close and be at same position as it
+is now, right now its refreshing the whole screen and scrolling to the different position"*.
+
+Two separate faults, and the second one took three attempts because I kept trying to solve it with
+arithmetic.
+
+**It navigated.** `__closeDay()` ran `go(i06)` — a real step, so the scroll reset to 0 and the entry
+animation played. That is the "refreshing the whole screen" half. The fold collapses **in place**
+now: `RETURN.chosen` is cleared and the same frame is repainted, which the builder already supports
+because a chosen-day frame with nothing chosen renders exactly what 06 renders — same rows, no
+deltas, no ring, fold hidden.
+
+**Then it still jumped 340px, and no scroll target could fix it.** The fold is ~470px. Remove it and
+the page is *shorter than the scroll position the open state was read at*: the card sat at 71px with
+scrollTop 737, and after the collapse 06's entire scroll range is **329** where holding the card
+there needs **676**. The browser clamps, the content drops, and every version of "scroll to hold the
+card" clamps to the same place. Measured before believing it.
+
+**The position that is always reachable is the one it was tapped at**, because that measurement was
+taken on the page the close returns to. `__openDay` records the card's offset at the moment of the
+tap; `__closeDay` restores it. Verified on three days at three scroll depths — 747px, 337px, 963px —
+**0px of movement in all three**.
+
+`Review trip` now blinks on 06a and 06b too when nothing is chosen, since those frames can hold that
+state.
+
+Walk 01 → 16 unchanged. All 26 parity diffs unmoved.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**Collapsing a tall section cannot preserve the viewport, and the fix is to pick a different anchor,
+not a better sum.** I tried three targets — carry the scroll across, hold the card's open position,
+hold it after the collapse — and all three landed in the same place, because they were all asking
+the page to hold a scroll it no longer has the height for. The question is not "what scrollTop keeps
+this still" but **"which anchor is reachable on the page I am going to"**. The tap position is, by
+construction: it was measured on that exact page.
+
+**A state a screen can hold is a state that screen should render.** Closing had to navigate only
+because 06a was written to bail out with nothing chosen. Once it renders the unchosen state — which
+it can, identically to 06 — the close stops being a navigation at all. The cost is that the viewer's
+rail still calls the frame *Return chosen* while nothing is chosen; that is a label in the dev panel,
+not something in the phone.
