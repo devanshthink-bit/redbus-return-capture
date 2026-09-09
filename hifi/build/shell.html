@@ -184,6 +184,22 @@
     background:conic-gradient(#ec3535 var(--hf-turn,0deg), rgba(0,0,0,0) 0);
     -webkit-mask:radial-gradient(circle, transparent 0 88px, #000 88px);
             mask:radial-gradient(circle, transparent 0 88px, #000 88px)}
+  /* The ticket's header, guarantee band and tabs hold the top while the rest scrolls, and the
+     strip scrolls sideways to keep the section you are in on screen. */
+  .hf-sticky{position:sticky;top:0;z-index:6;background:#fff}
+  .hf-tabscroll{overflow-x:auto!important;overflow-y:hidden!important;scroll-behavior:smooth;
+    flex-wrap:nowrap!important;-webkit-overflow-scrolling:touch;
+    /* pin the box to the phone, or the row widens the screen instead of scrolling inside it */
+    width:390px!important;max-width:390px!important;box-sizing:border-box!important}
+  .hf-tabscroll::-webkit-scrollbar{height:0;width:0}
+  /* without this the flex row shrinks the four tabs to fit and there is nothing left to scroll --
+     the real strip runs past the edge and clips Safety, which is what tells you to swipe it */
+  .hf-tabscroll > *{flex:0 0 auto!important;min-width:max-content!important}
+  .hf-tabscroll p{white-space:nowrap!important}
+  .hf-tab-on{background:#c54646!important}
+  .hf-tab-on p{color:#fff!important;font-weight:700!important}
+  .hf-tab-off{background:transparent!important}
+  .hf-tab-off p{color:#1d1d1d!important;font-weight:400!important}
   .hf-radio-on{position:relative}
   /* A radio dot does not travel -- it is either set or not. It fades in on the spot. */
   @keyframes hf-dot{from{opacity:0;transform:scale(.6)} to{opacity:1;transform:none}}
@@ -268,7 +284,10 @@
   // Review trip on 06a walked to 06b -- and of 07, which is a detour off the fold's All-N-buses
   // link and returns to whichever frame opened it. The rail still reaches all of them; only
   // next / prev / arrow keys skip.
-  var SKIP = { '01a': 1, '03a': 1, '04a': 1, '05a': 1, '05b': 1, '09a': 1,
+  // 09b is the payment countdown. It is not a step you can walk back into: entering it starts
+  // the timer, which then throws you forward to the ticket again. It is only ever reached by
+  // tapping Pay.
+  var SKIP = { '01a': 1, '03a': 1, '04a': 1, '05a': 1, '05b': 1, '09a': 1, '09b': 1,
                '06a': 1, '06b': 1, '07': 1 };
   // Which screen a state frame belongs to, for Back.
   var BACK_AS = { '05a': '05', '05b': '05', '06a': '06', '06b': '06' };
@@ -677,10 +696,6 @@
       ['08',  '212:2084',           ['retDrop'],  function(P){ return P.retDrop.name; }],
       ['08b', 'I695:4094;34:92',    ['retBoard'], function(P){ return P.retBoard.name + ', Nainital → Delhi'; }],
       ['08c', 'I695:4193;34:92',    ['retBoard'], function(P){ return P.retBoard.name + ', Nainital → Delhi'; }],
-      ['10',  'I114:1037;113:1015', ['outBoard'], function(P){ return P.outBoard.name; }],
-      ['10',  'I114:1037;113:1029', ['outDrop'],  function(P){ return P.outDrop.name; }],
-      ['10',  'I114:1071;113:1015', ['retBoard'], function(P){ return P.retBoard.name; }],
-      ['10',  'I114:1071;113:1029', ['retDrop'],  function(P){ return P.retDrop.name; }],
       ['11',  '515:3856',           ['retBoard'], function(P){ return P.retBoard.name; }],
       ['11',  '515:3870',           ['retDrop'],  function(P){ return P.retDrop.name; }],
       ['11',  '686:4115',           ['retBoard'], function(P){ return P.retBoard.name; }],
@@ -1722,8 +1737,8 @@
   //      opens a waiting screen while the transaction goes through. The wait is five seconds here
   //      -- long enough to read, short enough to sit through -- and the ring empties over it.
   (function paying(){
-    var i09 = ORDER.indexOf('09'), i09b = ORDER.indexOf('09b'), i10 = ORDER.indexOf('10');
-    if (i09 < 0 || i09b < 0 || i10 < 0) return;
+    var i09 = ORDER.indexOf('09'), i09b = ORDER.indexOf('09b'), iTic = ORDER.indexOf('11');
+    if (i09 < 0 || i09b < 0 || iTic < 0) return;
     var sec = screens[i09];
     // Choosing an option is a selection state, and this build draws none of those -- the point
     // radios, the ring on the bus list and the sheet are all runtime. Pay's frame stays the
@@ -1807,7 +1822,7 @@
         if (bar)    bar.style.width    = Math.round(42 * (WINDOW - left) / WINDOW) + 'px';
         if (sweep)  sweep.style.setProperty('--hf-turn',
                       (360 * (WINDOW - left) / WINDOW).toFixed(1) + 'deg');
-        if (ticks >= WAIT) { stop(); go(i10); return; }
+        if (ticks >= WAIT) { stop(); go(iTic); return; }
         ticks += 1; left -= 1;
       }
       tick();
@@ -1820,6 +1835,100 @@
     }, true);
     var _go = go;
     window.__stopWait = stop;
+  })();
+
+  // 11 · the ticket. Its header, the Seat Guarantee band and the tab strip hold the top of the
+  //      screen; everything under them scrolls. The strip is a real tab bar: it says which section
+  //      you are looking at, it scrolls sideways to keep that tab on screen, and tapping one takes
+  //      you to its section. Four tabs do not fit 390pt, which is why the real one scrolls too.
+  (function ticketTabs(){
+    var i11 = ORDER.indexOf('11');
+    if (i11 < 0) return;
+    var sec = screens[i11];
+    var scroller = sec.querySelector('.scroll');
+    var root = sec.querySelector('.scroll > div');
+    var header = root && root.querySelector('[data-name="Header"]');
+    var band = root && root.querySelector('[data-name="Art / Seat Guarantee"]');
+    var tabs = root && root.querySelector('[data-name="Tabs"]');
+    if (!scroller || !root || !header || !tabs) { console.warn('11: nothing to pin'); return; }
+
+    // one sticky block, not three: three siblings each pinned to top:0 would stack on each other
+    var pin = document.createElement('div');
+    pin.className = 'hf-sticky';
+    root.insertBefore(pin, header);
+    pin.appendChild(header);
+    if (band) pin.appendChild(band);
+    pin.appendChild(tabs);
+    tabs.classList.add('hf-tabscroll');
+
+    // what each tab is looking at. The first covers everything above Live tracking, which is the
+    // ticket itself; the rest are the sections by the names the frame gives them.
+    var NAMED = ['', 'Live tracking', 'Hotels', 'Safety Tips'];
+    var items = [].slice.call(tabs.querySelectorAll('[data-name="Tab"]'));
+    if (!items.length) items = [].slice.call(tabs.children[0] ? tabs.children : []);
+    function targetOf(i){
+      if (i === 0) return root.querySelector('[data-name="tripReward banner"]') || root.children[1];
+      var all = [].slice.call(root.querySelectorAll('[data-name="' + NAMED[i] + '"]'));
+      return all[all.length - 1] || null;
+    }
+    var targets = items.map(function(_, i){ return targetOf(i); });
+    // offsetTop up the offsetParent chain, not a rect: the phone is scaled, so a rect is in scaled
+    // pixels while scrollTop is in layout pixels -- CONTEXT §10's oldest trap in this file.
+    function absTop(el){ var y = 0; for (var n = el; n; n = n.offsetParent) y += n.offsetTop; return y; }
+    // measured on every look, never cached: at boot this screen is display:none and every
+    // offset reads 0, so a base captured here would be 1116pt wrong the moment it is shown.
+    function topOf(el){ return absTop(el) - absTop(root); }
+
+    function paint(active){
+      items.forEach(function(t, i){
+        t.classList.remove('hf-tab-on', 'hf-tab-off');
+        t.classList.add(i === active ? 'hf-tab-on' : 'hf-tab-off');
+      });
+      var on = items[active];
+      if (!on) return;
+      // keep the live tab on screen, and let the strip animate to it
+      var l = on.offsetLeft, r = l + on.offsetWidth;
+      if (l < tabs.scrollLeft + 8) tabs.scrollLeft = Math.max(0, l - 8);
+      else if (r > tabs.scrollLeft + tabs.clientWidth - 8)
+        tabs.scrollLeft = r - tabs.clientWidth + 8;
+    }
+
+    var current = -1;
+    function spy(){
+      var line = scroller.scrollTop + pin.offsetHeight + 24;
+      var active = 0;
+      for (var i = 0; i < targets.length; i++) {
+        var t = targets[i];
+        if (!t) continue;
+        if (topOf(t) <= line) active = i;
+      }
+      if (active !== current) { current = active; paint(active); }
+    }
+    scroller.addEventListener('scroll', spy, {passive: true});
+
+    items.forEach(function(t, i){
+      t.classList.add('hf-hot');
+      t.addEventListener('click', function(e){
+        e.preventDefault(); e.stopPropagation();
+        var to = targets[i];
+        if (!to) return;
+        scroller.scrollTo({ top: Math.max(0, topOf(to) - pin.offsetHeight - 12),
+                            behavior: 'smooth' });
+      }, true);
+    });
+
+    ON_ENTER['11'] = function(){ current = -1; spy(); };
+
+    // Change your return day is the door into the change flow, and it opens on 13. The flow map
+    // could only say "next", which from the ticket is My Bookings -- a screen the traveller did
+    // not ask for. CONTEXT §18 has had 11 -> 13 since the table was written.
+    var i13 = ORDER.indexOf('13');
+    var changeDay = sec.querySelector('[data-name="Change day"]');
+    if (i13 >= 0 && changeDay) changeDay.addEventListener('click', function(e){
+      e.preventDefault(); e.stopPropagation(); go(i13);
+    }, true);
+    else if (!changeDay) console.warn('11: no Change day row');
+    paint(0);
   })();
 
   // 09 / 09a · "View details" opens the booking-details sheet, and the × closes it. A sheet is not

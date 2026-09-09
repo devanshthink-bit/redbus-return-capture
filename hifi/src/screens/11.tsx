@@ -18,13 +18,14 @@ const imgArtScratchCard = "assets/1719b144-784f-40e4-bf69-aabf7329cf50.png";
 const imgIconCancel = "assets/eaf7aaa8-5b15-4f99-8572-a499f5590e13.svg";
 const imgIconInfo = "assets/1fdfa7c9-d103-4495-bc2c-f6b058ff57ef.svg";
 const imgButtonAppleWallet = "assets/659c7bb8-9409-4f1d-b898-52b40a84583f.png";
+const imgLogoRedBusMark = "assets/24678315-8076-42a5-adf4-048efb56feb5.png";
 const imgArtTripRewardMark = "assets/34bc959d-d061-454e-8167-1a8c39dc0deb.png";
-const imgArtSunburst = "assets/581ccbc3-0950-490a-b402-e283d8cdc89e.svg";
+const imgArtSunburst = "assets/440767b9-0eec-4bf5-ba72-569c2b05fc51.svg";
 const imgFrame = "assets/c5419b2e-7977-459a-acdc-4614635f0d6e.svg";
-const imgArtSeatGuarantee = "assets/078a32b3-0f14-4885-88e1-c3fcb8dea39e.svg";
-const imgButtonShare = "assets/adab8786-60af-46d1-8aec-66eaf070b341.svg";
-const imgButtonSupport = "assets/97976952-770c-41e5-932e-36b1c42d6462.svg";
-const imgButtonClose = "assets/f4e5f904-6d29-49f8-bc10-827643a7434b.svg";
+const imgArtSeatGuarantee = "assets/b5c811e4-e3e3-43b0-a60c-8bb1db272cc9.svg";
+const imgButtonShare = "assets/9a10baca-6e5c-4021-850c-f8e7127119c6.svg";
+const imgButtonSupport = "assets/ef8c8240-9b36-4aff-98a2-517de39e34b3.svg";
+const imgButtonClose = "assets/78730083-d59d-41bb-93f7-91cbc85ba0d1.svg";
 const imgStatusIcons = "assets/091fbdca-8e2e-4f59-80c8-bfdc341f332f.svg";
 const imgMarker = "assets/6280aa85-f461-44e4-9003-fd9bae23d7bd.svg";
 const imgMarker1 = "assets/dfe32957-1e71-451e-9967-a4e3d86aa505.svg";
@@ -204,6 +205,14 @@ function ButtonAppleWallet({ className }: { className?: string }) {
   );
 }
 
+function LogoRedBusMark({ className }: { className?: string }) {
+  return (
+    <div className={className || "h-[23px] relative w-[36px]"} data-node-id="270:2405" data-name="Logo / redBus mark">
+      <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgLogoRedBusMark} />
+    </div>
+  );
+}
+
 function ArtTripRewardMark({ className }: { className?: string }) {
   return (
     <div className={className || "h-[26px] overflow-clip relative w-[100px]"} data-node-id="678:4047" data-name="Art / tripReward mark">
@@ -282,45 +291,138 @@ export default function Component11TicketDetails() {
         </div>
       </div>
       <ArtSeatGuarantee className="bg-gradient-to-r from-[#a3e4ad] h-[43.337px] overflow-clip relative shrink-0 to-[#d7f2da] w-[390px]" />
-      <div className="content-stretch flex flex-col gap-[16px] items-start p-[16px] relative shrink-0 w-full" data-node-id="127:1323" data-name="Content">
-        <div className="content-stretch flex gap-[6px] items-center overflow-clip relative shrink-0 w-full" data-node-id="680:4014" data-name="Tabs">
-          <div className="bg-[#c54646] content-stretch flex items-center overflow-clip px-[16px] py-[10px] relative rounded-[10px] shrink-0" data-node-id="680:4015" data-name="Tab">
-            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[20px] not-italic relative shrink-0 text-[15px] text-white w-[100px]" data-node-id="680:4016">
-              Ticket details
-            </p>
-          </div>
-          <div className="content-stretch flex items-center overflow-clip px-[16px] py-[10px] relative rounded-[10px] shrink-0" data-node-id="680:4017" data-name="Tab">
-            <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[15px] text-[color:var(--text\/primary,#1d1d1d)] w-[91px]" data-node-id="680:4018">
-              Live tracking
-            </p>
-          </div>
-          <div className="content-stretch flex items-center overflow-clip px-[16px] py-[10px] relative rounded-[10px] shrink-0" data-node-id="680:4019" data-name="Tab">
-            <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[15px] text-[color:var(--text\/primary,#1d1d1d)] w-[46px]" data-node-id="680:4020">
-              Hotels
-            </p>
-          </div>
-          <div className="content-stretch flex items-center overflow-clip px-[16px] py-[10px] relative rounded-[10px] shrink-0" data-node-id="680:4021" data-name="Tab">
-            <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[15px] text-[color:var(--text\/primary,#1d1d1d)] w-[46px]" data-node-id="680:4022">
-              Safety
-            </p>
-          </div>
+      <div className="bg-white content-stretch flex gap-[6px] items-center overflow-clip px-[16px] py-[12px] relative shrink-0 w-full" data-node-id="680:4014" data-name="Tabs">
+        <div className="bg-[#c54646] content-stretch flex items-center overflow-clip px-[20px] py-[9px] relative rounded-[8px] shrink-0" data-node-id="680:4015" data-name="Tab">
+          <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[20px] not-italic relative shrink-0 text-[15px] text-white w-[100px]" data-node-id="680:4016">
+            Ticket details
+          </p>
         </div>
-        <div className="bg-gradient-to-r content-stretch flex from-[#faf2db] gap-[10px] items-center overflow-clip p-[14px] relative rounded-[12px] shrink-0 to-[#efdbea] w-full" data-node-id="680:4023" data-name="tripReward banner">
-          <div className="content-stretch flex flex-[1_0_0] flex-col gap-[8px] items-start min-w-px overflow-clip relative" data-node-id="680:4024" data-name="Text">
+        <div className="content-stretch flex items-center overflow-clip px-[20px] py-[9px] relative rounded-[8px] shrink-0" data-node-id="680:4017" data-name="Tab">
+          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[15px] text-[color:var(--text\/primary,#1d1d1d)] w-[91px]" data-node-id="680:4018">
+            Live tracking
+          </p>
+        </div>
+        <div className="content-stretch flex items-center overflow-clip px-[20px] py-[9px] relative rounded-[8px] shrink-0" data-node-id="680:4019" data-name="Tab">
+          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[15px] text-[color:var(--text\/primary,#1d1d1d)] w-[46px]" data-node-id="680:4020">
+            Hotels
+          </p>
+        </div>
+        <div className="content-stretch flex items-center overflow-clip px-[20px] py-[9px] relative rounded-[8px] shrink-0" data-node-id="680:4021" data-name="Tab">
+          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[15px] text-[color:var(--text\/primary,#1d1d1d)] w-[46px]" data-node-id="680:4022">
+            Safety
+          </p>
+        </div>
+      </div>
+      <div className="content-stretch flex flex-col gap-[16px] items-start pb-[16px] pt-[12px] px-[16px] relative shrink-0 w-full" data-node-id="127:1323" data-name="Content">
+        <div className="bg-gradient-to-r content-stretch flex from-[#faf2db] gap-[10px] items-center overflow-clip px-[14px] py-[12px] relative rounded-[12px] shrink-0 to-[#efdbea] w-full" data-node-id="680:4023" data-name="tripReward banner">
+          <div className="content-stretch flex flex-[1_0_0] flex-col gap-[6px] items-start min-w-px overflow-clip relative" data-node-id="680:4024" data-name="Text">
             <div className="content-stretch flex items-center justify-between overflow-clip relative shrink-0 w-full" data-node-id="680:4025" data-name="Top">
-              <ArtTripRewardMark className="h-[26px] relative shrink-0 w-[118px]" />
+              <ArtTripRewardMark className="h-[25px] relative shrink-0 w-[96px]" />
               <div className="bg-[#af8b3c] content-stretch flex items-start overflow-clip px-[12px] py-[6px] relative rounded-[8px] shrink-0" data-node-id="680:4027" data-name="Days left">
-                <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[18px] not-italic relative shrink-0 text-[14px] text-white w-[72px]" data-node-id="680:4028">
+                <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[17px] not-italic relative shrink-0 text-[13px] text-white w-[72px]" data-node-id="680:4028">
                   4 days left
                 </p>
               </div>
             </div>
-            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="680:4029">
+            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[20px] not-italic relative shrink-0 text-[15px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="680:4029">
               Unlock to get free ticket with Laxmi Holidays
             </p>
           </div>
           <IconChevronRight className="relative shrink-0 size-[20px]" />
         </div>
+        <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[16px] min-w-full not-italic relative shrink-0 text-[12px] text-[color:var(--text\/secondary,#636363)] w-[min-content]" data-node-id="737:4274">
+          ONWARD
+        </p>
+        <div className="bg-[var(--surface\/default,white)] content-stretch drop-shadow-[0px_8px_12px_rgba(0,0,0,0.07),0px_2px_3px_rgba(0,0,0,0.05)] flex flex-col items-start relative rounded-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="737:4220" data-name="Onward ticket">
+          <div className="bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-col items-start overflow-clip pl-[16px] pr-[18px] py-[18px] relative rounded-tl-[var(--radius\/16,16px)] rounded-tr-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="737:4221" data-name="Journey">
+            <div className="content-stretch flex gap-[12px] items-start relative shrink-0 w-full" data-node-id="737:4222" data-name="From">
+              <div className="relative shrink-0 size-[22px]" data-node-id="737:4223" data-name="Marker">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgMarker} />
+              </div>
+              <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px not-italic relative text-[color:var(--text\/on-accent,white)] whitespace-nowrap" data-node-id="737:4226" data-name="Place">
+                <p className="font-['Inter:Bold'] font-bold leading-[24px] relative shrink-0 text-[18px]" data-node-id="737:4227">
+                  Delhi
+                </p>
+                <p className="font-['Inter:Regular'] font-normal leading-[22px] opacity-85 relative shrink-0 text-[16px]" data-node-id="737:4228">
+                  ISBT Kashmiri Gate
+                </p>
+              </div>
+              <div className="[word-break:break-word] content-stretch flex flex-col gap-[2px] items-end not-italic relative shrink-0 text-[color:var(--text\/on-accent,white)] whitespace-nowrap" data-node-id="737:4229" data-name="When">
+                <p className="font-['Inter:Bold'] font-bold leading-[26px] relative shrink-0 text-[20px]" data-node-id="737:4230">
+                  23:55
+                </p>
+                <p className="font-['Inter:Regular'] font-normal leading-[20px] opacity-90 relative shrink-0 text-[14px]" data-node-id="737:4231">
+                  Thu, 10 Sep
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[12px] items-center pl-[22px] py-[14px] relative shrink-0 w-full" data-node-id="737:4232" data-name="Duration">
+              <div className="bg-[rgba(255,255,255,0.45)] flex-[1_0_0] h-px min-w-px relative" data-node-id="737:4233" data-name="Rule" />
+              <LogoRedBusMark className="h-[21px] relative shrink-0 w-[34px]" />
+              <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[22px] not-italic opacity-95 relative shrink-0 text-[16px] text-[color:var(--text\/on-accent,white)] whitespace-nowrap" data-node-id="737:4234">
+                8h 5m
+              </p>
+              <div className="bg-[rgba(255,255,255,0.45)] flex-[1_0_0] h-px min-w-px relative" data-node-id="737:4235" data-name="Rule" />
+            </div>
+            <div className="content-stretch flex gap-[12px] items-start relative shrink-0 w-full" data-node-id="737:4237" data-name="To">
+              <div className="relative shrink-0 size-[22px]" data-node-id="737:4238" data-name="Marker">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgMarker1} />
+              </div>
+              <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px not-italic relative text-[color:var(--text\/on-accent,white)] whitespace-nowrap" data-node-id="737:4241" data-name="Place">
+                <p className="font-['Inter:Bold'] font-bold leading-[24px] relative shrink-0 text-[18px]" data-node-id="737:4242">
+                  Nainital
+                </p>
+                <p className="font-['Inter:Regular'] font-normal leading-[22px] opacity-85 relative shrink-0 text-[16px]" data-node-id="737:4243">
+                  Nainital Bus Stand
+                </p>
+              </div>
+              <div className="[word-break:break-word] content-stretch flex flex-col gap-[2px] items-end not-italic relative shrink-0 text-[color:var(--text\/on-accent,white)] whitespace-nowrap" data-node-id="737:4244" data-name="When">
+                <p className="font-['Inter:Bold'] font-bold leading-[26px] relative shrink-0 text-[20px]" data-node-id="737:4245">
+                  08:00
+                </p>
+                <p className="font-['Inter:Regular'] font-normal leading-[20px] opacity-90 relative shrink-0 text-[14px]" data-node-id="737:4246">
+                  Fri, 11 Sep
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="content-stretch flex gap-[12px] items-center p-[16px] relative shrink-0 w-full" data-node-id="737:4247" data-name="Passenger">
+            <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[4px] items-start min-w-px not-italic relative text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="737:4248" data-name="Text">
+              <p className="font-['Inter:Bold'] font-bold leading-[24px] relative shrink-0 text-[18px]" data-node-id="737:4249">
+                LAXMI HOLIDAYS PVT LTD
+              </p>
+              <p className="font-['Inter:Regular'] font-normal leading-[22px] relative shrink-0 text-[16px]" data-node-id="737:4250">
+                Devansh Somvanshi
+              </p>
+            </div>
+            <div className="bg-[var(--colour\/neutral\/150,#e9eaf6)] content-stretch flex items-start px-[12px] py-[4px] relative rounded-[var(--radius\/8,8px)] shrink-0" data-node-id="737:4251" data-name="Seat badge">
+              <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/link,#0000e4)] whitespace-nowrap" data-node-id="737:4252">
+                U4
+              </p>
+            </div>
+          </div>
+          <div className="content-stretch flex flex-col items-center pb-[18px] pt-[4px] relative shrink-0 w-full" data-node-id="737:4259" data-name="Tear off">
+            <div className="h-[22px] relative shrink-0 w-full" data-node-id="737:4260" data-name="Perforation">
+              <div className="absolute h-0 left-[24px] top-[11px] w-[310px]" data-node-id="737:4261" data-name="Dashes">
+                <div className="absolute inset-[-1.5px_0_0_0]">
+                  <img alt="" className="block max-w-none size-full" src={imgDashes} />
+                </div>
+              </div>
+              <div className="absolute left-[-11px] size-[22px] top-0" data-node-id="737:4262" data-name="Notch">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgNotch} />
+              </div>
+              <div className="absolute left-[347px] size-[22px] top-0" data-node-id="737:4263" data-name="Notch">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgNotch} />
+              </div>
+            </div>
+            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[20px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/link,#0000e4)] text-center w-full" data-node-id="737:4264">
+              Ticket details
+            </p>
+          </div>
+        </div>
+        <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[16px] min-w-full not-italic relative shrink-0 text-[12px] text-[color:var(--text\/secondary,#636363)] w-[min-content]" data-node-id="737:4275">
+          RETURN
+        </p>
         <div className="bg-[var(--surface\/default,white)] content-stretch drop-shadow-[0px_8px_12px_rgba(0,0,0,0.07),0px_2px_3px_rgba(0,0,0,0.05)] flex flex-col items-start relative rounded-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="515:3848" data-name="Return ticket">
           <div className="bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-col items-start overflow-clip pl-[16px] pr-[18px] py-[18px] relative rounded-tl-[var(--radius\/16,16px)] rounded-tr-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="515:3849" data-name="Journey">
             <div className="content-stretch flex gap-[12px] items-start relative shrink-0 w-full" data-node-id="515:3850" data-name="From">
@@ -346,6 +448,7 @@ export default function Component11TicketDetails() {
             </div>
             <div className="content-stretch flex gap-[12px] items-center pl-[22px] py-[14px] relative shrink-0 w-full" data-node-id="515:3860" data-name="Duration">
               <div className="bg-[rgba(255,255,255,0.45)] flex-[1_0_0] h-px min-w-px relative" data-node-id="515:3861" data-name="Rule" />
+              <LogoRedBusMark className="h-[21px] relative shrink-0 w-[34px]" />
               <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[22px] not-italic opacity-95 relative shrink-0 text-[16px] text-[color:var(--text\/on-accent,white)] whitespace-nowrap" data-node-id="515:3862">
                 8h 5m
               </p>
@@ -466,6 +569,46 @@ export default function Component11TicketDetails() {
             </div>
           </div>
         </div>
+        <div className="bg-[var(--surface\/default,white)] content-stretch drop-shadow-[0px_8px_12px_rgba(0,0,0,0.07),0px_2px_3px_rgba(0,0,0,0.05)] flex flex-col items-start p-[16px] relative rounded-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="737:4276" data-name="Changing your return day">
+          <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[14px] not-italic relative shrink-0 text-[10px] text-[color:var(--text\/secondary,#636363)] tracking-[0.4px] w-full" data-node-id="737:4277">
+            CHANGING YOUR RETURN DAY
+          </p>
+          <div className="h-[12px] relative shrink-0 w-full" data-node-id="737:4278" data-name="gap" />
+          <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[21px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="737:4279">
+            Open your ticket
+          </p>
+          <div className="h-[4px] relative shrink-0 w-full" data-node-id="737:4280" data-name="gap" />
+          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="737:4281">
+            Tap Change day and pick another date
+          </p>
+          <div className="h-[16px] relative shrink-0 w-full" data-node-id="737:4282" data-name="gap" />
+          <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[21px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="737:4283">
+            No fee to change it
+          </p>
+          <div className="h-[4px] relative shrink-0 w-full" data-node-id="737:4284" data-name="gap" />
+          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="737:4285">
+            Pay only if the new bus costs more
+          </p>
+          <div className="h-[16px] relative shrink-0 w-full" data-node-id="737:4286" data-name="gap" />
+          <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[21px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="737:4287">
+            Change to any date
+          </p>
+          <div className="h-[4px] relative shrink-0 w-full" data-node-id="737:4288" data-name="gap" />
+          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="737:4289">
+            Any day in that range, earlier or later
+          </p>
+          <div className="h-[16px] relative shrink-0 w-full" data-node-id="737:4290" data-name="gap" />
+          <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[21px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/warning,#a45729)] w-full" data-node-id="737:4291">
+            You cannot cancel after that
+          </p>
+          <div className="h-[4px] relative shrink-0 w-full" data-node-id="737:4292" data-name="gap" />
+          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="737:4293">
+            No refund on the return
+          </p>
+        </div>
+        <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] min-w-full not-italic relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-[min-content]" data-node-id="737:4294">
+          Ticket sent to your email and WhatsApp.
+        </p>
         <div className="bg-[#f1e5b7] content-stretch flex gap-[12px] items-center overflow-clip px-[16px] py-[14px] relative rounded-[12px] shrink-0 w-full" data-node-id="684:4022" data-name="Scratch card">
           <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px not-italic overflow-clip relative" data-node-id="684:4023" data-name="Text">
             <p className="font-['Inter:Regular'] font-normal leading-[20px] relative shrink-0 text-[#594d2e] text-[14px] w-full" data-node-id="684:4024">

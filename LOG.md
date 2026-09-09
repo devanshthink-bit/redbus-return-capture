@@ -8764,3 +8764,49 @@ screen the traveller lands on.
 **And when the fix for a divergence starts distorting the product, the divergence was not the
 problem.** Reserving the button's space kept the parity number tidy and made the screen wrong. The
 number is a smoke alarm, not the thing being protected.
+
+CHANGE · 2026-09-09 · direct request · Source: user
+**Booking confirmed is gone; the ticket is the confirmation.** Devansh: *"the booking confirmed
+screen doesn't exist in the real RedBus app. Tickets are shown on the ticket details page. Now
+include everything in the booking confirmation page inside the ticket details page in both the
+Figma & prototype and just after the timer screen."* Frame 10 was renamed
+`S14 · Booking confirmed (retired — the real app has no such screen)` and moved to **States**, which
+the build does not read. `src/screens/10.tsx`, its `render.tsx` entry, its `FORWARD` row, its four
+`PAINT` rows and its `HIFI_NAMES` name were all deleted, and the countdown now ends on 11. The build
+is 28 screens.
+
+CHANGE · 2026-09-09 · direct request · Source: user
+**11 rebuilt against the real screenshot, and it now carries both legs.** Matched to
+`Picsew_TicketDetails.HEIC`: the tab pills at the app's own 20/9 padding, the tripReward banner
+tightened, the redBus mark set into the journey duration row between two rules, and an **onward
+ticket card** cloned from the return one (Delhi → Nainital, 23:55 Thu 10 Sep → 08:00 Fri 11 Sep,
+seat U4) with its `Change day` row removed — only the return leg can move. `Changing your return
+day` and `Sent` came across from the retired 10. Frame height 4020 → 4757pt. Parity **10.37%**, a
+clean ramp of 16px over 4,757pt with 2.6–10 grey levels of residue after realignment: glyph raster,
+no step.
+
+CHANGE · 2026-09-09 · direct request · Source: user
+**The tab strip is fixed at the top and follows what you are reading.** Devansh: *"This upper nav
+bar is fixed at the top. While the user scrolls in the remaining section vertically, these active
+tabs scroll horizontally according to whatever content is active. Implement it with smooth scrolling
+on tab bar horizontally."* A `ticketTabs` module lifts the header, the banner and the tabs into one
+sticky pin, marks the tab whose section has crossed the pin, and scrolls the strip to it — and taps
+on a tab scroll the page to that section. Both smooth.
+
+LEARNED · 2026-09-09 · direct request
+**A row that is allowed to grow will not scroll; it will widen the phone.** The strip measured
+`scrollWidth === clientWidth` (493/493) and reported nothing to scroll, while Figma's render clipped
+"Safety" — the flex row had simply taken the width it wanted. Overflow is only overflow against a
+box that will not move: `width:390px; max-width:390px; box-sizing:border-box` turned the same 493pt
+of tabs into 103pt of scroll. **`overflow-x:auto` is half a scroller. The other half is a fixed
+width.**
+
+LEARNED · 2026-09-09 · direct request
+**A waiting screen is not a step you can walk back into.** Back on 11 landed on 09b, the payment
+countdown — which starts its timer on entry and throws you forward to 11 again five seconds later.
+The Back button looked broken because it worked. 09b joins `SKIP`: prev, next and the arrow keys
+step over it, and it is only ever reached by tapping Pay.
+
+NOTE · 2026-09-09 · direct request
+**The change-date flow now starts from the ticket.** `Change day` on 11 goes to 13, and the walk
+13 → 14 → 15 → 16 runs clean with no warnings and no JS errors.
