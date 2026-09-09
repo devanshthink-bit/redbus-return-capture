@@ -1245,7 +1245,6 @@
     function absTop(el){ var y = 0; for (var n = el; n; n = n.offsetParent) y += n.offsetTop; return y; }
 
     window.__openDay = function(d){
-      releaseHold(screens[at]);                        // the fold is coming back; stop propping
       RETURN.chosen = d; RETURN.bus = null;            // a new day proposes its own default bus
       var to = chosenFrame(d);
       if (to === at) {
@@ -1286,59 +1285,18 @@
     // the card still needed 676. Any route through go() therefore ends at the bottom of a shorter
     // page with the card 350-420px lower than the finger left it. Repainting in place moves
     // nothing above the card at all, because the only thing that changes is below it.
-    // Everything the collapse removes sits BELOW the card, so the card stays put as long as the
-    // scroll does. It does not on its own: the page loses ~470px of fold and the browser clamps a
-    // scroll the shorter page can no longer hold, which slides the card down by the shortfall.
-    // So hold the page open by exactly that shortfall -- padding below the last card, where there
-    // is nothing -- and drop it again the moment the traveller scrolls back within range, at which
-    // point removing it clamps nothing and nothing moves.
-    function setScroll(sc, to){
-      var prev = sc.style.scrollBehavior;
-      sc.style.scrollBehavior = 'auto';
-      sc.scrollTop = to;
-      sc.style.scrollBehavior = prev;
-    }
-    function releaseHold(sec){
-      var root = sec.querySelector('.scroll > div'), sc = sec.querySelector('.scroll');
-      if (sec.__holdFn && sc) sc.removeEventListener('scroll', sec.__holdFn);
-      sec.__holdFn = null;
-      if (!sec.__hold || !root) { sec.__hold = 0; return; }
-      var base = parseFloat(getComputedStyle(root).paddingBottom) || 0;
-      root.style.paddingBottom = Math.max(0, base - sec.__hold) + 'px';
-      sec.__hold = 0;
-    }
-    function holdScroll(sec, sc, want){
-      releaseHold(sec);
-      var root = sec.querySelector('.scroll > div'); if (!root) return;
-      var over = Math.round(want - (sc.scrollHeight - sc.clientHeight));
-      if (over <= 0) { setScroll(sc, want); return; }
-      var base = parseFloat(getComputedStyle(root).paddingBottom) || 0;
-      root.style.paddingBottom = (base + over) + 'px';
-      sec.__hold = over;
-      setScroll(sc, want);
-      var onScroll = function(){
-        if (sc.scrollTop > (sc.scrollHeight - sc.clientHeight) - sec.__hold) return;
-        releaseHold(sec);
-      };
-      sec.__holdFn = onScroll;
-      sc.addEventListener('scroll', onScroll);
-    }
-
+    // The scroll is deliberately NOT touched. Everything the collapse removes sits below the card,
+    // so on most days the card does not move at all. Where the shortened page cannot hold the
+    // scroll it was read at, the browser clamps and the list settles lower -- Devansh's call, made
+    // after seeing the alternative: holding the page open with padding kept the card exactly still
+    // and left a band of empty grey under the last card, and *"for dates which might create this
+    // its ok for thm to scroll to diff position"*.
     window.__closeDay = function(){
-      var sec = screens[at], id = ORDER[at], sc = sec.querySelector('.scroll');
-      var want = sc ? sc.scrollTop : 0;
       RETURN.chosen = 0; RETURN.bus = null;
+      var sec = screens[at], id = ORDER[at];
       if (ON_ENTER[id]) { ON_ENTER[id](sec); clearBottom(sec); }
-      if (sc) holdScroll(sec, sc, want);
     };
-    // Swapping the bus from the fold is a change to what is on screen, not a step: repaint in
-    // place so the page does not animate or lose its scroll. From 07 it IS a step back.
-    window.__pickBus = function(i, back){
-      RETURN.bus = i;
-      if (back) { go(chosenFrame(RETURN.chosen)); return; }
-      var id = ORDER[at];
-      if (ON_ENTER[id]) { ON_ENTER[id](screens[at]); clearBottom(screens[at]); }
-    };
+
     window.__openBusList = function(){ if (i07 >= 0) go(i07); };
 
     // 07 is a detour, so its Back returns to whichever frame opened it rather than walking the

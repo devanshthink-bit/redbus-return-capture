@@ -8079,3 +8079,36 @@ the case the frame was drawn with — a day running more services than the fold 
 false promise on any day where the fold happens to hold them all. The count was never the problem;
 the word *all* was, because it describes the destination without reference to the origin. Copy that
 compares two states has to be generated from both.
+
+DECISION  ·  2026-09-09  ·  molades-none  · Source: user
+**The padding hold is reversed. A day that cannot hold its position may move.** Devansh, on a
+screenshot of the grey band it left under the last card: *"dont show this i tapped on 15th to keep
+it on same position dont add this white space, for dates which might create this its ok for thm to
+scroll to diff position"*.
+
+The hold worked — 0px of movement on every day — and the price was up to **415px of empty page**
+under the last card, held there so the scroll would stay legal. He looked at it and took the
+opposite trade, which is his to take and is the right one: an empty band is a defect on every day,
+where the movement is a compromise only on the days whose fold does not fit.
+
+So the scroll is left alone again. Measured on an 11–17 window after the revert: the first day moves
+**0px**, the 15th **308px**, the last **415px**, and the space under the last card is **142px on all
+three** — the frame's own bottom padding, exactly what it is before any day is opened.
+
+**What this cost, honestly: four attempts and a reversal on one behaviour.** Carry the scroll; hold
+the open position; restore the tap position; leave it alone; hold the page open. The last was the
+only one that fully met the stated requirement, and it was rejected on sight for a side effect I had
+described but he had not seen. The record is worth keeping because the sequence is the lesson, not
+the endpoint.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**A trade-off described in a sentence and a trade-off seen on screen are not the same decision.** I
+wrote "the cost is a band of blank space below the last card" in the commit and shipped it; he
+looked at one screenshot and reversed it immediately. Anything that buys a behaviour with a visible
+artefact should be **shown before it is shipped** — a screenshot of the artefact next to the
+behaviour it buys, not a description of it. That is a cheap step I skipped twice today.
+
+**And: the requirement was never "0px".** It was "do not make the screen jump around", and I turned
+it into an absolute because absolutes are easier to test against. 0px on every day cost more than it
+was worth; 0px on the days where it is free, and a settle on the rest, is what he actually wanted —
+and it is what the simplest implementation already did two commits earlier.
