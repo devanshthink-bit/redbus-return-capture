@@ -99,7 +99,7 @@ export default function Component04BoardDropBoarding() {
                 Isbt Kashmiri Gate Metro Gate No.5
               </p>
               <p className="font-['Inter:Regular'] font-normal relative shrink-0 text-[#636363] text-[14px] w-full" data-node-id="562:3948">
-                Kashmiri Gate Metro Gate No.5 ,Kashmiri Gate Metro Gate No.5
+                Kashmiri Gate Metro Gate No.5
               </p>
             </div>
             <div className="relative shrink-0 size-[26px]" data-node-id="562:3949" data-name="Radio">
@@ -128,7 +128,7 @@ export default function Component04BoardDropBoarding() {
                 Isbt Kashmiri Gate Metro Gate No.5
               </p>
               <p className="font-['Inter:Regular'] font-normal relative shrink-0 text-[#636363] text-[14px] w-full" data-node-id="562:3960">
-                Kashmiri Gate Metro Gate No.5 ,Kashmiri Gate Metro Gate No.5
+                Kashmiri Gate Metro Gate No.5
               </p>
             </div>
             <div className="relative shrink-0 size-[26px]" data-node-id="562:3961" data-name="Radio">

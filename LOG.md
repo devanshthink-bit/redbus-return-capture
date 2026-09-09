@@ -8557,3 +8557,44 @@ test written around that one passes while an identical control on another screen
 same copy appearing twice is the signal: when a line is duplicated across screens — *View details*,
 *Change points*, a fare — wire the **set**, and assert the count you expected. This is the fourth
 defect in two days whose shape is "it works on the screen I tested".
+
+CHANGE  ·  2026-09-09  ·  molades-none  ·  Source: user
+**The details sheet is a sheet now, and it says what was actually booked.** Four faults in one
+report: *"The hidden background behind this bottom sheet should be exactly the same as it is in the
+review screen … the content inside this bottom sheet should scroll within that bottom sheet … why
+are we showing location twice? … why is duration not at the center? … all the details here should
+exactly match the real booking."*
+
+**It was a screen pretending to be a sheet.** 09a was built as its own frame carrying a *drawn copy*
+of Pay behind a scrim, so opening it from Review put Review's title over Pay's content, and
+scrolling moved the whole page because the page was all there was. The Sheet is now lifted out of
+the frame and laid into the `.overlay` of whichever screen is showing: **that screen is the real
+one**, it is frozen while the sheet is up (`overflow-y: hidden` on its scroller), the scrim carries
+a real `backdrop-filter: blur(4px)`, and only the sheet scrolls. Tapping the scrim closes it, and
+`go()` closes it — a sheet does not survive a page change.
+
+**The location twice** was real data: 04's boarding address read *"Kashmiri Gate Metro Gate No.5
+,Kashmiri Gate Metro Gate No.5"*. Fixed at the source in Figma and pulled, so it is right on 04 and
+everywhere that reads a point off it.
+
+**The duration** sat at the top of the gap because the middle row hugged its label. Each timeline is
+now three rows — stop, a fixed 56pt gap with the label centred in it, stop — with the rail drawn
+per row so both dots still land on their own stop. Same shape as the real sheet.
+
+**And every value comes from the booking.** The onward leg is read off Review, which owns those
+facts; the return leg off the bus actually held — `buildFold` now publishes its operator, vehicle,
+seat, times and dates alongside the fare. Durations are computed from the two times, not typed.
+Verified on a trip booked through the UI: boarding Noida, dropping Nainital Mall Road, return on the
+cheap 19:45 bus — the sheet read *Noida / Sector 62…*, *International Tourist Centre*, *VE A/C
+Sleeper (2+1)*, *19:45 14 Sep → 03:50 15 Sep*, *8h 5m*, *Tallital Taxi Stand*, *Anand Vihar ISBT*.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**A copy of a screen is not that screen — strip its wiring.** `markHot` had already run over 09a, so
+the cloned sheet's close button still carried `hf-back`. Over Review that made closing the sheet
+answer *Review's* Back handler and walk to the day list: a close button that navigated. Anything
+cloned out of a wired frame has to have `hf-back` / `hf-fwd` / `hf-hot` removed before it is used
+somewhere else.
+
+**A sheet drawn as a full screen cannot behave like a sheet.** The frame is right as documentation —
+it shows what the sheet contains — but the presentation has to be runtime, over the live screen,
+or the backdrop is a photograph and the scroll is the page's.

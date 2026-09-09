@@ -172,6 +172,13 @@
   .hf-day-sel{background:#c54646!important}
   .hf-day-sel > p:nth-of-type(1){color:#fff!important}
   .hf-day-sel > p:nth-of-type(2){color:#fff!important}
+  /* The details sheet is a sheet: it sits over the screen that opened it, that screen stays put,
+     and only the sheet scrolls. Drawing it as its own full screen made the whole page move. */
+  .hf-scrim{position:absolute;inset:0;background:rgba(0,0,0,.45);
+    -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);animation:hf-in 200ms ease-out}
+  .hf-sheet{position:absolute;left:0;right:0;bottom:0;max-height:74%;overflow-y:auto;
+    border-radius:20px 20px 0 0;background:#fff;-webkit-overflow-scrolling:touch}
+  .hf-sheet::-webkit-scrollbar{width:0;height:0}
   .hf-radio-on{position:relative}
   /* A radio dot does not travel -- it is either set or not. It fades in on the spot. */
   @keyframes hf-dot{from{opacity:0;transform:scale(.6)} to{opacity:1;transform:none}}
@@ -415,6 +422,7 @@
   var ON_ENTER = {};
   function go(i){
     if (i < 0 || i >= screens.length) return;
+    if (window.__closeSheet) window.__closeSheet();   // a sheet does not survive a page change
     var from = ORDER[at];
     var dir = i >= at ? 1 : -1;
     // Read the outgoing scroll BEFORE hiding it. `hidden` is display:none, and a display:none
@@ -1313,6 +1321,14 @@
       RETURN.fare     = bus[2];
       RETURN.depLabel = label(chosen) + ' \u00b7 ' + bus[0];
       RETURN.arrLabel = label(bus[1] < bus[0] ? chosen + 1 : chosen) + ' \u00b7 ' + bus[1];
+      RETURN.dep      = bus[0];
+      RETURN.arr      = bus[1];
+      RETURN.depDate  = label(chosen).split(', ')[1];
+      RETURN.arrDate  = label(bus[1] < bus[0] ? chosen + 1 : chosen).split(', ')[1];
+      RETURN.dayTag   = label(chosen);
+      RETURN.op       = B.ops[bus[10]];
+      RETURN.veh      = B.veh[bus[10]];
+      RETURN.seat     = seatOf;
       return bus;
     }
 
@@ -1591,38 +1607,116 @@
   (function bookingDetails(){
     var i09 = ORDER.indexOf('09'), i09a = ORDER.indexOf('09a'), i08 = ORDER.indexOf('08');
     if (i09 < 0 || i09a < 0) return;
-    // There are two of these links, not one. Review carries the same "View details" line as Pay,
-    // and only Pay's was wired -- so on the screen where the traveller first meets the line, it
-    // did nothing. Both open the sheet, and the sheet goes back to whichever one opened it.
+
+    // The sheet is a sheet, not a screen. It was built as its own frame -- a drawn copy of Pay
+    // behind a scrim -- so opening it from Review put Review's title over Pay's content, and
+    // scrolling moved the whole page instead of the sheet. It now lifts the Sheet out of the frame
+    // and lays it over whichever screen is actually showing: that screen is the real one, it stays
+    // where it was, and only the sheet scrolls.
+    var TPL = screens[i09a].querySelector('[data-name="Sheet"]');
+    if (!TPL) { console.warn('09a: no Sheet'); return; }
+    TPL = TPL.cloneNode(true);
+    // markHot has already been round the frame, so the sheet's close button carries hf-back. Over
+    // Review that made closing the sheet answer Review's own Back handler and walk to the day list.
+    // A copy of a screen is not that screen: strip the navigation classes off it.
+    [].forEach.call(TPL.querySelectorAll('.hf-back, .hf-fwd, .hf-hot'), function(n){
+      n.classList.remove('hf-back', 'hf-fwd', 'hf-hot');
+    });
+
+    function q(root, id){ return root.querySelector('[data-node-id="' + id + '"]'); }
+    function set(root, id, txt){ var e = q(root, id); if (e && txt) e.textContent = txt; }
+    function mins(hhmm){ var p = String(hhmm).split(':'); return (+p[0]) * 60 + (+p[1]); }
+    function dur(from, to){
+      var d = mins(to) - mins(from); if (d <= 0) d += 24 * 60;
+      return Math.floor(d / 60) + 'h ' + (d % 60) + 'm';
+    }
+    // "Thu, 10 Sep · 23:55" -> the pieces the sheet lays out separately
+    function split(line){
+      var m = /^(\w+), (.+?) · (.+)$/.exec((line || '').trim());
+      return m ? { dow: m[1], date: m[2], time: m[3] } : null;
+    }
+
+    // Every value in the sheet, and where it comes from. The onward leg is read off Review, which
+    // is the screen that owns those facts; the return leg is read off the bus the traveller holds.
+    function fill(sheet){
+      var R = screens[i08];
+      var oDep = split(q(R, '212:2066') && q(R, '212:2066').textContent);
+      var oArr = split(q(R, '212:2071') && q(R, '212:2071').textContent);
+      if (oDep) {
+        set(sheet, '704:4133', 'ONWARD · ' + (oDep.dow + ', ' + oDep.date).toUpperCase());
+        set(sheet, '704:4141', oDep.time);
+        set(sheet, '704:4142', oDep.date);
+      }
+      if (oArr) { set(sheet, '704:4158', oArr.time); set(sheet, '704:4159', oArr.date); }
+      if (oDep && oArr) set(sheet, '704:4152', dur(oDep.time, oArr.time));
+      if (POINTS.outBoard) {
+        set(sheet, '704:4147', POINTS.outBoard.name);
+        set(sheet, '704:4148', POINTS.outBoard.address);
+      }
+      if (POINTS.outDrop) {
+        set(sheet, '704:4164', POINTS.outDrop.name);
+        set(sheet, '704:4165', POINTS.outDrop.address);
+      }
+
+      if (RETURN.dayTag) {
+        set(sheet, '704:4176', 'RETURN · ' + RETURN.dayTag.toUpperCase());
+        set(sheet, '704:4184', RETURN.dep);
+        set(sheet, '704:4185', RETURN.depDate);
+        set(sheet, '704:4201', RETURN.arr);
+        set(sheet, '704:4202', RETURN.arrDate);
+        set(sheet, '704:4195', dur(RETURN.dep, RETURN.arr));
+        set(sheet, '704:4178', RETURN.op);
+        set(sheet, '704:4179', '1 Seat · ' + RETURN.veh);
+        if (RETURN.seat) set(sheet, '704:4214', RETURN.seat + ' - ' +
+          (/^U/.test(RETURN.seat) ? 'Upper deck' : 'Lower deck'));
+      }
+      if (POINTS.retBoard) {
+        set(sheet, '704:4190', POINTS.retBoard.name);
+        set(sheet, '704:4191', POINTS.retBoard.address);
+      }
+      if (POINTS.retDrop) {
+        set(sheet, '704:4207', POINTS.retDrop.name);
+        set(sheet, '704:4208', POINTS.retDrop.address);
+      }
+    }
+
+    function close(){
+      screens.forEach(function(sec){
+        var sc = sec.querySelector('.scroll'); if (sc) sc.style.overflowY = '';
+        [].forEach.call(sec.querySelectorAll('.hf-scrim, .hf-sheet'), function(n){ n.remove(); });
+      });
+    }
+    function open(sec){
+      close();
+      var layer = sec.querySelector('.overlay'); if (!layer) return;
+      var scrim = document.createElement('div');
+      scrim.className = 'hf-scrim';
+      scrim.addEventListener('click', function(e){ e.stopPropagation(); close(); }, true);
+      var sheet = TPL.cloneNode(true);
+      sheet.className = 'hf-sheet hf-slideup ' + sheet.className;
+      fill(sheet);
+      var x = sheet.querySelector('[data-name="Button / Close"]');
+      if (x) { x.classList.add('hf-hot');
+        x.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); close(); }, true); }
+      layer.appendChild(scrim);
+      layer.appendChild(sheet);
+      var sc = sec.querySelector('.scroll'); if (sc) sc.style.overflowY = 'hidden';
+    }
+
+    // Both screens carry the line, and only Pay's was ever wired.
     var DOORS = [[i08, '212:2089'], [i09, '109:1003']];
-    var owner = i09;
     DOORS.forEach(function(d){
       if (d[0] < 0) return;
       var el = screens[d[0]].querySelector('[data-node-id="' + d[1] + '"]');
       if (!el) { console.warn('no View details at ' + d[1]); return; }
       el.classList.add('hf-hot');
       el.addEventListener('click', function(e){
-        e.preventDefault(); e.stopPropagation();
-        owner = d[0]; go(i09a);
+        e.preventDefault(); e.stopPropagation(); open(screens[d[0]]);
       }, true);
     });
-    var shut = screens[i09a].querySelector('[data-name="Button / Close"]');
-    if (shut) {
-      shut.classList.add('hf-hot');
-      shut.addEventListener('click', function(e){
-        e.preventDefault(); e.stopPropagation(); go(owner);
-      }, true);
-    } else console.warn('09a: no close button');
-    // The sheet is drawn over Pay. Opened from Review it would still say "Pay \u20b92,919" behind
-    // the scrim, naming a screen the traveller has not reached -- so the backdrop's title says
-    // where they actually are, read off that screen rather than typed here.
-    ON_ENTER['09a'] = function(sec){
-      var t = sec.querySelector('[data-node-id="I704:4100;34:91"]');
-      if (!t) return;
-      var src = screens[owner].querySelector(
-        owner === i08 ? '[data-node-id="I212:2041;34:91"]' : '[data-node-id="I109:988;34:91"]');
-      if (src) t.textContent = src.textContent;
-    };
+    window.__closeSheet = close;         // go() calls this, so leaving a screen takes the sheet with it
+    // the standalone frame is what Figma draws; keep it filled too, for the rail and the diff
+    ON_ENTER['09a'] = function(sec){ fill(sec); };
   })();
 
   // 08 · the three return actions. CONTEXT §18 has always said Review leads to 07, 08a and 08b as

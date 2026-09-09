@@ -2,7 +2,7 @@ const imgButtonClose = "assets/4526b244-b8f0-4e89-95f9-e3629f7a78de.svg";
 const imgIconChevronLeft = "assets/c52a55a0-4bd0-4f7a-a9fa-205a96aa0d14.svg";
 const imgStatusIcons = "assets/091fbdca-8e2e-4f59-80c8-bfdc341f332f.svg";
 const imgDot = "assets/e3ba5a6c-19af-4a5b-b8da-896debdd44bc.svg";
-const imgRailStop = "assets/9bd8502b-94b3-427b-8d4d-3eeef668da35.svg";
+const imgRail = "assets/600465f5-c4dd-470c-8b4e-c9d14774ced1.svg";
 
 function ButtonClose({ className }: { className?: string }) {
   return (
@@ -129,9 +129,9 @@ export default function Component09ABookingDetails() {
             1 Seat · Bharat Benz A/C Seater /Sleeper (2+1)
           </p>
           <div className="h-[18px] relative shrink-0 w-full" data-node-id="704:4137" data-name="gap" />
-          <div className="content-stretch flex flex-col items-start overflow-clip relative shrink-0 w-full" data-node-id="704:4138" data-name="Timeline">
-            <div className="content-stretch flex gap-[12px] items-start overflow-clip relative shrink-0 w-full" data-node-id="704:4139" data-name="Stop">
-              <div className="[word-break:break-word] content-stretch flex flex-col gap-[2px] items-start not-italic overflow-clip relative shrink-0 w-[62px]" data-node-id="704:4140" data-name="When">
+          <div className="content-stretch flex flex-col items-start overflow-clip relative shrink-0 w-full" data-node-id="714:4122" data-name="Timeline">
+            <div className="content-stretch flex gap-[12px] items-start overflow-clip relative shrink-0 w-full" data-node-id="714:4123" data-name="Stop">
+              <div className="[word-break:break-word] content-stretch flex flex-col gap-[2px] items-start not-italic relative shrink-0 w-[62px]" data-node-id="704:4140" data-name="When">
                 <p className="font-['Inter:Bold'] font-bold leading-[23px] relative shrink-0 text-[#1d1d1d] text-[17px] w-[49px]" data-node-id="704:4141">
                   23:55
                 </p>
@@ -139,23 +139,23 @@ export default function Component09ABookingDetails() {
                   10 Sep
                 </p>
               </div>
-              <div className="relative self-stretch shrink-0 w-[12px]" data-node-id="704:4143" data-name="Rail · stop">
-                <div className="-translate-x-1/2 absolute bg-[#d6d6da] bottom-0 left-1/2 rounded-[2px] top-[10px] w-[3px]" data-node-id="704:4144" data-name="Line" />
-                <div className="-translate-x-1/2 absolute left-1/2 size-[11px] top-[5px]" data-node-id="704:4145" data-name="Dot">
+              <div className="relative self-stretch shrink-0 w-[12px]" data-node-id="714:4124" data-name="Rail">
+                <div className="-translate-x-1/2 absolute bg-[#d6d6da] bottom-[-1px] left-1/2 rounded-[2px] top-[11px] w-[3px]" data-node-id="714:4125" data-name="Line" />
+                <div className="-translate-x-1/2 absolute left-1/2 size-[11px] top-[6px]" data-node-id="714:4126" data-name="Dot">
                   <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgDot} />
                 </div>
               </div>
-              <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[3px] items-start min-w-px not-italic overflow-clip pb-[14px] relative" data-node-id="704:4146" data-name="Info">
+              <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[3px] items-start min-w-px not-italic pb-[16px] relative self-stretch" data-node-id="704:4146" data-name="Info">
                 <p className="font-['Inter:Bold'] font-bold leading-[22px] relative shrink-0 text-[#1d1d1d] text-[16px] w-full" data-node-id="704:4147">
                   Isbt Kashmiri Gate Metro Gate No.5
                 </p>
                 <p className="font-['Inter:Regular'] font-normal leading-[20px] relative shrink-0 text-[#636363] text-[14px] w-full" data-node-id="704:4148">
-                  Kashmiri Gate Metro Gate No.5 ,Kashmiri Gate Metro Gate No.5
+                  Kashmiri Gate Metro Gate No.5
                 </p>
               </div>
             </div>
-            <div className="content-stretch flex gap-[12px] items-start overflow-clip relative shrink-0 w-full" data-node-id="704:4149" data-name="Duration">
-              <div className="[word-break:break-word] content-stretch flex flex-col font-['Inter:Regular'] font-normal items-start leading-[18px] not-italic overflow-clip pb-[16px] relative shrink-0 text-[#636363] text-[13px] w-[62px]" data-node-id="704:4150" data-name="When">
+            <div className="content-stretch flex gap-[12px] h-[56px] items-center overflow-clip relative shrink-0 w-full" data-node-id="714:4127" data-name="Duration">
+              <div className="[word-break:break-word] content-stretch flex flex-col font-['Inter:Regular'] font-normal items-start leading-[18px] not-italic relative shrink-0 text-[#636363] text-[13px] w-[62px]" data-node-id="704:4150" data-name="When">
                 <p className="relative shrink-0 w-[48px]" data-node-id="704:4151">
                   Approx.
                 </p>
@@ -163,13 +163,13 @@ export default function Component09ABookingDetails() {
                   8h 5m
                 </p>
               </div>
-              <div className="relative self-stretch shrink-0 w-[12px]" data-node-id="704:4153" data-name="Rail">
-                <div className="-translate-x-1/2 absolute bg-[#d6d6da] bottom-0 left-1/2 rounded-[2px] top-0 w-[3px]" data-node-id="704:4154" data-name="Line" />
+              <div className="h-full relative shrink-0 w-[12px]" data-node-id="714:4128" data-name="Rail">
+                <div className="-translate-x-1/2 absolute bg-[#d6d6da] bottom-[10px] left-1/2 rounded-[2px] top-0 w-[3px]" data-node-id="714:4129" data-name="Line" />
               </div>
-              <div className="flex-[1_0_0] h-px min-w-px relative" data-node-id="704:4155" data-name="Info" />
+              <div className="flex-[1_0_0] h-px min-w-px relative" data-node-id="714:4130" data-name="Info" />
             </div>
-            <div className="content-stretch flex gap-[12px] items-start overflow-clip relative shrink-0 w-full" data-node-id="704:4156" data-name="Stop">
-              <div className="[word-break:break-word] content-stretch flex flex-col gap-[2px] items-start not-italic overflow-clip relative shrink-0 w-[62px]" data-node-id="704:4157" data-name="When">
+            <div className="content-stretch flex gap-[12px] items-start overflow-clip relative shrink-0 w-full" data-node-id="714:4131" data-name="Stop">
+              <div className="[word-break:break-word] content-stretch flex flex-col gap-[2px] items-start not-italic relative shrink-0 w-[62px]" data-node-id="704:4157" data-name="When">
                 <p className="font-['Inter:Bold'] font-bold leading-[23px] relative shrink-0 text-[#1d1d1d] text-[17px] w-[52px]" data-node-id="704:4158">
                   08:00
                 </p>
@@ -177,10 +177,10 @@ export default function Component09ABookingDetails() {
                   11 Sep
                 </p>
               </div>
-              <div className="h-[18px] relative shrink-0 w-[12px]" data-node-id="704:4160" data-name="Rail · stop">
-                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgRailStop} />
+              <div className="h-[18px] relative shrink-0 w-[12px]" data-node-id="714:4132" data-name="Rail">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgRail} />
               </div>
-              <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[3px] items-start min-w-px not-italic overflow-clip pb-[14px] relative" data-node-id="704:4163" data-name="Info">
+              <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[3px] items-start min-w-px not-italic relative self-stretch" data-node-id="704:4163" data-name="Info">
                 <p className="font-['Inter:Bold'] font-bold leading-[22px] relative shrink-0 text-[#1d1d1d] text-[16px] w-full" data-node-id="704:4164">
                   Nainital Mall Road
                 </p>
@@ -219,9 +219,9 @@ export default function Component09ABookingDetails() {
             1 Seat · Bharat Benz A/C Seater /Sleeper (2+1)
           </p>
           <div className="h-[18px] relative shrink-0 w-full" data-node-id="704:4180" data-name="gap" />
-          <div className="content-stretch flex flex-col items-start overflow-clip relative shrink-0 w-full" data-node-id="704:4181" data-name="Timeline">
-            <div className="content-stretch flex gap-[12px] items-start overflow-clip relative shrink-0 w-full" data-node-id="704:4182" data-name="Stop">
-              <div className="[word-break:break-word] content-stretch flex flex-col gap-[2px] items-start not-italic overflow-clip relative shrink-0 w-[62px]" data-node-id="704:4183" data-name="When">
+          <div className="content-stretch flex flex-col items-start overflow-clip relative shrink-0 w-full" data-node-id="714:4134" data-name="Timeline">
+            <div className="content-stretch flex gap-[12px] items-start overflow-clip relative shrink-0 w-full" data-node-id="714:4135" data-name="Stop">
+              <div className="[word-break:break-word] content-stretch flex flex-col gap-[2px] items-start not-italic relative shrink-0 w-[62px]" data-node-id="704:4183" data-name="When">
                 <p className="font-['Inter:Bold'] font-bold leading-[23px] relative shrink-0 text-[#1d1d1d] text-[17px] w-[49px]" data-node-id="704:4184">
                   23:55
                 </p>
@@ -229,13 +229,13 @@ export default function Component09ABookingDetails() {
                   14 Sep
                 </p>
               </div>
-              <div className="relative self-stretch shrink-0 w-[12px]" data-node-id="704:4186" data-name="Rail · stop">
-                <div className="-translate-x-1/2 absolute bg-[#d6d6da] bottom-0 left-1/2 rounded-[2px] top-[10px] w-[3px]" data-node-id="704:4187" data-name="Line" />
-                <div className="-translate-x-1/2 absolute left-1/2 size-[11px] top-[5px]" data-node-id="704:4188" data-name="Dot">
+              <div className="relative self-stretch shrink-0 w-[12px]" data-node-id="714:4136" data-name="Rail">
+                <div className="-translate-x-1/2 absolute bg-[#d6d6da] bottom-[-1px] left-1/2 rounded-[2px] top-[11px] w-[3px]" data-node-id="714:4137" data-name="Line" />
+                <div className="-translate-x-1/2 absolute left-1/2 size-[11px] top-[6px]" data-node-id="714:4138" data-name="Dot">
                   <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgDot} />
                 </div>
               </div>
-              <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[3px] items-start min-w-px not-italic overflow-clip pb-[14px] relative" data-node-id="704:4189" data-name="Info">
+              <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[3px] items-start min-w-px not-italic pb-[16px] relative self-stretch" data-node-id="704:4189" data-name="Info">
                 <p className="font-['Inter:Bold'] font-bold leading-[22px] relative shrink-0 text-[#1d1d1d] text-[16px] w-full" data-node-id="704:4190">
                   Nainital Bus Stand
                 </p>
@@ -244,8 +244,8 @@ export default function Component09ABookingDetails() {
                 </p>
               </div>
             </div>
-            <div className="content-stretch flex gap-[12px] items-start overflow-clip relative shrink-0 w-full" data-node-id="704:4192" data-name="Duration">
-              <div className="[word-break:break-word] content-stretch flex flex-col font-['Inter:Regular'] font-normal items-start leading-[18px] not-italic overflow-clip pb-[16px] relative shrink-0 text-[#636363] text-[13px] w-[62px]" data-node-id="704:4193" data-name="When">
+            <div className="content-stretch flex gap-[12px] h-[56px] items-center overflow-clip relative shrink-0 w-full" data-node-id="714:4139" data-name="Duration">
+              <div className="[word-break:break-word] content-stretch flex flex-col font-['Inter:Regular'] font-normal items-start leading-[18px] not-italic relative shrink-0 text-[#636363] text-[13px] w-[62px]" data-node-id="704:4193" data-name="When">
                 <p className="relative shrink-0 w-[48px]" data-node-id="704:4194">
                   Approx.
                 </p>
@@ -253,13 +253,13 @@ export default function Component09ABookingDetails() {
                   8h 5m
                 </p>
               </div>
-              <div className="relative self-stretch shrink-0 w-[12px]" data-node-id="704:4196" data-name="Rail">
-                <div className="-translate-x-1/2 absolute bg-[#d6d6da] bottom-0 left-1/2 rounded-[2px] top-0 w-[3px]" data-node-id="704:4197" data-name="Line" />
+              <div className="h-full relative shrink-0 w-[12px]" data-node-id="714:4140" data-name="Rail">
+                <div className="-translate-x-1/2 absolute bg-[#d6d6da] bottom-[10px] left-1/2 rounded-[2px] top-0 w-[3px]" data-node-id="714:4141" data-name="Line" />
               </div>
-              <div className="flex-[1_0_0] h-px min-w-px relative" data-node-id="704:4198" data-name="Info" />
+              <div className="flex-[1_0_0] h-px min-w-px relative" data-node-id="714:4142" data-name="Info" />
             </div>
-            <div className="content-stretch flex gap-[12px] items-start overflow-clip relative shrink-0 w-full" data-node-id="704:4199" data-name="Stop">
-              <div className="[word-break:break-word] content-stretch flex flex-col gap-[2px] items-start not-italic overflow-clip relative shrink-0 w-[62px]" data-node-id="704:4200" data-name="When">
+            <div className="content-stretch flex gap-[12px] items-start overflow-clip relative shrink-0 w-full" data-node-id="714:4143" data-name="Stop">
+              <div className="[word-break:break-word] content-stretch flex flex-col gap-[2px] items-start not-italic relative shrink-0 w-[62px]" data-node-id="704:4200" data-name="When">
                 <p className="font-['Inter:Bold'] font-bold leading-[23px] relative shrink-0 text-[#1d1d1d] text-[17px] w-[52px]" data-node-id="704:4201">
                   08:00
                 </p>
@@ -267,10 +267,10 @@ export default function Component09ABookingDetails() {
                   15 Sep
                 </p>
               </div>
-              <div className="h-[18px] relative shrink-0 w-[12px]" data-node-id="704:4203" data-name="Rail · stop">
-                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgRailStop} />
+              <div className="h-[18px] relative shrink-0 w-[12px]" data-node-id="714:4144" data-name="Rail">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgRail} />
               </div>
-              <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[3px] items-start min-w-px not-italic overflow-clip pb-[14px] relative" data-node-id="704:4206" data-name="Info">
+              <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[3px] items-start min-w-px not-italic relative self-stretch" data-node-id="704:4206" data-name="Info">
                 <p className="font-['Inter:Bold'] font-bold leading-[22px] relative shrink-0 text-[#1d1d1d] text-[16px] w-full" data-node-id="704:4207">
                   ISBT Kashmiri Gate
                 </p>
