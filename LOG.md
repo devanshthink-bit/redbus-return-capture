@@ -8012,3 +8012,39 @@ now complete enough to state as a rule: a frame that represents a state needs th
 not one — it must be skipped by next/prev (`SKIP`), it must answer to its owner for Back (`BACK_AS`),
 and **arriving at it must set the state it depicts** (`ON_ENTER`). Two out of three leaves a screen
 that lies about itself.
+
+CHANGE  ·  2026-09-09  ·  molades-none  · Source: user
+**The card now genuinely does not move when a day closes.** Devansh, with the two screenshots side
+by side: *"this is exact position of date card of 14th on opening and closing, why are they still
+not the exact same position"*.
+
+Because leaving the scroll alone is not enough. Collapsing the fold takes ~470px out of the page, so
+the browser clamps a scroll the shorter page can no longer hold and the card slides **down** by the
+shortfall — 197pt on Mon 14, the case he photographed. Three previous attempts all failed for the
+same reason: every one of them was choosing *where to scroll to* on a page that no longer had the
+room.
+
+The page is now **held open by exactly the shortfall** — padding below the last card, where there is
+nothing — so the scroll stays legal and the card stays put. The hold is released the moment the
+traveller scrolls back within the real page, and removing it then clamps nothing and moves nothing.
+Opening a day releases it first, because the fold is coming back to fill that space.
+
+Measured on an 11–17 window: first day, middle day, last day, all **0px of movement**, with holds of
+0, 203 and 415px respectively — the first needs none because its scroll was legal anyway. Verified
+the release too: after closing the last day the scroll sits at 824 of a held 824; scroll back inside
+and the hold drops to 0 with the page at its real 409.
+
+Walk 01 → 16 unchanged. All 26 parity diffs unmoved.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**Four attempts at "keep it in place" failed because they all answered the wrong question.** Carry
+the scroll across; hold the card's open position; restore the tap position; leave the scroll alone —
+each picked a different *target*, and the constraint was never the target. It was that the page had
+stopped being tall enough to hold any of them. The fix is not a better number, it is **removing the
+constraint**: keep the height, then every target works. When several reasonable answers all fail the
+same way, the thing they have in common is the bug.
+
+**A prop like this has to know how to leave.** Padding that holds a scroll is a lie about the
+content, and a lie that stays becomes a defect of its own — blank space at the end of a list. Tying
+its removal to the moment it stops mattering (the traveller scrolling back into range, where taking
+it away changes nothing) is what makes it safe to tell.
