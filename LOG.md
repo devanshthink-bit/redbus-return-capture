@@ -8623,3 +8623,48 @@ the reference**, so the two numbers are not strictly comparable either way.
 
 Every node the shell reaches into on 08 was re-checked after the pull — all 21 present, and Change
 bus, Change seat, Change points, View details and Pay now all still land where they should.
+
+CHANGE  ·  2026-09-09  ·  molades-none  ·  Source: user
+**Four more on the sheet and Review, all from one message.**
+
+**23:40 broke across two lines.** The time text was exported at the *drawn* string's own width —
+`w-[49px]`, measured from "23:55" — so a different time ran a pixel over and wrapped. Every time and
+date in the sheet sizes to its content now, inside a column wide enough for both.
+
+**09a's backdrop is the Review screen.** It was a drawn copy of Pay; the frame now carries a clone of
+08 behind the scrim, so the documentation agrees with what the runtime already does.
+
+**The icons were cut.** Not clipped by the frame — the *crops* were too tight, taken to the glyph's
+edge, so the envelope lost its outline and the pin its point. All fourteen were re-cut with margin,
+and the frames grew to match (20 → 28 for the contact row, 32 → 44 for the shields, and so on) so
+the ink still reads at the size the row was designed for.
+
+**And Change seat now changes the seat.** 08a drew one berth selected and took no taps, so the
+screen was a picture of a choice. Every free berth is a control, and the pick reaches the fold, the
+ticket's seat badge, 08a's own summary and the details sheet.
+
+Seats carry no labels in the frame — they are shapes — so the names are positional, in the order the
+map reads: the upper deck's three rows give U1–U18, the lower deck's sleepers L1–L6 and its two
+seater columns S1–S24. **The drawn selection lands on U2, which is the seat the ticket already
+carried**, so the scheme is the file's own rather than one invented here.
+
+**`RETURN.seatPick` is set by a tap and by nothing else.** Seeding it from the drawn selection made
+every other screen say U2 — the berth the frame happens to draw — and turned 06a's *"Seat U4 — same
+as your onward"* into *"Seat U2 — U4 is taken"* on a cold load. The map falls back to the day's own
+seat, then to the drawn one, without writing either into shared state.
+
+The fold's line also stopped explaining a seat the traveller chose on purpose: it reads *"— the one
+you picked"* once they have picked one.
+
+Checks: cold state unchanged, walks 01 ↔ 16 clean, one screen visible, no JS errors. Parity **08
+7.31%**, **09a 2.67%**, 04 9.73%.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**A text node exported at its own drawn width is a fixed width, and any other string breaks it.**
+Figma's `WIDTH_AND_HEIGHT` texts export as a hard `w-[49px]`; the moment the shell writes a different
+value into one, it wraps or clips. Anything the runtime rewrites has to size to its content, not to
+the example it was drawn with.
+
+**An icon cropped to its own edge has no outline left.** Every one of the fourteen looked right in a
+tile at 80px and lost a stroke at 20. Cut with margin and size the frame up — the ratio is the thing
+to control, not the box.

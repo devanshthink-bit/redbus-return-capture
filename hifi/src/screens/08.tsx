@@ -1,19 +1,19 @@
 const imgGlyph = "assets/f987e112-3f21-4093-9c91-abca9b06aa32.svg";
-const imgArtCoverPerson = "assets/72967248-2e1c-400f-80ee-fe053281efb7.png";
-const imgArtCoverHospital = "assets/23c4ba8d-644c-4bc3-aca4-7b8baa86db6a.png";
-const imgArtCoverLuggage = "assets/3d6859c2-c952-47f7-bcc3-43c19169e86d.png";
-const imgLogoAcko = "assets/df7717f2-98d0-479b-9f06-ff1a14a74588.png";
-const imgIconWalletCard = "assets/b186c55c-0e97-4e28-a0d1-693c1fed4aa5.png";
-const imgIconBank = "assets/078a1a5a-f93d-4d09-ae91-1a1fbaf0db7b.png";
-const imgArtShieldTripGuarantee = "assets/5161d008-0c65-4d54-b9d7-a0217205f01e.png";
+const imgArtCoverPerson = "assets/0c3c11cb-205a-4858-9139-f1e4ebb6de2e.png";
+const imgArtCoverHospital = "assets/237a7c28-e418-4102-b26a-4f2e8f0f43e6.png";
+const imgArtCoverLuggage = "assets/121b36ea-4581-411e-9267-453c287a219a.png";
+const imgLogoAcko = "assets/c87a29f5-ae81-49bc-9023-e19193aceb2b.png";
+const imgIconWalletCard = "assets/83fcb996-8fa7-4cae-ad6a-78bf06a84787.png";
+const imgIconBank = "assets/0fe17d5c-ab72-4cca-8410-fe46221f86b3.png";
+const imgArtShieldTripGuarantee = "assets/f88d22e4-40fd-4197-b646-54f08b3f20a4.png";
 const imgIconHourglass = "assets/e138f8f0-40ec-4703-bdc6-eb2b6e0e7076.svg";
-const imgArtShieldFreeCancellation = "assets/65478840-285f-4467-9ec1-59835f0e3be3.png";
-const imgIconAddPassenger = "assets/f0619e74-5450-4cdb-87f0-cfb124707f41.png";
-const imgLogoWhatsApp = "assets/18ed33f2-f102-4b20-a862-8d34f5eba577.png";
-const imgIconPin = "assets/3777b767-7f58-4fa3-a838-08fbbf558faf.png";
-const imgIconPhoneFilled = "assets/b7a189dc-cfdc-461b-8d25-8e90c4118b02.png";
-const imgIconMail = "assets/44c449a8-5085-4dd3-8cd1-f726443b14a3.png";
-const imgIconSeat = "assets/c57a0be4-5309-4ee6-8c4f-ba764ff18038.png";
+const imgArtShieldFreeCancellation = "assets/d1bd5d83-5f10-458d-b078-e6f009f0f4a6.png";
+const imgIconAddPassenger = "assets/7809ae76-4caf-42f0-936a-4441cbeecbbe.png";
+const imgLogoWhatsApp = "assets/a5095ba5-5b6f-40fd-9abf-ba4fd955c35b.png";
+const imgIconPin = "assets/14633a77-7518-49f8-a287-91e21d838a62.png";
+const imgIconPhoneFilled = "assets/7dca6784-8680-47a6-9ce9-8bb31a177d60.png";
+const imgIconMail = "assets/07f33865-5252-4fb2-81d8-b27809d4f68a.png";
+const imgIconSeat = "assets/6e477112-565d-4b4d-8039-41a6059fc9f5.png";
 const imgArtPrimoOnNavy = "assets/fa5d30e0-7fdf-4efa-a4d8-a3f163de5175.png";
 const imgIconChevronLeft = "assets/c52a55a0-4bd0-4f7a-a9fa-205a96aa0d14.svg";
 const imgStatusIcons = "assets/091fbdca-8e2e-4f59-80c8-bfdc341f332f.svg";
@@ -49,7 +49,7 @@ function ButtonPrimary({ className, label = "Search buses", showIcon = true }: B
 
 function ArtCoverPerson({ className }: { className?: string }) {
   return (
-    <div className={className || "overflow-clip relative size-[26px]"} data-node-id="715:4164" data-name="Art / Cover · Person">
+    <div className={className || "overflow-clip relative size-[36px]"} data-node-id="715:4164" data-name="Art / Cover · Person">
       <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgArtCoverPerson} />
     </div>
   );
@@ -57,7 +57,7 @@ function ArtCoverPerson({ className }: { className?: string }) {
 
 function ArtCoverHospital({ className }: { className?: string }) {
   return (
-    <div className={className || "overflow-clip relative size-[26px]"} data-node-id="715:4163" data-name="Art / Cover · Hospital">
+    <div className={className || "overflow-clip relative size-[36px]"} data-node-id="715:4163" data-name="Art / Cover · Hospital">
       <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgArtCoverHospital} />
     </div>
   );
@@ -65,7 +65,7 @@ function ArtCoverHospital({ className }: { className?: string }) {
 
 function ArtCoverLuggage({ className }: { className?: string }) {
   return (
-    <div className={className || "overflow-clip relative size-[26px]"} data-node-id="715:4162" data-name="Art / Cover · Luggage">
+    <div className={className || "overflow-clip relative size-[36px]"} data-node-id="715:4162" data-name="Art / Cover · Luggage">
       <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgArtCoverLuggage} />
     </div>
   );
@@ -73,7 +73,7 @@ function ArtCoverLuggage({ className }: { className?: string }) {
 
 function LogoAcko({ className }: { className?: string }) {
   return (
-    <div className={className || "h-[18px] overflow-clip relative w-[62px]"} data-node-id="715:4161" data-name="Logo / ACKO">
+    <div className={className || "h-[24px] overflow-clip relative w-[80px]"} data-node-id="715:4161" data-name="Logo / ACKO">
       <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgLogoAcko} />
     </div>
   );
@@ -81,7 +81,7 @@ function LogoAcko({ className }: { className?: string }) {
 
 function IconWalletCard({ className }: { className?: string }) {
   return (
-    <div className={className || "h-[20px] overflow-clip relative w-[22px]"} data-node-id="715:4167" data-name="Icon / Wallet card">
+    <div className={className || "h-[26px] overflow-clip relative w-[28px]"} data-node-id="715:4167" data-name="Icon / Wallet card">
       <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgIconWalletCard} />
     </div>
   );
@@ -89,7 +89,7 @@ function IconWalletCard({ className }: { className?: string }) {
 
 function IconBank({ className }: { className?: string }) {
   return (
-    <div className={className || "h-[20px] overflow-clip relative w-[22px]"} data-node-id="715:4166" data-name="Icon / Bank">
+    <div className={className || "h-[28px] overflow-clip relative w-[30px]"} data-node-id="715:4166" data-name="Icon / Bank">
       <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgIconBank} />
     </div>
   );
@@ -97,7 +97,7 @@ function IconBank({ className }: { className?: string }) {
 
 function ArtShieldTripGuarantee({ className }: { className?: string }) {
   return (
-    <div className={className || "overflow-clip relative size-[32px]"} data-node-id="715:4160" data-name="Art / Shield · Trip Guarantee">
+    <div className={className || "overflow-clip relative size-[44px]"} data-node-id="715:4160" data-name="Art / Shield · Trip Guarantee">
       <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgArtShieldTripGuarantee} />
     </div>
   );
@@ -113,7 +113,7 @@ function IconHourglass({ className }: { className?: string }) {
 
 function ArtShieldFreeCancellation({ className }: { className?: string }) {
   return (
-    <div className={className || "overflow-clip relative size-[32px]"} data-node-id="715:4159" data-name="Art / Shield · Free Cancellation">
+    <div className={className || "overflow-clip relative size-[44px]"} data-node-id="715:4159" data-name="Art / Shield · Free Cancellation">
       <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgArtShieldFreeCancellation} />
     </div>
   );
@@ -121,7 +121,7 @@ function ArtShieldFreeCancellation({ className }: { className?: string }) {
 
 function IconAddPassenger({ className }: { className?: string }) {
   return (
-    <div className={className || "h-[20px] overflow-clip relative w-[22px]"} data-node-id="715:4158" data-name="Icon / Add passenger">
+    <div className={className || "h-[26px] overflow-clip relative w-[28px]"} data-node-id="715:4158" data-name="Icon / Add passenger">
       <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgIconAddPassenger} />
     </div>
   );
@@ -129,7 +129,7 @@ function IconAddPassenger({ className }: { className?: string }) {
 
 function LogoWhatsApp({ className }: { className?: string }) {
   return (
-    <div className={className || "overflow-clip relative size-[20px]"} data-node-id="715:4157" data-name="Logo / WhatsApp">
+    <div className={className || "overflow-clip relative size-[26px]"} data-node-id="715:4157" data-name="Logo / WhatsApp">
       <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgLogoWhatsApp} />
     </div>
   );
@@ -137,7 +137,7 @@ function LogoWhatsApp({ className }: { className?: string }) {
 
 function IconPin({ className }: { className?: string }) {
   return (
-    <div className={className || "overflow-clip relative size-[20px]"} data-node-id="715:4156" data-name="Icon / Pin">
+    <div className={className || "overflow-clip relative size-[28px]"} data-node-id="715:4156" data-name="Icon / Pin">
       <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgIconPin} />
     </div>
   );
@@ -145,7 +145,7 @@ function IconPin({ className }: { className?: string }) {
 
 function IconPhoneFilled({ className }: { className?: string }) {
   return (
-    <div className={className || "overflow-clip relative size-[20px]"} data-node-id="715:4155" data-name="Icon / Phone filled">
+    <div className={className || "overflow-clip relative size-[28px]"} data-node-id="715:4155" data-name="Icon / Phone filled">
       <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgIconPhoneFilled} />
     </div>
   );
@@ -153,7 +153,7 @@ function IconPhoneFilled({ className }: { className?: string }) {
 
 function IconMail({ className }: { className?: string }) {
   return (
-    <div className={className || "overflow-clip relative size-[20px]"} data-node-id="715:4154" data-name="Icon / Mail">
+    <div className={className || "overflow-clip relative size-[28px]"} data-node-id="715:4154" data-name="Icon / Mail">
       <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgIconMail} />
     </div>
   );
@@ -161,7 +161,7 @@ function IconMail({ className }: { className?: string }) {
 
 function IconSeat({ className }: { className?: string }) {
   return (
-    <div className={className || "overflow-clip relative size-[18px]"} data-node-id="715:4165" data-name="Icon / Seat">
+    <div className={className || "overflow-clip relative size-[24px]"} data-node-id="715:4165" data-name="Icon / Seat">
       <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgIconSeat} />
     </div>
   );
@@ -304,7 +304,7 @@ export default function Component08ReviewYourTrip() {
         </div>
         <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="212:2085" data-name="Passengers">
           <div className="bg-[#ecebf2] content-stretch flex gap-[8px] items-center px-[12px] py-[6px] relative rounded-[8px] shrink-0" data-node-id="212:2086" data-name="Chip">
-            <IconSeat className="relative shrink-0 size-[18px]" />
+            <IconSeat className="relative shrink-0 size-[24px]" />
             <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[18px] not-italic relative shrink-0 text-[13px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="212:2087">
               1 Passenger
             </p>
@@ -334,25 +334,25 @@ export default function Component08ReviewYourTrip() {
           </p>
           <div className="h-[14px] relative shrink-0 w-px" data-node-id="213:2053" data-name="gap" />
           <div className="content-stretch flex gap-[12px] items-center pb-[10px] relative shrink-0 w-full" data-node-id="213:2054" data-name="Row">
-            <IconMail className="relative shrink-0 size-[20px]" />
+            <IconMail className="relative shrink-0 size-[28px]" />
             <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="213:2056">
               devanshoffc@gmail.com
             </p>
           </div>
           <div className="content-stretch flex gap-[12px] items-center pb-[10px] relative shrink-0 w-full" data-node-id="213:2057" data-name="Row">
-            <IconPhoneFilled className="relative shrink-0 size-[20px]" />
+            <IconPhoneFilled className="relative shrink-0 size-[28px]" />
             <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="213:2059">
               +91 6396483499
             </p>
           </div>
           <div className="content-stretch flex gap-[12px] items-center pb-[10px] relative shrink-0 w-full" data-node-id="213:2060" data-name="Row">
-            <IconPin className="relative shrink-0 size-[20px]" />
+            <IconPin className="relative shrink-0 size-[28px]" />
             <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="213:2062">
               Karnataka
             </p>
           </div>
           <div className="bg-[#dff3d8] content-stretch flex gap-[8px] items-center px-[12px] py-[7px] relative rounded-[8px] shrink-0 w-full" data-node-id="213:2063" data-name="Strip">
-            <LogoWhatsApp className="relative shrink-0 size-[20px]" />
+            <LogoWhatsApp className="relative shrink-0 size-[26px]" />
             <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[18px] not-italic relative shrink-0 text-[#1d1d1d] text-[13px] whitespace-nowrap" data-node-id="213:2064">
               WhatsApp communication enabled
             </p>
@@ -370,7 +370,7 @@ export default function Component08ReviewYourTrip() {
           </p>
           <div className="h-[16px] relative shrink-0 w-px" data-node-id="213:2070" data-name="gap" />
           <div className="bg-[#f5dcdc] content-stretch flex gap-[10px] items-center justify-center py-[13px] relative rounded-[999px] shrink-0 w-full" data-node-id="213:2071" data-name="Add passenger">
-            <IconAddPassenger className="h-[20px] relative shrink-0 w-[22px]" />
+            <IconAddPassenger className="h-[26px] relative shrink-0 w-[28px]" />
             <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="213:2072">
               Add new passenger
             </p>
@@ -414,7 +414,7 @@ export default function Component08ReviewYourTrip() {
             </div>
             <div className="flex-[1_0_0] h-px min-w-px relative" data-node-id="213:2094" data-name="spacer" />
             <div className="bg-[#f7e6ea] content-stretch flex items-start p-[7px] relative rounded-[999px] shrink-0" data-node-id="213:2088" data-name="Icon">
-              <ArtShieldFreeCancellation className="relative shrink-0 size-[32px]" />
+              <ArtShieldFreeCancellation className="relative shrink-0 size-[44px]" />
             </div>
           </div>
           <div className="h-[14px] relative shrink-0 w-px" data-node-id="213:2095" data-name="gap" />
@@ -541,7 +541,7 @@ export default function Component08ReviewYourTrip() {
             </div>
             <div className="flex-[1_0_0] h-px min-w-px relative" data-node-id="214:2078" data-name="spacer" />
             <div className="bg-[#f7e6ea] content-stretch flex items-start p-[7px] relative rounded-[999px] shrink-0" data-node-id="214:2072" data-name="Icon">
-              <ArtShieldTripGuarantee className="relative shrink-0 size-[32px]" />
+              <ArtShieldTripGuarantee className="relative shrink-0 size-[44px]" />
             </div>
           </div>
           <div className="h-[12px] relative shrink-0 w-px" data-node-id="214:2079" data-name="gap" />
@@ -554,7 +554,7 @@ export default function Component08ReviewYourTrip() {
             <div className="content-stretch flex gap-[16px] items-center justify-center relative shrink-0 w-full" data-node-id="214:2084" data-name="Row">
               <div className="content-stretch flex flex-col gap-px items-center relative shrink-0" data-node-id="214:2085" data-name="Col">
                 <div className="content-stretch flex gap-[6px] items-center overflow-clip relative shrink-0" data-node-id="715:4183" data-name="Amount">
-                  <IconBank className="h-[20px] relative shrink-0 w-[22px]" />
+                  <IconBank className="h-[28px] relative shrink-0 w-[30px]" />
                   <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[24px] not-italic relative shrink-0 text-[18px] text-[color:var(--text\/primary,#1d1d1d)] text-center whitespace-nowrap" data-node-id="214:2086">
                     ₹2,919
                   </p>
@@ -568,7 +568,7 @@ export default function Component08ReviewYourTrip() {
               </p>
               <div className="content-stretch flex flex-col gap-px items-center relative shrink-0" data-node-id="214:2089" data-name="Col">
                 <div className="content-stretch flex gap-[6px] items-center overflow-clip relative shrink-0" data-node-id="715:4185" data-name="Amount">
-                  <IconWalletCard className="h-[20px] relative shrink-0 w-[22px]" />
+                  <IconWalletCard className="h-[26px] relative shrink-0 w-[28px]" />
                   <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[24px] not-italic relative shrink-0 text-[18px] text-[color:var(--text\/primary,#1d1d1d)] text-center whitespace-nowrap" data-node-id="214:2090">
                     ₹500
                   </p>
@@ -624,7 +624,7 @@ export default function Component08ReviewYourTrip() {
               </p>
             </div>
             <div className="flex-[1_0_0] h-px min-w-px relative" data-node-id="214:2115" data-name="spacer" />
-            <LogoAcko className="h-[18px] relative shrink-0 w-[62px]" />
+            <LogoAcko className="h-[24px] relative shrink-0 w-[80px]" />
           </div>
           <div className="h-[12px] relative shrink-0 w-px" data-node-id="214:2116" data-name="gap" />
           <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] min-w-full not-italic relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-[min-content]" data-node-id="214:2117">
@@ -633,7 +633,7 @@ export default function Component08ReviewYourTrip() {
           <div className="h-[12px] relative shrink-0 w-px" data-node-id="214:2118" data-name="gap" />
           <div className="content-stretch flex gap-[12px] items-center py-[11px] relative shrink-0 w-full" data-node-id="214:2119" data-name="Cover">
             <div className="bg-[#efeef6] content-stretch flex items-start p-[7px] relative rounded-[999px] shrink-0" data-node-id="214:2120" data-name="Icon">
-              <ArtCoverLuggage className="relative shrink-0 size-[26px]" />
+              <ArtCoverLuggage className="relative shrink-0 size-[36px]" />
             </div>
             <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Regular'] font-normal leading-[20px] min-w-px not-italic relative text-[14px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="214:2122">
               In the event of loss of luggage
@@ -645,7 +645,7 @@ export default function Component08ReviewYourTrip() {
           <div className="bg-[#eaeaf0] h-px relative shrink-0 w-full" data-node-id="214:2125" data-name="Divider" />
           <div className="content-stretch flex gap-[12px] items-center py-[11px] relative shrink-0 w-full" data-node-id="214:2126" data-name="Cover">
             <div className="bg-[#efeef6] content-stretch flex items-start p-[7px] relative rounded-[999px] shrink-0" data-node-id="214:2127" data-name="Icon">
-              <ArtCoverHospital className="relative shrink-0 size-[26px]" />
+              <ArtCoverHospital className="relative shrink-0 size-[36px]" />
             </div>
             <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Regular'] font-normal leading-[20px] min-w-px not-italic relative text-[14px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="214:2129">
               In the event of accidental hospitalisation
@@ -657,7 +657,7 @@ export default function Component08ReviewYourTrip() {
           <div className="bg-[#eaeaf0] h-px relative shrink-0 w-full" data-node-id="214:2132" data-name="Divider" />
           <div className="content-stretch flex gap-[12px] items-center py-[11px] relative shrink-0 w-full" data-node-id="214:2133" data-name="Cover">
             <div className="bg-[#efeef6] content-stretch flex items-start p-[7px] relative rounded-[999px] shrink-0" data-node-id="214:2134" data-name="Icon">
-              <ArtCoverPerson className="relative shrink-0 size-[26px]" />
+              <ArtCoverPerson className="relative shrink-0 size-[36px]" />
             </div>
             <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Regular'] font-normal leading-[20px] min-w-px not-italic relative text-[14px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="214:2136">
               In case of death/PTD/PPD

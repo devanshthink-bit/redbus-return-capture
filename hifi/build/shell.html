@@ -1227,7 +1227,9 @@
 
     // ---- the fold under the chosen day ------------------------------------------------------
     function buildFold(sec, m, chosen){
-      var r = day(chosen), all = r[4], pick = busIdx(), bus = all[pick], seatOf = r[2];
+      // the seat the day gives you, unless the traveller went and chose one on 08a
+      var r = day(chosen), all = r[4], pick = busIdx(), bus = all[pick],
+          seatOf = RETURN.seatPick || r[2];
       set(sec, m.dep, bus[0]); set(sec, m.arr, bus[1]);
       set(sec, m.meta, bus[7] + ' \u00b7 ' + bus[5] + (m.caps ? ' Seats (' : ' seats (') +
                        bus[6] + (m.caps ? ' Single)' : ' single)'));
@@ -1235,9 +1237,11 @@
       set(sec, m.op, B.ops[bus[10]]); set(sec, m.veh, B.veh[bus[10]]);
       set(sec, m.rate, bus[8].toFixed(1)); set(sec, m.votes, String(bus[9]));
       set(sec, m.dcText, bus[3] ? 'Free date change' : 'No date change');
-      set(sec, m.seat, seatOf === ONWARD_SEAT
-        ? 'Seat ' + ONWARD_SEAT + ' \u2014 same as your onward'
-        : 'Seat ' + seatOf + ' \u2014 ' + ONWARD_SEAT + ' is taken on this bus');
+      set(sec, m.seat, RETURN.seatByUser
+        ? 'Seat ' + seatOf + ' \u2014 the one you picked'
+        : seatOf === ONWARD_SEAT
+          ? 'Seat ' + ONWARD_SEAT + ' \u2014 same as your onward'
+          : 'Seat ' + seatOf + ' \u2014 ' + ONWARD_SEAT + ' is taken on this bus');
       show(sec, m.fcPill, !!bus[4]);
       show(sec, m.closePill, pick === defIdx(chosen));
 
@@ -1595,6 +1599,99 @@
     }
   })();
 
+  // 08a · the return seat map. It drew one seat selected and took no taps, so "Change seat" opened
+  //      a picture of a choice. Every free berth is a control now, and the seat the traveller lands
+  //      on is the one every other screen names.
+  //
+  //      Seats have no labels in the frame -- they are shapes -- so the names are positional, in the
+  //      order the map reads: upper deck rows give U1..U18, the lower deck's sleepers L1..L6 and its
+  //      two seater columns S1..S24. The drawn selection is the second berth of the upper deck's
+  //      first row, which is the U2 the ticket already carries, so the scheme is the file's own.
+  (function returnSeat(){
+    var i08a = ORDER.indexOf('08a');
+    if (i08a < 0) return;
+    var sec = screens[i08a];
+    var decks = sec.querySelector('[data-name="Decks"]');
+    if (!decks) { console.warn('08a: no Decks'); return; }
+
+    var seats = [];
+    [].forEach.call(decks.children, function(deck){
+      var upper = /Upper/.test(deck.getAttribute('data-name') || '');
+      var grid = deck.querySelector('[data-name="Seat grid"]'); if (!grid) return;
+      var n = { U: 0, L: 0, S: 0 };
+      [].forEach.call(grid.children, function(col){
+        var cn = col.getAttribute('data-name') || '';
+        if (/Aisle|Gap/.test(cn)) return;
+        var pre = upper ? 'U' : (/Sleeper/.test(cn) ? 'L' : 'S');
+        [].forEach.call(col.children, function(cell){
+          var kind = cell.getAttribute('data-name') || '';
+          if (!/^Seat /.test(kind)) return;
+          n[pre] += 1;
+          cell.__seat = pre + n[pre];
+          cell.__deck = upper ? 'Upper deck' : 'Lower deck';
+          cell.__free = /Available|Selected/.test(kind);
+          var price = cell.querySelector('p');
+          cell.__price = price ? price.textContent : '';
+          seats.push(cell);
+        });
+      });
+    });
+    var drawnSel = seats.filter(function(c){ return /Selected/.test(c.getAttribute('data-name')); })[0];
+    var drawnFree = seats.filter(function(c){ return /Available/.test(c.getAttribute('data-name')); })[0];
+    if (!drawnSel || !drawnFree) { console.warn('08a: no seat states to copy'); return; }
+    // the two looks, taken from the frame itself rather than restyled here
+    var SEL = drawnSel.innerHTML, FREE = drawnFree.innerHTML;
+    var names = {}; seats.forEach(function(c){ names[c.__seat] = 1; });
+
+    // What the map shows selected: the traveller's own pick first, then the seat the chosen day
+    // gives them, and on a cold load the one the frame draws. RETURN.seatPick is set by a tap and
+    // by nothing else -- seeding it here would have made every other screen say U2, because that
+    // is the berth the frame happens to draw.
+    function current(){
+      if (RETURN.seatPick) return RETURN.seatPick;
+      if (RETURN.seat && names[RETURN.seat]) return RETURN.seat;
+      return drawnSel.__seat;
+    }
+
+    function paint(){
+      var on = current();
+      seats.forEach(function(c){
+        if (!c.__free) return;
+        c.innerHTML = (c.__seat === on) ? SEL : FREE;
+        var p = c.querySelector('p');           // the look is shared, the fare is the seat's own
+        if (p) p.textContent = c.__price;
+        c.classList.add('hf-hot');
+      });
+      var count = sec.querySelector('[data-node-id="423:3129"]');
+      if (count) count.textContent = 'Seat ' + on + ' selected';
+      if (RETURN.seatPick) {
+        var badge = screens[ORDER.indexOf('11')];
+        badge = badge && badge.querySelector('[data-node-id="515:3879"]');
+        if (badge) badge.textContent = RETURN.seatPick;
+      }
+      var i06a = ORDER.indexOf('06a'), i06b = ORDER.indexOf('06b');
+      [i06a, i06b].forEach(function(ix){
+        if (ix < 0 || !ON_ENTER[ORDER[ix]]) return;
+        if (!RETURN.chosen) return;
+        ON_ENTER[ORDER[ix]](screens[ix]);
+      });
+    }
+
+    sec.addEventListener('click', function(e){
+      if (e.target.closest && e.target.closest('.hf-back')) return;
+      var cell = e.target.closest('[data-name^="Seat "]');
+      if (!cell || !cell.__free) return;
+      e.preventDefault(); e.stopPropagation();
+      RETURN.seatPick = cell.__seat;
+      RETURN.seatDeck = cell.__deck;
+      RETURN.seatByUser = true;
+      paint();
+    }, true);
+
+    ON_ENTER['08a'] = function(){ paint(); };
+    paint();
+  })();
+
   // 09 / 09a · "View details" opens the booking-details sheet, and the × closes it. A sheet is not
   //      a step, so 09a sits in OVERLAY and SKIP: prev, next and the arrow keys walk straight past
   //      it, and Back on Pay still goes to the points screen rather than into the sheet.
@@ -1668,7 +1765,7 @@
         set(sheet, '704:4178', RETURN.op);
         set(sheet, '704:4179', '1 Seat · ' + RETURN.veh);
         if (RETURN.seat) set(sheet, '704:4214', RETURN.seat + ' - ' +
-          (/^U/.test(RETURN.seat) ? 'Upper deck' : 'Lower deck'));
+          (RETURN.seatDeck || (/^U/.test(RETURN.seat) ? 'Upper deck' : 'Lower deck')));
       }
       if (POINTS.retBoard) {
         set(sheet, '704:4190', POINTS.retBoard.name);
