@@ -691,41 +691,127 @@
   // 03a · the full bus-details sheet closes back to the seat map, it does not go forward
   onlyOne('03a', '[data-name="Collapse"]', function(){ go(ORDER.indexOf('03')); });
 
-  // 04 · board & drop. Any boarding point can be picked; picking one moves you to the drop tab,
-  //      which is what the real screen does once the first half is answered.
+  // 04 / 04a / 08b / 08c · board & drop, both legs. One module, because they are one screen shown
+  //      four times: pick a point, the radio moves, and the choice is remembered.
+  //
+  //      Two things were wrong before. The rows were not marked hot, so the pointer stayed a text
+  //      caret over a control that did work -- the screen looked dead while behaving fine. And the
+  //      pick was only ever a CSS class: nothing downstream knew which point had been chosen, so
+  //      Review, Booking confirmed, the ticket and My Bookings all kept naming the drawn example
+  //      whichever row you tapped. POINTS is now the single place a chosen point lives, and PAINT
+  //      is the single writer. Every label is read off the row the traveller actually tapped --
+  //      nothing here is typed twice.
+  var POINTS = { outBoard:null, outDrop:null, retBoard:null, retDrop:null };
+
   (function boardDrop(){
-    var i04 = ORDER.indexOf('04'), i04a = ORDER.indexOf('04a'), i05 = ORDER.indexOf('05');
-    if (i04 < 0 || i04a < 0) return;
-    var b = screens[i04], d = screens[i04a];
-    // A radio group has one answer. Clearing the whole screen first is what makes it a group --
-      // without it every point you ever tapped stayed filled.
-    function pick(el){
-      var screen = el.closest('section');
-      screen.querySelectorAll('.hf-radio-on').forEach(function(x){ x.classList.remove('hf-radio-on'); });
-      var r = el.querySelector('[data-name="Radio"]');
-      if (r) r.classList.add('hf-radio-on');
+    var LEG = {
+      '04':  { slot:'outBoard', pair:'04a', next:'04a' },
+      '04a': { slot:'outDrop',  pair:'04',  next:'05'  },
+      '08b': { slot:'retBoard', pair:'08c', next:'08c' },
+      '08c': { slot:'retDrop',  pair:'08b', next:'09'  }
+    };
+    // where a chosen point is named, and the shape it is named in. A row is written only once the
+    // point it needs has been chosen, so an untouched prototype still shows each frame as drawn.
+    var PAINT = [
+      ['04',  'I67:247;34:92',      ['outBoard'], function(P){ return P.outBoard.name + ', Delhi → Nainital'; }],
+      ['04a', 'I563:3942;34:92',    ['outBoard'], function(P){ return P.outBoard.name + ', Delhi → Nainital'; }],
+      ['08',  '212:2067',           ['outBoard'], function(P){ return P.outBoard.name; }],
+      ['08',  '212:2072',           ['outDrop'],  function(P){ return P.outDrop.name; }],
+      ['08',  '212:2079',           ['retBoard'], function(P){ return P.retBoard.name; }],
+      ['08',  '212:2084',           ['retDrop'],  function(P){ return P.retDrop.name; }],
+      ['08b', 'I695:4094;34:92',    ['retBoard'], function(P){ return P.retBoard.name + ', Nainital → Delhi'; }],
+      ['08c', 'I695:4193;34:92',    ['retBoard'], function(P){ return P.retBoard.name + ', Nainital → Delhi'; }],
+      ['10',  'I114:1037;113:1015', ['outBoard'], function(P){ return P.outBoard.name; }],
+      ['10',  'I114:1037;113:1029', ['outDrop'],  function(P){ return P.outDrop.name; }],
+      ['10',  'I114:1071;113:1015', ['retBoard'], function(P){ return P.retBoard.name; }],
+      ['10',  'I114:1071;113:1029', ['retDrop'],  function(P){ return P.retDrop.name; }],
+      ['11',  '515:3856',           ['retBoard'], function(P){ return P.retBoard.name; }],
+      ['11',  '515:3870',           ['retDrop'],  function(P){ return P.retDrop.name; }],
+      ['11',  '686:4115',           ['retBoard'], function(P){ return P.retBoard.name; }],
+      ['11',  '686:4117',           ['retBoard'], function(P){ return P.retBoard.address; }],
+      ['12',  'I125:1341;121:1341', ['retBoard','retDrop'],
+              function(P){ return P.retBoard.name + ' → ' + P.retDrop.name + ', Delhi'; }],
+      ['16',  '103:813',            ['retBoard','retDrop'],
+              function(P){ return P.retBoard.name + ' → ' + P.retDrop.name; }]
+    ];
+    // 11's second address line belongs to the drawn example, not to whatever point is chosen
+    var ADDR2 = ['11', '686:4118'];
+
+    function screenOf(id){ var i = ORDER.indexOf(id); return i < 0 ? null : screens[i]; }
+
+    // Read the row rather than restate it. Time and Date sit in "When", Name and Address in
+    // "Info" -- the two frames Figma names, since the exporter drops data-name from text nodes.
+    function readPoint(el){
+      function pair(box){
+        var n = el.querySelector('[data-name="' + box + '"]');
+        return n ? [].map.call(n.querySelectorAll('p'), function(p){ return p.textContent.trim(); }) : [];
+      }
+      var w = pair('When'), i = pair('Info');
+      return { time: w[0] || '', date: w[1] || '', name: i[0] || '', address: i[1] || '' };
     }
-    b.addEventListener('click', function(e){
-      if (e.target.closest && e.target.closest('.hf-back')) return;
-      e.preventDefault(); e.stopPropagation();
-      var pt  = e.target.closest('[data-name^="Point / "]');
-      var tab = e.target.closest('[data-name="Tab / Dropping Points"]');
-      if (pt)  { pick(pt); setTimeout(function(){ go(i04a); }, 220); return; }
-      if (tab) { go(i04a); return; }
-      var first = b.querySelector('[data-name^="Point / "]');
-      if (first) { blinkAt(first);
-                   if (first.scrollIntoView) first.scrollIntoView({block:'nearest'}); }
-    }, true);
-    d.addEventListener('click', function(e){
-      if (e.target.closest && e.target.closest('.hf-back')) return;
-      e.preventDefault(); e.stopPropagation();
-      var pt  = e.target.closest('[data-name^="Point / "]');
-      var tab = e.target.closest('[data-name="Tab / Boarding Points"]');
-      if (pt)  { pick(pt); setTimeout(function(){ go(i05); }, 260); return; }
-      if (tab) { go(i04); return; }
-      var only = d.querySelector('[data-name^="Point / "]');
-      if (only) blinkAt(only);
-    }, true);
+
+    function paint(){
+      PAINT.forEach(function(row){
+        var sec = screenOf(row[0]); if (!sec) return;
+        for (var k = 0; k < row[2].length; k++) if (!POINTS[row[2][k]]) return;
+        var el = sec.querySelector('[data-node-id="' + row[1] + '"]');
+        if (el) el.textContent = row[3](POINTS);
+      });
+      if (POINTS.retBoard) {
+        var sec = screenOf(ADDR2[0]);
+        var el = sec && sec.querySelector('[data-node-id="' + ADDR2[1] + '"]');
+        if (el) el.hidden = true;
+      }
+    }
+
+    // A radio group has one answer, so the whole screen is cleared before the tapped row is set.
+    // Both frames of a leg carry the same list, so the answer is set on the pair too -- otherwise
+    // switching tabs and back showed an empty group for a question already answered.
+    function markRadio(sec, name){
+      sec.querySelectorAll('.hf-radio-on').forEach(function(x){ x.classList.remove('hf-radio-on'); });
+      if (!name) return;
+      [].forEach.call(sec.querySelectorAll('[data-name^="Point / "]'), function(row){
+        if (readPoint(row).name !== name) return;
+        var r = row.querySelector('[data-name="Radio"]');
+        if (r) r.classList.add('hf-radio-on');
+      });
+    }
+
+    Object.keys(LEG).forEach(function(id){
+      var sec = screenOf(id); if (!sec) return;
+      var leg = LEG[id];
+      // the pointer has to say "this takes a tap" -- that is all hf-hot does here
+      [].forEach.call(sec.querySelectorAll('[data-name^="Point / "], [data-name^="Tab / "]'),
+                      function(el){ el.classList.add('hf-hot'); });
+
+      sec.addEventListener('click', function(e){
+        if (e.target.closest && e.target.closest('.hf-back')) return;
+        e.preventDefault(); e.stopPropagation();
+        var pt  = e.target.closest('[data-name^="Point / "]');
+        var tab = e.target.closest('[data-name^="Tab / "]');
+        if (pt) {
+          POINTS[leg.slot] = readPoint(pt);
+          markRadio(sec, POINTS[leg.slot].name);
+          var other = screenOf(leg.pair);
+          if (other) markRadio(other, POINTS[leg.slot].name);
+          paint();
+          var to = ORDER.indexOf(leg.next);
+          if (to >= 0) setTimeout(function(){ go(to); }, 220);
+          return;
+        }
+        if (tab) {
+          var wants = /Dropping/.test(tab.getAttribute('data-name')) ? 'drop' : 'board';
+          var isDropScreen = id === '04a' || id === '08c';
+          if ((wants === 'drop') === isDropScreen) return;   // already on that half
+          var to2 = ORDER.indexOf(leg.pair);
+          if (to2 >= 0) go(to2);
+          return;
+        }
+        var first = sec.querySelector('[data-name^="Point / "]');
+        if (first) { blinkAt(first);
+                     if (first.scrollIntoView) first.scrollIntoView({block:'nearest'}); }
+      }, true);
+    });
   })();
 
   // 05 / 05a / 05b · the return question and the calendar, working the way v4 works.
@@ -1502,6 +1588,27 @@
         e.preventDefault(); e.stopPropagation();
         var days = screens[ix].querySelector('[data-name="Days"]');
         if (days && days.firstChild) blinkAt(days.firstChild);
+      }, true);
+    });
+  })();
+
+  // 08 · the three return actions. CONTEXT §18 has always said Review leads to 07, 08a and 08b as
+  //      well as to Pay, but only the primary was ever wired: Change bus, Change seat and Change
+  //      points were live-looking links that did nothing, which reads as "those screens do not
+  //      exist". They do -- 07, 08a and 08b are them.
+  (function returnActions(){
+    var i08 = ORDER.indexOf('08');
+    if (i08 < 0) return;
+    var TO = { '426:3103':'07', '221:1872':'08a', '221:1873':'08b' };
+    var sec = screens[i08];
+    Object.keys(TO).forEach(function(node){
+      var el = sec.querySelector('[data-node-id="' + node + '"]');
+      if (!el) { console.warn('08: no return action ' + node); return; }
+      el.classList.add('hf-hot');
+      el.addEventListener('click', function(e){
+        e.preventDefault(); e.stopPropagation();
+        var to = ORDER.indexOf(TO[node]);
+        if (to >= 0) go(to);
       }, true);
     });
   })();

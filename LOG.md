@@ -8388,3 +8388,51 @@ builder, so 06 / 06a / 06b are unmoved at 5.79 / 8.39 / 8.83.
 
 Checks: v4 parses, state matrix **234/234**, no JS errors. hi-fi forward and back walks 01 ↔ 16
 clean, one screen visible.
+
+CHANGE  ·  2026-09-09  ·  molades-none  ·  Source: user
+**The board & drop screens looked dead and were hardcoded.** Devansh: *"why am I showing a typing
+cursor rather than an index finger icon for selection? … subsequent screens are not updating if I
+select different options. It is only showing the first option in the boarding point. … They should
+be dynamic according to the option chosen by the user. Don't hardcode them."*
+
+Two faults, and the first hid the second.
+
+**The rows were never marked hot.** The click handler was on the section, so the taps worked — but
+nothing carried `hf-hot`, so the pointer stayed a text caret over a live control. A screen that
+behaves correctly and *looks* dead is read as broken, and it was.
+
+**The pick was only ever a CSS class.** `pick()` moved `hf-radio-on` and stopped. Nothing downstream
+knew which point had been chosen, so Review, Booking confirmed, the ticket, My Bookings and Return
+moved all went on naming the drawn example whichever row was tapped.
+
+Rewritten as one module over all four frames — 04, 04a, 08b, 08c — with **one place a chosen point
+lives** (`POINTS`) and **one writer** (`PAINT`), which is CONTEXT §10's fifth check. Every label is
+read off the row the traveller tapped: `readPoint()` takes Time and Date out of the row's *When*
+frame and Name and Address out of its *Info* frame, so no string is typed twice. Labels are written
+only once a point has been chosen, so an untouched prototype still shows each frame exactly as
+drawn — which is why the parity numbers did not move.
+
+Verified: picking the third boarding point on 04 turns *ISBT Kashmiri Gate, Delhi → Nainital* into
+*Noida, Delhi → Nainital* on 04 and 04a, and *Noida* on Review and on Booking confirmed. Picking
+Kaladhungi Road on 08b and Anand Vihar ISBT on 08c reaches all eight return slots across 08, 10, 11,
+12 and 16.
+
+**One node id in the table was wrong and the test caught it.** 16's leg line renders from `103:813`,
+not the `I103:815;102:799` the source file suggests — the id in the .tsx belongs to a part of the
+component that never renders. It read `(MISSING)` in the probe rather than silently doing nothing,
+because `paint()` looks the node up every time instead of caching it at boot.
+
+CHANGE  ·  2026-09-09  ·  molades-none  ·  Source: user
+**Change bus, Change seat and Change points on Review now go somewhere.** Devansh asked for screens
+to be built for all three — they already exist. 07 is Change bus, 08a is Change seat, 08b is Change
+points. What did not exist was the wiring: `FORWARD['08']` only ever carried the primary, so three
+live-looking links did nothing, which reads exactly like three missing screens. CONTEXT §18 has
+listed 08 → 09 · 07 · 08a · 08b since the flow table was written.
+
+Verified by clicking each: Change bus → 07, Change seat → 08a, Change points → 08b.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**A control that works but has the wrong cursor is reported as broken, and the report will be about
+the cursor.** Both faults here were real, and the one Devansh could see was the cheaper one. Worth
+checking the affordance whenever a hotspot is attached to a container rather than to the thing being
+tapped: `markHot` adds `hf-hot` to what it wires, a hand-written section listener adds nothing.
