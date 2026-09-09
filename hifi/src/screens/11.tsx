@@ -1,9 +1,5 @@
 const imgArtRefer = "assets/ec0ef796-ab5a-4a38-bad4-475ca0833e93.png";
-const imgIconPolicyPickup = "assets/305a919e-4de0-47f6-aa0d-1821ecb07588.svg";
-const imgIconPolicyLiquor = "assets/d510c566-a435-45dc-a798-91e4e953b1eb.svg";
-const imgIconPolicyPets = "assets/6bf5a3b1-e366-4051-bd82-d6f1cac74610.svg";
-const imgIconPolicyLuggage = "assets/b2c1e6b6-c264-42ee-8601-87d3f606e151.svg";
-const imgIconPolicyChild = "assets/c676aee4-a118-4a6b-9af5-21b7927868de.svg";
+const imgIconPolicyBadge = "assets/a7ae7569-2d8a-4a8e-8ba3-30adfa903e1c.png";
 const imgIconChat = "assets/e4f7892e-14a2-4a37-bcd7-d15ba79c75df.svg";
 const imgArtRedBuddy = "assets/c159bb98-94e5-49c8-ae0e-5ca509a187fd.png";
 const imgIconPhone = "assets/be00fe5b-c798-497d-b88d-62acf1d305d4.svg";
@@ -18,14 +14,14 @@ const imgArtScratchCard = "assets/1719b144-784f-40e4-bf69-aabf7329cf50.png";
 const imgIconCancel = "assets/eaf7aaa8-5b15-4f99-8572-a499f5590e13.svg";
 const imgIconInfo = "assets/1fdfa7c9-d103-4495-bc2c-f6b058ff57ef.svg";
 const imgButtonAppleWallet = "assets/659c7bb8-9409-4f1d-b898-52b40a84583f.png";
-const imgLogoRedBusMark = "assets/24678315-8076-42a5-adf4-048efb56feb5.png";
+const imgLogoRedBusMarkWhite = "assets/a64dab4a-2197-48c8-871f-96c58b498ab7.png";
 const imgArtTripRewardMark = "assets/34bc959d-d061-454e-8167-1a8c39dc0deb.png";
-const imgArtSunburst = "assets/440767b9-0eec-4bf5-ba72-569c2b05fc51.svg";
-const imgFrame = "assets/c5419b2e-7977-459a-acdc-4614635f0d6e.svg";
-const imgArtSeatGuarantee = "assets/b5c811e4-e3e3-43b0-a60c-8bb1db272cc9.svg";
-const imgButtonShare = "assets/9a10baca-6e5c-4021-850c-f8e7127119c6.svg";
-const imgButtonSupport = "assets/ef8c8240-9b36-4aff-98a2-517de39e34b3.svg";
-const imgButtonClose = "assets/78730083-d59d-41bb-93f7-91cbc85ba0d1.svg";
+const imgFrame = "assets/a4acfe59-d8aa-4483-ab10-c40ba5ace219.png";
+const imgArtSunburst = "assets/45a6a2c4-0283-466c-a0c7-0f146def1354.svg";
+const imgArtSeatGuarantee = "assets/77e4149f-a38e-49cc-84aa-4ecc1fcfe5c3.svg";
+const imgButtonShare = "assets/65612538-ec9f-44d4-98ca-061e6d84e054.svg";
+const imgButtonSupport = "assets/b6ee8693-acb4-41e0-b28a-ada8e75a2907.svg";
+const imgButtonClose = "assets/2bd99b19-ae30-4f24-8c32-090cf0952b2d.svg";
 const imgStatusIcons = "assets/091fbdca-8e2e-4f59-80c8-bfdc341f332f.svg";
 const imgMarker = "assets/6280aa85-f461-44e4-9003-fd9bae23d7bd.svg";
 const imgMarker1 = "assets/dfe32957-1e71-451e-9967-a4e3d86aa505.svg";
@@ -41,42 +37,10 @@ function ArtRefer({ className }: { className?: string }) {
   );
 }
 
-function IconPolicyPickup({ className }: { className?: string }) {
+function IconPolicyBadge({ className }: { className?: string }) {
   return (
-    <div className={className || "relative size-[24px]"} data-node-id="241:1829" data-name="Icon / Policy Pickup">
-      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconPolicyPickup} />
-    </div>
-  );
-}
-
-function IconPolicyLiquor({ className }: { className?: string }) {
-  return (
-    <div className={className || "relative size-[24px]"} data-node-id="241:1819" data-name="Icon / Policy Liquor">
-      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconPolicyLiquor} />
-    </div>
-  );
-}
-
-function IconPolicyPets({ className }: { className?: string }) {
-  return (
-    <div className={className || "relative size-[24px]"} data-node-id="241:1800" data-name="Icon / Policy Pets">
-      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconPolicyPets} />
-    </div>
-  );
-}
-
-function IconPolicyLuggage({ className }: { className?: string }) {
-  return (
-    <div className={className || "relative size-[24px]"} data-node-id="241:1793" data-name="Icon / Policy Luggage">
-      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconPolicyLuggage} />
-    </div>
-  );
-}
-
-function IconPolicyChild({ className }: { className?: string }) {
-  return (
-    <div className={className || "relative size-[24px]"} data-node-id="241:1786" data-name="Icon / Policy Child">
-      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconPolicyChild} />
+    <div className={className || "overflow-clip relative size-[22px]"} data-node-id="750:4240" data-name="Icon / Policy Badge">
+      <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgIconPolicyBadge} />
     </div>
   );
 }
@@ -205,10 +169,10 @@ function ButtonAppleWallet({ className }: { className?: string }) {
   );
 }
 
-function LogoRedBusMark({ className }: { className?: string }) {
+function LogoRedBusMarkWhite({ className }: { className?: string }) {
   return (
-    <div className={className || "h-[23px] relative w-[36px]"} data-node-id="270:2405" data-name="Logo / redBus mark">
-      <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgLogoRedBusMark} />
+    <div className={className || "h-[17px] overflow-clip relative w-[25px]"} data-node-id="750:4241" data-name="Logo / redBus mark · white">
+      <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgLogoRedBusMarkWhite} />
     </div>
   );
 }
@@ -230,8 +194,8 @@ function ArtSeatGuarantee({ className }: { className?: string }) {
       <p className="[word-break:break-word] absolute font-['Inter:Bold'] font-bold leading-[20px] left-[16px] not-italic text-[16px] text-[color:var(--text\/primary,#1d1d1d)] top-[calc(50%-13px)] whitespace-nowrap" data-node-id="289:2634">
         Seat Guarantee with redBus
       </p>
-      <div className="-translate-y-1/2 absolute right-[16px] size-[30px] top-[calc(50%-2px)]" data-node-id="289:2635" data-name="Frame">
-        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame} />
+      <div className="-translate-y-1/2 absolute h-[28px] right-[28px] top-[calc(50%+0.67px)] w-[24px]" data-node-id="289:2635" data-name="Frame">
+        <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgFrame} />
       </div>
       <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgArtSeatGuarantee} />
     </div>
@@ -358,7 +322,7 @@ export default function Component11TicketDetails() {
             </div>
             <div className="content-stretch flex gap-[12px] items-center pl-[22px] py-[14px] relative shrink-0 w-full" data-node-id="737:4232" data-name="Duration">
               <div className="bg-[rgba(255,255,255,0.45)] flex-[1_0_0] h-px min-w-px relative" data-node-id="737:4233" data-name="Rule" />
-              <LogoRedBusMark className="h-[21px] relative shrink-0 w-[34px]" />
+              <LogoRedBusMarkWhite className="h-[17px] relative shrink-0 w-[25px]" />
               <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[22px] not-italic opacity-95 relative shrink-0 text-[16px] text-[color:var(--text\/on-accent,white)] whitespace-nowrap" data-node-id="737:4234">
                 8h 5m
               </p>
@@ -448,7 +412,7 @@ export default function Component11TicketDetails() {
             </div>
             <div className="content-stretch flex gap-[12px] items-center pl-[22px] py-[14px] relative shrink-0 w-full" data-node-id="515:3860" data-name="Duration">
               <div className="bg-[rgba(255,255,255,0.45)] flex-[1_0_0] h-px min-w-px relative" data-node-id="515:3861" data-name="Rule" />
-              <LogoRedBusMark className="h-[21px] relative shrink-0 w-[34px]" />
+              <LogoRedBusMarkWhite className="h-[17px] relative shrink-0 w-[25px]" />
               <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[22px] not-italic opacity-95 relative shrink-0 text-[16px] text-[color:var(--text\/on-accent,white)] whitespace-nowrap" data-node-id="515:3862">
                 8h 5m
               </p>
@@ -718,8 +682,8 @@ export default function Component11TicketDetails() {
           </p>
         </div>
       </div>
-      <div className="content-stretch flex flex-col gap-[16px] items-start pb-[24px] pt-[16px] px-[16px] relative shrink-0 w-full" data-node-id="687:4185" data-name="Content · below hotels">
-        <div className="bg-[var(--surface\/default,white)] border border-[var(--border\/subtle,#e4e4e4)] border-solid content-stretch flex flex-col items-center overflow-clip relative rounded-[var(--radius\/12,12px)] shrink-0 w-full" data-node-id="686:4022" data-name="Safety Tips">
+      <div className="content-stretch flex flex-col gap-[16px] items-center pb-[24px] pt-[16px] relative shrink-0 w-full" data-node-id="687:4185" data-name="Content · below hotels">
+        <div className="bg-[var(--surface\/default,white)] border border-[var(--border\/subtle,#e4e4e4)] border-solid content-stretch flex flex-col items-center overflow-clip relative rounded-[var(--radius\/12,12px)] shrink-0 w-[358px]" data-node-id="686:4022" data-name="Safety Tips">
           <div className="content-stretch flex flex-col items-start overflow-clip px-[16px] py-[14px] relative shrink-0 w-full" data-node-id="686:4036" data-name="Card header">
             <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[26px] not-italic relative shrink-0 text-[#1d1d1d] text-[20px] w-full" data-node-id="686:4037">
               Safety Tips
@@ -729,7 +693,7 @@ export default function Component11TicketDetails() {
             <ArtSafetyVideo className="h-[182px] relative rounded-[10px] shrink-0 w-[326px]" />
           </div>
         </div>
-        <div className="bg-[var(--surface\/default,white)] border border-[var(--border\/subtle,#e4e4e4)] border-solid content-stretch flex flex-col items-center overflow-clip relative rounded-[var(--radius\/12,12px)] shrink-0 w-full" data-node-id="686:4040" data-name="View booking policy">
+        <div className="bg-[var(--surface\/default,white)] border border-[var(--border\/subtle,#e4e4e4)] border-solid content-stretch flex flex-col items-center overflow-clip relative rounded-[var(--radius\/12,12px)] shrink-0 w-[358px]" data-node-id="686:4040" data-name="View booking policy">
           <div className="content-stretch flex gap-[14px] items-center overflow-clip p-[16px] relative shrink-0 w-full" data-node-id="686:4054" data-name="Row">
             <IconList className="relative shrink-0 size-[26px]" />
             <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px not-italic overflow-clip relative" data-node-id="686:4061" data-name="Text">
@@ -743,7 +707,7 @@ export default function Component11TicketDetails() {
             <IconChevronRight className="relative shrink-0 size-[20px]" />
           </div>
         </div>
-        <div className="bg-[var(--surface\/default,white)] border border-[var(--border\/subtle,#e4e4e4)] border-solid content-stretch flex flex-col items-center overflow-clip relative rounded-[var(--radius\/12,12px)] shrink-0 w-full" data-node-id="686:4067" data-name="View bus details">
+        <div className="bg-[var(--surface\/default,white)] border border-[var(--border\/subtle,#e4e4e4)] border-solid content-stretch flex flex-col items-center overflow-clip relative rounded-[var(--radius\/12,12px)] shrink-0 w-[358px]" data-node-id="686:4067" data-name="View bus details">
           <div className="content-stretch flex gap-[14px] items-center overflow-clip p-[16px] relative shrink-0 w-full" data-node-id="686:4081" data-name="Row">
             <IconList className="relative shrink-0 size-[26px]" />
             <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px not-italic overflow-clip relative" data-node-id="686:4088" data-name="Text">
@@ -757,7 +721,7 @@ export default function Component11TicketDetails() {
             <IconChevronRight className="relative shrink-0 size-[20px]" />
           </div>
         </div>
-        <div className="bg-[var(--surface\/default,white)] border border-[var(--border\/subtle,#e4e4e4)] border-solid content-stretch flex flex-col items-center overflow-clip relative rounded-[var(--radius\/12,12px)] shrink-0 w-full" data-node-id="686:4094" data-name="Boarding point details">
+        <div className="bg-[var(--surface\/default,white)] border border-[var(--border\/subtle,#e4e4e4)] border-solid content-stretch flex flex-col items-center overflow-clip relative rounded-[var(--radius\/12,12px)] shrink-0 w-[358px]" data-node-id="686:4094" data-name="Boarding point details">
           <div className="content-stretch flex flex-col items-start overflow-clip px-[16px] py-[14px] relative shrink-0 w-full" data-node-id="686:4108" data-name="Card header">
             <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[26px] not-italic relative shrink-0 text-[#1d1d1d] text-[20px] w-full" data-node-id="686:4109">
               Boarding point details
@@ -800,7 +764,7 @@ export default function Component11TicketDetails() {
             </div>
           </div>
         </div>
-        <div className="bg-[var(--surface\/default,white)] border border-[var(--border\/subtle,#e4e4e4)] border-solid content-stretch flex flex-col items-center overflow-clip relative rounded-[var(--radius\/12,12px)] shrink-0 w-full" data-node-id="687:4042" data-name="Need help">
+        <div className="bg-[var(--surface\/default,white)] border border-[var(--border\/subtle,#e4e4e4)] border-solid content-stretch flex flex-col items-center overflow-clip relative rounded-[var(--radius\/12,12px)] shrink-0 w-[358px]" data-node-id="687:4042" data-name="Need help">
           <div className="content-stretch flex flex-col items-center overflow-clip px-[16px] py-[20px] relative shrink-0 w-full" data-node-id="687:4056" data-name="Body">
             <ArtRedBuddy className="h-[79px] relative shrink-0 w-[60px]" />
             <div className="h-[12px] relative shrink-0 w-full" data-node-id="687:4058" data-name="gap" />
@@ -820,7 +784,7 @@ export default function Component11TicketDetails() {
             </div>
           </div>
         </div>
-        <div className="bg-[var(--surface\/default,white)] border border-[var(--border\/subtle,#e4e4e4)] border-solid content-stretch flex flex-col items-center overflow-clip relative rounded-[var(--radius\/12,12px)] shrink-0 w-full" data-node-id="687:4068" data-name="Travel policies">
+        <div className="bg-[var(--surface\/default,white)] border border-[var(--border\/subtle,#e4e4e4)] border-solid content-stretch flex flex-col items-center overflow-clip relative rounded-[var(--radius\/12,12px)] shrink-0 w-[358px]" data-node-id="687:4068" data-name="Travel policies">
           <div className="content-stretch flex flex-col items-start overflow-clip px-[16px] py-[14px] relative shrink-0 w-full" data-node-id="687:4082" data-name="Card header">
             <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[26px] not-italic relative shrink-0 text-[#1d1d1d] text-[20px] w-full" data-node-id="687:4083">
               Travel policies
@@ -829,57 +793,57 @@ export default function Component11TicketDetails() {
           <div className="bg-[#e4e4e4] h-px relative shrink-0 w-full" data-node-id="687:4084" data-name="Divider" />
           <div className="content-stretch flex flex-col gap-[18px] items-start overflow-clip px-[16px] py-[18px] relative shrink-0 w-full" data-node-id="687:4085" data-name="Body">
             <div className="content-stretch flex gap-[12px] items-start relative shrink-0 w-full" data-node-id="687:4086" data-name="Row / Policy">
-              <IconPolicyChild className="relative shrink-0 size-[22px]" />
-              <div className="[word-break:break-word] bg-white content-stretch flex flex-[1_0_0] flex-col font-['Inter:Regular'] font-normal gap-[2px] items-start leading-[22px] min-w-px not-italic overflow-clip relative text-[16px]" data-node-id="I687:4086;244:1793" data-name="Text">
-                <p className="relative shrink-0 text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="I687:4086;244:1794">
+              <IconPolicyBadge className="relative shrink-0 size-[22px]" />
+              <div className="[word-break:break-word] bg-white content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start leading-[22px] min-w-px not-italic overflow-clip relative text-[16px]" data-node-id="I687:4086;244:1793" data-name="Text">
+                <p className="font-['Inter:Bold'] font-bold relative shrink-0 text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="I687:4086;244:1794">
                   Child passenger policy
                 </p>
-                <p className="relative shrink-0 text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="I687:4086;244:1795">
+                <p className="font-['Inter:Regular'] font-normal relative shrink-0 text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="I687:4086;244:1795">
                   Children above the age of 4 will need a ticket
                 </p>
               </div>
             </div>
             <div className="content-stretch flex gap-[12px] items-start relative shrink-0 w-full" data-node-id="687:4096" data-name="Row / Policy">
-              <IconPolicyLuggage className="relative shrink-0 size-[22px]" />
-              <div className="[word-break:break-word] bg-white content-stretch flex flex-[1_0_0] flex-col font-['Inter:Regular'] font-normal gap-[2px] items-start min-w-px not-italic overflow-clip relative text-[16px]" data-node-id="I687:4096;244:1793" data-name="Text">
-                <p className="leading-[22px] relative shrink-0 text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="I687:4096;244:1794">
+              <IconPolicyBadge className="relative shrink-0 size-[22px]" />
+              <div className="[word-break:break-word] bg-white content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px not-italic overflow-clip relative text-[16px]" data-node-id="I687:4096;244:1793" data-name="Text">
+                <p className="font-['Inter:Bold'] font-bold leading-[22px] relative shrink-0 text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="I687:4096;244:1794">
                   Luggage policy
                 </p>
-                <div className="leading-[0] relative shrink-0 text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="I687:4096;244:1795">
+                <div className="font-['Inter:Regular'] font-normal leading-[0] relative shrink-0 text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="I687:4096;244:1795">
                   <p className="leading-[22px] mb-0">2 pieces of luggage will be accepted free of charge per passenger. Excess items will be chargeable</p>
                   <p className="leading-[22px]">Excess baggage over 20 kgs per passenger will be chargeable</p>
                 </div>
               </div>
             </div>
             <div className="content-stretch flex gap-[12px] items-start relative shrink-0 w-full" data-node-id="687:4111" data-name="Row / Policy">
-              <IconPolicyPets className="relative shrink-0 size-[22px]" />
-              <div className="[word-break:break-word] bg-white content-stretch flex flex-[1_0_0] flex-col font-['Inter:Regular'] font-normal gap-[2px] items-start leading-[22px] min-w-px not-italic overflow-clip relative text-[16px]" data-node-id="I687:4111;244:1793" data-name="Text">
-                <p className="relative shrink-0 text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="I687:4111;244:1794">
+              <IconPolicyBadge className="relative shrink-0 size-[22px]" />
+              <div className="[word-break:break-word] bg-white content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start leading-[22px] min-w-px not-italic overflow-clip relative text-[16px]" data-node-id="I687:4111;244:1793" data-name="Text">
+                <p className="font-['Inter:Bold'] font-bold relative shrink-0 text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="I687:4111;244:1794">
                   Pets Policy
                 </p>
-                <p className="relative shrink-0 text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="I687:4111;244:1795">
+                <p className="font-['Inter:Regular'] font-normal relative shrink-0 text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="I687:4111;244:1795">
                   Pets are not allowed
                 </p>
               </div>
             </div>
             <div className="content-stretch flex gap-[12px] items-start relative shrink-0 w-full" data-node-id="687:4126" data-name="Row / Policy">
-              <IconPolicyLiquor className="relative shrink-0 size-[22px]" />
-              <div className="[word-break:break-word] bg-white content-stretch flex flex-[1_0_0] flex-col font-['Inter:Regular'] font-normal gap-[2px] items-start leading-[22px] min-w-px not-italic overflow-clip relative text-[16px]" data-node-id="I687:4126;244:1793" data-name="Text">
-                <p className="relative shrink-0 text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="I687:4126;244:1794">
+              <IconPolicyBadge className="relative shrink-0 size-[22px]" />
+              <div className="[word-break:break-word] bg-white content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start leading-[22px] min-w-px not-italic overflow-clip relative text-[16px]" data-node-id="I687:4126;244:1793" data-name="Text">
+                <p className="font-['Inter:Bold'] font-bold relative shrink-0 text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="I687:4126;244:1794">
                   Liquor Policy
                 </p>
-                <p className="relative shrink-0 text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="I687:4126;244:1795">
+                <p className="font-['Inter:Regular'] font-normal relative shrink-0 text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="I687:4126;244:1795">
                   Carrying or consuming liquor inside the bus is prohibited. Bus operator reserves the right to deboard drunk passengers.
                 </p>
               </div>
             </div>
             <div className="content-stretch flex gap-[12px] items-start relative shrink-0 w-full" data-node-id="687:4140" data-name="Row / Policy">
-              <IconPolicyPickup className="relative shrink-0 size-[22px]" />
-              <div className="[word-break:break-word] bg-white content-stretch flex flex-[1_0_0] flex-col font-['Inter:Regular'] font-normal gap-[2px] items-start min-w-px not-italic overflow-clip relative" data-node-id="I687:4140;244:1793" data-name="Text">
-                <p className="leading-[22px] relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="I687:4140;244:1794">
+              <IconPolicyBadge className="relative shrink-0 size-[22px]" />
+              <div className="[word-break:break-word] bg-white content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px not-italic overflow-clip relative" data-node-id="I687:4140;244:1793" data-name="Text">
+                <p className="font-['Inter:Bold'] font-bold leading-[22px] relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="I687:4140;244:1794">
                   Pick up time policy
                 </p>
-                <p className="leading-[0] relative shrink-0 text-[0px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="I687:4140;244:1795">
+                <p className="font-['Inter:Regular'] font-normal leading-[0] relative shrink-0 text-[0px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="I687:4140;244:1795">
                   <span className="leading-[22px] text-[16px]">{`Bus operator is not obligated to wait beyond the scheduled departure time of the bus. No refund request w… `}</span>
                   <span className="[text-underline-position:from-font] decoration-from-font decoration-solid font-['Inter:Bold'] font-bold leading-[22px] text-[#1d1d1d] text-[16px] underline">read more</span>
                 </p>
@@ -887,9 +851,9 @@ export default function Component11TicketDetails() {
             </div>
           </div>
         </div>
-        <div className="bg-white content-stretch flex gap-[8px] items-center overflow-clip pl-[16px] relative rounded-[12px] shrink-0 w-full" data-node-id="687:4158" data-name="Refer">
-          <div className="content-stretch flex flex-[1_0_0] flex-col items-start min-w-px overflow-clip py-[18px] relative" data-node-id="687:4159" data-name="Text">
-            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[24px] min-w-full not-italic relative shrink-0 text-[#1d1d1d] text-[18px] w-[min-content]" data-node-id="687:4160">
+        <div className="bg-white content-stretch flex gap-[17px] items-center overflow-clip pl-[30px] pr-[16px] relative shrink-0 w-full" data-node-id="687:4158" data-name="Refer">
+          <div className="content-stretch flex flex-col items-start overflow-clip py-[18px] relative shrink-0 w-[180px]" data-node-id="687:4159" data-name="Text">
+            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[20px] min-w-full not-italic relative shrink-0 text-[#1d1d1d] text-[17px] w-[min-content]" data-node-id="687:4160">
               Loving the redBus experience? Let your friends know too!
             </p>
             <div className="h-[8px] relative shrink-0 w-full" data-node-id="687:4161" data-name="gap" />
@@ -903,7 +867,7 @@ export default function Component11TicketDetails() {
               </p>
             </div>
           </div>
-          <ArtRefer className="h-[180px] relative shrink-0 w-[162px]" />
+          <ArtRefer className="h-[163px] relative shrink-0 w-[147px]" />
         </div>
       </div>
     </div>

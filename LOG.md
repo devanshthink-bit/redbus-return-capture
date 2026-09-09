@@ -8810,3 +8810,50 @@ step over it, and it is only ever reached by tapping Pay.
 NOTE · 2026-09-09 · direct request
 **The change-date flow now starts from the ticket.** `Change day` on 11 goes to 13, and the walk
 13 → 14 → 15 → 16 runs clean with no warnings and no JS errors.
+
+CHANGE · 2026-09-09 · direct request · Source: user
+**The change-date flow now runs on the day you tapped.** Devansh: *"in change date calender i am
+not able to select a date to move to next screen to show buses on that date"*. The tap did navigate
+— the whole calendar was one forward hotspot — but nothing after it knew which day it was, so 14, 15
+and 16 all said Tue, 15 Sep whatever you picked. A `moveFlow` module now reads the day and its price
+off the cell you tapped and repaints the date, both bus fares, the per-bus difference line, the
+confirm screen's To row, what you pay now, and the receipt's leg tag, times, fare and relief line.
+The calendar is the truth about money: a day marked **+₹n** makes the cheaper bus cost the booked
+fare plus n, and a day marked **₹0** keeps the drawn ₹970 / ₹1,060 pair, which is what a day that
+costs no more looks like. Full, Booked and out-of-window days now do nothing at all.
+
+CHANGE · 2026-09-09 · direct request · Source: user
+**Four things on the ticket did not match the real screenshot.** Devansh sent side-by-side crops.
+Fixed in Figma and the build together, all cut from `Picsew_TicketDetails.HEIC` at native 1080:
+- **Travel policies** — the real app repeats one scalloped tick badge on every row and sets the row
+  titles in Bold. Mine had five different outline glyphs and regular titles. New component
+  `Icon / Policy Badge`, swapped into all five rows.
+- **The duration rule** — the real mark is the white outline redBus bus on the red ground. Mine was
+  a white chip with the red logo inside it. New component `Logo / redBus mark · white` at 25×17,
+  which lands the ink at 22.8 × 14.9 against the real 22.4 × 14.8.
+- **Seat Guarantee** — the real icon is a padded armchair with a scalloped tick badge, not a bench
+  and a circle. The master's glyph frame was cleared and given the real image at 24×28.
+- **Refer a friend** — the real block is full-bleed white, not a card. It now runs edge to edge,
+  text at 30pt in, illustration ending 16pt from the right, title at 17/20 so it wraps in three
+  lines like the app's.
+
+LEARNED · 2026-09-09 · direct request
+**A screen that reads its own drawn values is a screen that lies once anything upstream moves.**
+13 → 14 → 15 → 16 was four frames drawn for one date. Every screen was correct, the flow was
+correct, and the whole thing was wrong the moment you picked a different day. The fix is the same
+one `PAINT` already makes for the boarding points: name the values, catch them once at boot while
+they still say what Figma drew, and repaint them from the answer on the way in.
+
+LEARNED · 2026-09-09 · direct request
+**One hotspot over a grid cannot tell you which cell.** `FORWARD['13']` pointed at the whole
+Calendar, so every tap went forward — including taps on days that are full, already booked, or
+before the outbound. It looked like it worked and it looked like nothing was selectable, both at
+once. A grid needs the cell, not the block.
+
+NOTE · 2026-09-09 · direct request
+**Cutting an icon out of a screenshot: the background decides the method.** A glyph on flat ground
+comes out with a single-ink alpha ramp. The Seat Guarantee icon sits on a *rayed gradient*, where
+that method leaves the rays behind and eats the badge's white tick — the tick is the same colour as
+the ground, because in the real icon it is a hole. What worked was a hard mask at a threshold above
+the ray noise, keeping each pixel's own colour, then supersampling. The hole stays a hole and shows
+the banner through it, exactly as the app does.

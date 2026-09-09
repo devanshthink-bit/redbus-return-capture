@@ -1931,6 +1931,139 @@
     paint(0);
   })();
 
+  // 13 / 14 / 15 / 16 · The change-date flow, driven by the day you tap.
+  //
+  //      It was drawn for one date -- Tue, 15 Sep -- and every screen after the calendar said so
+  //      whichever day you picked. Devansh: "in change date calender i am not able to select a date
+  //      to move to next screen to show buses on that date". The tap worked; it just did not carry.
+  //
+  //      The calendar is the truth about money. Each live day shows the least extra it would cost,
+  //      so the cheapest bus that day is the booked fare plus that number -- and a day marked
+  //      ₹0 is a day that costs no more, which is what the drawn ₹970 / ₹1,060 pair already is.
+  (function moveFlow(){
+    var i13 = ORDER.indexOf('13'), i14 = ORDER.indexOf('14'),
+        i15 = ORDER.indexOf('15'), i16 = ORDER.indexOf('16');
+    if (i13 < 0 || i14 < 0 || i15 < 0 || i16 < 0) return;
+    var s13 = screens[i13], s14 = screens[i14], s15 = screens[i15], s16 = screens[i16];
+
+    var HELD = { day: 16, dep: '23:55', arr: '08:00', fare: 1090, seat: 'U5' };
+    var GAP  = 90;                       // the drawn spread between the two buses of a day
+    var BASE = [970, 1060];              // what a day that costs no more looks like
+    var DOW  = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    function label(d){ return DOW[new Date(2026, 8, d).getDay()] + ', ' + d + ' Sep'; }
+    function rupee(n){ return '₹' + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+
+    // What the two buses cost on the day they tapped.
+    function faresFor(extra){
+      return extra > 0 ? [HELD.fare + extra, HELD.fare + extra + GAP] : BASE.slice();
+    }
+    // How the difference reads, from the traveller's side.
+    function diffLine(fare){
+      var d = fare - HELD.fare;
+      if (d < 0) return rupee(-d) + ' less — no refund';
+      if (d > 0) return rupee(d) + ' more';
+      return 'Same fare';
+    }
+
+    var MOVE = { day: 15, extra: 0, bus: 1 };
+
+    // Every drawn value this flow rewrites, caught once while it still says what Figma drew.
+    function leaf(root, id){ return root.querySelector('[data-node-id="' + id + '"]'); }
+    var cards14 = [].slice.call(s14.querySelectorAll('[data-name="Card / Bus"]'));
+    var sub14   = leaf(s14, 'I360:2666;34:92');
+    var notes14 = [leaf(s14, '368:2905'), leaf(s14, '368:2964')];
+    var to15    = leaf(s15, '137:1398'), seat15 = leaf(s15, '137:1399');
+    var pay15   = leaf(s15, 'I137:1412;102:804');
+    var diff15  = (function(){
+      var rows = s15.querySelectorAll('[data-name="Row / Fare"]');
+      for (var i = 0; i < rows.length; i++){
+        var l = leaf(rows[i], '102:803');
+        if (l && l.textContent.trim() === 'Price difference') return leaf(rows[i], '102:804');
+      }
+      return null;
+    })();
+    var head16  = leaf(s16, '377:3131'), sub16 = leaf(s16, '377:3132');
+    var card16  = s16.querySelector('[data-name="Card / Leg"]');
+    var relief16 = leaf(s16, '138:1457');
+    var missing = [];
+    [['14 subtitle', sub14], ['15 to', to15], ['15 seat', seat15], ['15 pay', pay15],
+     ['15 difference', diff15], ['16 heading', head16], ['16 sub', sub16],
+     ['16 card', card16], ['16 relief', relief16]].forEach(function(p){
+      if (!p[1]) missing.push(p[0]); });
+    if (cards14.length !== 2) missing.push('14 cards (' + cards14.length + ')');
+    if (missing.length) console.warn('move flow cannot repaint: ' + missing.join(', '));
+
+    function set(el, txt){ if (el) el.textContent = txt; }
+
+    function paintBuses(){
+      var f = faresFor(MOVE.extra);
+      set(sub14, 'Nainital → Delhi · ' + label(MOVE.day));
+      cards14.forEach(function(card, k){
+        set(leaf(card, 'I368:2851;39:118') || leaf(card, 'I368:2910;39:118'), rupee(f[k]));
+        set(notes14[k], diffLine(f[k]));
+      });
+    }
+    function paintConfirm(){
+      var f = faresFor(MOVE.extra)[MOVE.bus];
+      var dep = MOVE.bus === 0 ? '20:30' : '23:55';
+      set(to15, label(MOVE.day) + ' · ' + dep);
+      set(seat15, 'Seat U4 · ' + rupee(f));
+      set(diff15, diffLine(f));
+      set(pay15, rupee(Math.max(0, f - HELD.fare)));
+    }
+    function paintDone(){
+      var f = faresFor(MOVE.extra)[MOVE.bus];
+      var dep = MOVE.bus === 0 ? '20:30' : '23:55', arr = MOVE.bus === 0 ? '04:35' : '08:00';
+      var shift = MOVE.day - HELD.day;
+      var n = Math.abs(shift);
+      var when = shift === 0 ? 'the same day'
+               : (n === 1 ? 'a day' : n + ' days') + (shift < 0 ? ' earlier' : ' later');
+      set(head16, 'Return moved to ' + label(MOVE.day));
+      set(sub16, 'Back in Delhi ' + when + '. Nothing else about the trip moved.');
+      if (card16){
+        set(leaf(card16, '103:798'), 'RETURN · ' + label(MOVE.day).toUpperCase());
+        set(leaf(card16, '103:802'), dep);
+        set(leaf(card16, '103:804'), arr);
+        set(leaf(card16, '103:805'), rupee(f));
+      }
+      var d = f - HELD.fare;
+      set(relief16, d < 0 ? 'The new day is ' + rupee(-d) + ' cheaper. You do not get that back.'
+                  : d > 0 ? 'You paid ' + rupee(d) + ' more for the new day.'
+                          : 'The new day costs exactly the same.');
+    }
+    ON_ENTER['14'] = paintBuses;
+    ON_ENTER['15'] = paintConfirm;
+    ON_ENTER['16'] = paintDone;
+
+    // A tap on the calendar is a tap on one day, not on the calendar. The flow map can only say
+    // "this block goes forward", so it sent you on from a day that is full, already booked, or
+    // before the outbound -- and told the next screen nothing about which day you meant.
+    var cal = s13.querySelector('[data-name="Calendar"]');
+    if (!cal) { console.warn('13: no Calendar'); return; }
+    cal.addEventListener('click', function(e){
+      var day = null, cell = e.target;
+      while (cell && cell !== cal){
+        var ps = cell.children;
+        if (ps.length === 2 && ps[0].tagName === 'P' && ps[1].tagName === 'P'){ day = cell; break; }
+        cell = cell.parentElement;
+      }
+      var live = false, extra = 0;
+      if (day){
+        var n = parseInt(day.children[0].textContent.trim(), 10);
+        var m = /^₹0$|^\+₹([\d,]+)$/.exec(day.children[1].textContent.trim());
+        if (m && n) { live = true; extra = m[1] ? parseInt(m[1].replace(/,/g, ''), 10) : 0;
+                      MOVE.day = n; MOVE.extra = extra; }
+      }
+      // A day you cannot move to must do nothing at all, rather than walk you on regardless.
+      if (!live) { e.preventDefault(); e.stopPropagation(); }
+    }, true);
+
+    // Which bus, so the confirm and the receipt name the one they tapped.
+    cards14.forEach(function(card, k){
+      card.addEventListener('click', function(){ MOVE.bus = k; }, true);
+    });
+  })();
+
   // 09 / 09a · "View details" opens the booking-details sheet, and the × closes it. A sheet is not
   //      a step, so 09a sits in OVERLAY and SKIP: prev, next and the arrow keys walk straight past
   //      it, and Back on Pay still goes to the points screen rather than into the sheet.

@@ -770,8 +770,9 @@ not from memory. **28 frames = 16 screens + 12 state variants** (01a · 03a · 0
 | 09a · Booking details | — | *sheet off **Review or Pay**, whichever View details was tapped*; the × | back to the one that opened it |
 | 11 · Ticket details | `s-ticket` | Change your return day | 13 |
 | 12 · My Bookings | `s-mybook` | a booking card | 11 |
-| 13 · Change day | `s-within` | tap a date | 14, **or 15 direct** |
+| 13 · Change day | `s-within` | tap a **live** day — one showing ₹0 or +₹n; Full, Booked and past days do nothing | 14 |
 | 14 · Move · buses | `s-wibus` | a bus card | 15 |
+| ↳ *the day you tapped drives 14, 15 and 16* — the date, both fares, the difference, what you pay and the receipt | | | |
 | 15 · Confirm the move | `s-confirm` | Confirm change | 16 |
 | 16 · Return moved | `s-done` | — | — |
 
@@ -2158,7 +2159,7 @@ Two checks, because each is blind to what the other sees.
 | | |
 |---|---|
 | **Geometry** | 1,730 nodes matched by `data-node-id` against the Figma metadata. **Three** blocks off by more than 4px. **Last run 4 Sep on the 23-frame build, and not re-run since — 01a, 04a and 06b have never been geometry-checked.** Treat the number as history, not as current |
-| **Pixels** | **current.** 26 of the 27 frames were re-rendered headless at native size on 2026-09-09 and diffed against Figma renders pulled the same hour. Three frames were rebuilt later that day and carry their own fresh numbers: **09 · 1.96%** (1681pt), **11 · 10.37%** (4757pt), **08b · 8.25%** and **08c · 5.82%**. **Do not compare 11's number with its old 5.38% or 11.22%** — the frame is four and a half times taller and half of it is photographic, so a 1px accumulated drift turns every pixel of a photo different. Read its bands for *steps*, not its percentage. Of the rest, worst are **11.99%** (01) and **11.69%** (03a) — the two tallest — with 04, 05a, 06a and 06b above 8% |
+| **Pixels** | **current.** 26 of the 27 frames were re-rendered headless at native size on 2026-09-09 and diffed against Figma renders pulled the same hour. Three frames were rebuilt later that day and carry their own fresh numbers: **09 · 1.96%** (1681pt), **11 · 10.44%** (4721pt), **08b · 8.25%** and **08c · 5.82%**. **Do not compare 11's number with its old 5.38% or 11.22%** — the frame is four and a half times taller and half of it is photographic, so a 1px accumulated drift turns every pixel of a photo different. Read its bands for *steps*, not its percentage. Of the rest, worst are **11.99%** (01) and **11.69%** (03a) — the two tallest — with 04, 05a, 06a and 06b above 8% |
 
 **The full 28 (9 Sep), for the next person who needs a baseline to compare against:**
 
@@ -2166,15 +2167,15 @@ Two checks, because each is blind to what the other sees.
 01  11.99   01a  2.60   02  5.84   03  4.80   03a 11.69   03b  4.77
 04   9.73   04a  5.77   05  5.20   05a 8.06   05b  7.54   06   5.79
 06a  8.43   06b  8.83   07  6.15   08  7.31   08a  5.21   08b  8.25
-08c  5.82   09  1.96   09a 2.67   09b 1.76   11 10.37
+08c  5.82   09  1.96   09a 2.67   09b 1.76   11 10.44
 12   2.35   13  4.87   14  6.93   15  1.30   16   2.58
 ```
 
 **10 is gone.** Booking confirmed does not exist in the real app — the ticket is the confirmation —
-so everything on it moved into 11 and the frame was retired to States. 11 is now **4757pt**, the
-tallest frame in the file, and reads **10.37%**. Its drift profile is a clean ramp: 0px for the
+so everything on it moved into 11 and the frame was retired to States. 11 is now **4721pt**, the
+tallest frame in the file, and reads **10.44%**. Its drift profile is a clean ramp: 0px for the
 first 1,000pt, 16px by 4,200pt, and after realignment the residue is 2.6–10 grey levels, which is
-glyph raster. Compare it against **10.37 at 4757pt**, not against the old 11.22 at 4020pt.
+glyph raster. Compare it against **10.44 at 4721pt**, not against the old 11.22 at 4020pt.
 
 **06, 06a and 06b read higher than the run above and nothing got worse.** The day cards were
 restyled on 9 Sep and the three frames lost 129pt of double bottom clearance each, so the same
