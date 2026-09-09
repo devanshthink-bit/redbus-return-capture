@@ -2147,17 +2147,24 @@ Two checks, because each is blind to what the other sees.
 | | |
 |---|---|
 | **Geometry** | 1,730 nodes matched by `data-node-id` against the Figma metadata. **Three** blocks off by more than 4px. **Last run 4 Sep on the 23-frame build, and not re-run since — 01a, 04a and 06b have never been geometry-checked.** Treat the number as history, not as current |
-| **Pixels** | **current.** All 26 frames re-rendered headless at native size on 2026-09-09 and diffed against Figma renders pulled the same hour: **mean 5.63%** of pixels differing, **median 5.54%**, best **1.28%** (08b), worst **11.99%** (01) and **11.69%** (03a) — the two tallest. Only four frames sit above 8%: 01, 03a, **04 (9.82%)** and **05a (8.06%)** |
+| **Pixels** | **current.** All 26 frames re-rendered headless at native size on 2026-09-09 and diffed against Figma renders pulled the same hour: **mean 5.76%** of pixels differing, best **1.28%** (08b), worst **11.99%** (01) and **11.69%** (03a) — the two tallest. Six frames sit above 8%: 01, 03a, **04 (9.82%)**, **05a (8.06%)**, **06a (8.43%)** and **06b (8.74%)** |
 
 **The full 26 (9 Sep), for the next person who needs a baseline to compare against:**
 
 ```
 01  11.99   01a  2.60   02  5.84   03  4.80   03a 11.69   03b  4.77
-04   9.82   04a  5.77   05  5.20   05a 8.06   05b  7.54   06   6.51
-06a  6.90   06b  7.76   07  5.71   08  7.45   08a  5.21   08b  1.28
+04   9.82   04a  5.77   05  5.20   05a 8.06   05b  7.54   06   7.25
+06a  8.43   06b  8.74   07  5.71   08  7.45   08a  5.21   08b  1.28
 09   1.78   10   2.40   11  5.38   12  2.35   13   4.87   14   6.93
 15   1.30   16   2.58
 ```
+
+**06, 06a and 06b read higher than the run above and nothing got worse.** The day cards were
+restyled on 9 Sep and the three frames lost 129pt of double bottom clearance each, so the same
+absolute difference is now measured over a shorter frame. In row-equivalents — the percentage times
+the height — **06 is unchanged (82.8 → 82.9), 06b improved (120.8 → 114.2)** and 06a rose by 7.5 on
+a real design change. **A percentage is only comparable while the frame height is.** Compare the
+product, not the rate, whenever a frame has been resized.
 
 **The mean moved 5.2 → 5.63 without anything getting worse.** The three frames added since the
 first run — 01a, 04a, 06b — are not what did it either; 01a and 04a are among the better ones. It is

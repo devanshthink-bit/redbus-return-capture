@@ -7692,3 +7692,55 @@ labels the cheapest of the *other* services, so when the traveller is already on
 that row reads *Cheapest · ₹30 more*. v4 does exactly this and the instruction was to follow v4, so
 it stands — recorded rather than quietly diverged from. If it reads badly in a session, the fix is
 to drop the Cheapest row when the pick already holds that title.
+
+CHANGE  ·  2026-09-09  ·  molades-none  · Source: user
+**The Cheapest row is dropped when the pick already is cheapest, the chosen day centres in the
+screen, and the day cards are rebuilt to the file's own card convention.** Devansh: *"yes drop when
+pick is already cheapest in both v4 and hifi proto and figma (if its also there). Also make this
+view at the center not at the top… also improve the design of date cards how redbus wud do in their
+app in this screen they look bad"*.
+
+**Cheapest.** `tradeRows()` labelled the cheapest of the *other* services, so on the cheapest bus of
+the day it read *Cheapest · ₹30 more* — the one thing that row must never say. Both v4 and the hi-fi
+now require it to actually beat the pick on price. Verified in both, on the same day and bus: taking
+the cheapest service drops the row, and **Free cancellation** correctly takes its slot, because that
+service is the one that has none. **Figma needed no change** — 06a's drawn trade is ₹150 *less* and
+06b's ₹30 *less*, both legitimate.
+
+**Centring.** The tap used to pin the card 12px under the top edge. The day and its fold are one
+block — the day you chose and what that day gives you — and a block hard against the top reads as
+the page having scrolled past something. It centres now, falling back to top-aligning when the block
+is taller than the screen. Measured: a 491px group in an 844px screen lands 176 above / 177 below.
+
+**The cards.** They looked bad for a measurable reason: the title row was a **FIXED 71pt frame
+holding one line of 16px text** on 06a, 42 on 06b, and 19 — correct — on 06. My builder cloned the
+worst of the three as the template for all of them, so every row on every frame inherited the 71.
+Fixed in Figma on all 18 cards: the rows hug their content, and the cards take **radius 16 and
+`Elevation/Card`**, which is what `Card / Bus`, `Card / Booking`, `Card / Leg`, `Card / Ticket` and
+— pointedly — the unused **`Card / Return day` component** all already carry. The day cards were
+hand-made frames that never used it. Card height **155 → 75**; title row **71 → 20**.
+
+**The frames were also 129pt too tall, each.** With the cards shrunk, resizing exposed that the
+frame height had been counting the action bar *and* the content's own 135pt bottom padding — the
+double-clearance defect §21 records. 06 now matches 05's arrangement exactly: frame = header +
+content, bar floating over the padding. 1272 → 1143, 1865 → 1615, 1557 → 1307.
+
+Checks: v4 parses, its state matrix is 234 combinations with exactly one screen visible and no JS
+errors. Hi-fi walk 01 → 16 unchanged. All 26 parity diffs re-run; the 23 untouched frames did not
+move.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**A diff percentage is only comparable while the frame height is.** 06, 06a and 06b all read
+*higher* after this change — 6.51 → 7.25, 6.90 → 8.43, 7.76 → 8.74 — and my first instinct was that
+the new card shadows were rendering badly. Rendering the same screen with the shadows suppressed
+returned **exactly the same 8.43%**, which killed that theory in one run. The real cause is that
+each frame lost 129pt of blank, trivially-matching tail, so the same absolute difference is now
+divided by less. In row-equivalents 06 is unchanged, 06b improved, and only 06a genuinely rose.
+**Multiply the rate by the height before calling a change a regression** — and when a theory is
+cheap to test, test it instead of reasoning about it.
+
+**A component that exists and is not used is worse than no component.** `Card / Return day` has been
+in the file since August carrying the right radius and the right shadow, while eighteen hand-made
+day cards drifted into three different title-row heights across three frames. Nothing flagged it,
+because every frame looked right on its own. When a card component exists, the audit question is not
+"does this card look right" but "why is this card not an instance".

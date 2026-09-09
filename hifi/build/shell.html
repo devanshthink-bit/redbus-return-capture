@@ -937,7 +937,10 @@
       var fare = function(i){ return all[i][2]; }, out = [], taken = {};
       function add(why, i){ if (i == null || taken[i] || out.length >= 3) return; taken[i] = 1; out.push({why:why, i:i}); }
       var byFare = list.slice().sort(function(a,b){ return fare(a) - fare(b); });
-      var cheapest = byFare[0];
+      // only when it actually beats the pick on price -- on the cheapest bus of the day the old
+      // rule printed the next cheapest and labelled it "Cheapest ... 30 more", which is the one
+      // thing that row must never say. Same guard as v4's.
+      var cheapest = (byFare[0] != null && fare(byFare[0]) < fare(pick)) ? byFare[0] : null;
       var rateable = list.filter(function(i){ return all[i][9] >= VOTE_FLOOR; });
       var best = rateable.slice().sort(function(a,b){ return all[b][8] - all[a][8] || fare(a) - fare(b); })[0];
       var beats = best != null && all[best][8] > all[pick][8];
@@ -1169,7 +1172,15 @@
       // offsetTop, not getBoundingClientRect: the phone is scaled by --hf-s, so a rect is in
       // scaled pixels while scrollTop is in layout pixels. CONTEXT §10 records that mix-up.
       function absTop(el){ var y = 0; for (var n = el; n; n = n.offsetParent) y += n.offsetTop; return y; }
-      var to = Math.max(0, Math.min(absTop(row) - absTop(sc) - 12, sc.scrollHeight - sc.clientHeight));
+      // Centre the day and its fold, rather than pinning the card to the top edge. The two are one
+      // block -- the day you chose and what that day gives you -- and a block hard against the top
+      // of the screen reads as the page having scrolled past something. Taller than the viewport,
+      // there is nothing to centre, so it falls back to top-aligning with a 12px breath.
+      var fold = sec.querySelector('[data-name="Bus fold"]');
+      var top  = absTop(row) - absTop(sc);
+      var groupH = row.offsetHeight + (fold && !fold.hidden ? fold.offsetHeight : 0);
+      var pad = groupH < sc.clientHeight ? (sc.clientHeight - groupH) / 2 : 12;
+      var to = Math.max(0, Math.min(top - pad, sc.scrollHeight - sc.clientHeight));
       sc.scrollTo({ top: to, behavior: 'smooth' });
     };
     window.__closeDay = function(){ RETURN.chosen = 0; RETURN.bus = null; go(i06); };

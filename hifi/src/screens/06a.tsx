@@ -162,7 +162,7 @@ export default function Component06AYourReturnDayChosen() {
           </p>
         </div>
         <div className="content-stretch flex flex-col gap-[16px] items-start relative shrink-0 w-full" data-node-id="100:733" data-name="Days">
-          <div className="bg-white content-stretch flex flex-col gap-[6px] items-start overflow-clip p-[16px] relative rounded-[12px] shrink-0 w-full" data-node-id="411:2967" data-name="Day · Fri, 11 Sep · 23:55">
+          <div className="bg-white content-stretch flex flex-col gap-[6px] items-start overflow-clip p-[16px] relative rounded-[16px] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.07),0px_2px_6px_0px_rgba(0,0,0,0.05)] shrink-0 w-full" data-node-id="411:2967" data-name="Day · Fri, 11 Sep · 23:55">
             <div className="[word-break:break-word] content-stretch flex font-['Inter:Bold'] font-bold items-center justify-between leading-[normal] not-italic overflow-clip relative shrink-0 text-[#1d1d1d] text-[16px] w-full whitespace-nowrap" data-node-id="411:2968" data-name="Frame">
               <p className="relative shrink-0" data-node-id="411:2969">
                 Fri, 11 Sep
@@ -187,7 +187,7 @@ export default function Component06AYourReturnDayChosen() {
               </div>
             </div>
           </div>
-          <div className="[word-break:break-word] bg-white content-stretch flex flex-col gap-[6px] items-start leading-[normal] not-italic overflow-clip p-[16px] relative rounded-[12px] shrink-0 w-full whitespace-nowrap" data-node-id="411:2976" data-name="Day · Sat, 12 Sep">
+          <div className="[word-break:break-word] bg-white content-stretch flex flex-col gap-[6px] items-start leading-[normal] not-italic overflow-clip p-[16px] relative rounded-[16px] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.07),0px_2px_6px_0px_rgba(0,0,0,0.05)] shrink-0 w-full whitespace-nowrap" data-node-id="411:2976" data-name="Day · Sat, 12 Sep">
             <div className="content-stretch flex font-['Inter:Bold'] font-bold items-center justify-between overflow-clip relative shrink-0 text-[#1d1d1d] text-[16px] w-full" data-node-id="411:2977" data-name="Frame">
               <p className="relative shrink-0" data-node-id="411:2978">
                 Sat, 12 Sep
@@ -205,7 +205,7 @@ export default function Component06AYourReturnDayChosen() {
               </p>
             </div>
           </div>
-          <div className="[word-break:break-word] bg-white content-stretch flex flex-col gap-[6px] items-start leading-[normal] not-italic overflow-clip p-[16px] relative rounded-[12px] shrink-0 text-[#636363] w-full whitespace-nowrap" data-node-id="411:2982" data-name="Day · Sun, 13 Sep · 22:15">
+          <div className="[word-break:break-word] bg-white content-stretch flex flex-col gap-[6px] items-start leading-[normal] not-italic overflow-clip p-[16px] relative rounded-[16px] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.07),0px_2px_6px_0px_rgba(0,0,0,0.05)] shrink-0 text-[#636363] w-full whitespace-nowrap" data-node-id="411:2982" data-name="Day · Sun, 13 Sep · 22:15">
             <div className="content-stretch flex font-['Inter:Bold'] font-bold items-center justify-between overflow-clip relative shrink-0 text-[16px] w-full" data-node-id="411:2983" data-name="Frame">
               <p className="relative shrink-0" data-node-id="411:2984">
                 Sun, 13 Sep · 22:15
@@ -223,8 +223,8 @@ export default function Component06AYourReturnDayChosen() {
               </p>
             </div>
           </div>
-          <div className="bg-white content-stretch flex flex-col gap-[6px] items-start p-[16px] relative rounded-[12px] shrink-0 w-full" data-node-id="411:2989" data-name="Day · Mon, 14 Sep">
-            <div className="[word-break:break-word] content-stretch flex font-['Inter:Bold'] font-bold h-[71px] items-center justify-between leading-[normal] not-italic overflow-clip relative shrink-0 text-[#1d1d1d] text-[16px] w-full whitespace-nowrap" data-node-id="411:2990" data-name="Frame">
+          <div className="bg-white content-stretch flex flex-col gap-[6px] items-start p-[16px] relative rounded-[16px] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.07),0px_2px_6px_0px_rgba(0,0,0,0.05)] shrink-0 w-full" data-node-id="411:2989" data-name="Day · Mon, 14 Sep">
+            <div className="[word-break:break-word] content-stretch flex font-['Inter:Bold'] font-bold items-center justify-between leading-[normal] not-italic overflow-clip relative shrink-0 text-[#1d1d1d] text-[16px] w-full whitespace-nowrap" data-node-id="411:2990" data-name="Frame">
               <p className="relative shrink-0" data-node-id="411:2991">
                 Mon, 14 Sep
               </p>
@@ -248,8 +248,8 @@ export default function Component06AYourReturnDayChosen() {
               </div>
             </div>
           </div>
-          <div className="[word-break:break-word] bg-white content-stretch flex flex-col gap-[6px] items-start leading-[normal] not-italic p-[16px] relative rounded-[12px] shrink-0 w-full" data-node-id="411:2997" data-name="Day · Tue, 15 Sep">
-            <div className="content-stretch flex font-['Inter:Bold'] font-bold h-[42px] items-center justify-between overflow-clip relative shrink-0 text-[#1d1d1d] text-[16px] w-full whitespace-nowrap" data-node-id="411:2998" data-name="Frame">
+          <div className="[word-break:break-word] bg-white content-stretch flex flex-col gap-[6px] items-start leading-[normal] not-italic p-[16px] relative rounded-[16px] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.07),0px_2px_6px_0px_rgba(0,0,0,0.05)] shrink-0 w-full" data-node-id="411:2997" data-name="Day · Tue, 15 Sep">
+            <div className="content-stretch flex font-['Inter:Bold'] font-bold items-center justify-between overflow-clip relative shrink-0 text-[#1d1d1d] text-[16px] w-full whitespace-nowrap" data-node-id="411:2998" data-name="Frame">
               <p className="relative shrink-0" data-node-id="411:2999">
                 Tue, 15 Sep
               </p>
@@ -266,8 +266,8 @@ export default function Component06AYourReturnDayChosen() {
               </p>
             </div>
           </div>
-          <div className="[word-break:break-word] bg-white content-stretch flex flex-col gap-[6px] items-start leading-[normal] not-italic p-[16px] relative rounded-[12px] shrink-0 w-full" data-node-id="411:3002" data-name="Day · Wed, 16 Sep">
-            <div className="content-stretch flex font-['Inter:Bold'] font-bold h-[42px] items-center justify-between overflow-clip relative shrink-0 text-[#1d1d1d] text-[16px] w-full whitespace-nowrap" data-node-id="411:3003" data-name="Frame">
+          <div className="[word-break:break-word] bg-white content-stretch flex flex-col gap-[6px] items-start leading-[normal] not-italic p-[16px] relative rounded-[16px] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.07),0px_2px_6px_0px_rgba(0,0,0,0.05)] shrink-0 w-full" data-node-id="411:3002" data-name="Day · Wed, 16 Sep">
+            <div className="content-stretch flex font-['Inter:Bold'] font-bold items-center justify-between overflow-clip relative shrink-0 text-[#1d1d1d] text-[16px] w-full whitespace-nowrap" data-node-id="411:3003" data-name="Frame">
               <p className="relative shrink-0" data-node-id="411:3004">
                 Wed, 16 Sep
               </p>
@@ -284,8 +284,8 @@ export default function Component06AYourReturnDayChosen() {
               </p>
             </div>
           </div>
-          <div className="[word-break:break-word] bg-white border-2 border-[#c54646] border-solid content-stretch flex flex-col gap-[6px] items-start leading-[normal] not-italic p-[16px] relative rounded-[12px] shrink-0 w-full" data-node-id="411:3007" data-name="Day · Thu, 17 Sep">
-            <div className="content-stretch flex font-['Inter:Bold'] font-bold h-[42px] items-center justify-between overflow-clip relative shrink-0 text-[#1d1d1d] text-[16px] w-full whitespace-nowrap" data-node-id="411:3008" data-name="Frame">
+          <div className="[word-break:break-word] bg-white border-2 border-[#c54646] border-solid content-stretch flex flex-col gap-[6px] items-start leading-[normal] not-italic p-[16px] relative rounded-[16px] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.07),0px_2px_6px_0px_rgba(0,0,0,0.05)] shrink-0 w-full" data-node-id="411:3007" data-name="Day · Thu, 17 Sep">
+            <div className="content-stretch flex font-['Inter:Bold'] font-bold items-center justify-between overflow-clip relative shrink-0 text-[#1d1d1d] text-[16px] w-full whitespace-nowrap" data-node-id="411:3008" data-name="Frame">
               <p className="relative shrink-0" data-node-id="411:3009">
                 Thu, 17 Sep
               </p>

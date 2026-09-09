@@ -1889,7 +1889,11 @@ function tradeRows(d, pick){
   const fare = i => fareOfBus(d,i);
   const out = [], taken = {};
   const add = (why, i) => { if(i==null || taken[i] || out.length>=3) return; taken[i]=1; out.push({why:why, i:i}); };
-  const cheapest = list.slice().sort((a,b)=>fare(a)-fare(b))[0];
+  // Only a row if it actually beats the pick on price. On the cheapest bus of the day the old
+  // rule still printed the next cheapest and labelled it "Cheapest ... ₹30 more", which is the
+  // one thing that row must never say.
+  const cheaper = list.slice().sort((a,b)=>fare(a)-fare(b))[0];
+  const cheapest = (cheaper!=null && fare(cheaper) < fare(pick)) ? cheaper : null;
   // A rating is only evidence above the vote floor, so a 4.9 from eleven people never wins this.
   const rateable = list.filter(i => rated(i).votes >= VOTE_FLOOR);
   const best = rateable.slice().sort((a,b)=> rated(b).rating-rated(a).rating || fare(a)-fare(b))[0];

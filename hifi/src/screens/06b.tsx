@@ -161,8 +161,8 @@ export default function Component06BYourReturnDayCannotChange() {
           </p>
         </div>
         <div className="content-stretch flex flex-col gap-[16px] items-start relative shrink-0 w-full" data-node-id="521:3823" data-name="Days">
-          <div className="[word-break:break-word] bg-white content-stretch flex flex-col gap-[6px] items-start leading-[normal] not-italic p-[16px] relative rounded-[12px] shrink-0 w-full" data-node-id="521:3858" data-name="Day · Fri, 18 Sep">
-            <div className="content-stretch flex font-['Inter:Bold'] font-bold h-[42px] items-center justify-between overflow-clip relative shrink-0 text-[#1d1d1d] text-[16px] w-full whitespace-nowrap" data-node-id="521:3859" data-name="Frame">
+          <div className="[word-break:break-word] bg-white content-stretch flex flex-col gap-[6px] items-start leading-[normal] not-italic p-[16px] relative rounded-[16px] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.07),0px_2px_6px_0px_rgba(0,0,0,0.05)] shrink-0 w-full" data-node-id="521:3858" data-name="Day · Fri, 18 Sep">
+            <div className="content-stretch flex font-['Inter:Bold'] font-bold items-center justify-between overflow-clip relative shrink-0 text-[#1d1d1d] text-[16px] w-full whitespace-nowrap" data-node-id="521:3859" data-name="Frame">
               <p className="relative shrink-0" data-node-id="521:3860">
                 Fri, 18 Sep
               </p>
@@ -179,8 +179,8 @@ export default function Component06BYourReturnDayCannotChange() {
               </p>
             </div>
           </div>
-          <div className="[word-break:break-word] bg-white content-stretch flex flex-col gap-[6px] items-start leading-[normal] not-italic p-[16px] relative rounded-[12px] shrink-0 w-full" data-node-id="521:3865" data-name="Day · Sat, 19 Sep">
-            <div className="content-stretch flex font-['Inter:Bold'] font-bold h-[42px] items-center justify-between overflow-clip relative shrink-0 text-[#1d1d1d] text-[16px] w-full whitespace-nowrap" data-node-id="521:3866" data-name="Frame">
+          <div className="[word-break:break-word] bg-white content-stretch flex flex-col gap-[6px] items-start leading-[normal] not-italic p-[16px] relative rounded-[16px] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.07),0px_2px_6px_0px_rgba(0,0,0,0.05)] shrink-0 w-full" data-node-id="521:3865" data-name="Day · Sat, 19 Sep">
+            <div className="content-stretch flex font-['Inter:Bold'] font-bold items-center justify-between overflow-clip relative shrink-0 text-[#1d1d1d] text-[16px] w-full whitespace-nowrap" data-node-id="521:3866" data-name="Frame">
               <p className="relative shrink-0" data-node-id="521:3867">
                 Sat, 19 Sep
               </p>
@@ -197,8 +197,8 @@ export default function Component06BYourReturnDayCannotChange() {
               </p>
             </div>
           </div>
-          <div className="[word-break:break-word] bg-white content-stretch flex flex-col gap-[6px] items-start leading-[normal] not-italic p-[16px] relative rounded-[12px] shrink-0 w-full" data-node-id="521:3872" data-name="Day · Sun, 20 Sep">
-            <div className="content-stretch flex font-['Inter:Bold'] font-bold h-[42px] items-center justify-between overflow-clip relative shrink-0 text-[#1d1d1d] text-[16px] w-full whitespace-nowrap" data-node-id="521:3873" data-name="Frame">
+          <div className="[word-break:break-word] bg-white content-stretch flex flex-col gap-[6px] items-start leading-[normal] not-italic p-[16px] relative rounded-[16px] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.07),0px_2px_6px_0px_rgba(0,0,0,0.05)] shrink-0 w-full" data-node-id="521:3872" data-name="Day · Sun, 20 Sep">
+            <div className="content-stretch flex font-['Inter:Bold'] font-bold items-center justify-between overflow-clip relative shrink-0 text-[#1d1d1d] text-[16px] w-full whitespace-nowrap" data-node-id="521:3873" data-name="Frame">
               <p className="relative shrink-0" data-node-id="521:3874">
                 Sun, 20 Sep
               </p>
@@ -215,8 +215,8 @@ export default function Component06BYourReturnDayCannotChange() {
               </p>
             </div>
           </div>
-          <div className="bg-white border-2 border-[#c54646] border-solid content-stretch flex flex-col gap-[6px] items-start p-[16px] relative rounded-[12px] shrink-0 w-full" data-node-id="521:3848" data-name="Day · Mon, 21 Sep">
-            <div className="[word-break:break-word] content-stretch flex font-['Inter:Bold'] font-bold h-[71px] items-center justify-between leading-[normal] not-italic overflow-clip relative shrink-0 text-[#1d1d1d] text-[16px] w-full whitespace-nowrap" data-node-id="521:3849" data-name="Frame">
+          <div className="bg-white border-2 border-[#c54646] border-solid content-stretch flex flex-col gap-[6px] items-start p-[16px] relative rounded-[16px] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.07),0px_2px_6px_0px_rgba(0,0,0,0.05)] shrink-0 w-full" data-node-id="521:3848" data-name="Day · Mon, 21 Sep">
+            <div className="[word-break:break-word] content-stretch flex font-['Inter:Bold'] font-bold items-center justify-between leading-[normal] not-italic overflow-clip relative shrink-0 text-[#1d1d1d] text-[16px] w-full whitespace-nowrap" data-node-id="521:3849" data-name="Frame">
               <p className="relative shrink-0" data-node-id="521:3850">
                 Mon, 21 Sep
               </p>
