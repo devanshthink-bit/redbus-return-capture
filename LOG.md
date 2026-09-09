@@ -8436,3 +8436,36 @@ LEARNED  ·  2026-09-09  ·  molades-none
 the cursor.** Both faults here were real, and the one Devansh could see was the cheaper one. Worth
 checking the affordance whenever a hotspot is attached to a container rather than to the thing being
 tapped: `markHot` adds `hf-hot` to what it wires, a hand-written section listener adds nothing.
+
+DECISION  ·  2026-09-09  ·  molades-none  ·  Source: user
+**One sheet for both legs, not one sheet each.** Devansh sent `ReviewDetails.PNG` — the sheet behind
+Pay's *View details* — asked for it in Figma and the build, and left the shape to me: *"in our
+concept we are adding a return trip also. You decide how you're going to show it. Should we show
+onward and return details within one sheet or different sheets?"*
+
+**One sheet, the two legs stacked and labelled ONWARD / RETURN.** Three reasons:
+
+1. **The control that opens it covers the whole booking.** It sits on the line *Review booking · 1
+   Passenger · View details*. Two sheets would need a second control that the screen does not have,
+   or a tab bar over content this short.
+2. **The construct's whole claim is that the return is part of this purchase.** Splitting the sheet
+   would say the opposite of the screen it opens from — and this is the one screen where the
+   traveller checks what they are about to pay for as a single thing.
+3. **It is short.** Per leg: an operator line, a four-line timeline, a seat pill. Two of those is a
+   normal scroll, not a wall.
+
+Everything else follows the real sheet exactly: title with a ×, operator and vehicle, a dotted rail
+between the two stops with *Approx. 8h 5m* on it, each stop's full address, then **Seat details**
+with the green seat pill. The one addition is the leg label, and it uses the ONWARD / RETURN wording
+already on Review.
+
+Built as `09a · Booking details`, a **sheet and not a step** — `OVERLAY` and `SKIP`, so prev, next
+and the arrow keys walk past it and Back on Pay still reaches the points screen. Opened by *View
+details*, closed by its ×.
+
+Parity **2.81%** over 1245pt. Walks 01 ↔ 16 unchanged, one screen visible, no JS errors.
+
+NOTE  ·  2026-09-09  ·  molades-none
+**The hi-fi is 28 screens.** `09a` reuses a name that was deleted long ago: §20's "three fake scroll
+positions" records an older `09a` that was 09 shifted to `y = −354`. Nothing in the new frame
+descends from it; CONTEXT §21 now says so, so nobody reads the old entry as history of this one.

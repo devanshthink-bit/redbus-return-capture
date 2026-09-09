@@ -244,7 +244,7 @@
 
   // 01a is a bottom sheet, not a step: it opens from the date row on Home and closes back to it.
   // Leaving it in the linear order meant Back from the bus list landed on an open calendar.
-  var OVERLAY = { '01a': 1, '03a': 1, '04a': 1 };
+  var OVERLAY = { '01a': 1, '03a': 1, '04a': 1, '09a': 1 };
   // Frames the linear walk must step over. Overlays are sheets that close back to their opener;
   // 05a and 05b are not steps at all -- they are the two answered states of the calendar, and the
   // picker moves between them itself. Left in the order, Continue on 05a walked to 05b, so a
@@ -253,7 +253,7 @@
   // Review trip on 06a walked to 06b -- and of 07, which is a detour off the fold's All-N-buses
   // link and returns to whichever frame opened it. The rail still reaches all of them; only
   // next / prev / arrow keys skip.
-  var SKIP = { '01a': 1, '03a': 1, '04a': 1, '05a': 1, '05b': 1,
+  var SKIP = { '01a': 1, '03a': 1, '04a': 1, '05a': 1, '05b': 1, '09a': 1,
                '06a': 1, '06b': 1, '07': 1 };
   // Which screen a state frame belongs to, for Back.
   var BACK_AS = { '05a': '05', '05b': '05', '06a': '06', '06b': '06' };
@@ -1511,6 +1511,34 @@
         if (days && days.firstChild) blinkAt(days.firstChild);
       }, true);
     });
+  })();
+
+  // 09 / 09a · "View details" opens the booking-details sheet, and the × closes it. A sheet is not
+  //      a step, so 09a sits in OVERLAY and SKIP: prev, next and the arrow keys walk straight past
+  //      it, and Back on Pay still goes to the points screen rather than into the sheet.
+  //
+  //      The real app shows one leg. This booking has two, and they go in **one sheet, stacked and
+  //      labelled** rather than in a sheet each: the control that opens it -- "Review booking ·
+  //      1 Passenger · View details" -- covers the whole booking, and the construct's whole claim
+  //      is that the return is part of this purchase and not a second one. Two sheets would say the
+  //      opposite of the screen they open from.
+  (function bookingDetails(){
+    var i09 = ORDER.indexOf('09'), i09a = ORDER.indexOf('09a');
+    if (i09 < 0 || i09a < 0) return;
+    var open = screens[i09].querySelector('[data-node-id="109:1003"]');      // View details
+    if (open) {
+      open.classList.add('hf-hot');
+      open.addEventListener('click', function(e){
+        e.preventDefault(); e.stopPropagation(); go(i09a);
+      }, true);
+    } else console.warn('09: no View details link');
+    var shut = screens[i09a].querySelector('[data-name="Button / Close"]');
+    if (shut) {
+      shut.classList.add('hf-hot');
+      shut.addEventListener('click', function(e){
+        e.preventDefault(); e.stopPropagation(); go(i09);
+      }, true);
+    } else console.warn('09a: no close button');
   })();
 
   // 08 · the three return actions. CONTEXT §18 has always said Review leads to 07, 08a and 08b as
