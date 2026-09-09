@@ -1,7 +1,22 @@
 const imgGlyph = "assets/f987e112-3f21-4093-9c91-abca9b06aa32.svg";
-const imgArtPrimoOnNavy = "assets/8deeba4a-68fe-4ab2-9412-204f7442f323.png";
-const imgIconChevronLeft = "assets/7e4f6672-6a99-4a56-99f6-735b5ad71848.svg";
-const imgStatusIcons = "assets/fb99b813-0f9f-41bd-b92a-d43df6ae994b.svg";
+const imgArtCoverPerson = "assets/72967248-2e1c-400f-80ee-fe053281efb7.png";
+const imgArtCoverHospital = "assets/23c4ba8d-644c-4bc3-aca4-7b8baa86db6a.png";
+const imgArtCoverLuggage = "assets/3d6859c2-c952-47f7-bcc3-43c19169e86d.png";
+const imgLogoAcko = "assets/df7717f2-98d0-479b-9f06-ff1a14a74588.png";
+const imgIconWalletCard = "assets/b186c55c-0e97-4e28-a0d1-693c1fed4aa5.png";
+const imgIconBank = "assets/078a1a5a-f93d-4d09-ae91-1a1fbaf0db7b.png";
+const imgArtShieldTripGuarantee = "assets/5161d008-0c65-4d54-b9d7-a0217205f01e.png";
+const imgIconHourglass = "assets/e138f8f0-40ec-4703-bdc6-eb2b6e0e7076.svg";
+const imgArtShieldFreeCancellation = "assets/65478840-285f-4467-9ec1-59835f0e3be3.png";
+const imgIconAddPassenger = "assets/f0619e74-5450-4cdb-87f0-cfb124707f41.png";
+const imgLogoWhatsApp = "assets/18ed33f2-f102-4b20-a862-8d34f5eba577.png";
+const imgIconPin = "assets/3777b767-7f58-4fa3-a838-08fbbf558faf.png";
+const imgIconPhoneFilled = "assets/b7a189dc-cfdc-461b-8d25-8e90c4118b02.png";
+const imgIconMail = "assets/44c449a8-5085-4dd3-8cd1-f726443b14a3.png";
+const imgIconSeat = "assets/c57a0be4-5309-4ee6-8c4f-ba764ff18038.png";
+const imgArtPrimoOnNavy = "assets/fa5d30e0-7fdf-4efa-a4d8-a3f163de5175.png";
+const imgIconChevronLeft = "assets/c52a55a0-4bd0-4f7a-a9fa-205a96aa0d14.svg";
+const imgStatusIcons = "assets/091fbdca-8e2e-4f59-80c8-bfdc341f332f.svg";
 const imgAvatar = "assets/88739341-fbd3-4bc2-bc34-65ecb2911285.svg";
 const imgRadio = "assets/f410a566-6990-4296-9328-11bace6bed32.svg";
 
@@ -28,6 +43,126 @@ function ButtonPrimary({ className, label = "Search buses", showIcon = true }: B
       <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[20px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/on-accent,white)] whitespace-nowrap" data-node-id="18:53">
         {label}
       </p>
+    </div>
+  );
+}
+
+function ArtCoverPerson({ className }: { className?: string }) {
+  return (
+    <div className={className || "overflow-clip relative size-[26px]"} data-node-id="715:4164" data-name="Art / Cover · Person">
+      <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgArtCoverPerson} />
+    </div>
+  );
+}
+
+function ArtCoverHospital({ className }: { className?: string }) {
+  return (
+    <div className={className || "overflow-clip relative size-[26px]"} data-node-id="715:4163" data-name="Art / Cover · Hospital">
+      <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgArtCoverHospital} />
+    </div>
+  );
+}
+
+function ArtCoverLuggage({ className }: { className?: string }) {
+  return (
+    <div className={className || "overflow-clip relative size-[26px]"} data-node-id="715:4162" data-name="Art / Cover · Luggage">
+      <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgArtCoverLuggage} />
+    </div>
+  );
+}
+
+function LogoAcko({ className }: { className?: string }) {
+  return (
+    <div className={className || "h-[18px] overflow-clip relative w-[62px]"} data-node-id="715:4161" data-name="Logo / ACKO">
+      <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgLogoAcko} />
+    </div>
+  );
+}
+
+function IconWalletCard({ className }: { className?: string }) {
+  return (
+    <div className={className || "h-[20px] overflow-clip relative w-[22px]"} data-node-id="715:4167" data-name="Icon / Wallet card">
+      <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgIconWalletCard} />
+    </div>
+  );
+}
+
+function IconBank({ className }: { className?: string }) {
+  return (
+    <div className={className || "h-[20px] overflow-clip relative w-[22px]"} data-node-id="715:4166" data-name="Icon / Bank">
+      <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgIconBank} />
+    </div>
+  );
+}
+
+function ArtShieldTripGuarantee({ className }: { className?: string }) {
+  return (
+    <div className={className || "overflow-clip relative size-[32px]"} data-node-id="715:4160" data-name="Art / Shield · Trip Guarantee">
+      <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgArtShieldTripGuarantee} />
+    </div>
+  );
+}
+
+function IconHourglass({ className }: { className?: string }) {
+  return (
+    <div className={className || "relative size-[20px]"} data-node-id="33:92" data-name="Icon / Hourglass">
+      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconHourglass} />
+    </div>
+  );
+}
+
+function ArtShieldFreeCancellation({ className }: { className?: string }) {
+  return (
+    <div className={className || "overflow-clip relative size-[32px]"} data-node-id="715:4159" data-name="Art / Shield · Free Cancellation">
+      <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgArtShieldFreeCancellation} />
+    </div>
+  );
+}
+
+function IconAddPassenger({ className }: { className?: string }) {
+  return (
+    <div className={className || "h-[20px] overflow-clip relative w-[22px]"} data-node-id="715:4158" data-name="Icon / Add passenger">
+      <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgIconAddPassenger} />
+    </div>
+  );
+}
+
+function LogoWhatsApp({ className }: { className?: string }) {
+  return (
+    <div className={className || "overflow-clip relative size-[20px]"} data-node-id="715:4157" data-name="Logo / WhatsApp">
+      <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgLogoWhatsApp} />
+    </div>
+  );
+}
+
+function IconPin({ className }: { className?: string }) {
+  return (
+    <div className={className || "overflow-clip relative size-[20px]"} data-node-id="715:4156" data-name="Icon / Pin">
+      <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgIconPin} />
+    </div>
+  );
+}
+
+function IconPhoneFilled({ className }: { className?: string }) {
+  return (
+    <div className={className || "overflow-clip relative size-[20px]"} data-node-id="715:4155" data-name="Icon / Phone filled">
+      <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgIconPhoneFilled} />
+    </div>
+  );
+}
+
+function IconMail({ className }: { className?: string }) {
+  return (
+    <div className={className || "overflow-clip relative size-[20px]"} data-node-id="715:4154" data-name="Icon / Mail">
+      <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgIconMail} />
+    </div>
+  );
+}
+
+function IconSeat({ className }: { className?: string }) {
+  return (
+    <div className={className || "overflow-clip relative size-[18px]"} data-node-id="715:4165" data-name="Icon / Seat">
+      <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgIconSeat} />
     </div>
   );
 }
@@ -155,20 +290,21 @@ export default function Component08ReviewYourTrip() {
               </p>
             </div>
           </div>
-          <div className="[word-break:break-word] content-stretch cursor-pointer flex font-['Inter:Bold'] font-bold gap-[24px] items-start leading-[0] not-italic pt-[4px] relative shrink-0 text-[#1b1bd1] text-[14px] w-full whitespace-nowrap" data-node-id="221:1871" data-name="Return actions">
-            <a className="block relative shrink-0" data-node-id="221:1872">
+          <div className="[word-break:break-word] content-stretch flex font-['Inter:Bold'] font-bold gap-[24px] items-start not-italic pt-[4px] relative shrink-0 text-[#1b1bd1] text-[14px] w-full whitespace-nowrap" data-node-id="221:1871" data-name="Return actions">
+            <a className="block cursor-pointer leading-[0] relative shrink-0" data-node-id="221:1872">
               <p className="leading-[18px]">Change seat</p>
             </a>
-            <a className="block relative shrink-0" data-node-id="221:1873">
-              <p className="leading-[18px]">Change points</p>
-            </a>
-            <a className="block relative shrink-0" data-node-id="426:3103">
+            <p className="leading-[18px] relative shrink-0" data-node-id="221:1873">
+              Change points
+            </p>
+            <a className="block cursor-pointer leading-[0] relative shrink-0" data-node-id="426:3103">
               <p className="leading-[18px]">Change bus</p>
             </a>
           </div>
         </div>
         <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="212:2085" data-name="Passengers">
-          <div className="bg-[#ecebf2] content-stretch flex items-start px-[12px] py-[6px] relative rounded-[8px] shrink-0" data-node-id="212:2086" data-name="Chip">
+          <div className="bg-[#ecebf2] content-stretch flex gap-[8px] items-center px-[12px] py-[6px] relative rounded-[8px] shrink-0" data-node-id="212:2086" data-name="Chip">
+            <IconSeat className="relative shrink-0 size-[18px]" />
             <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[18px] not-italic relative shrink-0 text-[13px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="212:2087">
               1 Passenger
             </p>
@@ -197,31 +333,26 @@ export default function Component08ReviewYourTrip() {
             Ticket details will be sent to
           </p>
           <div className="h-[14px] relative shrink-0 w-px" data-node-id="213:2053" data-name="gap" />
-          <div className="[word-break:break-word] content-stretch flex font-['Inter:Regular'] font-normal gap-[12px] items-center not-italic pb-[10px] relative shrink-0 w-full whitespace-nowrap" data-node-id="213:2054" data-name="Row">
-            <p className="leading-[20px] relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)]" data-node-id="213:2055">
-              ✉︎
-            </p>
-            <p className="leading-[22px] relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="213:2056">
+          <div className="content-stretch flex gap-[12px] items-center pb-[10px] relative shrink-0 w-full" data-node-id="213:2054" data-name="Row">
+            <IconMail className="relative shrink-0 size-[20px]" />
+            <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="213:2056">
               devanshoffc@gmail.com
             </p>
           </div>
-          <div className="[word-break:break-word] content-stretch flex font-['Inter:Regular'] font-normal gap-[12px] items-center not-italic pb-[10px] relative shrink-0 w-full whitespace-nowrap" data-node-id="213:2057" data-name="Row">
-            <p className="leading-[20px] relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)]" data-node-id="213:2058">
-              ☎︎
-            </p>
-            <p className="leading-[22px] relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="213:2059">
+          <div className="content-stretch flex gap-[12px] items-center pb-[10px] relative shrink-0 w-full" data-node-id="213:2057" data-name="Row">
+            <IconPhoneFilled className="relative shrink-0 size-[20px]" />
+            <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="213:2059">
               +91 6396483499
             </p>
           </div>
-          <div className="[word-break:break-word] content-stretch flex font-['Inter:Regular'] font-normal gap-[12px] items-center not-italic pb-[10px] relative shrink-0 w-full whitespace-nowrap" data-node-id="213:2060" data-name="Row">
-            <p className="leading-[20px] relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)]" data-node-id="213:2061">
-              ⌖
-            </p>
-            <p className="leading-[22px] relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="213:2062">
+          <div className="content-stretch flex gap-[12px] items-center pb-[10px] relative shrink-0 w-full" data-node-id="213:2060" data-name="Row">
+            <IconPin className="relative shrink-0 size-[20px]" />
+            <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="213:2062">
               Karnataka
             </p>
           </div>
-          <div className="bg-[#dff3d8] content-stretch flex items-start px-[12px] py-[7px] relative rounded-[8px] shrink-0 w-full" data-node-id="213:2063" data-name="Strip">
+          <div className="bg-[#dff3d8] content-stretch flex gap-[8px] items-center px-[12px] py-[7px] relative rounded-[8px] shrink-0 w-full" data-node-id="213:2063" data-name="Strip">
+            <LogoWhatsApp className="relative shrink-0 size-[20px]" />
             <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[18px] not-italic relative shrink-0 text-[#1d1d1d] text-[13px] whitespace-nowrap" data-node-id="213:2064">
               WhatsApp communication enabled
             </p>
@@ -238,8 +369,11 @@ export default function Component08ReviewYourTrip() {
             0/1 selected
           </p>
           <div className="h-[16px] relative shrink-0 w-px" data-node-id="213:2070" data-name="gap" />
-          <div className="bg-[#f5dcdc] content-stretch flex items-start justify-center py-[13px] relative rounded-[999px] shrink-0 w-full" data-node-id="213:2071" data-name="Add passenger">
-            <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-pre" data-node-id="213:2072">{`＋  Add new passenger`}</p>
+          <div className="bg-[#f5dcdc] content-stretch flex gap-[10px] items-center justify-center py-[13px] relative rounded-[999px] shrink-0 w-full" data-node-id="213:2071" data-name="Add passenger">
+            <IconAddPassenger className="h-[20px] relative shrink-0 w-[22px]" />
+            <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="213:2072">
+              Add new passenger
+            </p>
           </div>
           <div className="h-[16px] relative shrink-0 w-px" data-node-id="213:2073" data-name="gap" />
           <div className="bg-[#eaeaf0] h-px relative shrink-0 w-full" data-node-id="213:2074" data-name="Divider" />
@@ -280,9 +414,7 @@ export default function Component08ReviewYourTrip() {
             </div>
             <div className="flex-[1_0_0] h-px min-w-px relative" data-node-id="213:2094" data-name="spacer" />
             <div className="bg-[#f7e6ea] content-stretch flex items-start p-[7px] relative rounded-[999px] shrink-0" data-node-id="213:2088" data-name="Icon">
-              <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="213:2089">
-                🛡
-              </p>
+              <ArtShieldFreeCancellation className="relative shrink-0 size-[32px]" />
             </div>
           </div>
           <div className="h-[14px] relative shrink-0 w-px" data-node-id="213:2095" data-name="gap" />
@@ -323,7 +455,7 @@ export default function Component08ReviewYourTrip() {
               <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgRadio} />
             </div>
           </div>
-          <div className="content-stretch flex flex-col gap-[4px] items-start pt-[16px] relative shrink-0 w-full" data-node-id="516:3805" data-name="What declining gives you">
+          <div className="content-stretch flex flex-col gap-[4px] items-start overflow-clip pt-[16px] relative shrink-0 w-full" data-node-id="516:3805" data-name="What declining gives you">
             <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[16px] w-full" data-node-id="516:3806">
               Without it, you still get a part refund
             </p>
@@ -359,9 +491,7 @@ export default function Component08ReviewYourTrip() {
             </div>
             <div className="flex-[1_0_0] h-px min-w-px relative" data-node-id="214:2055" data-name="spacer" />
             <div className="bg-[#ecebf6] content-stretch flex items-start p-[7px] relative rounded-[999px] shrink-0" data-node-id="214:2049" data-name="Icon">
-              <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="214:2050">
-                ⏳
-              </p>
+              <IconHourglass className="relative shrink-0 size-[22px]" />
             </div>
           </div>
           <div className="h-[14px] relative shrink-0 w-px" data-node-id="214:2056" data-name="gap" />
@@ -411,9 +541,7 @@ export default function Component08ReviewYourTrip() {
             </div>
             <div className="flex-[1_0_0] h-px min-w-px relative" data-node-id="214:2078" data-name="spacer" />
             <div className="bg-[#f7e6ea] content-stretch flex items-start p-[7px] relative rounded-[999px] shrink-0" data-node-id="214:2072" data-name="Icon">
-              <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="214:2073">
-                🛡
-              </p>
+              <ArtShieldTripGuarantee className="relative shrink-0 size-[32px]" />
             </div>
           </div>
           <div className="h-[12px] relative shrink-0 w-px" data-node-id="214:2079" data-name="gap" />
@@ -421,25 +549,31 @@ export default function Component08ReviewYourTrip() {
             Get back full ticket price + ₹500 extra if your bus gets cancelled by the operator. View details
           </p>
           <div className="h-[14px] relative shrink-0 w-px" data-node-id="214:2081" data-name="gap" />
-          <div className="[word-break:break-word] bg-[#efeef6] content-stretch flex flex-col gap-[8px] items-start justify-center not-italic py-[14px] relative rounded-[10px] shrink-0 w-full" data-node-id="214:2082" data-name="Breakdown">
-            <p className="font-['Inter:Regular'] font-normal leading-[20px] relative shrink-0 text-[14px] text-[color:var(--text\/primary,#1d1d1d)] text-center w-full" data-node-id="214:2083">{`You'll get ₹3,419 refund if bus gets cancelled`}</p>
-            <div className="content-stretch flex gap-[16px] items-center justify-center relative shrink-0 w-full whitespace-nowrap" data-node-id="214:2084" data-name="Row">
-              <div className="content-stretch flex flex-col gap-px items-center relative shrink-0 text-center" data-node-id="214:2085" data-name="Col">
-                <p className="font-['Inter:Bold'] font-bold leading-[24px] relative shrink-0 text-[18px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="214:2086">
-                  ₹2,919
-                </p>
-                <p className="font-['Inter:Regular'] font-normal leading-[18px] relative shrink-0 text-[13px] text-[color:var(--text\/secondary,#636363)]" data-node-id="214:2087">
+          <div className="bg-[#efeef6] content-stretch flex flex-col gap-[8px] items-start justify-center py-[14px] relative rounded-[10px] shrink-0 w-full" data-node-id="214:2082" data-name="Breakdown">
+            <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/primary,#1d1d1d)] text-center w-full" data-node-id="214:2083">{`You'll get ₹3,419 refund if bus gets cancelled`}</p>
+            <div className="content-stretch flex gap-[16px] items-center justify-center relative shrink-0 w-full" data-node-id="214:2084" data-name="Row">
+              <div className="content-stretch flex flex-col gap-px items-center relative shrink-0" data-node-id="214:2085" data-name="Col">
+                <div className="content-stretch flex gap-[6px] items-center overflow-clip relative shrink-0" data-node-id="715:4183" data-name="Amount">
+                  <IconBank className="h-[20px] relative shrink-0 w-[22px]" />
+                  <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[24px] not-italic relative shrink-0 text-[18px] text-[color:var(--text\/primary,#1d1d1d)] text-center whitespace-nowrap" data-node-id="214:2086">
+                    ₹2,919
+                  </p>
+                </div>
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[18px] not-italic relative shrink-0 text-[13px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="214:2087">
                   Full refund
                 </p>
               </div>
-              <p className="font-['Inter:Bold'] font-bold leading-[24px] relative shrink-0 text-[#3a57e8] text-[18px]" data-node-id="214:2088">
+              <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[24px] not-italic relative shrink-0 text-[#3a57e8] text-[18px] whitespace-nowrap" data-node-id="214:2088">
                 +
               </p>
-              <div className="content-stretch flex flex-col gap-px items-center relative shrink-0 text-center" data-node-id="214:2089" data-name="Col">
-                <p className="font-['Inter:Bold'] font-bold leading-[24px] relative shrink-0 text-[18px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="214:2090">
-                  ₹500
-                </p>
-                <p className="font-['Inter:Regular'] font-normal leading-[18px] relative shrink-0 text-[13px] text-[color:var(--text\/secondary,#636363)]" data-node-id="214:2091">
+              <div className="content-stretch flex flex-col gap-px items-center relative shrink-0" data-node-id="214:2089" data-name="Col">
+                <div className="content-stretch flex gap-[6px] items-center overflow-clip relative shrink-0" data-node-id="715:4185" data-name="Amount">
+                  <IconWalletCard className="h-[20px] relative shrink-0 w-[22px]" />
+                  <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[24px] not-italic relative shrink-0 text-[18px] text-[color:var(--text\/primary,#1d1d1d)] text-center whitespace-nowrap" data-node-id="214:2090">
+                    ₹500
+                  </p>
+                </div>
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[18px] not-italic relative shrink-0 text-[13px] text-[color:var(--text\/secondary,#636363)] text-center whitespace-nowrap" data-node-id="214:2091">
                   Cashback
                 </p>
               </div>
@@ -490,9 +624,7 @@ export default function Component08ReviewYourTrip() {
               </p>
             </div>
             <div className="flex-[1_0_0] h-px min-w-px relative" data-node-id="214:2115" data-name="spacer" />
-            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[18px] not-italic relative shrink-0 text-[#4b2fd6] text-[14px] whitespace-nowrap" data-node-id="214:2110">
-              ACKO
-            </p>
+            <LogoAcko className="h-[18px] relative shrink-0 w-[62px]" />
           </div>
           <div className="h-[12px] relative shrink-0 w-px" data-node-id="214:2116" data-name="gap" />
           <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] min-w-full not-italic relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-[min-content]" data-node-id="214:2117">
@@ -501,9 +633,7 @@ export default function Component08ReviewYourTrip() {
           <div className="h-[12px] relative shrink-0 w-px" data-node-id="214:2118" data-name="gap" />
           <div className="content-stretch flex gap-[12px] items-center py-[11px] relative shrink-0 w-full" data-node-id="214:2119" data-name="Cover">
             <div className="bg-[#efeef6] content-stretch flex items-start p-[7px] relative rounded-[999px] shrink-0" data-node-id="214:2120" data-name="Icon">
-              <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="214:2121">
-                🧳
-              </p>
+              <ArtCoverLuggage className="relative shrink-0 size-[26px]" />
             </div>
             <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Regular'] font-normal leading-[20px] min-w-px not-italic relative text-[14px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="214:2122">
               In the event of loss of luggage
@@ -515,9 +645,7 @@ export default function Component08ReviewYourTrip() {
           <div className="bg-[#eaeaf0] h-px relative shrink-0 w-full" data-node-id="214:2125" data-name="Divider" />
           <div className="content-stretch flex gap-[12px] items-center py-[11px] relative shrink-0 w-full" data-node-id="214:2126" data-name="Cover">
             <div className="bg-[#efeef6] content-stretch flex items-start p-[7px] relative rounded-[999px] shrink-0" data-node-id="214:2127" data-name="Icon">
-              <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="214:2128">
-                🏥
-              </p>
+              <ArtCoverHospital className="relative shrink-0 size-[26px]" />
             </div>
             <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Regular'] font-normal leading-[20px] min-w-px not-italic relative text-[14px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="214:2129">
               In the event of accidental hospitalisation
@@ -529,9 +657,7 @@ export default function Component08ReviewYourTrip() {
           <div className="bg-[#eaeaf0] h-px relative shrink-0 w-full" data-node-id="214:2132" data-name="Divider" />
           <div className="content-stretch flex gap-[12px] items-center py-[11px] relative shrink-0 w-full" data-node-id="214:2133" data-name="Cover">
             <div className="bg-[#efeef6] content-stretch flex items-start p-[7px] relative rounded-[999px] shrink-0" data-node-id="214:2134" data-name="Icon">
-              <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="214:2135">
-                ⚠️
-              </p>
+              <ArtCoverPerson className="relative shrink-0 size-[26px]" />
             </div>
             <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Regular'] font-normal leading-[20px] min-w-px not-italic relative text-[14px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="214:2136">
               In case of death/PTD/PPD

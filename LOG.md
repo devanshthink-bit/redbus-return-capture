@@ -8598,3 +8598,28 @@ somewhere else.
 **A sheet drawn as a full screen cannot behave like a sheet.** The frame is right as documentation —
 it shows what the sheet contains — but the presentation has to be runtime, over the live screen,
 or the backdrop is a photograph and the scroll is the page's.
+
+CHANGE  ·  2026-09-09  ·  molades-none  ·  Source: user
+**Review's icons are the real app's icons now.** Devansh: *"All the icons in the review screen are
+not matching with the exact icons used in the real app screenshot."*
+
+They were **literal text characters** — `✉︎ ☎︎ ⌖ 🛡 ⏳ 🧳 🏥 ⚠️ ＋` typed into text nodes, rendering as
+whatever glyph the platform font happened to carry. Fourteen are now real marks, lifted from
+`Picsew_TripReview.HEIC` rather than approximated: mail, phone, pin, the WhatsApp badge, the
+add-passenger figure, both maroon shields (Free Cancellation's ₹ and Trip Guarantee's redBus), the
+ACKO logo, the three cover illustrations, the seat glyph on the *1 Passenger* chip, and the bank and
+wallet marks either side of the refund split.
+
+Three of them are additions the real screen has and ours did not: the seat glyph on the passenger
+chip, the WhatsApp badge on its strip, and the two glyphs in front of the refund amounts.
+
+`Icon / Hourglass` already existed in the library and is used for *Free date change* instead of a
+fifteenth import.
+
+Parity: **08 moves 7.45% → 7.71%** at the same 3246pt. The bands read high from 1200 down, and the
+comparison at the worst of them (1400–1500, 18.4%) shows the two renders identical about 9px apart —
+a text-reflow ramp, not a step. **The earlier 7.45% was measured against a shot 127pt taller than
+the reference**, so the two numbers are not strictly comparable either way.
+
+Every node the shell reaches into on 08 was re-checked after the pull — all 21 present, and Change
+bus, Change seat, Change points, View details and Pay now all still land where they should.
