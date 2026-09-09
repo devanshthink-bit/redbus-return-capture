@@ -250,6 +250,8 @@
   // next / prev / arrow keys skip.
   var SKIP = { '01a': 1, '03a': 1, '04a': 1, '05a': 1, '05b': 1,
                '06a': 1, '06b': 1, '07': 1 };
+  // Which screen a state frame belongs to, for Back.
+  var BACK_AS = { '05a': '05', '05b': '05', '06a': '06', '06b': '06' };
   function nextOf(i){ i += 1; while (screens[i] && SKIP[ORDER[i]]) i += 1; return i; }
   function prevOf(i){ i -= 1; while (screens[i] && SKIP[ORDER[i]]) i -= 1; return i; }
 
@@ -337,7 +339,14 @@
     (FORWARD[ORDER[i]] || []).forEach(function(sel){
       n += markHot(sec, sel, 'hf-fwd', function(){ go(nextOf(i)); });
     });
-    markHot(sec, BACK, 'hf-back', function(){ go(prevOf(i)); });
+    markHot(sec, BACK, 'hf-back', function(){
+      // 05a/05b are states of 05 and 06a/06b are states of 06, so Back on one of them means
+      // "leave this screen", not "step to the sibling state". Without this, Back on 05a landed on
+      // 05 -- which since paintAll renders identically, looked like the button was dead.
+      // v4 is the reference: s-window back -> s-outpoints, s-picked back -> s-window.
+      var owner = BACK_AS[ORDER[i]];
+      go(prevOf(owner ? ORDER.indexOf(owner) : i));
+    });
     // last screen has nowhere to go; every other screen must have a way forward
     if (n === 0 && i < screens.length - 1) console.warn('no forward hotspot on ' + ORDER[i]);
   });
@@ -1051,6 +1060,7 @@
       // up to three alternatives, each a real control: tapping one swaps the bus
       var rows = tradeRows(chosen, pick), host = q(sec, m.trade);
       show(sec, m.otherHead, !!rows.length);
+      set(sec, m.otherHead, 'OTHER BUSES ON ' + label(chosen).toUpperCase());
       if (host) {
         var parent = host.parentNode, next = host.nextSibling;
         [].slice.call(parent.querySelectorAll('[data-hf-trade]')).forEach(function(x){ parent.removeChild(x); });

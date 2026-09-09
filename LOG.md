@@ -7813,3 +7813,46 @@ because 06a was written to bail out with nothing chosen. Once it renders the unc
 it can, identically to 06 — the close stops being a navigation at all. The cost is that the viewer's
 rail still calls the frame *Return chosen* while nothing is chosen; that is a label in the dev panel,
 not something in the phone.
+
+CHANGE  ·  2026-09-09  ·  molades-none  · Source: user
+**Consistent action buttons, Back that leaves the screen, and the fold's two labels renamed.**
+Devansh: *"make the sizes of all this buttons and their position consistent, back buttons in these
+screens and view all bus screen are not working properly, they are taking me somewhere else, change
+'your bus' … to 'recommended bus' and 'other buses that day' to 'other buses on 16 Sep'"*.
+
+**The buttons were a build drift, not a design inconsistency.** Figma has every primary in this flow
+`FILL`; the exported files for **06 and 06a were behind it** — no `flex-[1_0_0]`, so the button hugged
+its label and floated mid-bar with 145px of empty space to its right. 06 also still carried
+`opacity-40`, the dimmed state that the 8 Sep finding retired (85 real captures, zero dimmed
+primaries; the build blinks the day list instead). 07's was 46 tall against everyone else's 48. All
+four fixed, in Figma and the build. Measured: **48 tall, opacity 1, 16px from the right edge, on all
+five screens**. The widths still differ — 305 on 06, 186 on 06a — and that is correct: the button
+fills what the summary beside it leaves, and the summary is *Return / —* on one and
+*Return · Wed, 16 Sep · 23:55 / ₹1,090* on the other.
+
+**Back was stepping between states instead of leaving the screen.** Back on 05a went to 05 — and
+since `paintAll` renders those two identically, it looked like a dead button. v4 settles it:
+`s-window`'s Back goes to the points screen, `s-picked`'s goes to the calendar. A `BACK_AS` map
+makes a state frame answer to its owner's Back, so **05a/05b → 04** and **06a/06b → 05**. 07 already
+returned to whichever frame opened it.
+
+**The labels.** *YOUR BUS* → **RECOMMENDED BUS**, and *OTHER BUSES THAT DAY* → **OTHER BUSES ON
+WED, 16 SEP** — the actual chosen day, written by the shell, with Figma carrying a representative
+date on each frame.
+
+Diffs: **06 improved 7.25 → 5.79** — the button drift was real and worth 1.5 points — 06b 8.74 →
+8.91 on the longer label, 06a and 07 unchanged. Mean **5.71%**. Walk 01 → 16 unchanged.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**Patching a screen file instead of re-pulling it fixes what you looked at and freezes what you did
+not.** I patched 06/06a/06b for the card restyle and verified the card lines against a fresh pull —
+and that pull *also* contained `flex-[1_0_0]` on the action button, which the file had been missing
+for who knows how long. I compared the lines I had changed and read past the rest. **If a pull is in
+front of you, diff the whole thing, not the part you edited** — the witness is only a witness for
+what you actually check.
+
+Second: **the same three-state confusion has now produced four bugs** — Continue on 05a walking to
+05b, Review trip on 06a walking to 06b, the rail reaching states as if they were steps, and now Back
+stepping to a sibling. Every one came from state frames living in a linear order. `SKIP` and
+`BACK_AS` are the two halves of the answer: a state frame is not somewhere you go next, and it is
+not somewhere you came from.

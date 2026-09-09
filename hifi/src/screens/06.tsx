@@ -224,7 +224,7 @@ export default function Component06YourReturnPickADay() {
               —
             </p>
           </div>
-          <ButtonPrimary className="bg-[var(--surface\/accent,#c54646)] content-stretch drop-shadow-[0px_2px_3px_rgba(0,0,0,0.1)] flex gap-[10px] h-[48px] items-center justify-center opacity-40 px-[20px] relative rounded-[var(--radius\/full,999px)] shrink-0 w-[176px]" label="Review trip" showIcon={false} />
+          <ButtonPrimary className="bg-[var(--surface\/accent,#c54646)] content-stretch drop-shadow-[0px_2px_3px_rgba(0,0,0,0.1)] flex flex-[1_0_0] gap-[10px] h-[48px] items-center min-w-px justify-center px-[20px] relative rounded-[var(--radius\/full,999px)] shrink-0 w-[176px]" label="Review trip" showIcon={false} />
         </div>
       </div>
     </div>

@@ -304,7 +304,7 @@ export default function Component06AYourReturnDayChosen() {
           </div>
           <div className="border-[#c54646] border-l-2 border-solid content-stretch flex flex-col gap-[8px] items-start pb-[4px] pl-[14px] pt-[12px] relative shrink-0 w-full" data-node-id="413:2908" data-name="Bus fold">
             <p className="[word-break:break-word] font-['Inter:Semi_Bold'] font-semibold leading-[normal] not-italic relative shrink-0 text-[#8a8a95] text-[12px] tracking-[0.96px] whitespace-nowrap" data-node-id="413:2909">
-              YOUR BUS
+              RECOMMENDED BUS
             </p>
             <div className="bg-white content-stretch flex flex-col items-start relative rounded-[12px] shrink-0 w-full" data-node-id="414:2952" data-name="Your bus card">
               <div className="content-stretch drop-shadow-[0px_8px_12px_rgba(0,0,0,0.07),0px_2px_3px_rgba(0,0,0,0.05)] flex flex-col items-start overflow-clip relative rounded-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="413:2910" data-name="Card / Bus">
@@ -370,7 +370,7 @@ export default function Component06AYourReturnDayChosen() {
               </div>
             </div>
             <p className="[word-break:break-word] font-['Inter:Semi_Bold'] font-semibold leading-[normal] not-italic relative shrink-0 text-[#8a8a95] text-[12px] tracking-[0.96px] whitespace-nowrap" data-node-id="413:2968">
-              OTHER BUSES THAT DAY
+              OTHER BUSES ON THU, 17 SEP
             </p>
             <div className="bg-white content-stretch flex flex-col gap-[8px] items-start overflow-clip px-[16px] py-[12px] relative rounded-[12px] shrink-0 w-full" data-node-id="413:2969" data-name="Trade · Cheapest">
               <div className="content-stretch flex items-center justify-between overflow-clip relative shrink-0 w-full" data-node-id="413:2970" data-name="Top">
@@ -406,7 +406,7 @@ export default function Component06AYourReturnDayChosen() {
               ₹1,120
             </p>
           </div>
-          <ButtonPrimary className="bg-[var(--surface\/accent,#c54646)] content-stretch cursor-pointer drop-shadow-[0px_2px_3px_rgba(0,0,0,0.1)] flex gap-[10px] h-[48px] items-center justify-center px-[20px] relative rounded-[var(--radius\/full,999px)] shrink-0 w-[176px]" label="Review trip" showIcon={false} />
+          <ButtonPrimary className="bg-[var(--surface\/accent,#c54646)] content-stretch cursor-pointer drop-shadow-[0px_2px_3px_rgba(0,0,0,0.1)] flex flex-[1_0_0] gap-[10px] h-[48px] items-center min-w-px justify-center px-[20px] relative rounded-[var(--radius\/full,999px)] shrink-0 w-[176px]" label="Review trip" showIcon={false} />
         </div>
       </div>
     </div>
