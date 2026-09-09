@@ -8252,3 +8252,40 @@ reported `layoutSizingVertical: 'HUG'`, and still measured 307 against 368pt of 
 row hung outside the white card in the render while every property read back correct. Re-appending
 the two new children forced the reflow and the height snapped to 368. **Trust the render, not the
 property read**: the frame said HUG and was lying.
+
+CHANGE  ·  2026-09-09  ·  molades-none  ·  Source: user
+**11 · Ticket details is now the whole scrolling screen too.** From the same request and the same
+screenshot pair. It was one viewport — header, Seat Guarantee, the ticket, the note, one action row,
+Apple Wallet. It now carries, in the app's own order: the **tab strip** (Ticket details · Live
+tracking · Hotels · Safety), the **tripReward banner**, the ticket, the note, Apple Wallet, both
+ticket actions in **one card** (Change trip details · Review and cancel, with the refund window),
+the **scratch-card strip**, **Live tracking**, the full-bleed **Hotels** band with two stay cards and
+*View all Hotels*, **Safety Tips**, **View booking policy**, **View bus details**, **Boarding point
+details** with Directions / Bus stop, the **redBuddy** help card, **Travel policies** (five
+`Row / Policy` instances) and the **referral** card. 859 → 4020pt.
+
+**One section from the real screen is deliberately missing: Book return trip.** That card exists to
+sell a return on a one-way ticket. This ticket already holds a return — the whole point of the
+construct — so drawing it would contradict the screen it sits on.
+
+Eight illustrations were lifted from Devansh's screenshot (`Picsew_TicketDetails.HEIC`) rather than
+approximated: the scratch gift, the live-tracking art, both hotel photos, the safety video still,
+the redBuddy avatar, the referral art and the tripReward mark.
+
+The **Hotels band runs edge to edge**, which the app does and a child of the padded `Content` column
+cannot. `Content` was split around it: `Content` · `Hotels` · `Content · below hotels`, all three
+direct children of the frame.
+
+Parity: **11 reads 11.22%** over 4020pt against 2.28% before. **That number is not comparable to the
+old one and is not a regression** — the frame is now four and a half times taller and half of it is
+photographic. A 1px accumulated drift over a photo turns every pixel in it different; the structural
+comparison at the worst band (1700–1900, 19%) shows the two renders identical but ~5px apart. Read
+this frame's bands for *steps*, never its percentage.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**A cloned auto-layout frame keeps the source's fixed height, and clearing it needs a reflow, not a
+property.** Every card cloned from another card came out 76pt tall no matter what went in it —
+`layoutSizingVertical = 'HUG'` read back as HUG and changed nothing. Re-appending the children first,
+*then* setting HUG, fixed all eight. Same fault as the UPI card on 09 earlier the same day, so it is
+the rule and not an accident: **after appending to a cloned auto-layout frame, re-append its children
+before trusting its height.**
