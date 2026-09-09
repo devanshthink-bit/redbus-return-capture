@@ -55,7 +55,7 @@ Do not start work, answer a question about the project, or change a file until y
   builds, byte-for-byte. Only the viewer loads them, in an iframe
 - `v1.html` · `v2.html` · `v3.html` · `prototype.html` — **redirects** to `/?version=N`, so an old
   link opens the viewer on the version it asked for instead of a bare prototype
-- `hifi/app.html` — **the hi-fi prototype: the 28 Figma frames as working code.** Shown *inside*
+- `hifi/app.html` — **the hi-fi prototype: the 29 Figma frames as working code.** Shown *inside*
   the root viewer, behind a **Lo-fi / Hi-fi** switch, and the hi-fi is what opens on landing. Only
   the viewer's iframe reaches it, exactly as only the iframe reaches `frozen/`.
   `hifi/app.html` and `hifi/app.css` are **generated** — rebuild with `node hifi/build/build.mjs`
@@ -109,7 +109,7 @@ build — an undeclared drift is the thing this rule exists to prevent.
 **The three lo-fi screens the hi-fi mirrors most closely** are the calendar (05/05a/05b), the day
 list (06/06a/06b) and Review (08). A v4 change to any of those almost certainly needs a Figma change.
 
-**The hi-fi is 28 screens.** Adding one means four edits, not one: `hifi/src/render.tsx`, the count
+**The hi-fi is 29 screens.** Adding one means four edits, not one: `hifi/src/render.tsx`, the count
 guard *and* the forward hotspot in `hifi/build/build.mjs`, and `HIFI_NAMES` in the root `index.html`.
 **A sheet is not a step.** `01a` opens from Home's date row and closes back to it, so it is listed
 in `OVERLAY` in `build/shell.html` and prev / next / Back / arrow keys skip it. Leaving it in the

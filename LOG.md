@@ -8857,3 +8857,40 @@ that method leaves the rays behind and eats the badge's white tick — the tick 
 the ground, because in the real icon it is a hole. What worked was a hard mask at a threshold above
 the ray noise, keeping each pixel's own colour, then supersampling. The hole stays a hole and shows
 the banner through it, exactly as the app does.
+
+CHANGE · 2026-09-10 · direct request · Source: user
+**Every live day on the change calendar is its own hotspot.** Devansh: *"whats the issue with this
+broken ui? i am still not able to tap on single date in this calender, whole calender is getting
+tapped."* The flow map can only say *this block goes forward*, so `FORWARD['13']` pointed at the
+whole Calendar: the pointer lit the entire card, a tap anywhere walked you on, and days that are
+full, already booked or before the outbound went forward too. Now the 17 live days each carry their
+own hotspot and their own hover state; the month header, the legend and the dead days are not
+hotspots at all. `LATE_HOT` tells the boot check that this screen's hotspots arrive from a module,
+so the "no forward hotspot" warning stays honest.
+
+CHANGE · 2026-09-10 · direct request · Source: user
+**Home's tab bar works once there is a booking behind it, and My Account opens a real profile.**
+Devansh: *"After user books the ticket, enable my bookings tab and profile tab ... in home page
+where user can see his bookings (screen 12 for my bookings ... and Picsew_Profile.HEIC ... for
+profile -> on clicking bookings in this it will redirect to my bookings tab)"*. New frame
+**17 · Profile**, built from the screenshot: the night-camp hero, the trips/km/carbon row, the
+wallet card with its expiry strip, and all twenty rows across My details, Payments, More and
+Preferences, each with the app's own icon. Home's *My Bookings* → 12 and *My Account* → 17, both
+inert and dimmed until the traveller has reached the ticket; the profile's *Bookings* row and its
+*My Bookings* tab both go to 12, and its *Home* tab goes back to 01. The build is 29 screens.
+Parity 2.04%.
+
+LEARNED · 2026-09-10 · direct request
+**A screen that swallows every tap will swallow the one you add next.** Home's capture handler
+exists so that only the field you are on is tappable — that is the point of it. It also silently ate
+the new tab-bar handlers, which looked exactly like "the tabs are not wired". The gate now has one
+named exception: a tab item that is currently live. **When a screen has a blanket interceptor, adding
+a control to it is two edits, not one.**
+
+LEARNED · 2026-09-10 · direct request
+**Cutting art out of a screenshot that carries someone's name.** The profile hero is the app's own
+illustration with the account holder's name, number and the phone's clock painted over it. Masking
+those and filling each masked pixel with a vertical *median* left visible lighter rectangles, because
+the median pulled from a brighter band. Interpolating linearly down each column between the last
+clean row above and the first below is exact where the background is a smooth vertical gradient,
+which a night sky is — no seam, and the name goes back as a text layer that the build can change.

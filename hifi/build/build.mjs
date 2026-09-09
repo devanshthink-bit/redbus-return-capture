@@ -25,7 +25,7 @@ await build({
 });
 
 const { SCREENS } = require(out);
-if (SCREENS.length !== 28) throw new Error(`expected 28 screens, got ${SCREENS.length}`);
+if (SCREENS.length !== 29) throw new Error(`expected 29 screens, got ${SCREENS.length}`);
 
 // 2 · render each frame to static markup
 const rendered = SCREENS.map(({ id, name, C }) => {
@@ -64,10 +64,11 @@ const FORWARD = {
   '09b': [],                                        // it leaves on its own timer, not on a tap
   '11':  ['[data-name="Change day"]'],
   '12':  ['[data-name="Booking"]'],
-  '13':  ['[data-name="Calendar"]'],
+  '13':  [],   // one hotspot per live day, wired in shell.html -- see LATE_HOT
   '14':  ['[data-name="Card / Bus"]'],
   '15':  ['[data-name="Button / Primary"]'],
   '16':  [],
+  '17':  [],   // the profile is a destination, not a step -- its rows are wired in shell.html
 };
 for (const s of rendered) if (!(s.id in FORWARD)) throw new Error(`no forward map for ${s.id}`);
 

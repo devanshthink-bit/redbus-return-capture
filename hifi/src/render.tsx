@@ -26,6 +26,7 @@ import S13 from "./screens/13";
 import S14 from "./screens/14";
 import S15 from "./screens/15";
 import S16 from "./screens/16";
+import S17 from "./screens/17";
 
 export const SCREENS = [
   { id: "01", name: '01 · Home', C: S01 },
@@ -56,4 +57,5 @@ export const SCREENS = [
   { id: "14", name: '14 · Move · buses', C: S14 },
   { id: "15", name: '15 · Confirm the move', C: S15 },
   { id: "16", name: '16 · Return moved', C: S16 },
+  { id: "17", name: '17 · Profile', C: S17 },
 ];

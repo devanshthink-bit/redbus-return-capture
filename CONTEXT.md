@@ -68,7 +68,7 @@ on push. `raw/` (interview transcripts) is gitignored.
 | `frozen/v1.html` · `frozen/v2.html` · `frozen/prototype.html` | the other frozen builds |
 | `v1.html` · `v2.html` · `v3.html` · `prototype.html` | redirects to `/?version=N` |
 | `component-sheet.html` | Design-language component sheet |
-| `hifi/` | **The hi-fi prototype** — the 28 Figma frames as working code, shown inside the root viewer. `app.html` and `app.css` are generated, `index.html` is a redirect; see §21 |
+| `hifi/` | **The hi-fi prototype** — the 29 Figma frames as working code, shown inside the root viewer. `app.html` and `app.css` are generated, `index.html` is a redirect; see §21 |
 
 **Source material** (not in the repo): `/Users/devansh/Downloads/RedBus Case Docs/` — 8 interview
 transcripts, scope card and research plan PDFs, `redfigjam.pdf`, `PAM03L08.pdf`, and two screenshot
@@ -741,7 +741,7 @@ v4, not v3.** What changed in Figma, and the node ids, in case it has to be done
 ### The flow, frame by frame — read this before rebuilding a screen in code
 
 Every hi-fi frame, the prototype screen it is, and what moves you off it. Derived from the build,
-not from memory. **28 frames = 16 screens + 12 state variants** (01a · 03a · 03b · 04a · 05a ·
+not from memory. **29 frames = 17 screens + 12 state variants** (01a · 03a · 03b · 04a · 05a ·
 05b · 06a · 06b · 08a · 08b · 08c · 09a). Counted off the Figma section and `src/render.tsx`, 2026-09-09.
 
 | # · Frame | Prototype | Control | Goes to |
@@ -775,6 +775,8 @@ not from memory. **28 frames = 16 screens + 12 state variants** (01a · 03a · 0
 | ↳ *the day you tapped drives 14, 15 and 16* — the date, both fares, the difference, what you pay and the receipt | | | |
 | 15 · Confirm the move | `s-confirm` | Confirm change | 16 |
 | 16 · Return moved | `s-done` | — | — |
+| 17 · Profile | — | *reached from Home's tab bar, once a booking exists*; Bookings, or the My Bookings tab | 12 |
+| ↳ *Home's My Bookings and My Account tabs are inert until the traveller has reached the ticket* | | | 12 · 17 |
 
 **The four branches a linear reading of the canvas will miss:**
 
@@ -2128,7 +2130,7 @@ rules, and the range **ends** in the accent), 06 · 06a (the narrowing heading, 
 Figma never had), 08 (what declining Free Cancellation gives you), 11 (Change day inside the ticket
 card). 12 was already right.
 
-**The build is 28 screens.** It shipped at 23, grew by six and lost one, each for its own reason:
+**The build is 29 screens.** It shipped at 23, grew by seven and lost one, each for its own reason:
 `06b · Your return · day cannot change` (6 Sep) is the trap state, which existed in v4 and in none
 of the frames; `01a · Select date` is the calendar sheet off Home's date row; `04a · Board & drop ·
 dropping` is the second half of the boarding-points tab control. All three live in **Screens**, not
@@ -2161,14 +2163,14 @@ Two checks, because each is blind to what the other sees.
 | **Geometry** | 1,730 nodes matched by `data-node-id` against the Figma metadata. **Three** blocks off by more than 4px. **Last run 4 Sep on the 23-frame build, and not re-run since — 01a, 04a and 06b have never been geometry-checked.** Treat the number as history, not as current |
 | **Pixels** | **current.** 26 of the 27 frames were re-rendered headless at native size on 2026-09-09 and diffed against Figma renders pulled the same hour. Three frames were rebuilt later that day and carry their own fresh numbers: **09 · 1.96%** (1681pt), **11 · 10.44%** (4721pt), **08b · 8.25%** and **08c · 5.82%**. **Do not compare 11's number with its old 5.38% or 11.22%** — the frame is four and a half times taller and half of it is photographic, so a 1px accumulated drift turns every pixel of a photo different. Read its bands for *steps*, not its percentage. Of the rest, worst are **11.99%** (01) and **11.69%** (03a) — the two tallest — with 04, 05a, 06a and 06b above 8% |
 
-**The full 28 (9 Sep), for the next person who needs a baseline to compare against:**
+**The full 29 (10 Sep), for the next person who needs a baseline to compare against:**
 
 ```
 01  11.99   01a  2.60   02  5.84   03  4.80   03a 11.69   03b  4.77
 04   9.73   04a  5.77   05  5.20   05a 8.06   05b  7.54   06   5.79
 06a  8.43   06b  8.83   07  6.15   08  7.31   08a  5.21   08b  8.25
 08c  5.82   09  1.96   09a 2.67   09b 1.76   11 10.44
-12   2.35   13  4.87   14  6.93   15  1.30   16   2.58
+12   2.35   13  4.87   14  6.93   15  1.30   16   2.58   17  2.04
 ```
 
 **10 is gone.** Booking confirmed does not exist in the real app — the ticket is the confirmation —

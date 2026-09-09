@@ -83,6 +83,10 @@
   .overlay > *{pointer-events:auto}
   .hf-hot{cursor:pointer}
   .hf-hot:active{filter:brightness(.96)}
+  /* a day is a small target, so it says so on hover rather than only on the press */
+  .hf-day{transition:background-color .12s}
+  .hf-day:hover{background:rgba(0,0,0,.05)}
+  .hf-day:active{filter:none;background:rgba(0,0,0,.10)}
 
   /* session mode: ?test — chrome away, phone fills the window */
   body.hf-test .hf-panel{display:none}
@@ -288,7 +292,9 @@
   // the timer, which then throws you forward to the ticket again. It is only ever reached by
   // tapping Pay.
   var SKIP = { '01a': 1, '03a': 1, '04a': 1, '05a': 1, '05b': 1, '09a': 1, '09b': 1,
-               '06a': 1, '06b': 1, '07': 1 };
+               '06a': 1, '06b': 1, '07': 1, '17': 1 };
+  // Screens whose forward hotspots are one per cell, added by a module rather than by the flow map.
+  var LATE_HOT = { '13': 1, '17': 1 };
   // Which screen a state frame belongs to, for Back.
   var BACK_AS = { '05a': '05', '05b': '05', '06a': '06', '06b': '06' };
   function nextOf(i){ i += 1; while (screens[i] && SKIP[ORDER[i]]) i += 1; return i; }
@@ -399,8 +405,10 @@
       var owner = BACK_AS[ORDER[i]];
       go(prevOf(owner ? ORDER.indexOf(owner) : i));
     });
-    // last screen has nowhere to go; every other screen must have a way forward
-    if (n === 0 && i < screens.length - 1) console.warn('no forward hotspot on ' + ORDER[i]);
+    // last screen has nowhere to go; every other screen must have a way forward -- except the
+    // ones whose forward taps belong to individual cells, which a module wires after this pass.
+    if (n === 0 && i < screens.length - 1 && !LATE_HOT[ORDER[i]])
+      console.warn('no forward hotspot on ' + ORDER[i]);
   });
 
   // 3 · navigation
@@ -460,6 +468,9 @@
   // Screens that have to rebuild themselves from that answer register here. go() calls the hook
   // after the frame is on screen and clearBottom has run, so a hook may change the content height.
   var ON_ENTER = {};
+  // The home tab bar is dead until there is something behind it. My Bookings and My Account only
+  // mean anything once a ticket exists, so they stay inert until the traveller reaches one.
+  var BOOKED = false;
   function go(i){
     if (i < 0 || i >= screens.length) return;
     if (window.__closeSheet) window.__closeSheet();   // a sheet does not survive a page change
@@ -509,6 +520,8 @@
     // a price sheet is a sheet: it comes up from the bottom rather than being there already
     var sheet = sec.querySelector('.overlay [data-name="Bottom sheet"]');
     if (sheet) { sheet.classList.remove('hf-slideup'); void sheet.offsetWidth; sheet.classList.add('hf-slideup'); }
+    if (ORDER[at] === '11') BOOKED = true;
+    if (window.__paintTabs) window.__paintTabs();
     if (ON_ENTER[ORDER[at]]) { ON_ENTER[ORDER[at]](sec); clearBottom(sec); }
   }
   rows.forEach(function(r){ r.addEventListener('click', function(){ go(+r.dataset.go); }); });
@@ -608,6 +621,10 @@
     // them: on Home nothing is tappable except the field you are on, the toggle and Search.
     s01.addEventListener('click', function(e){
       var t = e.target;
+      // ...except the bottom tab bar, once a booking exists behind it. Swallowing that too made
+      // My Bookings and My Account look wired and do nothing.
+      var tabHit = t.closest && t.closest('[data-name="Nav / Tab Item"]');
+      if (tabHit && tabHit.classList.contains('hf-hot')) return;
       if (toggle && toggle.contains(t)) {
         toggle.classList.toggle('hf-toggle-on');
         e.preventDefault(); e.stopPropagation(); return;
@@ -1931,6 +1948,65 @@
     paint(0);
   })();
 
+  // 01 / 12 / 17 · The home tab bar, and the profile behind it.
+  //
+  //      Devansh: "After user books the ticket, enable my bookings tab and profile tab ... in home
+  //      page where user can see his bookings". The bar was drawn on Home and did nothing. It now
+  //      does something the moment there is a booking to look at, and nothing before that -- a tab
+  //      that opens an empty list is worse than a tab that waits.
+  (function homeTabs(){
+    var i01 = ORDER.indexOf('01'), i12 = ORDER.indexOf('12'), i17 = ORDER.indexOf('17');
+    if (i01 < 0 || i12 < 0 || i17 < 0) return;
+    var WHERE = { 'My Bookings': i12, 'My Account': i17, 'Home': i01 };
+    var wired = [];
+
+    function items(sec){
+      var bar = sec.querySelector('[data-name="Nav / Tab Bar"]');
+      return bar ? [].slice.call(bar.querySelectorAll('[data-name="Nav / Tab Item"]')) : [];
+    }
+    function label(el){ var p = el.querySelector('p'); return p ? p.textContent.trim() : ''; }
+
+    [[i01, ['My Bookings', 'My Account']], [i17, ['Home', 'My Bookings']]].forEach(function(pair){
+      items(screens[pair[0]]).forEach(function(it){
+        var nm = label(it);
+        if (pair[1].indexOf(nm) < 0) return;
+        var to = WHERE[nm];
+        // Home is always live on the profile; the two booking tabs wait for a booking.
+        var gated = nm !== 'Home';
+        wired.push({ el: it, to: to, gated: gated, name: nm });
+        it.addEventListener('click', function(e){
+          e.preventDefault(); e.stopPropagation();
+          if (gated && !BOOKED) return;
+          go(to);
+        });
+      });
+    });
+    if (!wired.length) console.warn('home tabs: no tab items found');
+
+    // A tab you cannot use yet should not look like one you can.
+    window.__paintTabs = function(){
+      wired.forEach(function(w){
+        var on = !w.gated || BOOKED;
+        w.el.classList.toggle('hf-hot', on);
+        w.el.style.opacity = on ? '' : '0.45';
+      });
+    };
+    window.__paintTabs();
+
+    // The profile's own Bookings row is the other way in, and it is the one the real app leads with.
+    var row = null;
+    [].forEach.call(screens[i17].querySelectorAll('[data-name="Row / Profile"]'), function(r){
+      var p = r.querySelector('p');
+      if (p && p.textContent.trim() === 'Bookings') row = r;
+    });
+    if (row){
+      row.classList.add('hf-hot', 'hf-fwd');
+      row.addEventListener('click', function(e){
+        e.preventDefault(); e.stopPropagation(); go(i12);
+      });
+    } else console.warn('17: no Bookings row');
+  })();
+
   // 13 / 14 / 15 / 16 · The change-date flow, driven by the day you tap.
   //
   //      It was drawn for one date -- Tue, 15 Sep -- and every screen after the calendar said so
@@ -2036,27 +2112,29 @@
     ON_ENTER['16'] = paintDone;
 
     // A tap on the calendar is a tap on one day, not on the calendar. The flow map can only say
-    // "this block goes forward", so it sent you on from a day that is full, already booked, or
-    // before the outbound -- and told the next screen nothing about which day you meant.
+    // "this block goes forward", which made the whole grid one hotspot: it took you on from a day
+    // that is full, already booked or before the outbound, it lit the whole card under the finger,
+    // and it told the next screen nothing about which day you meant. Every live day is its own
+    // hotspot now, and a day you cannot move to is not a hotspot at all.
     var cal = s13.querySelector('[data-name="Calendar"]');
     if (!cal) { console.warn('13: no Calendar'); return; }
-    cal.addEventListener('click', function(e){
-      var day = null, cell = e.target;
-      while (cell && cell !== cal){
-        var ps = cell.children;
-        if (ps.length === 2 && ps[0].tagName === 'P' && ps[1].tagName === 'P'){ day = cell; break; }
-        cell = cell.parentElement;
-      }
-      var live = false, extra = 0;
-      if (day){
-        var n = parseInt(day.children[0].textContent.trim(), 10);
-        var m = /^₹0$|^\+₹([\d,]+)$/.exec(day.children[1].textContent.trim());
-        if (m && n) { live = true; extra = m[1] ? parseInt(m[1].replace(/,/g, ''), 10) : 0;
-                      MOVE.day = n; MOVE.extra = extra; }
-      }
-      // A day you cannot move to must do nothing at all, rather than walk you on regardless.
-      if (!live) { e.preventDefault(); e.stopPropagation(); }
-    }, true);
+    var live = 0, dead = 0;
+    [].forEach.call(cal.querySelectorAll('*'), function(cell){
+      var ps = cell.children;
+      if (ps.length !== 2 || ps[0].tagName !== 'P' || ps[1].tagName !== 'P') return;
+      var n = parseInt(ps[0].textContent.trim(), 10);
+      var m = /^₹0$|^\+₹([\d,]+)$/.exec(ps[1].textContent.trim());
+      if (!n || !m) { dead++; return; }
+      var extra = m[1] ? parseInt(m[1].replace(/,/g, ''), 10) : 0;
+      live++;
+      cell.classList.add('hf-hot', 'hf-fwd', 'hf-day');
+      cell.addEventListener('click', function(e){
+        e.preventDefault(); e.stopPropagation();
+        MOVE.day = n; MOVE.extra = extra;
+        go(i14);
+      });
+    });
+    if (!live) console.warn('13: no day is tappable');
 
     // Which bus, so the confirm and the receipt name the one they tapped.
     cards14.forEach(function(card, k){
