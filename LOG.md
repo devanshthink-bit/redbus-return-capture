@@ -8363,3 +8363,28 @@ a fix to the first, and the traveller would have reported the same sentence agai
 **A rule-driven list of alternatives must always be able to name where you came from.** Ranking by
 merit is right for *what to offer*; it is wrong as the only way *back*. The pattern to watch for:
 any list built by scoring, where the current selection is excluded from the candidates.
+
+DECISION  ·  2026-09-09  ·  molades-none  ·  Source: user
+**The fold's heading is a claim about who chose, not about which bus.** Devansh:
+*"Only for the first time, it should show the recommended bus. Once the user taps on some other bus
+or comes back again to the recommended bus by tapping different buses, in all these cases, it should
+show your bus, because for the first time it should not show your bus, right? Since it's a
+recommendation."*
+
+So it is not `pick === the day's default`, which was the obvious reading and the wrong one — under
+that rule, tapping back onto the recommended service would call it *our* recommendation again, when
+by then the traveller has chosen it. The flag is **has the choice been touched on this day**:
+`RETURN.bus === null` in the hi-fi, a new `retBusTouched` in v4. Opening a day clears it, because a
+new day proposes its own bus and is a recommendation again.
+
+Verified in both, through the UI. hi-fi: open a day → *RECOMMENDED BUS*; tap the card → *YOUR BUS*;
+open another day → *RECOMMENDED BUS*; tap an alternative → *YOUR BUS*; tap back onto the recommended
+one → **still YOUR BUS**; reopen a day → *RECOMMENDED BUS*. v4 the same, with *Recommended bus* /
+*Your bus*.
+
+**No Figma change.** The drawn frames say RECOMMENDED BUS, which is the untouched state — what a
+frame of a freshly opened day should show. The parity render is a cold load that never runs the
+builder, so 06 / 06a / 06b are unmoved at 5.79 / 8.39 / 8.83.
+
+Checks: v4 parses, state matrix **234/234**, no JS errors. hi-fi forward and back walks 01 ↔ 16
+clean, one screen visible.

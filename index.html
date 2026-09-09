@@ -1548,6 +1548,11 @@ const closestToOnward = defaultBusOn;
 // One writer for the return bus, the way outSeat()/retSeat() are the one writer for the seat.
 // retBus is only ever set for the booked day; every other day shows its own default.
 let retBus = null;
+// Whether the traveller has chosen a bus themselves, as opposed to being shown the day's
+// default. It is the difference between 'Recommended bus' and 'Your bus' over the fold: the
+// heading is a claim about who chose, not about which bus, so tapping back onto the
+// recommended service still leaves it theirs.
+let retBusTouched = false;
 const busOn  = d => (d===heldDay && retBus!==null && busesOn(d).indexOf(retBus)>=0) ? retBus : defaultBusOn(d);
 const depOn  = d => RET_BUSES[busOn(d)].dep;      // the day list shows each day's own default bus
 const retDep = () => RET_BUSES[busOn(heldDay)].dep;
@@ -1958,7 +1963,7 @@ function busSectionHTML(d){
 
   const n = busesOn(d).length;
   return '<div class="busfold">'
-    + '<div class="seclab">Your bus</div>' + card
+    + '<div class="seclab">' + (retBusTouched ? 'Your bus' : 'Recommended bus') + '</div>' + card
     + (rows ? '<div class="seclab gap">Other buses that day</div>'+rows : '')
     + (n>1 ? '<button class="allbuses" onclick="openBus(\'picked\')">All '+n+' buses on '+label(d)+' \u2192</button>' : '')
     + '</div>';
@@ -2189,6 +2194,8 @@ function setHeldDay(d){
   // alternatives that beat it. So picking a day proposes a complete booking, and swapping the bus
   // is a change to a proposal rather than a blank to fill.
   retBus = d ? (one.length===1 ? one[0] : defaultBusOn(d)) : null;
+  // A new day proposes its own bus, so the fold is a recommendation again until it is tapped.
+  retBusTouched = false;
   heldDay = d; setState(state);
 }
 function choosePick(d){
@@ -2201,7 +2208,7 @@ function choosePick(d){
 // The empty state is "no day here can be changed later". Showing them anyway is the whole point of the
 // primary button -- a return that cannot be moved is still a return, and the terms say so on review.
 function showAllReturns(){ setState('default'); }
-function pickBus(d,i){ if(d!==heldDay) heldDay=d; retBus=i; setState(state); }
+function pickBus(d,i){ if(d!==heldDay) heldDay=d; retBus=i; retBusTouched=true; setState(state); }
 
 // Changing the booked day after payment — any day in the range, either direction.
 const BOOKABLE = Array.from({length: LAST_BOOKABLE-OUT_DAY}, (_,i)=>OUT_DAY+1+i);

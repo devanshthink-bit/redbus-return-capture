@@ -1146,6 +1146,12 @@
       // not allowed to pick. It now carries the same ring the full list uses on 07, and takes
       // a tap that selects it -- a no-op while it already is the pick, but the gesture is
       // alive and the ring says which bus you hold.
+      // 'Recommended' is only honest until the traveller has touched the choice. The moment they
+      // tap any bus -- including tapping straight back onto the one we recommended -- the card
+      // stops being our suggestion and starts being their pick, and it says so. Opening a day
+      // clears RETURN.bus, so a fresh day gets a fresh recommendation.
+      set(sec, m.recHead, RETURN.bus === null ? 'RECOMMENDED BUS' : 'YOUR BUS');
+
       var card = q(sec, m.card);
       if (card) {
         card.classList.add('hf-hot', 'hf-bus-on');
