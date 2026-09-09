@@ -72,7 +72,11 @@ still means running the §10 checks on the lo-fi: the state matrix and the Back 
 nothing last time, which is the point of running them.
 
 Repo is public and auto-deploys to GitHub Pages on push. Deploys take 45–90 seconds; verify with
-`curl` + `md5` before telling the user it is live.
+`curl` + `md5` before telling the user it is live. **The URL is
+`https://devanshthink-bit.github.io/redbus-return-capture/`** — the repo is
+`redbus-return-capture`, not `RedBus`, which is only the local directory name. A wrong guess
+returns GitHub's 9,115-byte *Site not found* page with a 404, and `md5` on that looks exactly
+like a stale deploy. Check the status code, not just the hash.
 
 ## Figma and the hi-fi build move together. Always.
 
