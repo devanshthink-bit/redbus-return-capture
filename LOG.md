@@ -8668,3 +8668,23 @@ the example it was drawn with.
 **An icon cropped to its own edge has no outline left.** Every one of the fourteen looked right in a
 tile at 80px and lost a stroke at 20. Cut with margin and size the frame up — the ratio is the thing
 to control, not the box.
+
+CHANGE  ·  2026-09-09  ·  molades-none  ·  Source: user
+**"Seat L4" did not say what L4 is.** Devansh, straight after the seat picker landed: *"why in bus
+fold, its saying seat L4 - the one you picked, why we are showing lower deck seat in a sleeper bus,
+if lower deck seats are available then we should show them separately."*
+
+A 2+1 Seater/Sleeper runs **three kinds of place** — berths upstairs, berths downstairs, and seats
+downstairs — and a bare seat name says which only if you already know the convention. Every screen
+that names the seat now says where it is: *Seat L3 · lower-deck sleeper*, *Seat S4 · lower-deck
+seater*, *Seat U8 · upper-deck sleeper*, on the fold, on 08a's summary and on the sheet's pill.
+
+The map already keeps them in separate columns — that was never the problem. The label was.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**A describer that reads shared state describes the wrong thing the moment it is asked about
+something else.** `seatDesc()` took no argument and read `RETURN.seat`, so on the untouched screen it
+called U4 a *lower-deck* sleeper — `RETURN.seat` had not been written yet at that point in the same
+function — and 08a's summary described the picked seat while naming the drawn one. It takes the seat
+it is describing now. **If a function's answer depends on which thing you mean, the thing has to be
+an argument.**

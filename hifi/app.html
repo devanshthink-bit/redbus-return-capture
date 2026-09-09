@@ -499,6 +499,19 @@
   // onwards instead of back: Change seat ended on the points screen and Change points ended
   // on Pay. A detour returns you to where you asked for the change.
   var DETOUR = null;
+  // A 2+1 Seater/Sleeper runs three kinds of place: berths upstairs, berths downstairs and seats
+  // downstairs. "Seat L4" alone does not say which, and on a sleeper bus that is the first thing
+  // the traveller wants to know -- so every screen that names the seat says where it is too.
+  // The picker records deck and kind when it is used; otherwise the v4 berth naming decides, where
+  // U is upstairs and L is down.
+  function seatDesc(name){
+    // the picker knows deck and kind for the seat it recorded; for any other name the berth
+    // convention decides, and only berths have names outside the picker
+    if (RETURN.seatKind && name === RETURN.seatPick)
+      return (RETURN.seatDeck || 'Upper deck').replace(' deck', '-deck').toLowerCase()
+             + ' ' + RETURN.seatKind;
+    return /^U/i.test(name || '') ? 'upper-deck sleeper' : 'lower-deck sleeper';
+  }
   // Screens that have to rebuild themselves from that answer register here. go() calls the hook
   // after the frame is on screen and clearBottom has run, so a hook may change the content height.
   var ON_ENTER = {};
@@ -1320,10 +1333,10 @@
       set(sec, m.rate, bus[8].toFixed(1)); set(sec, m.votes, String(bus[9]));
       set(sec, m.dcText, bus[3] ? 'Free date change' : 'No date change');
       set(sec, m.seat, RETURN.seatByUser
-        ? 'Seat ' + seatOf + ' \u2014 the one you picked'
+        ? 'Seat ' + seatOf + ' \u00b7 ' + seatDesc(seatOf) + ' \u2014 the one you picked'
         : seatOf === ONWARD_SEAT
-          ? 'Seat ' + ONWARD_SEAT + ' \u2014 same as your onward'
-          : 'Seat ' + seatOf + ' \u2014 ' + ONWARD_SEAT + ' is taken on this bus');
+          ? 'Seat ' + ONWARD_SEAT + ' \u00b7 ' + seatDesc(seatOf) + ' \u2014 same as your onward'
+          : 'Seat ' + seatOf + ' \u00b7 ' + seatDesc(seatOf) + ' \u2014 ' + ONWARD_SEAT + ' is taken on this bus');
       show(sec, m.fcPill, !!bus[4]);
       show(sec, m.closePill, pick === defIdx(chosen));
 
@@ -1705,12 +1718,14 @@
         var cn = col.getAttribute('data-name') || '';
         if (/Aisle|Gap/.test(cn)) return;
         var pre = upper ? 'U' : (/Sleeper/.test(cn) ? 'L' : 'S');
+        var sort = (upper || /Sleeper/.test(cn)) ? 'sleeper' : 'seater';
         [].forEach.call(col.children, function(cell){
           var kind = cell.getAttribute('data-name') || '';
           if (!/^Seat /.test(kind)) return;
           n[pre] += 1;
           cell.__seat = pre + n[pre];
           cell.__deck = upper ? 'Upper deck' : 'Lower deck';
+          cell.__kind = sort;
           cell.__free = /Available|Selected/.test(kind);
           var price = cell.querySelector('p');
           cell.__price = price ? price.textContent : '';
@@ -1745,7 +1760,7 @@
         c.classList.add('hf-hot');
       });
       var count = sec.querySelector('[data-node-id="423:3129"]');
-      if (count) count.textContent = 'Seat ' + on + ' selected';
+      if (count) count.textContent = 'Seat ' + on + ' selected \u00b7 ' + seatDesc(on);
       if (RETURN.seatPick) {
         var badge = screens[ORDER.indexOf('11')];
         badge = badge && badge.querySelector('[data-node-id="515:3879"]');
@@ -1766,6 +1781,7 @@
       e.preventDefault(); e.stopPropagation();
       RETURN.seatPick = cell.__seat;
       RETURN.seatDeck = cell.__deck;
+      RETURN.seatKind = cell.__kind;
       RETURN.seatByUser = true;
       paint();
     }, true);
@@ -1846,8 +1862,10 @@
         set(sheet, '704:4195', dur(RETURN.dep, RETURN.arr));
         set(sheet, '704:4178', RETURN.op);
         set(sheet, '704:4179', '1 Seat · ' + RETURN.veh);
-        if (RETURN.seat) set(sheet, '704:4214', RETURN.seat + ' - ' +
-          (RETURN.seatDeck || (/^U/.test(RETURN.seat) ? 'Upper deck' : 'Lower deck')));
+        if (RETURN.seat) {
+          var where = seatDesc(RETURN.seat);
+          set(sheet, '704:4214', RETURN.seat + ' - ' + where.charAt(0).toUpperCase() + where.slice(1));
+        }
       }
       if (POINTS.retBoard) {
         set(sheet, '704:4190', POINTS.retBoard.name);
