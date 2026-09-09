@@ -755,6 +755,17 @@
     }
 
     // which of the three frames shows this state
+    // the toggle is one answer, so it is painted on all three frames at once
+    function segAll(){
+      idx.forEach(function(k){ if (k < 0) return;
+        var ss = screens[k].querySelectorAll('[data-name^="Segment / "]');
+        [].forEach.call(ss, function(x, j){
+          x.classList.toggle('hf-seg-on',  (mode === 'fixed') === (j === 0));
+          x.classList.toggle('hf-seg-off', (mode === 'fixed') !== (j === 0));
+        });
+      });
+    }
+
     function frameFor(){
       if (mode === 'fixed') return pick.length ? i05b : i05;
       return pick.length === 2 ? i05a : i05;
@@ -831,12 +842,37 @@
 
     function paintAll(){ idx.forEach(function(k){ if (k >= 0) paint(screens[k]); }); }
 
+    // True while the picker is moving between its own three frames, so the arrival hooks below
+    // know not to treat that as somebody landing on a frame from outside.
+    var SELF = false;
     function render(){
       RETURN.mode = mode; RETURN.pick = pick.slice();
       var to = frameFor();
-      if (to !== at) goQuiet(to);
+      if (to !== at) { SELF = true; try { goQuiet(to); } finally { SELF = false; } }
       paintAll();
     }
+
+    // Arriving at one of these frames any other way -- the viewer's screen list, the arrows, a
+    // #hash -- has to SET the state that frame represents. 05b is drawn as "a single date is
+    // chosen"; landing on it with the answer still "I'm not sure yet" left the fixed-date screen
+    // on screen and the window logic underneath, so the next tap started selecting a range.
+    // Each frame seeds with its own drawn example when the current answer does not fit it.
+    var DRAWN = { '05': [], '05a': [11, 17], '05b': [14] };
+    function arrive(id, want){ return function(){
+      if (SELF) return;
+      var fits = want === 'fixed' ? (mode === 'fixed' && pick.length === 1)
+               : id === '05a'     ? (mode === 'unsure' && pick.length === 2)
+               :                    (pick.length === 0);
+      if (fits) return;
+      mode = want;
+      pick = DRAWN[id].slice();
+      RETURN.mode = mode; RETURN.pick = pick.slice();
+      segAll();
+      paintAll();
+    }; }
+    ON_ENTER['05']  = arrive('05',  'unsure');
+    ON_ENTER['05a'] = arrive('05a', 'unsure');
+    ON_ENTER['05b'] = arrive('05b', 'fixed');
 
     idx.forEach(function(i){
       if (i < 0) return;
@@ -869,13 +905,7 @@
           // v4: the answer decides what a tap means, so old taps cannot survive it
           var want = segs.indexOf(seg) === 0 ? 'fixed' : 'unsure';
           if (want !== mode) { mode = want; pick = []; }
-          idx.forEach(function(k){ if (k >= 0) {
-            var ss = screens[k].querySelectorAll('[data-name^="Segment / "]');
-            [].forEach.call(ss, function(x, j){
-              x.classList.toggle('hf-seg-on',  (mode === 'fixed') === (j === 0));
-              x.classList.toggle('hf-seg-off', (mode === 'fixed') !== (j === 0));
-            });
-          }});
+          segAll();
           render();
           return;
         }

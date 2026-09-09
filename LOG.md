@@ -7975,3 +7975,40 @@ written inside `buildFold`, which is skipped when nothing is chosen — the same
 being re-attached only inside `if (d === chosen)` two commits ago. Both are one branch owning a
 piece of the screen and no branch owning its absence. **For every element a builder writes, ask what
 writes it when the thing it describes is gone.**
+
+CHANGE  ·  2026-09-09  ·  molades-none  · Source: user
+**Landing on the fixed-date calendar from the screen list left the window logic underneath it.**
+Devansh: *"on fixed date calender i selected one date and once when i selected other date it
+switched to flexible calender and started selecting window, it shud not happend"*.
+
+**It is not reachable through the flow, and I could not reproduce it until I stopped trying to.**
+Six routes through the picker all held: answer *I know my date* then tap twice; pick a window then
+switch; Continue and Back; tapping the number rather than the cell; tapping the fare; two taps with
+no wait between them. Every one kept a single date. The way in is the **viewer's own screen list** —
+tapping *Return day* jumps straight to 05b, which is *drawn* as "a single date is chosen" while the
+answer underneath was still the default *I'm not sure yet*. The screen said one thing and the state
+was the other, so the next tap narrowed the calendar and started a range.
+
+Arriving at 05, 05a or 05b any way other than through the picker itself now **sets the state that
+frame represents**, seeding with the frame's own drawn example when the current answer does not fit:
+05b → fixed on 14, 05a → the 11–17 window, 05 → no answer chosen. A `SELF` flag keeps the picker's
+own `goQuiet` moves out of it, so nothing changes on the path a traveller actually walks.
+
+Verified on all four arrivals: from the list, 05b holds one date across repeated taps, 05a still
+takes two taps for a window, 05 opens blank, and the ordinary toggle path is unchanged. **All 26
+parity diffs unmoved** — the seeded examples regenerate the frames exactly, which is the same oracle
+that checked 06a and 06b. Walk 01 → 16 unchanged.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**When six reproductions fail, the report is still true and the route is somewhere you are not
+looking.** I spent the whole first pass driving the picker because that is where the code is. The
+bug was in the one entry point the code does not own — the rail — and it had been reachable since
+the day the frames were split into states. **Ask how else the screen can be arrived at**, not only
+how it is arrived at on the happy path.
+
+**This is the fifth defect from state frames sitting in a linear order**, after Continue on 05a,
+Review trip on 06a, Back stepping to a sibling, and 06 keeping a stale chosen day. The pattern is
+now complete enough to state as a rule: a frame that represents a state needs three things wired,
+not one — it must be skipped by next/prev (`SKIP`), it must answer to its owner for Back (`BACK_AS`),
+and **arriving at it must set the state it depicts** (`ON_ENTER`). Two out of three leaves a screen
+that lies about itself.
