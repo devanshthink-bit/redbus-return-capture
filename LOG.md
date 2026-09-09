@@ -8528,3 +8528,32 @@ now* — landing somewhere that is not an ending.
 **And a state matrix cannot see this.** Every screen rendered correctly in every state; the fault was
 entirely in where one tap led, which only a click-through walk that goes *in* and then *out* of a
 detour can catch.
+
+CHANGE  ·  2026-09-09  ·  molades-none  ·  Source: user
+**There are two "View details" links, and I had wired one.** Devansh, with a crop of the dead one:
+*"still not able to tap view details to open sheet."*
+
+Pay's link (`109:1003`) opened the sheet from the first commit. **Review carries the same line**
+(`212:2089`), it is the screen where the traveller meets it first, and it had no handler at all —
+`hot=false`, default cursor, tap does nothing. I had gone looking for *the* link, found one, tested
+it, and shipped.
+
+Both open the sheet now, and **the sheet goes back to whichever one opened it**, so closing from
+Review does not dump you on Pay.
+
+**And the backdrop tells the truth.** 09a is drawn over Pay, scrim and all. Opened from Review it
+would have said *Pay ₹2,919* behind the glass, naming a screen the traveller has not reached and a
+total they have not agreed to. The backdrop's title is now read off the screen that opened it —
+*Passenger Information* from Review, the live *Pay ₹…* from Pay — read, not typed, so it moves with
+the money.
+
+Verified both doors: Review → 09a (backdrop *Passenger Information*) → close → Review; Pay → 09a
+(backdrop *Pay ₹2,919*) → close → Pay. Walks 01 ↔ 16 clean, no JS errors, parity unmoved on 08
+(7.45), 09 (1.96) and 09a (2.81).
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**"Find the control" is not the same as "find every control."** `querySelector` returns one, and a
+test written around that one passes while an identical control on another screen stays dead. The
+same copy appearing twice is the signal: when a line is duplicated across screens — *View details*,
+*Change points*, a fare — wire the **set**, and assert the count you expected. This is the fourth
+defect in two days whose shape is "it works on the screen I tested".

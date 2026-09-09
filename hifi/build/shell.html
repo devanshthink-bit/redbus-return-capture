@@ -1589,22 +1589,40 @@
   //      is that the return is part of this purchase and not a second one. Two sheets would say the
   //      opposite of the screen they open from.
   (function bookingDetails(){
-    var i09 = ORDER.indexOf('09'), i09a = ORDER.indexOf('09a');
+    var i09 = ORDER.indexOf('09'), i09a = ORDER.indexOf('09a'), i08 = ORDER.indexOf('08');
     if (i09 < 0 || i09a < 0) return;
-    var open = screens[i09].querySelector('[data-node-id="109:1003"]');      // View details
-    if (open) {
-      open.classList.add('hf-hot');
-      open.addEventListener('click', function(e){
-        e.preventDefault(); e.stopPropagation(); go(i09a);
+    // There are two of these links, not one. Review carries the same "View details" line as Pay,
+    // and only Pay's was wired -- so on the screen where the traveller first meets the line, it
+    // did nothing. Both open the sheet, and the sheet goes back to whichever one opened it.
+    var DOORS = [[i08, '212:2089'], [i09, '109:1003']];
+    var owner = i09;
+    DOORS.forEach(function(d){
+      if (d[0] < 0) return;
+      var el = screens[d[0]].querySelector('[data-node-id="' + d[1] + '"]');
+      if (!el) { console.warn('no View details at ' + d[1]); return; }
+      el.classList.add('hf-hot');
+      el.addEventListener('click', function(e){
+        e.preventDefault(); e.stopPropagation();
+        owner = d[0]; go(i09a);
       }, true);
-    } else console.warn('09: no View details link');
+    });
     var shut = screens[i09a].querySelector('[data-name="Button / Close"]');
     if (shut) {
       shut.classList.add('hf-hot');
       shut.addEventListener('click', function(e){
-        e.preventDefault(); e.stopPropagation(); go(i09);
+        e.preventDefault(); e.stopPropagation(); go(owner);
       }, true);
     } else console.warn('09a: no close button');
+    // The sheet is drawn over Pay. Opened from Review it would still say "Pay \u20b92,919" behind
+    // the scrim, naming a screen the traveller has not reached -- so the backdrop's title says
+    // where they actually are, read off that screen rather than typed here.
+    ON_ENTER['09a'] = function(sec){
+      var t = sec.querySelector('[data-node-id="I704:4100;34:91"]');
+      if (!t) return;
+      var src = screens[owner].querySelector(
+        owner === i08 ? '[data-node-id="I212:2041;34:91"]' : '[data-node-id="I109:988;34:91"]');
+      if (src) t.textContent = src.textContent;
+    };
   })();
 
   // 08 · the three return actions. CONTEXT §18 has always said Review leads to 07, 08a and 08b as

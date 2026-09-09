@@ -766,7 +766,7 @@ not from memory. **28 frames = 16 screens + 12 state variants** (01a · 03a · 0
 | 08b · Return boarding | `s-points` | Dropping Points tab | 08c |
 | 08c · Return dropping | `s-points` | a dropping point | 09 |
 | 09 · Pay | `s-pay` | a payment method · View details | 10 · 09a |
-| 09a · Booking details | — | *sheet off Pay*; the × | back to 09 |
+| 09a · Booking details | — | *sheet off **Review or Pay**, whichever View details was tapped*; the × | back to the one that opened it |
 | 10 · Booking confirmed | `s-done2` | View ticket | 11 |
 | 11 · Ticket details | `s-ticket` | Change your return day | 13 |
 | 12 · My Bookings | `s-mybook` | a booking card | 11 |
