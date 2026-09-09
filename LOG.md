@@ -8112,3 +8112,61 @@ behaviour it buys, not a description of it. That is a cheap step I skipped twice
 it into an absolute because absolutes are easier to test against. 0px on every day cost more than it
 was worth; 0px on the days where it is free, and a settle on the rest, is what he actually wanted —
 and it is what the simplest implementation already did two commits earlier.
+
+CHANGE  ·  2026-09-09  ·  molades-none  · Source: user
+**The bus list's bar is pinned, its cards lost their dead band, and every tag in both flows is the
+pill redBus actually draws.** Devansh: *"why bottom section is not fixed to bottom and i want all bus
+cards to be of the same size as they are on the outbound bus page and design all the tags in the
+return flow exactly like redbus designs its tags use similar icons in tags as redbus uses"*, with the
+screenshots folder named as the reference.
+
+**The tag, measured off `IMG_4555` rather than eyeballed:** 24pt tall, a **full pill** (not a 6px
+radius), `#E9EAF6`, and an **icon then the label** — 12pt left padding, ~8pt icon, ~10pt gap. Ours
+were radius 6, and every tag the return flow generates had no icon at all, just a bare `↻`. Now:
+`Chip / Date change` and `Chip / Day tag` are full pills in Figma with icons added to the four
+icon-less variants; the 19 hand-drawn chips across 02, 06, 06a, 06b, 07 and 14 are re-rounded in the
+screen files; and the shell's `chip()` emits the measured pill with an icon cloned out of the page —
+Hourglass for anything about the date, Percent for Cheapest, Tick Circle for Free Cancellation, Star
+for Closest to your onward, Info for the seat warning. Verified across the flow: every generated tag
+is 24pt, `rgb(233,234,246)`, radius 999, icon present.
+
+**The card's dead band was an empty row, not a wrong size.** 07's cards carry the same `Card / Bus`
+as 02 at the same 16pt padding and 11pt gaps — but the Amenities row inside them is *empty* on this
+screen (the outbound list fills it, the return list hangs its tags below the card), and an empty
+auto-layout row still occupies its 24pt plus its gap. The shell hides it when it has no children.
+
+**The bar was a flow child.** Every other action bar in the build arrives carrying `absolute
+bottom-0`; 07's was exported inside the scroll, so it scrolled away. It is absolute in Figma now, and
+until 07 is re-pulled the shell lifts it — **with the pinning styles applied**, because a lifted
+element with no positioning classes lands at the top of the overlay, over the nav.
+
+07 **6.15%** against 5.71 — the pinned bar and the new radius are real design changes. Every other
+frame is at baseline; mean 5.72%. Walk 01 → 16 unchanged.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**Three wrong turns in one change, all from acting before measuring the consequence.**
+
+1. I lifted the action bar **by name on every screen**. 15 and 16 keep their bars at the end of their
+   content and are shorter than the viewport, so pinning them moved the design — two frames I never
+   opened went from 1.30% and 2.58% to 8.71% and 12.58%. A rule written for one screen has to be
+   scoped to that screen until the file it is compensating for is fixed.
+2. I moved 07's tags **inside** the card to match 02. Figma cannot follow: an instance takes no new
+   children (CONTEXT §18), so the build would have been permanently ahead of the design. The fix that
+   both can express — hide the empty row — reads the same and stays in step.
+3. I hid that row **in Figma too**, forgetting the parity render is a *cold* load that never runs the
+   day builder. Figma showed the runtime state and the file showed the drawn one, and the diff went
+   to 16%.
+
+**The pattern under all three: a change is not finished when the screen looks right, it is finished
+when the thing that renders it and the thing that describes it still agree.** The diff caught every
+one of these, including a bar sitting over the nav that my own DOM probe had reported as "in the
+overlay: true".
+
+NOTE  ·  2026-09-09  ·  molades-none
+**07's screen file is behind Figma on one thing: the action bar's position.** Figma has it absolute
+with a MAX constraint; the export still has it in the scroll, and the shell pins it at runtime for
+that one screen. It is declared here rather than left silent. Clearing it needs a re-pull of 07 —
+and the same pass should re-pull **02, 03a, 06a, 06b, 14**, whose chip components changed shape in
+Figma while the files carry a hand-patched radius. Re-pulling was skipped because these frames run
+to 145 KB and the pull arrives inline; that is a real limit of the current loop and worth solving
+before the next component-level change.

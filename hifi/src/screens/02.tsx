@@ -201,7 +201,7 @@ function CardBus({ className, arrival = "08:00", busType = "Bharat Benz A/C Seat
           {showDateChange && <ChipDateChange className="bg-[var(--colour\/neutral\/150,#e9eaf6)] content-stretch flex gap-[4px] h-[24px] items-center overflow-clip pl-[6px] pr-[9px] relative rounded-[var(--radius\/6,6px)] shrink-0" />}
         </div>
         {showOffer && (
-          <div className="bg-[#ede7f4] content-stretch flex items-start px-[9px] py-[8px] relative rounded-[6px] shrink-0 w-full" data-node-id="179:1452" data-name="Offer strip">
+          <div className="bg-[#ede7f4] content-stretch flex items-start px-[9px] py-[8px] relative rounded-[999px] shrink-0 w-full" data-node-id="179:1452" data-name="Offer strip">
             <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Regular'] font-normal leading-[20px] min-w-px not-italic relative text-[14px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="179:1453">
               {offer}
             </p>
@@ -1032,7 +1032,7 @@ export default function Component02OutboundBusList() {
                 </p>
               </div>
             </div>
-            <div className="bg-[#ede7f4] content-stretch flex items-start px-[9px] py-[8px] relative rounded-[6px] shrink-0 w-full" data-node-id="I183:1713;179:1452" data-name="Offer strip">
+            <div className="bg-[#ede7f4] content-stretch flex items-start px-[9px] py-[8px] relative rounded-[999px] shrink-0 w-full" data-node-id="I183:1713;179:1452" data-name="Offer strip">
               <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Regular'] font-normal leading-[20px] min-w-px not-italic relative text-[14px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="I183:1713;179:1453">
                 Min. 12.5% OFF on 3 or more seats
               </p>
@@ -1292,7 +1292,7 @@ export default function Component02OutboundBusList() {
                 </p>
               </div>
             </div>
-            <div className="bg-[#ede7f4] content-stretch flex items-start px-[9px] py-[8px] relative rounded-[6px] shrink-0 w-full" data-node-id="I183:1838;179:1452" data-name="Offer strip">
+            <div className="bg-[#ede7f4] content-stretch flex items-start px-[9px] py-[8px] relative rounded-[999px] shrink-0 w-full" data-node-id="I183:1838;179:1452" data-name="Offer strip">
               <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Regular'] font-normal leading-[20px] min-w-px not-italic relative text-[14px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="I183:1838;179:1453">
                 Min. 10% OFF on 3 or more seats
               </p>
@@ -1560,7 +1560,7 @@ export default function Component02OutboundBusList() {
                 </p>
               </div>
             </div>
-            <div className="bg-[#ede7f4] content-stretch flex items-start px-[9px] py-[8px] relative rounded-[6px] shrink-0 w-full" data-node-id="I183:2002;179:1452" data-name="Offer strip">
+            <div className="bg-[#ede7f4] content-stretch flex items-start px-[9px] py-[8px] relative rounded-[999px] shrink-0 w-full" data-node-id="I183:2002;179:1452" data-name="Offer strip">
               <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Regular'] font-normal leading-[20px] min-w-px not-italic relative text-[14px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="I183:2002;179:1453">
                 Min. 15% OFF on 3 or more seats
               </p>

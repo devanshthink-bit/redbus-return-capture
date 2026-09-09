@@ -180,7 +180,7 @@ export default function Component06AYourReturnDayChosen() {
               </p>
             </div>
             <div className="content-stretch flex items-start overflow-clip relative shrink-0" data-node-id="411:2973" data-name="Frame">
-              <div className="bg-[#f6ede6] content-stretch flex items-start overflow-clip px-[8px] py-[4px] relative rounded-[6px] shrink-0" data-node-id="411:2974" data-name="Frame">
+              <div className="bg-[#f6ede6] content-stretch flex items-start overflow-clip px-[8px] py-[4px] relative rounded-[999px] shrink-0" data-node-id="411:2974" data-name="Frame">
                 <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#a45729] text-[12px] whitespace-nowrap" data-node-id="411:2975">
                   ↻ Different seat — U4 taken
                 </p>
@@ -241,7 +241,7 @@ export default function Component06AYourReturnDayChosen() {
               </p>
             </div>
             <div className="content-stretch flex items-start overflow-clip relative shrink-0" data-node-id="411:2994" data-name="Frame">
-              <div className="bg-[#e9eaf6] content-stretch flex items-start overflow-clip px-[8px] py-[4px] relative rounded-[6px] shrink-0" data-node-id="411:2995" data-name="Frame">
+              <div className="bg-[#e9eaf6] content-stretch flex items-start overflow-clip px-[8px] py-[4px] relative rounded-[999px] shrink-0" data-node-id="411:2995" data-name="Frame">
                 <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[12px] whitespace-nowrap" data-node-id="411:2996">
                   ↻ Cheapest
                 </p>

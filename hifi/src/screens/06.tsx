@@ -110,7 +110,7 @@ export default function Component06YourReturnPickADay() {
               </p>
             </div>
             <div className="content-stretch flex items-start overflow-clip relative shrink-0" data-node-id="410:2967" data-name="Frame">
-              <div className="bg-[#f6ede6] content-stretch flex items-start overflow-clip px-[8px] py-[4px] relative rounded-[6px] shrink-0" data-node-id="410:2968" data-name="Frame">
+              <div className="bg-[#f6ede6] content-stretch flex items-start overflow-clip px-[8px] py-[4px] relative rounded-[999px] shrink-0" data-node-id="410:2968" data-name="Frame">
                 <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#a45729] text-[12px] whitespace-nowrap" data-node-id="410:2969">
                   ↻ Different seat — U4 taken
                 </p>
@@ -163,7 +163,7 @@ export default function Component06YourReturnPickADay() {
               4 buses · 2 can change date
             </p>
             <div className="content-stretch flex items-start overflow-clip relative shrink-0" data-node-id="352:2648" data-name="Frame">
-              <div className="bg-[#e9eaf6] content-stretch flex items-start overflow-clip px-[8px] py-[4px] relative rounded-[6px] shrink-0" data-node-id="352:2649" data-name="Frame">
+              <div className="bg-[#e9eaf6] content-stretch flex items-start overflow-clip px-[8px] py-[4px] relative rounded-[999px] shrink-0" data-node-id="352:2649" data-name="Frame">
                 <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[12px] whitespace-nowrap" data-node-id="352:2650">
                   ↻ Cheapest
                 </p>

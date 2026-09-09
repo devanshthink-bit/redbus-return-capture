@@ -185,7 +185,7 @@ export default function Component14MoveBuses() {
             </p>
           </div>
           <div className="content-start flex flex-wrap items-start overflow-clip pt-[6px] px-[16px] relative shrink-0 w-full" data-node-id="368:2906" data-name="Frame">
-            <div className="bg-[#f6ede6] content-stretch flex items-start overflow-clip px-[8px] py-[4px] relative rounded-[6px] shrink-0" data-node-id="368:2907" data-name="Frame">
+            <div className="bg-[#f6ede6] content-stretch flex items-start overflow-clip px-[8px] py-[4px] relative rounded-[999px] shrink-0" data-node-id="368:2907" data-name="Frame">
               <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#a45729] text-[12px] whitespace-nowrap" data-node-id="368:2908">
                 ↻ Different seat
               </p>
@@ -261,12 +261,12 @@ export default function Component14MoveBuses() {
             </p>
           </div>
           <div className="content-start flex flex-wrap gap-[0px_8px] items-start overflow-clip pt-[6px] px-[16px] relative shrink-0 w-full" data-node-id="368:2965" data-name="Frame">
-            <div className="bg-[#f6ede6] content-stretch flex items-start overflow-clip px-[8px] py-[4px] relative rounded-[6px] shrink-0" data-node-id="368:2966" data-name="Frame">
+            <div className="bg-[#f6ede6] content-stretch flex items-start overflow-clip px-[8px] py-[4px] relative rounded-[999px] shrink-0" data-node-id="368:2966" data-name="Frame">
               <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#a45729] text-[12px] whitespace-nowrap" data-node-id="368:2967">
                 ↻ Different seat
               </p>
             </div>
-            <div className="bg-[#e9eaf6] content-stretch flex items-start overflow-clip px-[8px] py-[4px] relative rounded-[6px] shrink-0" data-node-id="368:2968" data-name="Frame">
+            <div className="bg-[#e9eaf6] content-stretch flex items-start overflow-clip px-[8px] py-[4px] relative rounded-[999px] shrink-0" data-node-id="368:2968" data-name="Frame">
               <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[12px] whitespace-nowrap" data-node-id="368:2969">
                 Same time as now
               </p>

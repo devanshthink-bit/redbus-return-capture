@@ -163,6 +163,11 @@
      two. Three -- Cheapest, Cannot change, Different seat -- ran off the card, and the frame's
      own overflow-clip cut them rather than showing the overflow. Chips wrap now. */
   .hf-pillrow{flex-wrap:wrap!important;gap:6px!important;overflow:visible!important}
+  /* the real tag, measured: 24pt tall, full pill, icon then label */
+  .hf-chip{align-items:center!important;gap:5px!important;height:24px!important;
+           padding:0 10px 0 8px!important;border-radius:999px!important}
+  .hf-chip-i{width:14px;height:14px;flex:0 0 14px;position:relative;opacity:.75}
+  .hf-chip-i img{width:100%;height:100%;position:absolute;inset:0}
   .hf-bus-on{outline:2px solid #c54646;outline-offset:-2px;border-radius:12px}
   .hf-day-sel{background:#c54646!important}
   .hf-day-sel > p:nth-of-type(1){color:#fff!important}
@@ -258,14 +263,27 @@
   // 1 · Figma pins bottom bars, tab bars, sheets and the FAB to the viewport
   //     ("Fixed position when scrolling"). Here they are absolute children of a
   //     frame taller than the screen, so lift them out of the scroller.
-  screens.forEach(function(sec){
+  screens.forEach(function(sec, si){
     var root = sec.querySelector('.scroll > div');
     var layer = sec.querySelector('.overlay');
     Array.prototype.slice.call(root.children).forEach(function(el){
       var c = el.className || '';
-      if (typeof c === 'string' && /(^|\s)absolute(\s|$)/.test(c) && /(^|\s)bottom-/.test(c)) {
-        layer.appendChild(el);
+      var pinned = typeof c === 'string' && /(^|\s)absolute(\s|$)/.test(c) && /(^|\s)bottom-/.test(c);
+      // 07 ALONE. Its bar is now absolute in Figma but the screen file still has it as a flow
+      // child, so it scrolled away with the list. Lifting every "Action bar" by name instead
+      // pinned 15's and 16's too -- both are meant to sit at the end of their content, and both
+      // frames are shorter than the viewport, so pinning them moved the design. Remove this line
+      // when 07 is re-pulled; the file will carry the absolute itself.
+      var byName = !pinned && ORDER[si] === '07' && el.getAttribute('data-name') === 'Action bar';
+      if (byName) {
+        // Every other bar arrives carrying `absolute bottom-0`, which is what pins it once it is
+        // in the overlay. This one was a flow child, so it has no positioning at all and simply
+        // sat at the top of the layer -- over the nav. Give it the same pinning the others bring.
+        el.style.position = 'absolute';
+        el.style.left = '0'; el.style.right = '0'; el.style.bottom = '0';
+        pinned = true;
       }
+      if (pinned) layer.appendChild(el);
     });
   });
 
@@ -967,14 +985,36 @@
       if (mov === n) return n === 1 ? '1 bus \u00b7 can change date' : n + ' buses \u00b7 all can change date';
       return n + ' buses \u00b7 ' + mov + ' can change date';
     }
-    function chip(from, text, tone){        // tone: 'warn' amber, 'note' lavender, 'mute' grey
+    // Measured off the real app (IMG_4555): a tag is a 24pt FULL pill, #E9EAF6, with an icon and
+    // then the label -- never a label on its own, and never the 6px radius the frames were drawn
+    // with. The icons are cloned out of the page: every one of these already exists somewhere in
+    // the build, so nothing is drawn here and nothing new has to ship.
+    var ICONS = {};
+    ['Icon / Hourglass', 'Icon / Percent', 'Icon / Info', 'Icon / Tick Circle', 'Icon / Star Filled']
+      .forEach(function(n){
+        var e = document.querySelector('.screen [data-name="' + n + '"]');
+        if (e) ICONS[n] = e;
+      });
+    function chip(from, text, tone, icon){   // tone: 'warn' amber, 'note' lavender, 'mute' grey
       var c = from.cloneNode(true);
-      c.className = c.className.replace(/bg-\[#[0-9a-f]+\]/,
-        tone === 'warn' ? 'bg-[#f6ede6]' : tone === 'mute' ? 'bg-[#f1f1f1]' : 'bg-[#e9eaf6]');
+      c.className = c.className
+        .replace(/bg-\[#[0-9a-f]+\]/, tone === 'warn' ? 'bg-[#f6ede6]'
+                                     : tone === 'mute' ? 'bg-[#f1f1f1]' : 'bg-[#e9eaf6]')
+        .replace(/rounded-\[[^\]]*\]/, 'rounded-[999px]');
+      c.classList.add('hf-chip');
       var t = c.querySelector('p');
       t.className = t.className.replace(/text-\[#[0-9a-f]+\]/,
         tone === 'warn' ? 'text-[#a45729]' : tone === 'mute' ? 'text-[#636363]' : 'text-[#1d1d1d]');
-      t.textContent = text; return c;
+      // the frames prefixed these with a bare arrow glyph; a real icon replaces it
+      t.textContent = String(text).replace(/^[\u21bb\u21BB]\s*/, '');
+      Array.prototype.slice.call(c.children).forEach(function(k){ if (k !== t) c.removeChild(k); });
+      if (icon && ICONS[icon]) {
+        var g = ICONS[icon].cloneNode(true);
+        g.className = 'hf-chip-i';
+        g.removeAttribute('data-node-id');
+        c.insertBefore(g, t);
+      }
+      return c;
     }
 
     // v4's tradeRows: not three arbitrary services, the ones that BEAT the pick on something this
@@ -1052,10 +1092,10 @@
         // Cannot-change only on a day that still has a seat; and Different seat only where the
         // day runs ONE bus -- with several, the seat is a property of the bus you pick next.
         if (tags) {
-          if (count > 1 && spread && d === cheap) tags.appendChild(chip(tpl, '\u21bb Cheapest', 'note'));
-          if (seat && mov === 0) tags.appendChild(chip(tpl, '\u21bb Cannot change this date', 'warn'));
+          if (count > 1 && spread && d === cheap) tags.appendChild(chip(tpl, 'Cheapest', 'note', 'Icon / Percent'));
+          if (seat && mov === 0) tags.appendChild(chip(tpl, 'Cannot change this date', 'warn', 'Icon / Hourglass'));
           if (n === 1 && seat && seat !== ONWARD_SEAT)
-            tags.appendChild(chip(tpl, '\u21bb Different seat \u2014 ' + ONWARD_SEAT + ' taken', 'warn'));
+            tags.appendChild(chip(tpl, 'Different seat \u2014 ' + ONWARD_SEAT + ' taken', 'warn', 'Icon / Info'));
           tags.hidden = !tags.children.length;
           tags.classList.add('hf-pillrow');
         }
@@ -1216,14 +1256,21 @@
         t('36:121', b[8].toFixed(1)); t('36:122', String(b[9]));
         var onw = row.querySelector('[data-node-id$="39:119"]');   // "Onwards" is the outbound list's word
         if (onw) onw.hidden = true;
+        // The card's own Amenities row is empty on this screen -- the outbound list fills it, the
+        // return list does not -- and it still occupied 24pt plus its 11pt gap. That band, not the
+        // card, was the space between the bus type and the tags. Hide it; the tags stay in the row
+        // below the card, which is where Figma has them and where they must stay, because an
+        // instance takes no new children (CONTEXT §18) so Figma cannot put them inside.
+        var amen = row.querySelector('[data-name="Amenities"]');
+        if (amen && !amen.children.length) amen.hidden = true;
         var pills = row.querySelector('[data-node-id="367:2735"]');
         if (pills) {
           var ptpl = pills.children[0];
           while (pills.firstChild) pills.removeChild(pills.firstChild);
-          if (!b[3]) pills.appendChild(chip(ptpl, 'No date change', 'mute'));
-          if (i === cheapest && all.length > 1) pills.appendChild(chip(ptpl, 'Cheapest', 'note'));
-          if (b[4]) pills.appendChild(chip(ptpl, 'Free Cancellation', 'note'));
-          if (i === defIdx(chosen)) pills.appendChild(chip(ptpl, 'Closest to your onward', 'note'));
+          if (!b[3]) pills.appendChild(chip(ptpl, 'No date change', 'mute', 'Icon / Hourglass'));
+          if (i === cheapest && all.length > 1) pills.appendChild(chip(ptpl, 'Cheapest', 'note', 'Icon / Percent'));
+          if (b[4]) pills.appendChild(chip(ptpl, 'Free Cancellation', 'note', 'Icon / Tick Circle'));
+          if (i === defIdx(chosen)) pills.appendChild(chip(ptpl, 'Closest to your onward', 'note', 'Icon / Star Filled'));
           pills.hidden = !pills.children.length;
           pills.classList.add('hf-pillrow');
         }

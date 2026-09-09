@@ -175,12 +175,12 @@ export default function Component07ChooseYourBus() {
             </div>
           </div>
           <div className="content-start flex flex-wrap gap-[0px_8px] items-start overflow-clip px-[16px] relative shrink-0 w-full" data-node-id="367:2735" data-name="Frame">
-            <div className="bg-[#f1f1f1] content-stretch flex items-start overflow-clip px-[8px] py-[4px] relative rounded-[6px] shrink-0" data-node-id="367:2736" data-name="Frame">
+            <div className="bg-[#f1f1f1] content-stretch flex items-start overflow-clip px-[8px] py-[4px] relative rounded-[999px] shrink-0" data-node-id="367:2736" data-name="Frame">
               <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#636363] text-[12px] whitespace-nowrap" data-node-id="367:2737">
                 No date change
               </p>
             </div>
-            <div className="bg-[#e9eaf6] content-stretch flex items-start overflow-clip px-[8px] py-[4px] relative rounded-[6px] shrink-0" data-node-id="367:2738" data-name="Frame">
+            <div className="bg-[#e9eaf6] content-stretch flex items-start overflow-clip px-[8px] py-[4px] relative rounded-[999px] shrink-0" data-node-id="367:2738" data-name="Frame">
               <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[12px] whitespace-nowrap" data-node-id="367:2739">
                 Cheapest
               </p>
@@ -307,12 +307,12 @@ export default function Component07ChooseYourBus() {
             </div>
           </div>
           <div className="content-start flex flex-wrap gap-[0px_8px] items-start overflow-clip px-[16px] relative shrink-0 w-full" data-node-id="367:2846" data-name="Frame">
-            <div className="bg-[#f1f1f1] content-stretch flex items-start overflow-clip px-[8px] py-[4px] relative rounded-[6px] shrink-0" data-node-id="367:2847" data-name="Frame">
+            <div className="bg-[#f1f1f1] content-stretch flex items-start overflow-clip px-[8px] py-[4px] relative rounded-[999px] shrink-0" data-node-id="367:2847" data-name="Frame">
               <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#636363] text-[12px] whitespace-nowrap" data-node-id="367:2848">
                 No date change
               </p>
             </div>
-            <div className="bg-[#e9eaf6] content-stretch flex items-start overflow-clip px-[8px] py-[4px] relative rounded-[6px] shrink-0" data-node-id="367:2849" data-name="Frame">
+            <div className="bg-[#e9eaf6] content-stretch flex items-start overflow-clip px-[8px] py-[4px] relative rounded-[999px] shrink-0" data-node-id="367:2849" data-name="Frame">
               <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[12px] whitespace-nowrap" data-node-id="367:2850">
                 Free Cancellation
               </p>
@@ -380,12 +380,12 @@ export default function Component07ChooseYourBus() {
             </div>
           </div>
           <div className="content-start flex flex-wrap gap-[0px_8px] items-start overflow-clip px-[16px] relative shrink-0 w-full" data-node-id="367:2904" data-name="Frame">
-            <div className="bg-[#e9eaf6] content-stretch flex items-start overflow-clip px-[8px] py-[4px] relative rounded-[6px] shrink-0" data-node-id="367:2905" data-name="Frame">
+            <div className="bg-[#e9eaf6] content-stretch flex items-start overflow-clip px-[8px] py-[4px] relative rounded-[999px] shrink-0" data-node-id="367:2905" data-name="Frame">
               <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[12px] whitespace-nowrap" data-node-id="367:2906">
                 Free Cancellation
               </p>
             </div>
-            <div className="bg-[#e9eaf6] content-stretch flex items-start overflow-clip px-[8px] py-[4px] relative rounded-[6px] shrink-0" data-node-id="367:2907" data-name="Frame">
+            <div className="bg-[#e9eaf6] content-stretch flex items-start overflow-clip px-[8px] py-[4px] relative rounded-[999px] shrink-0" data-node-id="367:2907" data-name="Frame">
               <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[12px] whitespace-nowrap" data-node-id="367:2908">
                 Closest to your onward
               </p>
