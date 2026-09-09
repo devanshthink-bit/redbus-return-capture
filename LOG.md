@@ -8688,3 +8688,40 @@ called U4 a *lower-deck* sleeper — `RETURN.seat` had not been written yet at t
 function — and 08a's summary described the picked seat while naming the drawn one. It takes the seat
 it is describing now. **If a function's answer depends on which thing you mean, the thing has to be
 an argument.**
+
+CHANGE  ·  2026-09-09  ·  molades-none  ·  Source: user
+**Paying is three steps now, not one.** Devansh: *"The back button on the payment screen is taking
+me somewhere else. When the user clicks on this credit option to pay, the UI will change to this…
+When the user clicks on this Pay button, this loading screen will show. You have to make it work so
+that the timer actually runs for 5 seconds, and then it will redirect to the next screen."*
+
+**Back on Pay went to the dropping-points screen** — `prevOf(09)` — a step nobody came through, since
+*Pay now* on Review goes straight to 09. It goes to Review.
+
+**Choosing an option now grows its own Pay button**, which is what the real screen does: the radio
+fills, the button moves into that card and takes the amount. Nothing is chosen at rest.
+
+**And paying opens `09b · Please wait`** — the real app's processing screen: the orange *do not go
+back* band, the redBus mark, the amount, and the countdown ring. It sits five seconds, the ring
+sweeps a full turn and the digits count 00:05 → 00:00, then it goes on to Booking confirmed. Leaving
+early stops the clock, so a Back does not drop you on Booking confirmed a few seconds later.
+
+**The five seconds are a prototype's timing, not redBus's.** The real ring counts the eight-minute
+payment window down from 07:10; five seconds of that would be an invisible sliver of arc. This one
+is a wait you can watch.
+
+NOTE  ·  2026-09-09  ·  molades-none
+**09's parity is 4.08% with one 36.7% band, and the band is on purpose.** The frame draws a chosen
+option *with* its Pay button, because that is the state the button belongs to; the build hides the
+button until the traveller chooses. Hiding it with `display` first took 60pt out of the flow and
+lifted the entire lower half of the screen — one honest difference became a shifted page and a
+number nobody could read. It is hidden with `visibility` now, so the space stays and the difference
+stays where it belongs: **one band, the button's own.**
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**When the build must differ from the frame, differ in place.** A runtime state that removes a drawn
+element should keep its box, or every measurement below it moves and the parity harness stops being
+able to tell a real regression from the intended difference.
+
+**A screen that leaves on a timer has to stop its timer when you leave it.** Otherwise Back works,
+and then five seconds later the prototype walks forward on its own from wherever you went.

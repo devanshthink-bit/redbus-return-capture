@@ -179,9 +179,15 @@
   .hf-sheet{position:absolute;left:0;right:0;bottom:0;max-height:74%;overflow-y:auto;
     border-radius:20px 20px 0 0;background:#fff;-webkit-overflow-scrolling:touch}
   .hf-sheet::-webkit-scrollbar{width:0;height:0}
+  /* The countdown ring. Figma draws it; this sweeps it, because an exported arc is a picture. */
+  .hf-sweep{position:absolute;inset:0;border-radius:50%;
+    background:conic-gradient(#ec3535 var(--hf-turn,0deg), rgba(0,0,0,0) 0);
+    -webkit-mask:radial-gradient(circle, transparent 0 88px, #000 88px);
+            mask:radial-gradient(circle, transparent 0 88px, #000 88px)}
   .hf-radio-on{position:relative}
   /* A radio dot does not travel -- it is either set or not. It fades in on the spot. */
   @keyframes hf-dot{from{opacity:0;transform:scale(.6)} to{opacity:1;transform:none}}
+  .hf-pay-on{background:#c54646!important;border-color:#c54646!important}
   .hf-radio-on::after{content:'';position:absolute;inset:5px;border-radius:50%;
     background:#C54646;animation:hf-dot 160ms ease-out}
   @media (prefers-reduced-motion:reduce){
@@ -436,6 +442,7 @@
   function go(i){
     if (i < 0 || i >= screens.length) return;
     if (window.__closeSheet) window.__closeSheet();   // a sheet does not survive a page change
+    if (ORDER[at] === '09b' && window.__stopWait) window.__stopWait();
     var from = ORDER[at];
     var dir = i >= at ? 1 : -1;
     // Read the outgoing scroll BEFORE hiding it. `hidden` is display:none, and a display:none
@@ -1708,6 +1715,95 @@
     paint();
   })();
 
+  // 09 / 09b · paying. Tapping a method used to walk straight to Booking confirmed, which skipped
+  //      the two things the real app does: the chosen option grows its own Pay button, and paying
+  //      opens a waiting screen while the transaction goes through. The wait is five seconds here
+  //      -- long enough to read, short enough to sit through -- and the ring empties over it.
+  (function paying(){
+    var i09 = ORDER.indexOf('09'), i09b = ORDER.indexOf('09b'), i10 = ORDER.indexOf('10');
+    if (i09 < 0 || i09b < 0 || i10 < 0) return;
+    var sec = screens[i09];
+    var payBtn = sec.querySelector('[data-name="Button / Primary"]');
+    var payGap = sec.querySelector('[data-node-id="723:4125"]');
+    if (!payBtn) { console.warn('09: no Pay button'); return; }
+    payBtn.classList.add('hf-hot');
+
+    // the frame draws a chosen option, because that is the state the button belongs to. Nothing is
+    // chosen until the traveller chooses, so the button starts away and moves to whichever card
+    // holds the option they tapped.
+    function amount(){
+      var t = sec.querySelector('[data-node-id="I109:988;34:91"]');
+      return t ? t.textContent.replace(/^Pay\s*/, '') : '';
+    }
+    // At rest the button is out of sight but not out of the layout. Taking it out of the flow moved
+    // everything below it up by 60pt, which turned one honest difference from the frame into a
+    // shifted lower half and made the parity number for this screen unreadable.
+    function hide(){
+      payBtn.style.visibility = 'hidden';
+      if (payGap) payGap.style.visibility = 'hidden';
+      [].forEach.call(sec.querySelectorAll('.hf-pay-on'), function(r){ r.classList.remove('hf-pay-on'); });
+    }
+    function show(){
+      payBtn.style.visibility = '';
+      if (payGap) payGap.style.visibility = '';
+    }
+    hide();
+
+    sec.addEventListener('click', function(e){
+      if (e.target.closest && e.target.closest('.hf-back')) return;
+      if (payBtn.contains(e.target)) {
+        e.preventDefault(); e.stopPropagation(); go(i09b); return;
+      }
+      var row = e.target.closest('[data-name="Row / Payment method"]');
+      if (!row) return;
+      e.preventDefault(); e.stopPropagation();
+      hide();
+      var radio = row.querySelector('[data-name="Radio"]');
+      if (radio) radio.classList.add('hf-pay-on');
+      var card = row.parentNode;
+      var label = payBtn.querySelector('p');
+      if (label) label.textContent = 'Pay ' + amount();
+      if (payGap) card.appendChild(payGap);
+      card.appendChild(payBtn);
+      show();
+      if (payBtn.scrollIntoView) payBtn.scrollIntoView({block:'nearest'});
+    }, true);
+
+    // 09b · the wait. Five seconds, counted down and swept, then Booking confirmed.
+    var WAIT = 5, timer = null;
+    function stop(){ if (timer) { clearInterval(timer); timer = null; } }
+    ON_ENTER['09b'] = function(w){
+      stop();
+      var digits = w.querySelector('[data-node-id="725:4169"]');
+      var amtT   = w.querySelector('[data-node-id="725:4162"]');
+      var subT   = w.querySelector('[data-node-id="I727:4171;34:92"]');
+      var ring   = w.querySelector('[data-name="Ring"]');
+      var drawn  = w.querySelector('[data-node-id="725:4168"]');       // the drawn arc
+      if (amtT) amtT.textContent = 'Complete payment of ' + amount();
+      if (subT) subT.textContent = 'Pay ' + amount();
+      if (drawn) drawn.hidden = true;                                  // the sweep replaces it
+      var sweep = ring && ring.querySelector('.hf-sweep');
+      if (ring && !sweep) { sweep = document.createElement('div'); sweep.className = 'hf-sweep';
+                            ring.insertBefore(sweep, ring.firstChild.nextSibling); }
+      var left = WAIT;
+      function tick(){
+        if (digits) digits.textContent = '00:0' + Math.max(0, left);
+        if (sweep) sweep.style.setProperty('--hf-turn', (360 * (WAIT - left) / WAIT) + 'deg');
+        if (left <= 0) { stop(); go(i10); return; }
+        left -= 1;
+      }
+      tick();
+      timer = setInterval(tick, 1000);
+    };
+    // leaving the screen stops the clock, so Back does not land you on Booking confirmed later
+    screens[i09b].addEventListener('click', function(e){
+      if (!e.target.closest || !e.target.closest('.hf-back')) return;
+      stop();
+    }, true);
+    var _go = go;
+    window.__stopWait = stop;
+  })();
+
   // 09 / 09a · "View details" opens the booking-details sheet, and the × closes it. A sheet is not
   //      a step, so 09a sits in OVERLAY and SKIP: prev, next and the arrow keys walk straight past
   //      it, and Back on Pay still goes to the points screen rather than into the sheet.
@@ -1720,6 +1816,13 @@
   (function bookingDetails(){
     var i09 = ORDER.indexOf('09'), i09a = ORDER.indexOf('09a'), i08 = ORDER.indexOf('08');
     if (i09 < 0 || i09a < 0) return;
+    // Pay is reached from Review, so Back belongs there. prevOf(09) is the dropping-points screen,
+    // which is a step nobody came through to get here.
+    if (i08 >= 0) screens[i09].addEventListener('click', function(e){
+      if (!e.target.closest || !e.target.closest('.hf-back')) return;
+      e.preventDefault(); e.stopPropagation();
+      go(i08);
+    }, true);
 
     // The sheet is a sheet, not a screen. It was built as its own frame -- a drawn copy of Pay
     // behind a scrim -- so opening it from Review put Review's title over Pay's content, and

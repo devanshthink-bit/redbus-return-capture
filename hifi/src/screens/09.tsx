@@ -4,6 +4,7 @@ const imgIconGlobe = "assets/5df2ea04-9b1c-4b42-a123-ebe0393efc46.svg";
 const imgArtCardNetworks = "assets/d43395b2-a758-42a1-a84f-06a870e435b4.png";
 const imgIconCard = "assets/d13e3842-ae19-4e98-abf1-49cfa3e61794.svg";
 const imgLogoGooglePay = "assets/a01a8bf4-3f5a-49d5-8bae-c08f1a7ff013.png";
+const imgGlyph1 = "assets/f987e112-3f21-4093-9c91-abca9b06aa32.svg";
 const imgIconPercentGreen = "assets/7b9b26f4-27d1-43b6-9739-37b6e26aeb61.svg";
 const imgArtWallet = "assets/f78dbdd1-07f6-4431-aa6c-36db9c60a7f9.png";
 const imgArtTrustRow = "assets/fea115d9-5c34-45eb-bbed-63381bff504a.png";
@@ -67,6 +68,33 @@ function LogoGooglePay({ className }: { className?: string }) {
   return (
     <div className={className || "relative size-[32px]"} data-node-id="108:976" data-name="Logo / Google Pay">
       <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgLogoGooglePay} />
+    </div>
+  );
+}
+
+function IconSearch({ className }: { className?: string }) {
+  return (
+    <div className={className || "relative size-[20px]"} data-node-id="13:15" data-name="Icon / Search">
+      <div className="absolute left-0 size-[20px] top-0" data-node-id="13:16" data-name="glyph">
+        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgGlyph1} />
+      </div>
+    </div>
+  );
+}
+
+type ButtonPrimaryProps = {
+  className?: string;
+  label?: string;
+  showIcon?: boolean;
+};
+
+function ButtonPrimary({ className, label = "Search buses", showIcon = true }: ButtonPrimaryProps) {
+  return (
+    <div className={className || "bg-[var(--surface\\/accent,#c54646)] content-stretch flex gap-[10px] h-[46px] items-center justify-center overflow-clip px-[20px] relative rounded-[var(--radius\\/full,999px)] shadow-[0px_2px_6px_0px_rgba(0,0,0,0.1)] w-[358px]"} data-node-id="18:54" data-name="Button / Primary">
+      {showIcon && <IconSearch className="relative shrink-0 size-[20px]" />}
+      <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[20px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/on-accent,white)] whitespace-nowrap" data-node-id="18:53">
+        {label}
+      </p>
     </div>
   );
 }
@@ -232,8 +260,10 @@ export default function Component09Pay() {
             <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Regular'] font-normal leading-[22px] min-w-px not-italic relative text-[16px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="I673:4028;108:987">
               CRED UPI
             </p>
-            <div className="border-[1.5px] border-[var(--border\/default,#b0b0b0)] border-solid relative rounded-[var(--radius\/full,999px)] shrink-0 size-[24px]" data-node-id="I673:4028;108:988" data-name="Radio" />
+            <div className="bg-[#c54646] border-[#c54646] border-[1.5px] border-solid relative rounded-[var(--radius\/full,999px)] shrink-0 size-[24px]" data-node-id="I673:4028;108:988" data-name="Radio" />
           </div>
+          <div className="h-[12px] relative shrink-0 w-full" data-node-id="723:4125" data-name="gap" />
+          <ButtonPrimary className="bg-[var(--surface\/accent,#c54646)] content-stretch flex gap-[10px] h-[48px] items-center justify-center overflow-clip px-[20px] relative rounded-[var(--radius\/full,999px)] shadow-[0px_2px_6px_0px_rgba(0,0,0,0.1)] shrink-0 w-full" label="Pay ₹2,919" showIcon={false} />
         </div>
         <div className="bg-[var(--surface\/default,white)] content-stretch drop-shadow-[0px_8px_12px_rgba(0,0,0,0.07),0px_2px_3px_rgba(0,0,0,0.05)] flex flex-col items-start p-[16px] relative rounded-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="109:1029" data-name="UPI">
           <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[26px] not-italic relative shrink-0 text-[20px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="109:1030">

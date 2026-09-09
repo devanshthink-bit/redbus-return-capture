@@ -25,7 +25,7 @@ await build({
 });
 
 const { SCREENS } = require(out);
-if (SCREENS.length !== 28) throw new Error(`expected 28 screens, got ${SCREENS.length}`);
+if (SCREENS.length !== 29) throw new Error(`expected 29 screens, got ${SCREENS.length}`);
 
 // 2 · render each frame to static markup
 const rendered = SCREENS.map(({ id, name, C }) => {
@@ -61,6 +61,7 @@ const FORWARD = {
   '08c': ['[data-name="Point / ISBT Kashmiri Gate"]'],
   '09':  ['[data-name="Row / Payment method"]'],
   '09a': [],                                        // a sheet: it closes, it does not go forward
+  '09b': [],                                        // it leaves on its own timer, not on a tap
   '10':  ['[data-name="Button / Primary"]'],
   '11':  ['[data-name="Change day"]'],
   '12':  ['[data-name="Booking"]'],

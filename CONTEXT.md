@@ -741,7 +741,7 @@ v4, not v3.** What changed in Figma, and the node ids, in case it has to be done
 ### The flow, frame by frame — read this before rebuilding a screen in code
 
 Every hi-fi frame, the prototype screen it is, and what moves you off it. Derived from the build,
-not from memory. **28 frames = 16 screens + 12 state variants** (01a · 03a · 03b · 04a · 05a ·
+not from memory. **29 frames = 17 screens + 12 state variants** (01a · 03a · 03b · 04a · 05a ·
 05b · 06a · 06b · 08a · 08b · 08c · 09a). Counted off the Figma section and `src/render.tsx`, 2026-09-09.
 
 | # · Frame | Prototype | Control | Goes to |
@@ -765,7 +765,8 @@ not from memory. **28 frames = 16 screens + 12 state variants** (01a · 03a · 0
 | 08a · Return seat | `s-seat` | Select points | 08 |
 | 08b · Return boarding | `s-points` | Dropping Points tab | 08c |
 | 08c · Return dropping | `s-points` | a dropping point | 09 |
-| 09 · Pay | `s-pay` | a payment method · View details | 10 · 09a |
+| 09 · Pay | `s-pay` | a payment method, then its Pay button · View details | 09b · 09a |
+| 09b · Please wait | — | *nothing; it leaves on a five-second timer* | 10 |
 | 09a · Booking details | — | *sheet off **Review or Pay**, whichever View details was tapped*; the × | back to the one that opened it |
 | 10 · Booking confirmed | `s-done2` | View ticket | 11 |
 | 11 · Ticket details | `s-ticket` | Change your return day | 13 |
@@ -2127,7 +2128,7 @@ rules, and the range **ends** in the accent), 06 · 06a (the narrowing heading, 
 Figma never had), 08 (what declining Free Cancellation gives you), 11 (Change day inside the ticket
 card). 12 was already right.
 
-**The build is 28 screens.** It shipped at 23 and grew by five, each for its own reason:
+**The build is 29 screens.** It shipped at 23 and grew by six, each for its own reason:
 `06b · Your return · day cannot change` (6 Sep) is the trap state, which existed in v4 and in none
 of the frames; `01a · Select date` is the calendar sheet off Home's date row; `04a · Board & drop ·
 dropping` is the second half of the boarding-points tab control. All three live in **Screens**, not
@@ -2160,14 +2161,14 @@ Two checks, because each is blind to what the other sees.
 | **Geometry** | 1,730 nodes matched by `data-node-id` against the Figma metadata. **Three** blocks off by more than 4px. **Last run 4 Sep on the 23-frame build, and not re-run since — 01a, 04a and 06b have never been geometry-checked.** Treat the number as history, not as current |
 | **Pixels** | **current.** 26 of the 27 frames were re-rendered headless at native size on 2026-09-09 and diffed against Figma renders pulled the same hour. Three frames were rebuilt later that day and carry their own fresh numbers: **09 · 1.96%** (1681pt), **11 · 11.22%** (4020pt), **08b · 8.25%** and **08c · 5.82%**. **Do not compare 11's number with its old 5.38%** — the frame is four and a half times taller and half of it is photographic, so a 1px accumulated drift turns every pixel of a photo different. Read its bands for *steps*, not its percentage. Of the rest, worst are **11.99%** (01) and **11.69%** (03a) — the two tallest — with 04, 05a, 06a and 06b above 8% |
 
-**The full 28 (9 Sep), for the next person who needs a baseline to compare against:**
+**The full 29 (9 Sep), for the next person who needs a baseline to compare against:**
 
 ```
 01  11.99   01a  2.60   02  5.84   03  4.80   03a 11.69   03b  4.77
 04   9.73   04a  5.77   05  5.20   05a 8.06   05b  7.54   06   5.79
 06a  8.43   06b  8.83   07  6.15   08  7.31   08a  5.21   08b  8.25
-08c  5.82   09  1.96   09a 2.67   10  2.40   11 11.22   12  2.35
-13   4.87   14  6.93   15  1.30   16   2.58
+08c  5.82   09  4.08   09a 2.67   09b 1.77   10  2.40   11 11.22
+12   2.35   13  4.87   14  6.93   15  1.30   16   2.58
 ```
 
 **06, 06a and 06b read higher than the run above and nothing got worse.** The day cards were
