@@ -348,7 +348,7 @@ export default function Component06BYourReturnDayCannotChange() {
               </p>
             </div>
             <a className="[word-break:break-word] block cursor-pointer font-['Inter:Bold'] font-bold leading-[0] not-italic relative shrink-0 text-[#c54646] text-[14px] whitespace-nowrap" data-node-id="521:3897">
-              <p className="leading-[normal]">All 2 buses on Mon, 21 Sep →</p>
+              <p className="leading-[normal]">See all 2 in full →</p>
             </a>
           </div>
         </div>

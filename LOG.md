@@ -8048,3 +8048,34 @@ same way, the thing they have in common is the bug.
 content, and a lie that stays becomes a defect of its own — blank space at the end of a list. Tying
 its removal to the moment it stops mattering (the traveller scrolling back into range, where taking
 it away changes nothing) is what makes it safe to tell.
+
+DECISION  ·  2026-09-09  ·  molades-none  · Source: user
+**The all-buses link stays, and says what it actually adds.** Devansh: *"when we are already showing
+all buses here, why still have view all buses? or we cd have some other copy since user might want
+to still see all buses in detail in diff page?"* — on a Fri 18 fold showing a recommended bus and
+two alternatives, under a link reading *All 3 buses on Fri, 18 Sep*.
+
+He is right that it promises nothing new on those days. **Kept rather than hidden**, for two
+reasons: the full list genuinely gives more — a whole card per bus with seats left, the vehicle and
+every tag, where the fold's alternatives are one-liners with a time, a rating and a price delta —
+and a control that disappears on some days and not others is harder to learn than one that is always
+there.
+
+So the copy is conditional on whether the fold is already showing everything:
+
+- fold shows fewer than the day runs → **All 7 buses on Wed, 16 Sep →**
+- fold shows all of them → **See all 3 in full →**
+
+Checked across a window: 14, 15, 16, 17 and 20 Sep take the first form, **18 and 19 the second** —
+which are exactly the days whose bus count is at or below the fold's four slots. Figma carries the
+second form on 06b, which is drawn on a two-bus day. 06b's diff 8.91 → 8.83.
+
+**The alternative he offered — hiding it — is one line away** if the extra detail turns out not to
+be worth a tap in a session.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**A label that counts things has to know what is already on screen.** *All N buses* was written for
+the case the frame was drawn with — a day running more services than the fold can list — and is a
+false promise on any day where the fold happens to hold them all. The count was never the problem;
+the word *all* was, because it describes the destination without reference to the origin. Copy that
+compares two states has to be generated from both.

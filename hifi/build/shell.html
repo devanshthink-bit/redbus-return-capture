@@ -1123,7 +1123,14 @@
       if (link) {
         link.hidden = all.length < 2;
         var lp = link.querySelector('p');
-        if (lp) lp.textContent = 'All ' + all.length + ' buses on ' + label(chosen) + ' \u2192';
+        // On a day with few services the fold already lists every one of them, so "All 3 buses"
+        // promises something the traveller can already see. The full list still earns its place --
+        // it gives each bus a whole card with seats left, the vehicle and every tag, and the fold's
+        // alternatives are one-liners -- so the link stays and says what it actually adds.
+        var shown = 1 + rows.length;
+        if (lp) lp.textContent = shown >= all.length
+          ? 'See all ' + all.length + ' in full \u2192'
+          : 'All ' + all.length + ' buses on ' + label(chosen) + ' \u2192';
         link.classList.add('hf-hot');
         if (!link.__wired) { link.__wired = 1;
           link.addEventListener('click', function(e){

@@ -2147,14 +2147,14 @@ Two checks, because each is blind to what the other sees.
 | | |
 |---|---|
 | **Geometry** | 1,730 nodes matched by `data-node-id` against the Figma metadata. **Three** blocks off by more than 4px. **Last run 4 Sep on the 23-frame build, and not re-run since — 01a, 04a and 06b have never been geometry-checked.** Treat the number as history, not as current |
-| **Pixels** | **current.** All 26 frames re-rendered headless at native size on 2026-09-09 and diffed against Figma renders pulled the same hour: **mean 5.71%** of pixels differing, best **1.28%** (08b), worst **11.99%** (01) and **11.69%** (03a) — the two tallest. Six frames sit above 8%: 01, 03a, **04 (9.82%)**, **05a (8.06%)**, **06a (8.43%)** and **06b (8.74%)** |
+| **Pixels** | **current.** All 26 frames re-rendered headless at native size on 2026-09-09 and diffed against Figma renders pulled the same hour: **mean 5.70%** of pixels differing, best **1.28%** (08b), worst **11.99%** (01) and **11.69%** (03a) — the two tallest. Six frames sit above 8%: 01, 03a, **04 (9.82%)**, **05a (8.06%)**, **06a (8.43%)** and **06b (8.74%)** |
 
 **The full 26 (9 Sep), for the next person who needs a baseline to compare against:**
 
 ```
 01  11.99   01a  2.60   02  5.84   03  4.80   03a 11.69   03b  4.77
 04   9.82   04a  5.77   05  5.20   05a 8.06   05b  7.54   06   5.79
-06a  8.43   06b  8.91   07  5.71   08  7.45   08a  5.21   08b  1.28
+06a  8.43   06b  8.83   07  5.71   08  7.45   08a  5.21   08b  1.28
 09   1.78   10   2.40   11  5.38   12  2.35   13   4.87   14   6.93
 15   1.30   16   2.58
 ```
