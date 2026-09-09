@@ -349,6 +349,20 @@
   // for fixed bars; it is the same rule for sheets.
   // It has to run when the screen is VISIBLE: a hidden element measures 0, so doing it at init
   // padded nothing.
+  // How much of the viewport the pinned chrome covers: measured from the top of the highest
+  // pinned element to the bottom edge, not its own height, because a bar that floats clear of the
+  // bottom (the tab bar sits 21px up) occupies more than it is tall.
+  function pinnedHeight(sec){
+    var layer = sec.querySelector('.overlay');
+    if (!layer) return 0;
+    var tall = 0;
+    Array.prototype.forEach.call(layer.children, function(el){
+      var h = (layer.offsetHeight || 0) - (el.offsetTop || 0);
+      if (h > tall) tall = h;
+    });
+    return tall > 0 ? tall : 0;
+  }
+
   function clearBottom(sec){
     if (sec.dataset.cleared) return;
     var layer = sec.querySelector('.overlay');
@@ -359,11 +373,7 @@
     // scale factor and left the last section 13px under the sheet.
     // Measure from the element's TOP to the bottom of the viewport, not its own height: the tab
     // bar floats 21px clear of the bottom edge, so its height alone under-pads by that inset.
-    var tall = 0;
-    Array.prototype.forEach.call(layer.children, function(el){
-      var h = (layer.offsetHeight || 0) - (el.offsetTop || 0);
-      if (h > tall) tall = h;
-    });
+    var tall = pinnedHeight(sec);
     if (tall <= 0) { sec.dataset.cleared = '1'; return; }
     // ADD only what is missing. Every frame already carries its own bottom padding for the bar it
     // was designed with -- 05 has 135 under a 99pt bar -- so padding the full height again left a
@@ -1255,7 +1265,11 @@
       var fold = sec.querySelector('[data-name="Bus fold"]');
       var top  = absTop(row) - absTop(sc);
       var groupH = row.offsetHeight + (fold && !fold.hidden ? fold.offsetHeight : 0);
-      var pad = groupH < sc.clientHeight ? (sc.clientHeight - groupH) / 2 : 12;
+      // Centre in what can actually be seen, which stops at the top of the action bar -- the bar
+      // is pinned over the last ~129px, so centring on the whole viewport pushed the bottom of the
+      // fold underneath it.
+      var seen = sc.clientHeight - pinnedHeight(sec);
+      var pad = groupH < seen ? (seen - groupH) / 2 : 12;
       var to = Math.max(0, Math.min(top - pad, sc.scrollHeight - sc.clientHeight));
       sc.scrollTo({ top: to, behavior: 'smooth' });
     };

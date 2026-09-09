@@ -7744,3 +7744,28 @@ in the file since August carrying the right radius and the right shadow, while e
 day cards drifted into three different title-row heights across three frames. Nothing flagged it,
 because every frame looked right on its own. When a card component exists, the audit question is not
 "does this card look right" but "why is this card not an instance".
+
+CHANGE  ·  2026-09-09  ·  molades-none  · Source: user
+**The chosen day centres in what can be seen, not in the whole frame.** Devansh: *"make it center of
+this height till the bottom component of button"*.
+
+The centring added earlier used `sc.clientHeight` — the full 844 — but the action bar is pinned over
+the last **130px** of it, so the block sat visually low and the end of the fold went under the bar.
+It centres in the **714px band above the bar** now. `clearBottom()` already knew that number; the
+measurement is factored out as `pinnedHeight()` and both use it, so a screen with different chrome
+(a tab bar floating 21px clear, a taller pay bar) needs no second rule.
+
+Measured on four picks: a 572px group lands 71 above / 71 below, a 374px group 170 / 170. Where the
+page runs out — the last day of a window, and 06b — the scroll clamps and the group sits as low as
+it can, still fully clear of the bar. **The fold ends above the bar in every case.**
+
+Walk 01 → 16 unchanged. All 26 parity diffs unmoved — this is runtime scroll only and the renders
+never scroll.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**"The viewport" and "the part of the viewport a person can use" are different numbers, and the
+second one is almost always the one you want.** Every pinned bar, sheet and tab bar in this build
+covers a slice of the frame, and `clientHeight` counts it. The same distinction already had a
+function — `clearBottom()` computed it to pad the scroller — and the centring re-derived the wrong
+one instead of reusing it. When a measurement about visible space already exists in the file, the
+new feature should call it, not measure again.
