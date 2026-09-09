@@ -1137,6 +1137,12 @@
       // With no day chosen this frame renders exactly what 06 renders -- same rows, no deltas, no
       // ring, fold hidden. That is what lets a close happen in place: see __closeDay.
       var bus = chosen ? buildFold(sec, MAP[id], chosen) : null;
+      if (!chosen) {
+        // buildFold is what writes the action bar, so with no day chosen it kept naming the bus
+        // and fare of the day just closed. 06 draws this state as "Return / —".
+        set(sec, MAP[id].barLine, 'Return');
+        set(sec, MAP[id].barFare, '\u2014');
+      }
       heads(sec, MAP[id], info, chosen, bus);
     }; }
     ON_ENTER['06a'] = enterChosen('06a');
@@ -1202,14 +1208,6 @@
     function absTop(el){ var y = 0; for (var n = el; n; n = n.offsetParent) y += n.offsetTop; return y; }
 
     window.__openDay = function(d){
-      // Where the card sat when the finger landed on it. Closing puts it back there: the fold is
-      // ~470px, so once it is gone the page is shorter than the scroll position the open state was
-      // read at, and no arithmetic can hold the card where the OPEN screen had it -- 06's whole
-      // range is 329 where that would need 676. The tap position is always reachable, because the
-      // page it was measured on is the page the close returns to.
-      var was = screens[at], wsc = was.querySelector('.scroll');
-      var wrow = was.querySelector('[data-name="Day \u00b7 ' + label(d) + '"]');
-      RETURN.tapAt = (wrow && wsc) ? absTop(wrow) - absTop(wsc) - wsc.scrollTop : null;
       RETURN.chosen = d; RETURN.bus = null;            // a new day proposes its own default bus
       var to = chosenFrame(d);
       if (to === at) {
@@ -1250,22 +1248,16 @@
     // the card still needed 676. Any route through go() therefore ends at the bottom of a shorter
     // page with the card 350-420px lower than the finger left it. Repainting in place moves
     // nothing above the card at all, because the only thing that changes is below it.
+    // The scroll is deliberately NOT touched. Everything the collapse removes sits BELOW the card,
+    // so leaving the scroller alone is what makes the card stay put and the fold slide up into it.
+    // An earlier version restored the position the card was tapped at, which is reachable but is a
+    // different place -- and it read as the whole screen going back to where it started.
+    // The browser still clamps when the shortened page cannot hold the current scroll; that is the
+    // one bit of movement no anchor can avoid, and it is the smallest available.
     window.__closeDay = function(){
-      var d = RETURN.chosen, at0 = RETURN.tapAt;
       RETURN.chosen = 0; RETURN.bus = null;
       var sec = screens[at], id = ORDER[at];
       if (ON_ENTER[id]) { ON_ENTER[id](sec); clearBottom(sec); }
-      if (at0 == null || !d) return;
-      var sc = sec.querySelector('.scroll');
-      var row = sec.querySelector('[data-name="Day \u00b7 ' + label(d) + '"]');
-      if (!sc || !row) return;
-      var to = Math.max(0, Math.min(absTop(row) - absTop(sc) - at0, sc.scrollHeight - sc.clientHeight));
-      // instant, not smooth: the card is going back under the finger that just tapped it, and the
-      // scroller carries scroll-behavior:smooth, which would animate a plain assignment.
-      var prev = sc.style.scrollBehavior;
-      sc.style.scrollBehavior = 'auto';
-      sc.scrollTop = to;
-      sc.style.scrollBehavior = prev;
     };
     // Swapping the bus from the fold is a change to what is on screen, not a step: repaint in
     // place so the page does not animate or lose its scroll. From 07 it IS a step back.

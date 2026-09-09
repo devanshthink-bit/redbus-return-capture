@@ -7934,3 +7934,44 @@ Second, on how it got past me: I verified 07 the day I built it by opening it on
 has seven buses** — more than the four examples, so the real cards pushed the leftovers off the
 bottom of what I dumped. The bug needed a day with *fewer* buses than the frame draws. **A list
 builder has to be tested at a length shorter than the placeholder, not longer.**
+
+CHANGE  ·  2026-09-09  ·  molades-none  · Source: user
+**Closing leaves the scroll alone, and the action bar stops naming a day nobody has chosen.**
+Devansh: *"on tapping open date card the card shud remain at same position only content below it
+shud slide towards the card and disappear… basically the whole screen is going back to the position
+how it is originally"*.
+
+**His model was right and mine was over-built.** Everything the collapse removes sits **below** the
+card, so the way to keep the card still is to not touch the scroll at all. I had built the opposite:
+a restore to the position the card was tapped at — reachable, defensible, and a *different place*,
+which is exactly the "going back to where it started" he saw. The restore is gone; `__closeDay` now
+repaints and does nothing else. Measured on a 16–22 Sep window:
+
+| tapped | card moves | why |
+|---|---|---|
+| Wed 16, first in the list | **0px**, scroll untouched | nothing below needed the scroll |
+| Fri 18, third — the screenshot | 83px | the shorter page cannot hold scrollTop 526, browser clamps to 443 |
+| Tue 22, last | 286px | its fold *is* the bottom of the page; there is nowhere else to stand |
+
+The clamp is the one movement no anchor can remove: collapsing ~470px of fold shortens the page
+below the scroll it was read at. What changed is that it is now the **minimum** the browser forces
+rather than a deliberate jump somewhere else.
+
+**The bar was stale.** `buildFold` writes the action bar, and it does not run with nothing chosen —
+so after a close the bar still read *Return · Fri, 18 Sep · 23:40 / ₹1,090* for a day no longer
+picked. It resets to **Return / —**, which is what 06 is drawn with.
+
+Walk 01 → 16 unchanged. All 26 parity diffs unmoved.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**"Keep it where it is" and "put it back where it was" are different instructions, and the second is
+the one that needs code.** Doing nothing was the correct implementation of the first, and I wrote 15
+lines to do the second because the arithmetic was interesting. The user's description contained the
+answer — *only content below it should slide towards the card* — which is a statement about what
+must NOT be touched.
+
+**A field written by one code path is stale everywhere that path does not run.** The action bar is
+written inside `buildFold`, which is skipped when nothing is chosen — the same shape as the fold
+being re-attached only inside `if (d === chosen)` two commits ago. Both are one branch owning a
+piece of the screen and no branch owning its absence. **For every element a builder writes, ask what
+writes it when the thing it describes is gone.**
