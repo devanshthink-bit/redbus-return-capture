@@ -8725,3 +8725,42 @@ able to tell a real regression from the intended difference.
 
 **A screen that leaves on a timer has to stop its timer when you leave it.** Otherwise Back works,
 and then five seconds later the prototype walks forward on its own from wherever you went.
+
+CHANGE  ·  2026-09-09  ·  molades-none  ·  Source: user
+**The timer starts where the real one does.** Devansh: *"Start the timer from 7:10. Decrease one by
+one by 5 seconds and then complete the payment."* 09b's ring and its header chip now open on **07:10**
+and tick a second at a time — 07:09, 07:08, 07:07, 07:06, 07:05 — and the payment goes through.
+The arc measures the eight-minute window, so it opens at 37.5° (50 seconds gone) and creeps, which
+is exactly what the real ring does over five seconds. The digits are the thing that moves.
+
+CHANGE  ·  2026-09-09  ·  molades-none  ·  Source: user
+**The chosen state stopped leaking into the resting screen.** Devansh: *"When it's not selected, use
+the earlier design only… Why did you increase the height when it's not tab, and why are you showing
+the radio button when it's not tab?"*
+
+He was right, and the cause was a decision I made an hour earlier and defended. I had drawn the Pay
+button into 09's frame, which meant the frame drew a *chosen* option — filled radio and all — and
+the build inherited that markup. Hiding the button with `visibility` then held its 60pt of space, so
+the resting card was taller than it had ever been and wore a selected radio nobody had selected. I
+had traded the product's honesty for a parity number.
+
+**Choosing a payment method is a selection state, and this build draws none of those.** The point
+radios, the ring on the bus list, the sheet over Review — all runtime. Pay's frame is the unchosen
+screen again, the Pay button is built at runtime from the primary the file already has, and the card
+at rest is byte-for-byte the card it was: **09 back to 1.96%, its old baseline**, which also proves
+the restored file matches the reverted frame.
+
+The chosen state is still drawn — as **`S13 · Pay · option chosen`** in the States section, which is
+where this file documents a state without making it a screen. The build reads Screens only.
+
+The chosen radio is a red *ring* now, not a filled dot, matching the real app.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**A frame that draws a state the build does not rest in will leak that state into the build.** The
+export carries the drawn markup, so whatever the frame chose, every cold load has chosen. If a state
+is entered by tapping, either draw it in a separate frame or do not draw it — never draw it into the
+screen the traveller lands on.
+
+**And when the fix for a divergence starts distorting the product, the divergence was not the
+problem.** Reserving the button's space kept the parity number tidy and made the screen wrong. The
+number is a smoke alarm, not the thing being protected.

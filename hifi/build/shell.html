@@ -187,7 +187,9 @@
   .hf-radio-on{position:relative}
   /* A radio dot does not travel -- it is either set or not. It fades in on the spot. */
   @keyframes hf-dot{from{opacity:0;transform:scale(.6)} to{opacity:1;transform:none}}
-  .hf-pay-on{background:#c54646!important;border-color:#c54646!important}
+  .hf-pay-on{background:#fff!important;border:6px solid #c54646!important}
+  .hf-paygap{height:12px;width:100%;flex:0 0 auto}
+  .hf-paybtn{width:100%!important;height:48px!important;flex:0 0 auto}
   .hf-radio-on::after{content:'';position:absolute;inset:5px;border-radius:50%;
     background:#C54646;animation:hf-dot 160ms ease-out}
   @media (prefers-reduced-motion:reduce){
@@ -1723,10 +1725,20 @@
     var i09 = ORDER.indexOf('09'), i09b = ORDER.indexOf('09b'), i10 = ORDER.indexOf('10');
     if (i09 < 0 || i09b < 0 || i10 < 0) return;
     var sec = screens[i09];
-    var payBtn = sec.querySelector('[data-name="Button / Primary"]');
-    var payGap = sec.querySelector('[data-node-id="723:4125"]');
-    if (!payBtn) { console.warn('09: no Pay button'); return; }
-    payBtn.classList.add('hf-hot');
+    // Choosing an option is a selection state, and this build draws none of those -- the point
+    // radios, the ring on the bus list and the sheet are all runtime. Pay's frame stays the
+    // unchosen screen, and the button is built here from the primary the file already has.
+    var i08b = ORDER.indexOf('08');
+    var src = i08b >= 0 && screens[i08b].querySelector('[data-name="Button / Primary"]');
+    if (!src) { console.warn('09: no primary to copy'); return; }
+    var payBtn = src.cloneNode(true);
+    payBtn.setAttribute('data-name', 'Button / Pay');
+    [].forEach.call(payBtn.querySelectorAll('.hf-back, .hf-fwd, .hf-hot'), function(n){
+      n.classList.remove('hf-back', 'hf-fwd', 'hf-hot'); });
+    payBtn.classList.remove('hf-back', 'hf-fwd');
+    payBtn.classList.add('hf-hot', 'hf-paybtn');
+    var payGap = document.createElement('div');
+    payGap.className = 'hf-paygap';
 
     // the frame draws a chosen option, because that is the state the button belongs to. Nothing is
     // chosen until the traveller chooses, so the button starts away and moves to whichever card
@@ -1735,17 +1747,12 @@
       var t = sec.querySelector('[data-node-id="I109:988;34:91"]');
       return t ? t.textContent.replace(/^Pay\s*/, '') : '';
     }
-    // At rest the button is out of sight but not out of the layout. Taking it out of the flow moved
-    // everything below it up by 60pt, which turned one honest difference from the frame into a
-    // shifted lower half and made the parity number for this screen unreadable.
+    // Nothing is chosen at rest, so the card is exactly the card the frame draws: an outlined
+    // radio, no button, no space held for one.
     function hide(){
-      payBtn.style.visibility = 'hidden';
-      if (payGap) payGap.style.visibility = 'hidden';
+      if (payBtn.parentNode) payBtn.parentNode.removeChild(payBtn);
+      if (payGap.parentNode) payGap.parentNode.removeChild(payGap);
       [].forEach.call(sec.querySelectorAll('.hf-pay-on'), function(r){ r.classList.remove('hf-pay-on'); });
-    }
-    function show(){
-      payBtn.style.visibility = '';
-      if (payGap) payGap.style.visibility = '';
     }
     hide();
 
@@ -1763,14 +1770,20 @@
       var card = row.parentNode;
       var label = payBtn.querySelector('p');
       if (label) label.textContent = 'Pay ' + amount();
-      if (payGap) card.appendChild(payGap);
+      card.appendChild(payGap);
       card.appendChild(payBtn);
-      show();
       if (payBtn.scrollIntoView) payBtn.scrollIntoView({block:'nearest'});
     }, true);
 
-    // 09b · the wait. Five seconds, counted down and swept, then Booking confirmed.
-    var WAIT = 5, timer = null;
+    // 09b · the wait. The real screen picks the transaction window up at 07:10 of eight minutes and
+    //       counts it down a second at a time; this sits for five of those seconds and then the
+    //       payment goes through. The ring measures the window, so over five seconds it creeps --
+    //       which is what the real one does. The digits are the thing that moves.
+    var WINDOW = 8 * 60, START = 7 * 60 + 10, WAIT = 5, timer = null;
+    function mmss(t){
+      var m = Math.floor(t / 60), r = t % 60;
+      return (m < 10 ? '0' + m : m) + ':' + (r < 10 ? '0' + r : r);
+    }
     function stop(){ if (timer) { clearInterval(timer); timer = null; } }
     ON_ENTER['09b'] = function(w){
       stop();
@@ -1785,12 +1798,17 @@
       var sweep = ring && ring.querySelector('.hf-sweep');
       if (ring && !sweep) { sweep = document.createElement('div'); sweep.className = 'hf-sweep';
                             ring.insertBefore(sweep, ring.firstChild.nextSibling); }
-      var left = WAIT;
+      var chip = w.querySelector('[data-node-id="I727:4171;53:196;108:981"]');
+      var bar  = w.querySelector('[data-node-id="I727:4171;53:196;108:983"]');
+      var left = START, ticks = 0;
       function tick(){
-        if (digits) digits.textContent = '00:0' + Math.max(0, left);
-        if (sweep) sweep.style.setProperty('--hf-turn', (360 * (WAIT - left) / WAIT) + 'deg');
-        if (left <= 0) { stop(); go(i10); return; }
-        left -= 1;
+        if (digits) digits.textContent = mmss(left);
+        if (chip)   chip.textContent   = mmss(left);
+        if (bar)    bar.style.width    = Math.round(42 * (WINDOW - left) / WINDOW) + 'px';
+        if (sweep)  sweep.style.setProperty('--hf-turn',
+                      (360 * (WINDOW - left) / WINDOW).toFixed(1) + 'deg');
+        if (ticks >= WAIT) { stop(); go(i10); return; }
+        ticks += 1; left -= 1;
       }
       tick();
       timer = setInterval(tick, 1000);

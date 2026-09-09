@@ -2,7 +2,7 @@ const imgLogoRedBusMark = "assets/24678315-8076-42a5-adf4-048efb56feb5.png";
 const imgIconChevronLeft = "assets/c52a55a0-4bd0-4f7a-a9fa-205a96aa0d14.svg";
 const imgStatusIcons = "assets/091fbdca-8e2e-4f59-80c8-bfdc341f332f.svg";
 const imgTrack = "assets/1c105ba5-371c-415f-9a70-e06b68450be5.svg";
-const imgElapsed = "assets/b92e534b-961f-4fe5-8cc4-44b9c908723c.svg";
+const imgElapsed = "assets/0a681be4-e485-4182-9571-ed400acd3939.svg";
 
 function LogoRedBusMark({ className }: { className?: string }) {
   return (
@@ -55,7 +55,7 @@ export default function Component09BPleaseWait() {
           <div className="absolute bottom-0 content-stretch flex items-center justify-end overflow-clip right-[8px] top-0 w-[120px]" data-node-id="I727:4171;56:226" data-name="Trailing slot">
             <div className="bg-[var(--surface\/default,white)] content-stretch flex flex-col gap-[5px] items-center overflow-clip pb-[10px] pt-[8px] px-[14px] relative rounded-[var(--radius\/20,20px)] shadow-[0px_2px_6px_0px_rgba(0,0,0,0.1)] shrink-0" data-node-id="I727:4171;53:196" data-name="Trailing">
               <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[20px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/warning,#a45729)] whitespace-nowrap" data-node-id="I727:4171;53:196;108:981">
-                07:55
+                07:10
               </p>
               <div className="bg-[var(--border\/divider,#e6e6e6)] h-[2.5px] overflow-clip relative rounded-[2px] shrink-0 w-[42px]" data-node-id="I727:4171;53:196;108:982" data-name="Track">
                 <div className="absolute bg-[var(--text\/warning,#a45729)] h-[2.5px] left-0 rounded-[2px] top-0 w-[4px]" data-node-id="I727:4171;53:196;108:983" data-name="Elapsed" />
@@ -83,12 +83,12 @@ export default function Component09BPleaseWait() {
             <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgTrack} />
           </div>
           <div className="absolute left-0 size-[228px] top-0" data-node-id="725:4168" data-name="Elapsed">
-            <div className="absolute bottom-1/2 left-1/2 right-0 top-0">
+            <div className="absolute bottom-[83.32%] left-1/2 right-[19.56%] top-0">
               <img alt="" className="block max-w-none size-full" src={imgElapsed} />
             </div>
           </div>
           <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Inter:Bold'] font-bold leading-[48px] left-[114px] not-italic text-[#ec3535] text-[40px] text-center top-[90px] w-[228px]" data-node-id="725:4169">
-            00:05
+            07:10
           </p>
         </div>
         <div className="h-[36px] relative shrink-0 w-full" data-node-id="725:4170" data-name="gap" />
