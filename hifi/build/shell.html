@@ -1137,8 +1137,12 @@
       show(sec, m.otherHead, !!rows.length);
       set(sec, m.otherHead, 'OTHER BUSES ON ' + label(chosen).toUpperCase());
       if (host) {
-        var parent = host.parentNode, next = host.nextSibling;
+        // Clear the previous clones BEFORE reading where to insert. Reading first captured a
+        // sibling that the clear then removed, so insertBefore threw -- and it threw partway
+        // through buildFold, so the action bar below never got written and kept the old bus.
+        var parent = host.parentNode;
         [].slice.call(parent.querySelectorAll('[data-hf-trade]')).forEach(function(x){ parent.removeChild(x); });
+        var next = host.nextSibling;
         host.hidden = !rows.length;
         rows.forEach(function(t, k){
           var el = k === 0 ? host : TPL_TRADE.cloneNode(true);
@@ -1342,6 +1346,17 @@
       RETURN.chosen = 0; RETURN.bus = null;
       var sec = screens[at], id = ORDER[at];
       if (ON_ENTER[id]) { ON_ENTER[id](sec); clearBottom(sec); }
+    };
+
+    // Swapping the bus is a change to what is on screen, not a step: repaint in place so the page
+    // neither animates nor loses its scroll. Coming back from 07 it IS a step, so that one goes
+    // through go(). Lost once already -- it sat inside a block that was removed wholesale, and
+    // nothing in the walk or the parity sweep touches a trade row, so nothing caught it.
+    window.__pickBus = function(i, back){
+      RETURN.bus = i;
+      if (back) { go(chosenFrame(RETURN.chosen)); return; }
+      var id = ORDER[at];
+      if (ON_ENTER[id]) { ON_ENTER[id](screens[at]); clearBottom(screens[at]); }
     };
 
     window.__openBusList = function(){ if (i07 >= 0) go(i07); };

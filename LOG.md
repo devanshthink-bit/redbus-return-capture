@@ -8170,3 +8170,36 @@ and the same pass should re-pull **02, 03a, 06a, 06b, 14**, whose chip component
 Figma while the files carry a hand-patched radius. Re-pulling was skipped because these frames run
 to 145 KB and the pull arrives inline; that is a real limit of the current loop and worth solving
 before the next component-level change.
+
+CHANGE  ·  2026-09-09  ·  molades-none  · Source: user
+**Choosing a different bus was dead — I had deleted the function that does it.** Devansh: *"why i am
+not able to select different buses from tapping bus cards after opening date card or choosing from
+view all bus page"*.
+
+`window.__pickBus` is called from the fold's alternatives and from every card on 07. It was defined
+inside the block I removed wholesale when the padding hold was reversed, and nothing put it back —
+so both call sites threw `__pickBus is not a function` on the first tap. Restored, and a check added
+that every `window.__*` the shell calls is also defined: 4 called, 4 defined.
+
+**A second fault behind it.** The trade-row rebuild read `host.nextSibling` *before* clearing the
+previous clones, so the reference it kept was often one of the nodes it then removed, and
+`insertBefore` threw. That happened partway through `buildFold`, which is why a second swap left the
+**action bar naming the previous bus** — the code that writes the bar sits after the throw. Clear
+first, then read where to insert.
+
+Verified end to end with `window.onerror` armed: open a day, three swaps from the fold, the full
+list, a pick from it, then a different day — the fold and the bar agree at every step and there are
+no JS errors. Walk 01 → 16 unchanged, all 26 parity diffs unmoved.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**Removing a block removes everything in it, including the parts that were only passing through.**
+This is the second time today — the fold was destroyed by a clear loop, and now a handler by a block
+replacement. Both times the deletion was invisible because the thing removed was defined in one
+place and used in another. **After deleting a span, list what it defined and grep for each name**;
+for this file that is one command, and it would have caught this in seconds.
+
+**And the checks that ran afterwards could not have caught it.** The forward walk taps each screen's
+primary control and the parity sweep never interacts at all, so neither one has ever touched a trade
+row or a card on 07. Two full sweeps passed over a completely dead control. A suite that only walks
+the happy path certifies the happy path — `CONTEXT` §21 now says so, and names the third check that
+belongs beside them.

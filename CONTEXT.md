@@ -2179,6 +2179,14 @@ accumulation and is not worth chasing. That distinction found the one genuine de
 collapsed its empty amenities row to 0 where Figma keeps it at 24px, twice on screen 02.
 `min-h-[24px]` fixed it — 11.9% → 6.0% differing, −20px → +2px drift.
 
+**The two standing checks do not touch the fold.** The forward walk drives each screen's own
+primary control and the parity sweep is a cold render, so **nothing in either one taps a trade row,
+the All-buses link or a card on 07**. A `window.__pickBus` deleted by accident survived two commits
+and two full sweeps that way, and the screen looked perfect the whole time. A third check belongs
+beside them: open a day, swap the bus from the fold twice, open the full list, pick from it, and
+assert the fold and the action bar agree after each — plus `window.onerror`, which is what finally
+named it.
+
 **Take any visual-regression number from two renders, not one.** Screen 06 read 4.6% then 6.4%
 with nothing changed in between; two passes at a longer virtual-time budget agree to 0.00% and
 land back at 4.6%. The odd reading was Inter not having loaded.
