@@ -8320,3 +8320,46 @@ not force the load, `findAll` does.** `clone()` then `findOne(n => n.name === 'S
 null on a copy of 04 whose original has that node; the same search with `findAll` after
 `appendChild` found it. Every text on the two new frames is set through `findAll(...)[0]` for that
 reason.
+
+CHANGE  ·  2026-09-09  ·  molades-none  ·  Source: user
+**"I am not able to select the recommended bus."** He was right twice over, and the two faults were
+different.
+
+**One · the card was not a control.** In the fold under a chosen day, the alternative rows took a
+tap and the *All N buses* link took a tap. The card under RECOMMENDED BUS — the bus you actually
+hold — took nothing, and wore no selected state, so it read as a bus you were not allowed to pick.
+Measured, not guessed: on 06a with Mon 14 Sep open, `.hf-hot` was on the day rows, the trade row and
+the link, and **not** on `Your bus card`. It now carries the same ring the full list uses on 07
+(`hf-bus-on`) and takes a tap that selects it.
+
+**Two · leaving the recommended bus was one-way.** `tradeRows` offers up to three alternatives by
+rule — cheapest, can-change-date, free cancellation, best rated — and **none of those rules is
+guaranteed to name the bus the day opened on**. On Mon 14 Sep, taking the Cheapest left the
+alternatives as *Can change date* alone: the recommended 23:55 ₹1,030 service had vanished from the
+fold, and the only way back to it was to close the day and open it again. So the sentence was
+literally true.
+
+**v4 has the identical hole** — same function, same rules — so the fix landed in both: when the pick
+is not the day's default, that default is always the **first** alternative, labelled *Closest to
+your onward*, the same words the card's own pill uses.
+
+Verified through the UI in both. hi-fi: open Mon 14 Sep → tap Cheapest → card 19:45 ₹800 and the
+first alternative reads *Closest to your onward ₹230 more 23:55 — 08:00* → tap it → back on 23:55
+₹1,030. v4: the same round trip, same rows, no errors.
+
+Checks: v4 state matrix **234/234** (18 screens × 13 states), exactly one screen visible, no JS
+errors. hi-fi forward and back walks 01 ↔ 16 clean. Parity unmoved — 06 5.79, 06a 8.39, 06b 8.83,
+07 6.15 against a baseline of 5.79 / 8.43 / 8.83 / 6.15.
+
+**No Figma change.** The ring is a runtime selection state, exactly as 07's is: `hf-bus-on` is CSS
+in the shell and no frame draws it. Same for the tap.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**"I can't select X" is worth reading as two claims: the control is dead, and the thing is
+unreachable.** Both were true here and only the first was visible in the screenshot. The second —
+that an alternative-ranking rule can silently drop the option you came from — would have survived
+a fix to the first, and the traveller would have reported the same sentence again.
+
+**A rule-driven list of alternatives must always be able to name where you came from.** Ranking by
+merit is right for *what to offer*; it is wrong as the only way *back*. The pattern to watch for:
+any list built by scoring, where the current selection is excluded from the candidates.

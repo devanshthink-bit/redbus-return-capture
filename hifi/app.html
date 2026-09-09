@@ -1030,6 +1030,7 @@
                fare:'I413:2910;39:118', op:'I413:2910;39:123', veh:'I413:2910;39:125',
                rate:'36:121', votes:'36:122', dcText:'36:111',
                seat:'413:2962', fcPill:'413:2964', closePill:'413:2966',
+               card:'414:2952', recHead:'413:2909',
                trade:'413:2969', otherHead:'413:2968', allLink:'413:2975',
                barLine:'100:742', barFare:'100:743', caps:true },
       '06b': { sub:'I521:3808;34:92', question:'521:3810', lead1:'521:3812', lead2:'521:3813',
@@ -1039,6 +1040,7 @@
                rate:'I521:3882;39:126;36:121', votes:'I521:3882;39:126;36:122',
                dcText:'I521:3882;39:132;36:111',
                seat:'521:3884', fcPill:'521:3886', closePill:'521:3888',
+               card:'521:3881', recHead:'521:3880',
                trade:'521:3891', otherHead:'521:3890', allLink:'521:3897',
                barLine:'521:3902', barFare:'521:3903', caps:false }
     };
@@ -1112,6 +1114,12 @@
       var rateable = list.filter(function(i){ return all[i][9] >= VOTE_FLOOR; });
       var best = rateable.slice().sort(function(a,b){ return all[b][8] - all[a][8] || fare(a) - fare(b); })[0];
       var beats = best != null && all[best][8] > all[pick][8];
+      // Leaving the bus the day opens on was one-way: none of the rules below is guaranteed to
+      // offer it back, so the recommended service could vanish from the fold and the only way
+      // to it was to close the day and reopen it. It is always the first row when it is not
+      // the pick. Same guard as v4's.
+      var def = defIdx(d);
+      if (def !== pick && list.indexOf(def) >= 0) add('Closest to your onward', def);
       var window2 = RETURN.mode !== 'fixed';
       if (window2) {
         if (!all[pick][3]) add('Can change date', byFare.filter(function(i){ return all[i][3]; })[0]);
@@ -1210,6 +1218,22 @@
         : 'Seat ' + seatOf + ' \u2014 ' + ONWARD_SEAT + ' is taken on this bus');
       show(sec, m.fcPill, !!bus[4]);
       show(sec, m.closePill, pick === defIdx(chosen));
+
+      // The card under RECOMMENDED BUS *is* the chosen bus, and it was the only thing in the
+      // fold that was not a control: the alternative rows took a tap, the All-N link took a
+      // tap, the card took nothing and wore no selected state. So it read as a bus you were
+      // not allowed to pick. It now carries the same ring the full list uses on 07, and takes
+      // a tap that selects it -- a no-op while it already is the pick, but the gesture is
+      // alive and the ring says which bus you hold.
+      var card = q(sec, m.card);
+      if (card) {
+        card.classList.add('hf-hot', 'hf-bus-on');
+        if (!card.__wired) { card.__wired = 1;
+          card.addEventListener('click', function(e){
+            e.preventDefault(); e.stopPropagation();
+            window.__pickBus(busIdx());
+          }, true); }
+      }
 
       // up to three alternatives, each a real control: tapping one swaps the bus
       var rows = tradeRows(chosen, pick), host = q(sec, m.trade);

@@ -1898,6 +1898,12 @@ function tradeRows(d, pick){
   const rateable = list.filter(i => rated(i).votes >= VOTE_FLOOR);
   const best = rateable.slice().sort((a,b)=> rated(b).rating-rated(a).rating || fare(a)-fare(b))[0];
   const bestBeatsPick = best!=null && rated(best).rating > rated(pick).rating;
+  // Leaving the bus the day opens on was one-way. None of the rules below is guaranteed to
+  // offer it back, so once the traveller took an alternative the recommended service could
+  // vanish from the fold entirely and the only way to it was to close the day and reopen it.
+  // It is always the first row when it is not the pick.
+  const def = defaultBusOn(d);
+  if(def!==pick && list.indexOf(def)>=0) add('Closest to your onward', def);
   if(WINDOW_MODE()){
     // Most flexible only appears when the pick actually loses on it.
     if(!RET_BUSES[pick].movable) add('Can change date', list.filter(i=>RET_BUSES[i].movable).sort((a,b)=>fare(a)-fare(b))[0]);
