@@ -7627,3 +7627,68 @@ headless never runs the animation — so the assignment appears to be *refused*,
 scroller with 1,159px of room. Verifying a scroll means forcing `scrollBehavior = 'auto'` first. That
 is the third time an animation has produced a fake result in this harness; the pattern is that
 anything the browser defers cannot be measured in the same breath as the code that requested it.
+
+CHANGE  ·  2026-09-09  ·  molades-none  · Source: user
+**The day list, the fold's alternatives and the full bus list all work now, on v4's rules.**
+Devansh: *"all of these are not tappable (other buses that day and all buses that day), make them
+all working for all the dates. take hint from v4 how they work, and when user has tapped on any date
+he is not able to tap on any other date and open inside of it… and also tags are broken and
+overflowing in the ui and also when one date is changed why ui of other date cards are changing??
+and when user clicks on date card of open date card again, it shud close."*
+
+Six things, and one of them turned out to be v4 working as designed.
+
+- **Every day row is tappable on every frame.** 06's rows were wired; 06a's and 06b's were not, so
+  once a day was open the list was dead. All three frames now build from one shared builder — 06,
+  06a and 06b are one screen in three states, and the two modules that had grown apart are one.
+- **Tapping the open day closes it**, back to 06 with nothing chosen. Not v4's behaviour — v4's
+  `choosePick()` only ever opens — and asked for explicitly.
+- **The alternatives under *OTHER BUSES THAT DAY* are real controls**, up to three, ranked by v4's
+  own `tradeRows()`: on a window, *Can change date* (only when the pick loses it), *Cheapest*,
+  *Free cancellation* (only when the pick has none), *Best rated* (only above the 50-vote floor and
+  only when it beats the pick); on a fixed date, Cheapest, Best rated, Leaves later. Tapping one
+  swaps the bus and repaints the fold in place — no navigation, no scroll jump. The frames draw one
+  such row; the rest are cloned from it.
+- **07 · Choose your bus is built from the day's real services.** Every bus that runs, with its
+  times, fare, seats, rating and its own tags, the chosen one ringed. Tapping one takes it and
+  returns. Its Back returns to the frame that opened it rather than walking the canvas.
+- **The tags were overflowing because one of them should not have been there.** v4 shows *Different
+  seat* only where the day runs **one** bus — with several, the seat is a property of the bus you
+  pick next, not of the day — and I had it on every day whose seat differed. That is what made three
+  chips collide on a 358pt card. Rule corrected, and `.hf-pillrow` wraps as insurance. Measured
+  across three windows: no row overflows.
+- **"Why do the other cards change?" — because they are priced against your pick, and that is v4.**
+  `diff = minFareOn(d) - minFareOn(heldDay)`, so every row restates what it would cost *instead of
+  the day you chose*; with nothing chosen there is nothing to be cheaper than and no row shows a
+  delta at all. The part that was genuinely wrong was the seat tag above.
+
+**A third instance of the state-frames-in-the-flow bug, found while testing this.** `Review trip` on
+06a walked to **06b** — the no-date-change design — exactly as Continue on 05a used to walk to 05b.
+06a, 06b and 07 are in `SKIP` now, so the linear walk is 06 → 08 and 07 is reached only from the
+fold. Walk verified: 01 → 06 → 06a → 08 → 16.
+
+**And a state bug the routing exposed.** `RETURN.chosen` survived a Back from Review to 06, a screen
+that draws no fold — so re-tapping that same day read as "tap the open one" and closed it. Arriving
+at 06 now clears the chosen day, because arriving at 06 *is* the state where nothing is open.
+
+All 26 parity diffs re-run: none moved. Cold renders are unaffected — every builder returns early
+with nothing picked, so each frame still renders the example it was drawn with.
+
+LEARNED  ·  2026-09-09  ·  molades-none
+**Two screens built from the same data will drift, and the fix is one builder, not two careful
+ones.** 06 and 06a had separate row code written a day apart. They already disagreed on the seat
+tag, and the disagreement was invisible because each looked right on its own frame. Merging them
+made the bug a single line to fix instead of two.
+
+**State that outlives the screen it describes is the same defect as a stale paint, one level up.**
+The paint bug earlier today was frames not repainted on a state change; this one is state not
+cleared on a frame change. Both come from the same missing question: for every screen, what does
+arriving at it *assert* about the model? 06 asserts nothing is open. Saying so in one line at the
+top of its hook is cheaper than reasoning about every route that reaches it.
+
+NOTE  ·  2026-09-09  ·  molades-none
+**A v4 quirk carried over deliberately: the *Cheapest* alternative can cost more.** `tradeRows()`
+labels the cheapest of the *other* services, so when the traveller is already on the cheapest bus
+that row reads *Cheapest · ₹30 more*. v4 does exactly this and the instruction was to follow v4, so
+it stands — recorded rather than quietly diverged from. If it reads badly in a session, the fix is
+to drop the Cheapest row when the pick already holds that title.
