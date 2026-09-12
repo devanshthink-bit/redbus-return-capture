@@ -722,6 +722,18 @@ stakeholder presentation. This is a separate deliverable from the prototype, whi
 `2. Semantic` aliases every one of them — `surface/*`, `text/*`, `icon/*`, `border/*`, `seat/*`.
 Screens only ever use semantic tokens. Type and elevation are shared styles, never loose values.
 
+**13 Sep 2026: every colour, text layer and shadow in the file is bound again.** Later edits had
+left ~4,000 colours, ~2,500 text layers and 27 shadows loose. Each was bound to an **exact** match —
+semantic first (by role: text / icon / surface / border), then primitive — and where no exact token
+existed one was created with the same value, so no screen moved (all 51 frames export byte-identical to
+before). That is why `1. Primitives` now holds 167 colours, including near-twins such as
+`green/50 #e0f3d9` and `green/100b #dff3d8`: merging them is a visual change and is Devansh's call.
+New text styles are named `Tier/size Weight · line-height`; new shadows `Elevation/Custom/…`.
+`border/strong` (neutral/900) was added. Six unused components were deleted.
+**Trap:** binding a variable to a paint dropped its opacity on real nodes (the battery at 35%, the
+45% white overlays) even though the same call kept it on a test object. Always pass `opacity`
+back explicitly, and prove "no visual change" by hashing each frame's PNG export before and after.
+
 **Screens done:** 01 Home · 02 Outbound bus list · 03 Outbound seat map. All iPhone 14, 390×844.
 
 ### Your return, the day list (screens 06 / 06a) — rebuilt for v4 on 4 Sep

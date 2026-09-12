@@ -10112,3 +10112,27 @@ ellipses; the other five passengers on S12a keep the plain circle. Each ellipse 
 own, and the screens were patched to the pull — Figma now exports the circle as a 2× PNG
 (`avatar-devansh-36.png`, `-44.png`), which is what the build shows. On S12a only his row points at it.
 The source JPG is not committed: nothing reads it.
+
+CHANGE · 2026-09-13 · direct · Source: user
+**Every colour, text layer and shadow in the Figma file is bound to a token or style again.**
+*"make sure nothing is hard-coded … like real product Figma screens"*, then, mid-task: *"Don't change
+anything in the Hi-fi design since they are exactly like real RedBus app screens."* So the rule was
+exact matches only. ~4,000 loose colours went to a semantic token by role (text / icon / surface /
+border) or the primitive with the same value; 121 values had no token and got one of their own. ~2,500
+unstyled text layers went to the existing ramp or to a new style of the exact same metrics (88 text
+styles now). 27 loose shadows became effect styles (`Elevation/Custom/…`). Added `border/strong`;
+`text/weekend` now aliases its primitive instead of holding a raw hex. Deleted six components with no
+instances (three selected tab icons, Chip / Day tag, Row / Add-on, Row / Boarding point) and moved 56
+loose icons, art and logos into their sections. Proof: each of the 51 frames' PNG export hashes the same
+as before the edit. The build did not change, because nothing it renders changed.
+
+**LEARNED — binding a variable can silently drop a paint's opacity.** The first pass turned the status
+bar battery (35% / 40%) and 41 white or black overlays (16–86%) solid, although the same API call kept
+opacity on a test object. Only the before/after export hashes caught it; the originals were recovered
+from the pulled `.tsx` and SVGs. Pass `opacity` back explicitly, and hash before and after.
+
+NOTE · 2026-09-13 · direct
+Open, Devansh's call: `1. Primitives` now holds 167 colours, and about 100 pairs sit within 3 levels of
+each other (e.g. `green/50 #e0f3d9` / `green/100b #dff3d8`, `red/500 #c54646` / `red/470 #c54848`).
+Merging them would tidy the palette but changes pixels by a shade. Spacing and radius numbers were not
+bound to `space/*` / `radius/*` in this pass.
