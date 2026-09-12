@@ -345,9 +345,9 @@ design-language tokens.
 - **Watch for class-name collisions.** The shell shares a stylesheet with the prototype. `.leg`,
   `.sw` and `.time` all already existed and silently restyled the shell. Prefix or rename
 - The **real** logo — the unaltered path
-  from `RedBus_Logo_(2015-present).svg`, which is also where the shell red `#D84E55` comes from.
-  That is the *logo* red; the prototype's own `--accent` `#C54646` is the *button* red measured off
-  the app, and the two are deliberately different. Shell tokens never touch the prototype's
+  from `RedBus_Logo_(2015-present).svg`. The shell red was the logo's `#D84E55` and the prototype's
+  `--accent` was `#C54646`, measured off the app; since 13 Sep both are `#E81E38`, the redBus red
+  Devansh set (LOG, 13 Sep). Shell tokens never touch the prototype's
 - **One rail on the left**, not two on both sides. Screens are a plain list; **states are a
   `<details>` shut by default** — they are for probing, not for walking the flow. Its summary turns
   red while a non-default state is on, so a hidden state can never look like a broken prototype
@@ -672,7 +672,7 @@ From 51 screenshots of the live app, five build-compare-correct rounds.
 
 ```css
 --page:#F1F1F6;  --raised:#FFFFFF;  --ink:#1D1D1D;  --muted:#636363;
---accent:#C54646;  --rate:#458442;  --ratebg:#E0F3D9;  --ratink:#2E5C2A;
+--accent:#E81E38;  --rate:#458442;  --ratebg:#E0F3D9;  --ratink:#2E5C2A;
 --chip:#E9EAF6;  --warn:#A45729;  --skeleton:#F2F2F7;  --dash:#E6E6E6;
 --line:#E4E4E4;  --edge:#767680;  --t-fast:120ms;  --t-state:180ms;
 --t-cross:280ms;
@@ -751,7 +751,7 @@ v4, not v3.** What changed in Figma, and the node ids, in case it has to be done
   *↻ Different seat — U4 taken* chip in the warn tone.
 - **06a** is the picked state. Its day list is a **clone of 06's**, so the two frames cannot drift
   apart, plus the per-day delta (`₹290 more`, `₹170 cheaper`, …) and `Your pick` with the 2px
-  `#C54646` ring on Thu 17. The lead dropped *"We will book"*, and the action bar names the bus:
+  accent ring on Thu 17 (`#C54646` when built, `#E81E38` since 13 Sep). The lead dropped *"We will book"*, and the action bar names the bus:
   *Return · Thu, 17 Sep · 23:55 · ₹1,120*.
 - **The bus fold** (`413:2908`) sits directly under Thu 17, tied to it by a 2px accent rule down the
   left — `strokeLeftWeight: 2` with the other three at 0. Inside: a `YOUR BUS` label, one white card
@@ -983,7 +983,8 @@ days and the outbound are not.
 Two corrections from the same pass did survive, and both came off the captures:
 
 - **`text/weekend` `#BC361C`** on bookable Saturdays and Sundays, from `IMG_5223`. A different red
-  from the button's `#C54646`, identical across all four week rows of the real picker.
+  from the button red (`#C54646` in the screenshots, `#E81E38` in the build since 13 Sep), identical
+  across all four week rows of the real picker.
 - **Content clearance 135 → 115** under the 99pt bar.
 
 The buttons on every other blank and error state were checked against the running build and match:
