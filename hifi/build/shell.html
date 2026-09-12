@@ -664,6 +664,7 @@
     if (window.__closeChangePlans) window.__closeChangePlans();
     if (window.__closeFilters) window.__closeFilters();
     if (window.__closeWhyCancel) window.__closeWhyCancel();
+    if (window.__closeCal) window.__closeCal();
     if (ORDER[at] === '09b' && window.__stopWait) window.__stopWait();
     var from = ORDER[at];
     var dir = i >= at ? 1 : -1;
@@ -847,6 +848,8 @@
     // them: on Home nothing is tappable except the field you are on, the toggle and Search.
     s01.addEventListener('click', function(e){
       var t = e.target;
+      // the calendar sheet lives on this screen now; its taps are its own
+      if (t.closest && t.closest('.hf-cal-sheet, .hf-scrim')) return;
       // ...except the bottom tab bar, once a booking exists behind it. Swallowing that too made
       // My Bookings and My Account look wired and do nothing.
       var tabHit = t.closest && t.closest('[data-name="Nav / Tab Item"]');
@@ -878,7 +881,7 @@
       if (!hit) { blink(); return; }
       if (hit === 'from')  { fill(fromV, VALUES.from, lblFrom); step = 1; }
       else if (hit === 'to')   { fill(toV, VALUES.to, lblTo); step = 2; }
-      else if (hit === 'date') { go(i01a); }
+      else if (hit === 'date') { openCal(); }
       else if (hit === 'search') { go(i02); }
     }, true);
 
@@ -896,6 +899,44 @@
       if (close && close.contains(e.target)) { go(i01); return; }
       if (day10) blinkAt(day10);
     }, true);
+
+    // The calendar opens OVER Home, not as a screen of its own. Devansh, 13 Sep: "when i open
+    // calender on tapping date of journey, ui in bg is moving a bit". 01a draws a copy of Home
+    // behind its sheet, and switching to it swapped the live Home for that copy: 8px off while the
+    // copy's category strip still had its old padding, and off by the whole scroll whenever Home was
+    // not at the top (104px at a 100px scroll). Now the sheet is lifted out of 01a and laid over
+    // the live Home -- the construction 09a, 11a and 19a already use -- so what is behind it IS
+    // Home, wherever it is scrolled, and nothing can move. 01a stays as the drawn frame.
+    var CALTPL = q(sCal, '[data-name="Sheet / Select date"]');
+    var calScrim = null, calSheet = null;
+    function closeCal(){
+      if (calScrim && calScrim.parentNode) calScrim.parentNode.removeChild(calScrim);
+      if (calSheet && calSheet.parentNode) calSheet.parentNode.removeChild(calSheet);
+      calScrim = calSheet = null;
+    }
+    function openCal(){
+      if (!CALTPL) { go(i01a); return; }
+      closeCal();
+      calScrim = document.createElement('div');
+      calScrim.className = 'hf-scrim';
+      calSheet = CALTPL.cloneNode(true);
+      [].forEach.call(calSheet.querySelectorAll('.hf-back, .hf-fwd, .hf-hot, .hf-blink'), function(n){
+        n.classList.remove('hf-back', 'hf-fwd', 'hf-hot', 'hf-blink'); });
+      calSheet.classList.add('hf-sheet', 'hf-cal-sheet', 'hf-slideup');
+      s01.appendChild(calScrim);
+      s01.appendChild(calSheet);
+      var d10 = calSheet.querySelector('[data-name="Sep 10"]');
+      var x   = calSheet.querySelector('[data-name="Close"]');
+      [d10, x].forEach(function(n){ if (n) n.classList.add('hf-hot'); });
+      calScrim.addEventListener('click', function(e){ e.stopPropagation(); closeCal(); }, true);
+      calSheet.addEventListener('click', function(e){
+        e.preventDefault(); e.stopPropagation();
+        if (d10 && d10.contains(e.target)) { fill(dateV, VALUES.date, null); closeCal(); return; }
+        if (x && x.contains(e.target)) { closeCal(); return; }
+        if (d10) blinkAt(d10);
+      }, true);
+    }
+    window.__closeCal = closeCal;
   })();
 
   // Devansh: "in view details sheet in trip review screen -> review booking details and cross icon

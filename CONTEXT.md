@@ -2186,6 +2186,10 @@ has the table of which state sits on which screen.
 Adding a screen means four edits: `src/render.tsx`, the count guard and forward hotspot in
 `build.mjs`, and `HIFI_NAMES` in the root viewer. **And a decision about the viewer's list:** since 12 Sep it shows only the key screens (`KEY` in `buildHifiRail`), so a new screen either joins `KEY` or goes in `PARENT` under the key screen it belongs to. Leave it out of both and nothing lights while it is showing. **A sheet is not a step** — 01a, 03a and 04a are
 listed in `OVERLAY` in `build/shell.html`, so prev / next / Back / arrow keys skip them.
+**Since 13 Sep, Home's date row does not go to 01a at all:** it lays 01a's `Sheet / Select date`
+over the live Home (`openCal` in `shell.html`), the way 09a, 11a and 19a work. Switching to 01a
+swapped Home for 01a's drawn copy of it, which jumped by Home's scroll and had drifted 8px stale.
+01a is still the drawn frame the list opens.
 
 **The fixed-height bar trap appeared four times in one session** — frames 08, 06, 06a, 06b. A frame
 whose height is FIXED does not grow for a new child, it just overlaps what is under it. Check

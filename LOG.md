@@ -10001,3 +10001,28 @@ reported "Inter" in all four versions, and `document.fonts.check('16px Inter')` 
 the frozen page too, because it does that when no face needs loading. Only measuring the drawn width
 against a known fallback showed the font was missing. This has probably been true of v1–v3 since
 they were built, on any machine without Inter.
+
+---
+
+CHANGE  ·  2026-09-13  ·  direct request  ·  Source: user
+
+**Opening the calendar on Home no longer moves the page behind it.** Devansh: *"in home screen of
+hifi proto when i open calender on tapping date of journey, ui in bg is moving a bit"*. Two causes,
+both from switching Home out for 01a, a separate frame that draws a copy of Home behind its sheet:
+
+- **The copy was stale by 8px.** Home's category strip got 13px top padding on 12 Sep. 01a's copy
+  still had 5px, so everything behind the calendar sat 8.3px higher. This is fixed in Figma: 01a's
+  strip (540:3891) is now 13 and the block below it (540:3896) moved from y=130 to y=138. The build
+  matches, and 01a reads 3.02% against a fresh Figma render (it was 3.11%).
+- **The copy is always at the top.** With Home scrolled even 100px, the background jumped 104px,
+  because 01a can only draw Home unscrolled.
+
+So the date row no longer switches screens. It lays 01a's sheet over the live Home, which is how
+09a, 11a and 19a already work. What sits behind the sheet is Home itself, wherever it is scrolled.
+Measured: 0px shift at the top and 0px at a 100px scroll. The sheet slides up 8px clear of the
+edges, 10 Sep fills the date and closes it, and the × and the dim layer both close it. 01a remains
+as the drawn frame and is still reachable from the list.
+
+**LEARNED — a drawn copy of another screen goes stale with no one noticing.** 01a's Home copy
+missed the 12 Sep padding change because nothing compares the two. Laying a sheet over the real
+screen removes the copy from the path, so there is nothing left to drift.

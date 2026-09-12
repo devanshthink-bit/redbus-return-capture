@@ -132,7 +132,7 @@ export default function Component01ASelectDate() {
             </div>
           </div>
         </div>
-        <div className="content-stretch flex gap-[24px] items-start overflow-clip pb-[14px] pt-[5px] px-[24px] relative shrink-0 w-full" data-node-id="540:3891" data-name="Category strip">
+        <div className="content-stretch flex gap-[24px] items-start overflow-clip pb-[14px] pt-[13px] px-[24px] relative shrink-0 w-full" data-node-id="540:3891" data-name="Category strip">
           <div className="content-stretch flex flex-col items-center relative shrink-0 w-[79px]" data-node-id="540:3892" data-name="Category Tile">
             <ArtTileBus className="h-[48px] relative shrink-0 w-[72px]" />
             <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[16px] min-w-full not-italic relative shrink-0 text-[12px] text-[color:var(--text\/primary,#1d1d1d)] text-center w-[min-content]" data-node-id="I540:3892;14:4">
@@ -159,7 +159,7 @@ export default function Component01ASelectDate() {
           </div>
         </div>
       </div>
-      <div className="absolute bg-white content-stretch flex flex-col items-start left-0 overflow-clip rounded-bl-[24px] rounded-br-[24px] top-[130px] w-[390px]" data-node-id="540:3896" data-name="Top block">
+      <div className="absolute bg-white content-stretch flex flex-col items-start left-0 overflow-clip rounded-bl-[24px] rounded-br-[24px] top-[138px] w-[390px]" data-node-id="540:3896" data-name="Top block">
         <div className="content-stretch flex flex-col gap-[16px] items-start pt-[16px] px-[16px] relative shrink-0 w-full" data-node-id="540:3897" style={{ backgroundImage: "linear-gradient(180deg, rgb(255, 255, 255) 0%, rgb(252, 242, 241) 34%, rgb(249, 236, 235) 80%, rgb(207, 160, 166) 100%)" }} data-name="Search section">
           <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[34px] not-italic relative shrink-0 text-[26px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="540:3898">
             Bus Tickets
