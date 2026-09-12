@@ -9623,3 +9623,21 @@ index-bounded replacements. The rule forbids those because one once deleted `bui
 block was asserted to contain exactly what it should first. The diff was then read line by line:
 only the bar, the box styling and the compaction edits were removed. The state matrix is clean at
 234 cells.
+
+---
+
+CHANGE  ·  2026-09-12  ·  direct request (humanizer for the copy)  ·  Source: user
+
+**One paragraph and one typeface.** Devansh: *"Why am I seeing two different types of fonts in the
+same paragraph? Why are you writing two different paragraphs? Only one is sufficient. Write
+to-the-point copies and don't include clutter. Keep the fonts consistent throughout."*
+
+- **The pitch is one paragraph with one style:** *"Lets travellers book a return before they know
+  the date. They pick the last day they could come back, we book it, and they can move it once
+  later."* The "two fonts" were a darker second paragraph and a bold "when". Both are gone.
+- **The page uses Inter only.** Manrope (the title) and the system mono (labels, the switches, hex
+  values, step numbers) are retired. This reverses an earlier choice: the mono labels were set "at
+  his request", and this request replaces it. The `--s-display` and `--s-mono` tokens now both
+  resolve to Inter, so all seven rules that named them follow without further edits. The Manrope
+  font is no longer downloaded. Measured in the browser: every text element on the page resolves
+  to Inter, and Inter is the only font loaded.

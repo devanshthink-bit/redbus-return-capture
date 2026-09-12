@@ -3,12 +3,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>redBus — Return</title>
-<!-- From devanshsomvanshi.com: Manrope for the title, Inter for everything else. The small labels
-     use the system mono rather than the portfolio's Geist Mono, at his request. Inter is also what
+<!-- Inter, and only Inter: the page and the phone share one typeface (12 Sep). Inter is also what
      the prototype's type scale was measured against, so loading it makes the phone more correct. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 <style>
 :root{
   /* DESIGN_LANGUAGE.md — do not add values */
@@ -44,9 +43,11 @@ html,body{height:100%}
   --s-red-soft:#FCE3E5;
   /* the dark-red version's white hair and wash sat here and overrode the two above, so the rule
      over the footnote was white on a pale page -- invisible. Removed. */
-  --s-display:Manrope,Inter,-apple-system,system-ui,sans-serif;    /* portfolio headings */
-  --s-mono:ui-monospace,SFMono-Regular,Menlo,monospace;   /* the system mono the dev rails used
-     originally. Geist Mono, the portfolio's mono, is one word away if he wants it back */
+  /* One typeface throughout, Inter -- the face the redBus app itself uses. Devansh, 12 Sep: "Keep
+     the fonts consistent throughout." Manrope for the title and a system mono for the labels are
+     retired; the two tokens stay so every rule that names them follows. */
+  --s-display:Inter,-apple-system,system-ui,sans-serif;
+  --s-mono:Inter,-apple-system,system-ui,sans-serif;
   --ds:1;                                  /* device scale, set by fitDevice() */
   --s-dw:430px; --s-dh:902px;              /* the mock frame at scale 1: 402x874 screen + 14 bezel */
 }
@@ -129,8 +130,6 @@ body.testing .layout{justify-content:center}
 .panel h1{font-family:var(--s-display);font-size:36px;font-weight:800;letter-spacing:-.035em;
  line-height:1.05;margin-bottom:14px;color:var(--s-on)}
 .panel .lede{font-size:15px;line-height:1.55;color:var(--s-on-60);max-width:36ch}
-.panel .lede + .lede{margin-top:10px}
-.panel .lede.pitch{color:var(--s-on-80)}
 .panel .lede b{color:var(--s-on);font-weight:600}
 .grp{margin-top:18px}
 .grp>h2{font-family:var(--s-mono);font-size:11px;font-weight:600;letter-spacing:.16em;
@@ -649,10 +648,8 @@ body.testing .devicewrap::before{display:none}
   </div>
 
   <h1>Return capture</h1>
-  <p class="lede">Some travellers know they are coming back, but not <b>when</b>. Today they
-    have no easy way to book that return on redBus.</p>
-  <p class="lede pitch">This feature asks for the last day they could travel back, and books that
-    day. If plans change, they can move it once, paying only any rise in fare.</p>
+  <p class="lede">Lets travellers book a return before they know the date. They pick the last
+    day they could come back, we book it, and they can move it once later.</p>
 
   <div class="grp">
     <h2>Prototype</h2>
