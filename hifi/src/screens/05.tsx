@@ -178,7 +178,7 @@ export default function Component05ReturnPickYourDays() {
             </p>
           </div>
           <div className="bg-white content-stretch flex flex-[1_0_0] items-center justify-center min-w-px overflow-clip py-[11px] relative rounded-[20px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.12)]" data-node-id="612:4013" data-name="Segment / I’m not sure yet">
-            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#c54646] text-[14px] text-center whitespace-nowrap" data-node-id="612:4014">
+            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#e81e38] text-[14px] text-center whitespace-nowrap" data-node-id="612:4014">
               I’m not sure yet
             </p>
           </div>

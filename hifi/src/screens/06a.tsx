@@ -284,7 +284,7 @@ export default function Component06AYourReturnDayChosen() {
               </p>
             </div>
           </div>
-          <div className="[word-break:break-word] bg-white border-2 border-[#c54646] border-solid content-stretch flex flex-col gap-[6px] items-start leading-[normal] not-italic p-[16px] relative rounded-[16px] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.07),0px_2px_6px_0px_rgba(0,0,0,0.05)] shrink-0 w-full" data-node-id="411:3007" data-name="Day · Thu, 17 Sep">
+          <div className="[word-break:break-word] bg-white border-2 border-[#e81e38] border-solid content-stretch flex flex-col gap-[6px] items-start leading-[normal] not-italic p-[16px] relative rounded-[16px] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.07),0px_2px_6px_0px_rgba(0,0,0,0.05)] shrink-0 w-full" data-node-id="411:3007" data-name="Day · Thu, 17 Sep">
             <div className="content-stretch flex font-['Inter:Bold'] font-bold items-center justify-between overflow-clip relative shrink-0 text-[#1d1d1d] text-[16px] w-full whitespace-nowrap" data-node-id="411:3008" data-name="Frame">
               <p className="relative shrink-0" data-node-id="411:3009">
                 Thu, 17 Sep
@@ -302,7 +302,7 @@ export default function Component06AYourReturnDayChosen() {
               </p>
             </div>
           </div>
-          <div className="border-[#c54646] border-l-2 border-solid content-stretch flex flex-col gap-[8px] items-start pb-[4px] pl-[14px] pt-[12px] relative shrink-0 w-full" data-node-id="413:2908" data-name="Bus fold">
+          <div className="border-[#e81e38] border-l-2 border-solid content-stretch flex flex-col gap-[8px] items-start pb-[4px] pl-[14px] pt-[12px] relative shrink-0 w-full" data-node-id="413:2908" data-name="Bus fold">
             <p className="[word-break:break-word] font-['Inter:Semi_Bold'] font-semibold leading-[normal] not-italic relative shrink-0 text-[#8a8a95] text-[12px] tracking-[0.96px] whitespace-nowrap" data-node-id="413:2909">
               RECOMMENDED BUS
             </p>
@@ -387,7 +387,7 @@ export default function Component06AYourReturnDayChosen() {
                 21:15 — 05:40 · ★ 4.5 (315)
               </p>
             </div>
-            <a className="[word-break:break-word] block cursor-pointer font-['Inter:Bold'] font-bold leading-[0] not-italic relative shrink-0 text-[#c54646] text-[14px] whitespace-nowrap" data-node-id="413:2975">
+            <a className="[word-break:break-word] block cursor-pointer font-['Inter:Bold'] font-bold leading-[0] not-italic relative shrink-0 text-[#e81e38] text-[14px] whitespace-nowrap" data-node-id="413:2975">
               <p className="leading-[normal]">All 5 buses on Thu, 17 Sep →</p>
             </a>
           </div>

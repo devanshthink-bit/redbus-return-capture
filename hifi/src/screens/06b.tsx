@@ -215,7 +215,7 @@ export default function Component06BYourReturnDayCannotChange() {
               </p>
             </div>
           </div>
-          <div className="bg-white border-2 border-[#c54646] border-solid content-stretch flex flex-col gap-[6px] items-start p-[16px] relative rounded-[16px] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.07),0px_2px_6px_0px_rgba(0,0,0,0.05)] shrink-0 w-full" data-node-id="521:3848" data-name="Day · Mon, 21 Sep">
+          <div className="bg-white border-2 border-[#e81e38] border-solid content-stretch flex flex-col gap-[6px] items-start p-[16px] relative rounded-[16px] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.07),0px_2px_6px_0px_rgba(0,0,0,0.05)] shrink-0 w-full" data-node-id="521:3848" data-name="Day · Mon, 21 Sep">
             <div className="[word-break:break-word] content-stretch flex font-['Inter:Bold'] font-bold items-center justify-between leading-[normal] not-italic overflow-clip relative shrink-0 text-[#1d1d1d] text-[16px] w-full whitespace-nowrap" data-node-id="521:3849" data-name="Frame">
               <p className="relative shrink-0" data-node-id="521:3850">
                 Mon, 21 Sep
@@ -245,7 +245,7 @@ export default function Component06BYourReturnDayCannotChange() {
               </div>
             </div>
           </div>
-          <div className="border-[#c54646] border-l-2 border-solid content-stretch flex flex-col gap-[8px] items-start pb-[4px] pl-[14px] pt-[12px] relative shrink-0 w-full" data-node-id="521:3879" data-name="Bus fold">
+          <div className="border-[#e81e38] border-l-2 border-solid content-stretch flex flex-col gap-[8px] items-start pb-[4px] pl-[14px] pt-[12px] relative shrink-0 w-full" data-node-id="521:3879" data-name="Bus fold">
             <p className="[word-break:break-word] font-['Inter:Semi_Bold'] font-semibold leading-[normal] not-italic relative shrink-0 text-[#8a8a95] text-[12px] tracking-[0.96px] whitespace-nowrap" data-node-id="521:3880">
               RECOMMENDED BUS
             </p>
@@ -347,7 +347,7 @@ export default function Component06BYourReturnDayCannotChange() {
                 19:45 — 03:50 · ★ 4.2 (420) · cannot change date
               </p>
             </div>
-            <a className="[word-break:break-word] block cursor-pointer font-['Inter:Bold'] font-bold leading-[0] not-italic relative shrink-0 text-[#c54646] text-[14px] whitespace-nowrap" data-node-id="521:3897">
+            <a className="[word-break:break-word] block cursor-pointer font-['Inter:Bold'] font-bold leading-[0] not-italic relative shrink-0 text-[#e81e38] text-[14px] whitespace-nowrap" data-node-id="521:3897">
               <p className="leading-[normal]">See all 2 in full →</p>
             </a>
           </div>

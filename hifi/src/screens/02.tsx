@@ -377,7 +377,7 @@ export default function Component02OutboundBusList() {
         <div className="content-stretch flex flex-col items-start px-[16px] py-[12px] relative shrink-0 w-full" data-node-id="35:109" data-name="Tabs">
           <div className="bg-[var(--surface\/page,#f2f2f7)] content-stretch flex h-[48px] items-start p-[2px] relative rounded-[var(--radius\/12,12px)] shrink-0 w-full" data-node-id="35:110" data-name="Segmented / Two-up">
             <div className="bg-[var(--surface\/default,white)] content-stretch drop-shadow-[0px_8px_12px_rgba(0,0,0,0.07),0px_2px_3px_rgba(0,0,0,0.05)] flex flex-[1_0_0] h-full items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" data-node-id="I35:110;34:98" data-name="Active">
-              <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[18px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/accent,#c54646)] whitespace-nowrap" data-node-id="I35:110;34:99">
+              <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[18px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/accent,#e81e38)] whitespace-nowrap" data-node-id="I35:110;34:99">
                 Buses
               </p>
             </div>
@@ -431,7 +431,7 @@ export default function Component02OutboundBusList() {
           </div>
         </div>
         <div className="content-stretch flex flex-col gap-[2px] items-start relative shrink-0 w-full" data-node-id="40:116" data-name="AI Smart filter">
-          <p className="[word-break:break-word] bg-clip-text bg-gradient-to-r font-['Inter:Regular'] font-normal from-[#c54646] leading-[18px] not-italic relative shrink-0 text-[13px] text-[transparent] to-[#7941e0] whitespace-nowrap" data-node-id="35:135">
+          <p className="[word-break:break-word] bg-clip-text bg-gradient-to-r font-['Inter:Regular'] font-normal from-[#e81e38] leading-[18px] not-italic relative shrink-0 text-[13px] text-[transparent] to-[#7941e0] whitespace-nowrap" data-node-id="35:135">
             AI Smart filter
           </p>
           <div className="bg-[var(--surface\/default,white)] border-[#385ded] border-[1.5px] border-solid content-stretch flex gap-[7px] h-[42px] items-center pl-[15px] pr-[14px] relative rounded-[var(--radius\/10,10px)] shrink-0 w-full" data-node-id="35:136" data-name="AI Smart filter field">
@@ -1568,7 +1568,7 @@ export default function Component02OutboundBusList() {
           </div>
         </div>
       </div>
-      <div className="-translate-x-1/2 absolute bg-gradient-to-r bottom-[46px] content-stretch drop-shadow-[0px_4px_7px_rgba(89,51,128,0.35)] flex from-[#c54646] gap-[6px] h-[43px] items-center justify-center left-1/2 pl-[18px] pr-[20px] rounded-[var(--radius\/full,999px)] to-[#7941e0]" data-node-id="40:200" data-name="Ask Ray">
+      <div className="-translate-x-1/2 absolute bg-gradient-to-r bottom-[46px] content-stretch drop-shadow-[0px_4px_7px_rgba(89,51,128,0.35)] flex from-[#e81e38] gap-[6px] h-[43px] items-center justify-center left-1/2 pl-[18px] pr-[20px] rounded-[var(--radius\/full,999px)] to-[#7941e0]" data-node-id="40:200" data-name="Ask Ray">
         <div className="relative shrink-0 size-[22px]" data-node-id="40:201" data-name="Sparkle">
           <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgSparkle} />
         </div>

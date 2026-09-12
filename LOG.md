@@ -10160,3 +10160,21 @@ NOTE · 2026-09-13 · direct
 Other colours: 47 of the 158 used in Figma appear exactly as flat areas in the screenshots. Most of the
 rest sit 1–5 levels from a screenshot colour; a few are further (e.g. `#2221D2`, `#2E5C2A`, `#9E457D`)
 and may be thin text or icons where no flat area exists to pick from. Not changed yet.
+
+DECISION · 2026-09-13 · direct · Source: user
+**`#C54646` is gone; every use of it is now `#E81E38`.** *"no screenshot have #C54646 red use #E81E38
+everywhere wherever u used #C54646 which u got from color picker and delete #C54646. Also update
+colors of the proto presentation … so that it matches correctly with redbus theme overall"*. Figma:
+`surface/text/icon/border accent` now alias `colour/brand/red-button`; the Foundations swatches were
+relinked and relabelled; gradient stops that started at `#C54646` (Ask Ray, AI Smart filter) moved to
+`#E81E38`; the primitive `colour/red/500` was deleted. Build: every `#c54646` and `rgba(197,70,70,…)`
+in the screens and shell became `#e81e38` / `rgba(232,30,56,…)`. Lo-fi: `--accent` in all four
+versions (frozen hashes updated again). Presentation page: logo red, rail and the Hi-fi / Lo-fi switch
+are `#E81E38`, the glow behind the phone is built from it, selected rail rows use `#C8102E` so the
+text keeps 7.4:1 on the pale pink, and the "Colours from the live app" Action swatch reads `#E81E38`.
+Other reds that came from their own measurement (nav `#BD3E3E`, the seat-sheet tab `#C54848`,
+checkbox `#D3192D`, weekend `#BC361C`) were not part of this and are unchanged.
+
+**LEARNED — his earlier words were right and my reading was wrong.** I had called `#C54646` the
+picker value, but his point was that it is not in the screenshots as he sees them. Either way the
+brand values are his decision; the log records them as his.

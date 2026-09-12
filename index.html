@@ -12,7 +12,7 @@
 :root{
   /* DESIGN_LANGUAGE.md — do not add values */
   --page:#F1F1F6; --raised:#FFFFFF; --ink:#1D1D1D; --muted:#636363;
-  --accent:#C54646; --rate:#458442; --ratebg:#E0F3D9; --ratink:#2E5C2A;
+  --accent:#E81E38; --rate:#458442; --ratebg:#E0F3D9; --ratink:#2E5C2A;
   --chip:#E9EAF6; --warn:#A45729; --skeleton:#F2F2F7; --dash:#E6E6E6; --line:#E4E4E4; --edge:#767680;  /* --line = decorative dividers. --edge = interactive boundaries, 3.1:1 */
   --t-fast:120ms; --t-state:180ms; --t-cross:280ms;
 }
@@ -26,7 +26,7 @@ html,body{height:100%}
    file; the prototype's own --accent is the measured button red and differs.
    ============================================================================ */
 :root{
-  --s-red:#D84E55;              /* the official logo red, from RedBus_Logo_(2015-present).svg */
+  --s-red:#E81E38;              /* redBus red -- the app's button red (Devansh, 13 Sep) */
   /* A pale red ground with dark ink. The names are kept from the dark-red version so nothing
      downstream has to change; only the values moved. Every one of these measures 4.5:1 or
      better on #F6E2E4, the darkest point of the page. */
@@ -54,7 +54,7 @@ html,body{height:100%}
 }
 body{
  /* A blush ground -- unmistakably redBus-tinted, never white, and light enough that dark ink
-    carries a proper type hierarchy again. It stays well clear of the prototype's own #C54646
+    carries a proper type hierarchy again. It stays well clear of the prototype's own #E81E38
     buttons, which remain the brightest red on screen. */
  /* 12 Sep, for the CEO review: the story sits on a calm warm white, and the product gets its own
     stage in redBus red (see .devicewrap). Two grounds, one job each. */
@@ -147,15 +147,15 @@ body.testing .layout{justify-content:center}
  transition:color 260ms cubic-bezier(.32,.72,0,1),transform 160ms cubic-bezier(.32,.72,0,1)}
 .vers button:hover{color:var(--s-on)}
 .vers button:active{transform:scale(.96)}
-.vers button:focus-visible{outline:0;box-shadow:0 0 0 2px rgba(216,78,85,.5)}
+.vers button:focus-visible{outline:0;box-shadow:0 0 0 2px rgba(232,30,56,.5)}
 /* The red lives on one thumb that slides between buttons (Devansh, 13 Sep: "really smooth and
    satisfying"). Before JS places it, the pressed button paints its own red, so nothing flashes.
-   One step darker than the logo red: white on #D84E55 is 4.1:1, under the 4.5 floor for 13px. */
+   The same redBus red as the app's own buttons (#E81E38), white ink on it as in the app. */
 .vers button[aria-pressed="true"]{color:#fff}
-.vers:not(.thumbed) button[aria-pressed="true"]{background:#BF3A41;
- box-shadow:0 1px 2px rgba(140,30,38,.22),0 6px 16px -6px rgba(140,30,38,.5)}
-.vthumb{position:absolute;z-index:-1;top:4px;bottom:4px;left:0;width:0;border-radius:9px;background:#BF3A41;
- box-shadow:0 1px 2px rgba(140,30,38,.22),0 6px 16px -6px rgba(140,30,38,.5);pointer-events:none;
+.vers:not(.thumbed) button[aria-pressed="true"]{background:#E81E38;
+ box-shadow:0 1px 2px rgba(160,16,36,.22),0 6px 16px -6px rgba(160,16,36,.5)}
+.vthumb{position:absolute;z-index:-1;top:4px;bottom:4px;left:0;width:0;border-radius:9px;background:#E81E38;
+ box-shadow:0 1px 2px rgba(160,16,36,.22),0 6px 16px -6px rgba(160,16,36,.5);pointer-events:none;
  will-change:transform,width}
 .vthumb.go{transition:transform 420ms cubic-bezier(.34,1.28,.44,1),width 420ms cubic-bezier(.34,1.28,.44,1)}
 .vnote{font-size:13px;line-height:1.5;color:var(--s-on-60);margin-top:10px;
@@ -187,7 +187,7 @@ body.testing .layout{justify-content:center}
 .devicewrap::before{content:"";position:absolute;z-index:-1;pointer-events:none;
  top:-28px;bottom:-28px;right:-28px;left:-38%;
  background:radial-gradient(ellipse 58% 64% at 64% 50%,
-   #B8343C 0%, #C8414A 26%, rgba(216,78,85,.78) 48%, rgba(222,110,116,.40) 72%, rgba(251,246,246,0) 100%)}.device{width:calc(var(--s-dw) * var(--ds));height:calc(var(--s-dh) * var(--ds))}
+   #D0142E 0%, #E81E38 26%, rgba(232,30,56,.72) 48%, rgba(240,110,125,.36) 72%, rgba(251,246,246,0) 100%)}.device{width:calc(var(--s-dw) * var(--ds));height:calc(var(--s-dh) * var(--ds))}
 /* A real iPhone, at the same 430 x 902 (the screen inside stays exactly 402 x 874): a brushed
    titanium rim catching light at two corners, a black glass bezel, shaded side buttons, and the
    Dynamic Island. The shadow falls down and away, so the phone stands on the page. */
@@ -281,7 +281,7 @@ body.hifi-on .phone,body.hifi-on .legacy{display:none}
 .field{width:100%;text-align:left;background:var(--raised);border:1px solid var(--edge);border-radius:12px;
  padding:16px;cursor:pointer;transition:border-color var(--t-state),box-shadow var(--t-state)}
 .field:hover{border-color:#C9C9CF}
-.field:focus-visible{outline:0;border-color:var(--accent);box-shadow:0 0 0 3px rgba(197,70,70,.18)}
+.field:focus-visible{outline:0;border-color:var(--accent);box-shadow:0 0 0 3px rgba(232,30,56,.18)}
 .field:active{background:#FBFBFC}
 .field .lab{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}
 .field .val{display:block;font-size:18px;font-weight:700}
@@ -295,8 +295,8 @@ body.hifi-on .phone,body.hifi-on .legacy{display:none}
  text-align:left;border:0;display:block;cursor:pointer;transition:transform var(--t-fast),box-shadow var(--t-state)}
 .card:hover{box-shadow:0 2px 10px rgba(0,0,0,.07)}
 .card.sel,.card.sel:hover{box-shadow:0 0 0 2px var(--accent)}   /* must beat :hover, so it comes after */
-.card.sel:focus-visible{box-shadow:0 0 0 2px var(--accent),0 0 0 5px rgba(197,70,70,.35)}
-.card:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(197,70,70,.35)}
+.card.sel:focus-visible{box-shadow:0 0 0 2px var(--accent),0 0 0 5px rgba(232,30,56,.35)}
+.card:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(232,30,56,.35)}
 .card:active{transform:scale(.995)}
 .card.off{opacity:1;background:#F7F7FA;box-shadow:none}
 .card.off .time,.card.off .price{color:var(--muted)}
@@ -332,7 +332,7 @@ body.hifi-on .phone,body.hifi-on .legacy{display:none}
 .ptline .cap{display:block;font-size:14px;color:var(--muted);margin-top:2px}
 .ptacts{display:flex;gap:20px;flex-wrap:wrap}
 .linkbtn{display:block;background:none;border:0;padding:8px 0 0;font-family:inherit;font-size:14px;font-weight:700;color:var(--accent);cursor:pointer;min-height:44px;text-align:left}
-.linkbtn:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(197,70,70,.35);border-radius:4px}   /* state rules go after the base */
+.linkbtn:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(232,30,56,.35);border-radius:4px}   /* state rules go after the base */
 
 /* ---------- controls row ---------- */
 .ctrls{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px;scrollbar-width:none}
@@ -341,7 +341,7 @@ body.hifi-on .phone,body.hifi-on .legacy{display:none}
  font-size:14px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:8px;cursor:pointer;
  transition:background var(--t-fast),border-color var(--t-fast)}
 .chip:hover{border-color:#C9C9CF}
-.chip:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(197,70,70,.25)}
+.chip:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(232,30,56,.25)}
 .chip[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
 .rule{display:flex;align-items:center;gap:12px;margin:16px 0 12px;color:var(--muted);font-size:14px}
 .rule::before,.rule::after{content:"";flex:1;height:1px;background:var(--line)}
@@ -354,7 +354,7 @@ body.hifi-on .phone,body.hifi-on .legacy{display:none}
 .btn.pri{background:#E81E38;color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.10);flex:1.4}
 .btn.sec{background:var(--raised);color:var(--ink);border:1px solid var(--edge);flex:1}
 .btn:hover{filter:brightness(.97)}
-.btn:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(197,70,70,.35)}
+.btn:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(232,30,56,.35)}
 .btn:active{transform:scale(.98)}
 .btn:disabled{opacity:.45;cursor:not-allowed;filter:none;transform:none}
 .btn .spin{width:16px;height:16px;border:2px solid rgba(255,255,255,.45);border-top-color:#fff;border-radius:50%;
@@ -387,7 +387,7 @@ body.hifi-on .phone,body.hifi-on .legacy{display:none}
  font-size:12px;color:var(--muted);display:flex;align-items:flex-end;justify-content:center;padding-bottom:4px;
  transition:background var(--t-fast),border-color var(--t-fast)}
 .seat:hover{border-color:var(--rate)}
-.seat:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(197,70,70,.35)}
+.seat:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(232,30,56,.35)}
 .seat[data-s="booked"]{background:#EDEDED;border-color:var(--edge);cursor:not-allowed;color:var(--muted)}
 .seat[data-s="female"]{border-color:#A0326B;color:#A0326B}
 .seat[aria-pressed="true"]{background:var(--rate);border-color:var(--rate);color:#fff}
@@ -400,7 +400,7 @@ body.hifi-on .phone,body.hifi-on .legacy{display:none}
 .ptn{width:100%;text-align:left;background:var(--raised);border:1px solid var(--edge);border-radius:12px;
  padding:16px;margin-bottom:16px;cursor:pointer;transition:border-color var(--t-state)}
 .ptn:hover{border-color:#C9C9CF}
-.ptn:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(197,70,70,.25)}
+.ptn:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(232,30,56,.25)}
 .ptn[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
 .pt-t{font-size:16px;font-weight:700} .pt-s{font-size:14px;color:var(--muted);margin-top:4px}
 /* ---------- bottom bar ---------- */
@@ -475,7 +475,7 @@ body.hifi-on .phone,body.hifi-on .legacy{display:none}
  align-items:center;justify-content:space-between;gap:12px;text-align:left;font-size:16px;cursor:pointer;
  transition:box-shadow var(--t-state)}
 .rowact:hover{box-shadow:0 2px 10px rgba(0,0,0,.07)}
-.rowact:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(197,70,70,.35)}
+.rowact:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(232,30,56,.35)}
 .rowact .chev{color:var(--muted);font-size:20px} .rowact .cap{font-weight:400}
 .rowact.off{color:var(--muted);cursor:default}
 .rowact:last-child{margin-bottom:0}
@@ -512,7 +512,7 @@ body.hifi-on .phone,body.hifi-on .legacy{display:none}
 .trade{background:var(--raised);border-radius:12px;padding:12px 16px;margin-bottom:8px;width:100%;
  text-align:left;border:0;display:block;cursor:pointer;transition:box-shadow var(--t-state)}
 .trade:hover{box-shadow:0 2px 10px rgba(0,0,0,.07)}
-.trade:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(197,70,70,.35)}
+.trade:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(232,30,56,.35)}
 .trade:active{transform:scale(.995)}
 .trade .top{display:flex;justify-content:space-between;align-items:center;gap:12px}
 .trade .why{font-size:12px;font-weight:700;color:var(--ink);background:var(--chip);
@@ -524,7 +524,7 @@ body.hifi-on .phone,body.hifi-on .legacy{display:none}
 /* the way out to everything else, when three is not enough */
 .allbuses{display:block;width:100%;text-align:left;background:none;border:0;padding:14px 2px 0;
  font-family:inherit;font-size:14px;font-weight:700;color:var(--accent);cursor:pointer;min-height:44px}
-.allbuses:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(197,70,70,.35);border-radius:8px}
+.allbuses:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(232,30,56,.35);border-radius:8px}
 .swapd{font-size:18px;font-weight:700;margin-top:4px}
 .swaparrow{color:var(--muted);font-size:20px;margin:8px 0}
 /* ---------- prototype controls (not part of the design) ---------- */
@@ -545,8 +545,8 @@ body.hifi-on .phone,body.hifi-on .legacy{display:none}
 .dev button.runstart{margin-top:14px}
 .dev h3:first-child{margin-top:0}
 .dev button:hover{background:rgba(255,255,255,.7);color:var(--s-on)}
-.dev button:focus-visible{outline:0;box-shadow:0 0 0 2px rgba(216,78,85,.5)}
-.dev button[aria-pressed="true"]{background:var(--s-red-soft);color:#B23138;font-weight:700}
+.dev button:focus-visible{outline:0;box-shadow:0 0 0 2px rgba(232,30,56,.5)}
+.dev button[aria-pressed="true"]{background:var(--s-red-soft);color:#C8102E;font-weight:700}
 /* Key screens only (12 Sep): the minor steps stay in the prototype but leave the list, and while
    one is showing, the key screen it belongs to lights instead */
 #screenrail button.minor{display:none}
@@ -560,7 +560,7 @@ body.hifi-on .phone,body.hifi-on .legacy{display:none}
  font-family:var(--s-mono);font-size:10.5px;font-weight:600;color:var(--s-on-45);min-width:16px;
  font-variant-numeric:tabular-nums}
 .pcol.b .dev:not(.states) > button[aria-pressed="true"]::before,
-.pcol.b .dev:not(.states) > button[data-lit]::before{color:#B23138}
+.pcol.b .dev:not(.states) > button[data-lit]::before{color:#C8102E}
 /* The states are numbered the same way, in their own run -- Devansh: "use the number in each state,
    just like there are numbers in the screens". The count on the heading went at the same time. */
 .pcol.b .statelist{counter-reset:state}
@@ -568,8 +568,8 @@ body.hifi-on .phone,body.hifi-on .legacy{display:none}
 .pcol.b .statelist > button::before{content:counter(state,decimal-leading-zero);
  font-family:var(--s-mono);font-size:10.5px;font-weight:600;color:var(--s-on-45);min-width:16px;
  font-variant-numeric:tabular-nums}
-.pcol.b .statelist > button[aria-pressed="true"]::before{color:#B23138}
-.dev button[data-lit]{background:var(--s-red-soft);color:#B23138;font-weight:700}
+.pcol.b .statelist > button[aria-pressed="true"]::before{color:#C8102E}
+.dev button[data-lit]{background:var(--s-red-soft);color:#C8102E;font-weight:700}
 /* The highlight slides between rows, like the switches (Devansh, 13 Sep: "make it smooth and
    satisfying for screens and states also"). It is the list's own ::before, moved by variables,
    because the rail code pairs list.children by index -- an extra child element would break it. */
@@ -596,7 +596,7 @@ body.hifi-on .phone,body.hifi-on .legacy{display:none}
 .dev.states[open]>summary .chev{transform:rotate(90deg)}
 .statelist{display:flex;flex-direction:column;align-items:flex-start;gap:1px;margin-top:6px}
 /* a state other than default is on: say so on the shut summary */
-.dev.states.dirty>summary{color:#B23138}
+.dev.states.dirty>summary{color:#C8102E}
 /* v1 and v2 have their own screens, so their own rails are mirrored in here */
 body.legacy-on #screenrail,body.legacy-on #staterail{display:none}
 body.hifi-on #screenrail,body.hifi-on #staterail,body.hifi-on #legacyrail,
@@ -661,7 +661,7 @@ body.testing .devicewrap::before{display:none}
 .cal .mon{font-size:16px;font-weight:700;color:var(--ink);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
 .calnav{width:44px;height:44px;border:0;background:none;color:var(--ink);font-size:20px;cursor:pointer;border-radius:8px}
 .calnav[disabled]{color:#C4C4C8;cursor:default}
-.calnav:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(197,70,70,.35)}
+.calnav:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(232,30,56,.35)}
 .cal .dow{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px}
 .cal .dow span{font-size:12px;color:var(--muted);text-align:center}
 .cal .grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
@@ -691,7 +691,7 @@ body.testing .devicewrap::before{display:none}
 .callegend i{width:5px;height:5px;border-radius:50%;background:#B9B9C4;display:inline-block;flex:0 0 auto}   /* --rate is only 3.7:1 on the range band */
 .pillnote{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.35}
 .cday.sel.cheap .f{color:#fff}
-.cday:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(197,70,70,.35)}
+.cday:focus-visible{outline:0;box-shadow:0 0 0 3px rgba(232,30,56,.35)}
 </style>
 </head><body>
 
@@ -792,7 +792,7 @@ body.testing .devicewrap::before{display:none}
   <div class="grp" style="margin-top:0">
     <h2>Colours from the live app</h2>
     <div class="swatches">
-      <div class="tok"><i style="background:#C54646"></i><div><b>Action</b><span>#C54646</span></div></div>
+      <div class="tok"><i style="background:#E81E38"></i><div><b>Action</b><span>#E81E38</span></div></div>
       <div class="tok"><i style="background:#458442"></i><div><b>Rating</b><span>#458442</span></div></div>
       <div class="tok"><i style="background:#A45729"></i><div><b>Warning</b><span>#A45729</span></div></div>
       <div class="tok"><i style="background:#E9EAF6"></i><div><b>Chip</b><span>#E9EAF6</span></div></div>

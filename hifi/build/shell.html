@@ -16,7 +16,7 @@
   :root{
     --hf-bg1:#FCF0F1; --hf-bg2:#F9E8EA; --hf-bg3:#F6E2E4;
     --hf-on:#1D1D22; --hf-on60:#4A4A55; --hf-on45:#5E5E6B; --hf-line:#E3CDD0;
-    --hf-red:#D84E55; --hf-vw:390px; --hf-vh:844px; --hf-s:1;
+    --hf-red:#E81E38; --hf-vw:390px; --hf-vh:844px; --hf-s:1;
   }
   *{box-sizing:border-box}
   html,body{margin:0;height:100%}
@@ -45,7 +45,7 @@
     font:inherit;font-size:13px;line-height:1.35;color:var(--hf-on60);background:none;border:0;
     padding:5px 9px;border-radius:7px;cursor:pointer;text-align:left;display:flex;gap:9px;
   }
-  .hf-rail button:hover{background:rgba(216,78,85,.09);color:var(--hf-on)}
+  .hf-rail button:hover{background:rgba(232,30,56,.09);color:var(--hf-on)}
   .hf-rail button[aria-current="true"]{background:var(--hf-red);color:#fff;font-weight:600}
   .hf-rail button[aria-current="true"] .hf-railn{color:rgba(255,255,255,.8)}
   .hf-railn{font-variant-numeric:tabular-nums;color:var(--hf-on45);min-width:24px}
@@ -116,11 +116,11 @@
   /* Empty shows one line, filled shows label + value. Without a floor the row grew as you typed
      into it. Reserve the filled height and centre the single line inside it. */
   .hf-fieldbox{min-height:38px;justify-content:center}
-  .hf-toggle-on{background:#C54646!important}
+  .hf-toggle-on{background:#E81E38!important}
   .hf-toggle-on>*{left:24px!important}
   @keyframes hf-blink{
-    0%,100%{box-shadow:inset 0 0 0 0 rgba(197,70,70,0)}
-    50%    {box-shadow:inset 0 0 0 3px rgba(197,70,70,.85)}
+    0%,100%{box-shadow:inset 0 0 0 0 rgba(232,30,56,0)}
+    50%    {box-shadow:inset 0 0 0 3px rgba(232,30,56,.85)}
   }
   /* No border-radius here. It was 8px so the ring would have soft corners, but it overwrites
      whatever radius the element already has -- the Search buses button went from pill-ish to
@@ -164,7 +164,7 @@
   /* The return question is a segmented control. Neither half is selected until it is answered --
      65.2% of travellers were unsure, so defaulting to "I know my date" defaults against them. */
   .hf-seg-on{background:#fff!important;box-shadow:0 1px 3px 0 rgba(0,0,0,.12)}
-  .hf-seg-on p{color:#c54646!important}
+  .hf-seg-on p{color:#e81e38!important}
   .hf-seg-off{background:transparent!important;box-shadow:none!important}
   .hf-seg-off p{color:#636363!important}
   .hf-live{opacity:1!important}
@@ -182,7 +182,7 @@
   .hf-day-off.hf-day-mute > p:nth-of-type(1){color:#9a9aa4!important}
   .hf-day-off.hf-day-mute > p:nth-of-type(2){color:#9a9aa4!important}
   /* The days between the two ends are the window, not a hint of one: same red, same white ink. */
-  .hf-day-band{background:#c54646!important}
+  .hf-day-band{background:#e81e38!important}
   .hf-day-band > p:nth-of-type(1){color:#fff!important}
   .hf-day-band > p:nth-of-type(2){color:#fff!important}
   .hf-day-dim{opacity:.32!important;pointer-events:none}
@@ -195,8 +195,8 @@
            padding:0 10px 0 8px!important;border-radius:999px!important}
   .hf-chip-i{width:14px;height:14px;flex:0 0 14px;position:relative;opacity:.75}
   .hf-chip-i img{width:100%;height:100%;position:absolute;inset:0}
-  .hf-bus-on{outline:2px solid #c54646;outline-offset:-2px;border-radius:12px}
-  .hf-day-sel{background:#c54646!important}
+  .hf-bus-on{outline:2px solid #e81e38;outline-offset:-2px;border-radius:12px}
+  .hf-day-sel{background:#e81e38!important}
   .hf-day-sel > p:nth-of-type(1){color:#fff!important}
   .hf-day-sel > p:nth-of-type(2){color:#fff!important}
   /* The details sheet is a sheet: it sits over the screen that opened it, that screen stays put,
@@ -220,7 +220,7 @@
        the title row to its text and the × sat beside the title instead of at the edge */
     align-self:stretch!important}
   /* A ticket that can no longer be acted on says so in a band right under the header, in white on
-     the accent red -- measured off the real app's cancelled ticket (IMG_5217) at #c54646 and 50pt.
+     the accent red -- measured off the real app's cancelled ticket (IMG_5217) at #e81e38 and 50pt.
      The same band carries "date changed", because it is the same fact: this ticket is now fixed. */
   .hf-lockband{display:flex;align-items:center;gap:10px;height:50px;padding:0 16px;
     background:#e8203a;flex:0 0 auto;width:100%;box-sizing:border-box}
@@ -276,9 +276,9 @@
   .hf-radio-on{position:relative}
   /* A radio dot does not travel -- it is either set or not. It fades in on the spot. */
   @keyframes hf-dot{from{opacity:0;transform:scale(.6)} to{opacity:1;transform:none}}
-  .hf-pay-on{background:#fff!important;border:6px solid #c54646!important}
+  .hf-pay-on{background:#fff!important;border:6px solid #e81e38!important}
   /* a ticked checkbox: the frame draws the empty box, so the tick is drawn here */
-  .hf-check-on{position:relative;background:#c54646!important;border-color:#c54646!important}
+  .hf-check-on{position:relative;background:#e81e38!important;border-color:#e81e38!important}
   .hf-check-on::after{content:'';position:absolute;left:50%;top:48%;width:6px;height:11px;
     border:solid #fff;border-width:0 2px 2px 0;transform:translate(-50%,-60%) rotate(45deg)}
   /* The filter sheet. Its panes are rebuilt as categories are tapped, so the rows are styled here
@@ -289,17 +289,17 @@
   .hf-filt-label{margin:0;flex:1 0 0;min-width:0;font-family:Inter,sans-serif;font-size:16px;
     line-height:22px;color:#1d1d1d}
   .hf-filt-mark{margin:0;flex:0 0 auto;font-family:Inter,sans-serif;font-size:17px;
-    line-height:22px;font-weight:700;color:#c54646;min-width:14px;text-align:right}
+    line-height:22px;font-weight:700;color:#e81e38;min-width:14px;text-align:right}
   .hf-filt-none{margin:14px 0 0;font-family:Inter,sans-serif;font-size:15px;line-height:22px;
     color:#636363}
   /* the rail's selected cell: white ground, red edge, bold label */
-  .hf-cat-on{background:#fff!important;border-left:3px solid #c54646!important;
+  .hf-cat-on{background:#fff!important;border-left:3px solid #e81e38!important;
     border-top-color:transparent!important}
   .hf-cat-on p{font-weight:700!important}
   .hf-paygap{height:12px;width:100%;flex:0 0 auto}
   .hf-paybtn{width:100%!important;height:48px!important;flex:0 0 auto}
   .hf-radio-on::after{content:'';position:absolute;inset:5px;border-radius:50%;
-    background:#C54646;animation:hf-dot 160ms ease-out}
+    background:#E81E38;animation:hf-dot 160ms ease-out}
   @media (prefers-reduced-motion:reduce){
     .hf-in-fwd,.hf-in-back,.hf-in-up,.hf-slideup,.hf-blink{animation:none}
   }
@@ -1559,7 +1559,7 @@
           var det = row.children[1].querySelectorAll('p');
           det[0].textContent = busLine(n, mov);
           if (d === chosen) { det[1].hidden = false; det[1].textContent = 'Your pick';
-            row.className = row.className.replace('bg-white', 'bg-white border-2 border-[#c54646] border-solid'); }
+            row.className = row.className.replace('bg-white', 'bg-white border-2 border-[#e81e38] border-solid'); }
           else if (!chosen || floor === myFloor) det[1].hidden = true;
           else { det[1].hidden = false;
                  det[1].textContent = floor > myFloor ? money(floor - myFloor) + ' more'
@@ -2513,7 +2513,7 @@
         var r = c.querySelector('[data-name="Radio"]');
         if (r) r.classList.toggle('hf-radio-on', on);
         // the chosen card takes the accent border the rest of the file uses for a selection
-        c.style.borderColor = on ? '#c54646' : '';
+        c.style.borderColor = on ? '#e81e38' : '';
         c.style.borderWidth = on ? '2px' : '';
       });
       label(card.getAttribute('data-name') === 'Option / Change date'

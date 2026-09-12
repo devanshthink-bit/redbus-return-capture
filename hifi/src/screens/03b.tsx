@@ -647,7 +647,7 @@ export default function Component03OutboundSeatMap() {
           </div>
         </div>
       </div>
-      <div className="absolute bottom-[284.3px] drop-shadow-[0px_0px_8px_rgba(107,61,140,0.28)] right-[16px] rounded-[var(--radius\/full,999px)] size-[48px]" data-node-id="63:234" style={{ backgroundImage: "linear-gradient(135deg, rgb(197, 70, 70) 0%, rgb(121, 65, 224) 71.429%)" }} data-name="Ask Ray">
+      <div className="absolute bottom-[284.3px] drop-shadow-[0px_0px_8px_rgba(107,61,140,0.28)] right-[16px] rounded-[var(--radius\/full,999px)] size-[48px]" data-node-id="63:234" style={{ backgroundImage: "linear-gradient(135deg, rgb(232, 30, 56) 0%, rgb(121, 65, 224) 71.429%)" }} data-name="Ask Ray">
         <div className="absolute left-[11px] size-[26px] top-[11px]" data-node-id="I63:234;63:230" data-name="Sparkle">
           <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgSparkle} />
         </div>

@@ -48,7 +48,7 @@ function CalendarDay({ className, day = "10", fare = "₹910", noDateChange = fa
   const isSelected = state === "Selected";
   const isUnavailable = state === "Unavailable";
   return (
-    <div className={className || `${String.raw`content-stretch flex flex-col gap-px h-[52px] items-center justify-center relative rounded-[var(--radius\/10,10px)] w-[50px] `}${isInReach ? String.raw`bg-[var(--surface\/accent,#c54646)]` : isOut ? String.raw`bg-[var(--colour\/neutral\/150,#e9eaf6)]` : isSelected ? String.raw`bg-[var(--surface\/accent,#c54646)]` : ""}`} id={isInReach ? "node-91_526" : isFull ? "node-82_326" : isUnavailable ? "node-82_321" : isOut ? "node-82_316" : isSelected ? "node-82_311" : "node-82_306"}>
+    <div className={className || `${String.raw`content-stretch flex flex-col gap-px h-[52px] items-center justify-center relative rounded-[var(--radius\/10,10px)] w-[50px] `}${isInReach ? String.raw`bg-[var(--surface\/accent,#e81e38)]` : isOut ? String.raw`bg-[var(--colour\/neutral\/150,#e9eaf6)]` : isSelected ? String.raw`bg-[var(--surface\/accent,#e81e38)]` : ""}`} id={isInReach ? "node-91_526" : isFull ? "node-82_326" : isUnavailable ? "node-82_321" : isOut ? "node-82_316" : isSelected ? "node-82_311" : "node-82_306"}>
       {isDefault && (
         <>
           <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[20px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="82:303">
@@ -205,7 +205,7 @@ export default function Component05BReturnOneDayPicked() {
         </div>
         <div className="bg-[#ededf2] border border-[#e4e4e4] border-solid content-stretch flex gap-[4px] items-start overflow-clip p-[4px] relative rounded-[24px] shrink-0 w-full" data-node-id="612:4021" data-name="Mode toggle">
           <div className="bg-white content-stretch flex flex-[1_0_0] items-center justify-center min-w-px overflow-clip py-[11px] relative rounded-[20px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.12)]" data-node-id="612:4022" data-name="Segment / I know my date">
-            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#c54646] text-[14px] text-center whitespace-nowrap" data-node-id="612:4023">
+            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#e81e38] text-[14px] text-center whitespace-nowrap" data-node-id="612:4023">
               I know my date
             </p>
           </div>
@@ -281,7 +281,7 @@ export default function Component05BReturnOneDayPicked() {
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="13" fare="Full" state="Full" />
             </div>
             <div className="[word-break:break-word] content-stretch flex gap-[4px] items-start not-italic overflow-clip relative shrink-0 w-full whitespace-nowrap" data-node-id="347:2901" data-name="Week">
-              <CalendarDay className="bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--text\/on-accent,white)]" day="14" fare="₹800" state="Selected" />
+              <CalendarDay className="bg-[var(--surface\/accent,#e81e38)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--text\/on-accent,white)]" day="14" fare="₹800" state="Selected" />
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="15" fare="₹860" />
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="16" fare="₹860" />
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="17" fare="₹970" />

@@ -171,7 +171,7 @@ export default function Component14MoveBuses() {
             </div>
           </div>
           <div className="content-stretch flex flex-col gap-[2px] items-start relative shrink-0 w-full" data-node-id="794:6362" data-name="AI Smart filter">
-            <p className="[word-break:break-word] bg-clip-text bg-gradient-to-r font-['Inter:Regular'] font-normal from-[#c54646] leading-[18px] not-italic relative shrink-0 text-[13px] text-[transparent] to-[#7941e0] whitespace-nowrap" data-node-id="794:6363">
+            <p className="[word-break:break-word] bg-clip-text bg-gradient-to-r font-['Inter:Regular'] font-normal from-[#e81e38] leading-[18px] not-italic relative shrink-0 text-[13px] text-[transparent] to-[#7941e0] whitespace-nowrap" data-node-id="794:6363">
               AI Smart filter
             </p>
             <div className="bg-[var(--surface\/default,white)] border-[#385ded] border-[1.5px] border-solid content-stretch flex gap-[7px] h-[42px] items-center pl-[15px] pr-[14px] relative rounded-[var(--radius\/10,10px)] shrink-0 w-full" data-node-id="794:6364" data-name="AI Smart filter field">

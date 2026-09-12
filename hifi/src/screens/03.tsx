@@ -537,7 +537,7 @@ export default function Component03OutboundSeatMap() {
           </div>
         </div>
       </div>
-      <div className="absolute bottom-[94px] overflow-clip right-[20px] rounded-[var(--radius\/full,999px)] shadow-[0px_0px_16px_0px_rgba(107,61,140,0.28)] size-[48px]" data-node-id="196:1876" style={{ backgroundImage: "linear-gradient(135deg, rgb(197, 70, 70) 0%, rgb(121, 65, 224) 71.429%)" }} data-name="Button / Ask Ray FAB">
+      <div className="absolute bottom-[94px] overflow-clip right-[20px] rounded-[var(--radius\/full,999px)] shadow-[0px_0px_16px_0px_rgba(107,61,140,0.28)] size-[48px]" data-node-id="196:1876" style={{ backgroundImage: "linear-gradient(135deg, rgb(232, 30, 56) 0%, rgb(121, 65, 224) 71.429%)" }} data-name="Button / Ask Ray FAB">
         <div className="absolute left-[11px] size-[26px] top-[11px]" data-node-id="I196:1876;63:230" data-name="Sparkle">
           <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgSparkle} />
         </div>

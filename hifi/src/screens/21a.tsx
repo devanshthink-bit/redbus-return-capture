@@ -78,7 +78,7 @@ export default function Component21AFilterBusesAi() {
           <div className="content-stretch flex flex-col items-start px-[16px] py-[12px] relative shrink-0 w-full" data-node-id="795:6240" data-name="Tabs">
             <div className="bg-[var(--surface\/page,#f2f2f7)] content-stretch flex h-[48px] items-start p-[2px] relative rounded-[var(--radius\/12,12px)] shrink-0 w-full" data-node-id="795:6241" data-name="Segmented / Two-up">
               <div className="bg-[var(--surface\/default,white)] content-stretch drop-shadow-[0px_8px_12px_rgba(0,0,0,0.07),0px_2px_3px_rgba(0,0,0,0.05)] flex flex-[1_0_0] h-full items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" data-node-id="I795:6241;34:98" data-name="Active">
-                <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[18px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/accent,#c54646)] whitespace-nowrap" data-node-id="I795:6241;34:99">
+                <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[18px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/accent,#e81e38)] whitespace-nowrap" data-node-id="I795:6241;34:99">
                   Buses
                 </p>
               </div>
@@ -105,7 +105,7 @@ export default function Component21AFilterBusesAi() {
         </div>
         <div className="bg-white content-stretch flex flex-[1_0_0] items-start min-h-px overflow-clip relative w-full" data-node-id="793:5502" data-name="Body">
           <div className="bg-[#f4f4f7] content-stretch flex flex-col h-full items-start overflow-clip relative shrink-0 w-[130px]" data-node-id="793:5503" data-name="Rail">
-            <div className="bg-white border-[#c54646] border-l-3 border-solid content-stretch flex items-center overflow-clip pl-[14px] pr-[10px] py-[14px] relative shrink-0 w-full" data-node-id="793:5504" data-name="Cat">
+            <div className="bg-white border-[#e81e38] border-l-3 border-solid content-stretch flex items-center overflow-clip pl-[14px] pr-[10px] py-[14px] relative shrink-0 w-full" data-node-id="793:5504" data-name="Cat">
               <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Bold'] font-bold leading-[18px] min-w-px not-italic relative text-[#1d1d1d] text-[13px]" data-node-id="793:5505">
                 AI Smart filter
               </p>

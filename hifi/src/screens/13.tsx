@@ -21,7 +21,7 @@ function CalendarDay({ className, day = "10", fare = "₹910", noDateChange = fa
   const isSelected = state === "Selected";
   const isUnavailable = state === "Unavailable";
   return (
-    <div className={className || `${String.raw`content-stretch flex flex-col gap-px h-[52px] items-center justify-center relative rounded-[var(--radius\/10,10px)] w-[50px] `}${isOut ? String.raw`bg-[var(--colour\/neutral\/150,#e9eaf6)]` : isSelected ? String.raw`bg-[var(--surface\/accent,#c54646)]` : ""}`} id={isFull ? "node-82_326" : isUnavailable ? "node-82_321" : isOut ? "node-82_316" : isSelected ? "node-82_311" : "node-82_306"}>
+    <div className={className || `${String.raw`content-stretch flex flex-col gap-px h-[52px] items-center justify-center relative rounded-[var(--radius\/10,10px)] w-[50px] `}${isOut ? String.raw`bg-[var(--colour\/neutral\/150,#e9eaf6)]` : isSelected ? String.raw`bg-[var(--surface\/accent,#e81e38)]` : ""}`} id={isFull ? "node-82_326" : isUnavailable ? "node-82_321" : isOut ? "node-82_316" : isSelected ? "node-82_311" : "node-82_306"}>
       {isDefault && (
         <>
           <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[20px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="82:303">
@@ -275,7 +275,7 @@ export default function Component13ChangeDay() {
             <div className="[word-break:break-word] content-stretch flex gap-[4px] items-start not-italic overflow-clip relative shrink-0 w-full whitespace-nowrap" data-node-id="339:2710" data-name="Week">
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="14" fare="₹0" />
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="15" fare="₹0" />
-              <CalendarDay className="bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--text\/on-accent,white)]" day="16" fare="Booked" state="Selected" />
+              <CalendarDay className="bg-[var(--surface\/accent,#e81e38)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--text\/on-accent,white)]" day="16" fare="Booked" state="Selected" />
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="17" fare="₹0" />
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="18" fare="+₹70" />
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="19" fare="+₹100" />

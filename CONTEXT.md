@@ -64,7 +64,7 @@ on push. `raw/` (interview transcripts) is gitignored.
 | `index.html` / `prototype.html` | **v1** — identical copies. index.html is what GitHub Pages serves |
 | `v2.html` | **v2** |
 | `index.html` | **the viewer and v4 — the file being changed.** Served at the bare root URL |
-| `frozen/v3.html` | **v3, frozen** the way v1 and v2 are. `97dbaf68…` (was `6e9c8a7c…` until the 13 Sep button red) |
+| `frozen/v3.html` | **v3, frozen** the way v1 and v2 are. `2c7461d8…` (was `6e9c8a7c…` until the 13 Sep button red) |
 | `frozen/v1.html` · `frozen/v2.html` · `frozen/prototype.html` | the other frozen builds |
 | `v1.html` · `v2.html` · `v3.html` · `prototype.html` | redirects to `/?version=N` |
 | `component-sheet.html` | Design-language component sheet |
@@ -99,7 +99,7 @@ someone can share must never be a bare prototype outside the viewer.
 The root **is** the viewer — `index.html` — it holds **v4** and carries the version switch, so the
 URL names no version. `?test` works on it.
 **`index.html` is no longer v1.** v1's file is unchanged and served at `v1.html` and
-`prototype.html`, both `d38535ef…` (the only change since freezing: the button red, 13 Sep, at
+`prototype.html`, both `164de4e8…` (the only change since freezing: the button red, 13 Sep, at
 Devansh's request).
 
 Deploys take **45–90 seconds**. Always verify with `curl` + `md5` against the local file before

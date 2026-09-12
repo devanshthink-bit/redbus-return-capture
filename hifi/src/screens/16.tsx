@@ -109,7 +109,7 @@ function CardLeg({ className, arrival = "08:00", caption = "ISBT Kashmiri Gate, 
               Gate Number 4 — where you started
             </p>
           </div>
-          <div className="[word-break:break-word] content-stretch flex font-['Inter:Bold'] font-bold gap-[20px] items-start leading-[20px] not-italic overflow-clip pt-[8px] relative shrink-0 text-[14px] text-[color:var(--text\/accent,#c54646)] w-full whitespace-nowrap" data-node-id="103:823" data-name="Actions">
+          <div className="[word-break:break-word] content-stretch flex font-['Inter:Bold'] font-bold gap-[20px] items-start leading-[20px] not-italic overflow-clip pt-[8px] relative shrink-0 text-[14px] text-[color:var(--text\/accent,#e81e38)] w-full whitespace-nowrap" data-node-id="103:823" data-name="Actions">
             <p className="relative shrink-0" data-node-id="103:824">
               Change seat
             </p>

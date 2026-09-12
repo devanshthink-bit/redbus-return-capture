@@ -12,9 +12,10 @@ Do not start work, answer a question about the project, or change a file until y
 1. **v1, v2 and v3 are frozen, and they live in `frozen/`.** Only **`index.html`** changes, and it
    now holds **v4**. Verify on every commit that the three are untouched — run exactly
    `md5 -q frozen/v1.html frozen/prototype.html frozen/v2.html frozen/v3.html`, which must return
-   `d38535ef…`, `d38535ef…`, `d86f9190…`, `97dbaf68…`. **Never put `index.html` in that command.**
-   (Changed once, on 13 Sep 2026, at Devansh's request: the primary button red became `#E81E38` in
-   all four lo-fi versions. The old hashes were `a96fc35f…`, `a96fc35f…`, `412b90eb…`, `6e9c8a7c…`.)
+   `164de4e8…`, `164de4e8…`, `d1e7d291…`, `2c7461d8…`. **Never put `index.html` in that command.**
+   (Changed on 13 Sep 2026 at Devansh's request, the only edits since freezing: the button red and
+   then the accent `--accent` became `#E81E38` in all four lo-fi versions. The original hashes were
+   `a96fc35f…`, `a96fc35f…`, `412b90eb…`, `6e9c8a7c…`.)
    The four files at the root with those names are **redirects into the viewer**, not the builds.
    On 3 Sep a whole session ran the check with `index.html` standing in v1's place; it returned the
    expected hashes every time while watching neither frozen file, and got quoted as evidence in

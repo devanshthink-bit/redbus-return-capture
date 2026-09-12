@@ -523,7 +523,7 @@ export default function Component09ABookingDetails() {
               <div className="h-[14px] relative shrink-0 w-px" data-node-id="721:4269" data-name="gap" />
               <div className="[word-break:break-word] bg-[#faf8f5] content-stretch flex flex-col gap-[12px] items-start leading-[18px] not-italic p-[14px] relative rounded-[10px] shrink-0 w-full" data-node-id="721:4270" data-name="Rules">
                 <div className="content-stretch flex flex-col gap-[3px] items-start relative shrink-0 w-full" data-node-id="721:4271" data-name="Rule">
-                  <p className="font-['Inter:Bold'] font-bold relative shrink-0 text-[14px] text-[color:var(--text\/accent,#c54646)] w-full" data-node-id="721:4272">
+                  <p className="font-['Inter:Bold'] font-bold relative shrink-0 text-[14px] text-[color:var(--text\/accent,#e81e38)] w-full" data-node-id="721:4272">
                     You cannot cancel it after that
                   </p>
                   <p className="font-['Inter:Regular'] font-normal relative shrink-0 text-[13px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="721:4273">

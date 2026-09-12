@@ -48,7 +48,7 @@ function CalendarDay({ className, day = "10", fare = "₹910", noDateChange = fa
   const isOut = state === "Out";
   const isUnavailable = state === "Unavailable";
   return (
-    <div className={className || `${String.raw`content-stretch flex flex-col gap-px h-[52px] items-center justify-center relative rounded-[var(--radius\/10,10px)] w-[50px] `}${isInReach ? String.raw`bg-[var(--surface\/accent,#c54646)]` : isOut ? String.raw`bg-[var(--colour\/neutral\/150,#e9eaf6)]` : ""}`} id={isInReach ? "node-91_526" : isFull ? "node-82_326" : isUnavailable ? "node-82_321" : isOut ? "node-82_316" : "node-82_306"}>
+    <div className={className || `${String.raw`content-stretch flex flex-col gap-px h-[52px] items-center justify-center relative rounded-[var(--radius\/10,10px)] w-[50px] `}${isInReach ? String.raw`bg-[var(--surface\/accent,#e81e38)]` : isOut ? String.raw`bg-[var(--colour\/neutral\/150,#e9eaf6)]` : ""}`} id={isInReach ? "node-91_526" : isFull ? "node-82_326" : isUnavailable ? "node-82_321" : isOut ? "node-82_316" : "node-82_306"}>
       {isDefault && (
         <>
           <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[20px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="82:303">
@@ -210,7 +210,7 @@ export default function Component05AReturnWindowChosen() {
             </p>
           </div>
           <div className="bg-white content-stretch flex flex-[1_0_0] items-center justify-center min-w-px overflow-clip py-[11px] relative rounded-[20px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.12)]" data-node-id="612:4019" data-name="Segment / I’m not sure yet">
-            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#c54646] text-[14px] text-center whitespace-nowrap" data-node-id="612:4020">
+            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#e81e38] text-[14px] text-center whitespace-nowrap" data-node-id="612:4020">
               I’m not sure yet
             </p>
           </div>
@@ -269,15 +269,15 @@ export default function Component05AReturnWindowChosen() {
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="8" fare=" " state="Unavailable" />
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="9" fare=" " state="Unavailable" />
               <CalendarDay className="bg-[var(--colour\/neutral\/150,#e9eaf6)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" fare="Out" state="Out" />
-              <CalendarDay className="[word-break:break-word] bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px not-italic relative rounded-[var(--radius\/10,10px)] text-[color:var(--text\/on-accent,white)] whitespace-nowrap" day="11" fare="₹1,260" state="Selected" />
-              <CalendarDay className="bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="12" fare="₹1,140" state="In reach" />
-              <CalendarDay className="bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="13" fare="Full" state="In reach" />
+              <CalendarDay className="[word-break:break-word] bg-[var(--surface\/accent,#e81e38)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px not-italic relative rounded-[var(--radius\/10,10px)] text-[color:var(--text\/on-accent,white)] whitespace-nowrap" day="11" fare="₹1,260" state="Selected" />
+              <CalendarDay className="bg-[var(--surface\/accent,#e81e38)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="12" fare="₹1,140" state="In reach" />
+              <CalendarDay className="bg-[var(--surface\/accent,#e81e38)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="13" fare="Full" state="In reach" />
             </div>
             <div className="[word-break:break-word] content-stretch flex gap-[4px] items-start not-italic overflow-clip relative shrink-0 w-full whitespace-nowrap" data-node-id="347:2734" data-name="Week">
-              <CalendarDay className="bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="14" fare="₹800" state="In reach" />
-              <CalendarDay className="bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="15" fare="₹860" state="In reach" />
-              <CalendarDay className="bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="16" fare="₹860" state="In reach" />
-              <CalendarDay className="[word-break:break-word] bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px not-italic relative rounded-[var(--radius\/10,10px)] text-[color:var(--text\/on-accent,white)] whitespace-nowrap" day="17" fare="₹970" state="Selected" />
+              <CalendarDay className="bg-[var(--surface\/accent,#e81e38)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="14" fare="₹800" state="In reach" />
+              <CalendarDay className="bg-[var(--surface\/accent,#e81e38)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="15" fare="₹860" state="In reach" />
+              <CalendarDay className="bg-[var(--surface\/accent,#e81e38)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="16" fare="₹860" state="In reach" />
+              <CalendarDay className="[word-break:break-word] bg-[var(--surface\/accent,#e81e38)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px not-italic relative rounded-[var(--radius\/10,10px)] text-[color:var(--text\/on-accent,white)] whitespace-nowrap" day="17" fare="₹970" state="Selected" />
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="18" fare="₹1,050" />
               <div className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" data-node-id="347:2740" data-name="19">
                 <p className="font-['Inter:Medium'] font-medium leading-[20px] relative shrink-0 text-[16px] text-[color:var(--text\/weekend,#bc361c)]" data-node-id="I347:2740;82:303">

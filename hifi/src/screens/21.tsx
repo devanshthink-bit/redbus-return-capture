@@ -78,7 +78,7 @@ export default function Component21FilterBuses() {
           <div className="content-stretch flex flex-col items-start px-[16px] py-[12px] relative shrink-0 w-full" data-node-id="795:6208" data-name="Tabs">
             <div className="bg-[var(--surface\/page,#f2f2f7)] content-stretch flex h-[48px] items-start p-[2px] relative rounded-[var(--radius\/12,12px)] shrink-0 w-full" data-node-id="795:6209" data-name="Segmented / Two-up">
               <div className="bg-[var(--surface\/default,white)] content-stretch drop-shadow-[0px_8px_12px_rgba(0,0,0,0.07),0px_2px_3px_rgba(0,0,0,0.05)] flex flex-[1_0_0] h-full items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" data-node-id="I795:6209;34:98" data-name="Active">
-                <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[18px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/accent,#c54646)] whitespace-nowrap" data-node-id="I795:6209;34:99">
+                <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[18px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/accent,#e81e38)] whitespace-nowrap" data-node-id="I795:6209;34:99">
                   Buses
                 </p>
               </div>
@@ -110,7 +110,7 @@ export default function Component21FilterBuses() {
                 AI Smart filter
               </p>
             </div>
-            <div className="bg-white border-[#c54646] border-l-3 border-solid content-stretch flex items-center overflow-clip pl-[14px] pr-[10px] py-[14px] relative shrink-0 w-full" data-node-id="792:4707" data-name="Cat">
+            <div className="bg-white border-[#e81e38] border-l-3 border-solid content-stretch flex items-center overflow-clip pl-[14px] pr-[10px] py-[14px] relative shrink-0 w-full" data-node-id="792:4707" data-name="Cat">
               <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Bold'] font-bold leading-[18px] min-w-px not-italic relative text-[#1d1d1d] text-[13px]" data-node-id="792:4708">
                 Sort by
               </p>
@@ -166,7 +166,7 @@ export default function Component21FilterBuses() {
               <p className="flex-[1_0_0] font-['Inter:Regular'] font-normal min-w-px relative text-[#1d1d1d] text-[16px]" data-node-id="792:4729">
                 Relevance
               </p>
-              <p className="font-['Inter:Bold'] font-bold relative shrink-0 text-[#c54646] text-[17px] whitespace-nowrap" data-node-id="792:4730">
+              <p className="font-['Inter:Bold'] font-bold relative shrink-0 text-[#e81e38] text-[17px] whitespace-nowrap" data-node-id="792:4730">
                 ✓
               </p>
             </div>
@@ -174,7 +174,7 @@ export default function Component21FilterBuses() {
               <p className="flex-[1_0_0] font-['Inter:Regular'] font-normal min-w-px relative text-[#1d1d1d] text-[16px]" data-node-id="792:4732">
                 Price - low to high
               </p>
-              <p className="font-['Inter:Bold'] font-bold relative shrink-0 text-[#c54646] text-[17px] whitespace-nowrap" data-node-id="792:4733">
+              <p className="font-['Inter:Bold'] font-bold relative shrink-0 text-[#e81e38] text-[17px] whitespace-nowrap" data-node-id="792:4733">
                 ​
               </p>
             </div>
@@ -182,7 +182,7 @@ export default function Component21FilterBuses() {
               <p className="flex-[1_0_0] font-['Inter:Regular'] font-normal min-w-px relative text-[#1d1d1d] text-[16px]" data-node-id="792:4735">
                 Best rated first
               </p>
-              <p className="font-['Inter:Bold'] font-bold relative shrink-0 text-[#c54646] text-[17px] whitespace-nowrap" data-node-id="792:4736">
+              <p className="font-['Inter:Bold'] font-bold relative shrink-0 text-[#e81e38] text-[17px] whitespace-nowrap" data-node-id="792:4736">
                 ​
               </p>
             </div>
@@ -190,7 +190,7 @@ export default function Component21FilterBuses() {
               <p className="flex-[1_0_0] font-['Inter:Regular'] font-normal min-w-px relative text-[#1d1d1d] text-[16px]" data-node-id="792:4738">
                 Early departure
               </p>
-              <p className="font-['Inter:Bold'] font-bold relative shrink-0 text-[#c54646] text-[17px] whitespace-nowrap" data-node-id="792:4739">
+              <p className="font-['Inter:Bold'] font-bold relative shrink-0 text-[#e81e38] text-[17px] whitespace-nowrap" data-node-id="792:4739">
                 ​
               </p>
             </div>
@@ -198,7 +198,7 @@ export default function Component21FilterBuses() {
               <p className="flex-[1_0_0] font-['Inter:Regular'] font-normal min-w-px relative text-[#1d1d1d] text-[16px]" data-node-id="792:4741">
                 Late departure
               </p>
-              <p className="font-['Inter:Bold'] font-bold relative shrink-0 text-[#c54646] text-[17px] whitespace-nowrap" data-node-id="792:4742">
+              <p className="font-['Inter:Bold'] font-bold relative shrink-0 text-[#e81e38] text-[17px] whitespace-nowrap" data-node-id="792:4742">
                 ​
               </p>
             </div>
