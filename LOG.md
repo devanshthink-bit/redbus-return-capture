@@ -9641,3 +9641,20 @@ to-the-point copies and don't include clutter. Keep the fonts consistent through
   resolve to Inter, so all seven rules that named them follow without further edits. The Manrope
   font is no longer downloaded. Measured in the browser: every text element on the page resolves
   to Inter, and Inter is the only font loaded.
+
+---
+
+CHANGE  ·  2026-09-12  ·  direct request  ·  Source: user
+
+**The States heading loses its count, and each state carries a number, like the screens.**
+Devansh: *"Remove the number 5 from here and use the number in each state, just like there are
+numbers in the screens, consistent with how the screen layout is."*
+
+- **The count is removed from every States heading:** the hi-fi's, v4's static one, and the copies
+  built for v1–v3. The two CSS rules that styled it (`.cnt`, and its red "dirty" variant) are
+  removed with it.
+- **The states are numbered 01, 02, … in their own run.** They use the same counter style as the
+  screens: the same size, weight and colour, red when selected. Hidden rows take no number, so v4
+  reads 01–06 with no gaps even though 13 buttons exist in its markup.
+- **Measured:** hi-fi 01–05; v4 and v2 01–06, where "default" is 01. The page still fits without
+  scrolling with the list open. The state matrix is clean.

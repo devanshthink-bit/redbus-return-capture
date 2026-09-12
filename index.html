@@ -518,6 +518,14 @@ body.hifi-on .phone,body.hifi-on .legacy{display:none}
  font-variant-numeric:tabular-nums}
 .pcol.b .dev:not(.states) > button[aria-pressed="true"]::before,
 .pcol.b .dev:not(.states) > button[data-lit]::before{color:#B23138}
+/* The states are numbered the same way, in their own run -- Devansh: "use the number in each state,
+   just like there are numbers in the screens". The count on the heading went at the same time. */
+.pcol.b .statelist{counter-reset:state}
+.pcol.b .statelist > button{counter-increment:state;display:flex;align-items:baseline;gap:10px}
+.pcol.b .statelist > button::before{content:counter(state,decimal-leading-zero);
+ font-family:var(--s-mono);font-size:10.5px;font-weight:600;color:var(--s-on-45);min-width:16px;
+ font-variant-numeric:tabular-nums}
+.pcol.b .statelist > button[aria-pressed="true"]::before{color:#B23138}
 .dev button[data-lit]{background:var(--s-red-soft);color:#B23138;font-weight:700}
 
 .dev.states{display:block;margin-top:22px}
@@ -527,13 +535,11 @@ body.hifi-on .phone,body.hifi-on .legacy{display:none}
  padding:6px 10px;border-radius:9px;transition:color 130ms,background 130ms}
 .dev.states>summary::-webkit-details-marker{display:none}
 .dev.states>summary:hover{color:var(--s-on);background:rgba(255,255,255,.7)}
-.dev.states>summary .cnt{font-size:11px;letter-spacing:0;color:var(--s-on-30);font-weight:600}
 .dev.states>summary .chev{font-size:12px;letter-spacing:0;transition:transform 180ms}
 .dev.states[open]>summary .chev{transform:rotate(90deg)}
 .statelist{display:flex;flex-direction:column;align-items:flex-start;gap:1px;margin-top:6px}
 /* a state other than default is on: say so on the shut summary */
 .dev.states.dirty>summary{color:#B23138}
-.dev.states.dirty>summary .cnt{color:rgba(178,49,56,.65)}
 /* v1 and v2 have their own screens, so their own rails are mirrored in here */
 body.legacy-on #screenrail,body.legacy-on #staterail{display:none}
 body.hifi-on #screenrail,body.hifi-on #staterail,body.hifi-on #legacyrail,
@@ -701,7 +707,7 @@ body.testing .devicewrap::before{display:none}
 </div>
 
 <details class="dev states" id="staterail">
-  <summary><span>States</span><span class="cnt">6</span><span class="chev">&rsaquo;</span></summary>
+  <summary><span>States</span><span class="chev">&rsaquo;</span></summary>
   <div class="statelist">
   <button onclick="setState('default')" id="st-default" aria-pressed="true">default</button>
   <button class="minor" onclick="setState('loading')" id="st-loading">loading</button>
@@ -3119,8 +3125,7 @@ function buildLegacyRail(){
   if(states.length){
     const d = document.createElement('details');
     d.className = 'dev states';
-    d.innerHTML = '<summary><span>States</span><span class="cnt">' + states.length +
-                  '</span><span class="chev">&rsaquo;</span></summary>';
+    d.innerHTML = '<summary><span>States</span><span class="chev">&rsaquo;</span></summary>';
     stateList = document.createElement('div');
     stateList.className = 'statelist';
     states.forEach(x => stateList.appendChild(mirror(x)));
@@ -3284,8 +3289,7 @@ function buildHifiRail(){
   if(stateList.children.length){
     const box = document.createElement('details');
     box.className = 'dev states';
-    box.innerHTML = '<summary><span>States</span><span class="cnt">' + stateList.children.length +
-                    '</span><span class="chev">&rsaquo;</span></summary>';
+    box.innerHTML = '<summary><span>States</span><span class="chev">&rsaquo;</span></summary>';
     box.appendChild(stateList);
     host.appendChild(box);
   }
