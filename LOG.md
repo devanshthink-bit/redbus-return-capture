@@ -9181,3 +9181,40 @@ steps rather than for its percentage.
 recolours the card to a flat grey and writes *Booking cancelled* across the connector instead of
 fading it. Fading is the cheaper gesture and it is not the same gesture; it is noted here rather
 than claimed as a match.
+
+---
+
+CHANGE · LEARNED  ·  2026-09-12  ·  molades-build  [· Source: user]
+
+**The Review icons were a circle inside a circle, and the cause was in the asset, not the layout.**
+
+Devansh: *"On the trip reviews page, the icons are not the same as in the real screenshots. They
+are coming with a gray background with a square in a circle."* He was describing five icons and
+one cause. Each art asset had been cut from a screenshot **with its own pale ground still attached**
+— a square PNG whose corners were white — and the markup then wrapped it in a second, tinted,
+fully-rounded chip. So every one of them drew a square inside a circle, and no amount of layout
+work would have fixed it.
+
+Measured off `IMG_4578` at 1206px wide, 3.092 px per point:
+
+- **The three Travel Insurance covers** are a **23pt** lavender circle with a **13pt** glyph inside.
+  Mine were a 50pt chip around a 36pt art — more than twice the size as well as double-ringed. The
+  luggage, hospital and seated-person glyphs were re-cut with a **disc mask** rather than a colour
+  threshold: the circle's antialiased rim is darker than any ground threshold, so a plain
+  knock-out kept the rim and the bounding box came back as the whole chip. Masking to
+  `r = d/2 − 4` first, then dropping the lavender, isolates the glyph.
+- **Free Cancellation** keeps its pale pink circle, with the shield inside it at 26×31pt — which is
+  what `IMG_5229` shows.
+- **Trip Guarantee** has **no chip at all** in the real app (`IMG_4577`): the shield sits bare at
+  the card's top right, 34×41pt. The fill came off that one entirely.
+
+Both shields use the same cut, because in the real app they are the same badge at two sizes.
+
+**LEARNED: an icon cut from a screenshot carries the screenshot's background unless you take it
+off.** `CONTEXT.md` §21 already records the two cutting techniques — single-ink alpha ramp for a
+flat ground, hard mask for a rayed one — and this is the third case: a glyph sitting on a *tinted
+circle* needs a **geometric** mask before any colour test, because the rim antialiases into the
+ground and defeats the threshold. Worth remembering as the general rule: when the art will be
+placed on a chip, cut the art without a chip.
+
+08 moved from 7.31% to 7.59%, no step — the icons are smaller and the card reflowed slightly.

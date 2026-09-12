@@ -1,13 +1,8 @@
 const imgGlyph = "assets/f987e112-3f21-4093-9c91-abca9b06aa32.svg";
-const imgArtCoverPerson = "assets/0c3c11cb-205a-4858-9139-f1e4ebb6de2e.png";
-const imgArtCoverHospital = "assets/237a7c28-e418-4102-b26a-4f2e8f0f43e6.png";
-const imgArtCoverLuggage = "assets/121b36ea-4581-411e-9267-453c287a219a.png";
 const imgLogoAcko = "assets/c87a29f5-ae81-49bc-9023-e19193aceb2b.png";
 const imgIconWalletCard = "assets/83fcb996-8fa7-4cae-ad6a-78bf06a84787.png";
 const imgIconBank = "assets/0fe17d5c-ab72-4cca-8410-fe46221f86b3.png";
-const imgArtShieldTripGuarantee = "assets/f88d22e4-40fd-4197-b646-54f08b3f20a4.png";
 const imgIconHourglass = "assets/e138f8f0-40ec-4703-bdc6-eb2b6e0e7076.svg";
-const imgArtShieldFreeCancellation = "assets/d1bd5d83-5f10-458d-b078-e6f009f0f4a6.png";
 const imgIconAddPassenger = "assets/7809ae76-4caf-42f0-936a-4441cbeecbbe.png";
 const imgLogoWhatsApp = "assets/a5095ba5-5b6f-40fd-9abf-ba4fd955c35b.png";
 const imgIconPin = "assets/14633a77-7518-49f8-a287-91e21d838a62.png";
@@ -16,6 +11,10 @@ const imgIconMail = "assets/07f33865-5252-4fb2-81d8-b27809d4f68a.png";
 const imgIconSeat = "assets/6e477112-565d-4b4d-8039-41a6059fc9f5.png";
 const imgArtPrimoOnNavy = "assets/fa5d30e0-7fdf-4efa-a4d8-a3f163de5175.png";
 const imgIconChevronLeft = "assets/c52a55a0-4bd0-4f7a-a9fa-205a96aa0d14.svg";
+const imgArtShieldFreeCancellation = "assets/311c7602-a5ed-4b8b-b6ed-c28529640dde.png";
+const imgArtCoverLuggage = "assets/c2460135-a700-4aee-b7a8-5c2b442d2d00.png";
+const imgArtCoverHospital = "assets/66f74197-06a7-48f5-8d45-010595c7b760.png";
+const imgArtCoverPerson = "assets/e057725b-56bb-443e-bf26-2c0841f17961.png";
 const imgStatusIcons = "assets/091fbdca-8e2e-4f59-80c8-bfdc341f332f.svg";
 const imgAvatar = "assets/88739341-fbd3-4bc2-bc34-65ecb2911285.svg";
 const imgRadio = "assets/f410a566-6990-4296-9328-11bace6bed32.svg";
@@ -47,30 +46,6 @@ function ButtonPrimary({ className, label = "Search buses", showIcon = true }: B
   );
 }
 
-function ArtCoverPerson({ className }: { className?: string }) {
-  return (
-    <div className={className || "overflow-clip relative size-[36px]"} data-node-id="715:4164" data-name="Art / Cover · Person">
-      <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgArtCoverPerson} />
-    </div>
-  );
-}
-
-function ArtCoverHospital({ className }: { className?: string }) {
-  return (
-    <div className={className || "overflow-clip relative size-[36px]"} data-node-id="715:4163" data-name="Art / Cover · Hospital">
-      <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgArtCoverHospital} />
-    </div>
-  );
-}
-
-function ArtCoverLuggage({ className }: { className?: string }) {
-  return (
-    <div className={className || "overflow-clip relative size-[36px]"} data-node-id="715:4162" data-name="Art / Cover · Luggage">
-      <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgArtCoverLuggage} />
-    </div>
-  );
-}
-
 function LogoAcko({ className }: { className?: string }) {
   return (
     <div className={className || "h-[24px] overflow-clip relative w-[80px]"} data-node-id="715:4161" data-name="Logo / ACKO">
@@ -95,26 +70,10 @@ function IconBank({ className }: { className?: string }) {
   );
 }
 
-function ArtShieldTripGuarantee({ className }: { className?: string }) {
-  return (
-    <div className={className || "overflow-clip relative size-[44px]"} data-node-id="715:4160" data-name="Art / Shield · Trip Guarantee">
-      <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgArtShieldTripGuarantee} />
-    </div>
-  );
-}
-
 function IconHourglass({ className }: { className?: string }) {
   return (
     <div className={className || "relative size-[20px]"} data-node-id="33:92" data-name="Icon / Hourglass">
       <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconHourglass} />
-    </div>
-  );
-}
-
-function ArtShieldFreeCancellation({ className }: { className?: string }) {
-  return (
-    <div className={className || "overflow-clip relative size-[44px]"} data-node-id="715:4159" data-name="Art / Shield · Free Cancellation">
-      <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgArtShieldFreeCancellation} />
     </div>
   );
 }
@@ -413,8 +372,10 @@ export default function Component08ReviewYourTrip() {
               </p>
             </div>
             <div className="flex-[1_0_0] h-px min-w-px relative" data-node-id="213:2094" data-name="spacer" />
-            <div className="bg-[#f7e6ea] content-stretch flex items-start p-[7px] relative rounded-[999px] shrink-0" data-node-id="213:2088" data-name="Icon">
-              <ArtShieldFreeCancellation className="relative shrink-0 size-[44px]" />
+            <div className="bg-[#f7e6ea] content-stretch flex items-start p-[6px] relative rounded-[999px] shrink-0" data-node-id="213:2088" data-name="Icon">
+              <div className="h-[31px] relative shrink-0 w-[26px]" data-node-id="715:4171" data-name="Art / Shield · Free Cancellation">
+                <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgArtShieldFreeCancellation} />
+              </div>
             </div>
           </div>
           <div className="h-[14px] relative shrink-0 w-px" data-node-id="213:2095" data-name="gap" />
@@ -540,8 +501,10 @@ export default function Component08ReviewYourTrip() {
               </p>
             </div>
             <div className="flex-[1_0_0] h-px min-w-px relative" data-node-id="214:2078" data-name="spacer" />
-            <div className="bg-[#f7e6ea] content-stretch flex items-start p-[7px] relative rounded-[999px] shrink-0" data-node-id="214:2072" data-name="Icon">
-              <ArtShieldTripGuarantee className="relative shrink-0 size-[44px]" />
+            <div className="content-stretch flex items-start relative rounded-[999px] shrink-0" data-node-id="214:2072" data-name="Icon">
+              <div className="h-[41px] relative shrink-0 w-[34px]" data-node-id="715:4172" data-name="Art / Shield · Trip Guarantee">
+                <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgArtShieldFreeCancellation} />
+              </div>
             </div>
           </div>
           <div className="h-[12px] relative shrink-0 w-px" data-node-id="214:2079" data-name="gap" />
@@ -632,8 +595,10 @@ export default function Component08ReviewYourTrip() {
           </p>
           <div className="h-[12px] relative shrink-0 w-px" data-node-id="214:2118" data-name="gap" />
           <div className="content-stretch flex gap-[12px] items-center py-[11px] relative shrink-0 w-full" data-node-id="214:2119" data-name="Cover">
-            <div className="bg-[#efeef6] content-stretch flex items-start p-[7px] relative rounded-[999px] shrink-0" data-node-id="214:2120" data-name="Icon">
-              <ArtCoverLuggage className="relative shrink-0 size-[36px]" />
+            <div className="bg-[#efeef6] content-stretch flex items-start p-[5px] relative rounded-[999px] shrink-0" data-node-id="214:2120" data-name="Icon">
+              <div className="relative shrink-0 size-[13px]" data-node-id="715:4176" data-name="Art / Cover · Luggage">
+                <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgArtCoverLuggage} />
+              </div>
             </div>
             <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Regular'] font-normal leading-[20px] min-w-px not-italic relative text-[14px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="214:2122">
               In the event of loss of luggage
@@ -644,8 +609,10 @@ export default function Component08ReviewYourTrip() {
           </div>
           <div className="bg-[#eaeaf0] h-px relative shrink-0 w-full" data-node-id="214:2125" data-name="Divider" />
           <div className="content-stretch flex gap-[12px] items-center py-[11px] relative shrink-0 w-full" data-node-id="214:2126" data-name="Cover">
-            <div className="bg-[#efeef6] content-stretch flex items-start p-[7px] relative rounded-[999px] shrink-0" data-node-id="214:2127" data-name="Icon">
-              <ArtCoverHospital className="relative shrink-0 size-[36px]" />
+            <div className="bg-[#efeef6] content-stretch flex items-start p-[5px] relative rounded-[999px] shrink-0" data-node-id="214:2127" data-name="Icon">
+              <div className="relative shrink-0 size-[13px]" data-node-id="715:4177" data-name="Art / Cover · Hospital">
+                <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgArtCoverHospital} />
+              </div>
             </div>
             <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Regular'] font-normal leading-[20px] min-w-px not-italic relative text-[14px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="214:2129">
               In the event of accidental hospitalisation
@@ -656,8 +623,10 @@ export default function Component08ReviewYourTrip() {
           </div>
           <div className="bg-[#eaeaf0] h-px relative shrink-0 w-full" data-node-id="214:2132" data-name="Divider" />
           <div className="content-stretch flex gap-[12px] items-center py-[11px] relative shrink-0 w-full" data-node-id="214:2133" data-name="Cover">
-            <div className="bg-[#efeef6] content-stretch flex items-start p-[7px] relative rounded-[999px] shrink-0" data-node-id="214:2134" data-name="Icon">
-              <ArtCoverPerson className="relative shrink-0 size-[36px]" />
+            <div className="bg-[#efeef6] content-stretch flex items-start p-[5px] relative rounded-[999px] shrink-0" data-node-id="214:2134" data-name="Icon">
+              <div className="relative shrink-0 size-[12px]" data-node-id="715:4178" data-name="Art / Cover · Person">
+                <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgArtCoverPerson} />
+              </div>
             </div>
             <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Regular'] font-normal leading-[20px] min-w-px not-italic relative text-[14px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="214:2136">
               In case of death/PTD/PPD
