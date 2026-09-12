@@ -10046,3 +10046,29 @@ mirrored v1–v3 rails.
 **LEARNED — the rail code reads `list.children` by index** (`sync()`'s `pair`, `litParent`), so a
 thumb element inside the list would have shifted every pairing by one. The highlight is the list's
 own `::before`, moved by CSS variables, so the list keeps exactly its buttons.
+
+CHANGE · 2026-09-13 · direct · Source: user
+**Skip now means no return, on every screen after it.** Devansh: *"why return is coming when i
+clicked on skip and didnt book return? check for all these bugs ... like a user"*. Only Review and
+Pay's title read `RETURN.skipped`. Walking the Skip path found the return still on: the booking-
+details sheet, Pay's booking card, the ticket (RETURN leg and tag, Change your return day, its
+how-to note, the return's boarding point, a hotel near Delhi on the day back), My Bookings (its
+only card was the bus to Delhi), Review and cancel and Refund details (a Wed 16 Sep return, U5,
+₹1,090 paid) and the cancelled ticket (₹763 refund). All now show the onward trip only. Refund
+uses the ticket's own "85% refund" line on ₹1,599 paid: ₹1,359.15 back, ₹239.85 deducted.
+Two journey bugs came out of the same walk:
+- Back from a skipped Review went to the return day list, a screen never seen on that path. It
+  now goes to the calendar Skip was tapped on.
+- Once skipped, a return picked later still stayed hidden. Holding a return bus clears Skip.
+Every write after payment is saved and undone on the next arrival, so Skip → Back → book the
+return puts each screen back as drawn (checked: Pay ₹2,919, ticket, My Bookings).
+
+**LEARNED — a flag has to be read by every screen that shows what it switches off.** Skip was
+wired where it was set and on the next screen, and nowhere after. The check that found the rest
+was a walk that reads each screen's visible text for the thing that should be gone.
+
+NOTE · 2026-09-13 · direct
+Found on the same walk, not fixed yet: with a return booked, Review and cancel / Refund details
+still show a different return (Wed 16 Sep, U5, ₹1,090) from the one booked (Mon 14 Sep, U2,
+₹1,320); the details sheet says the return seat is U4 where the ticket says U2; and without a
+chosen boarding point, Review says "Gate 4" where the sheet says "Metro Gate No.5".

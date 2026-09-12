@@ -1349,6 +1349,7 @@
         if (skip && sec.contains(skip)) {
           e.preventDefault(); e.stopPropagation();
           RETURN.skipped = true; RETURN.mode = mode; RETURN.pick = pick.slice();
+          RETURN.skipFrom = ORDER[screens.indexOf(sec)];
           go(ORDER.indexOf('08'));
           return;
         }
@@ -1688,6 +1689,9 @@
       // and the date logic lives here where label() is -- copying it there would be a second
       // source for the same fact. A bus whose arrival reads earlier than its departure lands the
       // next day, which is how every overnight service on this route runs.
+      // holding a return means it is booked after all, even after an earlier Skip -- Back from a
+      // skipped Review lands on the calendar, and a day picked from there is a yes
+      RETURN.skipped  = false;
       RETURN.fare     = bus[2];
       RETURN.depLabel = label(chosen) + ' \u00b7 ' + bus[0];
       RETURN.arrLabel = label(bus[1] < bus[0] ? chosen + 1 : chosen) + ' \u00b7 ' + bus[1];
@@ -3530,6 +3534,13 @@
         set(sheet, '704:4165', POINTS.outDrop.address);
       }
 
+      // Skip books the onward alone, so the return leg and its divider come out, and the ONWARD
+      // tag with them -- the same rule Review follows (skipReturn, below). The sheet read only
+      // RETURN.dayTag, which a day picked before tapping Skip still sets.
+      var off = !!RETURN.skipped;
+      ['704:4173', '704:4172', '704:4174', '704:4175', '704:4133'].forEach(function(id){
+        var el = q(sheet, id); if (el) el.hidden = off;
+      });
       if (RETURN.dayTag) {
         set(sheet, '704:4176', 'RETURN · ' + RETURN.dayTag.toUpperCase());
         set(sheet, '704:4184', RETURN.dep);
@@ -3628,6 +3639,14 @@
     function money(n){ return '\u20b9' + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
     function q(sec, id){ return sec.querySelector('[data-node-id="' + id + '"]'); }
 
+    // Back from a skipped Review goes to the calendar Skip was tapped on. prevOf(08) is the return
+    // day list, a screen the traveller never saw on this path.
+    screens[i08].addEventListener('click', function(e){
+      if (!RETURN.skipped || !e.target.closest || !e.target.closest('.hf-back')) return;
+      var to = ORDER.indexOf(RETURN.skipFrom || '05'); if (to < 0) return;
+      e.preventDefault(); e.stopPropagation(); go(to);
+    }, true);
+
     ON_ENTER['08'] = function(sec){
       var off = !!RETURN.skipped;
       DETOUR = null;                       // arriving here ends any change that was started here
@@ -3651,7 +3670,99 @@
       var ret = (!RETURN.skipped && RETURN.fare) ? RETURN.fare : (BOTH - ONE);
       var t = q(sec, 'I109:988;34:91');
       if (t) t.textContent = 'Pay ' + money(PAYFOR ? PAYFOR.amount : (RETURN.skipped ? ONE : ONE + ret));
+      // and the booking card under the title lists one leg, not two
+      ['109:1008', '109:1009'].forEach(function(id){
+        var el = q(sec, id); if (el) el.hidden = !!RETURN.skipped;
+      });
     };
+  })();
+
+  // 11 / 12 / 18 / 19 / 20 · Skip, after payment. Review and Pay dropped the return, then every
+  //      screen after the payment brought it back: the ticket drew a RETURN leg, "Change your
+  //      return day", the return's boarding point and a hotel near Delhi on the day back; My
+  //      Bookings' only card was the bus to Delhi; cancelling cancelled a return nobody bought.
+  //      Devansh: "why return is coming when i clicked on skip and didnt book return?"
+  //      Every write is remembered and undone on the next arrival, so going back and booking the
+  //      return after all puts each screen back exactly as it was.
+  (function skipAfter(){
+    var SAVED = [];
+    function q(sec, id){ return sec.querySelector('[data-node-id="' + id + '"]'); }
+    function hide(el){ if (!el) return; SAVED.push([el, 'hidden', el.hidden]); el.hidden = true; }
+    function put(el, txt){ if (!el) return; SAVED.push([el, 'text', el.textContent]); el.textContent = txt; }
+    function restore(){
+      for (var k = SAVED.length - 1; k >= 0; k--){
+        var r = SAVED[k];
+        if (r[1] === 'hidden') r[0].hidden = r[2]; else r[0].textContent = r[2];
+      }
+      SAVED = [];
+    }
+    function money(n){ return '₹' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+    var PAID = 1599, KEEP = 0.85;   // the onward fare; the ticket's own line: "85% refund if you cancel"
+    function board(){ return POINTS.outBoard ? POINTS.outBoard.name : 'ISBT Kashmiri Gate'; }
+    function drop(){ return POINTS.outDrop ? POINTS.outDrop.name : 'Nainital Bus Stand'; }
+
+    // the ticket and the cancelled ticket are one frame in two states, so they share one rule
+    var TICKET = {
+      '11': { tag:'737:4274', rtag:'737:4275', when:'686:4113', name:'686:4115', addr:['686:4117','686:4118'],
+              stay:'684:4052', dates:'684:4055', cards:'684:4057' },
+      '20': { tag:'785:4560', rtag:'785:4606', when:'785:4755', name:'785:4757', addr:['785:4759','785:4760'],
+              stay:'785:4698', dates:'785:4701', cards:'785:4703' }
+    };
+    function ticket(sec, T){
+      ['Return ticket', 'Change day', 'Changing your return day'].forEach(function(nm){
+        [].forEach.call(sec.querySelectorAll('[data-name="' + nm + '"]'), hide);
+      });
+      hide(q(sec, T.tag));                                  // one leg carries no ONWARD tag
+      hide(q(sec, T.rtag));                                 // and the RETURN tag sits outside its card
+      put(q(sec, T.when), '23:55 · Thu, 10 Sep');
+      put(q(sec, T.name), board());
+      if (POINTS.outBoard) { put(q(sec, T.addr[0]), POINTS.outBoard.address); hide(q(sec, T.addr[1])); }
+      else T.addr.forEach(function(id){ hide(q(sec, id)); });
+      // the stay is where the traveller ends up, which is now Nainital, the night they arrive
+      put(q(sec, T.stay), 'Book your stay near Nainital');
+      put(q(sec, T.dates), 'Fri, 11 Sep - Sat, 12 Sep');
+      hide(q(sec, T.cards));                                 // those are Delhi hotels
+      [].forEach.call(sec.querySelectorAll('p'), function(p){
+        if (/^Refund of ₹/.test(p.textContent.trim()))
+          put(p, 'Refund of ' + money(PAID * KEEP).replace(/\.\d\d$/, '') + ' is initiated');
+      });
+    }
+    function leg(sec, ids){
+      put(q(sec, ids[0]), 'Thu, 10 Sep · 23:55'); put(q(sec, ids[1]), 'Delhi');
+      put(q(sec, ids[2]), 'Fri, 11 Sep · 08:00'); put(q(sec, ids[3]), 'Nainital');
+    }
+    var FILL = {
+      '11': function(sec){ ticket(sec, TICKET['11']); },
+      '20': function(sec){ ticket(sec, TICKET['20']); },
+      '12': function(sec){
+        put(q(sec, 'I125:1341;121:1336'), '23:55');
+        put(q(sec, 'I125:1341;121:1337'), 'Thu, 10 Sep');
+        put(q(sec, 'I125:1341;121:1339'), 'Bus to Nainital');
+        put(q(sec, 'I125:1341;121:1341'), board() + ', Delhi → ' + drop());
+        put(q(sec, 'I125:1341;121:1351'), 'In 4 days');
+        hide(q(sec, 'I125:1341;132:1359')); hide(q(sec, 'I125:1341;132:1360'));
+      },
+      '18': function(sec){
+        leg(sec, ['784:4531', '784:4532', '784:4535', '784:4536']);
+        put(q(sec, '784:4545'), 'Seat: ' + OUT.seat);
+      },
+      '19': function(sec){
+        leg(sec, ['784:4550', '784:4551', '784:4554', '784:4555']);
+        put(q(sec, '784:4558'), OUT.seat + ' (Devansh Somvanshi)');
+        put(q(sec, '784:4565'), money(PAID * KEEP));
+        put(q(sec, '784:4568'), money(PAID));
+        put(q(sec, '784:4572'), money(PAID * (1 - KEEP)));
+        put(q(sec, '784:4576'), money(PAID * (1 - KEEP)));
+      }
+    };
+    Object.keys(FILL).forEach(function(id){
+      var was = ON_ENTER[id];
+      ON_ENTER[id] = function(sec){
+        if (was) was(sec);
+        restore();
+        if (RETURN.skipped) { var i = ORDER.indexOf(id); if (i >= 0) FILL[id](screens[i]); }
+      };
+    });
   })();
 
   // and the full sheet opens only by pulling the collapsed one up -- a tap will not do it
