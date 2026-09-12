@@ -9503,3 +9503,20 @@ files, so the filtering happens in the copy (`buildLegacyRail`); their hashes st
 versions share button ids, so one map (`LOFI_PARENT`) serves all of them. v4's minor buttons carry
 `class="minor"` and are hidden by CSS, so the state matrix, which clicks them by id, still reaches
 them: 234 cells, clean.
+
+---
+
+LEARNED  ·  2026-09-12  ·  direct request  ·  Source: user
+
+**Switching Lo-fi v1–v3 → Hi-fi showed both screen lists, one under the other.** Devansh: *"When I
+opened LoFi and then came back to HiFi, why are the screens getting repeated in the UI?"*
+
+The cause was the CSS cascade, not the JS. Choosing v1, v2 or v3 sets `legacy-on`, and switching to
+Hi-fi adds `hifi-on` without clearing it, because the version choice is meant to survive the round
+trip. The rule hiding the lo-fi copy under `hifi-on` and the rule showing it under `legacy-on` have
+the same specificity (`body.class #id`). The `legacy-on` rule comes later in the file, so it won.
+The bug predates today; the shorter lists just made it easy to see. The fix is one rule that names
+both classes, `body.hifi-on.legacy-on`, so Hi-fi wins outright.
+
+**The class of bug:** two body classes that can both be on at once, with the resolution left to
+source order. Where two modes can overlap, write the overlap rule explicitly.

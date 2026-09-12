@@ -526,6 +526,10 @@ body.hifi-on #hifirail{display:block}
 body.legacy-on #legacyrail{display:block}
 .legacynote{display:none;font-size:13px;line-height:1.55;color:var(--s-on-60)}
 body.legacy-on .legacynote{display:block}
+/* Switching to Lo-fi, picking v1-v3 and coming back to Hi-fi leaves legacy-on set, and the two
+   legacy-on rules above sit after the hi-fi rule that hides them, at the same specificity -- so
+   they won and the lo-fi list showed under the hi-fi one. Hi-fi wins outright. */
+body.hifi-on.legacy-on #legacyrail,body.hifi-on.legacy-on .legacynote{display:none}
 
 /* Session mode. Open the prototype with ?test on the end and the panel is gone, so a
    participant cannot see -- or tap -- anything but the phone. */
