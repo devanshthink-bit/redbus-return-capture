@@ -3,11 +3,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>redBus — Return</title>
-<!-- Inter, and only Inter: the page and the phone share one typeface (12 Sep). Inter is also what
+<!-- Inter everywhere except the page title, which is Manrope at Devansh's request (12 Sep). Inter is also what
      the prototype's type scale was measured against, so loading it makes the phone more correct. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@800&display=swap">
 <style>
 :root{
   /* DESIGN_LANGUAGE.md — do not add values */
@@ -46,7 +46,8 @@ html,body{height:100%}
   /* One typeface throughout, Inter -- the face the redBus app itself uses. Devansh, 12 Sep: "Keep
      the fonts consistent throughout." Manrope for the title and a system mono for the labels are
      retired; the two tokens stay so every rule that names them follows. */
-  --s-display:Inter,-apple-system,system-ui,sans-serif;
+  --s-display:Manrope,Inter,-apple-system,system-ui,sans-serif;   /* the title only: Devansh preferred
+     Manrope there ("Earlier typeface for this heading was better"), so it is the one exception */
   --s-mono:Inter,-apple-system,system-ui,sans-serif;
   --ds:1;                                  /* device scale, set by fitDevice() */
   --s-dw:430px; --s-dh:902px;              /* the mock frame at scale 1: 402x874 screen + 14 bezel */

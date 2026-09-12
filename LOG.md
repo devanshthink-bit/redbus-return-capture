@@ -9658,3 +9658,11 @@ numbers in the screens, consistent with how the screen layout is."*
   reads 01–06 with no gaps even though 13 buttons exist in its markup.
 - **Measured:** hi-fi 01–05; v4 and v2 01–06, where "default" is 01. The page still fits without
   scrolling with the list open. The state matrix is clean.
+
+---
+
+CHANGE  ·  2026-09-12  ·  direct request  ·  Source: user
+
+**The page title is Manrope again; everything else stays Inter.** Devansh: *"Earlier typeface for
+this heading was better."* This is the one exception to "keep the fonts consistent throughout".
+`--s-display` names Manrope again, and only the title uses it. Manrope 800 loads, and nothing else.
