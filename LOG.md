@@ -9023,3 +9023,62 @@ diffs then confirmed all four independently.
 carries, not the cat-on-stacked-suitcases from Devansh's screenshot — that image is not in
 `RedBusScreenshots` and cannot be cut from a chat attachment. Drop it in the folder and the swap
 is one asset.
+
+---
+
+CHANGE · LEARNED  ·  2026-09-12  ·  molades-build  [· Source: user]
+
+**Pass one of twelve more. Seven fixed, and a correction I owe the record.**
+
+**First, the correction.** Devansh said the filter and cancellation screens were in
+`RedBusScreenshots` and I said nothing new had arrived, because every file's birth time was 2 Sep or
+earlier. Both true, and my conclusion was wrong: the screens were *already there* and I had never
+looked at them. A contact sheet of all 106 files found, in one glance, the Filter Buses screen
+(`IMG_4556`, `IMG_4557`), the whole cancellation flow (`IMG_5214` → `IMG_5215` → `IMG_4991` →
+`IMG_5217`), the real Travel Insurance rows (`IMG_4577`), the no-buses-after-filter state
+(`IMG_5202`) — and `IMG_4589`, the empty My Bookings with **the exact cat-on-stacked-suitcases art I
+had told him was unavailable and had substituted**. **Lesson: "is it in the folder" is a question
+about the folder, not about the file dates. Build the contact sheet first.** 106 screenshots is
+five minutes of looking and it would have saved a wrong claim and a wrong asset.
+
+Done in this pass:
+
+- **The × on the ticket went to Pay.** `prevOf(11)` is 09, so closing a ticket landed on the payment
+  screen. It goes to My Bookings, which is where a ticket lives. Fifth instance of the linear-order
+  trap.
+- **Both sheets kept their titles in the scroll.** "Review booking details" and its × scrolled away
+  with the content. One `pinSheetHead()` now pins the first real row of any sheet — skipping gaps
+  and dividers — and bleeds it into the sheet's own 16px gutters so content does not show through
+  beside it.
+- **The bus-details sheet's tab strip** was a static row: no active state, no sideways scroll, and
+  it scrolled away. It is the same control the ticket has, so the ticket's scroll-spy was extracted
+  into `stickyTabs()` and both use it. Two things had to be fixed to make the sheet work at all:
+  the strip is drawn *inside* "Sheet header", and a sticky element stops sticking when its own
+  containing block leaves the screen — so it is moved out to sit directly under the header, where
+  it already appears. And the frame draws the active tab as a pill and the other three as bare
+  `<p>`, so `hf-tab-on` had nothing to paint on three of four; each bare label is now wrapped in
+  the drawn pill's own geometry. **A correct drawing of one state is the wrong structure for a
+  control that changes.**
+- **The passenger row is now a gate.** "0/1 selected" was decoration and Pay now worked regardless.
+  Ticking fills the box and moves the count; until then the primary blinks the row.
+  **The gate had to go on the section, not on the button** — `detour()` had already registered Pay
+  now's capture listener on the button itself, and capture runs ancestor-to-target, so a second
+  listener on the button ran after `go()` had been called and propagation stopped.
+- **The profile blinks its Bookings row** when there is no booking yet. Twenty identical rows and
+  nothing to say which one matters.
+- **The payment wait is three seconds, not five.**
+- **The empty My Bookings carries the real art**, cut from `IMG_4589` at 155×108pt.
+
+**LEARNED, and it invalidates a probe I have leaned on.** `scrollTop = n` does nothing to this
+build's `.scroll` containers — not in headless, and **not in a real browser either**, confirmed in
+the browser pane. `overflow-y:auto`, `scrollHeight` 4661 against `clientHeight` 844, and the
+assignment reads back 0 every time. A real wheel gesture scrolls it perfectly. So every "the spy
+did not move" reading I took was measuring my own probe. The scroll-spy on the ticket has worked
+all along. **A synthetic scroll is not a scroll here: drive the tab strip with `computer` in the
+browser pane, or do not claim to have tested it.** `CONTEXT.md` §10 already said `scrollIntoView`
+does not work headless; this is the same wall, one property along, and it is not headless-specific.
+
+**Still queued from this message:** the Filter Buses screen and its no-results state, the four-screen
+cancellation flow off the change-of-plans sheet, every free seat on the onward seat maps 03 and 03b
+(43 work on 08a, zero on those two — the module deliberately allows exactly one, which was right
+for the booking narrative and is wrong now), and the Trip Review icons.

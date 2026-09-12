@@ -1,18 +1,10 @@
-const imgArtNoPastBookings = "assets/05034b9c-ba45-473e-987a-3a54601bbc8b.png";
+const imgArtNoRecentTrips = "assets/bd6e9c09-9061-4e4d-b54e-d8bf2f9493d5.png";
 const imgStatusIcons = "assets/091fbdca-8e2e-4f59-80c8-bfdc341f332f.svg";
 const imgIcon = "assets/7cc7ced0-90f5-4428-bfd3-11c982b7c16c.svg";
 const imgIcon1 = "assets/39f455a3-4be3-47dc-8c7a-b1aab640f8b0.svg";
 const imgIcon2 = "assets/eeb9d54a-1fee-4829-a4ed-3871e724ccb5.svg";
 const imgIcon3 = "assets/3b75643d-00a8-47ad-912f-bfb71e93a48f.svg";
 const imgIcon4 = "assets/d2b1558b-e76e-4271-b6b0-e125757613df.svg";
-
-function ArtNoPastBookings({ className }: { className?: string }) {
-  return (
-    <div className={className || "h-[115px] relative w-[206.67px]"} data-node-id="124:1325" data-name="Art / No past bookings">
-      <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgArtNoPastBookings} />
-    </div>
-  );
-}
 
 export default function Component12AMyBookingsEmpty() {
   return (
@@ -32,7 +24,9 @@ export default function Component12AMyBookingsEmpty() {
           My Bookings
         </p>
         <div className="content-stretch flex flex-[1_0_0] flex-col items-center justify-center min-h-px overflow-clip relative w-full" data-node-id="776:4282" data-name="No recent trips">
-          <ArtNoPastBookings className="h-[115px] relative shrink-0 w-[207px]" />
+          <div className="h-[108px] relative shrink-0 w-[155px]" data-node-id="782:4387" data-name="Art / No recent trips">
+            <img alt="" className="absolute inset-0 max-w-none object-contain pointer-events-none size-full" src={imgArtNoRecentTrips} />
+          </div>
           <div className="h-[16px] relative shrink-0 w-px" data-node-id="776:4284" data-name="gap" />
           <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[24px] not-italic relative shrink-0 text-[#1d1d1d] text-[17px] text-center whitespace-nowrap" data-node-id="776:4285">
             No recent trips

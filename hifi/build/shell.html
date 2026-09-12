@@ -183,6 +183,12 @@
   .hf-sheet{position:absolute;left:0;right:0;bottom:0;max-height:74%;overflow-y:auto;
     border-radius:20px 20px 0 0;background:#fff;-webkit-overflow-scrolling:touch}
   .hf-sheet::-webkit-scrollbar{width:0;height:0}
+  /* A sheet's title and its × belong to the sheet, not to the sheet's content: they have to stay
+     put while the content moves under them, the way the ticket's header does. The head bleeds into
+     the sheet's own 16px gutters, or the content shows through beside it as it scrolls past. */
+  .hf-sheet-scroll{padding-top:0!important}
+  .hf-sheet-head{position:sticky!important;top:0;z-index:3;background:#fff;
+    margin:0 -16px!important;padding:20px 16px 12px!important;width:auto!important}
   /* A ticket that can no longer be acted on says so in a band right under the header, in white on
      the accent red -- measured off the real app's cancelled ticket (IMG_5217) at #c54646 and 50pt.
      The same band carries "date changed", because it is the same fact: this ticket is now fixed. */
@@ -223,6 +229,10 @@
   /* A radio dot does not travel -- it is either set or not. It fades in on the spot. */
   @keyframes hf-dot{from{opacity:0;transform:scale(.6)} to{opacity:1;transform:none}}
   .hf-pay-on{background:#fff!important;border:6px solid #c54646!important}
+  /* a ticked checkbox: the frame draws the empty box, so the tick is drawn here */
+  .hf-check-on{position:relative;background:#c54646!important;border-color:#c54646!important}
+  .hf-check-on::after{content:'';position:absolute;left:50%;top:48%;width:6px;height:11px;
+    border:solid #fff;border-width:0 2px 2px 0;transform:translate(-50%,-60%) rotate(45deg)}
   .hf-paygap{height:12px;width:100%;flex:0 0 auto}
   .hf-paybtn{width:100%!important;height:48px!important;flex:0 0 auto}
   .hf-radio-on::after{content:'';position:absolute;inset:5px;border-radius:50%;
@@ -673,6 +683,24 @@
       if (day10) blinkAt(day10);
     }, true);
   })();
+
+  // Devansh: "in view details sheet in trip review screen -> review booking details and cross icon
+  // shud stay fixed content below it shud scroll." Both sheets in this build are one scrolling box,
+  // so the title scrolled away with everything else. The first row of a sheet is its header: pin it
+  // to the top of the scroller and let the rest move under it.
+  function pinSheetHead(sheet){
+    if (!sheet) return null;
+    var head = sheet.firstElementChild;
+    // the row has to actually be a title row -- a gap or a divider is not a header
+    while (head && (!head.getAttribute ||
+           /^gap$|^Divider$/.test(head.getAttribute('data-name') || ''))) {
+      head = head.nextElementSibling;
+    }
+    if (!head) return null;
+    sheet.classList.add('hf-sheet-scroll');
+    head.classList.add('hf-sheet-head');
+    return head;
+  }
 
   // 6 · screens where exactly one thing may be tapped. Everything else blinks it instead, which is
   //     what a Figma prototype does when you tap a region with no connection on it. Back is left
@@ -1658,6 +1686,45 @@
       else console.warn('08: no primary');
     }
 
+    // 08 · the passenger has to be chosen before you can pay. Devansh: "in passenger details
+    //      proceed only when passesnger name box is selected." The frame draws "0/1 selected" and
+    //      an empty box, and Pay now worked anyway -- the count was decoration. Ticking the row
+    //      fills the box, moves the count to 1/1, and only then does the primary go anywhere;
+    //      before that it points at the row, the way every other gated control here does.
+    (function passengerGate(){
+      var i = ORDER.indexOf('08'); if (i < 0) return;
+      var sec = screens[i];
+      var row   = sec.querySelector('[data-node-id="213:2076"]');
+      var box   = sec.querySelector('[data-node-id="213:2082"]');
+      var count = sec.querySelector('[data-node-id="213:2069"]');
+      var prim  = sec.querySelector('[data-name="Button / Primary"]');
+      if (!row || !box || !count) { console.warn('08: no passenger row to gate'); return; }
+      var picked = false;
+      function paint(){
+        count.textContent = (picked ? '1/1' : '0/1') + ' selected';
+        box.classList.toggle('hf-check-on', picked);
+      }
+      row.classList.add('hf-hot');
+      row.addEventListener('click', function(e){
+        e.preventDefault(); e.stopPropagation();
+        picked = !picked; paint();
+      }, true);
+      paint();
+      window.__passengerPicked = function(){ return picked; };
+      // The gate has to sit on the SCREEN, not on the button. Capture runs ancestor-to-target, and
+      // detour() had already registered Pay now's own capture listener on the button itself -- so a
+      // listener added to the button here ran second, after go() had already been called and
+      // propagation stopped. On the section it runs first, which is the whole point of a gate.
+      sec.addEventListener('click', function(e){
+        if (picked) return;
+        if (!e.target.closest) return;
+        if (!e.target.closest('[data-name="Button / Primary"]')) return;
+        e.preventDefault(); e.stopPropagation();
+        blinkAt(row);
+        if (row.scrollIntoView) row.scrollIntoView({ block: 'center' });
+      }, true);
+    })();
+
     // and Continue on the return seat map finishes the change rather than walking on to points
     var i08a = ORDER.indexOf('08a');
     if (i08a >= 0) {
@@ -1854,7 +1921,7 @@
     //       counts it down a second at a time; this sits for five of those seconds and then the
     //       payment goes through. The ring measures the window, so over five seconds it creeps --
     //       which is what the real one does. The digits are the thing that moves.
-    var WINDOW = 8 * 60, START = 7 * 60 + 10, WAIT = 5, timer = null;
+    var WINDOW = 8 * 60, START = 7 * 60 + 10, WAIT = 3, timer = null;
     function mmss(t){
       var m = Math.floor(t / 60), r = t % 60;
       return (m < 10 ? '0' + m : m) + ':' + (r < 10 ? '0' + r : r);
@@ -1897,6 +1964,78 @@
     window.__stopWait = stop;
   })();
 
+  // A pinned, horizontally-scrolling tab strip with a scroll-spy, used by the ticket and by the
+  // bus-details sheet. Devansh, on the sheet: "on pulling bus details sheet horizontal tab bar shud
+  // move horizonatally acc to active content in it and it shud stay fixed at the top just like
+  // ticket details page." It is the same control on both, so it is one implementation.
+  //
+  //   scroller  the element that actually scrolls
+  //   root      the scrolled content
+  //   pinAbove  nodes to lift into the sticky block, in order, the strip last
+  //   tabs      the strip
+  //   items     the tabs, in order
+  //   targets   what each tab is looking at, same length as items
+  function stickyTabs(o){
+    var scroller = o.scroller, root = o.root, tabs = o.tabs;
+    if (!scroller || !root || !tabs || !o.items.length) return null;
+
+    // one sticky block, not several: siblings each pinned to top:0 would stack on each other
+    var pin = document.createElement('div');
+    pin.className = 'hf-sticky';
+    root.insertBefore(pin, o.pinAbove[0] || tabs);
+    o.pinAbove.forEach(function(n){ if (n) pin.appendChild(n); });
+    pin.appendChild(tabs);
+    tabs.classList.add('hf-tabscroll');
+
+    // offsetTop up the offsetParent chain, not a rect: the phone is scaled, so a rect is in scaled
+    // pixels while scrollTop is in layout pixels -- CONTEXT §10's oldest trap in this file.
+    function absTop(el){ var y = 0; for (var n = el; n; n = n.offsetParent) y += n.offsetTop; return y; }
+    // measured on every look, never cached: at boot the screen is display:none and every offset
+    // reads 0, so a base captured here would be wrong the moment it is shown.
+    function topOf(el){ return absTop(el) - absTop(root); }
+
+    function paint(active){
+      o.items.forEach(function(t, i){
+        t.classList.remove('hf-tab-on', 'hf-tab-off');
+        t.classList.add(i === active ? 'hf-tab-on' : 'hf-tab-off');
+      });
+      var on = o.items[active];
+      if (!on) return;
+      // keep the live tab on screen, and let the strip animate to it
+      var l = on.offsetLeft, r = l + on.offsetWidth;
+      if (l < tabs.scrollLeft + 8) tabs.scrollLeft = Math.max(0, l - 8);
+      else if (r > tabs.scrollLeft + tabs.clientWidth - 8)
+        tabs.scrollLeft = r - tabs.clientWidth + 8;
+    }
+
+    var current = -1;
+    function spy(){
+      var line = scroller.scrollTop + pin.offsetHeight + 24;
+      var active = 0;
+      for (var i = 0; i < o.targets.length; i++) {
+        var t = o.targets[i];
+        if (!t) continue;
+        if (topOf(t) <= line) active = i;
+      }
+      if (active !== current) { current = active; paint(active); }
+    }
+    scroller.addEventListener('scroll', spy, {passive: true});
+
+    o.items.forEach(function(t, i){
+      t.classList.add('hf-hot');
+      t.addEventListener('click', function(e){
+        e.preventDefault(); e.stopPropagation();
+        var to = o.targets[i];
+        if (!to) return;
+        scroller.scrollTo({ top: Math.max(0, topOf(to) - pin.offsetHeight - 12),
+                            behavior: 'smooth' });
+      }, true);
+    });
+
+    paint(0);
+    return { reset: function(){ current = -1; spy(); }, paint: paint };
+  }
+
   // 11 · the ticket. Its header, the Seat Guarantee band and the tab strip hold the top of the
   //      screen; everything under them scrolls. The strip is a real tab bar: it says which section
   //      you are looking at, it scrolls sideways to keep that tab on screen, and tapping one takes
@@ -1912,78 +2051,38 @@
     var tabs = root && root.querySelector('[data-name="Tabs"]');
     if (!scroller || !root || !header || !tabs) { console.warn('11: nothing to pin'); return; }
 
-    // one sticky block, not three: three siblings each pinned to top:0 would stack on each other
-    var pin = document.createElement('div');
-    pin.className = 'hf-sticky';
-    root.insertBefore(pin, header);
-    pin.appendChild(header);
-    if (band) pin.appendChild(band);
-    pin.appendChild(tabs);
-    tabs.classList.add('hf-tabscroll');
-
     // what each tab is looking at. The first covers everything above Live tracking, which is the
     // ticket itself; the rest are the sections by the names the frame gives them.
     var NAMED = ['', 'Live tracking', 'Hotels', 'Safety Tips'];
     var items = [].slice.call(tabs.querySelectorAll('[data-name="Tab"]'));
     if (!items.length) items = [].slice.call(tabs.children[0] ? tabs.children : []);
-    function targetOf(i){
+    var targets = items.map(function(_, i){
       if (i === 0) return root.querySelector('[data-name="tripReward banner"]') || root.children[1];
       var all = [].slice.call(root.querySelectorAll('[data-name="' + NAMED[i] + '"]'));
       return all[all.length - 1] || null;
-    }
-    var targets = items.map(function(_, i){ return targetOf(i); });
-    // offsetTop up the offsetParent chain, not a rect: the phone is scaled, so a rect is in scaled
-    // pixels while scrollTop is in layout pixels -- CONTEXT §10's oldest trap in this file.
-    function absTop(el){ var y = 0; for (var n = el; n; n = n.offsetParent) y += n.offsetTop; return y; }
-    // measured on every look, never cached: at boot this screen is display:none and every
-    // offset reads 0, so a base captured here would be 1116pt wrong the moment it is shown.
-    function topOf(el){ return absTop(el) - absTop(root); }
-
-    function paint(active){
-      items.forEach(function(t, i){
-        t.classList.remove('hf-tab-on', 'hf-tab-off');
-        t.classList.add(i === active ? 'hf-tab-on' : 'hf-tab-off');
-      });
-      var on = items[active];
-      if (!on) return;
-      // keep the live tab on screen, and let the strip animate to it
-      var l = on.offsetLeft, r = l + on.offsetWidth;
-      if (l < tabs.scrollLeft + 8) tabs.scrollLeft = Math.max(0, l - 8);
-      else if (r > tabs.scrollLeft + tabs.clientWidth - 8)
-        tabs.scrollLeft = r - tabs.clientWidth + 8;
-    }
-
-    var current = -1;
-    function spy(){
-      var line = scroller.scrollTop + pin.offsetHeight + 24;
-      var active = 0;
-      for (var i = 0; i < targets.length; i++) {
-        var t = targets[i];
-        if (!t) continue;
-        if (topOf(t) <= line) active = i;
-      }
-      if (active !== current) { current = active; paint(active); }
-    }
-    scroller.addEventListener('scroll', spy, {passive: true});
-
-    items.forEach(function(t, i){
-      t.classList.add('hf-hot');
-      t.addEventListener('click', function(e){
-        e.preventDefault(); e.stopPropagation();
-        var to = targets[i];
-        if (!to) return;
-        scroller.scrollTo({ top: Math.max(0, topOf(to) - pin.offsetHeight - 12),
-                            behavior: 'smooth' });
-      }, true);
     });
 
-    ON_ENTER['11'] = function(){ current = -1; spy(); };
+    var strip = stickyTabs({ scroller: scroller, root: root, tabs: tabs,
+                             pinAbove: [header, band], items: items, targets: targets });
+    if (!strip) { console.warn('11: tab strip did not build'); return; }
+    ON_ENTER['11'] = function(){ strip.reset(); };
 
     // Change your return day is the door into the change flow. It used to open 13 directly; the
     // real app puts a sheet in between -- "Change of plans?", with the free date change and the
     // cancel sitting side by side so the traveller sees what cancelling would actually cost before
     // choosing to move instead. Devansh: "when user click on change your return date then this
     // bottom sheet opens ... in which user can select an option and proceed to change day screen."
+    // The × closes the ticket, and closing a ticket lands on the list of tickets. It was walking to
+    // Pay, because prevOf(11) is 09 -- the screen you came through, not the screen you would expect
+    // to be left on. Devansh: "on clicking cross on ticket details page after date is moved why m i
+    // redirected to payment screen?? it shud come to my bookings page." True before the move too.
+    var i12c = ORDER.indexOf('12');
+    var closeX = sec.querySelector('[data-name="Button / Close"]');
+    if (i12c >= 0 && closeX) closeX.addEventListener('click', function(e){
+      e.preventDefault(); e.stopPropagation(); go(i12c);
+    }, true);
+    else if (!closeX) console.warn('11: no close button');
+
     var changeDay = sec.querySelector('[data-name="Change day"]');
     if (changeDay) changeDay.addEventListener('click', function(e){
       e.preventDefault(); e.stopPropagation();
@@ -1994,7 +2093,6 @@
       else { var i13 = ORDER.indexOf('13'); if (i13 >= 0) go(i13); }
     }, true);
     else console.warn('11: no Change day row');
-    paint(0);
   })();
 
   // 11a · "Change of plans?" -- the sheet between the ticket and the calendar. Same construction as
@@ -2064,6 +2162,8 @@
       if (x) { x.classList.add('hf-hot');
                x.addEventListener('click', function(e){
                  e.preventDefault(); e.stopPropagation(); close(); }, true); }
+
+      pinSheetHead(sheet);
 
       [].forEach.call(sheet.querySelectorAll('[data-name^="Option / "]'), function(c){
         c.classList.add('hf-hot');
@@ -2156,6 +2256,65 @@
       if (chev) chev.style.visibility = 'hidden';
     };
     window.__ticketMoved = function(){ return MOVED; };
+  })();
+
+  // 03a · the bus-details sheet, pulled full. It carries the same control the ticket does -- four
+  //       tabs over four sections -- and it was a static row: it did not say which section you were
+  //       in, it did not scroll sideways, and it scrolled away with the content.
+  //
+  //       "Booking policies" is the one tab whose section is not named after it. The frame calls
+  //       that block "Cancellation and refund policy", which is what the tab is actually pointing
+  //       at, so the map is by section name and not by tab label.
+  (function busDetailTabs(){
+    var i = ORDER.indexOf('03a'); if (i < 0) return;
+    var sec = screens[i];
+    var scroller = sec.querySelector('.scroll');
+    var root = sec.querySelector('.scroll > div');
+    var tabs = root && root.querySelector('[data-name="Tabs"]');
+    if (!scroller || !root || !tabs) { console.warn('03a: nothing to pin'); return; }
+
+    var SECTIONS = ['Highlights', 'Cancellation and refund policy', 'Bus route', 'Boarding points'];
+
+    // The frame draws the active tab as a pill and the other three as bare <p>. That is the right
+    // drawing of one fixed state and the wrong structure for a control that changes: hf-tab-on
+    // styles a wrapper and its <p>, so on a bare <p> there was nothing to paint. Each one gets the
+    // pill's own geometry -- the same padding and radius, taken off the drawn tab -- so all four
+    // are the same shape and only the fill moves.
+    var pill = tabs.querySelector('[data-name^="Tab · "]');
+    var items = [].slice.call(tabs.children)
+      .filter(function(n){ return !/^Spacer$|^gap$/.test(n.getAttribute('data-name') || ''); })
+      .map(function(n){
+        if (n.tagName !== 'P') return n;
+        var wrap = document.createElement('div');
+        wrap.setAttribute('data-name', 'Tab');
+        wrap.className = pill ? pill.className.replace(/bg-\[[^\]]+\]\s*/, '') : '';
+        n.parentNode.insertBefore(wrap, n);
+        wrap.appendChild(n);
+        return wrap;
+      });
+    var targets = SECTIONS.map(function(name){
+      var all = [].slice.call(root.querySelectorAll('[data-name="' + name + '"]'));
+      return all[all.length - 1] || null;
+    });
+    var missing = SECTIONS.filter(function(n, k){ return !targets[k]; });
+    if (missing.length) console.warn('03a: no section for ' + missing.join(', '));
+    if (items.length !== SECTIONS.length)
+      console.warn('03a: ' + items.length + ' tabs for ' + SECTIONS.length + ' sections');
+
+    // The strip is drawn inside "Sheet header", alongside the operator block and the photos. A
+    // sticky element only sticks while its own containing block is on screen, so left in there it
+    // would unstick the moment the photos scrolled past. It has to be a child of the scrolled
+    // content itself -- so it moves out of the sheet header and sits directly after it, which is
+    // where it already appears on screen. The operator block and the photos scroll away above it,
+    // which is what the real sheet does.
+    var sheetHead = tabs.parentNode;
+    if (sheetHead && sheetHead !== root && sheetHead.parentNode === root) {
+      root.insertBefore(tabs, sheetHead.nextSibling);
+    }
+    var strip = stickyTabs({ scroller: scroller, root: root, tabs: tabs,
+                             pinAbove: [], items: items, targets: targets });
+    if (!strip) { console.warn('03a: tab strip did not build'); return; }
+    ON_ENTER['03a'] = function(){ strip.reset(); };
   })();
 
   // 01 / 12 / 17 · The home tab bar, and the profile behind it.
@@ -2255,8 +2414,17 @@
     if (row){
       row.classList.add('hf-hot', 'hf-fwd');
       row.addEventListener('click', function(e){
-        e.preventDefault(); e.stopPropagation(); go(i12);
+        e.preventDefault(); e.stopPropagation();
+        go(whereFor('My Bookings'));      // the empty list before a ticket, the real one after
       });
+      // Devansh: "When no booking is made and the user is on the profile, then blink the booking
+      // section so that he knows where he needs to click." Twenty rows and nothing to tell them
+      // apart; before there is a ticket, the one row worth tapping points at itself on arrival.
+      ON_ENTER['17'] = function(){
+        if (BOOKED) return;
+        blinkAt(row);
+        if (row.scrollIntoView) row.scrollIntoView({ block: 'center' });
+      };
     } else console.warn('17: no Bookings row');
   })();
 
@@ -2626,6 +2794,7 @@
       scrim.addEventListener('click', function(e){ e.stopPropagation(); close(); }, true);
       var sheet = TPL.cloneNode(true);
       sheet.className = 'hf-sheet hf-slideup ' + sheet.className;
+      pinSheetHead(sheet);
       fill(sheet);
       var x = sheet.querySelector('[data-name="Button / Close"]');
       if (x) { x.classList.add('hf-hot');
