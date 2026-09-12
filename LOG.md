@@ -9082,3 +9082,48 @@ does not work headless; this is the same wall, one property along, and it is not
 cancellation flow off the change-of-plans sheet, every free seat on the onward seat maps 03 and 03b
 (43 work on 08a, zero on those two — the module deliberately allows exactly one, which was right
 for the booking narrative and is wrong now), and the Trip Review icons.
+
+---
+
+CHANGE · LEARNED  ·  2026-09-12  ·  molades-build  [· Source: user]
+
+**Every seat on the onward map is a seat now, and the onward seat stopped being a literal.**
+
+Devansh: *"in the changed seats screen at different places, I am not able to click any seat, only a
+few seats are clickable."* Measured before touching anything: **08a had 43 of 48 seats live, and 03
+and 03b had zero.** The five dead ones on 08a are Booked and Women-only, which is correct. The
+onward maps took exactly one tap, on one cell — `onlyOne('03', '[data-node-id="530:3981"]', …)` —
+and the other forty-seven shapes looked available and answered nothing.
+
+**Why it had never been fixed is the interesting part.** The onward seat was the string `U4` in
+fourteen places across ten screens, plus a module-local `ONWARD_SEAT = 'U4'` inside the 06 module.
+Making the map tappable without that plumbing would have been *worse* than leaving it dead: the map
+would move and every screen after it would keep saying U4. **This is the third time CONTEXT §10's
+rule has bitten in this project — a constant that becomes user-editable stops being a constant.**
+So: one accessor, `OUT.seat`, and the screens that state the onward seat read from it. The 06
+module's constant was already generating its own copy from a single name, which did half the work
+in advance.
+
+- **The seat-map reader is now shared.** `readSeatMap()` names seats positionally — U1..Un upper,
+  L1..Ln lower sleepers, S1..Sn seaters — and hands back the drawn Available and Selected markup so
+  the two looks come out of the frame rather than being restyled here. 03, 03b and 08a all use it.
+- **Picking on 03 opens the chosen state; picking on 03b moves the choice.** Same gesture, two
+  meanings, because 03 → 03b *is* the step.
+- **Seven sites follow the pick:** the ticket's onward badge, the booking-details sheet's onward
+  leg, the receipt's "your onward trip is the same" line, and the four example lines on 06, 06a and
+  06b. Verified: choosing a lower-deck seater turns all of them into S18, including *"Seat S18 —
+  same as your onward"*.
+
+**One deliberate compromise, worth recording.** 06, 06a and 06b keep the example the frame draws
+until a day has been answered — that is on purpose, and it means a redraw cannot reach them, because
+there is no day to build from. Those four lines are therefore swapped **by token**, tracking the
+name last written rather than assuming it is still U4, so repeated picks stay correct. Redrawing
+from the accessor would be better; it needs the fold to be buildable without an answered day, which
+is a bigger change than this one.
+
+**LEARNED, about my own probe.** The seat probe reported *"clicks that updated the header line:
+0/42"* for 03 and 03b and it looked like a total failure. It was not: the header line it reads,
+`423:3129`, exists only on 08a. The number that mattered was in the same output — `hot` went from 0
+to 42 and 43. **A probe that asserts on one screen's node and is then pointed at two others will
+report a clean pass as a failure.** Read what the assertion is actually attached to before
+believing the verdict, in either direction.

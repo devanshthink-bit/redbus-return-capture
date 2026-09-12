@@ -474,6 +474,13 @@
   // What the traveller answered on the calendar. The picker owns it; screens after the calendar
   // read it, so 06 can show the window they actually chose rather than the one it was drawn with.
   var RETURN = { mode: 'unsure', pick: [] };
+  // The onward seat. It was a literal in fourteen places and a module-local constant in a
+  // fifteenth, which was fine while it could not be chosen -- and the onward seat maps took no
+  // taps at all. Devansh: "in the changed seats screen at different places, I am not able to click
+  // any seat, only a few seats are clickable." CONTEXT §10's rule, for the second time in this
+  // build: a constant that becomes user-editable stops being a constant, so it gets one accessor
+  // and every screen that states it reads from here.
+  var OUT = { seat: 'U4', deck: 'Upper deck', kind: 'sleeper', byUser: false };
   // Which screen a change was started from. Review's Change bus / seat / points open screens
   // that are also steps of the booking flow, so without this, finishing one walked you
   // onwards instead of back: Change seat ended on the points screen and Change points ended
@@ -723,8 +730,8 @@
   //      23:55, the one whose seat map screen 03 draws.
   onlyOne('02', '[data-node-id="183:1503"]', function(i){ go(nextOf(i)); });
 
-  // 03 · the seat map you land on. One seat is bookable; picking it is what opens the price sheet.
-  onlyOne('03', '[data-node-id="530:3981"]', function(){ go(ORDER.indexOf('03b')); });
+  // 03 / 03b · the onward seat map. See onwardSeat() below: one seat used to be bookable and the
+  //      other forty-seven were scenery, which is what Devansh ran into.
 
   // 03a · the full bus-details sheet closes back to the seat map, it does not go forward
   onlyOne('03a', '[data-name="Collapse"]', function(){ go(ORDER.indexOf('03')); });
@@ -1119,7 +1126,7 @@
         i06b = ORDER.indexOf('06b'), i07 = ORDER.indexOf('07');
     if (i06 < 0 || i06a < 0 || i06b < 0) return;
     var B = {"ops":["Laxmi Holidays Pvt Ltd","RS Yadav Smart Bus","International Tourist Centre"],"veh":["Bharat Benz A/C Seater /Sleeper (2+1)","A/C Seater / Sleeper (2+1)","VE A/C Sleeper (2+1)"],"days":{"11":[1260,0,"U3",0,[["23:55","08:00",1260,1,60,28,3,"8h 5m",4.7,178,0]]],"12":[1140,0,"U3",1,[["21:15","05:40",1140,1,0,9,5,"8h 25m",4.5,315,1],["23:40","07:45",1180,1,60,6,5,"8h 5m",4.5,315,1]]],"13":[960,1,null,1,[["20:30","04:35",1070,1,60,11,7,"8h 5m",4.7,178,0],["22:15","06:20",1120,1,0,12,4,"8h 5m",4.7,178,0],["23:10","07:20",960,0,60,20,7,"8h 10m",4.2,420,2]]],"14":[800,0,"U4",3,[["19:45","03:50",800,0,0,9,9,"8h 5m",4.2,420,2],["21:15","05:40",880,1,0,7,6,"8h 25m",4.5,315,1],["23:10","07:20",830,0,60,10,3,"8h 10m",4.2,420,2],["23:55","08:00",1030,1,60,26,9,"8h 5m",4.7,178,0]]],"15":[860,0,"U4",3,[["20:30","04:35",970,1,60,37,8,"8h 5m",4.7,178,0],["23:10","07:20",860,0,60,23,8,"8h 10m",4.2,420,2],["23:40","07:45",950,1,60,13,2,"8h 5m",4.5,315,1],["23:55","08:00",1060,1,60,39,5,"8h 5m",4.7,178,0]]],"16":[860,0,"U4",6,[["19:45","03:50",860,0,0,17,10,"8h 5m",4.2,420,2],["20:30","04:35",1000,1,60,7,4,"8h 5m",4.7,178,0],["21:15","05:40",940,1,0,5,7,"8h 25m",4.5,315,1],["22:15","06:20",1050,1,0,14,10,"8h 5m",4.7,178,0],["23:10","07:20",890,0,60,13,4,"8h 10m",4.2,420,2],["23:40","07:45",980,1,60,26,7,"8h 5m",4.5,315,1],["23:55","08:00",1090,1,60,11,10,"8h 5m",4.7,178,0]]],"17":[970,0,"U4",4,[["20:30","04:35",1030,1,60,20,9,"8h 5m",4.7,178,0],["21:15","05:40",970,1,0,18,3,"8h 25m",4.5,315,1],["22:15","06:20",1080,1,0,27,6,"8h 5m",4.7,178,0],["23:40","07:45",1010,1,60,7,3,"8h 5m",4.5,315,1],["23:55","08:00",1120,1,60,24,6,"8h 5m",4.7,178,0]]],"18":[1050,0,"U4",2,[["21:15","05:40",1050,1,0,31,8,"8h 25m",4.5,315,1],["22:15","06:20",1160,1,0,40,2,"8h 5m",4.7,178,0],["23:40","07:45",1090,1,60,20,8,"8h 5m",4.5,315,1]]],"19":[1190,0,"U4",1,[["22:15","06:20",1190,1,0,16,7,"8h 5m",4.7,178,0],["23:55","08:00",1230,1,60,9,7,"8h 5m",4.7,178,0]]],"20":[870,0,"U4",3,[["19:45","03:50",870,0,0,15,3,"8h 5m",4.2,420,2],["20:30","04:35",1010,1,60,16,6,"8h 5m",4.7,178,0],["22:15","06:20",1060,1,0,29,3,"8h 5m",4.7,178,0],["23:55","08:00",1100,1,60,22,3,"8h 5m",4.7,178,0]]],"21":[740,0,"U3",1,[["19:45","03:50",740,0,0,10,8,"8h 5m",4.2,420,2],["23:10","07:20",770,0,60,9,2,"8h 10m",4.2,420,2]]],"22":[1000,0,"U3",0,[["23:55","08:00",1000,1,60,7,4,"8h 5m",4.7,178,0]]],"23":[880,1,null,1,[["21:15","05:40",880,1,0,12,6,"8h 25m",4.5,315,1],["23:40","07:45",920,1,60,21,6,"8h 5m",4.5,315,1]]],"24":[860,0,"U3",1,[["20:30","04:35",970,1,60,25,8,"8h 5m",4.7,178,0],["22:15","06:20",1020,1,0,7,5,"8h 5m",4.7,178,0],["23:10","07:20",860,0,60,25,8,"8h 10m",4.2,420,2]]],"25":[1180,0,"U3",3,[["19:45","03:50",1180,0,0,8,10,"8h 5m",4.2,420,2],["21:15","05:40",1260,1,0,10,7,"8h 25m",4.5,315,1],["23:10","07:20",1210,0,60,15,4,"8h 10m",4.2,420,2],["23:55","08:00",1410,1,60,5,10,"8h 5m",4.7,178,0]]],"26":[1240,0,"U4",3,[["20:30","04:35",1350,1,60,8,9,"8h 5m",4.7,178,0],["23:10","07:20",1240,0,60,5,9,"8h 10m",4.2,420,2],["23:40","07:45",1330,1,60,28,3,"8h 5m",4.5,315,1],["23:55","08:00",1440,1,60,18,6,"8h 5m",4.7,178,0]]],"27":[810,0,"U4",6,[["19:45","03:50",810,0,0,16,2,"8h 5m",4.2,420,2],["20:30","04:35",950,1,60,21,5,"8h 5m",4.7,178,0],["21:15","05:40",890,1,0,8,8,"8h 25m",4.5,315,1],["22:15","06:20",1000,1,0,9,2,"8h 5m",4.7,178,0],["23:10","07:20",840,0,60,18,5,"8h 10m",4.2,420,2],["23:40","07:45",930,1,60,9,8,"8h 5m",4.5,315,1],["23:55","08:00",1040,1,60,31,2,"8h 5m",4.7,178,0]]],"28":[760,0,"U4",4,[["20:30","04:35",820,1,60,34,10,"8h 5m",4.7,178,0],["21:15","05:40",760,1,0,21,4,"8h 25m",4.5,315,1],["22:15","06:20",870,1,0,22,7,"8h 5m",4.7,178,0],["23:40","07:45",800,1,60,22,4,"8h 5m",4.5,315,1],["23:55","08:00",910,1,60,44,7,"8h 5m",4.7,178,0]]],"29":[790,0,"U4",2,[["21:15","05:40",790,1,0,6,9,"8h 25m",4.5,315,1],["22:15","06:20",900,1,0,35,3,"8h 5m",4.7,178,0],["23:40","07:45",830,1,60,35,9,"8h 5m",4.5,315,1]]],"30":[930,0,"U4",1,[["22:15","06:20",930,1,0,11,8,"8h 5m",4.7,178,0],["23:55","08:00",970,1,60,29,8,"8h 5m",4.7,178,0]]],"31":[770,0,"U4",3,[["19:45","03:50",770,0,0,14,4,"8h 5m",4.2,420,2],["20:30","04:35",910,1,60,30,7,"8h 5m",4.7,178,0],["22:15","06:20",960,1,0,24,4,"8h 5m",4.7,178,0],["23:55","08:00",1000,1,60,42,4,"8h 5m",4.7,178,0]]],"32":[1120,0,"U4",1,[["19:45","03:50",1120,0,0,9,9,"8h 5m",4.2,420,2],["23:10","07:20",1150,0,60,14,3,"8h 10m",4.2,420,2]]],"33":[1380,1,null,0,[["23:55","08:00",1380,1,60,27,5,"8h 5m",4.7,178,0]]],"34":[1100,0,"U3",1,[["21:15","05:40",1100,1,0,15,7,"8h 25m",4.5,315,1],["23:40","07:45",1140,1,60,4,7,"8h 5m",4.5,315,1]]],"35":[920,0,"U3",1,[["20:30","04:35",1030,1,60,39,9,"8h 5m",4.7,178,0],["22:15","06:20",1080,1,0,39,6,"8h 5m",4.7,178,0],["23:10","07:20",920,0,60,7,9,"8h 10m",4.2,420,2]]],"36":[650,0,"U3",3,[["19:45","03:50",650,0,0,7,2,"8h 5m",4.2,420,2],["21:15","05:40",730,1,0,13,8,"8h 25m",4.5,315,1],["23:10","07:20",680,0,60,20,5,"8h 10m",4.2,420,2],["23:55","08:00",880,1,60,25,2,"8h 5m",4.7,178,0]]],"37":[710,0,"U3",3,[["20:30","04:35",820,1,60,22,10,"8h 5m",4.7,178,0],["23:10","07:20",710,0,60,10,10,"8h 10m",4.2,420,2],["23:40","07:45",800,1,60,11,4,"8h 5m",4.5,315,1],["23:55","08:00",910,1,60,38,7,"8h 5m",4.7,178,0]]],"38":[710,0,"U4",6,[["19:45","03:50",710,0,0,15,3,"8h 5m",4.2,420,2],["20:30","04:35",850,1,60,35,6,"8h 5m",4.7,178,0],["21:15","05:40",790,1,0,11,9,"8h 25m",4.5,315,1],["22:15","06:20",900,1,0,4,3,"8h 5m",4.7,178,0],["23:10","07:20",740,0,60,23,6,"8h 10m",4.2,420,2],["23:40","07:45",830,1,60,24,9,"8h 5m",4.5,315,1],["23:55","08:00",940,1,60,10,3,"8h 5m",4.7,178,0]]],"39":[1140,0,"U4",4,[["20:30","04:35",1200,1,60,5,2,"8h 5m",4.7,178,0],["21:15","05:40",1140,1,0,24,5,"8h 25m",4.5,315,1],["22:15","06:20",1250,1,0,17,8,"8h 5m",4.7,178,0],["23:40","07:45",1180,1,60,5,5,"8h 5m",4.5,315,1],["23:55","08:00",1290,1,60,23,8,"8h 5m",4.7,178,0]]],"40":[1170,0,"U4",2,[["21:15","05:40",1170,1,0,9,10,"8h 25m",4.5,315,1],["22:15","06:20",1280,1,0,30,4,"8h 5m",4.7,178,0],["23:40","07:45",1210,1,60,18,10,"8h 5m",4.5,315,1]]]}};
-    var ONWARD_SEAT = 'U4', VOTE_FLOOR = 50;
+    var VOTE_FLOOR = 50;
     var DOW = ['Tue','Wed','Thu','Fri','Sat','Sun','Mon'], SEP_LEN = 30;
     function dow(i){ return DOW[((i - 1) % 7 + 7) % 7]; }
     function label(i){ return dow(i) + ', ' + (i <= SEP_LEN ? i + ' Sep' : (i - SEP_LEN) + ' Oct'); }
@@ -1303,8 +1310,8 @@
         if (tags) {
           if (count > 1 && spread && d === cheap) tags.appendChild(chip(tpl, 'Cheapest', 'note', 'Icon / Percent'));
           if (seat && mov === 0) tags.appendChild(chip(tpl, 'Cannot change this date', 'warn', 'Icon / Hourglass'));
-          if (n === 1 && seat && seat !== ONWARD_SEAT)
-            tags.appendChild(chip(tpl, 'Different seat \u2014 ' + ONWARD_SEAT + ' taken', 'warn', 'Icon / Info'));
+          if (n === 1 && seat && seat !== OUT.seat)
+            tags.appendChild(chip(tpl, 'Different seat \u2014 ' + OUT.seat + ' taken', 'warn', 'Icon / Info'));
           tags.hidden = !tags.children.length;
           tags.classList.add('hf-pillrow');
         }
@@ -1339,9 +1346,9 @@
       set(sec, m.dcText, bus[3] ? 'Free date change' : 'No date change');
       set(sec, m.seat, RETURN.seatByUser
         ? 'Seat ' + seatOf + ' \u00b7 ' + seatDesc(seatOf) + ' \u2014 the one you picked'
-        : seatOf === ONWARD_SEAT
-          ? 'Seat ' + ONWARD_SEAT + ' \u00b7 ' + seatDesc(seatOf) + ' \u2014 same as your onward'
-          : 'Seat ' + seatOf + ' \u00b7 ' + seatDesc(seatOf) + ' \u2014 ' + ONWARD_SEAT + ' is taken on this bus');
+        : seatOf === OUT.seat
+          ? 'Seat ' + OUT.seat + ' \u00b7 ' + seatDesc(seatOf) + ' \u2014 same as your onward'
+          : 'Seat ' + seatOf + ' \u00b7 ' + seatDesc(seatOf) + ' \u2014 ' + OUT.seat + ' is taken on this bus');
       show(sec, m.fcPill, !!bus[4]);
       show(sec, m.closePill, pick === defIdx(chosen));
 
@@ -1746,13 +1753,13 @@
   //      order the map reads: upper deck rows give U1..U18, the lower deck's sleepers L1..L6 and its
   //      two seater columns S1..S24. The drawn selection is the second berth of the upper deck's
   //      first row, which is the U2 the ticket already carries, so the scheme is the file's own.
-  (function returnSeat(){
-    var i08a = ORDER.indexOf('08a');
-    if (i08a < 0) return;
-    var sec = screens[i08a];
+  // Reading a seat map. Seats have no labels in these frames -- they are shapes -- so the names are
+  // positional, in the order the map reads: upper-deck rows give U1..Un, the lower deck's sleepers
+  // L1..Ln and its two seater columns S1..Sn. Shared by the onward maps (03, 03b) and the return
+  // map (08a), because it is the same reading job on all three.
+  function readSeatMap(sec, label){
     var decks = sec.querySelector('[data-name="Decks"]');
-    if (!decks) { console.warn('08a: no Decks'); return; }
-
+    if (!decks) { console.warn(label + ': no Decks'); return null; }
     var seats = [];
     [].forEach.call(decks.children, function(deck){
       var upper = /Upper/.test(deck.getAttribute('data-name') || '');
@@ -1777,12 +1784,38 @@
         });
       });
     });
-    var drawnSel = seats.filter(function(c){ return /Selected/.test(c.getAttribute('data-name')); })[0];
+    var drawnSel  = seats.filter(function(c){ return /Selected/.test(c.getAttribute('data-name')); })[0];
     var drawnFree = seats.filter(function(c){ return /Available/.test(c.getAttribute('data-name')); })[0];
-    if (!drawnSel || !drawnFree) { console.warn('08a: no seat states to copy'); return; }
-    // the two looks, taken from the frame itself rather than restyled here
-    var SEL = drawnSel.innerHTML, FREE = drawnFree.innerHTML;
+    if (!drawnFree) { console.warn(label + ': no free seat to copy'); return null; }
     var names = {}; seats.forEach(function(c){ names[c.__seat] = 1; });
+    return {
+      seats: seats, names: names,
+      drawnSel: drawnSel, drawnFree: drawnFree,
+      // the two looks, taken from the frame itself rather than restyled here
+      SEL: drawnSel ? drawnSel.innerHTML : drawnFree.innerHTML,
+      FREE: drawnFree.innerHTML,
+      // repaint every free cell, marking one as the pick, and keep each seat's own fare
+      paint: function(on){
+        seats.forEach(function(c){
+          if (!c.__free) return;
+          c.innerHTML = (c.__seat === on) ? this.SEL : this.FREE;
+          var p = c.querySelector('p');
+          if (p) p.textContent = c.__price;
+          c.classList.add('hf-hot');
+        }, this);
+      }
+    };
+  }
+
+  (function returnSeat(){
+    var i08a = ORDER.indexOf('08a');
+    if (i08a < 0) return;
+    var sec = screens[i08a];
+    var map = readSeatMap(sec, '08a');
+    if (!map) return;
+    var seats = map.seats, names = map.names;
+    var drawnSel = map.drawnSel, drawnFree = map.drawnFree;
+    var SEL = map.SEL, FREE = map.FREE;
 
     // What the map shows selected: the traveller's own pick first, then the seat the chosen day
     // gives them, and on a cold load the one the frame draws. RETURN.seatPick is set by a tap and
@@ -1845,6 +1878,93 @@
 
     ON_ENTER['08a'] = function(){ paint(); };
     paint();
+  })();
+
+  // 03 / 03b · the onward seat map, both states of it. It took exactly one tap, on one cell, and
+  //      every other seat was scenery -- forty-seven shapes that looked available and answered
+  //      nothing. Devansh: "in the changed seats screen at different places, I am not able to click
+  //      any seat, only a few seats are clickable." Every free seat is now a seat: picking one on
+  //      03 records it and opens the chosen state, and picking again on 03b moves the choice.
+  //
+  //      Which is why OUT.seat exists. The onward seat was written into fourteen places as U4, so
+  //      a choice that changed nothing but the map would have been worse than no choice at all --
+  //      it would have made every screen after it wrong. The screens that state the onward seat
+  //      read the accessor, and this repaints them.
+  (function onwardSeat(){
+    var i03 = ORDER.indexOf('03'), i03b = ORDER.indexOf('03b');
+    if (i03 < 0 && i03b < 0) return;
+
+    // The example copy on 06, 06a and 06b names the onward seat inside a sentence, so those are
+    // swapped by token rather than rewritten. `written` remembers the name currently on screen.
+    var EXAMPLES = [
+      ['06',  '410:2969'],     // the chip: "Different seat -- U4 taken"
+      ['06a', '411:2975'],     // the same chip on the chosen state
+      ['06a', '413:2962'],     // "Seat U4 -- same as your onward"
+      ['06b', '521:3884']      // "Seat U3 -- U4 is taken on this bus"
+    ];
+    var written = OUT.seat;
+
+    // every place that states the onward seat as a fact, and how it says it
+    var SITES = [
+      ['11',  '737:4252', function(s){ return s; }],                        // the ticket's badge
+      ['09a', '704:4171', function(s){ return s + ' - ' + OUT.deck; }],      // the details sheet
+      ['16',  '373:3125', function(s){ return 'Thu, 10 Sep \u00b7 23:55 \u00b7 seat ' + s; }]
+    ];
+    function repaint(){
+      SITES.forEach(function(d){
+        var i = ORDER.indexOf(d[0]); if (i < 0) return;
+        var el = screens[i].querySelector('[data-node-id="' + d[1] + '"]');
+        if (!el) { console.warn('onward seat: no ' + d[0] + '/' + d[1]); return; }
+        el.textContent = d[2](OUT.seat);
+      });
+      // 06, 06a and 06b write their own seat lines from OUT.seat once a day has been answered, so
+      // asking them to redraw is enough for the answered case.
+      ['06', '06a', '06b'].forEach(function(id){
+        var i = ORDER.indexOf(id);
+        if (i >= 0 && ON_ENTER[id]) ON_ENTER[id](screens[i]);
+      });
+      // Before a day is answered those three deliberately keep the example the frame draws -- and
+      // the example names the onward seat in its own literals. Redrawing cannot reach them, because
+      // there is no day to build from, so the name is swapped in place. Tracked, not guessed: the
+      // value last written is what gets replaced, so this stays correct across repeated picks.
+      EXAMPLES.forEach(function(d){
+        var i = ORDER.indexOf(d[0]); if (i < 0) return;
+        var el = screens[i].querySelector('[data-node-id="' + d[1] + '"]');
+        if (!el) { console.warn('onward seat: no example ' + d[0] + '/' + d[1]); return; }
+        var was = new RegExp('\\b' + written + '\\b', 'g');
+        el.textContent = el.textContent.replace(was, OUT.seat);
+      });
+      written = OUT.seat;
+    }
+    window.__repaintOutSeat = repaint;
+
+    [i03, i03b].forEach(function(i){
+      if (i < 0) return;
+      var id = ORDER[i], sec = screens[i];
+      var map = readSeatMap(sec, id);
+      if (!map) return;
+      function draw(){ map.paint(map.names[OUT.seat] ? OUT.seat
+                                : (map.drawnSel ? map.drawnSel.__seat : null)); }
+      sec.addEventListener('click', function(e){
+        if (e.target.closest && e.target.closest('.hf-back')) return;
+        var cell = e.target.closest('[data-name^="Seat "]');
+        if (!cell || !cell.__free) return;
+        e.preventDefault(); e.stopPropagation();
+        OUT.seat = cell.__seat;
+        OUT.deck = cell.__deck;
+        OUT.kind = cell.__kind;
+        OUT.byUser = true;
+        draw();
+        repaint();
+        // On the map you land on, choosing a seat is what opens the chosen state -- that is the
+        // step. On the chosen state it just moves the choice.
+        if (id === '03' && i03b >= 0) setTimeout(function(){ go(i03b); }, 180);
+      }, true);
+      ON_ENTER[id] = draw;
+      draw();
+    });
+
+    repaint();
   })();
 
   // 09 / 09b · paying. Tapping a method used to walk straight to Booking confirmed, which skipped
