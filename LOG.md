@@ -9363,3 +9363,62 @@ CHANGE  ·  2026-09-12  ·  impeccable (polish)  ·  Source: user
 - **Left as they are:** the offline banner (its text is vertically centred in a 42pt bar, which
   the detector reads as "no inset"), the rating badge (the real app's own tight badge), and the
   switch's red shadow (it has an offset; the detector calls it a glow).
+
+---
+
+DECISION  ·  2026-09-12  ·  direct request  ·  Source: user
+
+**The hi-fi has the lo-fi's states now: 13 state screens, rebuilt in Figma and pulled into the
+build.** Devansh: *"like lofi proto has states screens, build the same for hifi prototype as well,
+few of them are in figma"*.
+
+**What Figma had.** A "States · every way the promise can fail" section held S1–S14, and every one
+of the lo-fi's 12 non-default states was already drawn. Every frame was also out of date. They were
+separate frames, not linked copies of the screens they belong to, so none of the later work reached
+them. The ticket states still had the "Change trip details" row removed on 11 Sep. The review
+states used the old section sizes. S11b sat on "Booking confirmed", which was retired because the
+real app has no such screen.
+
+**How they were rebuilt.** Each state is a fresh copy of today's screen with only the state's own
+block moved in from the old frame. The old frames are kept, untouched, in a new section, "States ·
+archived 12 Sep", rather than deleted.
+
+| State | Base | What changes |
+|---|---|---|
+| S1 Route has no return | 08 | no return leg, no free date change, ₹1,920 |
+| S2 None in window | 06 | the empty card; no action bar |
+| S3 Return seat gone | 08 | the seat-gone block; Pay held back |
+| S4 Past cutoff | 11 | change row: "Too late to change…", no chevron |
+| S5 Already moved | 11 | drawn as the build's lock: red band, "No changes left", cancel greyed |
+| S6 Loading | 06 | five skeleton cards; no action bar |
+| S7 Can't check | 06 | the error card; no action bar |
+| S8 Offline | 05 | the offline band under the header |
+| S9 No other days | 13 | the blank state instead of the rules and calendar |
+| S10 Seat lost mid-swap | 15 | the error on top; Confirm held back |
+| S11 Return dropped | 11 | no return ticket and no change row; "No return booked" |
+| S12a Six passengers | 08 | the six-passenger block, "6 Passengers", ₹17,514 |
+| S12b Six passengers | 11 | "6 seats", "+ 5", and the passenger list inside the return card |
+
+- **S5 is drawn exactly as the runtime lock paints 11.** The state and the live behaviour cannot
+  disagree, and both follow IMG_5227.
+- **S11b is not rebuilt.** Its screen is gone. S13 ("Pay · option chosen") is a runtime selection
+  state, not a failure, and S14 was already marked retired. Both stay in the archive.
+- **S12a's amount is 6 × ₹2,919 = ₹17,514.** The old frame said ₹15,774, which was priced before
+  the add-ons changed.
+
+**In the build.** 51 screens (38 + 13). All 13 are in SKIP, so they are never steps. A new
+`STATE_OF` map sends Back from a state to the screen it is a state of, not to the screen before it
+(`BACK_AS`'s meaning). The viewer lists them under a shut "States" group, the same control the lo-fi
+uses.
+
+Diffs: S2 3.61%, S6 0.44%, S7 2.41%, S8 5.47%, S9 2.42%, S10 2.98%; the 08-based S1 6.09%, S3 8.58%,
+S12a 6.89% (08's own baseline is 7.59%); the 11-based S4 10.41%, S5 10.18%, S11 10.02%, S12b 10.13%
+(11 is 10.35%). All ramps, no steps.
+
+**LEARNED — a use_figma script is all or nothing.** One bad `findOne` on a text node threw halfway
+through, and none of the five frames the script had built so far existed afterwards. Read the
+canvas before retrying, not after.
+
+**LEARNED — a drawn state frame goes stale the moment its screen changes.** These went stale because
+they were copies, not instances. Rebuilding them from the live screen at the time of the pull is what
+keeps them honest. A future change to 05, 06, 08, 11, 13 or 15 needs its states redone too.

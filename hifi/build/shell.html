@@ -358,12 +358,20 @@
   // chip on a list. 22 is what that list looks like when the filters match nothing.
   var SKIP = { '01a': 1, '03a': 1, '04a': 1, '05a': 1, '05b': 1, '09a': 1, '09b': 1,
                '06a': 1, '06b': 1, '07': 1, '17': 1, '11a': 1, '12a': 1,
-               '18': 1, '19': 1, '19a': 1, '20': 1, '21': 1, '21a': 1, '22': 1 };
+               '18': 1, '19': 1, '19a': 1, '20': 1, '21': 1, '21a': 1, '22': 1,
+               'S1': 1, 'S2': 1, 'S3': 1, 'S4': 1, 'S5': 1, 'S6': 1, 'S7': 1,
+               'S8': 1, 'S9': 1, 'S10': 1, 'S11': 1, 'S12a': 1, 'S12b': 1 };
   // Screens whose forward hotspots are one per cell, added by a module rather than by the flow map.
   var LATE_HOT = { '13': 1, '17': 1, '11a': 1, '12a': 1, '19': 1, '19a': 1, '20': 1,
                    '21': 1, '21a': 1, '22': 1 };
   // Which screen a state frame belongs to, for Back.
   var BACK_AS = { '05a': '05', '05b': '05', '06a': '06', '06b': '06' };
+  // The Figma "States" section: each is one screen when something has gone wrong. Back from a state
+  // returns to that screen itself -- not to the one before it, which is what BACK_AS means -- because
+  // leaving a state is "put it right", and the screen it was a state of is where that happens.
+  var STATE_OF = { 'S1': '08', 'S2': '06', 'S3': '08', 'S4': '11', 'S5': '11', 'S6': '06',
+                   'S7': '06', 'S8': '05', 'S9': '13', 'S10': '15', 'S11': '11',
+                   'S12a': '08', 'S12b': '11' };
   function nextOf(i){ i += 1; while (screens[i] && SKIP[ORDER[i]]) i += 1; return i; }
   function prevOf(i){ i -= 1; while (screens[i] && SKIP[ORDER[i]]) i -= 1; return i; }
 
@@ -469,12 +477,13 @@
       // "leave this screen", not "step to the sibling state". Without this, Back on 05a landed on
       // 05 -- which since paintAll renders identically, looked like the button was dead.
       // v4 is the reference: s-window back -> s-outpoints, s-picked back -> s-window.
+      if (STATE_OF[ORDER[i]]) { go(ORDER.indexOf(STATE_OF[ORDER[i]])); return; }
       var owner = BACK_AS[ORDER[i]];
       go(prevOf(owner ? ORDER.indexOf(owner) : i));
     });
     // last screen has nowhere to go; every other screen must have a way forward -- except the
     // ones whose forward taps belong to individual cells, which a module wires after this pass.
-    if (n === 0 && i < screens.length - 1 && !LATE_HOT[ORDER[i]])
+    if (n === 0 && i < screens.length - 1 && !LATE_HOT[ORDER[i]] && !STATE_OF[ORDER[i]])
       console.warn('no forward hotspot on ' + ORDER[i]);
   });
 

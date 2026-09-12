@@ -68,7 +68,7 @@ on push. `raw/` (interview transcripts) is gitignored.
 | `frozen/v1.html` · `frozen/v2.html` · `frozen/prototype.html` | the other frozen builds |
 | `v1.html` · `v2.html` · `v3.html` · `prototype.html` | redirects to `/?version=N` |
 | `component-sheet.html` | Design-language component sheet |
-| `hifi/` | **The hi-fi prototype** — the 38 Figma frames as working code, shown inside the root viewer. `app.html` and `app.css` are generated, `index.html` is a redirect; see §21 |
+| `hifi/` | **The hi-fi prototype** — the 51 Figma frames (38 screens, 13 states) as working code, shown inside the root viewer. `app.html` and `app.css` are generated, `index.html` is a redirect; see §21 |
 
 **Source material** (not in the repo): `/Users/devansh/Downloads/RedBus Case Docs/` — 8 interview
 transcripts, scope card and research plan PDFs, `redfigjam.pdf`, `PAM03L08.pdf`, and two screenshot
@@ -791,6 +791,7 @@ not from memory. **29 frames = 17 screens + 12 state variants** (01a · 03a · 0
 | ↳ *reaching 16 spends the one change* — the ticket takes a red band under its header and the change row reads "No changes left"; Review and cancel greys out with "Not allowed after a date change" (IMG_5227); My Bookings' change row is spent too | | | |
 | 17 · Profile | — | *reached from Home's tab bar*; Bookings, or the My Bookings tab | 12 |
 | ↳ *every tab in Home's bar is live from the first frame* — My Bookings opens 12a until there is a booking, then 12 | | | 12 · 12a · 17 |
+| S1–S12b · States | — | *reached only from the viewer's shut States list*; Back | the screen it is a state of (05 · 06 · 08 · 11 · 13 · 15) |
 
 **The four branches a linear reading of the canvas will miss:**
 
@@ -2144,7 +2145,8 @@ rules, and the range **ends** in the accent), 06 · 06a (the narrowing heading, 
 Figma never had), 08 (what declining Free Cancellation gives you), 11 (Change day inside the ticket
 card). 12 was already right.
 
-**The build is 38 screens.** It shipped at 23, grew by sixteen and lost one, each for its own reason:
+**The build is 51 screens: 38 in the flow and 13 states** (the states since 12 Sep, below). The 38
+shipped at 23, grew by sixteen and lost one, each for its own reason:
 `06b · Your return · day cannot change` (6 Sep) is the trap state, which existed in v4 and in none
 of the frames; `01a · Select date` is the calendar sheet off Home's date row; `04a · Board & drop ·
 dropping` is the second half of the boarding-points tab control. All three live in **Screens**, not
@@ -2158,6 +2160,15 @@ not a step** — in `OVERLAY` and `SKIP`, opened by the link and closed by its �
 shifted to `y = −354`, one of the three fake scroll positions §20 records. The name was free;
 nothing in this frame descends from that one. 06b shows the **18–21 Sep** window, where the cheapest day is the
 one that cannot move; 06 and 06a keep 11–17, where every day has a changeable bus.
+
+**The 13 states (12 Sep) are the one exception to "Screens only".** Figma's *States* section had
+drawn every lo-fi failure state since late August, but as loose frames, so each had gone stale as its
+screen moved on. They were rebuilt on 12 Sep as fresh clones of today's screen plus the state's own
+block — S1–S12b. The stale originals sit untouched in *States · archived 12 Sep*. In the build they
+are in `SKIP`, never steps. `STATE_OF` in `shell.html` sends Back to the screen each one is a state
+of. The viewer lists them under a shut *States* group, like the lo-fi's. **A state is a copy, not an
+instance: a change to 05, 06, 08, 11, 13 or 15 needs its states redone in the same pass.** LOG.md
+has the table of which state sits on which screen.
 
 Adding a screen means four edits: `src/render.tsx`, the count guard and forward hotspot in
 `build.mjs`, and `HIFI_NAMES` in the root viewer. **A sheet is not a step** — 01a, 03a and 04a are

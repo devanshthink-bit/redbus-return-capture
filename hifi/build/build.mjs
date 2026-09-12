@@ -25,7 +25,7 @@ await build({
 });
 
 const { SCREENS } = require(out);
-if (SCREENS.length !== 38) throw new Error(`expected 38 screens, got ${SCREENS.length}`);
+if (SCREENS.length !== 51) throw new Error(`expected 51 screens, got ${SCREENS.length}`);
 
 // 2 · render each frame to static markup
 const rendered = SCREENS.map(({ id, name, C }) => {
@@ -77,7 +77,12 @@ const FORWARD = {
   '20':  [],   // the cancelled ticket is where the flow ends
   '21':  [],   // a sheet: the rail, Apply and Clear All are wired in shell.html
   '21a': [],   // the AI pane, drawn -- the rail switches to it at runtime
-  '22':  []    // nothing left to tap but Back
+  '22':  [],   // nothing left to tap but Back
+  // The states. Each is one screen as it looks when something goes wrong -- the lo-fi's thirteen,
+  // drawn in Figma's "States" section. They are places to look at, not steps: nothing on them
+  // walks on, and Back returns to the screen the state belongs to (BACK_AS in shell.html).
+  'S1': [], 'S2': [], 'S3': [], 'S4': [], 'S5': [], 'S6': [], 'S7': [],
+  'S8': [], 'S9': [], 'S10': [], 'S11': [], 'S12a': [], 'S12b': []
 };
 for (const s of rendered) if (!(s.id in FORWARD)) throw new Error(`no forward map for ${s.id}`);
 

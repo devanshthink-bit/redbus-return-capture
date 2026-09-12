@@ -36,6 +36,19 @@ import S20 from "./screens/20";
 import S21 from "./screens/21";
 import S21A from "./screens/21a";
 import S22 from "./screens/22";
+import ST1 from "./screens/S1";
+import ST2 from "./screens/S2";
+import ST3 from "./screens/S3";
+import ST4 from "./screens/S4";
+import ST5 from "./screens/S5";
+import ST6 from "./screens/S6";
+import ST7 from "./screens/S7";
+import ST8 from "./screens/S8";
+import ST9 from "./screens/S9";
+import ST10 from "./screens/S10";
+import ST11 from "./screens/S11";
+import ST12A from "./screens/S12a";
+import ST12B from "./screens/S12b";
 
 export const SCREENS = [
   { id: "01", name: '01 · Home', C: S01 },
@@ -76,4 +89,17 @@ export const SCREENS = [
   { id: "21", name: '21 · Filter Buses', C: S21 },
   { id: "21a", name: '21a · Filter Buses · AI', C: S21A },
   { id: "22", name: '22 · No buses', C: S22 },
+  { id: "S1", name: 'S1 · Route has none · Review your trip', C: ST1 },
+  { id: "S2", name: 'S2 · None in window · Your return', C: ST2 },
+  { id: "S3", name: 'S3 · Return seat gone · Review your trip', C: ST3 },
+  { id: "S4", name: 'S4 · Past cutoff · Ticket details', C: ST4 },
+  { id: "S5", name: 'S5 · Already moved · Ticket details', C: ST5 },
+  { id: "S6", name: 'S6 · Loading · Your return', C: ST6 },
+  { id: "S7", name: 'S7 · Can’t check · Your return', C: ST7 },
+  { id: "S8", name: 'S8 · Offline · Pick your days', C: ST8 },
+  { id: "S9", name: 'S9 · No other days · Change day', C: ST9 },
+  { id: "S10", name: 'S10 · Seat lost mid-swap · Confirm the move', C: ST10 },
+  { id: "S11", name: 'S11 · Return dropped · Ticket details', C: ST11 },
+  { id: "S12a", name: 'S12a · Six passengers · Review your trip', C: ST12A },
+  { id: "S12b", name: 'S12b · Six passengers · Ticket details', C: ST12B },
 ];

@@ -3178,7 +3178,13 @@ function buildHifiRail(){
     '15':'Confirm move',     '16':'Return moved',    '17':'Profile',
     '18':'Review and cancel', '19':'Refund details',  '19a':'Why cancel',
     '20':'Ticket cancelled',  '21':'Filter Buses',
-    '21a':'Filter · AI',      '22':'No buses'
+    '21a':'Filter · AI',      '22':'No buses',
+    /* the states, named the way the lo-fi's state list names them */
+    'S1':'Route has no return', 'S2':'None in window',  'S3':'Return seat gone',
+    'S4':'Past cutoff',         'S5':'Already moved',   'S6':'Loading',
+    'S7':'Can’t check',    'S8':'Offline',         'S9':'No other days',
+    'S10':'Seat lost mid-swap', 'S11':'Return dropped', 'S12a':'6 passengers · review',
+    'S12b':'6 passengers · ticket'
   };
   FIDELITY.hifi.note = hifiNote(rows.length);
   if(fidelity === 'hifi') document.getElementById('fnote').innerHTML = FIDELITY.hifi.note;
@@ -3186,16 +3192,28 @@ function buildHifiRail(){
     const id = (src.querySelector('.railn') || {}).textContent || '';
     return {id:id, name: HIFI_NAMES[id] || src.textContent.slice(id.length)};
   });
+  const stateList = document.createElement('div');
+  stateList.className = 'statelist';
   const mine = rows.map((src, i) => {
     const b = document.createElement('button');
     b.type = 'button';
     b.textContent = names[i].name;
     if(RUN_START.includes(names[i].id)) b.className = 'runstart';
     b.onclick = () => { src.click(); setTimeout(sync,0); };
-    list.appendChild(b);
+    /* the states go in their own shut list, the way the lo-fi's do -- they are for looking at
+       what goes wrong, not for walking the flow */
+    (/^S\d/.test(names[i].id) ? stateList : list).appendChild(b);
     return b;
   });
   host.appendChild(list);
+  if(stateList.children.length){
+    const box = document.createElement('details');
+    box.className = 'dev states';
+    box.innerHTML = '<summary><span>States</span><span class="cnt">' + stateList.children.length +
+                    '</span><span class="chev">&rsaquo;</span></summary>';
+    box.appendChild(stateList);
+    host.appendChild(box);
+  }
   function sync(){
     let onIdx = -1;
     rows.forEach((src,i) => {
