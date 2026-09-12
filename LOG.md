@@ -9895,3 +9895,28 @@ was made because, placed between the switch and the colours, the picker pushed t
 whenever Lo-fi was chosen. Under the switch it is the last thing in the first column, so showing it
 moves nothing else. Measured at 1470×812 in Lo-fi: every column ends above the phone's bottom edge
 and the page does not scroll.
+
+---
+
+DECISION  ·  2026-09-12  ·  direct request  ·  Source: user
+
+**The lo-fi v4 now has a status bar and the Dynamic Island, like the hi-fi. v1–v3 do not yet.**
+Devansh: *"in lofi prototypes why it doesnt have icons and dynamic island like hifi prototypes
+have"*. Offered: v4 properly, v1–v3 with a bar drawn by the viewer and their frame started 49px
+lower. He chose *"do all four"*.
+
+- **v4:** the viewer draws a 49px bar (the hi-fi's 47pt at its 874/844 scale) with 9:41 and the
+  hi-fi's own status-icon file. `.phone` is now 825px tall, not 874. The time and icons centre on
+  the island within 0.4px. No v4 screen's bottom bar runs past the phone's edge, and the state
+  matrix is clean (234 cells, no errors).
+- **v1–v3 were built, looked at, and taken back out.** Starting the frozen frame 49px lower cuts
+  off its bottom 49px, and Home's "Search buses" button is there. Only a red line of it showed, and
+  it could not be scrolled to. I had told him the cost was "a bottom button would sit closer to the
+  edge or need a scroll". That was wrong, and I said so. Every fix that leaves their files
+  untouched costs something: shrink the whole build 5.6% (thin strips down both sides, which §7
+  rejected once), or lay the bar over the top of their title bar. [Devansh to choose.]
+
+**LEARNED — measure a frozen build's layout before promising what cropping it costs.** The
+estimate came from how v4 is built. v1–v3 are not built that way: their bottom bar is part of a
+fixed 874 layout, not pinned to the screen, so cropping it doesn't push it up, it hides it. A
+search for pinned elements found nothing to measure, and only a screenshot showed it.

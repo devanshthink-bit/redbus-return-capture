@@ -199,13 +199,27 @@ body.testing .layout{justify-content:center}
 .btn-side.up{left:-4px;top:186px;height:58px}
 .btn-side.down{left:-4px;top:256px;height:58px}
 .btn-side.power{right:-4px;top:210px;height:92px}
-/* the Dynamic Island, over the status bar's middle. The hi-fi draws a status bar for it; the
-   lo-fi screens put their title at the very top, where the island would cover it, so it shows
-   with the hi-fi only. */
+/* the Dynamic Island, over the status bar's middle, in every version. The hi-fi draws its own
+   status bar; the lo-fi ones get .sbar below. */
 .island{position:absolute;top:25px;left:50%;width:124px;height:36px;margin-left:-62px;
  border-radius:20px;background:#000;z-index:5;pointer-events:none;
  box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}
-body:not(.hifi-on) .island{display:none}
+/* The lo-fi status bar. Devansh, 12 Sep: "in lofi prototypes why it doesnt have icons and dynamic
+   island like hifi prototypes have" -- "do all four". The viewer draws it, so v1-v3 stay frozen:
+   their iframe simply starts 49px lower and gives up 49px at the bottom. v4's screens sit under
+   it in the same way. 49px is the hi-fi's 47pt bar at its 874/844 scale, and the time and icons
+   are centred on the island exactly as the hi-fi's are. The icons are the hi-fi's own file. */
+.sbar{height:49px;flex:0 0 49px;display:flex;align-items:center;justify-content:space-between;
+ padding:10px 15px 0 28px;box-sizing:border-box;background:#fff;position:relative;z-index:3}
+.sbar b{font:600 17px/21px Inter,-apple-system,system-ui,sans-serif;letter-spacing:-.4px;color:#1d1d1d}
+.sbar img{width:79px;height:14px;display:block}
+body.hifi-on .sbar{display:none}
+/* NOT on v1-v3 yet. Starting their frozen frame 49px lower cut off its bottom 49px, and that is
+   where Home's "Search buses" sits -- the button that starts every flow, not reachable by scroll.
+   Their files cannot change, so each fix costs something: shrink the whole build 5.6% (thin strips
+   down both sides, which §7 rejected once), or lay the bar over the top of their title bar.
+   Waiting on Devansh's choice (12 Sep). Until then v1-v3 show as they always have. */
+body.legacy-on .sbar,body.legacy-on .island{display:none}
 .viewport{width:402px;height:874px;border-radius:48px;overflow:hidden;background:var(--page);
  display:flex;flex-direction:column;position:relative}
 /* The screen is 402 x 874 -- exactly an iPhone 16 Pro, and exactly what all three builds are.
@@ -233,7 +247,7 @@ body.legacy-on .phone{display:none}
 .hifi iframe{position:absolute;left:0;top:0;width:402px;height:874px;border:0}
 body.hifi-on .hifi{display:block}
 body.hifi-on .phone,body.hifi-on .legacy{display:none}
-.phone{width:402px;height:874px;flex:0 0 auto;
+.phone{width:402px;height:825px;flex:0 0 auto;   /* 874 less the 49px status bar */
  background:var(--page);position:relative;overflow:hidden;display:flex;flex-direction:column}
 
 /* ---------- chrome ---------- */
@@ -591,7 +605,8 @@ body.testing .devicewrap::before{display:none}
   .devicewrap::before{display:none}
   .device{width:100%;height:auto}
   .deviceframe{width:100%;height:auto;transform:none;padding:0;border-radius:0;box-shadow:none;background:none}
-  .deviceframe::after,.deviceframe::before,.island{display:none}
+  .deviceframe::after,.deviceframe::before,.island,.sbar{display:none}
+  body.legacy-on .legacy{top:0}
   .viewport{width:100%;height:100vh;height:100dvh;border-radius:0}
   .phone{width:100%;height:100vh;height:100dvh}
   .legacy{inset:0;height:100vh;height:100dvh;border-radius:0}
@@ -775,6 +790,7 @@ body.testing .devicewrap::before{display:none}
   <i class="btn-side silent"></i><i class="btn-side up"></i><i class="btn-side down"></i><i class="btn-side power"></i>
   <i class="island" aria-hidden="true"></i>
   <div class="viewport">
+    <div class="sbar" aria-hidden="true"><b>9:41</b><img src="hifi/assets/091fbdca-8e2e-4f59-80c8-bfdc341f332f.svg" alt=""></div>
     <!-- v1 / v2 land here, whole and unedited, cropped to the phone -->
     <div class="legacy"><iframe id="legacyframe" title="Earlier version" src="about:blank"></iframe></div>
     <!-- the hi-fi build, whole and unedited, cropped to the phone -->
