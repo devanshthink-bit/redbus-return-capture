@@ -18,7 +18,7 @@ const imgIconSeat = "assets/6e477112-565d-4b4d-8039-41a6059fc9f5.png";
 const imgArtPrimoOnNavy = "assets/fa5d30e0-7fdf-4efa-a4d8-a3f163de5175.png";
 const imgIconChevronLeft = "assets/c52a55a0-4bd0-4f7a-a9fa-205a96aa0d14.svg";
 const imgStatusIcons = "assets/091fbdca-8e2e-4f59-80c8-bfdc341f332f.svg";
-const imgAvatar = "assets/88739341-fbd3-4bc2-bc34-65ecb2911285.svg";
+const imgAvatar = "assets/avatar-devansh-36.png";
 const imgRadio = "assets/f410a566-6990-4296-9328-11bace6bed32.svg";
 const imgDot = "assets/e3ba5a6c-19af-4a5b-b8da-896debdd44bc.svg";
 const imgRail = "assets/600465f5-c4dd-470c-8b4e-c9d14774ced1.svg";
@@ -393,7 +393,7 @@ export default function Component09ABookingDetails() {
               <div className="h-[14px] relative shrink-0 w-px" data-node-id="721:4206" data-name="gap" />
               <div className="content-stretch flex gap-[14px] items-center relative shrink-0 w-full" data-node-id="721:4207" data-name="Passenger">
                 <div className="relative shrink-0 size-[36px]" data-node-id="721:4208" data-name="Avatar">
-                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgAvatar} />
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" height="36" src={imgAvatar} width="36" />
                 </div>
                 <div className="[word-break:break-word] content-stretch flex flex-col font-['Inter:Regular'] font-normal gap-[2px] items-start not-italic relative shrink-0 whitespace-nowrap" data-node-id="721:4209" data-name="Text">
                   <p className="leading-[22px] relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="721:4210">

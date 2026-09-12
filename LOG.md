@@ -10102,3 +10102,13 @@ NOTE · 2026-09-13 · direct
 Still open from the same walk: with no boarding point chosen, Review says "ISBT Kashmiri Gate, Gate 4"
 while the details sheet says "Isbt Kashmiri Gate Metro Gate No.5" — the two frames draw different
 defaults.
+
+CHANGE · 2026-09-13 · direct · Source: user
+**The passenger avatar is Devansh's photo.** *"in this circle apply my picture"*. The circle was a
+flat lilac ellipse on every screen that lists him as a passenger: Review (08), the booking-details
+sheet (09a), Review and cancel (18, the 44px one), and the states S1, S3 and S12a. Figma first: the
+photo (`hifi/assets/IMG_2157.jpg`, 542×542, no location data) went in as an image fill on those six
+ellipses; the other five passengers on S12a keep the plain circle. Each ellipse was re-pulled on its
+own, and the screens were patched to the pull — Figma now exports the circle as a 2× PNG
+(`avatar-devansh-36.png`, `-44.png`), which is what the build shows. On S12a only his row points at it.
+The source JPG is not committed: nothing reads it.

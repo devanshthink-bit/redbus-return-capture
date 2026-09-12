@@ -16,7 +16,7 @@ const imgArtCoverLuggage = "assets/c2460135-a700-4aee-b7a8-5c2b442d2d00.png";
 const imgArtCoverHospital = "assets/66f74197-06a7-48f5-8d45-010595c7b760.png";
 const imgArtCoverPerson = "assets/e057725b-56bb-443e-bf26-2c0841f17961.png";
 const imgStatusIcons = "assets/091fbdca-8e2e-4f59-80c8-bfdc341f332f.svg";
-const imgAvatar = "assets/88739341-fbd3-4bc2-bc34-65ecb2911285.svg";
+const imgAvatar = "assets/avatar-devansh-36.png";
 const imgRadio = "assets/f410a566-6990-4296-9328-11bace6bed32.svg";
 
 function IconSearch({ className }: { className?: string }) {
@@ -339,7 +339,7 @@ export default function Component08ReviewYourTrip() {
           <div className="h-[14px] relative shrink-0 w-px" data-node-id="213:2075" data-name="gap" />
           <div className="content-stretch flex gap-[14px] items-center relative shrink-0 w-full" data-node-id="213:2076" data-name="Passenger">
             <div className="relative shrink-0 size-[36px]" data-node-id="213:2077" data-name="Avatar">
-              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgAvatar} />
+              <img alt="" className="absolute block inset-0 max-w-none size-full" height="36" src={imgAvatar} width="36" />
             </div>
             <div className="[word-break:break-word] content-stretch flex flex-col font-['Inter:Regular'] font-normal gap-[2px] items-start not-italic relative shrink-0 whitespace-nowrap" data-node-id="213:2078" data-name="Text">
               <p className="leading-[22px] relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="213:2079">

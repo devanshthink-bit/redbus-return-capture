@@ -1,7 +1,7 @@
 const imgGlyph = "assets/f987e112-3f21-4093-9c91-abca9b06aa32.svg";
 const imgIconChevronLeft = "assets/c52a55a0-4bd0-4f7a-a9fa-205a96aa0d14.svg";
 const imgStatusIcons = "assets/091fbdca-8e2e-4f59-80c8-bfdc341f332f.svg";
-const imgAvatar = "assets/6250385b-1df1-4ba2-9701-acf2c10b23e7.svg";
+const imgAvatar = "assets/avatar-devansh-44.png";
 
 function IconSearch({ className }: { className?: string }) {
   return (
@@ -99,7 +99,7 @@ export default function Component18ReviewAndCancel() {
           </p>
           <div className="bg-white content-stretch flex gap-[14px] items-center overflow-clip relative shrink-0 w-full" data-node-id="784:4539" data-name="Passenger">
             <div className="relative shrink-0 size-[44px]" data-node-id="784:4540" data-name="Avatar">
-              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgAvatar} />
+              <img alt="" className="absolute block inset-0 max-w-none size-full" height="44" src={imgAvatar} width="44" />
             </div>
             <div className="[word-break:break-word] bg-white content-stretch flex flex-[1_0_0] flex-col gap-px items-start min-w-px not-italic overflow-clip relative" data-node-id="784:4541" data-name="Text">
               <p className="font-['Inter:Semi_Bold'] font-semibold leading-[18px] relative shrink-0 text-[#2e5c2a] text-[13px] w-full" data-node-id="784:4542">
