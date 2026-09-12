@@ -1,3 +1,9 @@
+const imgIconMic = "https://www.figma.com/api/mcp/asset/26796fd9-9c69-4aab-9453-1c15b3eeef1a.svg";
+const imgIconAiSparkle = "https://www.figma.com/api/mcp/asset/8909187d-200e-437d-9929-f4c57bfd3cf6.svg";
+const imgIconPercent = "https://www.figma.com/api/mcp/asset/1b1539f1-ba38-43b9-ba70-3799bb7016d0.svg";
+const imgIconStarOutline = "https://www.figma.com/api/mcp/asset/6792ec27-54fb-4819-bd2a-4ac0ab7f4e33.svg";
+const imgIconChevronDown = "https://www.figma.com/api/mcp/asset/fcb1ccfa-6c85-4930-8861-8f5c7376d96d.svg";
+const imgIconSliders = "https://www.figma.com/api/mcp/asset/896ed676-bbb4-47d6-a9fa-3c7131944418.svg";
 const imgIconHourglass = "assets/fc79b371-8622-4754-8241-fef3e1e574f9.svg";
 const imgIconBusPin = "assets/69a4634a-5991-41fa-8b2b-bb170464cf48.svg";
 const imgIconBus = "assets/550e0797-aedd-4962-964f-1c86e8440304.svg";
@@ -53,6 +59,54 @@ function IconChevronLeft({ className }: { className?: string }) {
   );
 }
 
+function IconMic({ className }: { className?: string }) {
+  return (
+    <div className={className || "relative size-[24px]"} data-node-id="33:90" data-name="Icon / Mic">
+      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconMic} />
+    </div>
+  );
+}
+
+function IconAiSparkle({ className }: { className?: string }) {
+  return (
+    <div className={className || "relative size-[28px]"} data-node-id="33:94" data-name="Icon / AI Sparkle">
+      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconAiSparkle} />
+    </div>
+  );
+}
+
+function IconPercent({ className }: { className?: string }) {
+  return (
+    <div className={className || "relative size-[24px]"} data-node-id="33:89" data-name="Icon / Percent">
+      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconPercent} />
+    </div>
+  );
+}
+
+function IconStarOutline({ className }: { className?: string }) {
+  return (
+    <div className={className || "relative size-[24px]"} data-node-id="33:88" data-name="Icon / Star Outline">
+      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconStarOutline} />
+    </div>
+  );
+}
+
+function IconChevronDown({ className }: { className?: string }) {
+  return (
+    <div className={className || "relative size-[20px]"} data-node-id="33:87" data-name="Icon / Chevron Down">
+      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconChevronDown} />
+    </div>
+  );
+}
+
+function IconSliders({ className }: { className?: string }) {
+  return (
+    <div className={className || "relative size-[24px]"} data-node-id="33:86" data-name="Icon / Sliders">
+      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconSliders} />
+    </div>
+  );
+}
+
 export default function Component14MoveBuses() {
   return (
     <div className="bg-[#f1f1f6] content-stretch flex flex-col items-start relative size-full" data-node-id="360:2663" data-name="14 · Move · buses">
@@ -82,6 +136,51 @@ export default function Component14MoveBuses() {
         </div>
       </div>
       <div className="content-stretch flex flex-col gap-[16px] items-start overflow-clip pb-[16px] pt-[13px] px-[16px] relative shrink-0 w-full" data-node-id="360:2689" data-name="Content">
+        <div className="bg-[var(--surface\/default,white)] content-stretch flex flex-col gap-[10px] items-start pb-[11px] pt-[13px] px-[16px] relative shrink-0 w-full" data-node-id="794:6345" data-name="Filters">
+          <div className="content-stretch flex gap-[8px] items-start overflow-clip relative shrink-0 w-full" data-node-id="794:6346" data-name="Chips row 1">
+            <div className="bg-[var(--surface\/default,white)] border border-[var(--border\/default,#b0b0b0)] border-solid content-stretch flex gap-[6px] h-[30px] items-center justify-center px-[13px] relative rounded-[var(--radius\/10,10px)] shrink-0" data-node-id="794:6347" data-name="Chip / Filter and Sort">
+              <IconSliders className="relative shrink-0 size-[24px]" />
+              <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[18px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="794:6349">
+                Filter and Sort
+              </p>
+              <IconChevronDown className="relative shrink-0 size-[20px]" />
+            </div>
+            <div className="bg-[var(--surface\/default,white)] border border-[var(--border\/default,#b0b0b0)] border-solid content-stretch flex gap-[6px] h-[30px] items-center justify-center px-[13px] relative rounded-[var(--radius\/10,10px)] shrink-0" data-node-id="794:6351" data-name="Chip / Primo Bus">
+              <IconStarOutline className="relative shrink-0 size-[24px]" />
+              <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[18px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="794:6353">
+                Primo Bus
+              </p>
+            </div>
+            <div className="bg-[var(--surface\/default,white)] border border-[var(--border\/default,#b0b0b0)] border-solid content-stretch flex gap-[6px] h-[30px] items-center justify-center px-[13px] relative rounded-[var(--radius\/10,10px)] shrink-0" data-node-id="794:6354" data-name="Chip / Deals">
+              <IconPercent className="relative shrink-0 size-[24px]" />
+              <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[18px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="794:6356">
+                Deals
+              </p>
+            </div>
+          </div>
+          <div className="content-stretch flex gap-[8px] items-start overflow-clip relative shrink-0 w-full" data-node-id="794:6357" data-name="Chips row 2">
+            <div className="bg-[var(--surface\/default,white)] border border-[var(--border\/default,#b0b0b0)] border-solid content-stretch flex h-[30px] items-center justify-center px-[13px] relative rounded-[var(--radius\/10,10px)] shrink-0" data-node-id="794:6358" data-name="Chip / Group Deal">
+              <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[18px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="794:6359">
+                Group Deal
+              </p>
+            </div>
+            <div className="bg-[var(--surface\/default,white)] border border-[var(--border\/default,#b0b0b0)] border-solid content-stretch flex h-[30px] items-center justify-center px-[13px] relative rounded-[var(--radius\/10,10px)] shrink-0" data-node-id="794:6360" data-name="Chip / Early Buy">
+              <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[18px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="794:6361">
+                Early Buy
+              </p>
+            </div>
+          </div>
+          <div className="content-stretch flex flex-col gap-[2px] items-start relative shrink-0 w-full" data-node-id="794:6362" data-name="AI Smart filter">
+            <p className="[word-break:break-word] bg-clip-text bg-gradient-to-r font-['Inter:Regular'] font-normal from-[#c54646] leading-[18px] not-italic relative shrink-0 text-[13px] text-[transparent] to-[#7941e0] whitespace-nowrap" data-node-id="794:6363">
+              AI Smart filter
+            </p>
+            <div className="bg-[var(--surface\/default,white)] border-[#385ded] border-[1.5px] border-solid content-stretch flex gap-[7px] h-[42px] items-center pl-[15px] pr-[14px] relative rounded-[var(--radius\/10,10px)] shrink-0 w-full" data-node-id="794:6364" data-name="AI Smart filter field">
+              <IconAiSparkle className="relative shrink-0 size-[28px]" />
+              <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Regular'] font-normal leading-[20px] min-w-px not-italic relative text-[14px] text-[color:var(--text\/tertiary,#767680)]" data-node-id="794:6366">{`Search 'AC sleeper under 1000'`}</p>
+              <IconMic className="relative shrink-0 size-[24px]" />
+            </div>
+          </div>
+        </div>
         <div className="[word-break:break-word] bg-white content-stretch flex flex-col gap-[6px] items-start leading-[normal] not-italic overflow-clip p-[16px] relative rounded-[12px] shrink-0 w-full" data-node-id="360:2690" data-name="Frame">
           <p className="font-['Inter:Regular'] font-normal relative shrink-0 text-[#636363] text-[12px] whitespace-nowrap" data-node-id="360:2691">
             Your booking

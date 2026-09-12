@@ -233,6 +233,21 @@
   .hf-check-on{position:relative;background:#c54646!important;border-color:#c54646!important}
   .hf-check-on::after{content:'';position:absolute;left:50%;top:48%;width:6px;height:11px;
     border:solid #fff;border-width:0 2px 2px 0;transform:translate(-50%,-60%) rotate(45deg)}
+  /* The filter sheet. Its panes are rebuilt as categories are tapped, so the rows are styled here
+     rather than drawn -- the same arrangement as every other selection state in this build. */
+  .hf-filt-sheet{max-height:92%!important;top:70px;bottom:0;border-radius:20px 20px 0 0}
+  .hf-filt-pane{overflow-y:auto!important}
+  .hf-filt-row{display:flex;align-items:center;gap:10px;padding:14px 0;width:100%}
+  .hf-filt-label{margin:0;flex:1 0 0;min-width:0;font-family:Inter,sans-serif;font-size:16px;
+    line-height:22px;color:#1d1d1d}
+  .hf-filt-mark{margin:0;flex:0 0 auto;font-family:Inter,sans-serif;font-size:17px;
+    line-height:22px;font-weight:700;color:#c54646;min-width:14px;text-align:right}
+  .hf-filt-none{margin:14px 0 0;font-family:Inter,sans-serif;font-size:15px;line-height:22px;
+    color:#636363}
+  /* the rail's selected cell: white ground, red edge, bold label */
+  .hf-cat-on{background:#fff!important;border-left:3px solid #c54646!important;
+    border-top-color:transparent!important}
+  .hf-cat-on p{font-weight:700!important}
   .hf-paygap{height:12px;width:100%;flex:0 0 auto}
   .hf-paybtn{width:100%!important;height:48px!important;flex:0 0 auto}
   .hf-radio-on::after{content:'';position:absolute;inset:5px;border-radius:50%;
@@ -304,7 +319,7 @@
 
   // 01a is a bottom sheet, not a step: it opens from the date row on Home and closes back to it.
   // Leaving it in the linear order meant Back from the bus list landed on an open calendar.
-  var OVERLAY = { '01a': 1, '03a': 1, '04a': 1, '09a': 1, '11a': 1, '19a': 1 };
+  var OVERLAY = { '01a': 1, '03a': 1, '04a': 1, '09a': 1, '11a': 1, '19a': 1, '21': 1, '21a': 1 };
   // Frames the linear walk must step over. Overlays are sheets that close back to their opener;
   // 05a and 05b are not steps at all -- they are the two answered states of the calendar, and the
   // picker moves between them itself. Left in the order, Continue on 05a walked to 05b, so a
@@ -320,11 +335,14 @@
   // from the bar, not a step on the way to anywhere.
   // The cancellation flow hangs off the change-of-plans sheet, not off the linear order: 18, 19
   // and 20 are only ever reached by choosing to cancel, and 19a is the sheet in the middle of it.
+  // 21 and 21a are the filter sheet and its AI pane -- one control in two states, opened from a
+  // chip on a list. 22 is what that list looks like when the filters match nothing.
   var SKIP = { '01a': 1, '03a': 1, '04a': 1, '05a': 1, '05b': 1, '09a': 1, '09b': 1,
                '06a': 1, '06b': 1, '07': 1, '17': 1, '11a': 1, '12a': 1,
-               '18': 1, '19': 1, '19a': 1, '20': 1 };
+               '18': 1, '19': 1, '19a': 1, '20': 1, '21': 1, '21a': 1, '22': 1 };
   // Screens whose forward hotspots are one per cell, added by a module rather than by the flow map.
-  var LATE_HOT = { '13': 1, '17': 1, '11a': 1, '12a': 1, '19': 1, '19a': 1, '20': 1 };
+  var LATE_HOT = { '13': 1, '17': 1, '11a': 1, '12a': 1, '19': 1, '19a': 1, '20': 1,
+                   '21': 1, '21a': 1, '22': 1 };
   // Which screen a state frame belongs to, for Back.
   var BACK_AS = { '05a': '05', '05b': '05', '06a': '06', '06b': '06' };
   function nextOf(i){ i += 1; while (screens[i] && SKIP[ORDER[i]]) i += 1; return i; }
@@ -512,6 +530,8 @@
     if (i < 0 || i >= screens.length) return;
     if (window.__closeSheet) window.__closeSheet();   // a sheet does not survive a page change
     if (window.__closeChangePlans) window.__closeChangePlans();
+    if (window.__closeFilters) window.__closeFilters();
+    if (window.__closeWhyCancel) window.__closeWhyCancel();
     if (ORDER[at] === '09b' && window.__stopWait) window.__stopWait();
     var from = ORDER[at];
     var dir = i >= at ? 1 : -1;
@@ -722,6 +742,14 @@
     if (!t) { console.warn('onlyOne: no target ' + sel + ' on ' + screenId); return; }
     sec.addEventListener('click', function(e){
       if (e.target.closest && e.target.closest('.hf-back')) return;   // Back still works
+      // and so does anything else that has been wired on purpose. This gate is on the SCREEN and
+      // capture runs ancestor-to-target, so without an exemption it eats every control added by a
+      // later module before that module's own listener can see the tap -- which is exactly what it
+      // did to the Filter and Sort chip. hf-exempt is the named way through; hf-hot is not, because
+      // the forward hotspots this gate exists to hold back all carry it.
+      // A sheet laid over this screen is not part of this screen's content: it has its own
+      // controls and its own scrim, and this gate must not reach inside either.
+      if (e.target.closest && e.target.closest('.hf-exempt, .hf-sheet, .hf-scrim')) return;
       e.preventDefault(); e.stopPropagation();
       if (t.contains(e.target)) { onHit(i); return; }
       blinkAt(t);
@@ -2570,6 +2598,213 @@
     var CANCELLED = false;
     window.__cancelTicket = function(){ CANCELLED = true; };
     window.__ticketCancelled = function(){ return CANCELLED; };
+  })();
+
+  // 21 / 21a / 22 · Filter and Sort. Devansh: "Build filters and inside of it all screens for
+  //      onward and when user lands on bus selection screen from calender in date change screen
+  //      since redbus app have it". The chip was drawn on the onward list and did nothing, and the
+  //      date-change list had no chip at all.
+  //
+  //      The sheet is lifted out of 21 and laid over whichever list opened it, same as every other
+  //      sheet here. The rail's eleven categories come straight off IMG_4556; the pane is redrawn
+  //      from a table when a category is tapped, because a pane is a state of one control rather
+  //      than eleven screens. Two of those panes are drawn in Figma -- Sort by on 21 and the AI
+  //      smart filter on 21a -- which are the two the real app shows.
+  (function filterSheet(){
+    var i21 = ORDER.indexOf('21'), i21a = ORDER.indexOf('21a'), i22 = ORDER.indexOf('22');
+    if (i21 < 0) return;
+    var TPL = screens[i21].querySelector('[data-name="Sheet"]');
+    var AIPANE = i21a >= 0 && screens[i21a].querySelector('[data-name="Pane"]');
+    if (!TPL) { console.warn('21: no Sheet'); return; }
+    TPL = TPL.cloneNode(true);
+    [].forEach.call(TPL.querySelectorAll('.hf-back, .hf-fwd, .hf-hot'), function(n){
+      n.classList.remove('hf-back', 'hf-fwd', 'hf-hot');
+    });
+    var AI = AIPANE ? AIPANE.cloneNode(true) : null;
+
+    // What each category offers. Everything here is a fact about THIS route that the prototype
+    // already states somewhere else -- the buses on 02, the points on 04 and 04a, the amenities on
+    // 03a -- so nothing on this screen is invented. The four categories the route cannot answer say
+    // so rather than opening an empty pane.
+    var PANES = {
+      'Sort by': ['Relevance', 'Price - low to high', 'Best rated first',
+                  'Early departure', 'Late departure'],
+      'Departure Time from Source': ['Before 6 am', '6 am - 12 pm', '12 pm - 6 pm', 'After 6 pm'],
+      'Bus Type': ['AC', 'Sleeper', 'Seater', 'Bharat Benz', 'Volvo'],
+      'Boarding Points': ['ISBT Kashmiri Gate', 'Majnu Ka Tilla', 'Akshardham'],
+      'Dropping Points': ['Nainital Mall Road', 'Nainital Bus Stand', 'Tallital'],
+      'Amenities': ['Blanket', 'Charging point', 'Water bottle', 'Reading light', 'Toilet'],
+      'Bus Operator': ['Laxmi Holidays Pvt Ltd', 'Mahadev Travels', 'Himalayan Roadways',
+                       'Nainital Travels', 'GMOU Ltd'],
+      'Single Window Sleeper/Seater': [],
+      'RTC Bus Service Type': [],
+      'Special Features': []
+    };
+    // One truth about what is picked, so Clear All has something to clear and Apply has something
+    // to act on. Sort is single-choice; every other category is a set.
+    var PICK = { sort: 'Relevance', on: {} };
+
+    var host = null, scrim = null, sheet = null, opener = null;
+
+    function close(){
+      if (scrim && scrim.parentNode) scrim.parentNode.removeChild(scrim);
+      if (sheet && sheet.parentNode) sheet.parentNode.removeChild(sheet);
+      scrim = sheet = host = null;
+    }
+
+    function option(label, on, single){
+      var row = document.createElement('div');
+      row.setAttribute('data-name', 'Option');
+      row.className = 'hf-filt-row hf-hot';
+      var t = document.createElement('p');
+      t.className = 'hf-filt-label';
+      t.textContent = label;
+      var mark = document.createElement('p');
+      mark.className = 'hf-filt-mark';
+      mark.textContent = on ? (single ? '✓' : '✓') : '';
+      row.appendChild(t); row.appendChild(mark);
+      row.__label = label; row.__single = single;
+      return row;
+    }
+
+    function showPane(name){
+      var pane = sheet.querySelector('[data-name="Pane"]');
+      if (!pane) return;
+      // the AI pane is drawn, not listed -- swap the whole pane for Figma's own
+      if (name === 'AI Smart filter' && AI) {
+        var fresh = AI.cloneNode(true);
+        pane.parentNode.replaceChild(fresh, pane);
+        [].forEach.call(fresh.querySelectorAll('[data-name="Suggestion"]'), function(c){
+          c.classList.add('hf-hot');
+        });
+        return;
+      }
+      // coming back from the AI pane, the listed pane has to be rebuilt from scratch
+      if (!pane.classList.contains('hf-filt-pane')) {
+        var plain = TPL.querySelector('[data-name="Pane"]').cloneNode(true);
+        pane.parentNode.replaceChild(plain, pane);
+        pane = plain;
+      }
+      pane.classList.add('hf-filt-pane');
+      while (pane.firstChild) pane.removeChild(pane.firstChild);
+      var opts = PANES[name] || [];
+      if (!opts.length) {
+        var none = document.createElement('p');
+        none.className = 'hf-filt-none';
+        none.textContent = 'No ' + name.toLowerCase() + ' options on this route.';
+        pane.appendChild(none);
+        return;
+      }
+      var single = name === 'Sort by';
+      opts.forEach(function(label){
+        var on = single ? (PICK.sort === label) : !!PICK.on[name + '|' + label];
+        var row = option(label, on, single);
+        row.addEventListener('click', function(e){
+          e.preventDefault(); e.stopPropagation();
+          if (single) PICK.sort = label;
+          else {
+            var k = name + '|' + label;
+            if (PICK.on[k]) delete PICK.on[k]; else PICK.on[k] = 1;
+          }
+          showPane(name);
+        }, true);
+        pane.appendChild(row);
+      });
+    }
+
+    function paintRail(name){
+      [].forEach.call(sheet.querySelectorAll('[data-name="Cat"]'), function(cell){
+        var p = cell.querySelector('p');
+        var on = p && p.textContent.trim() === name;
+        cell.classList.toggle('hf-cat-on', !!on);
+      });
+    }
+
+    function open(over, fromId){
+      close();
+      host = over; opener = fromId;
+      scrim = document.createElement('div');
+      scrim.className = 'hf-scrim';
+      sheet = TPL.cloneNode(true);
+      sheet.classList.add('hf-sheet', 'hf-filt-sheet');
+      host.appendChild(scrim);
+      host.appendChild(sheet);
+
+      scrim.addEventListener('click', function(e){ e.stopPropagation(); close(); }, true);
+
+      var closeBtn = null;
+      [].forEach.call(sheet.querySelectorAll('p'), function(p){
+        if (p.textContent.trim() === 'Close' && !closeBtn) closeBtn = p;
+      });
+      if (closeBtn) { closeBtn.classList.add('hf-hot');
+        closeBtn.addEventListener('click', function(e){
+          e.preventDefault(); e.stopPropagation(); close(); }, true); }
+
+      [].forEach.call(sheet.querySelectorAll('[data-name="Cat"]'), function(cell){
+        cell.classList.add('hf-hot');
+        cell.addEventListener('click', function(e){
+          e.preventDefault(); e.stopPropagation();
+          var p = cell.querySelector('p');
+          if (!p) return;
+          var name = p.textContent.trim();
+          paintRail(name);
+          showPane(name);
+        }, true);
+      });
+
+      var clearBtn = sheet.querySelector('[data-name="Button / Clear All"]');
+      if (clearBtn){
+        clearBtn.classList.add('hf-hot');
+        clearBtn.addEventListener('click', function(e){
+          e.preventDefault(); e.stopPropagation();
+          PICK.sort = 'Relevance'; PICK.on = {};
+          paintRail('Sort by'); showPane('Sort by');
+        }, true);
+      }
+
+      var applyBtn = sheet.querySelector('[data-name="Button / Primary"]');
+      if (applyBtn){
+        applyBtn.classList.add('hf-hot');
+        applyBtn.addEventListener('click', function(e){
+          e.preventDefault(); e.stopPropagation();
+          // A filter that names an operator this route does not run, or a bus type it does not
+          // have, matches nothing -- and that is a real screen, not an error. Any operator other
+          // than Laxmi Holidays is the honest case: the whole change flow says so out loud.
+          var impossible = Object.keys(PICK.on).some(function(k){
+            return /^Bus Operator\|/.test(k) && k.indexOf('Laxmi Holidays') < 0;
+          });
+          close();
+          if (impossible && i22 >= 0) { go(i22); return; }
+          // otherwise Apply just closes: the list behind is the list it was already showing
+        }, true);
+      }
+
+      paintRail('Sort by');
+      showPane('Sort by');
+    }
+
+    window.__closeFilters = close;
+    window.__openFilters = open;
+
+    // the chip on each list that opens it
+    [['02', null], ['14', null]].forEach(function(pair){
+      var i = ORDER.indexOf(pair[0]); if (i < 0) return;
+      var chip = screens[i].querySelector('[data-name="Chip / Filter and Sort"]');
+      if (!chip) { console.warn(pair[0] + ': no Filter and Sort chip'); return; }
+      chip.classList.add('hf-hot', 'hf-exempt');
+      chip.addEventListener('click', function(e){
+        e.preventDefault(); e.stopPropagation();
+        open(screens[i], pair[0]);
+      }, true);
+    });
+
+    // 22 · Back goes to whichever list the filter was applied on
+    if (i22 >= 0) screens[i22].addEventListener('click', function(e){
+      if (!e.target.closest || !e.target.closest('.hf-back')) return;
+      e.preventDefault(); e.stopPropagation();
+      var to = ORDER.indexOf(opener || '02');
+      if (to >= 0) go(to);
+    }, true);
   })();
 
   // 01 / 12 / 17 · The home tab bar, and the profile behind it.

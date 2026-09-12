@@ -9218,3 +9218,62 @@ ground and defeats the threshold. Worth remembering as the general rule: when th
 placed on a chip, cut the art without a chip.
 
 08 moved from 7.31% to 7.59%, no step — the icons are smaller and the card reflowed slightly.
+
+---
+
+CHANGE · LEARNED  ·  2026-09-12  ·  molades-build  [· Source: user]
+
+**Filter and Sort, on both bus lists. Three screens, and two bugs worth keeping.**
+
+Devansh: *"Build filters and inside of it all screens for onward and when user lands on bus
+selection screen from calender in date change screen since redbus app have it."* The chip was drawn
+on the onward list and did nothing; the date-change list had no chip at all.
+
+- **21 · Filter Buses** (`IMG_4556`) — a sheet over the list: *Close*, *Filter Buses*, the eleven-
+  category rail exactly as the real app lists it, the Sort by pane, and *Clear All* / *Apply*.
+- **21a · Filter Buses · AI** (`IMG_4557`) — the AI smart filter pane: the ask box, *Try asking*,
+  and the three suggestions verbatim.
+- **22 · No buses** (`IMG_5202`) — the balloon art, *Oops!!*, *No Buses Found*, and *"Sorry! No
+  Buses found for applied filters. Modify filters and try again"*.
+- **14 got the filter row** 02 already had, copied from 02's own Filters card, because the real
+  reschedule list carries it (`IMG_5224`).
+
+**Only two panes are drawn; the rest are built at runtime from a table.** A pane is a state of one
+control, not eleven screens — the same arrangement as every other selection state in this build.
+The options come only from facts the prototype already states elsewhere: the operators on 02, the
+points on 04 and 04a, the amenities on 03a, the coaches in the fleet. **Three categories the
+route cannot answer** — Single Window Sleeper/Seater, RTC Bus Service Type and Special Features —
+say *"No … options on this route"* instead of opening empty or inventing a list. *Departure Time
+from Source* uses redBus's standard four time bands; that one is an assumption, not a screenshot.
+
+**Apply lands on 22 only when it honestly should**: when the filter names an operator other than
+Laxmi Holidays. Every other combination closes the sheet and leaves the list as it was, because this
+prototype has no second result set to show and pretending otherwise would be invented data.
+
+**The backdrop came off.** 21 was first built the way 09a, 11a and 19a are, with the whole screen
+behind the sheet cloned under a scrim. Behind *this* sheet that meant 4,957pt of bus list — **847
+nodes and 163KB** — of which only the top 70pt is ever visible. It now clones the list's header
+alone: 5 nodes, 18KB, identical render.
+
+**LEARNED 1 — a screen-level gate eats every control added after it.** 02 is guarded by
+`onlyOne()`, a capture listener on the whole screen that lets exactly one bus card through and
+blinks it for everything else. Capture runs ancestor-to-target, so it ran before the chip's own
+listener and swallowed the tap — and then, once the chip was exempted, it swallowed **every tap
+inside the sheet** too, because the sheet is laid over 02 and so sits inside 02's DOM. Now the gate
+lets `.hf-exempt`, `.hf-sheet` and `.hf-scrim` through by name. It cannot exempt `.hf-hot`, because
+the forward hotspots it exists to hold back all carry that class. This is the third time a
+capture-phase ordering bug has turned up in this file (Home's tab bar, the passenger gate, now
+this); the rule is **a listener on an ancestor wins, so any gate on a screen needs a named way
+through for everything laid over it.**
+
+**LEARNED 2 — a stretched instance exports without its own styling.** The first diff of 21 read
+5.65% with a **20.9% step at 700–800pt**, and the build had no Apply button at all. In Figma the
+button filled the bar's height (`layoutAlign: STRETCH`), and for a stretched instance the code
+export emits only the layout classes — `flex flex-[1_0_0] flex-row items-center self-stretch` — and
+drops the fill, the radius and the height, so the component's defaults never apply. A fixed 48pt
+height makes it export whole. 21 fell to 2.63%, 21a to 3.84%. **When a primary vanishes in the
+build but not in Figma, check whether the instance stretches.** The step was the only reason it
+was caught; the percentage alone would have passed.
+
+Diffs: 21 2.63%, 21a 3.84%, 22 1.18%, 14 6.90% (was 7.05% before the filter row; no step).
+38 screens.

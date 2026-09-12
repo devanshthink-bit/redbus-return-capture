@@ -25,7 +25,7 @@ await build({
 });
 
 const { SCREENS } = require(out);
-if (SCREENS.length !== 35) throw new Error(`expected 35 screens, got ${SCREENS.length}`);
+if (SCREENS.length !== 38) throw new Error(`expected 38 screens, got ${SCREENS.length}`);
 
 // 2 · render each frame to static markup
 const rendered = SCREENS.map(({ id, name, C }) => {
@@ -74,7 +74,10 @@ const FORWARD = {
   '18':  ['[data-name="Button / Primary"]'],     // View refund details
   '19':  [],   // Proceed opens the why-cancel sheet -- see shell.html
   '19a': [],   // a sheet: Cancel ticket walks on, the x closes it
-  '20':  []    // the cancelled ticket is where the flow ends
+  '20':  [],   // the cancelled ticket is where the flow ends
+  '21':  [],   // a sheet: the rail, Apply and Clear All are wired in shell.html
+  '21a': [],   // the AI pane, drawn -- the rail switches to it at runtime
+  '22':  []    // nothing left to tap but Back
 };
 for (const s of rendered) if (!(s.id in FORWARD)) throw new Error(`no forward map for ${s.id}`);
 

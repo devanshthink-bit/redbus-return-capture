@@ -68,7 +68,7 @@ on push. `raw/` (interview transcripts) is gitignored.
 | `frozen/v1.html` · `frozen/v2.html` · `frozen/prototype.html` | the other frozen builds |
 | `v1.html` · `v2.html` · `v3.html` · `prototype.html` | redirects to `/?version=N` |
 | `component-sheet.html` | Design-language component sheet |
-| `hifi/` | **The hi-fi prototype** — the 35 Figma frames as working code, shown inside the root viewer. `app.html` and `app.css` are generated, `index.html` is a redirect; see §21 |
+| `hifi/` | **The hi-fi prototype** — the 38 Figma frames as working code, shown inside the root viewer. `app.html` and `app.css` are generated, `index.html` is a redirect; see §21 |
 
 **Source material** (not in the repo): `/Users/devansh/Downloads/RedBus Case Docs/` — 8 interview
 transcripts, scope card and research plan PDFs, `redfigjam.pdf`, `PAM03L08.pdf`, and two screenshot
@@ -775,6 +775,9 @@ not from memory. **29 frames = 17 screens + 12 state variants** (01a · 03a · 0
 | 19 · Refund details | — | Proceed | 19a |
 | 19a · Why cancel | — | *sheet off **Refund details***; a reason, then Cancel ticket | 20 |
 | 20 · Ticket cancelled | — | *the ×* | 12 |
+| 21 · Filter Buses | — | *sheet off the **Filter and Sort** chip on 02 or 14*; a category, an option, Apply | the list · 22 |
+| 21a · Filter Buses · AI | — | *the AI smart filter pane of 21, drawn* | — |
+| 22 · No buses | — | *what Apply lands on when the filters match nothing*; Back | the list it came from |
 | ↳ *cancelling is one way* — from here the booking card on My Bookings opens 20, not the live ticket | | | 20 |
 | 12 · My Bookings | `s-mybook` | a booking card | 11 |
 | 12a · My Bookings · empty | — | *what the tab shows before there is a booking*; Book Now | 01 |
@@ -2140,7 +2143,7 @@ rules, and the range **ends** in the accent), 06 · 06a (the narrowing heading, 
 Figma never had), 08 (what declining Free Cancellation gives you), 11 (Change day inside the ticket
 card). 12 was already right.
 
-**The build is 35 screens.** It shipped at 23, grew by thirteen and lost one, each for its own reason:
+**The build is 38 screens.** It shipped at 23, grew by sixteen and lost one, each for its own reason:
 `06b · Your return · day cannot change` (6 Sep) is the trap state, which existed in v4 and in none
 of the frames; `01a · Select date` is the calendar sheet off Home's date row; `04a · Board & drop ·
 dropping` is the second half of the boarding-points tab control. All three live in **Screens**, not
@@ -2173,15 +2176,15 @@ Two checks, because each is blind to what the other sees.
 | **Geometry** | 1,730 nodes matched by `data-node-id` against the Figma metadata. **Three** blocks off by more than 4px. **Last run 4 Sep on the 23-frame build, and not re-run since — 01a, 04a and 06b have never been geometry-checked.** Treat the number as history, not as current |
 | **Pixels** | **current.** All **29** frames were re-rendered headless at native size and diffed against Figma renders pulled the same hour — the full table is in the code block directly below this one, re-measured 10 Sep. **Do not compare 11's number with its old 5.38% or 11.22%** — the frame is four and a half times taller and half of it is photographic, so a 1px accumulated drift turns every pixel of a photo different. Read its bands for *steps*, not its percentage. Of the rest, worst are **11.99%** (01) and **11.69%** (03a) — the two tallest — with 04, 05a, 06a and 06b above 8% |
 
-**The full 35 (12 Sep), for the next person who needs a baseline to compare against:**
+**The full 38 (12 Sep), for the next person who needs a baseline to compare against:**
 
 ```
 01  11.99   01a  2.60   02  5.84   03  4.80   03a 11.69   03b  4.77
 04   9.73   04a  5.77   05  5.20   05a 8.06   05b  7.54   06   5.79
 06a  8.43   06b  8.83   07  6.21   08  7.59   08a  5.21   08b  8.25
 08c  5.82   09  1.96   09a 2.67   09b 1.76   11 10.35   11a  4.39
-12   2.35   12a 1.62   13  4.97   14  7.05   15  1.43   16   2.66   17  2.04
-18   1.17   19  2.43   19a 5.83   20  8.75
+12   2.35   12a 1.62   13  4.97   14  6.90   15  1.43   16   2.66   17  2.04
+18   1.17   19  2.43   19a 5.83   20  8.75   21  2.63   21a  3.84   22  1.18
 ```
 
 **The cancellation flow arrived on 12 Sep**: 18 · Review and cancel, 19 · Refund details,
