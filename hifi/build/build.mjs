@@ -25,7 +25,7 @@ await build({
 });
 
 const { SCREENS } = require(out);
-if (SCREENS.length !== 29) throw new Error(`expected 29 screens, got ${SCREENS.length}`);
+if (SCREENS.length !== 31) throw new Error(`expected 31 screens, got ${SCREENS.length}`);
 
 // 2 · render each frame to static markup
 const rendered = SCREENS.map(({ id, name, C }) => {
@@ -63,7 +63,9 @@ const FORWARD = {
   '09a': [],                                        // a sheet: it closes, it does not go forward
   '09b': [],                                        // it leaves on its own timer, not on a tap
   '11':  ['[data-name="Change day"]'],
+  '11a': [],   // a sheet: it opens over the ticket and its own button walks on -- see shell.html
   '12':  ['[data-name="Booking"]'],
+  '12a': [],   // the empty list is a destination, not a step -- Book Now goes back to Home
   '13':  [],   // one hotspot per live day, wired in shell.html -- see LATE_HOT
   '14':  ['[data-name="Card / Bus"]'],
   '15':  ['[data-name="Button / Primary"]'],

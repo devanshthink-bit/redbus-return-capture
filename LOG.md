@@ -8932,3 +8932,94 @@ point to it, not duplicate it.
 nothing — orphans from re-pulling 11 and other frames, since `pull.py` adds new assets and never
 removes the ones a re-pull dropped. 6.5 MB total, so it costs nothing and deleting is the kind of
 unasked cleanup that breaks things. Flagged, not swept.
+
+---
+
+CHANGE · CRITIQUE · LEARNED  ·  2026-09-12  ·  molades-build  [· Source: user]
+
+**Twelve things wrong, in one pass. Two new screens, and one lesson worth more than the rest.**
+
+Devansh sent a single message with twelve faults in it, most of them things that looked finished
+and were not. Grouped by what they actually were:
+
+**Controls that did nothing.** *View ticket* on 16, the booking card on 12, *Change seat* on 15,
+and a tap anywhere but a payment method on 09. Three of the four had the same cause: the flow map
+can only say "this element goes to the next screen in the linear order", and for these four the
+next screen in the order was not the right answer. 16 is last, so there was no next at all. 12's
+next is 13, so tapping a booking opened the change calendar instead of the ticket. **This is now
+the fourth time this exact shape of bug has been fixed in this build** — Review's three change
+links, Pay's primary, the calendar grid, and now these. The flow map is a convenience for the
+common case and a trap for every screen with more than one exit.
+
+**Values that did not vary.** The two bus cards on 14 were the same operator, the same coach, the
+same times and the same rating on all seventeen days; only the fares moved. Devansh: *"why are we
+showing same buses on all dates??"* The flow now carries a fleet of six and each day runs two of
+them, picked by arithmetic on the date so the same day always shows the same pair. The confirm
+screen and the receipt read the same function, which also fixed a bug nobody had reported: the
+receipt named Laxmi Holidays and seat U4 whichever bus and seat had been picked.
+
+**A first attempt at the pairing repeated after six days.** `day % 6` and `day * 3 + 2` are both
+period-6 however they are dressed up, so 11 Sep and 17 Sep drew the identical pair — the same
+complaint, one week later. Mixing a period of 6 with a period of 7 repeats every 42 days instead,
+and the calendar is 17 long. **Lesson: any polynomial in `day % n` has period n. If you want two
+indices that do not move together, they need different moduli, not different formulas.**
+
+**A gate that should have been a screen.** The first pass dimmed Home's My Bookings and My Account
+tabs until there was a booking, on the reasoning that "a tab that opens an empty list is worse than
+a tab that waits". Devansh: *"when there is no booking dont disable my bookings and profile. show
+this empty screen."* He is right and the reasoning was wrong. The real app never disables its own
+tab bar — it opens the tab and the tab says it is empty. **An empty state is an answer; a dead
+control is a question.** New screen **12a**, from his screenshot: the cat art, *No recent trips*,
+the two-line body and the pink *Book Now* pill. Every tab is live from the first frame, and My
+Bookings goes to 12a before there is a ticket and to 12 after.
+
+**A missing step.** *Change your return day* went straight to the calendar. The real app puts a
+sheet in between — **11a · Change of plans** — with the free date change and the cancellation
+sitting side by side, so the traveller sees what cancelling would cost before choosing to move
+instead. That is the construct's whole argument, drawn by the app itself. The button reads
+*Proceed to cancel* at rest, exactly as the real one does: the destructive option is the default,
+which is the problem this project exists to solve. Choosing the free change turns it into *Change
+date or time*.
+**The cancel branch is the one thing on that sheet this prototype does not build.** It is drawn
+because the real sheet draws it and because leaving it out would misrepresent the choice; pressing
+the button on it points at the free option rather than walking somewhere that does not exist.
+
+**Back from the calendar went to My Bookings** from either opener, for the fourth-time reason
+above. The sheet now remembers which screen it opened over and 13's Back answers to that.
+
+**Wrong ink, wrong ring.** The Note blocks used a reddish brown `#5a3a2a`; the real app puts
+near-black on its pink grounds — measured at `#130D03` in the *Chat with redBuddy* block of
+`Picsew_TicketDetails`, against a `#F2D9D5` ground. All six note texts now bind `text/primary`.
+And the countdown ring's red arc was 26px thick against the grey track's 18px, because the sweep's
+mask hole was 88px when the track — `r=105` at `stroke-width 18` in a 228px box — starts at 96px.
+
+**A promise with no end.** Nothing marked the ticket after the move. Devansh: *"after ticket is
+moved we are not disabling further moves (real screenshots are there in folder for it, do it
+exactly same)."* The real app's answer is in `IMG_5217`: a band directly under the header, white on
+`#c54646` at 50pt, with a crossed-calendar glyph and one line saying what happened and when, and
+the action rows gone. A moved ticket is the same fact, so it takes the same band — *Return date
+changed on 12 Sep 2026 09:41* — and the change row stays, spent: *1 change left* becomes *No
+changes left*, the chevron goes, and tapping it opens nothing. **The row is not deleted on
+purpose.** A control that vanishes leaves the traveller wondering whether the promise was ever
+there; one that reads as used up answers the question.
+
+**LEARNED, and this is the important one.** Mid-edit, 11 measured **22.28% with an 82.5% step at
+1800–1900pt**. The row had been deleted in Figma and the build had never been re-pulled, so the
+diff was reading my own un-synced edit as a defect. After the re-pull it fell to **10.35%** on a
+clean ramp. The same drift was live on five more frames — the note ink was changed in Figma and
+none of 07, 13, 14, 15 or 16 had been pulled. **A Figma edit and a re-pull are one action, and
+splitting them is not "doing it later", it is shipping two different designs.** `CLAUDE.md` has
+said this since 6 Sep; the step is what it looks like when you forget. It was also the cheapest
+possible detection — one diff, one number, one glance at the band profile.
+
+**One deviation, declared.** 07, 13, 14 and 16 were brought over by applying the exact
+character-for-character substitution Figma's own codegen produces for that node, rather than by
+four more full pulls. That is normally forbidden — screen files are generated. It was made safe by
+proving it: 15 was pulled for real, the substitution was applied to 15's *old* file, and the two
+were compared byte-for-byte after normalising asset filenames. They matched exactly. The render
+diffs then confirmed all four independently.
+
+**Still open.** The empty My Bookings uses the cat-in-suitcase art the real My Bookings already
+carries, not the cat-on-stacked-suitcases from Devansh's screenshot — that image is not in
+`RedBusScreenshots` and cannot be cut from a chat attachment. Drop it in the folder and the swap
+is one asset.

@@ -21,7 +21,9 @@ import S09 from "./screens/09";
 import S09A from "./screens/09a";
 import S09B from "./screens/09b";
 import S11 from "./screens/11";
+import S11A from "./screens/11a";
 import S12 from "./screens/12";
+import S12A from "./screens/12a";
 import S13 from "./screens/13";
 import S14 from "./screens/14";
 import S15 from "./screens/15";
@@ -52,7 +54,9 @@ export const SCREENS = [
   { id: "09a", name: '09a · Booking details', C: S09A },
   { id: "09b", name: '09b · Please wait', C: S09B },
   { id: "11", name: '11 · Ticket details', C: S11 },
+  { id: "11a", name: '11a · Change of plans', C: S11A },
   { id: "12", name: '12 · My Bookings', C: S12 },
+  { id: "12a", name: '12a · My Bookings · empty', C: S12A },
   { id: "13", name: '13 · Change day', C: S13 },
   { id: "14", name: '14 · Move · buses', C: S14 },
   { id: "15", name: '15 · Confirm the move', C: S15 },

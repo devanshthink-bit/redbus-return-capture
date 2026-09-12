@@ -100,7 +100,7 @@ export default function Component14MoveBuses() {
         </div>
         <div className="content-stretch flex flex-col gap-[16px] items-start overflow-clip relative shrink-0 w-full" data-node-id="377:3133" data-name="Frame">
           <div className="bg-[#f5dcce] content-stretch flex flex-col items-start overflow-clip p-[14px] relative rounded-[10px] shrink-0 w-full" data-node-id="377:3134" data-name="Frame">
-            <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[#5a3a2a] text-[14px] w-full" data-node-id="377:3135">
+            <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="377:3135">
               Note: Once you change the date for this ticket, you will not be able to cancel or change the date again.
             </p>
           </div>

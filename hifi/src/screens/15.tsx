@@ -1,6 +1,6 @@
-const imgGlyph = "assets/cc525b8e-7104-4a98-b303-702ba7664fc0.svg";
-const imgIconChevronLeft = "assets/089a1576-2ca8-4be9-b7e8-f30094a7a46a.svg";
-const imgStatusIcons = "assets/bf9d88d7-1bcb-40f1-ad66-590c8c6d5c3f.svg";
+const imgGlyph = "assets/f987e112-3f21-4093-9c91-abca9b06aa32.svg";
+const imgIconChevronLeft = "assets/c52a55a0-4bd0-4f7a-a9fa-205a96aa0d14.svg";
+const imgStatusIcons = "assets/091fbdca-8e2e-4f59-80c8-bfdc341f332f.svg";
 
 function IconSearch({ className }: { className?: string }) {
   return (
@@ -137,7 +137,7 @@ export default function Component15ConfirmTheMove() {
           </div>
         </div>
         <div className="bg-[#f5dcce] content-stretch flex flex-col items-start overflow-clip p-[14px] relative rounded-[10px] shrink-0 w-full" data-node-id="372:3106" data-name="Note">
-          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[#5a3a2a] text-[14px] w-full" data-node-id="372:3107">
+          <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="372:3107">
             Note: Once you confirm, this ticket cannot be cancelled or changed again. A cheaper day is not refunded.
           </p>
         </div>

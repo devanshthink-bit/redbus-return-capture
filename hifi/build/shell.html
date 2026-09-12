@@ -183,6 +183,18 @@
   .hf-sheet{position:absolute;left:0;right:0;bottom:0;max-height:74%;overflow-y:auto;
     border-radius:20px 20px 0 0;background:#fff;-webkit-overflow-scrolling:touch}
   .hf-sheet::-webkit-scrollbar{width:0;height:0}
+  /* A ticket that can no longer be acted on says so in a band right under the header, in white on
+     the accent red -- measured off the real app's cancelled ticket (IMG_5217) at #c54646 and 50pt.
+     The same band carries "date changed", because it is the same fact: this ticket is now fixed. */
+  .hf-lockband{display:flex;align-items:center;gap:10px;height:50px;padding:0 16px;
+    background:#c54646;flex:0 0 auto;width:100%;box-sizing:border-box}
+  .hf-lockband p{margin:0;font-family:Inter,sans-serif;font-size:14px;line-height:20px;
+    font-weight:400;color:#fff}
+  .hf-lockband svg{flex:0 0 auto}
+  /* and the row that offered the change reads as spent rather than disappearing, so the traveller
+     can see the promise was kept rather than wondering where it went */
+  .hf-spent{opacity:.55}
+  .hf-spent .hf-hot,.hf-spent.hf-hot{cursor:default}
   /* The countdown ring. Figma draws it; this sweeps it, because an exported arc is a picture.
      The hole has to match the grey track exactly or the red arc reads as a fatter ring laid over
      a thinner one. The track is r=105 at stroke-width 18 in a 228px box, so it occupies 96..114
@@ -282,7 +294,7 @@
 
   // 01a is a bottom sheet, not a step: it opens from the date row on Home and closes back to it.
   // Leaving it in the linear order meant Back from the bus list landed on an open calendar.
-  var OVERLAY = { '01a': 1, '03a': 1, '04a': 1, '09a': 1 };
+  var OVERLAY = { '01a': 1, '03a': 1, '04a': 1, '09a': 1, '11a': 1 };
   // Frames the linear walk must step over. Overlays are sheets that close back to their opener;
   // 05a and 05b are not steps at all -- they are the two answered states of the calendar, and the
   // picker moves between them itself. Left in the order, Continue on 05a walked to 05b, so a
@@ -294,10 +306,12 @@
   // 09b is the payment countdown. It is not a step you can walk back into: entering it starts
   // the timer, which then throws you forward to the ticket again. It is only ever reached by
   // tapping Pay.
+  // 11a is the change-of-plans sheet, and 12a is the empty My Bookings -- a tab you arrive at
+  // from the bar, not a step on the way to anywhere.
   var SKIP = { '01a': 1, '03a': 1, '04a': 1, '05a': 1, '05b': 1, '09a': 1, '09b': 1,
-               '06a': 1, '06b': 1, '07': 1, '17': 1 };
+               '06a': 1, '06b': 1, '07': 1, '17': 1, '11a': 1, '12a': 1 };
   // Screens whose forward hotspots are one per cell, added by a module rather than by the flow map.
-  var LATE_HOT = { '13': 1, '17': 1 };
+  var LATE_HOT = { '13': 1, '17': 1, '11a': 1, '12a': 1 };
   // Which screen a state frame belongs to, for Back.
   var BACK_AS = { '05a': '05', '05b': '05', '06a': '06', '06b': '06' };
   function nextOf(i){ i += 1; while (screens[i] && SKIP[ORDER[i]]) i += 1; return i; }
@@ -477,6 +491,7 @@
   function go(i){
     if (i < 0 || i >= screens.length) return;
     if (window.__closeSheet) window.__closeSheet();   // a sheet does not survive a page change
+    if (window.__closeChangePlans) window.__closeChangePlans();
     if (ORDER[at] === '09b' && window.__stopWait) window.__stopWait();
     var from = ORDER[at];
     var dir = i >= at ? 1 : -1;
@@ -1707,6 +1722,11 @@
     // by nothing else -- seeding it here would have made every other screen say U2, because that
     // is the berth the frame happens to draw.
     function current(){
+      // opened as the change flow's seat map, it shows the move's seat and nothing else
+      if (DETOUR === '15' && window.__moveSeat) {
+        var m = window.__moveSeat();
+        if (m && names[m]) return m;
+      }
       if (RETURN.seatPick) return RETURN.seatPick;
       if (RETURN.seat && names[RETURN.seat]) return RETURN.seat;
       return drawnSel.__seat;
@@ -1741,6 +1761,14 @@
       var cell = e.target.closest('[data-name^="Seat "]');
       if (!cell || !cell.__free) return;
       e.preventDefault(); e.stopPropagation();
+      // This map is also the map for the moved bus: the change flow sends "Change seat" here as a
+      // detour, and the leg is the same leg. When that is where the traveller came from, the pick
+      // belongs to the move, not to the booking -- two different seats on two different buses.
+      if (DETOUR === '15' && window.__moveSeatPicked) {
+        window.__moveSeatPicked(cell.__seat);
+        paint();
+        return;
+      }
       RETURN.seatPick = cell.__seat;
       RETURN.seatDeck = cell.__deck;
       RETURN.seatKind = cell.__kind;
@@ -1951,16 +1979,183 @@
 
     ON_ENTER['11'] = function(){ current = -1; spy(); };
 
-    // Change your return day is the door into the change flow, and it opens on 13. The flow map
-    // could only say "next", which from the ticket is My Bookings -- a screen the traveller did
-    // not ask for. CONTEXT §18 has had 11 -> 13 since the table was written.
-    var i13 = ORDER.indexOf('13');
+    // Change your return day is the door into the change flow. It used to open 13 directly; the
+    // real app puts a sheet in between -- "Change of plans?", with the free date change and the
+    // cancel sitting side by side so the traveller sees what cancelling would actually cost before
+    // choosing to move instead. Devansh: "when user click on change your return date then this
+    // bottom sheet opens ... in which user can select an option and proceed to change day screen."
     var changeDay = sec.querySelector('[data-name="Change day"]');
-    if (i13 >= 0 && changeDay) changeDay.addEventListener('click', function(e){
-      e.preventDefault(); e.stopPropagation(); go(i13);
+    if (changeDay) changeDay.addEventListener('click', function(e){
+      e.preventDefault(); e.stopPropagation();
+      // one change, and it is spent. The row stays so the promise is still legible; it just
+      // does not open anything any more.
+      if (window.__ticketMoved && window.__ticketMoved()) return;
+      if (window.__openChangePlans) window.__openChangePlans(sec);
+      else { var i13 = ORDER.indexOf('13'); if (i13 >= 0) go(i13); }
     }, true);
-    else if (!changeDay) console.warn('11: no Change day row');
+    else console.warn('11: no Change day row');
     paint(0);
+  })();
+
+  // 11a · "Change of plans?" -- the sheet between the ticket and the calendar. Same construction as
+  //       09a: the Sheet is lifted out of its frame and laid over whichever screen is showing, so
+  //       the screen behind stays the real one and only the sheet scrolls. It is in OVERLAY and
+  //       SKIP, so prev / next / Back / the arrow keys walk straight past it.
+  //
+  //       The button is the interesting part. At rest it reads "Proceed to cancel", exactly as the
+  //       real sheet does -- the default is the destructive one, which is the whole reason this
+  //       construct exists. Choosing the free change turns it into "Change date or time".
+  (function changePlans(){
+    var i11a = ORDER.indexOf('11a'), i13 = ORDER.indexOf('13');
+    if (i11a < 0 || i13 < 0) return;
+    var TPL = screens[i11a].querySelector('[data-name="Sheet"]');
+    if (!TPL) { console.warn('11a: no Sheet'); return; }
+    TPL = TPL.cloneNode(true);
+    [].forEach.call(TPL.querySelectorAll('.hf-back, .hf-fwd, .hf-hot'), function(n){
+      n.classList.remove('hf-back', 'hf-fwd', 'hf-hot');
+    });
+
+    var host = null, scrim = null, sheet = null, chosen = null;
+    // which screen the sheet was opened from, so the calendar behind it can go back there. prevOf
+    // 13 is My Bookings, a screen nobody came through to reach the change flow -- the same shape
+    // of bug as Review's three change links, and the reason DETOUR exists.
+    var opener = null;
+    window.__changeOpener = function(){ return opener; };
+
+    function close(){
+      if (scrim && scrim.parentNode) scrim.parentNode.removeChild(scrim);
+      if (sheet && sheet.parentNode) sheet.parentNode.removeChild(sheet);
+      scrim = sheet = host = null; chosen = null;
+    }                                   // opener deliberately survives: 13's Back still needs it
+
+    function label(txt){
+      var p = sheet && sheet.querySelector('[data-name="Button / Primary"] p');
+      if (p) p.textContent = txt;
+    }
+    function pick(card){
+      chosen = card;
+      [].forEach.call(sheet.querySelectorAll('[data-name^="Option / "]'), function(c){
+        var on = c === card;
+        var r = c.querySelector('[data-name="Radio"]');
+        if (r) r.classList.toggle('hf-radio-on', on);
+        // the chosen card takes the accent border the rest of the file uses for a selection
+        c.style.borderColor = on ? '#c54646' : '';
+        c.style.borderWidth = on ? '2px' : '';
+      });
+      label(card.getAttribute('data-name') === 'Option / Change date'
+              ? 'Change date or time' : 'Proceed to cancel');
+    }
+
+    function open(over){
+      var was = null;
+      for (var k = 0; k < screens.length; k++) if (screens[k] === over) was = ORDER[k];
+      close();
+      opener = was;
+      host = over;
+      scrim = document.createElement('div');
+      scrim.className = 'hf-scrim';
+      sheet = TPL.cloneNode(true);
+      sheet.classList.add('hf-sheet');
+      host.appendChild(scrim);
+      host.appendChild(sheet);
+
+      scrim.addEventListener('click', function(e){ e.stopPropagation(); close(); }, true);
+      var x = sheet.querySelector('[data-name="Button / Close"]');
+      if (x) { x.classList.add('hf-hot');
+               x.addEventListener('click', function(e){
+                 e.preventDefault(); e.stopPropagation(); close(); }, true); }
+
+      [].forEach.call(sheet.querySelectorAll('[data-name^="Option / "]'), function(c){
+        c.classList.add('hf-hot');
+        c.addEventListener('click', function(e){
+          e.preventDefault(); e.stopPropagation(); pick(c);
+        }, true);
+      });
+
+      var btn = sheet.querySelector('[data-name="Button / Primary"]');
+      if (btn){
+        btn.classList.add('hf-hot');
+        btn.addEventListener('click', function(e){
+          e.preventDefault(); e.stopPropagation();
+          // Nothing chosen, or the cancel branch chosen: the free change is the one path this
+          // prototype builds, so point at it rather than walking somewhere that does not exist.
+          if (!chosen || chosen.getAttribute('data-name') !== 'Option / Change date'){
+            var free = sheet.querySelector('[data-name="Option / Change date"]');
+            if (free) { blinkAt(free); pick(free); }
+            return;
+          }
+          close();
+          go(i13);
+        }, true);
+      }
+    }
+
+    window.__openChangePlans = open;
+    window.__closeChangePlans = close;
+    // the standalone frame is what Figma draws; leave it alone for the rail and the diff
+  })();
+
+  // 11 · the ticket after the move. Devansh: "after ticket is moved we are not disabling further
+  //      moves (real screenshots are there in folder for it, do it exactly same)". The real app's
+  //      answer, on its cancelled ticket, is a band in white on the accent red directly under the
+  //      header -- a crossed-calendar glyph and one line saying what happened and when -- with the
+  //      action rows gone and the leg greyed. A moved ticket is the same fact: it is fixed now.
+  //
+  //      The row itself stays, spent rather than deleted. "1 change left" becomes "No changes
+  //      left", the chevron goes, and tapping it opens nothing. A control that vanishes leaves the
+  //      traveller wondering whether the promise was ever there; one that reads as used up
+  //      answers the question.
+  (function moveLock(){
+    var i11 = ORDER.indexOf('11');
+    if (i11 < 0) return;
+    var sec = screens[i11];
+    var pin = sec.querySelector('.hf-sticky');
+    var row = sec.querySelector('[data-name="Change day"]');
+    if (!pin || !row) { console.warn('11: cannot lock (pin=' + !!pin + ' row=' + !!row + ')'); return; }
+
+    var band = null;
+    function makeBand(when){
+      var b = document.createElement('div');
+      b.className = 'hf-lockband';
+      b.setAttribute('data-name', 'Band / Date changed');
+      b.innerHTML =
+        '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">' +
+        '<rect x="2.2" y="3.6" width="15.6" height="14" rx="2.4" stroke="#fff" stroke-width="1.5"/>' +
+        '<path d="M2.2 8h15.6M6.4 2v3M13.6 2v3" stroke="#fff" stroke-width="1.5"/>' +
+        '<path d="M3 18.4 17.4 3.2" stroke="#fff" stroke-width="1.5"/></svg>' +
+        '<p></p>';
+      b.querySelector('p').textContent = 'Return date changed on ' + when;
+      return b;
+    }
+
+    // the label the real band uses: "2 Sep 2026 09:30"
+    function stamp(){
+      var M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      var d = new Date(2026, 8, 12, 9, 41);
+      function two(n){ return n < 10 ? '0' + n : String(n); }
+      return d.getDate() + ' ' + M[d.getMonth()] + ' ' + d.getFullYear()
+             + ' ' + two(d.getHours()) + ':' + two(d.getMinutes());
+    }
+
+    var MOVED = false;
+    window.__lockTicket = function(){
+      if (MOVED) return;
+      MOVED = true;
+      // under the header, above the guarantee band and the tabs -- the header is the pin's first
+      // child, so the band goes straight after it and travels with the sticky block
+      var header = pin.querySelector('[data-name="Header"]');
+      band = makeBand(stamp());
+      if (header && header.nextSibling) pin.insertBefore(band, header.nextSibling);
+      else pin.appendChild(band);
+
+      row.classList.add('hf-spent');
+      row.classList.remove('hf-hot', 'hf-fwd');
+      var pill = row.querySelector('[data-node-id="I127:1371;116:1179"]');
+      if (pill) pill.textContent = 'No changes left';
+      var chev = row.querySelector('[data-name="Icon / Chevron Right"]');
+      if (chev) chev.style.visibility = 'hidden';
+    };
+    window.__ticketMoved = function(){ return MOVED; };
   })();
 
   // 01 / 12 / 17 · The home tab bar, and the profile behind it.
@@ -2033,8 +2228,22 @@
       changeRow.classList.add('hf-hot');
       changeRow.addEventListener('click', function(e){
         e.preventDefault(); e.stopPropagation();
+        if (window.__ticketMoved && window.__ticketMoved()) return;
         if (window.__openChangePlans) window.__openChangePlans(screens[i12]);
       }, true);
+    }
+
+    // 12a · nothing booked yet. "Book Now" is the only thing on the screen and it goes to Home,
+    //       which is where a booking starts. Without it the empty state is a dead end, which is
+    //       the thing the empty state exists to avoid.
+    if (i12a >= 0){
+      var book = screens[i12a].querySelector('[data-name="Button / Book Now"]');
+      if (book){
+        book.classList.add('hf-hot', 'hf-fwd');
+        book.addEventListener('click', function(e){
+          e.preventDefault(); e.stopPropagation(); go(i01);
+        }, true);
+      } else console.warn('12a: no Book Now button');
     }
 
     // The profile's own Bookings row is the other way in, and it is the one the real app leads with.
@@ -2210,8 +2419,16 @@
                           : 'The new day costs exactly the same.');
     }
     ON_ENTER['14'] = paintBuses;
-    ON_ENTER['15'] = paintConfirm;
-    ON_ENTER['16'] = paintDone;
+    ON_ENTER['15'] = function(w){
+      DETOUR = null;                  // coming back here ends the seat change that started here
+      paintConfirm(w);
+    };
+    ON_ENTER['16'] = function(w){
+      paintDone(w);
+      // reaching the receipt IS the move. From here the ticket carries the band and the row is
+      // spent, whichever way the traveller gets back to it.
+      if (window.__lockTicket) window.__lockTicket();
+    };
 
     // A tap on the calendar is a tap on one day, not on the calendar. The flow map can only say
     // "this block goes forward", which made the whole grid one hotspot: it took you on from a day
@@ -2238,10 +2455,55 @@
     });
     if (!live) console.warn('13: no day is tappable');
 
+    // Back on the calendar answers to the screen the change was started from -- the ticket, or the
+    // booking card on My Bookings. Without this it walked to My Bookings from either one.
+    s13.addEventListener('click', function(e){
+      if (!e.target.closest || !e.target.closest('.hf-back')) return;
+      var from = window.__changeOpener && window.__changeOpener();
+      if (!from) return;
+      var to = ORDER.indexOf(from);
+      if (to < 0) return;
+      e.preventDefault(); e.stopPropagation();
+      go(to);
+    }, true);
+
     // Which bus, so the confirm and the receipt name the one they tapped.
     cards14.forEach(function(card, k){
       card.addEventListener('click', function(){ MOVE.bus = k; }, true);
     });
+
+    // 15 · "Change seat" was a red link that did nothing. Devansh: "in confirm date change screen
+    //      why change seat is not working? it shud show seat screen with an option to select any
+    //      seat and according seat changes everywhere in change date flow".
+    //
+    //      It does not need a new screen. 08a is the seat map for this very leg -- Nainital to
+    //      Delhi -- and the file already has the machinery for a change that answers to the screen
+    //      that started it: set DETOUR and Back or Continue comes home. The only new thing is that
+    //      a pick made from here belongs to the move, so it writes MOVE.seat rather than the
+    //      booking's own seat. Two buses, two seats, one map.
+    window.__moveSeat = function(){ return MOVE.seat; };
+    window.__moveSeatPicked = function(seat){
+      MOVE.seat = seat;
+      paintConfirm();                 // 15 is behind the detour and has to be true when we return
+      paintDone();
+    };
+    var i08a = ORDER.indexOf('08a');
+    var seatLink = (function(){
+      var lbl = s15.querySelector('[data-node-id="I137:1401;97:644"]');
+      if (!lbl) return null;
+      for (var n = lbl; n && n !== s15; n = n.parentNode) {
+        if (n.getAttribute && n.getAttribute('data-node-id') === '137:1401') return n;
+      }
+      return lbl;
+    })();
+    if (i08a >= 0 && seatLink){
+      seatLink.classList.add('hf-hot');
+      seatLink.addEventListener('click', function(e){
+        e.preventDefault(); e.stopPropagation();
+        DETOUR = '15';
+        go(i08a);
+      }, true);
+    } else if (!seatLink) console.warn('15: no Change seat link');
 
     // 16 · "View ticket" is the only way out of the receipt and it did nothing: 16 is the last
     //      screen in ORDER, so there was no "next" for the flow map to point it at. It goes to the

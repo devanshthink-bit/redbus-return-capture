@@ -111,7 +111,7 @@ export default function Component07ChooseYourBus() {
             </p>
           </div>
           <div className="bg-[#f5dcce] content-stretch flex flex-col items-start overflow-clip px-[14px] py-[12px] relative rounded-[10px] shrink-0 w-full" data-node-id="373:3110" data-name="Frame">
-            <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[#5a3a2a] text-[14px] w-full" data-node-id="373:3111">
+            <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="373:3111">
               Note: Only buses with the “Free date change” tag can be moved to another date later.
             </p>
           </div>

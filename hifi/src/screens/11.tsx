@@ -12,16 +12,15 @@ const imgArtHotelBunk = "assets/1ef25e0f-4f01-4de9-b498-9fd1e2872bd7.png";
 const imgArtLiveTracking = "assets/eb72dc8d-521d-4eda-a2ae-6cd68eee8494.png";
 const imgArtScratchCard = "assets/1719b144-784f-40e4-bf69-aabf7329cf50.png";
 const imgIconCancel = "assets/eaf7aaa8-5b15-4f99-8572-a499f5590e13.svg";
-const imgIconInfo = "assets/1fdfa7c9-d103-4495-bc2c-f6b058ff57ef.svg";
 const imgButtonAppleWallet = "assets/659c7bb8-9409-4f1d-b898-52b40a84583f.png";
 const imgLogoRedBusMarkWhite = "assets/a64dab4a-2197-48c8-871f-96c58b498ab7.png";
 const imgArtTripRewardMark = "assets/34bc959d-d061-454e-8167-1a8c39dc0deb.png";
 const imgFrame = "assets/a4acfe59-d8aa-4483-ab10-c40ba5ace219.png";
-const imgArtSunburst = "assets/45a6a2c4-0283-466c-a0c7-0f146def1354.svg";
-const imgArtSeatGuarantee = "assets/77e4149f-a38e-49cc-84aa-4ecc1fcfe5c3.svg";
-const imgButtonShare = "assets/65612538-ec9f-44d4-98ca-061e6d84e054.svg";
-const imgButtonSupport = "assets/b6ee8693-acb4-41e0-b28a-ada8e75a2907.svg";
-const imgButtonClose = "assets/2bd99b19-ae30-4f24-8c32-090cf0952b2d.svg";
+const imgArtSunburst = "assets/d87e72e7-abe6-43d1-92d1-9cb4eba69186.svg";
+const imgArtSeatGuarantee = "assets/35ff2b0e-be3b-419a-96d8-88cbd35fe07a.svg";
+const imgButtonShare = "assets/c32d8d1a-b5ac-465e-82ea-800f53aa5d09.svg";
+const imgButtonSupport = "assets/6877ab34-60c8-4b12-bfa2-1b0658324330.svg";
+const imgButtonClose = "assets/bad3f32f-3d72-4ff7-8678-65387f1ad521.svg";
 const imgStatusIcons = "assets/091fbdca-8e2e-4f59-80c8-bfdc341f332f.svg";
 const imgMarker = "assets/6280aa85-f461-44e4-9003-fd9bae23d7bd.svg";
 const imgMarker1 = "assets/dfe32957-1e71-451e-9967-a4e3d86aa505.svg";
@@ -149,14 +148,6 @@ function IconCancel({ className }: { className?: string }) {
       <div className="absolute left-0 size-[24px] top-0" data-node-id="672:4016" data-name="Icon / Cancel">
         <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconCancel} />
       </div>
-    </div>
-  );
-}
-
-function IconInfo({ className }: { className?: string }) {
-  return (
-    <div className={className || "relative size-[26.67px]"} data-node-id="121:1329" data-name="Icon / Info">
-      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconInfo} />
     </div>
   );
 }
@@ -499,23 +490,6 @@ export default function Component11TicketDetails() {
         </p>
         <ButtonAppleWallet className="h-[51.6px] relative shrink-0 w-[358px]" />
         <div className="bg-[var(--surface\/default,white)] border border-[var(--border\/subtle,#e4e4e4)] border-solid content-stretch flex flex-col items-center overflow-clip relative rounded-[var(--radius\/12,12px)] shrink-0 w-full" data-node-id="680:4033" data-name="Ticket actions">
-          <div className="content-stretch flex gap-[14px] items-center p-[16px] relative shrink-0 w-full" data-node-id="680:4045" data-name="Change trip details">
-            <IconInfo className="relative shrink-0 size-[26.67px]" />
-            <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px not-italic relative whitespace-nowrap" data-node-id="680:4047" data-name="Text">
-              <p className="[text-underline-position:from-font] decoration-from-font decoration-solid font-['Inter:Bold'] font-bold leading-[22px] relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] underline" data-node-id="680:4048">
-                Change trip details
-              </p>
-              <p className="font-['Inter:Regular'] font-normal leading-[20px] relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)]" data-node-id="680:4049">
-                Boarding and dropping point
-              </p>
-            </div>
-            <div className="relative shrink-0 size-[20px]" data-node-id="680:4050" data-name="Icon / Chevron Right">
-              <div className="absolute left-0 size-[20px] top-0" data-node-id="I680:4050;116:1172" data-name="glyph">
-                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgGlyph1} />
-              </div>
-            </div>
-          </div>
-          <div className="bg-[#e4e4e4] h-px relative shrink-0 w-full" data-node-id="680:4074" data-name="Divider" />
           <div className="content-stretch flex gap-[14px] items-center p-[16px] relative shrink-0 w-full" data-node-id="680:4062" data-name="Review and cancel">
             <IconCancel className="relative shrink-0 size-[26px]" />
             <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px not-italic relative" data-node-id="680:4064" data-name="Text">
@@ -862,7 +836,7 @@ export default function Component11TicketDetails() {
             </p>
             <div className="h-[14px] relative shrink-0 w-full" data-node-id="687:4163" data-name="gap" />
             <div className="bg-[#efcdcd] content-stretch flex items-center justify-center overflow-clip px-[20px] py-[11px] relative rounded-[999px] shrink-0" data-node-id="687:4164" data-name="Button / Refer Now">
-              <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[22px] not-italic relative shrink-0 text-[#1d1d1d] text-[16px] w-[81px]" data-node-id="687:4165">
+              <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[22px] not-italic relative shrink-0 text-[#1d1d1d] text-[16px] whitespace-nowrap" data-node-id="687:4165">
                 Refer Now
               </p>
             </div>
