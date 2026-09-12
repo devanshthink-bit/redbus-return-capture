@@ -9666,3 +9666,40 @@ CHANGE  ·  2026-09-12  ·  direct request  ·  Source: user
 **The page title is Manrope again; everything else stays Inter.** Devansh: *"Earlier typeface for
 this heading was better."* This is the one exception to "keep the fonts consistent throughout".
 `--s-display` names Manrope again, and only the title uses it. Manrope 800 loads, and nothing else.
+
+---
+
+CHANGE  ·  2026-09-12  ·  direct request  ·  Source: user
+
+**The story column now scales to the phone's height on every laptop screen.** Devansh: *"Make this
+sections text responsive so that it looks approximately the same height as the prototype height
+across different laptop viewports ... So that I don't get a white blank space at the bottom, like
+I'm getting on the MacBook Air ... and also, I don't get any overflow."*
+
+`fitPanel()` used to only shrink. It now scales both ways. The three columns are zoomed, and
+their widths are scaled through `--pz` so every line wraps the same way at any size. The content
+ends up exactly as tall as the phone, and its top is aligned with the phone's top. If an opened
+list would overflow the window, it shrinks to the window instead.
+
+| Window | Phone (px) | Text (px) | Body text |
+|---|---|---|---|
+| 1470×760 (MacBook Air) | 62–611 | 62–611 | 13.6px |
+| 1440×900 | 62–751 | 62–745 | 17.1px |
+| 1366×768 | 62–619 | 62–619 | 13.8px |
+| 1280×720 | 62–571 | 62–573 | 12.6px |
+| 1728×1000 | 62–851 | 62–839 | 19.5px |
+| 1920×1080 | 68–925 | 68–911 | 21.2px |
+
+Nothing scrolls in either direction at any of these sizes.
+
+**LEARNED — three measurements lied before one told the truth.**
+1. A fixed-height panel's `scrollHeight` never reads below the panel's own height, so it cannot
+   say that the content is short. Every first result shrank the text instead of growing it.
+2. The columns' grid boxes under-report their content: the screen list runs past its cell. The fit
+   overshot the phone by about a fifth.
+3. A closed `<details>` keeps its rows laid out in Chrome, only undrawn. They were counted as
+   content, and the text stopped 130px short of the phone at 1920.
+
+The probe had the same blind spots as the code, so the two agreed while the screen showed a gap.
+**Check a layout measurement against a screenshot, not against another measurement made the same
+way.**

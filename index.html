@@ -94,7 +94,7 @@ body.testing .layout{justify-content:center}
  flex:0 0 auto;width:clamp(340px,25vw,400px);
  /* a fixed height, not a max: the row's height then never depends on which version is
     showing, so the whole composition stays put in the middle of the window */
- height:calc(100vh - 56px);padding-top:8px!important;
+ height:calc(100vh - 56px);padding-top:8px;
  overflow-y:auto;scrollbar-width:none;
  padding:0 10px}   /* the rails hang 10px either side; overflow-y:auto would clip them without this */
 /* Wide enough for two: the writing goes left, the screen list goes right. It stops the
@@ -108,7 +108,9 @@ body.testing .layout{justify-content:center}
    scrolled, and scrolling it right put the whole left column out of view -- which is what "the
    mock is not centred" looked like. */
 @media (min-width:1100px){
-  .panel{grid-template-columns:minmax(280px,360px) minmax(200px,250px);column-gap:clamp(28px,3vw,52px);row-gap:22px;
+  /* --pz is set by fitPanel(): the columns widen with the text, so a larger scale reflows the same
+     lines rather than squeezing them */
+  .panel{grid-template-columns:calc(340px * var(--pz,1)) calc(236px * var(--pz,1));column-gap:calc(44px * var(--pz,1));row-gap:22px;
    align-items:start;width:auto;
    /* the second row must be flexible: b spans both rows, and across an `auto` row its extra
       height is shared out into row 1, which moved the swatches every time the version changed
@@ -2999,6 +3001,7 @@ function fitDevice(){
      trackpad swipe must not be able to leave the composition parked out of view. */
   const stage = document.querySelector('.stage');
   if(stage && stage.scrollLeft) stage.scrollLeft = 0;
+  if(typeof fitPanel === 'function') fitPanel();
 }
 fitDevice();
 addEventListener('resize', fitDevice);
@@ -3335,15 +3338,44 @@ const panelEl = document.querySelector('.panel');
    columns are zoomed down together until they fit, rather than scrolling or fading out. zoom and
    not transform, so the text reflows at the smaller size instead of leaving a gap. */
 function fitPanel(){
+  /* Devansh, 12 Sep: the story "looks approximately the same height as the prototype height across
+     different laptop viewports", with no white space under it and nothing to scroll. So the scale
+     goes both ways now: the three columns (and their widths, via --pz) grow or shrink until the
+     content is as tall as the phone, and the content starts where the phone starts. If an opened
+     list would still overflow, it shrinks again to fit the window. */
   const panel = document.querySelector('.panel');
   if(!panel || document.body.classList.contains('testing') || innerWidth <= 520) return;
   const cols = [...panel.querySelectorAll('.pcol')];
-  cols.forEach(c => c.style.zoom = '');
-  let z = 1;
-  for(let k = 0; k < 3 && panel.scrollHeight > panel.clientHeight + 1; k++){
-    z = Math.max(.55, z * (panel.clientHeight - 6) / panel.scrollHeight);
-    cols.forEach(c => c.style.zoom = z.toFixed(3));
-  }
+  const dev = document.querySelector('.device');
+  /* the content's own height: a fixed-height panel's scrollHeight never reads below its own height,
+     so it cannot say whether the content is short. */
+  const contentH = () => { let t = Infinity, b = 0;
+    /* what is drawn, not the columns' boxes: the screen list runs past its grid cell, so a
+       column's box under-reported the height by about a fifth and the fit overshot the phone */
+    cols.forEach(c => c.querySelectorAll('*').forEach(e => { if(!e.offsetParent) return;
+      /* a shut <details> keeps its rows laid out, only undrawn -- they are not on screen */
+      const d = e.closest('details'); if(d && !d.open && !e.closest('summary')) return;
+      const r = e.getBoundingClientRect();
+      if(r.height){ t = Math.min(t, r.top); b = Math.max(b, r.bottom); } }));
+    return b > t ? b - t : 0; };
+  const apply = z => { panel.style.setProperty('--pz', z.toFixed(3));
+                       cols.forEach(c => c.style.zoom = z === 1 ? '' : z.toFixed(3)); };
+  panel.style.paddingTop = '0px';
+  apply(1);
+  /* Measured once, at the natural size, and scaled in one step. The columns widen with the text
+     (--pz), so every line wraps the same way at any scale and the height scales exactly with z.
+     Re-measuring after zooming read the zoomed boxes inconsistently and overshot the phone. */
+  const room = panel.clientHeight;
+  const h0 = contentH();
+  if(!h0) return;
+  const pr = panel.getBoundingClientRect();
+  const dr = dev ? dev.getBoundingClientRect() : null;
+  const phone = dr ? dr.height : room;
+  const off = dr ? Math.max(0, dr.top - pr.top) : 0;
+  const z = Math.max(.55, Math.min(1.7, phone / h0, (room - 4) / h0));
+  apply(z);
+  /* start where the phone starts, as far as the room allows */
+  panel.style.paddingTop = Math.max(0, Math.min(off, room - 4 - h0 * z)) + 'px';
 }
 function panelFade(){
   panelEl.classList.toggle('more', panelEl.scrollHeight - panelEl.clientHeight - panelEl.scrollTop > 4);
