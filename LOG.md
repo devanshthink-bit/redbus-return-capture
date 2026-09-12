@@ -9920,3 +9920,16 @@ lower. He chose *"do all four"*.
 estimate came from how v4 is built. v1–v3 are not built that way: their bottom bar is part of a
 fixed 874 layout, not pinned to the screen, so cropping it doesn't push it up, it hides it. A
 search for pinned elements found nothing to measure, and only a screenshot showed it.
+
+---
+
+CHANGE  ·  2026-09-12  ·  direct request  ·  Source: user
+
+**v1–v3 now have the status bar and the island too, shrunk to fit under it.** Asked to choose
+between shrinking the frozen build, laying the bar over its title bar, or leaving it without one,
+Devansh picked shrink. The viewer draws each frozen build at 825/874 (94.4%) under the bar, centred,
+with the scale origin at the frame's own corner inside the iframe (299,48). Their files are
+untouched. Measured on v1, v2 and v3 at 1470×812: the frame's top meets the bar, its bottom meets
+the phone's edge, "Search buses" is fully visible, and about 11px of page shows down each side. On
+a phone-width window the bar is hidden, so the build is not shrunk there. This takes back §7's "no
+side strips" for v1–v3, because he chose it with the cost stated.

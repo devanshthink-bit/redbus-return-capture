@@ -355,8 +355,14 @@ design-language tokens.
   left v1 and v2, frozen at 402, needing either 14px strips down the sides *or* a `scaleX(430/402)`
   stretch — and the stretch was visible in their type and pulled their own rounded corners out of
   line with the clip, showing as a boundary. A frame that resized per version was rejected too.
-  Matching the real 402 × 874 settles all four at the cost of the status bar. **There is no iOS
-  status bar any more**; if it comes back, the aspect problem comes back with it.
+  Matching the real 402 × 874 settles all four at the cost of the status bar.
+  **The status bar came back on 12 Sep, INSIDE the 402 × 874, so the aspect problem did not.** The
+  screen stays 402 × 874; the bar (`.sbar`, 49px, with the Dynamic Island over it) takes the top of
+  it and the content gets what is left. The hi-fi draws its own. **v4:** `.phone` is 825 tall.
+  **v1–v3:** the frozen build is drawn at 825/874 (94.4%) under the bar, centred, with ~11px of page
+  down each side — Devansh chose that over laying the bar across their title, knowing the strips
+  are what this paragraph once rejected. Starting it 49px lower at full size instead hid Home's
+  *Search buses*. On a phone-width window the bar is hidden and nothing is shrunk.
   Do not put a `transition:width` on the frame: it leaves the width stuck at the old value.
   **`--ds` is capped at 0.92, not 1** — on a tall window the frame would otherwise render full size
   and dominate the page. In session mode there is no panel to balance it, so the cap is 1.05.

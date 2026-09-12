@@ -214,12 +214,13 @@ body.testing .layout{justify-content:center}
 .sbar b{font:600 17px/21px Inter,-apple-system,system-ui,sans-serif;letter-spacing:-.4px;color:#1d1d1d}
 .sbar img{width:79px;height:14px;display:block}
 body.hifi-on .sbar{display:none}
-/* NOT on v1-v3 yet. Starting their frozen frame 49px lower cut off its bottom 49px, and that is
-   where Home's "Search buses" sits -- the button that starts every flow, not reachable by scroll.
-   Their files cannot change, so each fix costs something: shrink the whole build 5.6% (thin strips
-   down both sides, which §7 rejected once), or lay the bar over the top of their title bar.
-   Waiting on Devansh's choice (12 Sep). Until then v1-v3 show as they always have. */
-body.legacy-on .sbar,body.legacy-on .island{display:none}
+/* v1-v3 under the bar: the whole frozen build, drawn at 825/874 so all of it fits below the bar,
+   and centred -- ~11px of page shows down each side. Starting it 49px lower at full size cut off
+   its bottom 49px, and that is where Home's "Search buses" sits. Their files cannot change, so the
+   choice was shrink, cover their title with the bar, or no bar; Devansh chose shrink (12 Sep).
+   The frame lands at (299,48) inside the iframe, so that point is the scale origin. */
+body.legacy-on .legacy{top:49px;border-radius:0}
+body.legacy-on .legacy iframe{transform-origin:299px 48px;transform:translateX(11.26px) scale(.94394)}
 .viewport{width:402px;height:874px;border-radius:48px;overflow:hidden;background:var(--page);
  display:flex;flex-direction:column;position:relative}
 /* The screen is 402 x 874 -- exactly an iPhone 16 Pro, and exactly what all three builds are.
@@ -607,6 +608,7 @@ body.testing .devicewrap::before{display:none}
   .deviceframe{width:100%;height:auto;transform:none;padding:0;border-radius:0;box-shadow:none;background:none}
   .deviceframe::after,.deviceframe::before,.island,.sbar{display:none}
   body.legacy-on .legacy{top:0}
+  body.legacy-on .legacy iframe{transform:none}
   .viewport{width:100%;height:100vh;height:100dvh;border-radius:0}
   .phone{width:100%;height:100vh;height:100dvh}
   .legacy{inset:0;height:100vh;height:100dvh;border-radius:0}
