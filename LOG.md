@@ -10026,3 +10026,13 @@ as the drawn frame and is still reachable from the list.
 **LEARNED — a drawn copy of another screen goes stale with no one noticing.** 01a's Home copy
 missed the 12 Sep padding change because nothing compares the two. Laying a sheet over the real
 screen removes the copy from the path, so there is nothing left to drift.
+
+CHANGE · 2026-09-13 · direct · Source: user
+**The Hi-fi / Lo-fi and v1–v4 switches now slide.** Devansh: *"make the sliding interaction of
+toggle in hifi lofi protos and versions toggle really smooth and satisfying and polished"*. The red
+moved off the pressed button onto one thumb per switch that slides to the pressed button (420ms,
+a slight overshoot), with the label colour easing in step and a small press-down on tap. The thumb
+follows `aria-pressed` through a MutationObserver, so `setFidelity` and `setVersion` are untouched.
+Until the script places it, the pressed button still paints its own red, so the first paint never
+flashes. A ResizeObserver re-places it without animating, which covers the Lo-fi group appearing
+from `display:none`. Reduced motion is already cut by the global rule.

@@ -139,16 +139,25 @@ body.testing .layout{justify-content:center}
  text-transform:uppercase;color:var(--s-on-45);margin:0 0 12px 2px}
 
 /* version switch */
-.vers{display:flex;gap:6px;background:rgba(255,255,255,.72);border:1px solid rgba(23,23,28,.08);
- border-radius:12px;padding:4px;backdrop-filter:blur(6px)}
-.vers button{flex:1;border:0;background:none;font-family:var(--s-mono);font-size:13px;font-weight:600;
- letter-spacing:-.01em;color:var(--s-on-60);padding:9px 0;border-radius:9px;cursor:pointer;
- transition:background 160ms,color 160ms,box-shadow 160ms}
+.vers{position:relative;isolation:isolate;display:flex;gap:6px;background:rgba(255,255,255,.72);
+ border:1px solid rgba(23,23,28,.08);border-radius:12px;padding:4px;backdrop-filter:blur(6px)}
+.vers button{position:relative;flex:1;border:0;background:none;font-family:var(--s-mono);font-size:13px;
+ font-weight:600;letter-spacing:-.01em;color:var(--s-on-60);padding:9px 0;border-radius:9px;cursor:pointer;
+ -webkit-tap-highlight-color:transparent;
+ transition:color 260ms cubic-bezier(.32,.72,0,1),transform 160ms cubic-bezier(.32,.72,0,1)}
 .vers button:hover{color:var(--s-on)}
+.vers button:active{transform:scale(.96)}
 .vers button:focus-visible{outline:0;box-shadow:0 0 0 2px rgba(216,78,85,.5)}
-/* one step darker than the logo red: white on #D84E55 is 4.1:1, under the 4.5 floor for 13px */
-.vers button[aria-pressed="true"]{background:#BF3A41;color:#fff;
+/* The red lives on one thumb that slides between buttons (Devansh, 13 Sep: "really smooth and
+   satisfying"). Before JS places it, the pressed button paints its own red, so nothing flashes.
+   One step darker than the logo red: white on #D84E55 is 4.1:1, under the 4.5 floor for 13px. */
+.vers button[aria-pressed="true"]{color:#fff}
+.vers:not(.thumbed) button[aria-pressed="true"]{background:#BF3A41;
  box-shadow:0 1px 2px rgba(140,30,38,.22),0 6px 16px -6px rgba(140,30,38,.5)}
+.vthumb{position:absolute;z-index:-1;top:4px;bottom:4px;left:0;width:0;border-radius:9px;background:#BF3A41;
+ box-shadow:0 1px 2px rgba(140,30,38,.22),0 6px 16px -6px rgba(140,30,38,.5);pointer-events:none;
+ will-change:transform,width}
+.vthumb.go{transition:transform 420ms cubic-bezier(.34,1.28,.44,1),width 420ms cubic-bezier(.34,1.28,.44,1)}
 .vnote{font-size:13px;line-height:1.5;color:var(--s-on-60);margin-top:10px;
  min-height:3em}   /* two lines, the longer prototype note: the rows under it never move */   /* three lines: the longest of the three notes. Stops the swatches jumping */
 .vnote b{color:var(--s-on);font-weight:600}
@@ -3502,5 +3511,20 @@ booted=true;
    outright. hifi/index.html redirects here with ?fidelity=hifi. */
 const askedFid = (new URLSearchParams(location.search).get('fidelity') || '').toLowerCase();
 setFidelity(askedFid === 'lofi' || (!askedFid && VERSIONS[asked]) ? 'lofi' : 'hifi');
+
+// Sliding thumb for the two switches. It follows aria-pressed, so setFidelity and setVersion stay
+// as they are. A ResizeObserver re-places it without animating when the Lo-fi group first shows.
+document.querySelectorAll('.vers').forEach(function(g){
+  var t=document.createElement('span'); t.className='vthumb'; g.prepend(t);
+  function place(anim){
+    var b=g.querySelector('button[aria-pressed="true"]'); if(!b||!b.offsetWidth) return;
+    t.classList.toggle('go', anim);
+    t.style.width=b.offsetWidth+'px'; t.style.transform='translateX('+b.offsetLeft+'px)';
+    g.classList.add('thumbed');
+  }
+  place(false);
+  new MutationObserver(function(){ place(true); }).observe(g,{subtree:true,attributes:true,attributeFilter:['aria-pressed']});
+  new ResizeObserver(function(){ place(false); }).observe(g);
+});
 </script>
 </body></html>
