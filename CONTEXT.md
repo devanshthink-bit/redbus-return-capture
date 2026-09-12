@@ -768,7 +768,7 @@ not from memory. **29 frames = 17 screens + 12 state variants** (01a · 03a · 0
 | 09 · Pay | `s-pay` | a payment method, then its Pay button · View details | 09b · 09a |
 | 09b · Please wait | — | *nothing; it leaves on a five-second timer* | 11 |
 | 09a · Booking details | — | *sheet off **Review or Pay**, whichever View details was tapped*; the × | back to the one that opened it |
-| 11 · Ticket details | `s-ticket` | Change your return day | 11a |
+| 11 · Ticket details | `s-ticket` | Change your return day · Review and cancel | 11a · 18 |
 | 11a · Change of plans | — | *sheet off **the ticket or the booking card***; an option, then the button | 13 · 18 |
 | ↳ *both branches are real* — the free change opens the calendar, the cancellation opens Review and cancel | | | |
 | 18 · Review and cancel | — | View refund details | 19 |
@@ -785,9 +785,10 @@ not from memory. **29 frames = 17 screens + 12 state variants** (01a · 03a · 0
 | ↳ *Back answers to whichever screen opened the sheet* — the ticket, or My Bookings | | | 11 · 12 |
 | 14 · Move · buses | `s-wibus` | a bus card | 15 |
 | ↳ *the day you tapped drives 14, 15 and 16* — which two buses run, their times, operators and fares, the difference, what you pay and the receipt | | | |
+| ↳ *14 prices each bus as the extra you pay*, never the full fare — a cheaper bus reads ₹0, as the real reschedule list does (IMG_5208) | | | |
 | 15 · Confirm the move | `s-confirm` | Confirm change · Change seat | 16 · 08a |
 | 16 · Return moved | `s-done` | View ticket | 11 |
-| ↳ *reaching 16 spends the one change* — the ticket takes a red band under its header and the change row reads "No changes left" | | | |
+| ↳ *reaching 16 spends the one change* — the ticket takes a red band under its header and the change row reads "No changes left"; Review and cancel greys out with "Not allowed after a date change" (IMG_5227); My Bookings' change row is spent too | | | |
 | 17 · Profile | — | *reached from Home's tab bar*; Bookings, or the My Bookings tab | 12 |
 | ↳ *every tab in Home's bar is live from the first frame* — My Bookings opens 12a until there is a booking, then 12 | | | 12 · 12a · 17 |
 

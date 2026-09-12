@@ -200,6 +200,22 @@
   /* and the row that offered the change reads as spent rather than disappearing, so the traveller
      can see the promise was kept rather than wondering where it went */
   .hf-spent{opacity:.55}
+  /* a row that cannot be used any more, as the real ticket draws it (IMG_5227): grey title and
+     icon, and the reason in brown. Colours measured off the screenshot. */
+  .hf-off{cursor:default}
+  .hf-off [data-node-id="680:4065"]{color:#909090!important}
+  .hf-off [data-node-id="680:4066"]{color:#a45729!important}
+  .hf-off [data-name="Icon / Cancel"]{opacity:.5}
+  /* Sheets sit over everything on the screen they open on, including the Ask Ray button and
+     any card that is mid-blink. */
+  .hf-scrim{z-index:30}
+  .hf-sheet{z-index:31}
+  /* Ask Ray floats over the list, as it does in the real app (IMG_5208) */
+  [data-name="Ask Ray"]{z-index:8}
+  /* a picked seater: the frame draws only a picked sleeper, so the seater keeps its own shape
+     and takes the same green */
+  .hf-seat-sel > :first-child{background:#8dbf8b!important;border-color:#458442!important}
+  .hf-seat-sel p{color:#458442!important}
   .hf-spent .hf-hot,.hf-spent.hf-hot{cursor:default}
   /* The countdown ring. Figma draws it; this sweeps it, because an exported arc is a picture.
      The hole has to match the grey track exactly or the red arc reads as a fatter ring laid over
@@ -472,7 +488,9 @@
     // A timer, not `animationend`: a hidden or throttled tab never fires the event, and the
     // inline radius would then stick for the life of the page. 800ms x 3 iterations.
     clearTimeout(el._hfBlinkT);
-    el._hfBlinkT = setTimeout(function(){ el.style.borderRadius = ''; }, 2400);
+    // The class goes too: it carries z-index 5, and left on, a blinked bus card sat over the
+    // Ask Ray button and over any sheet opened on that list afterwards.
+    el._hfBlinkT = setTimeout(function(){ el.style.borderRadius = ''; el.classList.remove('hf-blink'); }, 2400);
   }
 
   // the two halves of one tab control, keyed both ways
@@ -761,8 +779,11 @@
   //      23:55, the one whose seat map screen 03 draws.
   onlyOne('02', '[data-node-id="183:1503"]', function(i){ go(nextOf(i)); });
 
-  // 03 / 03b · the onward seat map. See onwardSeat() below: one seat used to be bookable and the
-  //      other forty-seven were scenery, which is what Devansh ran into.
+  // 03 · the onward seat map. One seat books, the one the case study books; any other tap points
+  //      at it. Opening every seat here was a misreading -- Devansh's "only a few seats are
+  //      clickable" was about the change-seat map (08a), and he said so: "in onward booking flow in
+  //      seat only one seat was tappable it shud be one only".
+  onlyOne('03', '[data-node-id="530:3981"]', function(){ go(ORDER.indexOf('03b')); });
 
   // 03a · the full bus-details sheet closes back to the seat map, it does not go forward
   onlyOne('03a', '[data-name="Collapse"]', function(){ go(ORDER.indexOf('03')); });
@@ -1809,6 +1830,7 @@
           cell.__deck = upper ? 'Upper deck' : 'Lower deck';
           cell.__kind = sort;
           cell.__free = /Available|Selected/.test(kind);
+          cell.__orig = cell.innerHTML;
           var price = cell.querySelector('p');
           cell.__price = price ? price.textContent : '';
           seats.push(cell);
@@ -1819,21 +1841,35 @@
     var drawnFree = seats.filter(function(c){ return /Available/.test(c.getAttribute('data-name')); })[0];
     if (!drawnFree) { console.warn(label + ': no free seat to copy'); return null; }
     var names = {}; seats.forEach(function(c){ names[c.__seat] = 1; });
+    // The free look is per kind. One shared look -- the first free cell's, a sleeper -- was painted
+    // over every seater too, which stretched the two seater columns to sleeper height and ran them
+    // far past the rest of the deck: the "too many extra seats" Devansh saw on every map.
+    var FREE_BY = {};
+    seats.forEach(function(c){
+      if (/Available/.test(c.getAttribute('data-name')) && !FREE_BY[c.__kind]) FREE_BY[c.__kind] = c.__orig;
+    });
+    var SEL = drawnSel ? drawnSel.__orig : drawnFree.__orig;
+    var SEL_KIND = drawnSel ? drawnSel.__kind : null;
+    // One cell's look. The drawn selection is a sleeper, so a picked seater keeps its own shape
+    // and takes the selected fill from CSS instead.
+    function look(c, on){
+      var picked = c.__seat === on;
+      c.innerHTML = (picked && c.__kind === SEL_KIND) ? SEL : (FREE_BY[c.__kind] || c.__orig);
+      c.classList.toggle('hf-seat-sel', picked && c.__kind !== SEL_KIND);
+      var p = c.querySelector('p');           // the look is shared, the fare is the seat's own
+      if (p) p.textContent = c.__price;
+    }
     return {
       seats: seats, names: names,
       drawnSel: drawnSel, drawnFree: drawnFree,
-      // the two looks, taken from the frame itself rather than restyled here
-      SEL: drawnSel ? drawnSel.innerHTML : drawnFree.innerHTML,
-      FREE: drawnFree.innerHTML,
-      // repaint every free cell, marking one as the pick, and keep each seat's own fare
+      look: look,
+      // repaint every free cell, marking one as the pick
       paint: function(on){
         seats.forEach(function(c){
           if (!c.__free) return;
-          c.innerHTML = (c.__seat === on) ? this.SEL : this.FREE;
-          var p = c.querySelector('p');
-          if (p) p.textContent = c.__price;
+          look(c, on);
           c.classList.add('hf-hot');
-        }, this);
+        });
       }
     };
   }
@@ -1844,9 +1880,7 @@
     var sec = screens[i08a];
     var map = readSeatMap(sec, '08a');
     if (!map) return;
-    var seats = map.seats, names = map.names;
-    var drawnSel = map.drawnSel, drawnFree = map.drawnFree;
-    var SEL = map.SEL, FREE = map.FREE;
+    var names = map.names, drawnSel = map.drawnSel;
 
     // What the map shows selected: the traveller's own pick first, then the seat the chosen day
     // gives them, and on a cold load the one the frame draws. RETURN.seatPick is set by a tap and
@@ -1865,13 +1899,7 @@
 
     function paint(){
       var on = current();
-      seats.forEach(function(c){
-        if (!c.__free) return;
-        c.innerHTML = (c.__seat === on) ? SEL : FREE;
-        var p = c.querySelector('p');           // the look is shared, the fare is the seat's own
-        if (p) p.textContent = c.__price;
-        c.classList.add('hf-hot');
-      });
+      map.paint(on);
       var count = sec.querySelector('[data-node-id="423:3129"]');
       if (count) count.textContent = 'Seat ' + on + ' selected \u00b7 ' + seatDesc(on);
       if (RETURN.seatPick) {
@@ -1969,32 +1997,9 @@
     }
     window.__repaintOutSeat = repaint;
 
-    [i03, i03b].forEach(function(i){
-      if (i < 0) return;
-      var id = ORDER[i], sec = screens[i];
-      var map = readSeatMap(sec, id);
-      if (!map) return;
-      function draw(){ map.paint(map.names[OUT.seat] ? OUT.seat
-                                : (map.drawnSel ? map.drawnSel.__seat : null)); }
-      sec.addEventListener('click', function(e){
-        if (e.target.closest && e.target.closest('.hf-back')) return;
-        var cell = e.target.closest('[data-name^="Seat "]');
-        if (!cell || !cell.__free) return;
-        e.preventDefault(); e.stopPropagation();
-        OUT.seat = cell.__seat;
-        OUT.deck = cell.__deck;
-        OUT.kind = cell.__kind;
-        OUT.byUser = true;
-        draw();
-        repaint();
-        // On the map you land on, choosing a seat is what opens the chosen state -- that is the
-        // step. On the chosen state it just moves the choice.
-        if (id === '03' && i03b >= 0) setTimeout(function(){ go(i03b); }, 180);
-      }, true);
-      ON_ENTER[id] = draw;
-      draw();
-    });
-
+    // Reversed on 12 Sep: the onward map books one seat again (see onlyOne('03') above), so no
+    // cell here is live and OUT.seat stays the seat the frames draw. repaint() is kept so the
+    // screens that state the seat still read it from one place.
     repaint();
   })();
 
@@ -2410,8 +2415,44 @@
       if (pill) pill.textContent = 'No changes left';
       var chev = row.querySelector('[data-name="Icon / Chevron Right"]');
       if (chev) chev.style.visibility = 'hidden';
+
+      // A moved ticket cannot be cancelled -- the note on 14 and 15 says so before the traveller
+      // commits. The real app's answer is IMG_5227: the row stays, the title greys, and one line
+      // in brown says why.
+      if (cancelRow){
+        cancelRow.classList.remove('hf-hot');
+        cancelRow.classList.add('hf-off');
+        var why = cancelRow.querySelector('[data-node-id="680:4066"]');
+        if (why) why.textContent = 'Not allowed after a date change';
+      }
+
+      // My Bookings carries the same change row on the booking card; it is spent too.
+      if (i12 >= 0){
+        var row12 = screens[i12].querySelector('[data-name="Change day"]');
+        if (row12){
+          row12.classList.add('hf-spent');
+          row12.classList.remove('hf-hot', 'hf-fwd');
+          var pill12 = row12.querySelector('[data-node-id="I125:1341;132:1365"]');
+          if (pill12) pill12.textContent = 'No changes left';
+          var chev12 = row12.querySelector('[data-name="Icon / Chevron Right"]');
+          if (chev12) chev12.style.visibility = 'hidden';
+        } else console.warn('12: no Change day row to spend');
+      }
     };
     window.__ticketMoved = function(){ return MOVED; };
+
+    // Review and cancel starts the cancellation flow, the same place the change-of-plans sheet's
+    // Cancel option leads. It was drawn and did nothing.
+    var i12 = ORDER.indexOf('12'), i18 = ORDER.indexOf('18');
+    var cancelRow = sec.querySelector('[data-name="Review and cancel"]');
+    if (cancelRow && i18 >= 0){
+      cancelRow.classList.add('hf-hot');
+      cancelRow.addEventListener('click', function(e){
+        e.preventDefault(); e.stopPropagation();
+        if (MOVED) return;
+        go(i18);
+      }, true);
+    } else console.warn('11: no Review and cancel row');
   })();
 
   // 03a · the bus-details sheet, pulled full. It carries the same control the ticket does -- four
@@ -3041,7 +3082,9 @@
         set(cardField(card, '39:113'), b[2]);                   // departs
         set(cardField(card, '39:115'), b[3]);                   // arrives
         set(cardField(card, '39:116'), dur(b[2], b[3]) + ' · ' + b[6]);
-        set(cardField(card, '39:118'), rupee(b[7]));
+        // the real reschedule list prices each bus as what you pay on top, never the full fare,
+        // and a cheaper bus as ₹0 (IMG_5208, IMG_5224)
+        set(cardField(card, '39:118'), rupee(Math.max(0, b[7] - HELD.fare)));
         set(cardField(card, '39:123'), b[0]);                   // operator
         set(cardField(card, '39:125'), b[1]);                   // coach
         set(cardField(card, '39:126;36:121'), b[4]);            // rating

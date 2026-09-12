@@ -236,7 +236,7 @@ export default function Component14MoveBuses() {
                 <div className="content-stretch flex flex-col items-end overflow-clip relative shrink-0" data-node-id="I368:2851;39:117" data-name="Fare column">
                   <div className="content-stretch flex gap-[8px] items-center justify-end relative shrink-0 w-full" data-node-id="I368:2851;179:1447" data-name="Price row">
                     <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] text-left whitespace-nowrap" data-node-id="I368:2851;39:118">
-                      ₹970
+                      ₹0
                     </p>
                   </div>
                   <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] text-left whitespace-nowrap" data-node-id="I368:2851;39:119">
@@ -312,7 +312,7 @@ export default function Component14MoveBuses() {
                 <div className="content-stretch flex flex-col items-end overflow-clip relative shrink-0" data-node-id="I368:2910;39:117" data-name="Fare column">
                   <div className="content-stretch flex gap-[8px] items-center justify-end relative shrink-0 w-full" data-node-id="I368:2910;179:1447" data-name="Price row">
                     <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="I368:2910;39:118">
-                      ₹1,060
+                      ₹0
                     </p>
                   </div>
                   <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] whitespace-nowrap" data-node-id="I368:2910;39:119">

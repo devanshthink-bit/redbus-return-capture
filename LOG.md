@@ -9277,3 +9277,43 @@ was caught; the percentage alone would have passed.
 
 Diffs: 21 2.63%, 21a 3.84%, 22 1.18%, 14 6.90% (was 7.05% before the filter row; no step).
 38 screens.
+
+---
+
+DECISION  ·  2026-09-12  ·  direct request  ·  Source: user
+
+**Seven fixes from Devansh's pass over the hi-fi.**
+
+1. **The onward seat map books one seat again — a reversal.** Last pass made all 42 free seats on
+   03 and 03b live. Devansh: *"in onward booking flow in seat only one seat was tappable it shud be
+   one only why many are tappable now?"* His earlier *"only a few seats are clickable"* was about
+   the change-seat map (08a), and I applied it to the onward map too. 03 is back behind `onlyOne()`
+   on its drawn bookable berth. 08a keeps every free seat live.
+2. **"Too many extra seats" was a paint bug, not the frames.** `readSeatMap()` repainted every free
+   cell with one shared look, copied from the first free cell — a sleeper. So every seater was
+   drawn as a sleeper, and the two seater columns grew to sleeper height and ran far below the rest
+   of the deck. That happened on every map it painted. The fix keeps one free look per kind. A
+   picked seater keeps its own shape and turns green through CSS. Measured on 08a: 24 seaters at
+   43pt and 24 sleepers at 83pt, both before and after a pick.
+3. **Review and cancel on 11 opens the cancellation flow (18).** It was drawn but did nothing.
+4. **After a move, the ticket cannot be cancelled.** This follows IMG_5227. The row stays, the
+   title turns grey (#909090), and one brown line (#a45729) says *"Not allowed after a date
+   change"*. Both colours were measured off the screenshot. The note on 14 and 15 already warns
+   about this before the traveller commits.
+5. **My Bookings' change row is spent after a move**, the same way the ticket's row is: "No changes
+   left", no chevron, and a tap does nothing. Before this, only the ticket's row was spent.
+6. **The date-change bus list (14) prices each bus as the extra you pay, not the full fare.** A
+   cheaper bus shows ₹0 (IMG_5208, IMG_5224). Figma 14 now draws ₹0 / ₹0 for the drawn day, and
+   the runtime writes max(0, fare − ₹1,090) for the day you tap. 14 diff: 6.80% (was 6.90%), no step.
+7. **The card over the filter sheet and over Ask Ray was a blink that never ended.** `blinkAt()`
+   removed the inline radius after the animation but left the `hf-blink` class, which carries
+   z-index 5. Any card blinked once by a stray tap on 02 then sat above Ask Ray and above any sheet
+   opened later. The class now comes off with the timer. Sheets now sit at z-index 30/31, and Ask
+   Ray at 8.
+
+**LEARNED — a helper that copies "the" look breaks as soon as a map has two kinds of cell.** The
+drawn selection and the drawn free seat were both sleepers. Nothing checked whether the cell being
+repainted was the same kind as the look being copied.
+
+**LEARNED — an animation class that sets z-index must be removed, not just allowed to finish.** A
+finished CSS animation leaves every non-animated property in place.
