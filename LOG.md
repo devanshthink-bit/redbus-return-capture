@@ -9435,3 +9435,15 @@ S1–S12b as they were before the rebuild, S11b (on the retired Booking confirme
 The page is now two sections and nothing else. **Screens** holds the 38 frames the flow walks.
 **States** holds the 13 rebuilt states and their headings. Every frame on the page is a frame the
 build pulls. Figma's version history still has the deleted frames if one is ever wanted back.
+
+---
+
+CHANGE  ·  2026-09-12  ·  direct request  ·  Source: user
+
+**Eight unused components are deleted from Figma's Components page.** A scan found 20 of 181
+components with no instance anywhere in the file. Twelve of them are alternate looks of parts in
+use: the selected seat, the selected tab icons, add-on rows and so on. The prototype switches to
+those at runtime, so they stay. The other eight had no use at all, and Devansh approved deleting
+them: Icon / Info, Icon / Play, Button / Secondary, Row / Choice, Row / Return bus, Card / Return
+day, Card / Ticket, Logo / CRED pay. Each was checked again for zero instances right before it was
+removed. 173 components remain. No screen used any of the eight, so the build is unchanged.
