@@ -2164,7 +2164,7 @@ one that cannot move; 06 and 06a keep 11–17, where every day has a changeable 
 **The 13 states (12 Sep) are the one exception to "Screens only".** Figma's *States* section had
 drawn every lo-fi failure state since late August, but as loose frames, so each had gone stale as its
 screen moved on. They were rebuilt on 12 Sep as fresh clones of today's screen plus the state's own
-block — S1–S12b. The stale originals sit untouched in *States · archived 12 Sep*. In the build they
+block — S1–S12b. The stale originals were kept in an archive section for a few hours, then deleted at Devansh's request: nothing used them. In the build they
 are in `SKIP`, never steps. `STATE_OF` in `shell.html` sends Back to the screen each one is a state
 of. The viewer lists them under a shut *States* group, like the lo-fi's. **A state is a copy, not an
 instance: a change to 05, 06, 08, 11, 13 or 15 needs its states redone in the same pass.** LOG.md

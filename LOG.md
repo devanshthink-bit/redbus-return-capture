@@ -9422,3 +9422,16 @@ canvas before retrying, not after.
 **LEARNED — a drawn state frame goes stale the moment its screen changes.** These went stale because
 they were copies, not instances. Rebuilding them from the live screen at the time of the pull is what
 keeps them honest. A future change to 05, 06, 08, 11, 13 or 15 needs its states redone too.
+
+---
+
+CHANGE  ·  2026-09-12  ·  direct request  ·  Source: user
+
+**The 16 stale state frames are deleted from Figma.** Devansh: *"keep correct and updated screens in
+figma delete old ones which are not used now"*. The whole "States · archived 12 Sep" section went:
+S1–S12b as they were before the rebuild, S11b (on the retired Booking confirmed screen), S13
+(Pay · option chosen) and S14 (Booking confirmed, retired). None were read by the build.
+
+The page is now two sections and nothing else. **Screens** holds the 38 frames the flow walks.
+**States** holds the 13 rebuilt states and their headings. Every frame on the page is a frame the
+build pulls. Figma's version history still has the deleted frames if one is ever wanted back.
