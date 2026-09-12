@@ -214,13 +214,13 @@ body.testing .layout{justify-content:center}
 .sbar b{font:600 17px/21px Inter,-apple-system,system-ui,sans-serif;letter-spacing:-.4px;color:#1d1d1d}
 .sbar img{width:79px;height:14px;display:block}
 body.hifi-on .sbar{display:none}
-/* v1-v3 under the bar: the whole frozen build, drawn at 825/874 so all of it fits below the bar,
-   and centred -- ~11px of page shows down each side. Starting it 49px lower at full size cut off
-   its bottom 49px, and that is where Home's "Search buses" sits. Their files cannot change, so the
-   choice was shrink, cover their title with the bar, or no bar; Devansh chose shrink (12 Sep).
-   The frame lands at (299,48) inside the iframe, so that point is the scale origin. */
+/* v1-v3 under the bar, full size. Devansh, 13 Sep: "i dont want shrinked ui, make all the ui
+   screens in v1, v2, v3 look expanded like v4 does". Their files stay byte-identical; once a build
+   loads, the viewer sets its .phone to 825 tall -- the same height v4's is -- and lines the
+   iframe up with where that shorter frame lands (see fitLegacy). Tried first and dropped: starting
+   the 874 frame 49px lower (hid Home's Search buses) and drawing it at 94.4% (strips down the sides,
+   smaller type). */
 body.legacy-on .legacy{top:49px;border-radius:0}
-body.legacy-on .legacy iframe{transform-origin:299px 48px;transform:translateX(11.26px) scale(.94394)}
 .viewport{width:402px;height:874px;border-radius:48px;overflow:hidden;background:var(--page);
  display:flex;flex-direction:column;position:relative}
 /* The screen is 402 x 874 -- exactly an iPhone 16 Pro, and exactly what all three builds are.
@@ -608,7 +608,6 @@ body.testing .devicewrap::before{display:none}
   .deviceframe{width:100%;height:auto;transform:none;padding:0;border-radius:0;box-shadow:none;background:none}
   .deviceframe::after,.deviceframe::before,.island,.sbar{display:none}
   body.legacy-on .legacy{top:0}
-  body.legacy-on .legacy iframe{transform:none}
   .viewport{width:100%;height:100vh;height:100dvh;border-radius:0}
   .phone{width:100%;height:100vh;height:100dvh}
   .legacy{inset:0;height:100vh;height:100dvh;border-radius:0}
@@ -3063,9 +3062,9 @@ document.querySelector('.stage').addEventListener('scroll', () => {
 })();
 
 /* ---- version switch -------------------------------------------------------
-   v3 is this file. v1 and v2 are frozen files loaded whole into an iframe sized so
-   their own centred 402x874 frame lands exactly on the crop -- nothing in them is
-   edited, overridden or scripted from here. */
+   v4 is this file. v1-v3 are frozen files loaded whole into an iframe. Their files are
+   never edited; since 13 Sep the viewer does set one thing in the LOADED page -- .phone's
+   height, to fit it under the status bar (fitLegacy) -- and reads their rails (below). */
 const VERSIONS = {
   1:{file:'frozen/v1.html', note:'<b>v1</b> asks for the last day you could travel, and books that day. 17 screens.'},
   2:{file:'frozen/v2.html', note:'<b>v2</b> asks for an earliest and a latest day, and books the cheapest one between them. 16 screens.'},
@@ -3191,8 +3190,30 @@ function buildLegacyRail(){
   }
   sync();
 }
+/* Fit a frozen build under the status bar at full size. Its files are untouched: this sets the
+   loaded page's .phone to 825 tall (874 less the 49px bar, which is v4's own height), then moves
+   the iframe so that shorter frame's corner lands on the crop's corner. Measured, not computed:
+   the frozen page centres its phone, so the frame moves when its height does. On a phone-width
+   window the bar is hidden and the build fills the screen by its own rule, so nothing is set. */
+function fitLegacy(){
+  const frame = document.getElementById('legacyframe');
+  frame.style.left = frame.style.top = '';
+  if(version === 4 || matchMedia('(max-width:520px)').matches) return;
+  let doc = null;
+  try { doc = frame.contentDocument; } catch(e){}
+  if(!doc || !doc.querySelector('.phone')) return;
+  if(!doc.getElementById('viewer-fit')){
+    const s = doc.createElement('style');
+    s.id = 'viewer-fit';
+    s.textContent = '.phone{height:825px!important}';
+    doc.head.appendChild(s);
+  }
+  const r = doc.querySelector('.phone').getBoundingClientRect();
+  frame.style.left = -Math.round(r.left) + 'px';
+  frame.style.top  = -Math.round(r.top) + 'px';
+}
 document.getElementById('legacyframe').addEventListener('load', () => {
-  if(version !== 4) buildLegacyRail();
+  if(version !== 4){ fitLegacy(); buildLegacyRail(); }
 });
 
 /* ---- prototype switch: lo-fi | hi-fi ---------------------------------------

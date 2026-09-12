@@ -9933,3 +9933,36 @@ untouched. Measured on v1, v2 and v3 at 1470×812: the frame's top meets the bar
 the phone's edge, "Search buses" is fully visible, and about 11px of page shows down each side. On
 a phone-width window the bar is hidden, so the build is not shrunk there. This takes back §7's "no
 side strips" for v1–v3, because he chose it with the cost stated.
+
+---
+
+DECISION  ·  2026-09-13  ·  direct request  ·  Source: user
+
+**v1–v3 are now full size under the status bar, like v4. They are no longer shrunk.** Devansh: *"i
+dont want shrinked ui, make all the ui screens in v1, v2, v3 look expanded like v4 does"*.
+
+- **How:** the frozen files are still byte-identical. Once a build loads, the viewer adds one rule
+  to the loaded page, `.phone{height:825px!important}`, which is the height v4's screen already
+  has. It then measures where that shorter frame lands, because the frozen page centres its phone,
+  and moves the iframe so the frame's corner sits on the crop's corner (`fitLegacy`). All three
+  builds lay out the same way as v4 (`.phone` is a flex column 874 tall on line 20 of each file),
+  so the same height works.
+- **Measured at 1470×812:** in v1, v2 and v3 the screen is 825 tall and full width, with no side
+  strips. It sits flush under the bar and ends flush with the phone's edge. None of the 51 screens
+  (17 + 16 + 18) is cut off at the bottom. A real tap on v3's Search buses opened its bus list.
+  v4's state matrix is still clean (234 cells).
+- **Phone-width windows** (≤520px): the bar is hidden and nothing is set, so each build fills the
+  screen by its own rule, as before.
+
+**This changes a standing rule.** §3 and the viewer's own comment said nothing in v1–v3 is
+"edited, overridden or scripted" from the viewer. The files are still never edited, but the
+loaded page now carries one height rule. That was the only way to meet all three things asked
+for: status bar, full size, nothing cut off. It is written down in `index.html` and CONTEXT so no
+one reads the old rule as still true.
+
+**Replaces** the 94.4% shrink from 12 Sep, which he had picked over two worse options, and dropped
+once he saw it.
+
+**Not fixed, found while testing:** at a 400×800 window, v1's Search buses falls below the
+screen. The frozen page keeps its 874px frame there, because its own phone rule never fires inside
+a 1000-wide iframe. It worked the same way before today's change and was not part of this request.
