@@ -9884,3 +9884,14 @@ sweep across all 51 screens would have shown every number jump by about 830.
 
 Diffs (fresh Figma renders): 01a 3.11 (was 2.60), 09a 2.65 (was 2.67), 11a 4.80 (was 4.39),
 19a 6.56 (was 5.83), 21 2.61 (was 2.63), 21a 3.79 (was 3.84).
+
+---
+
+CHANGE  ·  2026-09-12  ·  direct request  ·  Source: user
+
+**The Lo-fi version picker now sits directly under the Hi-fi / Lo-fi switch.** Devansh: *"move it
+below hifi lofi toggle"*. This reverses the earlier move to the end of the third column. That move
+was made because, placed between the switch and the colours, the picker pushed the colours down
+whenever Lo-fi was chosen. Under the switch it is the last thing in the first column, so showing it
+moves nothing else. Measured at 1470×812 in Lo-fi: every column ends above the phone's bottom edge
+and the page does not scroll.

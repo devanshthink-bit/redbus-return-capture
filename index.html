@@ -685,6 +685,19 @@ body.testing .devicewrap::before{display:none}
     <p class="vnote" id="fnote"></p>
   </div>
 
+  <!-- Lo-fi only, directly under the Hi-fi / Lo-fi switch (Devansh, 12 Sep: "move it below hifi
+       lofi toggle"). It is the last thing in this column, so showing it moves nothing else. -->
+  <div class="grp" id="vgrp">
+    <h2>Lo-fi version</h2>
+    <div class="vers">
+      <button type="button" onclick="setVersion(1)" id="v-1">v1</button>
+      <button type="button" onclick="setVersion(2)" id="v-2">v2</button>
+      <button type="button" onclick="setVersion(3)" id="v-3">v3</button>
+      <button type="button" onclick="setVersion(4)" id="v-4" aria-pressed="true">v4</button>
+    </div>
+    <p class="vnote" id="vnote"></p>
+  </div>
+
 </div><!-- /pcol a -->
 
 <div class="pcol b">
@@ -752,18 +765,6 @@ body.testing .devicewrap::before{display:none}
   <p class="foot">Everything on the phone works. Pick a return, change the bus, then move the
     date from My&nbsp;Bookings. This is a concept, so none of it is live redBus data.</p>
 
-  <!-- Lo-fi only. It sits last in the column (12 Sep): shown between the switch and the colours it
-       pushed everything below it down whenever Lo-fi was chosen. -->
-  <div class="grp" id="vgrp">
-    <h2>Lo-fi version</h2>
-    <div class="vers">
-      <button type="button" onclick="setVersion(1)" id="v-1">v1</button>
-      <button type="button" onclick="setVersion(2)" id="v-2">v2</button>
-      <button type="button" onclick="setVersion(3)" id="v-3">v3</button>
-      <button type="button" onclick="setVersion(4)" id="v-4" aria-pressed="true">v4</button>
-    </div>
-    <p class="vnote" id="vnote"></p>
-  </div>
 </div><!-- /pcol c -->
 </aside>
 
