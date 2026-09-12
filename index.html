@@ -118,7 +118,7 @@ body.testing .layout{justify-content:center}
    grid-template-rows:auto 1fr}
   .pcol.a{grid-column:1;grid-row:1}
   .pcol.b{grid-column:2;grid-row:1 / span 2}
-  .pcol.c{grid-column:1;grid-row:2}
+  .pcol.c{grid-column:1;grid-row:2;align-self:end}   /* level with the phone's bottom */
 }
 .panel::-webkit-scrollbar{display:none}
 /* The panel scrolls with its scrollbar hidden, so the only sign of more below was a screen name
@@ -150,8 +150,15 @@ body.testing .layout{justify-content:center}
 .vers button[aria-pressed="true"]{background:#BF3A41;color:#fff;
  box-shadow:0 1px 2px rgba(140,30,38,.22),0 6px 16px -6px rgba(140,30,38,.5)}
 .vnote{font-size:13px;line-height:1.5;color:var(--s-on-60);margin-top:10px;
- min-height:0}   /* three lines: the longest of the three notes. Stops the swatches jumping */
+ min-height:4.5em}   /* three lines, the longest note: the rows under it never move */   /* three lines: the longest of the three notes. Stops the swatches jumping */
 .vnote b{color:var(--s-on);font-weight:600}
+/* the one control: Hi-fi, then the lo-fi versions after a quiet label; only one note shows */
+.vers #f-hifi{flex:1.5}
+.vers .vsep{align-self:center;font-size:10.5px;font-weight:600;letter-spacing:.12em;
+ text-transform:uppercase;color:var(--s-on-45);padding:0 2px 0 10px;border-left:1px solid rgba(23,23,28,.12)}
+body.hifi-on .vers [id^="v-"][aria-pressed="true"]{background:none;color:var(--s-on-60);box-shadow:none}
+body:not(.hifi-on) .vers #f-hifi{background:none;color:var(--s-on-60);box-shadow:none}
+body.hifi-on #vnote,body:not(.hifi-on) #fnote{display:none}
 
 /* sampled tokens */
 .swatches{display:grid;grid-template-columns:repeat(3,1fr);gap:10px 12px}
@@ -179,18 +186,34 @@ body.testing .layout{justify-content:center}
  top:-28px;bottom:-28px;right:-28px;left:-38%;
  background:radial-gradient(ellipse 58% 64% at 64% 50%,
    #B8343C 0%, #C8414A 26%, rgba(216,78,85,.78) 48%, rgba(222,110,116,.40) 72%, rgba(251,246,246,0) 100%)}.device{width:calc(var(--s-dw) * var(--ds));height:calc(var(--s-dh) * var(--ds))}
+/* A real iPhone, at the same 430 x 902 (the screen inside stays exactly 402 x 874): a brushed
+   titanium rim catching light at two corners, a black glass bezel, shaded side buttons, and the
+   Dynamic Island. The shadow falls down and away, so the phone stands on the page. */
 .deviceframe{width:var(--s-dw);height:var(--s-dh);transform:scale(var(--ds));transform-origin:top left;
- background:linear-gradient(150deg,#4A4A52 0%,#0E0E11 26%,#0E0E11 74%,#4A4A52 100%);
- border-radius:58px;padding:14px;position:relative;
- box-shadow:0 1px 0 rgba(255,255,255,.24) inset, 0 44px 84px -26px rgba(80,26,32,.34), 0 12px 28px rgba(80,26,32,.13)}
-.deviceframe::after{content:"";position:absolute;inset:5px;border-radius:53px;
- border:1px solid rgba(255,255,255,.10);pointer-events:none}
-.btn-side{position:absolute;width:3px;background:#26262C;border-radius:2px}
-.btn-side.silent{left:-3px;top:132px;height:32px}
-.btn-side.up{left:-3px;top:186px;height:58px}
-.btn-side.down{left:-3px;top:256px;height:58px}
-.btn-side.power{right:-3px;top:210px;height:92px}
-.viewport{width:402px;height:874px;border-radius:44px;overflow:hidden;background:var(--page);
+ background:#060607;border-radius:62px;padding:14px;position:relative;
+ box-shadow:inset 0 0 0 3.5px #1c1d20, inset 0 0 0 5px #050506,
+   0 70px 110px -46px rgba(90,20,30,.55), 0 26px 44px -18px rgba(0,0,0,.42), 0 4px 10px rgba(0,0,0,.18)}
+.deviceframe::before{content:"";position:absolute;inset:0;border-radius:62px;padding:3px;pointer-events:none;
+ background:linear-gradient(145deg,#e4e4e7 0%,#8b8c91 14%,#45464b 36%,#2c2d31 52%,#5b5c61 70%,#a9aaaf 86%,#eeeef0 100%);
+ -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+ mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude}
+.deviceframe::after{content:"";position:absolute;inset:5px;border-radius:57px;
+ box-shadow:inset 0 0 0 1px rgba(255,255,255,.07);pointer-events:none}
+.btn-side{position:absolute;width:4px;border-radius:2px;
+ background:linear-gradient(90deg,#9a9ba0 0%,#4a4b50 45%,#2a2b2f 100%);box-shadow:0 0 0 .5px rgba(0,0,0,.35)}
+.btn-side.power{background:linear-gradient(270deg,#9a9ba0 0%,#4a4b50 45%,#2a2b2f 100%)}
+.btn-side.silent{left:-4px;top:132px;height:32px}
+.btn-side.up{left:-4px;top:186px;height:58px}
+.btn-side.down{left:-4px;top:256px;height:58px}
+.btn-side.power{right:-4px;top:210px;height:92px}
+/* the Dynamic Island, over the status bar's middle. The hi-fi draws a status bar for it; the
+   lo-fi screens put their title at the very top, where the island would cover it, so it shows
+   with the hi-fi only. */
+.island{position:absolute;top:25px;left:50%;width:124px;height:36px;margin-left:-62px;
+ border-radius:20px;background:#000;z-index:5;pointer-events:none;
+ box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}
+body:not(.hifi-on) .island{display:none}
+.viewport{width:402px;height:874px;border-radius:48px;overflow:hidden;background:var(--page);
  display:flex;flex-direction:column;position:relative}
 /* The screen is 402 x 874 -- exactly an iPhone 16 Pro, and exactly what all three builds are.
    It carried an iOS status strip above the prototype for a while, which made the screen 920 tall
@@ -546,7 +569,7 @@ body.hifi-on .phone,body.hifi-on .legacy{display:none}
 /* v1 and v2 have their own screens, so their own rails are mirrored in here */
 body.legacy-on #screenrail,body.legacy-on #staterail{display:none}
 body.hifi-on #screenrail,body.hifi-on #staterail,body.hifi-on #legacyrail,
-body.hifi-on .legacynote,body.hifi-on #vgrp{display:none}
+body.hifi-on .legacynote{display:none}
 #hifirail{display:none}
 body.hifi-on #hifirail{display:block}
 #legacyrail{display:none}
@@ -575,7 +598,7 @@ body.testing .devicewrap::before{display:none}
   .devicewrap::before{display:none}
   .device{width:100%;height:auto}
   .deviceframe{width:100%;height:auto;transform:none;padding:0;border-radius:0;box-shadow:none;background:none}
-  .deviceframe::after{display:none}
+  .deviceframe::after,.deviceframe::before,.island{display:none}
   .viewport{width:100%;height:100vh;height:100dvh;border-radius:0}
   .phone{width:100%;height:100vh;height:100dvh}
   .legacy{inset:0;height:100vh;height:100dvh;border-radius:0}
@@ -660,23 +683,21 @@ body.testing .devicewrap::before{display:none}
   <p class="lede">Lets travellers book a return before they know the date. They pick the last
     day they could come back, we book it, and they can move it once later.</p>
 
+  <!-- One control for all five prototypes (12 Sep). The lo-fi versions used to open a second
+       group under this one, which pushed everything below it down and changed the text scale, so
+       switching moved the page. Now both modes have the same rows in the same places. -->
   <div class="grp">
     <h2>Prototype</h2>
     <div class="vers" id="fidsw">
       <button type="button" onclick="setFidelity('hifi')" id="f-hifi" aria-pressed="true">Hi-fi</button>
-      <button type="button" onclick="setFidelity('lofi')" id="f-lofi">Lo-fi</button>
+      <span class="vsep" aria-hidden="true">Lo-fi</span>
+      <button type="button" onclick="pickLofi(1)" id="v-1" aria-label="Lo-fi version 1">v1</button>
+      <button type="button" onclick="pickLofi(2)" id="v-2" aria-label="Lo-fi version 2">v2</button>
+      <button type="button" onclick="pickLofi(3)" id="v-3" aria-label="Lo-fi version 3">v3</button>
+      <button type="button" onclick="pickLofi(4)" id="v-4" aria-label="Lo-fi version 4" aria-pressed="true">v4</button>
     </div>
+    <button type="button" id="f-lofi" hidden></button>
     <p class="vnote" id="fnote"></p>
-  </div>
-
-  <div class="grp" id="vgrp">
-    <h2>Version</h2>
-    <div class="vers">
-      <button type="button" onclick="setVersion(1)" id="v-1">v1</button>
-      <button type="button" onclick="setVersion(2)" id="v-2">v2</button>
-      <button type="button" onclick="setVersion(3)" id="v-3">v3</button>
-      <button type="button" onclick="setVersion(4)" id="v-4" aria-pressed="true">v4</button>
-    </div>
     <p class="vnote" id="vnote"></p>
   </div>
 
@@ -754,6 +775,7 @@ body.testing .devicewrap::before{display:none}
 <div class="device">
 <div class="deviceframe">
   <i class="btn-side silent"></i><i class="btn-side up"></i><i class="btn-side down"></i><i class="btn-side power"></i>
+  <i class="island" aria-hidden="true"></i>
   <div class="viewport">
     <!-- v1 / v2 land here, whole and unedited, cropped to the phone -->
     <div class="legacy"><iframe id="legacyframe" title="Earlier version" src="about:blank"></iframe></div>
@@ -2994,7 +3016,8 @@ function fitDevice(){
      phone standing on it. A session has nothing else on screen, so there it does fill. */
   const h = window.innerHeight;
   const s = testing ? Math.min(1.05, (h - 56) / 902)
-                    : Math.min(.95,  (h - 124) / 902, byWidth);
+                    : Math.min(1.05, h * 0.85 / 902, byWidth);   /* 85% of the page's height -- what it measured on
+                       Devansh's MacBook Air (about 688 of 812px), kept the same share on every laptop */
   document.documentElement.style.setProperty('--ds', Math.max(.42, s).toFixed(4));
   /* The stage can be scrolled sideways, and once it is, the writing is off the left of the
      screen and the phone looks stranded. Nothing should overflow any more, but a stray
@@ -3028,10 +3051,10 @@ document.querySelector('.stage').addEventListener('scroll', () => {
    their own centred 402x874 frame lands exactly on the crop -- nothing in them is
    edited, overridden or scripted from here. */
 const VERSIONS = {
-  1:{file:'frozen/v1.html', note:'<b>v1</b> asks for the last day you could travel, and books that day. 17 screens.'},
-  2:{file:'frozen/v2.html', note:'<b>v2</b> asks for an earliest and a latest day, and books the cheapest one between them. 16 screens.'},
-  3:{file:'frozen/v3.html', note:'<b>v3</b> is one calendar, and the chosen day opens its buses inside its own row. 16 screens.'},
-  4:{file:null,      note:'<b>v4</b> keeps the calendar and rebuilds the day screen: the days stay a fixed list and the chosen bus is shown in full below them. 16 screens.'}
+  1:{file:'frozen/v1.html', note:'<b>Lo-fi v1</b> asks for the last day you could travel, and books that day. 17 screens.'},
+  2:{file:'frozen/v2.html', note:'<b>Lo-fi v2</b> asks for an earliest and a latest day, and books the cheapest one between them. 16 screens.'},
+  3:{file:'frozen/v3.html', note:'<b>Lo-fi v3</b> is one calendar, and the chosen day opens its buses inside its own row. 16 screens.'},
+  4:{file:null,      note:'<b>Lo-fi v4</b> keeps the calendar and rebuilds the day screen: the days stay a fixed list and the chosen bus is shown in full below them. 16 screens.'}
 };
 let version = 4;
 function setVersion(v){
@@ -3173,6 +3196,7 @@ const FIDELITY = {
 };
 let fidelity = 'hifi';
 let hifiLoaded = false;
+function pickLofi(n){ setFidelity('lofi'); setVersion(n); }
 function setFidelity(f){
   fidelity = (f === 'lofi') ? 'lofi' : 'hifi';
   document.getElementById('f-hifi').setAttribute('aria-pressed', String(fidelity==='hifi'));
@@ -3338,44 +3362,39 @@ const panelEl = document.querySelector('.panel');
    columns are zoomed down together until they fit, rather than scrolling or fading out. zoom and
    not transform, so the text reflows at the smaller size instead of leaving a gap. */
 function fitPanel(){
-  /* Devansh, 12 Sep: the story "looks approximately the same height as the prototype height across
-     different laptop viewports", with no white space under it and nothing to scroll. So the scale
-     goes both ways now: the three columns (and their widths, via --pz) grow or shrink until the
-     content is as tall as the phone, and the content starts where the phone starts. If an opened
-     list would still overflow, it shrinks again to fit the window. */
+  /* Devansh, 12 Sep: the text was too big, and "on toggling for one laptop, no text, prototype
+     position, size, text size, or anything should not change". So the scale no longer chases the
+     content: it is one number per window height, never above the design size, identical in Hi-fi
+     and Lo-fi. The text starts level with the phone's top and the colours block ends level with its
+     bottom. Only if an opened list truly cannot fit does it shrink further. */
   const panel = document.querySelector('.panel');
   if(!panel || document.body.classList.contains('testing') || innerWidth <= 520) return;
   const cols = [...panel.querySelectorAll('.pcol')];
   const dev = document.querySelector('.device');
-  /* the content's own height: a fixed-height panel's scrollHeight never reads below its own height,
-     so it cannot say whether the content is short. */
-  const contentH = () => { let t = Infinity, b = 0;
-    /* what is drawn, not the columns' boxes: the screen list runs past its grid cell, so a
-       column's box under-reported the height by about a fifth and the fit overshot the phone */
-    cols.forEach(c => c.querySelectorAll('*').forEach(e => { if(!e.offsetParent) return;
-      /* a shut <details> keeps its rows laid out, only undrawn -- they are not on screen */
-      const d = e.closest('details'); if(d && !d.open && !e.closest('summary')) return;
-      const r = e.getBoundingClientRect();
-      if(r.height){ t = Math.min(t, r.top); b = Math.max(b, r.bottom); } }));
-    return b > t ? b - t : 0; };
   const apply = z => { panel.style.setProperty('--pz', z.toFixed(3));
                        cols.forEach(c => c.style.zoom = z === 1 ? '' : z.toFixed(3)); };
-  panel.style.paddingTop = '0px';
-  apply(1);
-  /* Measured once, at the natural size, and scaled in one step. The columns widen with the text
-     (--pz), so every line wraps the same way at any scale and the height scales exactly with z.
-     Re-measuring after zooming read the zoomed boxes inconsistently and overshot the phone. */
-  const room = panel.clientHeight;
-  const h0 = contentH();
-  if(!h0) return;
-  const pr = panel.getBoundingClientRect();
-  const dr = dev ? dev.getBoundingClientRect() : null;
-  const phone = dr ? dr.height : room;
-  const off = dr ? Math.max(0, dr.top - pr.top) : 0;
-  const z = Math.max(.55, Math.min(1.7, phone / h0, (room - 4) / h0));
+  /* the bottom of what is drawn in one column; a shut <details> keeps its rows laid out, undrawn */
+  const bottomOf = col => { let b = 0;
+    if(col) col.querySelectorAll('*').forEach(e => { if(!e.offsetParent) return;
+      const d = e.closest('details'); if(d && !d.open && !e.closest('summary')) return;
+      const r = e.getBoundingClientRect(); if(r.height) b = Math.max(b, r.bottom); });
+    return b; };
+  let z = Math.min(1, Math.max(.72, innerHeight / 900));
   apply(z);
-  /* start where the phone starts, as far as the room allows */
-  panel.style.paddingTop = Math.max(0, Math.min(off, room - 4 - h0 * z)) + 'px';
+  panel.style.paddingTop = panel.style.paddingBottom = '0px';
+  if(dev){
+    const pr = panel.getBoundingClientRect(), dr = dev.getBoundingClientRect();
+    panel.style.paddingTop = Math.max(0, dr.top - pr.top) + 'px';
+    panel.style.paddingBottom = Math.max(0, pr.bottom - dr.bottom) + 'px';
+    const a = panel.querySelector('.pcol.a'), b = panel.querySelector('.pcol.b'), c = panel.querySelector('.pcol.c');
+    for(let k = 0; k < 3; k++){
+      const cTop = c ? c.getBoundingClientRect().top : Infinity;
+      const over = Math.max(bottomOf(b) - dr.bottom, bottomOf(a) - (cTop - 14), 0);
+      if(over < 2) break;
+      z = Math.max(.55, z * dr.height / (dr.height + over));
+      apply(z);
+    }
+  }
 }
 function panelFade(){
   panelEl.classList.toggle('more', panelEl.scrollHeight - panelEl.clientHeight - panelEl.scrollTop > 4);

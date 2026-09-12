@@ -9703,3 +9703,41 @@ Nothing scrolls in either direction at any of these sizes.
 The probe had the same blind spots as the code, so the two agreed while the screen showed a gap.
 **Check a layout measurement against a screenshot, not against another measurement made the same
 way.**
+
+---
+
+DECISION  ·  2026-09-12  ·  direct request  ·  Source: user
+
+**A realistic iPhone, one phone size per laptop, one text size per laptop, and nothing moves when
+switching Hi-fi and Lo-fi.** Devansh: *"Use a more realistic prototype of the iPhone ... I can't see
+Dynamic Island, but make sure you don't change the width and height of the prototype ... it looks
+approximately the same as it is looking right now on a MacBook Air ... the UI text is looking too
+big ... remove responsive, maybe ... On toggling for one laptop, no text, prototype position, size,
+text size, or anything should not change."*
+
+- **The iPhone.** A brushed-titanium rim, drawn as a gradient ring through a mask, catches light
+  at two corners. Inside it: a black glass bezel, shaded side buttons, a soft shadow falling down
+  and away, and a 124×36 Dynamic Island. The frame stays 430×902 and the screen exactly 402×874.
+  The island shows in the hi-fi only: the hi-fi draws a status bar for it, while the lo-fi screens
+  put their title at the very top, where it would sit on the words.
+- **Phone size.** It is now 85% of the page's height on every laptop. That share was measured on
+  his MacBook Air, about 688 of 812px. A first attempt used 72%: the test browser reports about
+  87px less than its window size, so "760 tall" was really 673. Every sizing number is now checked
+  against the reported page height.
+- **Text size.** `fitPanel()` no longer chases the content. There is one scale per window height,
+  `min(1, max(.72, innerHeight/900))`: never above the design size, the same in Hi-fi and Lo-fi. It
+  shrinks further only if an opened list truly cannot fit. This reverses the grow-to-match-the-phone
+  scaling from earlier today, which made the text too big on larger screens.
+- **Nothing moves on switching.** The separate "Version" group is gone. Hi-fi and the four lo-fi
+  versions are one control (`Hi-fi | LO-FI v1 v2 v3 v4`, through `pickLofi(n)`). The note under it
+  keeps a fixed three-line height. The colours block is pinned level with the phone's bottom, and
+  the text starts level with its top.
+
+**Measured in Hi-fi, Lo-fi v4 and Lo-fi v2 at five page heights** (812, 900, 720, 1000, 1080): the
+phone's position and size, the switch's position, the colours block and the body text size were
+identical across all three modes at every size. Body text was 12–15px. Nothing scrolled either
+way. The state matrix is clean.
+
+The fit function was again replaced by locating its start and end in the text. The block was
+asserted first and the removed lines were read afterwards: only the old frame, the Version group,
+the old sizing line and the old fit function went.
