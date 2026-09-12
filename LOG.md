@@ -10036,3 +10036,13 @@ follows `aria-pressed` through a MutationObserver, so `setFidelity` and `setVers
 Until the script places it, the pressed button still paints its own red, so the first paint never
 flashes. A ResizeObserver re-places it without animating, which covers the Lo-fi group appearing
 from `display:none`. Reduced motion is already cut by the global rule.
+
+CHANGE · 2026-09-13 · direct · Source: user
+**The screen and state lists slide too.** Devansh: *"make it smooth and satisfying for screens and
+states also"*. The pink highlight now moves between rows (440ms, slight overshoot) and resizes to
+the new row's width, with a small press-down on tap. It works on the hi-fi rail, v4's, and the
+mirrored v1–v3 rails.
+
+**LEARNED — the rail code reads `list.children` by index** (`sync()`'s `pair`, `litParent`), so a
+thumb element inside the list would have shifted every pairing by one. The highlight is the list's
+own `::before`, moved by CSS variables, so the list keeps exactly its buttons.

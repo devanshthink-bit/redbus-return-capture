@@ -570,6 +570,20 @@ body.hifi-on .phone,body.hifi-on .legacy{display:none}
  font-variant-numeric:tabular-nums}
 .pcol.b .statelist > button[aria-pressed="true"]::before{color:#B23138}
 .dev button[data-lit]{background:var(--s-red-soft);color:#B23138;font-weight:700}
+/* The highlight slides between rows, like the switches (Devansh, 13 Sep: "make it smooth and
+   satisfying for screens and states also"). It is the list's own ::before, moved by variables,
+   because the rail code pairs list.children by index -- an extra child element would break it. */
+.pcol.b .dev:not(details),.pcol.b .statelist{position:relative;isolation:isolate}
+.pcol.b .dev:not(details)::before,.pcol.b .statelist::before{content:'';position:absolute;z-index:-1;
+ left:0;top:0;width:var(--tw,0);height:var(--th,0);transform:translate(var(--tx,0),var(--ty,0));
+ border-radius:9px;background:var(--s-red-soft);opacity:0;pointer-events:none;
+ transition:opacity 200ms}
+.pcol.b .thumbed::before{opacity:1}
+.pcol.b .thumbed.go::before{transition:transform 440ms cubic-bezier(.34,1.22,.44,1),
+ width 440ms cubic-bezier(.34,1.22,.44,1),height 440ms cubic-bezier(.34,1.22,.44,1),opacity 200ms}
+.pcol.b .thumbed > button[aria-pressed="true"],.pcol.b .thumbed > button[data-lit]{background:transparent}
+.pcol.b .dev button{transition:background 130ms,color 260ms cubic-bezier(.32,.72,0,1),transform 160ms cubic-bezier(.32,.72,0,1)}
+.pcol.b .dev button:active{transform:scale(.97)}
 
 .dev.states{display:block;margin-top:22px}
 .dev.states>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;
@@ -3526,5 +3540,33 @@ document.querySelectorAll('.vers').forEach(function(g){
   new MutationObserver(function(){ place(true); }).observe(g,{subtree:true,attributes:true,attributeFilter:['aria-pressed']});
   new ResizeObserver(function(){ place(false); }).observe(g);
 });
+
+// The screen and state lists get the same slide. Lists are rebuilt when a version or the hi-fi
+// loads, so one observer on the panel re-finds them all; placing only writes style, which the
+// observer does not watch, so it cannot loop.
+(function(){
+  var col=document.querySelector('.pcol.b'); if(!col) return;
+  var seen=new WeakSet();
+  function lit(l){
+    return [].find.call(l.children,function(b){ return b.tagName==='BUTTON' && b.offsetWidth &&
+      (b.getAttribute('aria-pressed')==='true' || b.hasAttribute('data-lit')); });
+  }
+  function place(l,anim){
+    var b=lit(l);
+    if(!b){ l.classList.remove('thumbed'); return; }
+    l.classList.toggle('go', anim && l.classList.contains('thumbed'));
+    l.style.setProperty('--tx',b.offsetLeft+'px'); l.style.setProperty('--ty',b.offsetTop+'px');
+    l.style.setProperty('--tw',b.offsetWidth+'px'); l.style.setProperty('--th',b.offsetHeight+'px');
+    l.classList.add('thumbed');
+  }
+  function all(anim){
+    col.querySelectorAll('.dev:not(details),.statelist').forEach(function(l){
+      if(!seen.has(l)){ seen.add(l); new ResizeObserver(function(){ place(l,false); }).observe(l); place(l,false); }
+      else place(l,anim);
+    });
+  }
+  all(false);
+  new MutationObserver(function(){ all(true); }).observe(col,{subtree:true,childList:true,attributes:true,attributeFilter:['aria-pressed','data-lit']});
+})();
 </script>
 </body></html>
