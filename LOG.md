@@ -9592,3 +9592,34 @@ was first pale pink at 3.4:1 and is now white, at about 5:1.
 **LEARNED — a gradient stage defeats a flat contrast check.** The detector measured the hint
 against the page colour (1.1:1) instead of the red it sits on. Measure text on a gradient at the
 spot where it actually sits.
+
+---
+
+CHANGE  ·  2026-09-12  ·  direct request  ·  Source: user
+
+**The viewer fits one screen, the presenter bar is gone, and the red is a glow, not a box.** Three
+corrections in a row from Devansh:
+
+1. *"I don't want anything to get hidden. Everything should be visible on this page only. Users
+   don't have to scroll vertically."* The left side is tighter: a 36pt title, three swatch columns,
+   and no empty space reserved under the notes. The story and the screen list now sit side by side
+   from 1100px wide (it was 1400). `fitPanel()` zooms the three columns down together whenever they
+   still overflow: a short window, Lo-fi's version row, or an opened States list. It uses zoom
+   rather than transform, so the text reflows. Measured: 1440×900 fits at full size, even in Lo-fi
+   v4 with States open; 1280×720 fits at 0.815. Nothing scrolls either way.
+2. *"Remove this section. It's not looking good."* The presenter bar under the phone (back, name,
+   "5 / 15", next, and the key hint) is removed. The arrow keys still step through the list, since
+   they add nothing visible. The caption stays in the page, hidden, because every rail writes into
+   it. The phone takes the freed height.
+3. *"Don't give hard borders and a boxy design to it. Make it mingle with the other UI so that it's
+   a gradient which becomes darker red ... around the prototype."* The rounded red panel and its
+   shadow are gone. In their place is a radial glow in redBus red, #B8343C behind the phone,
+   fading through #D84E55 to transparent on the warm-white page. It reaches into the stage's
+   padding so it runs to the window's edge without adding sideways scroll. The story column sits
+   above it (z-index 2), so it never draws over the text.
+
+**Rule broken, and checked.** Removing the presenter bar and the old stage block took two
+index-bounded replacements. The rule forbids those because one once deleted `buildSeats`. Each
+block was asserted to contain exactly what it should first. The diff was then read line by line:
+only the bar, the box styling and the compaction edits were removed. The state matrix is clean at
+234 cells.
