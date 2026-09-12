@@ -9347,3 +9347,19 @@ as they are and noted here.
 **LEARNED — a size watcher on a grid area misses content that overflows it.** The first fade never
 turned on at 1440px. In the two-column layout the column is a grid area of fixed size, so its box
 did not change when the list grew. The fix watches the lists themselves.
+
+---
+
+CHANGE  ·  2026-09-12  ·  impeccable (polish)  ·  Source: user
+
+**The lo-fi (v4) fixes the detector found.** Devansh: *"fix lofi too"*.
+
+- **The grey section label (`.seclab`, `.ptline` label) was #8A8A95 on #F1F1F6, 3.0:1.** It is now
+  #676772, 5.0:1. The same colour was used in both places.
+- **Five `.terms` headings were `h3` directly under the screen's `h1`.** They are now `h2` and
+  look the same. One line of JS looked the heading up by `h3` (the "Your return bus" swap in the
+  stuck-bus case), and it was changed with them. It is the only reference; `node --check` passes
+  and the 234-cell state matrix is clean.
+- **Left as they are:** the offline banner (its text is vertically centred in a 42pt bar, which
+  the detector reads as "no inset"), the rating badge (the real app's own tight badge), and the
+  switch's red shadow (it has an offset; the detector calls it a glow).
