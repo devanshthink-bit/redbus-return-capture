@@ -9475,3 +9475,31 @@ exact screen. So nothing is unreachable, and the viewer never shows a highlight 
 
 Which screens count as key is my reading of the case study's story. [Devansh to confirm or adjust:
 06b "Day fixed" and 07 "Choose your bus" were the closest calls.]
+
+---
+
+CHANGE  ·  2026-09-12  ·  direct request  ·  Source: user
+
+**Every lo-fi version's list shows the key screens only, the same cut as the hi-fi.** Devansh: *"Do
+the same for all versions of the lo-fi prototype."*
+
+Off the list in every version: the return leg's bus, seat and points steps; Booking confirmed; and
+v1's "Earlier buses". They are still in each prototype and reached by tapping through it. While one
+is showing, the list lights the key screen it belongs to: "Your return" in v2–v4, "Last day" in v1
+(which has no "Your return"), "Payment" for Booking confirmed, and "Change date" for v1's Earlier
+buses. The caption under the phone still names the exact screen.
+
+| Version | Before | After |
+|---|---|---|
+| v1 | 17 | 12 |
+| v2 | 16 | 13 |
+| v3 | 18 | 14 |
+| v4 | 18 | 14 |
+
+The states lists are unchanged.
+
+**The frozen builds are untouched.** v1–v3 lists are copies the viewer builds out of the frozen
+files, so the filtering happens in the copy (`buildLegacyRail`); their hashes still match. The four
+versions share button ids, so one map (`LOFI_PARENT`) serves all of them. v4's minor buttons carry
+`class="minor"` and are hidden by CSS, so the state matrix, which clicks them by id, still reaches
+them: 234 cells, clean.

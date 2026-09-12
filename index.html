@@ -497,6 +497,10 @@ body.hifi-on .phone,body.hifi-on .legacy{display:none}
 .dev button:hover{background:rgba(255,255,255,.7);color:var(--s-on)}
 .dev button:focus-visible{outline:0;box-shadow:0 0 0 2px rgba(216,78,85,.5)}
 .dev button[aria-pressed="true"]{background:var(--s-red-soft);color:#B23138;font-weight:700}
+/* Key screens only (12 Sep): the minor steps stay in the prototype but leave the list, and while
+   one is showing, the key screen it belongs to lights instead */
+#screenrail button.minor{display:none}
+.dev button[data-lit]{background:var(--s-red-soft);color:#B23138;font-weight:700}
 
 .dev.states{display:block;margin-top:22px}
 .dev.states>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;
@@ -657,12 +661,12 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
   <button onclick="go('s-outpoints')" id="t-outpoints">Outbound points</button>
   <button class="runstart" onclick="go('s-window')" id="t-window">Return</button>
   <button onclick="go('s-picked')" id="t-picked">Your return</button>
-  <button onclick="go('s-bus')" id="t-bus">Return bus</button>
-  <button onclick="go('s-seat')" id="t-seat">Return seat</button>
-  <button onclick="go('s-points')" id="t-points">Return points</button>
+  <button class="minor" onclick="go('s-bus')" id="t-bus">Return bus</button>
+  <button class="minor" onclick="go('s-seat')" id="t-seat">Return seat</button>
+  <button class="minor" onclick="go('s-points')" id="t-points">Return points</button>
   <button class="runstart" onclick="go('s-review')" id="t-review">Trip review</button>
   <button onclick="go('s-pay')" id="t-pay">Payment</button>
-  <button onclick="go('s-done2')" id="t-done2">Booking confirmed</button>
+  <button class="minor" onclick="go('s-done2')" id="t-done2">Booking confirmed</button>
   <button class="runstart" onclick="go('s-ticket')" id="t-ticket">Ticket</button>
   <button onclick="go('s-mybook')" id="t-mybook">My Bookings</button>
   <button class="runstart" onclick="openWithin()" id="t-within">Change day</button>
@@ -3006,7 +3010,24 @@ function setVersion(v){
 /* ---- caption under the phone ----------------------------------------------
    Reads the screen that is actually showing rather than the button that was pressed,
    so it stays right when the prototype navigates itself. */
+/* The lo-fi's minor screens, in every version, and the key screen each belongs to -- the same cut
+   as the hi-fi's list. The frozen builds share these ids, so one map serves v1 to v4. A list, not
+   one id, because the versions differ: v1 has no "Your return", so its return steps fall back to
+   its "Last day". */
+const LOFI_PARENT = {
+  't-buses':['t-backby'], 't-bus':['t-picked'],
+  't-seat':['t-picked','t-backby'], 't-points':['t-picked','t-backby'],
+  't-done2':['t-pay'], 't-earlier':['t-later']
+};
+function litParent(buttons, onId, find){
+  buttons.forEach(b => b.removeAttribute('data-lit'));
+  for(const c of (LOFI_PARENT[onId] || [])){ const t = find(c); if(t){ t.setAttribute('data-lit',''); return; } }
+}
 function setCaption(){
+  const rail4 = document.getElementById('screenrail');
+  const on4 = rail4.querySelector('[aria-pressed="true"]');
+  litParent([...rail4.querySelectorAll('button')], on4 && on4.id,
+            id => { const t = document.getElementById(id); return t && rail4.contains(t) ? t : null; });
   const cap = document.getElementById('caption');
   if(fidelity === 'hifi') return;            // the hi-fi rail writes its own
   if(version !== 4){ cap.innerHTML = 'Version ' + version + ' &mdash; frozen, shown as it was built'; return; }
@@ -3056,7 +3077,9 @@ function buildLegacyRail(){
   };
   const list = document.createElement('div');
   list.className = 'dev';
-  screens.forEach(x => list.appendChild(mirror(x)));
+  /* key screens only, as in v4 and the hi-fi; the frozen file itself is untouched */
+  const shown = screens.filter(x => !LOFI_PARENT[x.id]);
+  shown.forEach(x => list.appendChild(mirror(x)));
   host.appendChild(list);
 
   let stateList = null;
@@ -3075,9 +3098,11 @@ function buildLegacyRail(){
   function sync(){
     const pair = (mine, theirs) => [...mine.children].forEach((b,i) =>
       b.setAttribute('aria-pressed', theirs[i].getAttribute('aria-pressed') === 'true' ? 'true':'false'));
-    pair(list, screens);
+    pair(list, shown);
     if(stateList) pair(stateList, states);
     const on = screens.find(x => x.getAttribute('aria-pressed') === 'true');
+    litParent([...list.children], on && on.id, id => { const k = shown.findIndex(x => x.id === id);
+                                                       return k >= 0 ? list.children[k] : null; });
     const st = states.find(x => x.getAttribute('aria-pressed') === 'true');
     document.getElementById('caption').innerHTML =
       (on ? '<b>' + on.textContent + '</b>' : '') +
