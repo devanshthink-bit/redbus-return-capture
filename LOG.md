@@ -9554,3 +9554,41 @@ differently. The frozen files are untouched.
 
 Which states count as key is my reading. [Devansh to confirm: "Return seat gone" was the closest
 call.]
+
+---
+
+DECISION  ·  2026-09-12  ·  direct request (humanizer for the copy, Mobbin for reference)  ·  Source: user
+
+**The viewer is redesigned for a CEO presentation.** Devansh: *"Can you improve the overall UI of
+this and make it more professional for a stakeholder presentation? I will be presenting it to the
+CEO ... make sure it is in the theme of RedBus only ... Use the humanizer skill for the copies."*
+
+The structure follows two Mobbin references, Buffer's feature page and Devin's onboarding: the
+story sits in a calm column on the left, and the product stands on its own coloured stage on the
+right.
+
+- **A red stage.** The phone now stands on a panel in redBus red, the logo's #D84E55 darkening to
+  #B8343C. The page behind the story is a warm white. The phone is sized to the stage.
+- **A presenter bar under the phone.** Back, the screen's name, "5 / 15", and next. The ← and → keys
+  do the same. It clicks the visible list's own buttons, so the hidden steps, the lit parents and
+  the captions keep working. It works in the hi-fi, v4 and the frozen versions' copies.
+- **Numbered steps in the list** (01–15) using a CSS counter. The sequence is the story, so here the
+  numbers carry information. Hidden rows take no number.
+- **The pitch, rewritten with humanizer, from CONTEXT §2 and nothing else:** *"Some travellers know
+  they are coming back, but not when. Today they have no easy way to book that return on redBus.
+  This feature asks for the last day they could travel back, and books that day. If plans change,
+  they can move it once, paying only any rise in fare."* The last clause follows the verified
+  terms: one reschedule, the fare difference payable, nothing back if the new day is cheaper.
+- **Other copy.** The Hi-fi note now reads "the final design, built from Figma: 51 screens at iPhone
+  14 size"; the Lo-fi note, "the earlier prototype, in four versions". "Sampled from the live app"
+  became "Colours from the live app". The footnote is plain sentences with no dashes.
+- **Kept as Devansh chose them:** the system-mono labels, no group names in the lists, the colour
+  swatches, Test mode (phone only, and now no red stage either) and the phone-only view under
+  520px.
+
+Contrast: the caption on the presenter pill is about 5.7:1 and the step count 4.7:1. The key hint
+was first pale pink at 3.4:1 and is now white, at about 5:1.
+
+**LEARNED — a gradient stage defeats a flat contrast check.** The detector measured the hint
+against the page colour (1.1:1) instead of the red it sits on. Measure text on a gradient at the
+spot where it actually sits.

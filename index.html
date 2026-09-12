@@ -54,12 +54,10 @@ body{
  /* A blush ground -- unmistakably redBus-tinted, never white, and light enough that dark ink
     carries a proper type hierarchy again. It stays well clear of the prototype's own #C54646
     buttons, which remain the brightest red on screen. */
- background:#FAEBEC;
- background-image:
-   radial-gradient(1100px 800px at 6% -8%,  #FEF6F6 0%, rgba(254,246,246,0) 58%),
-   radial-gradient(900px 800px at 99% 4%,   #F7E4E7 0%, rgba(247,228,231,0) 60%),
-   radial-gradient(1000px 720px at 50% 112%,#F3DCDF 0%, rgba(243,220,223,0) 60%),
-   linear-gradient(165deg,#FCF0F1 0%,#F9E8EA 48%,#F6E2E4 100%);
+ /* 12 Sep, for the CEO review: the story sits on a calm warm white, and the product gets its own
+    stage in redBus red (see .devicewrap). Two grounds, one job each. */
+ background:#FBF6F6;
+ background-image:linear-gradient(180deg,#FFFFFF 0%,#FBF6F6 40%,#F8EFEF 100%);
  background-attachment:fixed;
  font-family:Inter,-apple-system,system-ui,sans-serif;
  color:var(--ink);   /* the PROTOTYPE's ink. Never a shell token -- anything in the phone that
@@ -71,19 +69,19 @@ body{
 .stage{flex:1 1 auto;min-height:0;display:flex;align-items:center;
  justify-content:center;justify-content:safe center;   /* plain `center` puts the overflow off the
    LEFT edge, where it cannot be scrolled to -- the panel simply vanishes. This has bitten twice */
- padding:28px 40px;overflow-x:auto;overflow-y:hidden;position:relative}
+ padding:28px 28px 28px 44px;overflow-x:auto;overflow-y:hidden;position:relative}
 /* The writing takes the width it needs on the left; the phone then centres in whatever is
    left over, rather than being pushed to the far edge by space-between. */
-.layout{width:100%;max-width:1400px;display:flex;align-items:flex-start;
- gap:0}   /* no gap: the leftover beside the text IS the phone's space, and it centres in all of it */
+.layout{width:100%;max-width:1680px;display:flex;align-items:stretch;
+ gap:44px}   /* no gap: the leftover beside the text IS the phone's space, and it centres in all of it */
 /* The panel is pinned to the top: centred, it slid up and down as the version changed its
    height. The phone stays centred against whichever of the two is taller. */
-.devicewrap{align-self:center}
+.devicewrap{align-self:stretch}
 body.testing .layout{justify-content:center}
 .stage::-webkit-scrollbar{height:6px}
 .stage::-webkit-scrollbar-thumb{background:rgba(23,23,28,.18);border-radius:3px}
 /* product-shot glow behind the device */
-.glow{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:1000px;height:1000px;
+.glow{display:none;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:1000px;height:1000px;
  border-radius:50%;pointer-events:none;z-index:0;
  background:radial-gradient(closest-side, rgba(255,255,255,.72), rgba(255,255,255,.28) 50%, rgba(255,255,255,0) 74%)}
 .panel,.devicewrap{position:relative;z-index:1}
@@ -93,7 +91,7 @@ body.testing .layout{justify-content:center}
  flex:0 0 auto;width:clamp(340px,25vw,400px);
  /* a fixed height, not a max: the row's height then never depends on which version is
     showing, so the whole composition stays put in the middle of the window */
- height:calc(100vh - 96px);
+ height:calc(100vh - 56px);padding-top:8px!important;
  overflow-y:auto;scrollbar-width:none;
  padding:0 10px}   /* the rails hang 10px either side; overflow-y:auto would clip them without this */
 /* Wide enough for two: the writing goes left, the screen list goes right. It stops the
@@ -107,7 +105,7 @@ body.testing .layout{justify-content:center}
    scrolled, and scrolling it right put the whole left column out of view -- which is what "the
    mock is not centred" looked like. */
 @media (min-width:1400px){
-  .panel{grid-template-columns:340px 340px;column-gap:44px;row-gap:26px;
+  .panel{grid-template-columns:minmax(300px,360px) 250px;column-gap:52px;row-gap:26px;
    align-items:start;width:auto;
    /* the second row must be flexible: b spans both rows, and across an `auto` row its extra
       height is shared out into row 1, which moved the swatches every time the version changed
@@ -127,9 +125,11 @@ body.testing .layout{justify-content:center}
 .lock svg{height:44px;width:auto;display:block}   /* the mark carries the page, so it is given room */
 .lock span{display:block;margin-top:13px;font-family:var(--s-mono);font-size:11px;font-weight:600;
  letter-spacing:.16em;text-transform:uppercase;color:var(--s-on-45)}
-.panel h1{font-family:var(--s-display);font-size:31px;font-weight:800;letter-spacing:-.03em;
- line-height:1.1;margin-bottom:9px;color:var(--s-on)}
-.panel .lede{font-size:14px;line-height:1.55;color:var(--s-on-60);max-width:32ch}
+.panel h1{font-family:var(--s-display);font-size:40px;font-weight:800;letter-spacing:-.035em;
+ line-height:1.05;margin-bottom:14px;color:var(--s-on)}
+.panel .lede{font-size:15.5px;line-height:1.55;color:var(--s-on-60);max-width:36ch}
+.panel .lede + .lede{margin-top:10px}
+.panel .lede.pitch{color:var(--s-on-80)}
 .panel .lede b{color:var(--s-on);font-weight:600}
 .grp{margin-top:22px}
 .grp>h2{font-family:var(--s-mono);font-size:11px;font-weight:600;letter-spacing:.16em;
@@ -165,8 +165,16 @@ body.testing .layout{justify-content:center}
 /* ---------- iPhone mock ---------- */
 /* The frame is drawn at its true pixel size and then scaled as one piece, so the
    430x874 prototype inside it never changes layout. .device reserves the scaled box. */
-.devicewrap{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;align-items:center;gap:14px}
-.device{width:calc(var(--s-dw) * var(--ds));height:calc(var(--s-dh) * var(--ds))}
+/* The product's stage: a panel in redBus red, the logo's own #D84E55 darkening to the app's
+   pressed red, with a soft light where the phone stands. It fills the height of the window, and
+   fitDevice() sizes the phone to it. */
+.devicewrap{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;
+ justify-content:center;gap:18px;height:calc(100vh - 56px);border-radius:28px;position:relative;
+ overflow:hidden;
+ background:
+   radial-gradient(620px 520px at 50% 42%, rgba(255,255,255,.20), rgba(255,255,255,0) 70%),
+   linear-gradient(160deg,#DE5A61 0%,#D84E55 38%,#B8343C 100%);
+ box-shadow:0 1px 0 rgba(255,255,255,.35) inset, 0 30px 60px -30px rgba(120,24,32,.45)}.device{width:calc(var(--s-dw) * var(--ds));height:calc(var(--s-dh) * var(--ds))}
 .deviceframe{width:var(--s-dw);height:var(--s-dh);transform:scale(var(--ds));transform-origin:top left;
  background:linear-gradient(150deg,#4A4A52 0%,#0E0E11 26%,#0E0E11 74%,#4A4A52 100%);
  border-radius:58px;padding:14px;position:relative;
@@ -188,9 +196,26 @@ body.testing .layout{justify-content:center}
    their own rounded corners out of line with the clip. Matching the real 402 x 874 costs the
    status bar and settles all of it. */
 /* caption under the phone, saying what is on screen */
-.caption{font-size:12px;color:var(--s-on-45);text-align:center;letter-spacing:-.005em;
- max-width:340px;line-height:1.4}
-.caption b{color:var(--s-on-80);font-weight:600}
+/* The presenter bar under the phone: back, where you are, next. The caption keeps its id because
+   every rail writes the screen name into it. */
+.presenter{display:flex;align-items:center;gap:6px;padding:5px;border-radius:999px;
+ background:rgba(60,8,14,.22);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);
+ -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);position:relative;z-index:1}
+.presenter button{width:36px;height:36px;border-radius:50%;border:0;cursor:pointer;
+ display:flex;align-items:center;justify-content:center;color:#fff;background:rgba(255,255,255,.14);
+ transition:background 140ms}
+.presenter button:hover{background:rgba(255,255,255,.26)}
+.presenter button:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.presenter button:disabled{opacity:.35;cursor:default;background:rgba(255,255,255,.10)}
+.presenter .now{display:flex;flex-direction:column;align-items:center;min-width:200px;padding:0 10px}
+.caption{font-size:14px;color:#fff;text-align:center;letter-spacing:-.005em;line-height:1.3;
+ max-width:260px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.caption b{color:#fff;font-weight:600}
+.presenter .step{font-family:var(--s-mono);font-size:11px;letter-spacing:.08em;color:#FFE3E5;
+ line-height:1.3;font-variant-numeric:tabular-nums}
+/* white, not the pale pink: #FFE3E5 on the stage red measured 3.4:1; white on the darker lower
+   stage where this sits is about 5:1 */
+.keyhint{font-size:12px;color:#fff;position:relative;z-index:1;margin-top:-8px}
 
 /* ---------- v1 / v2, shown in the same mock ---------- */
 /* Both are frozen files. They are loaded whole in an iframe sized so their own 402x874
@@ -483,7 +508,7 @@ body.hifi-on .phone,body.hifi-on .legacy{display:none}
    for probing, not for walking the flow. */
 .dev{display:flex;flex-direction:column;align-items:flex-start;gap:1px;margin:0 -10px}
 .dev button{background:none;color:var(--s-on-60);border:0;border-radius:9px;padding:5px 10px;
- font-family:inherit;font-size:13px;font-weight:500;letter-spacing:-.008em;line-height:1.3;
+ font-family:inherit;font-size:14px;font-weight:500;letter-spacing:-.008em;line-height:1.3;
  cursor:pointer;text-align:left;transition:background 130ms,color 130ms;
  display:block;max-width:100%}   /* no width:100% -- a short label had a long empty tail */
 /* The stage each screen belongs to used to be repeated on all eighteen rows. It is the same
@@ -501,6 +526,16 @@ body.hifi-on .phone,body.hifi-on .legacy{display:none}
    one is showing, the key screen it belongs to lights instead */
 #screenrail button.minor{display:none}
 #staterail button.minor{display:none}
+/* Numbered steps. The order is the story, so the number carries information: the presenter bar
+   says "5 / 15" and the list says 05. Hidden rows take no number (display:none makes no box). */
+.pcol.b .dev:not(.states){counter-reset:step}
+.pcol.b .dev:not(.states) > button{counter-increment:step;display:flex;align-items:baseline;gap:10px}
+.pcol.b .dev:not(.states) > button.minor{display:none}
+.pcol.b .dev:not(.states) > button::before{content:counter(step,decimal-leading-zero);
+ font-family:var(--s-mono);font-size:10.5px;font-weight:600;color:var(--s-on-45);min-width:16px;
+ font-variant-numeric:tabular-nums}
+.pcol.b .dev:not(.states) > button[aria-pressed="true"]::before,
+.pcol.b .dev:not(.states) > button[data-lit]::before{color:#B23138}
 .dev button[data-lit]{background:var(--s-red-soft);color:#B23138;font-weight:700}
 
 .dev.states{display:block;margin-top:22px}
@@ -534,7 +569,10 @@ body.hifi-on.legacy-on #legacyrail,body.hifi-on.legacy-on .legacynote{display:no
 
 /* Session mode. Open the prototype with ?test on the end and the panel is gone, so a
    participant cannot see -- or tap -- anything but the phone. */
-body.testing .panel,body.testing .glow,body.testing .caption{display:none!important}
+body.testing .panel,body.testing .glow,body.testing .caption,
+body.testing .presenter,body.testing .keyhint{display:none!important}
+/* a participant sees a phone and nothing else -- no red stage either */
+body.testing .devicewrap{background:none;box-shadow:none}
 
 /* On a real phone the frame filled 430x874 inside a smaller screen, so it was cut off and the
    rails sat on top of it. Below 520px the frame simply becomes the screen -- no mock, no panel. */
@@ -543,7 +581,8 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
   .panel,.btn-side,.glow,.caption{display:none}
   .stage{padding:0;display:block}
   .layout{display:block;max-width:none;gap:0}
-  .devicewrap{display:block}
+  .devicewrap{display:block;height:auto;border-radius:0;background:none;box-shadow:none;overflow:visible}
+  .presenter,.keyhint{display:none}
   .device{width:100%;height:auto}
   .deviceframe{width:100%;height:auto;transform:none;padding:0;border-radius:0;box-shadow:none;background:none}
   .deviceframe::after{display:none}
@@ -628,8 +667,10 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
   </div>
 
   <h1>Return capture</h1>
-  <p class="lede">For the traveller who knows they are coming back, but not <b>when</b>.
-    Built on colour and type measured off the live redBus app.</p>
+  <p class="lede">Some travellers know they are coming back, but not <b>when</b>. Today they
+    have no easy way to book that return on redBus.</p>
+  <p class="lede pitch">This feature asks for the last day they could travel back, and books that
+    day. If plans change, they can move it once, paying only any rise in fare.</p>
 
   <div class="grp">
     <h2>Prototype</h2>
@@ -704,7 +745,7 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
 
 <div class="pcol c">
   <div class="grp" style="margin-top:0">
-    <h2>Sampled from the live app</h2>
+    <h2>Colours from the live app</h2>
     <div class="swatches">
       <div class="tok"><i style="background:#C54646"></i><div><b>Action</b><span>#C54646</span></div></div>
       <div class="tok"><i style="background:#458442"></i><div><b>Rating</b><span>#458442</span></div></div>
@@ -715,8 +756,8 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
     </div>
   </div>
 
-  <p class="foot">Every screen responds &mdash; pick a return, change the bus, then move the
-    date after booking from My&nbsp;Bookings. Nothing here is real redBus data.</p>
+  <p class="foot">Everything on the phone works. Pick a return, change the bus, then move the
+    date from My&nbsp;Bookings. This is a concept, so none of it is live redBus data.</p>
 </div><!-- /pcol c -->
 </aside>
 
@@ -1428,7 +1469,16 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
   </div><!-- /viewport -->
 </div><!-- /deviceframe -->
 </div><!-- /device -->
-<p class="caption" id="caption"></p>
+<div class="presenter" role="group" aria-label="Step through the screens">
+  <button type="button" id="pv-prev" aria-label="Previous screen">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <div class="now"><p class="caption" id="caption"></p><span class="step" id="pv-step"></span></div>
+  <button type="button" id="pv-next" aria-label="Next screen">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+</div>
+<p class="keyhint">Use the arrow keys to step through</p>
 </div><!-- /devicewrap -->
 
 </div><!-- /layout -->
@@ -2956,15 +3006,16 @@ function fitDevice(){
   /* A width term as well as a height one, so the frame can never be wider than the room left
      beside the panel. Without it the row could overflow, and an overflowing row can be scrolled
      away from -- taking the writing off the screen. */
-  const panel = document.querySelector('.panel');
-  const byWidth = testing ? Infinity
-    : (window.innerWidth - 80 - (panel ? panel.offsetWidth : 0) - 48) / 430;
+  /* The phone stands on the red stage now, so it is sized to the stage: its width, less a margin,
+     and its height, less room for the presenter bar underneath. */
+  const wrap = document.querySelector('.devicewrap');
+  const byWidth = testing ? Infinity : ((wrap ? wrap.clientWidth : window.innerWidth) - 72) / 430;
   /* Sized as a *share* of the window, not as "the largest that fits". Fitting made the frame
      fill 91% of the height on any normal laptop, which reads as the page rather than as a
      phone standing on it. A session has nothing else on screen, so there it does fill. */
   const h = window.innerHeight;
   const s = testing ? Math.min(1.05, (h - 56) / 902)
-                    : Math.min(.95,  Math.min(h * .88, h - 76) / 902, byWidth);
+                    : Math.min(.95,  (h - 196) / 902, byWidth);
   document.documentElement.style.setProperty('--ds', Math.max(.42, s).toFixed(4));
   /* The stage can be scrolled sideways, and once it is, the writing is off the left of the
      screen and the phone looks stranded. Nothing should overflow any more, but a stray
@@ -3130,14 +3181,14 @@ document.getElementById('legacyframe').addEventListener('load', () => {
    iframe from hifi/app.html -- nothing in it is edited or overridden from here. Version
    only means anything inside the lo-fi, so that group hides when the hi-fi is on. */
 function hifiNote(n){
-  return '<b>Hi-fi</b> is the Figma build &mdash; ' + (n ? n + ' screens ' : '') +
-         'at iPhone&nbsp;14 size, walked in the order they are arranged on the canvas.';
+  return '<b>Hi-fi</b> is the final design, built from Figma' + (n ? ': ' + n + ' screens' : '') +
+         ' at iPhone&nbsp;14 size.';
 }
 const FIDELITY = {
   /* The count is read off the loaded build (see buildHifiRail). Typed here, it said 26 for weeks
      after the build reached 38. */
   hifi:{note:hifiNote(null)},
-  lofi:{note:'<b>Lo-fi</b> is the working prototype, in four versions. Every screen responds.'}
+  lofi:{note:'<b>Lo-fi</b> is the earlier prototype, in four versions.'}
 };
 let fidelity = 'hifi';
 let hifiLoaded = false;
@@ -3314,6 +3365,45 @@ if(window.ResizeObserver){
     const el = document.getElementById(id); if(el) ro.observe(el);
   });
 }
+
+/* ---- presenter bar ------------------------------------------------------------
+   Back / next / "5 / 15" under the phone, and the arrow keys, walk whichever list is showing: the
+   hi-fi's key screens, v4's, or a frozen version's copy. It clicks the list's own buttons, so every
+   rule the lists already follow (hidden steps, lit parents, captions) holds. */
+function railButtons(){
+  const host = fidelity === 'hifi' ? document.querySelector('#hifirail > .dev')
+             : version === 4 ? document.getElementById('screenrail')
+             : document.querySelector('#legacyrail > .dev');
+  return host ? [...host.children].filter(b => b.tagName === 'BUTTON' && b.offsetParent) : [];
+}
+function railAt(bs){
+  const i = bs.findIndex(b => b.getAttribute('aria-pressed') === 'true');
+  return i >= 0 ? i : bs.findIndex(b => b.hasAttribute('data-lit'));
+}
+function paintStep(){
+  const bs = railButtons(), i = railAt(bs);
+  document.getElementById('pv-step').textContent = bs.length && i >= 0 ? (i + 1) + ' / ' + bs.length : '';
+  document.getElementById('pv-prev').disabled = !bs.length || i === 0;
+  document.getElementById('pv-next').disabled = !bs.length || i === bs.length - 1;
+}
+function stepBy(d){
+  const bs = railButtons(); if(!bs.length) return;
+  const i = railAt(bs);
+  const j = i < 0 ? 0 : Math.max(0, Math.min(bs.length - 1, i + d));
+  if(j !== i) bs[j].click();
+  setTimeout(paintStep, 80);
+}
+document.getElementById('pv-prev').addEventListener('click', () => stepBy(-1));
+document.getElementById('pv-next').addEventListener('click', () => stepBy(1));
+addEventListener('keydown', e => {
+  if(e.metaKey || e.ctrlKey || e.altKey || document.body.classList.contains('testing')) return;
+  if(/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable) return;
+  if(e.key === 'ArrowRight'){ e.preventDefault(); stepBy(1); }
+  if(e.key === 'ArrowLeft'){ e.preventDefault(); stepBy(-1); }
+});
+/* every list writes the caption when the screen changes, so the count follows the caption */
+new MutationObserver(paintStep).observe(document.getElementById('caption'),
+  {childList:true, characterData:true, subtree:true});
 
 /* v1.html, v2.html, v3.html and prototype.html are redirects into here, each carrying the version
    it used to be. Anything outside 1..4 is ignored rather than trusted. */
