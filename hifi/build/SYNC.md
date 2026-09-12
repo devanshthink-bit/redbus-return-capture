@@ -71,7 +71,7 @@ source build/venv/bin/activate
 python3 build/diff.py build/ref/<NN>_figma.png build/shots/<NN>.png <NN>
 ```
 
-**Reading the number.** `CONTEXT.md` §21 records the baseline, re-measured over all 31 frames on
+**Reading the number.** `CONTEXT.md` §21 records the baseline, re-measured over all 35 frames on
 2026-09-09: **mean 5.63%** of pixels differing, **median 5.54%**, worst **11.99%** (01) and
 **11.69%** (03a), the two tallest. §21 carries the per-frame list — compare against **that frame's
 own number**, never against the mean, which moves whenever a frame is added. The residue is glyph
@@ -108,7 +108,7 @@ because the component that *contains* them sets the scale: `Row / Policy` at 22,
 instance by `enclosing component :: component`, and report any group with more than one size. It
 separates a decision from a mistake without needing judgement, and it is what the seat defect looked
 like — identical seats in one grid at 25×25, 30×62 and 31×68. It currently returns **empty** across
-all 31 frames; keep it that way.
+all 35 frames; keep it that way.
 
 Two other things the sweep is good for: **tap targets** — every `Button / Text action` should measure
 44 or more (one was 20, because `HUG/HUG` makes an instance ignore its master's fixed height) — and

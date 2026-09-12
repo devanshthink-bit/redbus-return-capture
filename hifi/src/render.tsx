@@ -29,6 +29,10 @@ import S14 from "./screens/14";
 import S15 from "./screens/15";
 import S16 from "./screens/16";
 import S17 from "./screens/17";
+import S18 from "./screens/18";
+import S19 from "./screens/19";
+import S19A from "./screens/19a";
+import S20 from "./screens/20";
 
 export const SCREENS = [
   { id: "01", name: '01 · Home', C: S01 },
@@ -62,4 +66,8 @@ export const SCREENS = [
   { id: "15", name: '15 · Confirm the move', C: S15 },
   { id: "16", name: '16 · Return moved', C: S16 },
   { id: "17", name: '17 · Profile', C: S17 },
+  { id: "18", name: '18 · Review and cancel', C: S18 },
+  { id: "19", name: '19 · Refund details', C: S19 },
+  { id: "19a", name: '19a · Why cancel', C: S19A },
+  { id: "20", name: '20 · Ticket cancelled', C: S20 },
 ];

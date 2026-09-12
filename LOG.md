@@ -9127,3 +9127,57 @@ is a bigger change than this one.
 to 42 and 43. **A probe that asserts on one screen's node and is then pointed at two others will
 report a clean pass as a failure.** Read what the assertion is actually attached to before
 believing the verdict, in either direction.
+
+---
+
+CHANGE  ·  2026-09-12  ·  molades-build  [· Source: user]
+
+**The cancellation flow, four screens, built from the real app.**
+
+The change-of-plans sheet has drawn the cancellation beside the free date change since it was
+added, and that side-by-side **is** this construct's argument: you see what cancelling would cost
+before you choose to move instead. Until now only one half of it led anywhere, and I recorded the
+other as "the one branch this prototype does not build". Devansh: *"In the ticket details page,
+build the cancellation flow also, there are screens for it in the folder"* and *"when he clicks on
+Cancellation, he should be redirected to the cancellation flow as usual."*
+
+The real app's four steps, and the screenshot each came from:
+
+- **18 · Review and cancel** (`IMG_5214`) — the leg strip, then one card: *Passenger for
+  cancellation*, the primary passenger in green, the name, the age, the seat. One action:
+  *View refund details*.
+- **19 · Refund details** (`IMG_5215`) — *Seats to be cancelled*, a *View cancellation policy* row,
+  then the money on a dark band with the workings under it: Refund amount, Total Paid, Total
+  deductions, Cancellation Charges (incl GST), and the footnote that says whose fee it is —
+  *"redBus doesn't charge cancellation processing fees; any deductions follow the bus operator's
+  policy."*
+- **19a · Why cancel** (`IMG_4991`) — a sheet with the eight reasons the real app lists, verbatim,
+  and *Cancel ticket*. Pressing it without a reason points at the first one.
+- **20 · Ticket cancelled** (`IMG_5217`) — the ticket with the white-on-red band, *Ticket cancelled
+  on 12 Sep 2026 09:41*, the change card and the ticket actions gone, a refund card in their place
+  — *Refund of ₹763 is initiated · Refund initiated · To: Original payment method* — and both legs
+  reading as spent.
+
+**The numbers are this ticket's own, not the screenshot's.** The real screens cancel a ₹255 fare
+and refund ₹210. This return leg is ₹1,090, so at the same 30% operator fee the deduction is ₹327
+and the refund is ₹763 — which is the figure already on the change-of-plans sheet, so the two
+agree. Copying ₹210 across would have put a number on screen that nothing in the prototype could
+produce, which is exactly the class of bug CONTEXT §10 records under *grep for what the code can
+actually produce*.
+
+**Cancelling is one way.** Once it is done the booking card on My Bookings opens 20 rather than the
+live ticket, and the change row on both the ticket and the card stops opening anything — the same
+treatment the move already gets, for the same reason.
+
+18, 19 and 20 are all in `SKIP`, and 19a is in `OVERLAY` too: none of the four is a step on the way
+to anywhere, and all four are reachable only by choosing to cancel. Back on 18 answers to the
+ticket rather than to `prevOf(18)`, which is the profile — the sixth instance of that trap.
+
+Diffs: **18 1.17%, 19 2.43%, 19a 5.83%, 20 8.75%.** 20 is a clone of the ticket, so it carries the
+ticket's profile: mostly photographic, drift accumulating down a 4504pt frame, and it is read for
+steps rather than for its percentage.
+
+**One thing left as drawn.** Both legs on 20 are set to 55% opacity to read as spent. The real app
+recolours the card to a flat grey and writes *Booking cancelled* across the connector instead of
+fading it. Fading is the cheaper gesture and it is not the same gesture; it is noted here rather
+than claimed as a match.

@@ -3163,7 +3163,9 @@ function buildHifiRail(){
     '09':'Pay',              '09a':'Booking details',  '09b':'Please wait',              '11':'Ticket details',
     '11a':'Change of plans',  '12':'My Bookings',       '12a':'My Bookings · empty',
     '13':'Change day',        '14':'Move buses',
-    '15':'Confirm move',     '16':'Return moved',    '17':'Profile'
+    '15':'Confirm move',     '16':'Return moved',    '17':'Profile',
+    '18':'Review and cancel', '19':'Refund details',  '19a':'Why cancel',
+    '20':'Ticket cancelled'
   };
   const names = rows.map(src => {
     const id = (src.querySelector('.railn') || {}).textContent || '';

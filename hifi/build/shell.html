@@ -304,7 +304,7 @@
 
   // 01a is a bottom sheet, not a step: it opens from the date row on Home and closes back to it.
   // Leaving it in the linear order meant Back from the bus list landed on an open calendar.
-  var OVERLAY = { '01a': 1, '03a': 1, '04a': 1, '09a': 1, '11a': 1 };
+  var OVERLAY = { '01a': 1, '03a': 1, '04a': 1, '09a': 1, '11a': 1, '19a': 1 };
   // Frames the linear walk must step over. Overlays are sheets that close back to their opener;
   // 05a and 05b are not steps at all -- they are the two answered states of the calendar, and the
   // picker moves between them itself. Left in the order, Continue on 05a walked to 05b, so a
@@ -318,10 +318,13 @@
   // tapping Pay.
   // 11a is the change-of-plans sheet, and 12a is the empty My Bookings -- a tab you arrive at
   // from the bar, not a step on the way to anywhere.
+  // The cancellation flow hangs off the change-of-plans sheet, not off the linear order: 18, 19
+  // and 20 are only ever reached by choosing to cancel, and 19a is the sheet in the middle of it.
   var SKIP = { '01a': 1, '03a': 1, '04a': 1, '05a': 1, '05b': 1, '09a': 1, '09b': 1,
-               '06a': 1, '06b': 1, '07': 1, '17': 1, '11a': 1, '12a': 1 };
+               '06a': 1, '06b': 1, '07': 1, '17': 1, '11a': 1, '12a': 1,
+               '18': 1, '19': 1, '19a': 1, '20': 1 };
   // Screens whose forward hotspots are one per cell, added by a module rather than by the flow map.
-  var LATE_HOT = { '13': 1, '17': 1, '11a': 1, '12a': 1 };
+  var LATE_HOT = { '13': 1, '17': 1, '11a': 1, '12a': 1, '19': 1, '19a': 1, '20': 1 };
   // Which screen a state frame belongs to, for Back.
   var BACK_AS = { '05a': '05', '05b': '05', '06a': '06', '06b': '06' };
   function nextOf(i){ i += 1; while (screens[i] && SKIP[ORDER[i]]) i += 1; return i; }
@@ -2297,15 +2300,20 @@
         btn.classList.add('hf-hot');
         btn.addEventListener('click', function(e){
           e.preventDefault(); e.stopPropagation();
-          // Nothing chosen, or the cancel branch chosen: the free change is the one path this
-          // prototype builds, so point at it rather than walking somewhere that does not exist.
-          if (!chosen || chosen.getAttribute('data-name') !== 'Option / Change date'){
+          // Nothing chosen: point at the free change, which is the one this construct argues for.
+          if (!chosen){
             var free = sheet.querySelector('[data-name="Option / Change date"]');
             if (free) { blinkAt(free); pick(free); }
             return;
           }
+          // Devansh: "when he clicks on Cancellation, he should be redirected to the cancellation
+          // flow as usual." Both branches are real now -- the free change goes to the calendar,
+          // the cancellation goes to Review and cancel.
+          var cancelling = chosen.getAttribute('data-name') === 'Option / Cancel';
+          var to = cancelling ? ORDER.indexOf('18') : i13;
+          if (to < 0) return;
           close();
-          go(i13);
+          go(to);
         }, true);
       }
     }
@@ -2437,6 +2445,133 @@
     ON_ENTER['03a'] = function(){ strip.reset(); };
   })();
 
+  // 18 / 19 / 19a / 20 · cancelling. The change-of-plans sheet has always drawn the cancellation
+  //      beside the free date change -- that side-by-side IS the construct's argument, and until now
+  //      only one half of it led anywhere. The real app's four steps, from IMG_5214, IMG_5215,
+  //      IMG_4991 and IMG_5217: review who is being cancelled, read what comes back, say why, and
+  //      then the ticket carries the band and the refund.
+  //
+  //      Every screen here is in SKIP: none of them is a step on the way to anywhere, and all four
+  //      are only reachable by choosing to cancel.
+  (function cancelFlow(){
+    var i18 = ORDER.indexOf('18'), i19 = ORDER.indexOf('19'),
+        i19a = ORDER.indexOf('19a'), i20 = ORDER.indexOf('20'),
+        i11 = ORDER.indexOf('11'), i12 = ORDER.indexOf('12');
+    if (i18 < 0 || i19 < 0 || i19a < 0 || i20 < 0) return;
+
+    // 18 · View refund details
+    var b18 = screens[i18].querySelector('[data-name="Button / Primary"]');
+    if (b18) b18.addEventListener('click', function(e){
+      e.preventDefault(); e.stopPropagation(); go(i19);
+    }, true);
+    else console.warn('18: no primary');
+
+    // Back on 18 answers to the ticket, which is where the sheet was opened over. prevOf(18) is
+    // the profile, a screen nobody came through.
+    if (i11 >= 0) screens[i18].addEventListener('click', function(e){
+      if (!e.target.closest || !e.target.closest('.hf-back')) return;
+      e.preventDefault(); e.stopPropagation();
+      go(i11);
+    }, true);
+
+    // 19 · Proceed opens the why-cancel sheet over it, the same way 09a and 11a work
+    var TPL = screens[i19a].querySelector('[data-name="Sheet"]');
+    if (!TPL) { console.warn('19a: no Sheet'); return; }
+    TPL = TPL.cloneNode(true);
+    [].forEach.call(TPL.querySelectorAll('.hf-back, .hf-fwd, .hf-hot'), function(n){
+      n.classList.remove('hf-back', 'hf-fwd', 'hf-hot');
+    });
+
+    var host = null, scrim = null, sheet = null, reason = null;
+    function close(){
+      if (scrim && scrim.parentNode) scrim.parentNode.removeChild(scrim);
+      if (sheet && sheet.parentNode) sheet.parentNode.removeChild(sheet);
+      scrim = sheet = host = null; reason = null;
+    }
+    function pick(row){
+      reason = row;
+      [].forEach.call(sheet.querySelectorAll('[data-name="Reason"]'), function(r){
+        var dot = r.querySelector('[data-name="Radio"]');
+        if (dot) dot.classList.toggle('hf-radio-on', r === row);
+      });
+    }
+    function open(over){
+      close();
+      host = over;
+      scrim = document.createElement('div');
+      scrim.className = 'hf-scrim';
+      sheet = TPL.cloneNode(true);
+      sheet.classList.add('hf-sheet');
+      host.appendChild(scrim);
+      host.appendChild(sheet);
+      pinSheetHead(sheet);
+
+      scrim.addEventListener('click', function(e){ e.stopPropagation(); close(); }, true);
+      var x = sheet.querySelector('[data-name="Button / Close"]');
+      if (x) { x.classList.add('hf-hot');
+               x.addEventListener('click', function(e){
+                 e.preventDefault(); e.stopPropagation(); close(); }, true); }
+
+      [].forEach.call(sheet.querySelectorAll('[data-name="Reason"]'), function(r){
+        r.classList.add('hf-hot');
+        r.addEventListener('click', function(e){
+          e.preventDefault(); e.stopPropagation(); pick(r);
+        }, true);
+      });
+
+      var go19 = sheet.querySelector('[data-name="Button / Primary"]');
+      if (go19){
+        go19.classList.add('hf-hot');
+        go19.addEventListener('click', function(e){
+          e.preventDefault(); e.stopPropagation();
+          // the real sheet asks for a reason; pressing without one points at the first
+          if (!reason){
+            var first = sheet.querySelector('[data-name="Reason"]');
+            if (first) { blinkAt(first); pick(first); }
+            return;
+          }
+          close();
+          if (window.__cancelTicket) window.__cancelTicket();
+          go(i20);
+        }, true);
+      }
+    }
+    window.__closeWhyCancel = close;
+
+    var b19 = screens[i19].querySelector('[data-name="Button / Primary"]');
+    if (b19){
+      b19.classList.add('hf-hot');
+      b19.addEventListener('click', function(e){
+        e.preventDefault(); e.stopPropagation();
+        open(screens[i19]);
+      }, true);
+    } else console.warn('19: no primary');
+
+    // Back on 19 goes back to the review, which is the step before it
+    screens[i19].addEventListener('click', function(e){
+      if (!e.target.closest || !e.target.closest('.hf-back')) return;
+      e.preventDefault(); e.stopPropagation();
+      go(i18);
+    }, true);
+
+    // 20 · the cancelled ticket. Its × closes to My Bookings, same as the live ticket's.
+    if (i12 >= 0){
+      var x20 = screens[i20].querySelector('[data-name="Button / Close"]');
+      if (x20) x20.addEventListener('click', function(e){
+        e.preventDefault(); e.stopPropagation(); go(i12);
+      }, true);
+      // and its tab strip is the ticket's tab strip
+      var strip20 = screens[i20].querySelector('[data-name="Tabs"]');
+      if (strip20) [].forEach.call(strip20.children, function(t){ t.classList.add('hf-hot'); });
+    }
+
+    // Once cancelled, the live ticket and the booking card are history. The traveller reaches the
+    // cancelled ticket from My Bookings, not the live one.
+    var CANCELLED = false;
+    window.__cancelTicket = function(){ CANCELLED = true; };
+    window.__ticketCancelled = function(){ return CANCELLED; };
+  })();
+
   // 01 / 12 / 17 · The home tab bar, and the profile behind it.
   //
   //      Devansh: "After user books the ticket, enable my bookings tab and profile tab ... in home
@@ -2500,7 +2635,11 @@
     if (i11 >= 0 && booking){
       booking.addEventListener('click', function(e){
         if (changeRow && changeRow.contains(e.target)) return;   // that row has its own door
-        e.preventDefault(); e.stopPropagation(); go(i11);
+        e.preventDefault(); e.stopPropagation();
+        // a cancelled booking opens the cancelled ticket; there is no live one any more
+        var i20 = ORDER.indexOf('20');
+        var cancelled = window.__ticketCancelled && window.__ticketCancelled();
+        go(cancelled && i20 >= 0 ? i20 : i11);
       }, true);
     } else if (!booking) console.warn('12: no Booking card');
     if (changeRow){
@@ -2508,6 +2647,7 @@
       changeRow.addEventListener('click', function(e){
         e.preventDefault(); e.stopPropagation();
         if (window.__ticketMoved && window.__ticketMoved()) return;
+        if (window.__ticketCancelled && window.__ticketCancelled()) return;
         if (window.__openChangePlans) window.__openChangePlans(screens[i12]);
       }, true);
     }
