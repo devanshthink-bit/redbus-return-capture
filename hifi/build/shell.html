@@ -188,7 +188,10 @@
      the sheet's own 16px gutters, or the content shows through beside it as it scrolls past. */
   .hf-sheet-scroll{padding-top:0!important}
   .hf-sheet-head{position:sticky!important;top:0;z-index:3;background:#fff;
-    margin:0 -16px!important;padding:20px 16px 12px!important;width:auto!important}
+    margin:0 -16px!important;padding:20px 16px 12px!important;width:auto!important;
+    /* the sheet is a column that does not stretch its rows (items-start), so width:auto shrank
+       the title row to its text and the × sat beside the title instead of at the edge */
+    align-self:stretch!important}
   /* A ticket that can no longer be acted on says so in a band right under the header, in white on
      the accent red -- measured off the real app's cancelled ticket (IMG_5217) at #c54646 and 50pt.
      The same band carries "date changed", because it is the same fact: this ticket is now fixed. */
