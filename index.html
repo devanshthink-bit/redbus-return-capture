@@ -500,6 +500,7 @@ body.hifi-on .phone,body.hifi-on .legacy{display:none}
 /* Key screens only (12 Sep): the minor steps stay in the prototype but leave the list, and while
    one is showing, the key screen it belongs to lights instead */
 #screenrail button.minor{display:none}
+#staterail button.minor{display:none}
 .dev button[data-lit]{background:var(--s-red-soft);color:#B23138;font-weight:700}
 
 .dev.states{display:block;margin-top:22px}
@@ -680,21 +681,21 @@ body.testing .panel,body.testing .glow,body.testing .caption{display:none!import
 </div>
 
 <details class="dev states" id="staterail">
-  <summary><span>States</span><span class="cnt">13</span><span class="chev">&rsaquo;</span></summary>
+  <summary><span>States</span><span class="cnt">6</span><span class="chev">&rsaquo;</span></summary>
   <div class="statelist">
   <button onclick="setState('default')" id="st-default" aria-pressed="true">default</button>
-  <button onclick="setState('loading')" id="st-loading">loading</button>
+  <button class="minor" onclick="setState('loading')" id="st-loading">loading</button>
   <button onclick="setState('none')" id="st-none">none in window</button>
-  <button onclick="setState('noguard')" id="st-ng">route has none (guard)</button>
-  <button onclick="setState('offline')" id="st-offline">offline</button>
-  <button onclick="setState('seatgone')" id="st-seatgone">return seat gone</button>
-  <button onclick="setState('crowded')" id="st-crowded">6 passengers</button>
+  <button class="minor" onclick="setState('noguard')" id="st-ng">route has none (guard)</button>
+  <button class="minor" onclick="setState('offline')" id="st-offline">offline</button>
+  <button class="minor" onclick="setState('seatgone')" id="st-seatgone">return seat gone</button>
+  <button class="minor" onclick="setState('crowded')" id="st-crowded">6 passengers</button>
   <button onclick="setState('nothingearlier')" id="st-ne">no other days</button>
-  <button onclick="setState('checkfail')" id="st-cf">can't check</button>
+  <button class="minor" onclick="setState('checkfail')" id="st-cf">can't check</button>
   <button onclick="setState('swapfail')" id="st-sf">seat lost mid-swap</button>
   <button onclick="setState('alreadymoved')" id="st-am">already moved</button>
   <button onclick="setState('pastcutoff')" id="st-pc">past cutoff</button>
-  <button onclick="setState('noreturn')" id="st-nr">return dropped</button>
+  <button class="minor" onclick="setState('noreturn')" id="st-nr">return dropped</button>
   </div>
 </details>
   </div>
@@ -3066,7 +3067,12 @@ function buildLegacyRail(){
   }
   note.hidden = true;
   const screens = [...doc.querySelectorAll('.dev.screens button')];
-  const states  = [...doc.querySelectorAll('.dev.states  button')];
+  const allStates = [...doc.querySelectorAll('.dev.states  button')];
+  /* the same five edge states as v4 and the hi-fi, plus default to get back; matched by label because
+     v1 names two of them differently (no movable buses, nothing earlier) */
+  const KEEP_STATE = ['default','none in window','no movable buses','no other days','nothing earlier',
+                      'past cutoff','already moved','seat lost mid-swap'];
+  const states = allStates.filter(x => KEEP_STATE.includes(x.textContent.trim().toLowerCase()));
   /* The same five runs as v3, keyed on the ids the frozen files already use:
      v1 opens its return run at t-backby and its move run at t-later; v2 at t-window and t-within.
      An id that is not here simply gets no break, so this cannot damage a rail it does not know. */
@@ -3193,6 +3199,10 @@ function buildHifiRail(){
      and nothing else. Every other screen is still in the prototype and reached by tapping through
      it; while one is showing, the list lights the key screen it belongs to. */
   const KEY = ['01','02','03','04', '05','06', '08','09', '11','12', '13','14','15','16', '18'];
+  /* and the states that mark the edges of the promise -- none in window, past cutoff, already
+     moved, no other days, seat lost mid-swap. Generic system states (loading, offline, can't check)
+     and rare edge cases stay in the build, off the list. */
+  const KEY_STATES = ['S2','S4','S5','S9','S10'];
   const PARENT = { '01a':'01', '03a':'03', '03b':'03', '04a':'04',
                    '05a':'05', '05b':'05', '06a':'06', '06b':'06', '07':'06',
                    '08a':'08', '08b':'08', '08c':'08', '09a':'09', '09b':'09',
@@ -3236,7 +3246,7 @@ function buildHifiRail(){
   stateList.className = 'statelist';
   const mine = rows.map((src, i) => {
     const isState = /^S\d/.test(names[i].id);
-    if(!isState && !KEY.includes(names[i].id)) return null;   // in the prototype, not in the list
+    if(isState ? !KEY_STATES.includes(names[i].id) : !KEY.includes(names[i].id)) return null;   // in the prototype, not in the list
     const b = document.createElement('button');
     b.type = 'button';
     b.textContent = names[i].name;

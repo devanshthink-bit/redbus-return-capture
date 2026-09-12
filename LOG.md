@@ -9520,3 +9520,37 @@ both classes, `body.hifi-on.legacy-on`, so Hi-fi wins outright.
 
 **The class of bug:** two body classes that can both be on at once, with the resolution left to
 source order. Where two modes can overlap, write the overlap rule explicitly.
+
+---
+
+DECISION  ·  2026-09-12  ·  direct request  ·  Source: user
+
+**Every States list shows the key states only: 5 in the hi-fi, and default plus the same 5 in each
+lo-fi version.** Devansh: *"do the same for state screens in both Hi-fi and Lo-fi prototype, in all
+versions"*.
+
+The five kept are the ones that mark the edges of the case study's promise:
+- **None in window:** no day in the window can change later. (v1 calls this "no movable buses".)
+- **Past cutoff:** the change window has closed.
+- **Already moved:** the one change is spent.
+- **No other days:** there is nowhere to move to. (v1 calls this "nothing earlier".)
+- **Seat lost mid-swap:** a move fails safely.
+
+Off the list: the generic system states (loading, offline, can't check) and the rare edge cases
+(route has no return, return seat gone, return dropped, both six-passenger states, v1's date error).
+
+| List | Before | After |
+|---|---|---|
+| Hi-fi | 13 | 5 |
+| v1 | 13 | 6 |
+| v2 | 14 | 6 |
+| v3 | 13 | 6 |
+| v4 | 13 | 6 |
+
+Nothing is deleted. The hi-fi's other eight state screens stay in the build and in Figma. v4's
+hidden state buttons carry `class="minor"`, so the state matrix still drives all 13 by id: 234
+cells, clean. v1–v3 are filtered in the viewer's copy by label, because v1 names two of the five
+differently. The frozen files are untouched.
+
+Which states count as key is my reading. [Devansh to confirm: "Return seat gone" was the closest
+call.]
