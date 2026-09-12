@@ -118,7 +118,7 @@ body.testing .layout{justify-content:center}
    grid-template-rows:auto 1fr}
   .pcol.a{grid-column:1;grid-row:1}
   .pcol.b{grid-column:2;grid-row:1 / span 2}
-  .pcol.c{grid-column:1;grid-row:2;align-self:end}   /* level with the phone's bottom */
+  .pcol.c{grid-column:1;grid-row:2}
 }
 .panel::-webkit-scrollbar{display:none}
 /* The panel scrolls with its scrollbar hidden, so the only sign of more below was a screen name
@@ -150,15 +150,8 @@ body.testing .layout{justify-content:center}
 .vers button[aria-pressed="true"]{background:#BF3A41;color:#fff;
  box-shadow:0 1px 2px rgba(140,30,38,.22),0 6px 16px -6px rgba(140,30,38,.5)}
 .vnote{font-size:13px;line-height:1.5;color:var(--s-on-60);margin-top:10px;
- min-height:4.5em}   /* three lines, the longest note: the rows under it never move */   /* three lines: the longest of the three notes. Stops the swatches jumping */
+ min-height:3em}   /* two lines, the longer prototype note: the rows under it never move */   /* three lines: the longest of the three notes. Stops the swatches jumping */
 .vnote b{color:var(--s-on);font-weight:600}
-/* the one control: Hi-fi, then the lo-fi versions after a quiet label; only one note shows */
-.vers #f-hifi{flex:1.5}
-.vers .vsep{align-self:center;font-size:10.5px;font-weight:600;letter-spacing:.12em;
- text-transform:uppercase;color:var(--s-on-45);padding:0 2px 0 10px;border-left:1px solid rgba(23,23,28,.12)}
-body.hifi-on .vers [id^="v-"][aria-pressed="true"]{background:none;color:var(--s-on-60);box-shadow:none}
-body:not(.hifi-on) .vers #f-hifi{background:none;color:var(--s-on-60);box-shadow:none}
-body.hifi-on #vnote,body:not(.hifi-on) #fnote{display:none}
 
 /* sampled tokens */
 .swatches{display:grid;grid-template-columns:repeat(3,1fr);gap:10px 12px}
@@ -569,7 +562,7 @@ body.hifi-on .phone,body.hifi-on .legacy{display:none}
 /* v1 and v2 have their own screens, so their own rails are mirrored in here */
 body.legacy-on #screenrail,body.legacy-on #staterail{display:none}
 body.hifi-on #screenrail,body.hifi-on #staterail,body.hifi-on #legacyrail,
-body.hifi-on .legacynote{display:none}
+body.hifi-on .legacynote,body.hifi-on #vgrp{display:none}
 #hifirail{display:none}
 body.hifi-on #hifirail{display:block}
 #legacyrail{display:none}
@@ -683,22 +676,13 @@ body.testing .devicewrap::before{display:none}
   <p class="lede">Lets travellers book a return before they know the date. They pick the last
     day they could come back, we book it, and they can move it once later.</p>
 
-  <!-- One control for all five prototypes (12 Sep). The lo-fi versions used to open a second
-       group under this one, which pushed everything below it down and changed the text scale, so
-       switching moved the page. Now both modes have the same rows in the same places. -->
   <div class="grp">
     <h2>Prototype</h2>
     <div class="vers" id="fidsw">
       <button type="button" onclick="setFidelity('hifi')" id="f-hifi" aria-pressed="true">Hi-fi</button>
-      <span class="vsep" aria-hidden="true">Lo-fi</span>
-      <button type="button" onclick="pickLofi(1)" id="v-1" aria-label="Lo-fi version 1">v1</button>
-      <button type="button" onclick="pickLofi(2)" id="v-2" aria-label="Lo-fi version 2">v2</button>
-      <button type="button" onclick="pickLofi(3)" id="v-3" aria-label="Lo-fi version 3">v3</button>
-      <button type="button" onclick="pickLofi(4)" id="v-4" aria-label="Lo-fi version 4" aria-pressed="true">v4</button>
+      <button type="button" onclick="setFidelity('lofi')" id="f-lofi">Lo-fi</button>
     </div>
-    <button type="button" id="f-lofi" hidden></button>
     <p class="vnote" id="fnote"></p>
-    <p class="vnote" id="vnote"></p>
   </div>
 
 </div><!-- /pcol a -->
@@ -767,6 +751,19 @@ body.testing .devicewrap::before{display:none}
 
   <p class="foot">Everything on the phone works. Pick a return, change the bus, then move the
     date from My&nbsp;Bookings. This is a concept, so none of it is live redBus data.</p>
+
+  <!-- Lo-fi only. It sits last in the column (12 Sep): shown between the switch and the colours it
+       pushed everything below it down whenever Lo-fi was chosen. -->
+  <div class="grp" id="vgrp">
+    <h2>Lo-fi version</h2>
+    <div class="vers">
+      <button type="button" onclick="setVersion(1)" id="v-1">v1</button>
+      <button type="button" onclick="setVersion(2)" id="v-2">v2</button>
+      <button type="button" onclick="setVersion(3)" id="v-3">v3</button>
+      <button type="button" onclick="setVersion(4)" id="v-4" aria-pressed="true">v4</button>
+    </div>
+    <p class="vnote" id="vnote"></p>
+  </div>
 </div><!-- /pcol c -->
 </aside>
 
@@ -3051,10 +3048,10 @@ document.querySelector('.stage').addEventListener('scroll', () => {
    their own centred 402x874 frame lands exactly on the crop -- nothing in them is
    edited, overridden or scripted from here. */
 const VERSIONS = {
-  1:{file:'frozen/v1.html', note:'<b>Lo-fi v1</b> asks for the last day you could travel, and books that day. 17 screens.'},
-  2:{file:'frozen/v2.html', note:'<b>Lo-fi v2</b> asks for an earliest and a latest day, and books the cheapest one between them. 16 screens.'},
-  3:{file:'frozen/v3.html', note:'<b>Lo-fi v3</b> is one calendar, and the chosen day opens its buses inside its own row. 16 screens.'},
-  4:{file:null,      note:'<b>Lo-fi v4</b> keeps the calendar and rebuilds the day screen: the days stay a fixed list and the chosen bus is shown in full below them. 16 screens.'}
+  1:{file:'frozen/v1.html', note:'<b>v1</b> asks for the last day you could travel, and books that day. 17 screens.'},
+  2:{file:'frozen/v2.html', note:'<b>v2</b> asks for an earliest and a latest day, and books the cheapest one between them. 16 screens.'},
+  3:{file:'frozen/v3.html', note:'<b>v3</b> is one calendar, and the chosen day opens its buses inside its own row. 16 screens.'},
+  4:{file:null,      note:'<b>v4</b> keeps the calendar and shows the chosen bus in full under a fixed list of days. 16 screens.'}
 };
 let version = 4;
 function setVersion(v){
@@ -3196,7 +3193,6 @@ const FIDELITY = {
 };
 let fidelity = 'hifi';
 let hifiLoaded = false;
-function pickLofi(n){ setFidelity('lofi'); setVersion(n); }
 function setFidelity(f){
   fidelity = (f === 'lofi') ? 'lofi' : 'hifi';
   document.getElementById('f-hifi').setAttribute('aria-pressed', String(fidelity==='hifi'));
@@ -3365,8 +3361,7 @@ function fitPanel(){
   /* Devansh, 12 Sep: the text was too big, and "on toggling for one laptop, no text, prototype
      position, size, text size, or anything should not change". So the scale no longer chases the
      content: it is one number per window height, never above the design size, identical in Hi-fi
-     and Lo-fi. The text starts level with the phone's top and the colours block ends level with its
-     bottom. Only if an opened list truly cannot fit does it shrink further. */
+     and Lo-fi. The text starts level with the phone's top. Only if an opened list truly cannot fit does it shrink further. */
   const panel = document.querySelector('.panel');
   if(!panel || document.body.classList.contains('testing') || innerWidth <= 520) return;
   const cols = [...panel.querySelectorAll('.pcol')];
@@ -3388,8 +3383,7 @@ function fitPanel(){
     panel.style.paddingBottom = Math.max(0, pr.bottom - dr.bottom) + 'px';
     const a = panel.querySelector('.pcol.a'), b = panel.querySelector('.pcol.b'), c = panel.querySelector('.pcol.c');
     for(let k = 0; k < 3; k++){
-      const cTop = c ? c.getBoundingClientRect().top : Infinity;
-      const over = Math.max(bottomOf(b) - dr.bottom, bottomOf(a) - (cTop - 14), 0);
+      const over = Math.max(bottomOf(b) - dr.bottom, bottomOf(c) - dr.bottom, 0);
       if(over < 2) break;
       z = Math.max(.55, z * dr.height / (dr.height + over));
       apply(z);

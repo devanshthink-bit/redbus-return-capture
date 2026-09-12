@@ -9741,3 +9741,26 @@ way. The state matrix is clean.
 The fit function was again replaced by locating its start and end in the text. The block was
 asserted first and the removed lines were read afterwards: only the old frame, the Version group,
 the old sizing line and the old fit function went.
+
+---
+
+CHANGE  ·  2026-09-12  ·  direct request  ·  Source: user
+
+**The gap is closed and the old Hi-fi | Lo-fi switch is back.** Devansh: *"Close this empty gap and
+the earlier design of the hifi and lofi toggle was better."*
+
+- **The colours block is no longer pinned to the phone's bottom.** It follows the prototype note
+  directly, as it did before.
+- **The two-button Hi-fi | Lo-fi switch returns, with v1–v4 in their own "Lo-fi version" group.**
+  That group now sits last in the left column, under the footnote. It appears only in Lo-fi, and
+  nothing above it moves. In its old place, between the switch and the colours, it pushed
+  everything down, which was the reason it was folded into one control earlier today. The
+  combined control and `pickLofi()` are removed. The prototype note keeps a two-line height, so
+  the colours stay put between modes.
+- **The v4 note is shortened to two lines:** *"v4 keeps the calendar and shows the chosen bus in
+  full under a fixed list of days. 16 screens."* At a 720px page its three lines overflowed by a
+  few pixels, and the fit shrank the whole column (text 12.0 → 11.9px) in v4 only.
+
+**Measured in Hi-fi and Lo-fi v1–v4, at 720 and 812px page height:** the phone, the switch, the
+colours and the text scale are identical in all five, and nothing scrolls. The state matrix is
+clean.
