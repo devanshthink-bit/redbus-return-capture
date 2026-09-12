@@ -9802,3 +9802,27 @@ earlier "why isn't this updated" moments too. `build.mjs` now writes `app.css?v=
 
 Diffs: 01 11.99% (its baseline is 11.99%), 06 5.79%, 11 10.38% (its baseline is 10.35%). All three
 are ramps; the top band, where the status bar sits, is clean.
+
+---
+
+CHANGE  ·  2026-09-12  ·  follow-up  ·  Source: self-check
+
+**The pinned status bar on Profile was white on white; it is now dark.** Found after the last commit
+(eff5c7e), before Devansh saw it. Profile (17) is the only screen with light status-bar content:
+white time and white icons, drawn over its dark header. There its status bar is not inside a header
+at all; it floats at top 0 over the header art. So the colour walk in 1b climbed past it to the
+white page, and the pinned copy came out white. The time and icons would have vanished as soon as
+the page scrolled.
+
+- **Light-content bars** (white time text) now take the colour of whatever sits at the top of the
+  frame under them, or a frosted near-black (rgba 22,22,26,.94).
+- **The frost class now has its blur.** It was being set with no CSS behind it, so content read
+  through the bar. `.hf-statusbar-frost` is now a backdrop blur, and the pinned bar never takes a
+  tap (pointer-events: none).
+- **Measured across all 51 screens:** 50 take their own header's colour (white, #FCFCFF or
+  #F5F5FA), and Profile is frosted dark. A screenshot scrolled 600px shows a clean dark bar with the
+  white time readable. The screen sweep is clean.
+
+**LEARNED — a copied element carries assumptions about what was under it.** The status bar was
+drawn to sit on its header; pinning it separated it from that header. Every screen needed checking
+for what the bar had been sitting on, and the one exception was the one with white content.
