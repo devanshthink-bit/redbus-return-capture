@@ -49,7 +49,7 @@ type ButtonPrimaryProps = {
 
 function ButtonPrimary({ className, label = "Search buses", showIcon = true }: ButtonPrimaryProps) {
   return (
-    <div className={className || "bg-[var(--surface\\/accent,#c54646)] content-stretch flex gap-[10px] h-[46px] items-center justify-center overflow-clip px-[20px] relative rounded-[var(--radius\\/full,999px)] shadow-[0px_2px_6px_0px_rgba(0,0,0,0.1)] w-[358px]"} data-node-id="18:54" data-name="Button / Primary">
+    <div className={className || "bg-[var(--surface\\/button-primary,#e81e38)] content-stretch flex gap-[10px] h-[46px] items-center justify-center overflow-clip px-[20px] relative rounded-[var(--radius\\/full,999px)] shadow-[0px_2px_6px_0px_rgba(0,0,0,0.1)] w-[358px]"} data-node-id="18:54" data-name="Button / Primary">
       {showIcon && <IconSearch className="relative shrink-0 size-[20px]" />}
       <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[20px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/on-accent,white)] whitespace-nowrap" data-node-id="18:53">
         {label}
@@ -287,7 +287,7 @@ export default function Component11AChangeOfPlans() {
           </div>
           <ArtSeatGuarantee className="bg-gradient-to-r from-[#a3e4ad] h-[43.337px] overflow-clip relative shrink-0 to-[#d7f2da] w-[390px]" />
           <div className="bg-white content-stretch flex gap-[6px] items-center overflow-clip px-[16px] py-[12px] relative shrink-0 w-full" data-node-id="777:4272" data-name="Tabs">
-            <div className="bg-[#c54646] content-stretch flex items-center overflow-clip px-[20px] py-[9px] relative rounded-[8px] shrink-0" data-node-id="777:4273" data-name="Tab">
+            <div className="bg-[var(--surface\/ticket,#e8203a)] content-stretch flex items-center overflow-clip px-[20px] py-[9px] relative rounded-[8px] shrink-0" data-node-id="777:4273" data-name="Tab">
               <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[20px] not-italic relative shrink-0 text-[15px] text-white w-[100px]" data-node-id="777:4274">
                 Ticket details
               </p>
@@ -329,7 +329,7 @@ export default function Component11AChangeOfPlans() {
               ONWARD
             </p>
             <div className="bg-[var(--surface\/default,white)] content-stretch drop-shadow-[0px_8px_12px_rgba(0,0,0,0.07),0px_2px_3px_rgba(0,0,0,0.05)] flex flex-col items-start relative rounded-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="777:4291" data-name="Onward ticket">
-              <div className="bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-col items-start overflow-clip pl-[16px] pr-[18px] py-[18px] relative rounded-tl-[var(--radius\/16,16px)] rounded-tr-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="777:4292" data-name="Journey">
+              <div className="bg-[var(--surface\/ticket,#e8203a)] content-stretch flex flex-col items-start overflow-clip pl-[16px] pr-[18px] py-[18px] relative rounded-tl-[var(--radius\/16,16px)] rounded-tr-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="777:4292" data-name="Journey">
                 <div className="content-stretch flex gap-[12px] items-start relative shrink-0 w-full" data-node-id="777:4293" data-name="From">
                   <div className="relative shrink-0 size-[22px]" data-node-id="777:4294" data-name="Marker">
                     <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgMarker} />
@@ -419,7 +419,7 @@ export default function Component11AChangeOfPlans() {
               RETURN
             </p>
             <div className="bg-[var(--surface\/default,white)] content-stretch drop-shadow-[0px_8px_12px_rgba(0,0,0,0.07),0px_2px_3px_rgba(0,0,0,0.05)] flex flex-col items-start relative rounded-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="777:4337" data-name="Return ticket">
-              <div className="bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-col items-start overflow-clip pl-[16px] pr-[18px] py-[18px] relative rounded-tl-[var(--radius\/16,16px)] rounded-tr-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="777:4338" data-name="Journey">
+              <div className="bg-[var(--surface\/ticket,#e8203a)] content-stretch flex flex-col items-start overflow-clip pl-[16px] pr-[18px] py-[18px] relative rounded-tl-[var(--radius\/16,16px)] rounded-tr-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="777:4338" data-name="Journey">
                 <div className="content-stretch flex gap-[12px] items-start relative shrink-0 w-full" data-node-id="777:4339" data-name="From">
                   <div className="relative shrink-0 size-[22px]" data-node-id="777:4340" data-name="Marker">
                     <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgMarker} />
@@ -934,7 +934,7 @@ export default function Component11AChangeOfPlans() {
           </div>
         </div>
         <div className="h-[20px] relative shrink-0 w-px" data-node-id="777:4721" data-name="gap" />
-        <ButtonPrimary className="bg-[var(--surface\/accent,#c54646)] content-stretch cursor-pointer flex gap-[10px] h-[46px] items-center justify-center overflow-clip px-[20px] relative rounded-[var(--radius\/full,999px)] shadow-[0px_2px_6px_0px_rgba(0,0,0,0.1)] shrink-0 w-full" label="Proceed to cancel" showIcon={false} />
+        <ButtonPrimary className="bg-[var(--surface\/button-primary,#e81e38)] content-stretch cursor-pointer flex gap-[10px] h-[46px] items-center justify-center overflow-clip px-[20px] relative rounded-[var(--radius\/full,999px)] shadow-[0px_2px_6px_0px_rgba(0,0,0,0.1)] shrink-0 w-full" label="Proceed to cancel" showIcon={false} />
       </div>
     </div>
   );

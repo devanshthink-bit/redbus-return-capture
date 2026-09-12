@@ -20,7 +20,7 @@ type ButtonPrimaryProps = {
 
 function ButtonPrimary({ className, label = "Search buses", showIcon = true }: ButtonPrimaryProps) {
   return (
-    <div className={className || "bg-[var(--surface\\/accent,#c54646)] content-stretch flex gap-[10px] h-[46px] items-center justify-center overflow-clip px-[20px] relative rounded-[var(--radius\\/full,999px)] shadow-[0px_2px_6px_0px_rgba(0,0,0,0.1)] w-[358px]"} data-node-id="18:54" data-name="Button / Primary">
+    <div className={className || "bg-[var(--surface\\/button-primary,#e81e38)] content-stretch flex gap-[10px] h-[46px] items-center justify-center overflow-clip px-[20px] relative rounded-[var(--radius\\/full,999px)] shadow-[0px_2px_6px_0px_rgba(0,0,0,0.1)] w-[358px]"} data-node-id="18:54" data-name="Button / Primary">
       {showIcon && <IconSearch className="relative shrink-0 size-[20px]" />}
       <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[20px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/on-accent,white)] whitespace-nowrap" data-node-id="18:53">
         {label}
@@ -92,7 +92,7 @@ export default function S10SeatLostMidSwapConfirmTheMove() {
           <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#636363] text-[14px] text-center w-full" data-node-id="808:5155">
             Your Mon, 14 Sep booking is safe. Seat U5, ₹1,030. Nothing was charged.
           </p>
-          <div className="bg-[#c54646] content-stretch flex h-[48px] items-center justify-center overflow-clip px-[24px] relative rounded-[24px] shrink-0 w-full" data-node-id="808:5156" data-name="Button / See other days">
+          <div className="bg-[var(--surface\/button-primary,#e81e38)] content-stretch flex h-[48px] items-center justify-center overflow-clip px-[24px] relative rounded-[24px] shrink-0 w-full" data-node-id="808:5156" data-name="Button / See other days">
             <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[16px] text-white whitespace-nowrap" data-node-id="808:5157">
               See other days
             </p>
@@ -128,7 +128,7 @@ export default function S10SeatLostMidSwapConfirmTheMove() {
           </div>
           <div className="content-stretch flex items-start pt-[4px] relative shrink-0" data-node-id="808:5140" data-name="Change seat">
             <div className="content-stretch flex h-[44px] items-center justify-center overflow-clip pr-[10px] relative shrink-0" data-node-id="808:5141" data-name="Button / Text action">
-              <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[20px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/accent,#c54646)] whitespace-nowrap" data-node-id="I808:5141;97:644">
+              <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[20px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/button,#e81e38)] whitespace-nowrap" data-node-id="I808:5141;97:644">
                 Change seat
               </p>
             </div>
@@ -157,11 +157,11 @@ export default function S10SeatLostMidSwapConfirmTheMove() {
       </div>
       <div className="bg-[var(--surface\/default,white)] border-[var(--border\/divider,#e6e6e6)] border-solid border-t content-stretch flex gap-[16px] items-center pb-[31px] pt-[20px] px-[16px] relative shrink-0 w-full" data-node-id="808:5150" data-name="Action bar">
         <div className="content-stretch flex h-[44px] items-center justify-center overflow-clip pl-[4px] pr-[10px] relative shrink-0" data-node-id="808:5151" data-name="Button / Text action">
-          <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[20px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/accent,#c54646)] whitespace-nowrap" data-node-id="I808:5151;97:644">
+          <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[20px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/button,#e81e38)] whitespace-nowrap" data-node-id="I808:5151;97:644">
             Go back
           </p>
         </div>
-        <ButtonPrimary className="bg-[var(--surface\/accent,#c54646)] content-stretch cursor-pointer drop-shadow-[0px_2px_3px_rgba(0,0,0,0.1)] flex flex-[1_0_0] gap-[10px] h-[48px] items-center justify-center min-w-px opacity-45 px-[20px] relative rounded-[var(--radius\/full,999px)]" label="Confirm change" showIcon={false} />
+        <ButtonPrimary className="bg-[var(--surface\/button-primary,#e81e38)] content-stretch cursor-pointer drop-shadow-[0px_2px_3px_rgba(0,0,0,0.1)] flex flex-[1_0_0] gap-[10px] h-[48px] items-center justify-center min-w-px opacity-45 px-[20px] relative rounded-[var(--radius\/full,999px)]" label="Confirm change" showIcon={false} />
       </div>
     </div>
   );

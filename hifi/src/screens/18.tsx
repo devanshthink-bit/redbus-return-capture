@@ -21,7 +21,7 @@ type ButtonPrimaryProps = {
 
 function ButtonPrimary({ className, label = "Search buses", showIcon = true }: ButtonPrimaryProps) {
   return (
-    <div className={className || "bg-[var(--surface\\/accent,#c54646)] content-stretch flex gap-[10px] h-[46px] items-center justify-center overflow-clip px-[20px] relative rounded-[var(--radius\\/full,999px)] shadow-[0px_2px_6px_0px_rgba(0,0,0,0.1)] w-[358px]"} data-node-id="18:54" data-name="Button / Primary">
+    <div className={className || "bg-[var(--surface\\/button-primary,#e81e38)] content-stretch flex gap-[10px] h-[46px] items-center justify-center overflow-clip px-[20px] relative rounded-[var(--radius\\/full,999px)] shadow-[0px_2px_6px_0px_rgba(0,0,0,0.1)] w-[358px]"} data-node-id="18:54" data-name="Button / Primary">
       {showIcon && <IconSearch className="relative shrink-0 size-[20px]" />}
       <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[20px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/on-accent,white)] whitespace-nowrap" data-node-id="18:53">
         {label}
@@ -119,7 +119,7 @@ export default function Component18ReviewAndCancel() {
         </div>
       </div>
       <div className="bg-[var(--surface\/default,white)] border-[var(--border\/divider,#e6e6e6)] border-solid border-t content-stretch flex items-center pb-[31px] pt-[20px] px-[16px] relative shrink-0 w-full" data-node-id="784:4413" data-name="Action bar">
-        <ButtonPrimary className="bg-[var(--surface\/accent,#c54646)] content-stretch cursor-pointer drop-shadow-[0px_2px_3px_rgba(0,0,0,0.1)] flex flex-[1_0_0] gap-[10px] h-[48px] items-center justify-center min-w-px px-[20px] relative rounded-[var(--radius\/full,999px)]" label="View refund details" showIcon={false} />
+        <ButtonPrimary className="bg-[var(--surface\/button-primary,#e81e38)] content-stretch cursor-pointer drop-shadow-[0px_2px_3px_rgba(0,0,0,0.1)] flex flex-[1_0_0] gap-[10px] h-[48px] items-center justify-center min-w-px px-[20px] relative rounded-[var(--radius\/full,999px)]" label="View refund details" showIcon={false} />
       </div>
     </div>
   );

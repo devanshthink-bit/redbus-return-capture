@@ -223,7 +223,7 @@
      the accent red -- measured off the real app's cancelled ticket (IMG_5217) at #c54646 and 50pt.
      The same band carries "date changed", because it is the same fact: this ticket is now fixed. */
   .hf-lockband{display:flex;align-items:center;gap:10px;height:50px;padding:0 16px;
-    background:#c54646;flex:0 0 auto;width:100%;box-sizing:border-box}
+    background:#e8203a;flex:0 0 auto;width:100%;box-sizing:border-box}
   .hf-lockband p{margin:0;font-family:Inter,sans-serif;font-size:14px;line-height:20px;
     font-weight:400;color:#fff}
   .hf-lockband svg{flex:0 0 auto}
@@ -267,7 +267,9 @@
      the real strip runs past the edge and clips Safety, which is what tells you to swipe it */
   .hf-tabscroll > *{flex:0 0 auto!important;min-width:max-content!important}
   .hf-tabscroll p{white-space:nowrap!important}
-  .hf-tab-on{background:#c54646!important}
+  .hf-tab-on{background:#c54848!important}
+  /* the booked ticket's strip is the ticket red; the seat sheet's is the picker red (Figma 03a) */
+  .hf-tabs-ticket .hf-tab-on{background:#e8203a!important}
   .hf-tab-on p{color:#fff!important;font-weight:700!important}
   .hf-tab-off{background:transparent!important}
   .hf-tab-off p{color:#1d1d1d!important;font-weight:400!important}
@@ -2437,6 +2439,7 @@
 
     var strip = stickyTabs({ scroller: scroller, root: root, tabs: tabs,
                              pinAbove: [header, band], items: items, targets: targets });
+    tabs.classList.add('hf-tabs-ticket');
     if (!strip) { console.warn('11: tab strip did not build'); return; }
     ON_ENTER['11'] = function(){ strip.reset(); };
 

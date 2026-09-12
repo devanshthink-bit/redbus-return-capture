@@ -10136,3 +10136,27 @@ Open, Devansh's call: `1. Primitives` now holds 167 colours, and about 100 pairs
 each other (e.g. `green/50 #e0f3d9` / `green/100b #dff3d8`, `red/500 #c54646` / `red/470 #c54848`).
 Merging them would tidy the palette but changes pixels by a shade. Spacing and radius numbers were not
 bound to `space/*` / `radius/*` in this pass.
+
+DECISION · 2026-09-13 · direct · Source: user
+**Three reds, by role, everywhere.** *"use E81E38 for all buttons, E8203A for booked tickets, and for
+others use whatever color picker shows"*, and for scope *"figma + all 4 lofi prototype versions + hifi
+prototype"*. Figma: new primitives `colour/brand/red-button` and `colour/brand/red-ticket`, semantic
+`surface/button-primary`, `text/button`, `surface/ticket`. Bound to the `Button / Primary` and
+`Button / Text action` masters, six standalone buttons (S2, S3, S7, S9, S10, S11) and 22 booked-ticket
+layers (Journey, Tab, Band / Cancelled, Band / Date changed on 11, 11a, 20, S4, S5, S11, S12b). Build:
+the same nodes patched in the `.tsx` to the fresh pull of 15 and 20 (class strings identical), plus the
+shell's lock band and ticket tab strip; the seat sheet's strip moved to Figma's `#C54848`. Diffs 15
+1.51%, S2 3.67%, 20 8.81% (was 8.75%), 11 10.44% (was 10.35%); red pixel counts equal build vs Figma.
+Lo-fi: `.btn.pri` is the only red fill in all four, now `#E81E38`; selections keep `#C54646`.
+
+**This reverses "v1–v3 are frozen" for one change.** Devansh asked for all four lo-fi versions. The
+frozen hashes in `CLAUDE.md` are updated: v1/prototype `d38535ef…`, v2 `d86f9190…`, v3 `97dbaf68…`.
+
+**LEARNED — his two reds are not in the screenshots.** Across all 117, the red button reads `#C54646`
+raw (53 files). The files are Display P3; converted properly the same red is `#D63940`. Neither is
+`#E8203A` or `#E81E38`, so these are his brand values, not measurements, and are logged as his.
+
+NOTE · 2026-09-13 · direct
+Other colours: 47 of the 158 used in Figma appear exactly as flat areas in the screenshots. Most of the
+rest sit 1–5 levels from a screenshot colour; a few are further (e.g. `#2221D2`, `#2E5C2A`, `#9E457D`)
+and may be thin text or icons where no flat area exists to pick from. Not changed yet.

@@ -234,14 +234,14 @@ export default function Component20TicketCancelled() {
           <ButtonShare className="-translate-y-1/2 absolute right-[12px] size-[44px] top-1/2" />
         </div>
       </div>
-      <div className="bg-[#c54646] content-stretch flex h-[50px] items-center overflow-clip px-[16px] relative shrink-0 w-full" data-node-id="785:4828" data-name="Band / Cancelled">
+      <div className="bg-[var(--surface\/ticket,#e8203a)] content-stretch flex h-[50px] items-center overflow-clip px-[16px] relative shrink-0 w-full" data-node-id="785:4828" data-name="Band / Cancelled">
         <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Regular'] font-normal leading-[20px] min-w-px not-italic relative text-[14px] text-white" data-node-id="785:4829">
           Ticket cancelled on 12 Sep 2026 09:41
         </p>
       </div>
       <ArtSeatGuarantee className="bg-gradient-to-r from-[#a3e4ad] h-[43.337px] overflow-clip relative shrink-0 to-[#d7f2da] w-[390px]" />
       <div className="bg-white content-stretch flex gap-[6px] items-center overflow-clip px-[16px] py-[12px] relative shrink-0 w-full" data-node-id="785:4542" data-name="Tabs">
-        <div className="bg-[#c54646] content-stretch flex items-center overflow-clip px-[20px] py-[9px] relative rounded-[8px] shrink-0" data-node-id="785:4543" data-name="Tab">
+        <div className="bg-[var(--surface\/ticket,#e8203a)] content-stretch flex items-center overflow-clip px-[20px] py-[9px] relative rounded-[8px] shrink-0" data-node-id="785:4543" data-name="Tab">
           <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[20px] not-italic relative shrink-0 text-[15px] text-white w-[100px]" data-node-id="785:4544">
             Ticket details
           </p>
@@ -283,7 +283,7 @@ export default function Component20TicketCancelled() {
           ONWARD
         </p>
         <div className="bg-[var(--surface\/default,white)] content-stretch drop-shadow-[0px_8px_12px_rgba(0,0,0,0.07),0px_2px_3px_rgba(0,0,0,0.05)] flex flex-col items-start opacity-55 relative rounded-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="785:4561" data-name="Onward ticket">
-          <div className="bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-col items-start overflow-clip pl-[16px] pr-[18px] py-[18px] relative rounded-tl-[var(--radius\/16,16px)] rounded-tr-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="785:4562" data-name="Journey">
+          <div className="bg-[var(--surface\/ticket,#e8203a)] content-stretch flex flex-col items-start overflow-clip pl-[16px] pr-[18px] py-[18px] relative rounded-tl-[var(--radius\/16,16px)] rounded-tr-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="785:4562" data-name="Journey">
             <div className="content-stretch flex gap-[12px] items-start relative shrink-0 w-full" data-node-id="785:4563" data-name="From">
               <div className="relative shrink-0 size-[22px]" data-node-id="785:4564" data-name="Marker">
                 <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgMarker} />
@@ -373,7 +373,7 @@ export default function Component20TicketCancelled() {
           RETURN
         </p>
         <div className="bg-[var(--surface\/default,white)] content-stretch drop-shadow-[0px_8px_12px_rgba(0,0,0,0.07),0px_2px_3px_rgba(0,0,0,0.05)] flex flex-col items-start opacity-55 relative rounded-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="785:4607" data-name="Return ticket">
-          <div className="bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-col items-start overflow-clip pl-[16px] pr-[18px] py-[18px] relative rounded-tl-[var(--radius\/16,16px)] rounded-tr-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="785:4608" data-name="Journey">
+          <div className="bg-[var(--surface\/ticket,#e8203a)] content-stretch flex flex-col items-start overflow-clip pl-[16px] pr-[18px] py-[18px] relative rounded-tl-[var(--radius\/16,16px)] rounded-tr-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="785:4608" data-name="Journey">
             <div className="content-stretch flex gap-[12px] items-start relative shrink-0 w-full" data-node-id="785:4609" data-name="From">
               <div className="relative shrink-0 size-[22px]" data-node-id="785:4610" data-name="Marker">
                 <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgMarker} />

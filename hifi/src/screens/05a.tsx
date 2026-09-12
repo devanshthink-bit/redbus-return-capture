@@ -23,7 +23,7 @@ type ButtonPrimaryProps = {
 
 function ButtonPrimary({ className, label = "Search buses", showIcon = true }: ButtonPrimaryProps) {
   return (
-    <div className={className || "bg-[var(--surface\\/accent,#c54646)] content-stretch flex gap-[10px] h-[46px] items-center justify-center overflow-clip px-[20px] relative rounded-[var(--radius\\/full,999px)] shadow-[0px_2px_6px_0px_rgba(0,0,0,0.1)] w-[358px]"} data-node-id="18:54" data-name="Button / Primary">
+    <div className={className || "bg-[var(--surface\\/button-primary,#e81e38)] content-stretch flex gap-[10px] h-[46px] items-center justify-center overflow-clip px-[20px] relative rounded-[var(--radius\\/full,999px)] shadow-[0px_2px_6px_0px_rgba(0,0,0,0.1)] w-[358px]"} data-node-id="18:54" data-name="Button / Primary">
       {showIcon && <IconSearch className="relative shrink-0 size-[20px]" />}
       <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[20px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/on-accent,white)] whitespace-nowrap" data-node-id="18:53">
         {label}
@@ -446,11 +446,11 @@ export default function Component05AReturnWindowChosen() {
       </div>
       <div className="absolute bg-[var(--surface\/default,white)] border-[var(--border\/divider,#e6e6e6)] border-solid border-t bottom-0 content-stretch flex gap-[16px] items-center left-0 pb-[31px] pt-[20px] px-[16px] right-0" data-node-id="88:486" data-name="Action bar">
         <div className="content-stretch flex h-[44px] items-center justify-center overflow-clip pl-[4px] pr-[10px] relative shrink-0" data-node-id="227:1782" data-name="Button / Text action">
-          <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[20px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/accent,#c54646)] whitespace-nowrap" data-node-id="I227:1782;97:644">
+          <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[20px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/button,#e81e38)] whitespace-nowrap" data-node-id="I227:1782;97:644">
             Skip
           </p>
         </div>
-        <ButtonPrimary className="bg-[var(--surface\/accent,#c54646)] content-stretch cursor-pointer drop-shadow-[0px_2px_3px_rgba(0,0,0,0.1)] flex flex-[1_0_0] gap-[10px] h-[48px] items-center justify-center min-w-px px-[20px] relative rounded-[var(--radius\/full,999px)]" label="Continue" showIcon={false} />
+        <ButtonPrimary className="bg-[var(--surface\/button-primary,#e81e38)] content-stretch cursor-pointer drop-shadow-[0px_2px_3px_rgba(0,0,0,0.1)] flex flex-[1_0_0] gap-[10px] h-[48px] items-center justify-center min-w-px px-[20px] relative rounded-[var(--radius\/full,999px)]" label="Continue" showIcon={false} />
       </div>
     </div>
   );

@@ -247,7 +247,7 @@ export default function S12BSixPassengersTicketDetails() {
       </div>
       <ArtSeatGuarantee className="bg-gradient-to-r from-[#a3e4ad] h-[43.337px] overflow-clip relative shrink-0 to-[#d7f2da] w-[390px]" />
       <div className="bg-white content-stretch flex gap-[6px] items-center overflow-clip px-[16px] py-[12px] relative shrink-0 w-full" data-node-id="809:6930" data-name="Tabs">
-        <div className="bg-[#c54646] content-stretch flex items-center overflow-clip px-[20px] py-[9px] relative rounded-[8px] shrink-0" data-node-id="809:6931" data-name="Tab">
+        <div className="bg-[var(--surface\/ticket,#e8203a)] content-stretch flex items-center overflow-clip px-[20px] py-[9px] relative rounded-[8px] shrink-0" data-node-id="809:6931" data-name="Tab">
           <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[20px] not-italic relative shrink-0 text-[15px] text-white w-[100px]" data-node-id="809:6932">
             Ticket details
           </p>
@@ -289,7 +289,7 @@ export default function S12BSixPassengersTicketDetails() {
           ONWARD
         </p>
         <div className="bg-[var(--surface\/default,white)] content-stretch drop-shadow-[0px_8px_12px_rgba(0,0,0,0.07),0px_2px_3px_rgba(0,0,0,0.05)] flex flex-col items-start relative rounded-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="809:6949" data-name="Onward ticket">
-          <div className="bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-col items-start overflow-clip pl-[16px] pr-[18px] py-[18px] relative rounded-tl-[var(--radius\/16,16px)] rounded-tr-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="809:6950" data-name="Journey">
+          <div className="bg-[var(--surface\/ticket,#e8203a)] content-stretch flex flex-col items-start overflow-clip pl-[16px] pr-[18px] py-[18px] relative rounded-tl-[var(--radius\/16,16px)] rounded-tr-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="809:6950" data-name="Journey">
             <div className="content-stretch flex gap-[12px] items-start relative shrink-0 w-full" data-node-id="809:6951" data-name="From">
               <div className="relative shrink-0 size-[22px]" data-node-id="809:6952" data-name="Marker">
                 <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgMarker} />
@@ -379,7 +379,7 @@ export default function S12BSixPassengersTicketDetails() {
           RETURN
         </p>
         <div className="bg-[var(--surface\/default,white)] content-stretch drop-shadow-[0px_8px_12px_rgba(0,0,0,0.07),0px_2px_3px_rgba(0,0,0,0.05)] flex flex-col items-start relative rounded-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="809:6995" data-name="Return ticket">
-          <div className="bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-col items-start overflow-clip pl-[16px] pr-[18px] py-[18px] relative rounded-tl-[var(--radius\/16,16px)] rounded-tr-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="809:6996" data-name="Journey">
+          <div className="bg-[var(--surface\/ticket,#e8203a)] content-stretch flex flex-col items-start overflow-clip pl-[16px] pr-[18px] py-[18px] relative rounded-tl-[var(--radius\/16,16px)] rounded-tr-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="809:6996" data-name="Journey">
             <div className="content-stretch flex gap-[12px] items-start relative shrink-0 w-full" data-node-id="809:6997" data-name="From">
               <div className="relative shrink-0 size-[22px]" data-node-id="809:6998" data-name="Marker">
                 <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgMarker} />

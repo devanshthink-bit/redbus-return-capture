@@ -247,7 +247,7 @@ export default function S11ReturnDroppedTicketDetails() {
       </div>
       <ArtSeatGuarantee className="bg-gradient-to-r from-[#a3e4ad] h-[43.337px] overflow-clip relative shrink-0 to-[#d7f2da] w-[390px]" />
       <div className="bg-white content-stretch flex gap-[6px] items-center overflow-clip px-[16px] py-[12px] relative shrink-0 w-full" data-node-id="810:6308" data-name="Tabs">
-        <div className="bg-[#c54646] content-stretch flex items-center overflow-clip px-[20px] py-[9px] relative rounded-[8px] shrink-0" data-node-id="810:6309" data-name="Tab">
+        <div className="bg-[var(--surface\/ticket,#e8203a)] content-stretch flex items-center overflow-clip px-[20px] py-[9px] relative rounded-[8px] shrink-0" data-node-id="810:6309" data-name="Tab">
           <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[20px] not-italic relative shrink-0 text-[15px] text-white w-[100px]" data-node-id="810:6310">
             Ticket details
           </p>
@@ -289,7 +289,7 @@ export default function S11ReturnDroppedTicketDetails() {
           ONWARD
         </p>
         <div className="bg-[var(--surface\/default,white)] content-stretch drop-shadow-[0px_8px_12px_rgba(0,0,0,0.07),0px_2px_3px_rgba(0,0,0,0.05)] flex flex-col items-start relative rounded-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="810:6327" data-name="Onward ticket">
-          <div className="bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-col items-start overflow-clip pl-[16px] pr-[18px] py-[18px] relative rounded-tl-[var(--radius\/16,16px)] rounded-tr-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="810:6328" data-name="Journey">
+          <div className="bg-[var(--surface\/ticket,#e8203a)] content-stretch flex flex-col items-start overflow-clip pl-[16px] pr-[18px] py-[18px] relative rounded-tl-[var(--radius\/16,16px)] rounded-tr-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="810:6328" data-name="Journey">
             <div className="content-stretch flex gap-[12px] items-start relative shrink-0 w-full" data-node-id="810:6329" data-name="From">
               <div className="relative shrink-0 size-[22px]" data-node-id="810:6330" data-name="Marker">
                 <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgMarker} />
@@ -382,7 +382,7 @@ export default function S11ReturnDroppedTicketDetails() {
           <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#636363] text-[14px] text-center w-full" data-node-id="810:6596">
             You booked this trip one way. You can book a return any time.
           </p>
-          <div className="bg-[#c54646] content-stretch flex h-[48px] items-center justify-center overflow-clip px-[24px] relative rounded-[24px] shrink-0 w-full" data-node-id="810:6597" data-name="Button / Book a return">
+          <div className="bg-[var(--surface\/button-primary,#e81e38)] content-stretch flex h-[48px] items-center justify-center overflow-clip px-[24px] relative rounded-[24px] shrink-0 w-full" data-node-id="810:6597" data-name="Button / Book a return">
             <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[16px] text-white whitespace-nowrap" data-node-id="810:6598">
               Book a return
             </p>

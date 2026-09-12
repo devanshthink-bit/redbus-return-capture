@@ -37,7 +37,7 @@ export default function S6LoadingYourReturn() {
           </div>
           <div className="absolute bottom-0 content-stretch flex items-center justify-end right-[8px] top-0 w-[120px]" data-node-id="I808:4743;56:226" data-name="Trailing slot">
             <div className="content-stretch flex h-[52px] items-center justify-center px-[10px] relative shrink-0" data-node-id="I808:4743;53:196" data-name="Trailing">
-              <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[20px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/accent,#c54646)] whitespace-nowrap" data-node-id="I808:4743;53:196;97:644">
+              <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[20px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/button,#e81e38)] whitespace-nowrap" data-node-id="I808:4743;53:196;97:644">
                 Edit
               </p>
             </div>

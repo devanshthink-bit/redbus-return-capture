@@ -235,7 +235,7 @@ export default function Component01ASelectDate() {
             </div>
           </div>
           <div className="content-stretch flex flex-col items-start pt-[4px] relative shrink-0 w-full" data-node-id="540:3912" data-name="CTA">
-            <a className="bg-[var(--surface\/accent,#c54646)] content-stretch cursor-pointer drop-shadow-[0px_2px_3px_rgba(0,0,0,0.1)] flex gap-[10px] h-[46px] items-center justify-center px-[20px] relative rounded-[var(--radius\/full,999px)] shrink-0 w-full" data-node-id="540:3913" data-name="Button / Primary">
+            <a className="bg-[var(--surface\/button-primary,#e81e38)] content-stretch cursor-pointer drop-shadow-[0px_2px_3px_rgba(0,0,0,0.1)] flex gap-[10px] h-[46px] items-center justify-center px-[20px] relative rounded-[var(--radius\/full,999px)] shrink-0 w-full" data-node-id="540:3913" data-name="Button / Primary">
               <div className="relative shrink-0 size-[20px]" data-node-id="I540:3913;18:49" data-name="Icon">
                 <div className="absolute left-0 size-[20px] top-0" data-node-id="I540:3913;18:49;13:16" data-name="glyph">
                   <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgGlyph} />

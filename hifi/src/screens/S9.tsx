@@ -67,7 +67,7 @@ export default function S9NoOtherDaysChangeDay() {
             Your Wed, 16 Sep booking is safe. Nothing was charged.
           </p>
           <div className="content-stretch flex flex-col items-start overflow-clip pt-[16px] relative shrink-0 w-full" data-node-id="808:5121" data-name="Actions">
-            <div className="bg-[#c54646] content-stretch flex h-[48px] items-center justify-center overflow-clip px-[24px] relative rounded-[24px] shrink-0 w-full" data-node-id="808:5122" data-name="Button / Show all returns">
+            <div className="bg-[var(--surface\/button-primary,#e81e38)] content-stretch flex h-[48px] items-center justify-center overflow-clip px-[24px] relative rounded-[24px] shrink-0 w-full" data-node-id="808:5122" data-name="Button / Show all returns">
               <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[16px] text-white whitespace-nowrap" data-node-id="808:5123">
                 Keep my booking
               </p>

@@ -246,7 +246,7 @@ export default function S5AlreadyMovedTicketDetails() {
           <ButtonShare className="-translate-y-1/2 absolute right-[12px] size-[44px] top-1/2" />
         </div>
       </div>
-      <div className="bg-[#c54646] content-stretch flex gap-[10px] h-[50px] items-center overflow-clip px-[16px] relative shrink-0 w-full" data-node-id="809:6843" data-name="Band / Date changed">
+      <div className="bg-[var(--surface\/ticket,#e8203a)] content-stretch flex gap-[10px] h-[50px] items-center overflow-clip px-[16px] relative shrink-0 w-full" data-node-id="809:6843" data-name="Band / Date changed">
         <div className="relative shrink-0 size-[20px]" data-node-id="809:6844" data-name="Icon / Date changed">
           <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconDateChanged} />
         </div>
@@ -256,7 +256,7 @@ export default function S5AlreadyMovedTicketDetails() {
       </div>
       <ArtSeatGuarantee className="bg-gradient-to-r from-[#a3e4ad] h-[43.337px] overflow-clip relative shrink-0 to-[#d7f2da] w-[390px]" />
       <div className="bg-white content-stretch flex gap-[6px] items-center overflow-clip px-[16px] py-[12px] relative shrink-0 w-full" data-node-id="809:6584" data-name="Tabs">
-        <div className="bg-[#c54646] content-stretch flex items-center overflow-clip px-[20px] py-[9px] relative rounded-[8px] shrink-0" data-node-id="809:6585" data-name="Tab">
+        <div className="bg-[var(--surface\/ticket,#e8203a)] content-stretch flex items-center overflow-clip px-[20px] py-[9px] relative rounded-[8px] shrink-0" data-node-id="809:6585" data-name="Tab">
           <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[20px] not-italic relative shrink-0 text-[15px] text-white w-[100px]" data-node-id="809:6586">
             Ticket details
           </p>
@@ -298,7 +298,7 @@ export default function S5AlreadyMovedTicketDetails() {
           ONWARD
         </p>
         <div className="bg-[var(--surface\/default,white)] content-stretch drop-shadow-[0px_8px_12px_rgba(0,0,0,0.07),0px_2px_3px_rgba(0,0,0,0.05)] flex flex-col items-start relative rounded-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="809:6603" data-name="Onward ticket">
-          <div className="bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-col items-start overflow-clip pl-[16px] pr-[18px] py-[18px] relative rounded-tl-[var(--radius\/16,16px)] rounded-tr-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="809:6604" data-name="Journey">
+          <div className="bg-[var(--surface\/ticket,#e8203a)] content-stretch flex flex-col items-start overflow-clip pl-[16px] pr-[18px] py-[18px] relative rounded-tl-[var(--radius\/16,16px)] rounded-tr-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="809:6604" data-name="Journey">
             <div className="content-stretch flex gap-[12px] items-start relative shrink-0 w-full" data-node-id="809:6605" data-name="From">
               <div className="relative shrink-0 size-[22px]" data-node-id="809:6606" data-name="Marker">
                 <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgMarker} />
@@ -388,7 +388,7 @@ export default function S5AlreadyMovedTicketDetails() {
           RETURN
         </p>
         <div className="bg-[var(--surface\/default,white)] content-stretch drop-shadow-[0px_8px_12px_rgba(0,0,0,0.07),0px_2px_3px_rgba(0,0,0,0.05)] flex flex-col items-start relative rounded-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="809:6649" data-name="Return ticket">
-          <div className="bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-col items-start overflow-clip pl-[16px] pr-[18px] py-[18px] relative rounded-tl-[var(--radius\/16,16px)] rounded-tr-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="809:6650" data-name="Journey">
+          <div className="bg-[var(--surface\/ticket,#e8203a)] content-stretch flex flex-col items-start overflow-clip pl-[16px] pr-[18px] py-[18px] relative rounded-tl-[var(--radius\/16,16px)] rounded-tr-[var(--radius\/16,16px)] shrink-0 w-full" data-node-id="809:6650" data-name="Journey">
             <div className="content-stretch flex gap-[12px] items-start relative shrink-0 w-full" data-node-id="809:6651" data-name="From">
               <div className="relative shrink-0 size-[22px]" data-node-id="809:6652" data-name="Marker">
                 <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgMarker} />
