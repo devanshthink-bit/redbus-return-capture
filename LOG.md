@@ -8894,3 +8894,41 @@ those and filling each masked pixel with a vertical *median* left visible lighte
 the median pulled from a brighter band. Interpolating linearly down each column between the last
 clean row above and the first below is exact where the background is a smooth vertical gradient,
 which a night sky is — no seam, and the name goes back as a text layer that the build can change.
+
+---
+
+NOTE  ·  2026-09-12  ·  molades-case  [· Source: user]
+
+**Sanity pass before the case study. Everything consistent bar one stale sentence.**
+
+Devansh asked for a full consistency check before writing the case study up. What was run and
+what it returned:
+
+- **Tree clean, live matches local.** Root `index.html`, `hifi/app.html` and `hifi/app.css` all
+  200 and byte-identical to the working copy. Frozen four unchanged.
+- **Rebuild is deterministic.** `build.mjs` + Tailwind regenerated `app.html` and `app.css`
+  byte-for-byte identical. So the committed build really is the build the sources produce — the
+  generated files are not carrying a hand-edit.
+- **The four edits a new screen needs all agree on 29.** 29 files in `src/screens/`, 29 rows in
+  `render.tsx`, the count guard reads 29, 29 keys in `FORWARD`, 29 entries in `HIFI_NAMES`.
+  No '10' anywhere, which is right — it was retired.
+- **Hi-fi runtime clean.** Every one of the 29 reachable from the rail, exactly one visible each,
+  no JS errors and no "no forward hotspot" warnings. Forward and back walked on all 29.
+- **v4 state matrix clean.** 18 screens × 13 states = 234 cells, exactly one screen visible in
+  every cell, no errors, no throws.
+- **Assets sound.** No Figma URLs left in any screen file; all 272 referenced assets present.
+
+**The one stale thing, now fixed.** §21's Pixels row still read *"26 of the 27 frames"* and named
+four frames as later rebuilds with their own numbers. The 29-frame table directly beneath it had
+already superseded all of that on 10 Sep. Two counts for the same measurement sat four lines
+apart, and the older one read first. It now points at the table instead of restating it.
+
+**Lesson worth keeping: a summary that restates the table below it goes stale and the table does
+not.** The row was written when it was the only number. Once the full table arrived, the row had
+no job left except to be wrong. When a doc grows a canonical table, the prose above it should
+point to it, not duplicate it.
+
+**One thing left alone deliberately.** `hifi/assets/` holds 369 files and 97 are referenced by
+nothing — orphans from re-pulling 11 and other frames, since `pull.py` adds new assets and never
+removes the ones a re-pull dropped. 6.5 MB total, so it costs nothing and deleting is the kind of
+unasked cleanup that breaks things. Flagged, not swept.

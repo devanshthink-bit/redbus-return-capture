@@ -2161,7 +2161,7 @@ Two checks, because each is blind to what the other sees.
 | | |
 |---|---|
 | **Geometry** | 1,730 nodes matched by `data-node-id` against the Figma metadata. **Three** blocks off by more than 4px. **Last run 4 Sep on the 23-frame build, and not re-run since — 01a, 04a and 06b have never been geometry-checked.** Treat the number as history, not as current |
-| **Pixels** | **current.** 26 of the 27 frames were re-rendered headless at native size on 2026-09-09 and diffed against Figma renders pulled the same hour. Three frames were rebuilt later that day and carry their own fresh numbers: **09 · 1.96%** (1681pt), **11 · 10.44%** (4721pt), **08b · 8.25%** and **08c · 5.82%**. **Do not compare 11's number with its old 5.38% or 11.22%** — the frame is four and a half times taller and half of it is photographic, so a 1px accumulated drift turns every pixel of a photo different. Read its bands for *steps*, not its percentage. Of the rest, worst are **11.99%** (01) and **11.69%** (03a) — the two tallest — with 04, 05a, 06a and 06b above 8% |
+| **Pixels** | **current.** All **29** frames were re-rendered headless at native size and diffed against Figma renders pulled the same hour — the full table is in the code block directly below this one, re-measured 10 Sep. **Do not compare 11's number with its old 5.38% or 11.22%** — the frame is four and a half times taller and half of it is photographic, so a 1px accumulated drift turns every pixel of a photo different. Read its bands for *steps*, not its percentage. Of the rest, worst are **11.99%** (01) and **11.69%** (03a) — the two tallest — with 04, 05a, 06a and 06b above 8% |
 
 **The full 29 (10 Sep), for the next person who needs a baseline to compare against:**
 
