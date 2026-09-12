@@ -184,10 +184,24 @@ body.testing .layout{justify-content:center}
    padding on the right so it runs to the window edge without making the page scroll sideways. */
 .devicewrap{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;
  justify-content:center;gap:18px;height:calc(100vh - 56px);position:relative}
-.devicewrap::before{content:"";position:absolute;z-index:-1;pointer-events:none;
- top:-28px;bottom:-28px;right:-28px;left:-38%;
- background:radial-gradient(ellipse 58% 64% at 64% 50%,
-   rgba(208,20,46,.97) 0%, rgba(232,30,56,.95) 26%, rgba(232,30,56,.69) 48%, rgba(240,110,125,.35) 72%, rgba(251,246,246,0) 100%)}.device{width:calc(var(--s-dw) * var(--ds));height:calc(var(--s-dh) * var(--ds))}
+.devicewrap::before{content:"";position:fixed;z-index:-1;pointer-events:none;inset:0;
+ /* A true circle, centred on the phone: fitDevice() measures it and sets --gx/--gy/--gr in px.
+    The layer is fixed to the window, so its only edges are the window's own -- the old box ended
+    inside the window on both sides and cut the glow with a straight line. A fixed layer also adds
+    nothing to the stage's sideways scroll. Twelve stops on an eased curve, blended in oklab
+    where supported, so the 8-bit steps do not read as rings; ::after dithers what is left. */
+ background:radial-gradient(circle var(--gr,720px) at var(--gx,64%) var(--gy,50%),
+   rgba(214,22,48,.96) 0%, rgba(224,26,53,.94) 12%, rgba(232,30,56,.90) 24%, rgba(233,40,64,.80) 34%,
+   rgba(234,56,78,.66) 44%, rgba(236,76,96,.50) 54%, rgba(238,96,114,.35) 63%, rgba(240,114,130,.23) 71%,
+   rgba(243,132,146,.13) 79%, rgba(246,150,162,.07) 86%, rgba(249,170,180,.025) 93%, rgba(251,190,198,0) 100%);
+ background:radial-gradient(in oklab circle var(--gr,720px) at var(--gx,64%) var(--gy,50%),
+   rgba(214,22,48,.96) 0%, rgba(224,26,53,.94) 12%, rgba(232,30,56,.90) 24%, rgba(233,40,64,.80) 34%,
+   rgba(234,56,78,.66) 44%, rgba(236,76,96,.50) 54%, rgba(238,96,114,.35) 63%, rgba(240,114,130,.23) 71%,
+   rgba(243,132,146,.13) 79%, rgba(246,150,162,.07) 86%, rgba(249,170,180,.025) 93%, rgba(251,190,198,0) 100%)}
+.devicewrap::after{content:"";position:fixed;z-index:-1;pointer-events:none;inset:0;opacity:.05;
+ background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+ -webkit-mask-image:radial-gradient(circle var(--gr,720px) at var(--gx,64%) var(--gy,50%),#000 0%,transparent 100%);
+ mask-image:radial-gradient(circle var(--gr,720px) at var(--gx,64%) var(--gy,50%),#000 0%,transparent 100%)}.device{width:calc(var(--s-dw) * var(--ds));height:calc(var(--s-dh) * var(--ds))}
 /* A real iPhone, at the same 430 x 902 (the screen inside stays exactly 402 x 874): a brushed
    titanium rim catching light at two corners, a black glass bezel, shaded side buttons, and the
    Dynamic Island. The shadow falls down and away, so the phone stands on the page. */
@@ -616,7 +630,7 @@ body.hifi-on.legacy-on #legacyrail,body.hifi-on.legacy-on .legacynote{display:no
    participant cannot see -- or tap -- anything but the phone. */
 body.testing .panel,body.testing .glow,body.testing .caption{display:none!important}
 /* a participant sees a phone and nothing else -- no red stage either */
-body.testing .devicewrap::before{display:none}
+body.testing .devicewrap::before,body.testing .devicewrap::after{display:none}
 
 /* On a real phone the frame filled 430x874 inside a smaller screen, so it was cut off and the
    rails sat on top of it. Below 520px the frame simply becomes the screen -- no mock, no panel. */
@@ -626,7 +640,7 @@ body.testing .devicewrap::before{display:none}
   .stage{padding:0;display:block}
   .layout{display:block;max-width:none;gap:0}
   .devicewrap{display:block;height:auto}
-  .devicewrap::before{display:none}
+  .devicewrap::before,.devicewrap::after{display:none}
   .device{width:100%;height:auto}
   .deviceframe{width:100%;height:auto;transform:none;padding:0;border-radius:0;box-shadow:none;background:none}
   .deviceframe::after,.deviceframe::before,.island,.sbar{display:none}
@@ -3063,6 +3077,16 @@ function fitDevice(){
   const stage = document.querySelector('.stage');
   if(stage && stage.scrollLeft) stage.scrollLeft = 0;
   if(typeof fitPanel === 'function') fitPanel();
+  /* the glow: centre it on the phone, in window coordinates (the layer is fixed) */
+  const dev = document.querySelector('.device');
+  if(wrap && dev){
+    const w = wrap.getBoundingClientRect(), d = dev.getBoundingClientRect();
+    const gx = d.left + d.width/2, gy = d.top + d.height/2;
+    const gr = Math.max(260, .80*window.innerHeight);   /* sized to match the approved strength */
+    wrap.style.setProperty('--gx', gx.toFixed(1)+'px');
+    wrap.style.setProperty('--gy', gy.toFixed(1)+'px');
+    wrap.style.setProperty('--gr', gr.toFixed(1)+'px');
+  }
 }
 fitDevice();
 addEventListener('resize', fitDevice);

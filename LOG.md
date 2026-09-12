@@ -10178,3 +10178,17 @@ checkbox `#D3192D`, weekend `#BC361C`) were not part of this and are unchanged.
 **LEARNED — his earlier words were right and my reading was wrong.** I had called `#C54646` the
 picker value, but his point was that it is not in the screenshots as he sees them. Either way the
 brand values are his decision; the log records them as his.
+
+CHANGE · 2026-09-13 · direct · Source: user
+**The glow behind the phone is a true circle with no steps or edges.** *"this whole circular shape
+doesnt look exactly circular, and it doesnt look 100% smooth in gradient, i can see steps of gradient
+… no sharp lines shud be visible in it"*. It was an ellipse sized in percent of a wide, off-centre box,
+with five stops. Now: a circle centred on the phone by `fitDevice()` (`--gx/--gy/--gr`, radius 80% of
+the window height, matched to the strength he approved a step earlier within 3–12 levels), twelve
+eased stops blended in oklab, and a 5% noise layer masked to the glow to dither the last 8-bit steps.
+Biggest step between neighbouring pixels outside the phone: 4 (was a ~40-level jump).
+
+**LEARNED — the glow's box ended inside the window.** `right:-28px` put its right edge 120px short of
+the window on a wide screen, so the gradient was cut by a straight vertical line there. The layer is
+now `position:fixed; inset:0`: its only edges are the window's, and a fixed layer cannot add to the
+stage's sideways scroll (checked: 0px overflow at 2000 and 1440 wide).
