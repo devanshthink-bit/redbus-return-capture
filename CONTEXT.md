@@ -2191,13 +2191,20 @@ Two checks, because each is blind to what the other sees.
 **The full 38 (12 Sep), for the next person who needs a baseline to compare against:**
 
 ```
-01  11.99   01a  2.60   02  5.84   03  4.80   03a 11.69   03b  4.77
+01  11.99   01a  3.11   02  5.84   03  4.80   03a 11.69   03b  4.77
 04   9.73   04a  5.77   05  5.20   05a 8.06   05b  7.54   06   5.79
 06a  8.43   06b  8.83   07  6.21   08  7.59   08a  5.21   08b  8.25
-08c  5.82   09  1.96   09a 2.67   09b 1.76   11 10.35   11a  4.39
-12   2.35   12a 1.62   13  4.97   14  6.90   15  1.43   16   2.66   17  2.04
-18   1.17   19  2.43   19a 5.83   20  8.75   21  2.63   21a  3.84   22  1.18
+08c  5.82   09  1.96   09a 2.65   09b 1.76   11 10.35   11a  4.80
+12   2.35   12a 1.79   13  4.97   14  6.90   15  1.43   16   2.66   17  2.04
+18   1.17   19  2.43   19a 6.56   20  8.75   21  2.61   21a  3.79   22  1.18
 ```
+
+**Sheets float since 12 Sep (late)**: 8pt off both sides and the bottom, bottom corners 36pt,
+as the current app draws them (IMG_4991). 01a, 09a, 11a, 19a, 21 and 21a were re-measured after that
+move, the numbers above. **Two traps from the same day:** anything pinned to the TOP of a screen's
+overlay must be skipped by `pinnedHeight`, or every frame gets ~830px of bottom padding (the grey
+gaps); and an override of a flow-map hotspot must listen on an ancestor, because on the element
+itself the flow map's listener was added first and runs first.
 
 **The cancellation flow arrived on 12 Sep**: 18 · Review and cancel, 19 · Refund details,
 19a · Why cancel and 20 · Ticket cancelled, all four built from the real app —

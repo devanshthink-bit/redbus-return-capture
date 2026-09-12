@@ -127,7 +127,26 @@
      square for the length of the blink. The box-shadow follows the element's own radius.
      The ring is INSET: an outward halo is clipped by every overflow-clip frame above it, which
      is most of them, so it showed up cut off on two or three sides. */
-  .hf-blink{animation:hf-blink 800ms ease-in-out 3;position:relative;z-index:5}
+  /* The ring is drawn on a layer ABOVE the element's children. An inset shadow on the element itself
+     paints under them, so any child with its own fill -- a card's white body, a chip -- covered it
+     and the ring showed on one or two sides only (Devansh, 12 Sep: "a part of it is getting
+     invisible because of the content over it"). The layer takes the element's corners. */
+  .hf-blink{z-index:5}
+  .hf-blink-rel{position:relative}
+  .hf-blink::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+    z-index:50;animation:hf-blink 800ms ease-in-out 3}
+  /* No text cursor anywhere on the phone -- it is an app, not a page -- and a finger on whatever
+     takes a tap. Devansh: "Wherever anything is tapable, the finger cursor should show." */
+  .hf-viewport{cursor:default;-webkit-user-select:none;user-select:none}
+  .hf-viewport :is(.hf-hot,[data-name^="Button"],[data-name="Close"],[data-name^="Chip"],
+    [data-name="Radio"],[data-name^="Row / Payment"],[data-name^="Tab"],[data-name="Nav / Tab Item"],
+    [data-name="Toggle / iOS"],[data-name="Back"],[data-name^="Card / Bus"],[data-name="Search / Row"],
+    [data-name="Reason"],[data-name="Cat"],[data-name="Option"],[data-name="Suggestion"]),
+  .hf-viewport :is(.hf-hot,[data-name^="Button"],[data-name="Close"],[data-name^="Chip"]) *{cursor:pointer}
+  /* the scroll indicator: drawn only while something is moving, like iOS */
+  .hf-sbar{position:absolute;width:3px;border-radius:3px;background:rgba(0,0,0,.4);z-index:60;
+    pointer-events:none;opacity:0;transition:opacity .35s ease}
+  .hf-sbar.on{opacity:1;transition:opacity .1s ease}
   @keyframes hf-slideup{from{transform:translateY(100%)}to{transform:translateY(0)}}
   .hf-slideup{animation:hf-slideup 380ms cubic-bezier(.22,1,.36,1)}
   /* Sliding is for things that slide. A screen change is a settle, not a swipe -- the left/right
@@ -184,8 +203,12 @@
      and only the sheet scrolls. Drawing it as its own full screen made the whole page move. */
   .hf-scrim{position:absolute;inset:0;background:rgba(0,0,0,.45);
     -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);animation:hf-in 200ms ease-out}
-  .hf-sheet{position:absolute;left:0;right:0;bottom:0;max-height:74%;overflow-y:auto;
-    border-radius:20px 20px 0 0;background:#fff;-webkit-overflow-scrolling:touch}
+  /* The real app's sheets float: 8pt clear of both sides and the bottom, every corner rounded, the
+     bottom two following the phone's own corner (IMG_4991). Devansh, 12 Sep: "All these bottom
+     sheets have gaps all around. They are not touching the screen edges." Figma moved with it. */
+  .hf-sheet{position:absolute;left:8px!important;right:8px!important;bottom:8px!important;
+    width:auto!important;max-height:74%;overflow-y:auto;
+    border-radius:20px 20px 36px 36px;background:#fff;-webkit-overflow-scrolling:touch}
   .hf-sheet::-webkit-scrollbar{width:0;height:0}
   /* A sheet's title and its × belong to the sheet, not to the sheet's content: they have to stay
      put while the content moves under them, the way the ticket's header does. The head bleeds into
@@ -258,7 +281,7 @@
     border:solid #fff;border-width:0 2px 2px 0;transform:translate(-50%,-60%) rotate(45deg)}
   /* The filter sheet. Its panes are rebuilt as categories are tapped, so the rows are styled here
      rather than drawn -- the same arrangement as every other selection state in this build. */
-  .hf-filt-sheet{max-height:92%!important;top:70px;bottom:0;border-radius:20px 20px 0 0}
+  .hf-filt-sheet{max-height:92%!important;top:62px!important;border-radius:20px 20px 36px 36px}
   .hf-filt-pane{overflow-y:auto!important}
   .hf-filt-row{display:flex;align-items:center;gap:10px;padding:14px 0;width:100%}
   .hf-filt-label{margin:0;flex:1 0 0;min-width:0;font-family:Inter,sans-serif;font-size:16px;
@@ -417,6 +440,9 @@
     var layer = sec.querySelector('.overlay');
     var bar = root && root.querySelector('[data-name="Status Bar / Light"]');
     if (!bar || !layer) return;
+    // a frame that draws its own sheet also draws the scrim over its bar; a pinned copy would sit
+    // on top of that scrim, bright on a dimmed screen (01a, 12 Sep)
+    if (root.querySelector('[data-name="Scrim"]')) return;
     var pin = bar.cloneNode(true);
     pin.removeAttribute('data-node-id');
     pin.classList.add('hf-statusbar');
@@ -468,6 +494,12 @@
     if (!layer) return 0;
     var tall = 0;
     Array.prototype.forEach.call(layer.children, function(el){
+      // the pinned status bar (1b) is at the TOP of the layer: counted here, it read as a bar
+      // covering the whole screen and padded every frame by ~830px -- the grey gaps under 02 and 05
+      // and the crushed empty My Bookings, 12 Sep
+      if (el.classList.contains('hf-statusbar')) return;
+      // 17's own status bar is drawn absolute in Figma, so step 1 lifted it too -- same fault
+      if (/^Status Bar/.test(el.getAttribute('data-name') || '')) return;
       var h = (layer.offsetHeight || 0) - (el.offsetTop || 0);
       if (h > tall) tall = h;
     });
@@ -547,14 +579,19 @@
     if (!el) return;
     el.classList.remove('hf-blink');
     void el.offsetWidth;
-    if (getComputedStyle(el).borderRadius === '0px') el.style.borderRadius = '8px';
+    var cs = getComputedStyle(el);
+    if (cs.borderRadius === '0px') el.style.borderRadius = '8px';
+    // the ring layer is absolute, so it needs a positioned host -- but only a static element may be
+    // made relative: forcing `relative` on an absolute one (the old rule did) threw it out of place
+    if (cs.position === 'static') el.classList.add('hf-blink-rel');
     el.classList.add('hf-blink');
     // A timer, not `animationend`: a hidden or throttled tab never fires the event, and the
     // inline radius would then stick for the life of the page. 800ms x 3 iterations.
     clearTimeout(el._hfBlinkT);
     // The class goes too: it carries z-index 5, and left on, a blinked bus card sat over the
     // Ask Ray button and over any sheet opened on that list afterwards.
-    el._hfBlinkT = setTimeout(function(){ el.style.borderRadius = ''; el.classList.remove('hf-blink'); }, 2400);
+    el._hfBlinkT = setTimeout(function(){ el.style.borderRadius = '';
+      el.classList.remove('hf-blink', 'hf-blink-rel'); }, 2400);
   }
 
   // the two halves of one tab control, keyed both ways
@@ -608,6 +645,19 @@
   // The home tab bar is dead until there is something behind it. My Bookings and My Account only
   // mean anything once a ticket exists, so they stay inert until the traveller reaches one.
   var BOOKED = false;
+  // A payment that is not the booking's own: the fare difference on a date change. Pay and the wait
+  // read the amount from here and the wait hands over to `done` instead of the ticket.
+  var PAYFOR = null;
+  // The scrim and sheet of a frame that draws its own sheet, or null. When the move is a sheet
+  // closing (from an overlay back to its opener), any truthy answer will do.
+  function drawnSheet(sec, from){
+    var root = sec.querySelector('.scroll > div');
+    if (!root) return null;
+    var kids = [].filter.call(root.children, function(n){
+      return /^(Scrim|Sheet)/.test(n.getAttribute('data-name') || ''); });
+    if (kids.length === 2) return kids;
+    return OVERLAY[from] ? [] : null;
+  }
   function go(i){
     if (i < 0 || i >= screens.length) return;
     if (window.__closeSheet) window.__closeSheet();   // a sheet does not survive a page change
@@ -647,6 +697,17 @@
     if (TABPAIR[from] === ORDER[at]) {
       belowTabs(sec).forEach(function(el){
         el.classList.remove('hf-in-fwd'); void el.offsetWidth; el.classList.add('hf-in-fwd');
+      });
+    } else if (!QUIET && (OVERLAY[ORDER[at]] || OVERLAY[from]) && drawnSheet(sec, from)) {
+      // A sheet drawn into its own frame (01a) is the screen behind plus a scrim plus the sheet.
+      // Fading the whole frame in made the page behind flicker -- Devansh, 12 Sep: "only the bottom
+      // slider of the calendar should slide and come into view. The whole UI shouldn't flicker."
+      // So the frame appears at once, the scrim fades and only the sheet travels. Closing it is the
+      // same in reverse: the screen under it is already there, so nothing animates at all.
+      sec.classList.remove('hf-in-fwd','hf-in-back','hf-in-up');
+      if (OVERLAY[ORDER[at]]) drawnSheet(sec, from).forEach(function(n){
+        var c = n.getAttribute('data-name') === 'Scrim' ? 'hf-in-fwd' : 'hf-slideup';
+        n.classList.remove(c); void n.offsetWidth; n.classList.add(c);
       });
     } else if (!QUIET) {
       // a sheet rises; every other screen fades in
@@ -699,6 +760,31 @@
              (new URLSearchParams(location.search).get('screen') || '');
   var idx = ORDER.indexOf(want);
   go(idx >= 0 ? idx : 0);
+
+  // 4b · the scroll indicator. Devansh, 12 Sep: "Wherever there is more content to scroll, always
+  //      show the scrollbar while the user starts scrolling, but don't show at the resting state."
+  //      The native bars stay off -- they take width, and every frame is exactly 390 -- so a thin
+  //      bar is drawn beside whatever is scrolling, one listener for every scroller on the phone,
+  //      and it fades out once the scrolling stops.
+  document.addEventListener('scroll', function(e){
+    var el = e.target;
+    if (!el || el.nodeType !== 1 || !el.closest || !el.closest('.hf-viewport')) return;
+    var h = el.clientHeight, H = el.scrollHeight;
+    if (H <= h + 1) return;                       // sideways strips, and anything that fits
+    var host = el.offsetParent; if (!host) return;
+    var bar = el._hfBar;
+    if (!bar || bar.parentNode !== host) {
+      bar = document.createElement('div'); bar.className = 'hf-sbar';
+      host.appendChild(bar); el._hfBar = bar;
+    }
+    var len = Math.max(36, h * h / H - 8);
+    bar.style.height = len + 'px';
+    bar.style.top  = (el.offsetTop + 4 + (h - 8 - len) * (el.scrollTop / (H - h))) + 'px';
+    bar.style.left = (el.offsetLeft + el.offsetWidth - 6) + 'px';
+    bar.classList.add('on');
+    clearTimeout(el._hfBarT);
+    el._hfBarT = setTimeout(function(){ bar.classList.remove('on'); }, 700);
+  }, true);
 
   // 5 · Home is a form, not a hotspot. The flow map can only say "this element goes forward",
   //     which cannot express "fill this, then that, then open the calendar, and blink the right
@@ -769,6 +855,17 @@
         toggle.classList.toggle('hf-toggle-on');
         e.preventDefault(); e.stopPropagation(); return;
       }
+      // Today / Tomorrow set the date on the spot -- no calendar -- and the date blinks so the change
+      // is seen. Devansh, 12 Sep: "date of journey should blink when the user clicks on today or
+      // tomorrow". This trip's today is Thu 10 Sep, the date every later screen is drawn for.
+      var chip = t.closest && t.closest('[data-name="Chip / Quick date"]');
+      if (chip && rowDate.contains(chip) && step >= 2) {
+        e.preventDefault(); e.stopPropagation();
+        var tom = /Tomorrow/.test(chip.textContent);
+        fill(dateV, tom ? 'Fri 11 Sep' : VALUES.date, null);
+        blinkAt(dateV.parentElement);
+        return;
+      }
       var hit = null;
       if (rowFrom.contains(t) && step === 0) hit = 'from';
       else if (rowTo.contains(t) && step === 1) hit = 'to';
@@ -785,9 +882,14 @@
       else if (hit === 'search') { go(i02); }
     }, true);
 
+    // the finger cursor goes on what Home actually takes a tap on; the class is only the look, the
+    // capture handler above does the work
+    [rowFrom, rowTo, rowDate, toggle, search].forEach(function(n){ if (n) n.classList.add('hf-hot'); });
+
     // the calendar sheet: only 10 September and the close button do anything
     var day10 = q(sCal, '[data-name="Sep 10"]');
     var close = q(sCal, '[data-name="Close"]');
+    [day10, close].forEach(function(n){ if (n) n.classList.add('hf-hot'); });
     sCal.addEventListener('click', function(e){
       e.preventDefault(); e.stopPropagation();
       if (day10 && day10.contains(e.target)) { fill(dateV, VALUES.date, null); go(i01); return; }
@@ -2169,7 +2271,12 @@
         if (bar)    bar.style.width    = Math.round(42 * (WINDOW - left) / WINDOW) + 'px';
         if (sweep)  sweep.style.setProperty('--hf-turn',
                       (360 * (WINDOW - left) / WINDOW).toFixed(1) + 'deg');
-        if (ticks >= WAIT) { stop(); go(iTic); return; }
+        if (ticks >= WAIT) {
+          stop();
+          var dest = PAYFOR ? PAYFOR.done : iTic;
+          PAYFOR = null;
+          go(dest); return;
+        }
         ticks += 1; left -= 1;
       }
       tick();
@@ -3275,6 +3382,30 @@
       }, true);
     } else if (!seatLink) console.warn('15: no Change seat link');
 
+    // 15 · a dearer day is paid for before it is moved. Devansh, 12 Sep: "on change date flow payment
+    //      screens are missing to pay the difference amount." Confirm went straight to the receipt.
+    //      Now a day that costs more goes through Pay and the wait -- the booking's own two screens,
+    //      carrying only the difference -- and the wait ends on the receipt, not the ticket. A day
+    //      that costs the same or less has nothing to pay and still goes straight on.
+    var i09m = ORDER.indexOf('09');
+    var confirm15 = s15.querySelector('[data-name="Button / Primary"]');
+    // on the SCREEN, in capture: on the button itself it would run after the flow map's own
+    // forward listener, which is registered on the same element first and already walked to 16
+    if (confirm15 && i09m >= 0) s15.addEventListener('click', function(e){
+      if (!confirm15.contains(e.target)) return;
+      e.preventDefault(); e.stopPropagation();
+      var d = busesFor(MOVE.day, MOVE.extra)[MOVE.bus][7] - HELD.fare;
+      if (d > 0) { PAYFOR = { amount: d, done: i16, back: i15 }; go(i09m); }
+      else { PAYFOR = null; go(i16); }
+    }, true);
+    else console.warn('15: no Confirm button');
+    // Back on Pay, while it is paying for a move, returns to the move -- not to the booking's points
+    if (i09m >= 0) screens[i09m].addEventListener('click', function(e){
+      if (!PAYFOR || !e.target.closest || !e.target.closest('.hf-back')) return;
+      e.preventDefault(); e.stopPropagation();
+      var b = PAYFOR.back; PAYFOR = null; go(b);
+    }, true);
+
     // 16 · "View ticket" is the only way out of the receipt and it did nothing: 16 is the last
     //      screen in ORDER, so there was no "next" for the flow map to point it at. It goes to the
     //      ticket, which is the thing it names.
@@ -3478,7 +3609,7 @@
     if (i09 >= 0) ON_ENTER['09'] = function(sec){
       var ret = (!RETURN.skipped && RETURN.fare) ? RETURN.fare : (BOTH - ONE);
       var t = q(sec, 'I109:988;34:91');
-      if (t) t.textContent = 'Pay ' + money(RETURN.skipped ? ONE : ONE + ret);
+      if (t) t.textContent = 'Pay ' + money(PAYFOR ? PAYFOR.amount : (RETURN.skipped ? ONE : ONE + ret));
     };
   })();
 

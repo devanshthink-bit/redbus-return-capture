@@ -93,7 +93,7 @@ export default function Component21AFilterBusesAi() {
         </div>
         <div className="absolute bg-[rgba(0,0,0,0.35)] h-[844px] left-0 top-0 w-[390px]" data-node-id="793:5496" data-name="Scrim" />
       </div>
-      <div className="absolute bg-white content-stretch flex flex-col h-[774px] items-start left-0 overflow-clip rounded-tl-[20px] rounded-tr-[20px] top-[70px] w-[390px]" data-node-id="793:5497" data-name="Sheet">
+      <div className="absolute bg-white content-stretch flex flex-col h-[774px] items-start left-[8px] overflow-clip rounded-bl-[36px] rounded-br-[36px] rounded-tl-[20px] rounded-tr-[20px] top-[62px] w-[374px]" data-node-id="793:5497" data-name="Sheet">
         <div className="bg-white content-stretch flex gap-[12px] h-[58px] items-center overflow-clip px-[20px] relative shrink-0 w-full" data-node-id="793:5498" data-name="Title row">
           <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[22px] not-italic relative shrink-0 text-[#0000e4] text-[16px] whitespace-nowrap" data-node-id="793:5499">
             Close

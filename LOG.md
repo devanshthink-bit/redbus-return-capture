@@ -9826,3 +9826,61 @@ the page scrolled.
 **LEARNED — a copied element carries assumptions about what was under it.** The status bar was
 drawn to sit on its header; pinning it separated it from that header. Every screen needed checking
 for what the bar had been sitting on, and the one exception was the one with white content.
+
+---
+
+CHANGE  ·  2026-09-12  ·  direct request  ·  Source: user
+
+**Eleven fixes from one message.** Devansh: *"why wifi icon lines dont have equal spacing. empty my
+bookings is broken. on change date flow payment screens are missing to pay the difference amount…
+All these bottom sheets have gaps all around… Wherever anything is tapable, the finger cursor should
+show… huge grey empty gap at the bottommost part. Blinking is broken at a lot of places…"*
+
+- **Grey gaps and the crushed empty My Bookings were one bug, and it was mine.** The pinned status
+  bar (1b, earlier today) sits at the TOP of the overlay. `pinnedHeight` measures from the top of
+  the highest pinned element to the bottom edge, so it read the status bar as a bar covering the
+  whole screen and padded every frame by about 830px. That made the grey band under 02, 05 and most
+  screens. On 12a the padding took the height away from its `flex-1` empty state, which collapsed to
+  57px and cut off its text. The status bar is now skipped, and so is 17's own Figma status bar,
+  which step 1 lifts. Padding is back to 0–76px everywhere except the seat maps, which carry a real
+  sheet, and Profile, whose content is all absolute.
+- **Wi-Fi.** The gap between the outer and middle arcs was 2.9pt and between the middle arc and the
+  dot 1.6pt. The middle arc moved up 0.67pt in the Figma component (13:10), so both gaps are now
+  2.26pt. The 23 status-icon files in `assets/` got the new arc path from Figma's own export. The
+  screen files were not re-pulled for this: the file names stay and only the bytes changed.
+- **Sheets float**, as in the current app (IMG_4991): 8pt off both sides and the bottom, top
+  corners unchanged, bottom corners 36pt. In Figma: 01a, 09a, 11a, 19a, 21, 21a. In the build:
+  `.hf-sheet` and `.hf-filt-sheet`. 11a and 09a were re-pulled through `pull.py`. On 01a, 19a, 21
+  and 21a, the one class string on the sheet node was patched to match the fresh pull. That is the
+  only line the pull changed there.
+- **The date change now pays the difference.** A day that costs more goes 15 → 09 Pay (showing
+  only the difference, e.g. "Pay ₹170") → 09b → 16. Back on Pay returns to 15. A day that costs
+  the same or less still goes straight to 16. This reuses the booking's own Pay screens rather than
+  adding a frame, via `PAYFOR`.
+- **Home.** Today / Tomorrow set the date without opening the calendar, and the date blinks.
+  Tomorrow shows "Fri 11 Sep", but the screens after Home are still drawn for 10 Sep.
+- **Opening the calendar no longer flickers.** 01a used to fade in whole. Now the frame appears at
+  once, the scrim fades and only the sheet slides up. Closing it doesn't animate. 01a also no
+  longer pins a status bar over its own scrim.
+- **Cursor.** The phone uses the default cursor, with no text cursor. Anything tappable (hotspots,
+  buttons, Close, chips, radios, tabs, rows, cards) shows the finger.
+- **Blink.** The ring is now drawn on an `::after` layer above the element's children. An inset
+  shadow on the element painted under any child with its own fill, so the ring showed on one or
+  two sides. The blink also stopped forcing `position: relative` onto absolute elements, which
+  moved them for the length of the blink.
+- **Scroll bar.** A thin bar shows beside whatever is scrolling and fades 0.7s after scrolling
+  stops. It is one capture listener for every scroller on the phone. Native bars stay off because
+  they take width.
+
+**LEARNED — two listeners on one element run in the order they were added, capture or not.**
+15's Confirm got a capture-phase listener to route through Pay, and it still went straight to 16.
+On the target element itself capture means nothing, and the flow map's forward listener was
+registered first. The fix was to listen on the screen. Any override of a flow-map hotspot has to
+sit on an ancestor.
+
+**LEARNED — a measurement that says "from the top of the highest pinned thing" breaks the moment
+something is pinned to the top.** 1b added exactly that and didn't re-run the padding sweep. One
+sweep across all 51 screens would have shown every number jump by about 830.
+
+Diffs (fresh Figma renders): 01a 3.11 (was 2.60), 09a 2.65 (was 2.67), 11a 4.80 (was 4.39),
+19a 6.56 (was 5.83), 21 2.61 (was 2.63), 21a 3.79 (was 3.84).

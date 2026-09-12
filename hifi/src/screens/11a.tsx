@@ -1,5 +1,5 @@
 const imgGlyph = "assets/f987e112-3f21-4093-9c91-abca9b06aa32.svg";
-const imgButtonClose = "assets/51e5722a-496e-4cd4-8c19-aca5cf7ff7e8.svg";
+const imgButtonClose = "assets/27f3359b-7642-4d28-ae07-9dbf13647bef.svg";
 const imgIconCalendar = "assets/8b1dbaae-1b05-4657-bb9a-3b69452dc009.svg";
 const imgArtRefer = "assets/ec0ef796-ab5a-4a38-bad4-475ca0833e93.png";
 const imgIconPolicyBadge = "assets/a7ae7569-2d8a-4a8e-8ba3-30adfa903e1c.png";
@@ -19,10 +19,10 @@ const imgButtonAppleWallet = "assets/659c7bb8-9409-4f1d-b898-52b40a84583f.png";
 const imgLogoRedBusMarkWhite = "assets/a64dab4a-2197-48c8-871f-96c58b498ab7.png";
 const imgArtTripRewardMark = "assets/34bc959d-d061-454e-8167-1a8c39dc0deb.png";
 const imgFrame = "assets/a4acfe59-d8aa-4483-ab10-c40ba5ace219.png";
-const imgArtSunburst = "assets/14d5e26e-f267-41f8-8240-ea9fab149449.svg";
+const imgArtSunburst = "assets/f91547bb-5e6a-46ab-b983-65c3f2e97334.svg";
 const imgArtSeatGuarantee = "assets/470260ce-0282-4e81-a870-bbc84ca38a54.svg";
-const imgButtonShare = "assets/8436c6ac-7cf7-4a2c-a2c6-a83dbd1f5f38.svg";
-const imgButtonSupport = "assets/3fe7e9bf-cd23-496e-8342-8d0d665c7948.svg";
+const imgButtonShare = "assets/0027d395-abdb-4491-9888-e71f7ab35c29.svg";
+const imgButtonSupport = "assets/9a1ed022-0e7e-4975-9d57-bb7a07793731.svg";
 const imgStatusIcons = "assets/091fbdca-8e2e-4f59-80c8-bfdc341f332f.svg";
 const imgMarker = "assets/6280aa85-f461-44e4-9003-fd9bae23d7bd.svg";
 const imgMarker1 = "assets/dfe32957-1e71-451e-9967-a4e3d86aa505.svg";
@@ -887,7 +887,7 @@ export default function Component11AChangeOfPlans() {
         </div>
         <div className="absolute bg-[rgba(0,0,0,0.45)] h-[844px] left-0 top-0 w-[390px]" data-node-id="777:4531" data-name="Scrim" />
       </div>
-      <div className="absolute bg-white content-stretch flex flex-col items-start left-0 overflow-clip pb-[28px] pt-[20px] px-[16px] rounded-tl-[20px] rounded-tr-[20px] top-[440px] w-[390px]" data-node-id="777:4532" data-name="Sheet">
+      <div className="absolute bg-white content-stretch flex flex-col items-start left-[8px] overflow-clip pb-[28px] pt-[20px] px-[16px] rounded-bl-[36px] rounded-br-[36px] rounded-tl-[20px] rounded-tr-[20px] top-[432px] w-[374px]" data-node-id="777:4532" data-name="Sheet">
         <div className="bg-white content-stretch flex gap-[12px] items-center overflow-clip relative shrink-0 w-full" data-node-id="777:4687" data-name="Title row">
           <IconCalendar className="relative shrink-0 size-[30px]" />
           <div className="[word-break:break-word] bg-white content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px not-italic overflow-clip relative" data-node-id="777:4700" data-name="Titles">

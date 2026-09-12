@@ -252,7 +252,7 @@ export default function Component01ASelectDate() {
         </div>
       </div>
       <div className="absolute bg-[rgba(0,0,0,0.45)] h-[844px] left-0 top-0 w-[390px]" data-node-id="540:3915" data-name="Scrim" />
-      <div className="absolute bg-white content-stretch flex flex-col items-start left-0 overflow-clip pt-[24px] rounded-tl-[24px] rounded-tr-[24px] top-[347px] w-[390px]" data-node-id="540:3916" data-name="Sheet / Select date">
+      <div className="absolute bg-white content-stretch flex flex-col items-start left-[8px] overflow-clip pt-[24px] rounded-bl-[36px] rounded-br-[36px] rounded-tl-[24px] rounded-tr-[24px] top-[339px] w-[374px]" data-node-id="540:3916" data-name="Sheet / Select date">
         <div className="content-stretch flex items-center justify-between overflow-clip px-[20px] relative shrink-0 w-full" data-node-id="540:3917" data-name="Title row">
           <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[20px] whitespace-nowrap" data-node-id="540:3918">
             Select date

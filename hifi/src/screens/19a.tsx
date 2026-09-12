@@ -166,7 +166,7 @@ export default function Component19AWhyCancel() {
         </div>
         <div className="absolute bg-[rgba(0,0,0,0.45)] h-[844px] left-0 top-0 w-[390px]" data-node-id="785:4470" data-name="Scrim" />
       </div>
-      <div className="absolute bg-white content-stretch flex flex-col items-start left-0 overflow-clip pb-[28px] pt-[20px] px-[16px] rounded-tl-[20px] rounded-tr-[20px] top-[210px] w-[390px]" data-node-id="785:4471" data-name="Sheet">
+      <div className="absolute bg-white content-stretch flex flex-col items-start left-[8px] overflow-clip pb-[28px] pt-[20px] px-[16px] rounded-bl-[36px] rounded-br-[36px] rounded-tl-[20px] rounded-tr-[20px] top-[202px] w-[374px]" data-node-id="785:4471" data-name="Sheet">
         <div className="bg-white content-stretch flex gap-[12px] items-center overflow-clip relative shrink-0 w-full" data-node-id="785:4472" data-name="Title row">
           <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Bold'] font-bold leading-[26px] min-w-px not-italic relative text-[#1d1d1d] text-[19px]" data-node-id="785:4473">
             Help us know why you want to cancel

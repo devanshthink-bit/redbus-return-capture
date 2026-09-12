@@ -196,7 +196,7 @@ function IconChevronLeft({ className }: { className?: string }) {
 
 export default function Component09ABookingDetails() {
   return (
-    <div className="bg-white content-stretch flex flex-col items-start relative size-full" data-node-id="704:4096" data-name="09a · Booking details">
+    <div className="bg-white content-stretch flex flex-col items-center pb-[8px] relative size-full" data-node-id="704:4096" data-name="09a · Booking details">
       <div className="bg-[#f2f2f7] h-[300px] overflow-clip relative shrink-0 w-full" data-node-id="704:4097" data-name="Backdrop">
         <div className="absolute bg-[#f0eff5] content-stretch flex flex-col h-[3246px] items-start left-0 overflow-x-clip overflow-y-auto top-0 w-[390px]" data-node-id="721:4125" data-name="Review · behind">
           <div className="bg-[#f5f5fa] content-stretch flex flex-col items-start relative shrink-0 w-full" data-node-id="721:4126" data-name="Header">
@@ -752,7 +752,7 @@ export default function Component09ABookingDetails() {
         </div>
         <div className="absolute bg-[rgba(0,0,0,0.45)] inset-0" data-node-id="721:4381" data-name="Scrim" />
       </div>
-      <div className="bg-white content-stretch flex flex-col items-start overflow-clip pb-[28px] pt-[20px] px-[16px] relative rounded-tl-[20px] rounded-tr-[20px] shrink-0 w-full" data-node-id="704:4124" data-name="Sheet">
+      <div className="bg-white content-stretch flex flex-col items-start overflow-clip pb-[28px] pt-[20px] px-[16px] relative rounded-bl-[36px] rounded-br-[36px] rounded-tl-[20px] rounded-tr-[20px] shrink-0 w-[374px]" data-node-id="704:4124" data-name="Sheet">
         <div className="content-stretch flex gap-[12px] items-center overflow-clip relative shrink-0 w-full" data-node-id="704:4125" data-name="Title row">
           <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Bold'] font-bold leading-[28px] min-w-px not-italic relative text-[#1d1d1d] text-[22px]" data-node-id="704:4126">
             Review booking details
