@@ -10072,3 +10072,33 @@ Found on the same walk, not fixed yet: with a return booked, Review and cancel /
 still show a different return (Wed 16 Sep, U5, ₹1,090) from the one booked (Mon 14 Sep, U2,
 ₹1,320); the details sheet says the return seat is U4 where the ticket says U2; and without a
 chosen boarding point, Review says "Gate 4" where the sheet says "Metro Gate No.5".
+
+CHANGE · 2026-09-13 · direct · Source: user
+**Every screen after booking now describes the return actually booked.** Found on the "go through
+all cases like a user" walk: the change flow carried a literal booking (Wed 16 Sep, ₹1,090, U5) and an
+invented fleet of six operators. Book 14 Sep's ₹1,030 bus and the change-of-plans sheet, Change day, the
+bus list, Confirm, the receipt, Review and cancel and Refund details all still talked about 16 Sep;
+the ticket said the return seat was U2 while you held U4. Devansh chose the full fix and the 85% rule:
+*"Full: follow the real booking"*, *"85%, as the ticket says"*.
+- `HELD` is built from `RETURN` on the way into 13; the fleet is gone and 14 lists the day's real buses.
+- `__heldReturn()` feeds the ticket, cancelled ticket, My Bookings, 18, 19 and the sheet's cancel line,
+  and follows the move once it is made (checked: 14 Sep → 19 Sep, Pay ₹160, ticket and card say 19 Sep).
+- Refund is 85% of the fare held: ₹1,030 → ₹875.50 back, ₹154.50 deducted.
+- The details sheet names the seat picked, not the day's default.
+
+DECISION · 2026-09-13 · direct
+**The change flow is limited to the booked operator, in the calendar as well as the list.** 14 says
+"Other operators are not offered" and TERMS §4 verifies it, but 13's drawn prices were the cheapest over
+every operator, so 25 Sep promised +₹90 and the list could only offer +₹320. Both now use the booked
+operator; a day it does not run reads `None`. Figma 13 changed with the build: 12 and 21 None, 18 +₹70,
+25 +₹320, 26 +₹260. Re-pulled, cells patched to the pull, diff 4.96% against a 4.97% baseline.
+
+**LEARNED — a drawn example in a frame is not data.** The 16 Sep booking was a sensible picture to
+draw and a wrong thing to compute with: every screen that did arithmetic on it was right only for the
+one booking nobody is forced to make. The walk that caught it booked a different day and read every
+screen after.
+
+NOTE · 2026-09-13 · direct
+Still open from the same walk: with no boarding point chosen, Review says "ISBT Kashmiri Gate, Gate 4"
+while the details sheet says "Isbt Kashmiri Gate Metro Gate No.5" — the two frames draw different
+defaults.

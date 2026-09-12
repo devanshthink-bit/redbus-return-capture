@@ -269,7 +269,7 @@ export default function Component13ChangeDay() {
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="9" fare=" " state="Unavailable" />
               <CalendarDay className="bg-[var(--colour\/neutral\/150,#e9eaf6)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" fare="Out" state="Out" />
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="11" fare="+₹170" />
-              <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="12" fare="+₹50" />
+              <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="12" fare="None" state="Full" />
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="13" fare="Full" state="Full" />
             </div>
             <div className="[word-break:break-word] content-stretch flex gap-[4px] items-start not-italic overflow-clip relative shrink-0 w-full whitespace-nowrap" data-node-id="339:2710" data-name="Week">
@@ -277,17 +277,17 @@ export default function Component13ChangeDay() {
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="15" fare="₹0" />
               <CalendarDay className="bg-[var(--surface\/accent,#c54646)] content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--text\/on-accent,white)]" day="16" fare="Booked" state="Selected" />
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="17" fare="₹0" />
-              <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="18" fare="₹0" />
+              <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="18" fare="+₹70" />
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="19" fare="+₹100" />
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="20" fare="₹0" />
             </div>
             <div className="[word-break:break-word] content-stretch flex gap-[4px] items-start not-italic overflow-clip relative shrink-0 w-full whitespace-nowrap" data-node-id="339:2742" data-name="Week">
-              <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="21" fare="₹0" />
+              <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="21" fare="None" state="Full" />
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="22" fare="₹0" />
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)] text-[color:var(--calendar\/unavailable,#9a9aa4)]" day="23" fare="Full" state="Full" />
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="24" fare="₹0" />
-              <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="25" fare="+₹90" />
-              <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="26" fare="+₹150" />
+              <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="25" fare="+₹320" />
+              <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="26" fare="+₹260" />
               <CalendarDay className="content-stretch flex flex-[1_0_0] flex-col gap-px h-[52px] items-center justify-center min-w-px relative rounded-[var(--radius\/10,10px)]" day="27" fare="₹0" />
             </div>
             <div className="content-stretch flex gap-[4px] items-start overflow-clip relative shrink-0 w-full" data-node-id="339:2777" data-name="Week">

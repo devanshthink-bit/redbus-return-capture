@@ -1229,6 +1229,17 @@ of the bus count. ("Service", not "bus" — two of the three operator names alre
 note names the operator. Scope decides what is *offered*; `closestBusOn()` falls back to the full list
 when the scoped set is empty, because the fare and the times still have to resolve on those days.
 
+**The hi-fi change flow reads the return actually held (13 Sep).** It used to carry a literal booking,
+Wed 16 Sep · ₹1,090 · U5, and an invented six-operator fleet, so the change-of-plans sheet, 13–16 and
+the cancel screens described that return whatever was booked. Now `hold()` builds `HELD` from `RETURN`,
+13's calendar is repainted from the bus data on the way in (Booked on the held day, `Full`, `None` where
+the booked operator does not run, else the least that operator's buses cost over what was paid), and
+14 lists that operator's real buses, cheapest first. `window.__heldReturn()` is the one accessor for the
+return after booking — the moved bus once a move is made — and the ticket, cancelled ticket, My
+Bookings, Review and cancel and Refund details all read it. Refunds use the ticket's own 85% line. The
+drawn 16 Sep booking is still what a cold load shows, and 13's Figma frame was corrected to the
+operator-scoped prices (12 and 21 `None`, 18 +₹70, 25 +₹320, 26 +₹260), which the build reproduces.
+
 **The two bus screens compare against different things, and one of them compares against nothing.**
 Booking has no ticket yet, so there is nothing to be cheaper *than* — that screen prices each bus and
 tags the **Cheapest** one (only when the fares actually differ) and the one **Closest to your
