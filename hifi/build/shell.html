@@ -183,11 +183,14 @@
   .hf-sheet{position:absolute;left:0;right:0;bottom:0;max-height:74%;overflow-y:auto;
     border-radius:20px 20px 0 0;background:#fff;-webkit-overflow-scrolling:touch}
   .hf-sheet::-webkit-scrollbar{width:0;height:0}
-  /* The countdown ring. Figma draws it; this sweeps it, because an exported arc is a picture. */
+  /* The countdown ring. Figma draws it; this sweeps it, because an exported arc is a picture.
+     The hole has to match the grey track exactly or the red arc reads as a fatter ring laid over
+     a thinner one. The track is r=105 at stroke-width 18 in a 228px box, so it occupies 96..114
+     and the hole is 96px -- not 88, which made the red 26px against the grey's 18px. */
   .hf-sweep{position:absolute;inset:0;border-radius:50%;
     background:conic-gradient(#ec3535 var(--hf-turn,0deg), rgba(0,0,0,0) 0);
-    -webkit-mask:radial-gradient(circle, transparent 0 88px, #000 88px);
-            mask:radial-gradient(circle, transparent 0 88px, #000 88px)}
+    -webkit-mask:radial-gradient(circle, transparent 0 96px, #000 96px);
+            mask:radial-gradient(circle, transparent 0 96px, #000 96px)}
   /* The ticket's header, guarantee band and tabs hold the top while the rest scrolls, and the
      strip scrolls sideways to keep the section you are in on screen. */
   .hf-sticky{position:sticky;top:0;z-index:6;background:#fff}
@@ -1794,7 +1797,19 @@
         e.preventDefault(); e.stopPropagation(); go(i09b); return;
       }
       var row = e.target.closest('[data-name="Row / Payment method"]');
-      if (!row) return;
+      // Pay has exactly one thing to do: choose a method. A tap anywhere else did nothing at all,
+      // so the screen read as dead. Every other single-action screen in this build blinks the
+      // control instead of ignoring the tap -- CRED UPI is the first method, so it is the one to
+      // point at. Anything inside the grown Pay button is handled above and must not blink.
+      if (!row) {
+        // "View details" is the screen's other live control and it carries hf-hot, so anything
+        // already wired is left alone rather than blinked at.
+        if (e.target.closest && e.target.closest('.hf-hot')) return;
+        var first = sec.querySelector('[data-name="Row / Payment method"]');
+        if (first) { blinkAt(first);
+                     if (first.scrollIntoView) first.scrollIntoView({block:'nearest'}); }
+        return;
+      }
       e.preventDefault(); e.stopPropagation();
       hide();
       var radio = row.querySelector('[data-name="Radio"]');
@@ -1951,13 +1966,18 @@
   // 01 / 12 / 17 · The home tab bar, and the profile behind it.
   //
   //      Devansh: "After user books the ticket, enable my bookings tab and profile tab ... in home
-  //      page where user can see his bookings". The bar was drawn on Home and did nothing. It now
-  //      does something the moment there is a booking to look at, and nothing before that -- a tab
-  //      that opens an empty list is worse than a tab that waits.
+  //      page where user can see his bookings". The bar was drawn on Home and did nothing, so the
+  //      first pass dimmed the two tabs until there was a booking to look at.
+  //
+  //      That was wrong, and he said so: "when there is no booking dont disable my bookings and
+  //      profile. show this empty screen." The real app never disables its own tab bar -- it opens
+  //      the tab and the tab says it is empty. An empty list is an answer; a dead tab is not. So
+  //      every tab is live from the first frame, and My Bookings goes to the empty state (12a)
+  //      until the traveller has a ticket, and to the list (12) after.
   (function homeTabs(){
-    var i01 = ORDER.indexOf('01'), i12 = ORDER.indexOf('12'), i17 = ORDER.indexOf('17');
+    var i01 = ORDER.indexOf('01'), i12 = ORDER.indexOf('12'),
+        i12a = ORDER.indexOf('12a'), i17 = ORDER.indexOf('17');
     if (i01 < 0 || i12 < 0 || i17 < 0) return;
-    var WHERE = { 'My Bookings': i12, 'My Account': i17, 'Home': i01 };
     var wired = [];
 
     function items(sec){
@@ -1965,33 +1985,57 @@
       return bar ? [].slice.call(bar.querySelectorAll('[data-name="Nav / Tab Item"]')) : [];
     }
     function label(el){ var p = el.querySelector('p'); return p ? p.textContent.trim() : ''; }
+    // My Bookings is the one tab whose destination depends on the state of the trip.
+    function whereFor(nm){
+      if (nm === 'Home') return i01;
+      if (nm === 'My Account') return i17;
+      return (BOOKED || i12a < 0) ? i12 : i12a;
+    }
 
-    [[i01, ['My Bookings', 'My Account']], [i17, ['Home', 'My Bookings']]].forEach(function(pair){
-      items(screens[pair[0]]).forEach(function(it){
-        var nm = label(it);
-        if (pair[1].indexOf(nm) < 0) return;
-        var to = WHERE[nm];
-        // Home is always live on the profile; the two booking tabs wait for a booking.
-        var gated = nm !== 'Home';
-        wired.push({ el: it, to: to, gated: gated, name: nm });
-        it.addEventListener('click', function(e){
-          e.preventDefault(); e.stopPropagation();
-          if (gated && !BOOKED) return;
-          go(to);
+    // Every screen that draws the bar gets it wired, minus the tab it is already on.
+    [[i01, 'Home'], [i12, 'My Bookings'], [i12a, 'My Bookings'], [i17, 'My Account']]
+      .forEach(function(pair){
+        if (pair[0] < 0) return;
+        items(screens[pair[0]]).forEach(function(it){
+          var nm = label(it);
+          if (nm === pair[1]) return;                       // the tab you are standing on
+          if (['Home', 'My Bookings', 'My Account'].indexOf(nm) < 0) return;   // Offers, Help: not built
+          wired.push({ el: it, name: nm });
+          it.addEventListener('click', function(e){
+            e.preventDefault(); e.stopPropagation();
+            go(whereFor(nm));
+          });
         });
       });
-    });
     if (!wired.length) console.warn('home tabs: no tab items found');
 
-    // A tab you cannot use yet should not look like one you can.
+    // Nothing to dim any more -- every wired tab is live, and the pointer says so.
     window.__paintTabs = function(){
-      wired.forEach(function(w){
-        var on = !w.gated || BOOKED;
-        w.el.classList.toggle('hf-hot', on);
-        w.el.style.opacity = on ? '' : '0.45';
-      });
+      wired.forEach(function(w){ w.el.classList.add('hf-hot'); w.el.style.opacity = ''; });
     };
     window.__paintTabs();
+
+    // 12 · the booking card is the door to the ticket, and it opened the change-date calendar
+    //      instead: 13 is simply what comes after 12 in the linear order, which is all the flow
+    //      map could tell it. Devansh: "In my bookings clicking on booking is directing to change
+    //      flow but it shud open ticket screen right?" -- it should, and the card's own "Change
+    //      day" row is the one thing on it that goes to the change flow.
+    var i11 = ORDER.indexOf('11');
+    var booking = screens[i12].querySelector('[data-name="Booking"]');
+    var changeRow = screens[i12].querySelector('[data-name="Change day"]');
+    if (i11 >= 0 && booking){
+      booking.addEventListener('click', function(e){
+        if (changeRow && changeRow.contains(e.target)) return;   // that row has its own door
+        e.preventDefault(); e.stopPropagation(); go(i11);
+      }, true);
+    } else if (!booking) console.warn('12: no Booking card');
+    if (changeRow){
+      changeRow.classList.add('hf-hot');
+      changeRow.addEventListener('click', function(e){
+        e.preventDefault(); e.stopPropagation();
+        if (window.__openChangePlans) window.__openChangePlans(screens[i12]);
+      }, true);
+    }
 
     // The profile's own Bookings row is the other way in, and it is the one the real app leads with.
     var row = null;
@@ -2028,10 +2072,48 @@
     var DOW  = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
     function label(d){ return DOW[new Date(2026, 8, d).getDay()] + ', ' + d + ' Sep'; }
     function rupee(n){ return '₹' + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+    // An overnight run crosses midnight, so the difference has to wrap rather than go negative.
+    function dur(from, to){
+      function mins(t){ var p = String(t).split(':'); return (+p[0]) * 60 + (+p[1]); }
+      var d = mins(to) - mins(from); if (d <= 0) d += 24 * 60;
+      return Math.floor(d / 60) + 'h ' + (d % 60) + 'm';
+    }
 
     // What the two buses cost on the day they tapped.
     function faresFor(extra){
       return extra > 0 ? [HELD.fare + extra, HELD.fare + extra + GAP] : BASE.slice();
+    }
+
+    // Devansh: "In calender on selecting a date in change day screen, buses on that specific date
+    // shud show right? why are we showing same buses on all dates??" -- and he was right: the two
+    // cards were the same operator, the same coach, the same times and the same rating on all
+    // seventeen days. Only the fares moved. A date with its own price but nobody else's buses is
+    // not a date, it is a price list.
+    //
+    // So the flow carries a fleet, and each day runs two of them. The pick is arithmetic on the
+    // date, not random: the same day always shows the same pair, which is what lets Back work and
+    // what makes the confirm and the receipt agree with the list without storing anything.
+    var FLEET = [
+      ['Laxmi Holidays Pvt Ltd', 'Bharat Benz A/C Seater /Sleeper (2+1)', '20:30', '04:35', '4.7', '178', '46 Seats (12 Single)'],
+      ['Laxmi Holidays Pvt Ltd', 'Volvo 9600 A/C Sleeper (2+1)',          '23:55', '08:00', '4.7', '178', '38 Seats (10 Single)'],
+      ['Mahadev Travels',        'Scania Multi-Axle A/C Sleeper (2+1)',   '19:45', '04:10', '4.4', '92',  '40 Seats (14 Single)'],
+      ['Himalayan Roadways',     'Bharat Benz A/C Sleeper (2+1)',         '21:15', '05:40', '4.2', '61',  '36 Seats (12 Single)'],
+      ['Nainital Travels',       'Volvo B11R Multi-Axle A/C (2+2)',       '22:30', '06:20', '4.5', '134', '49 Seats (0 Single)'],
+      ['GMOU Ltd',              'Ashok Leyland A/C Seater /Sleeper (2+1)', '18:20', '03:05', '3.9', '48',  '41 Seats (9 Single)']
+    ];
+    // Two different indices from one day number, and the cheaper one is listed first because the
+    // calendar's "+₹n" promises the least a day costs -- the first card has to be that number.
+    //
+    // The second index counts in sevens, not in sixes. Any arithmetic on `day % 6` repeats every
+    // six days however it is dressed up -- day*3+2 gave 11 Sep and 17 Sep the identical pair, which
+    // is the complaint all over again one week later. Mixing a period of 6 with a period of 7
+    // repeats only every 42 days, and the calendar is 17 days long.
+    function busesFor(day, extra){
+      var f = faresFor(extra);
+      var a = day % FLEET.length;
+      var b = (day % 7) % FLEET.length;
+      if (b === a) b = (a + 1) % FLEET.length;
+      return [FLEET[a].concat([f[0]]), FLEET[b].concat([f[1]])];
     }
     // How the difference reads, from the traveller's side.
     function diffLine(fare){
@@ -2041,7 +2123,10 @@
       return 'Same fare';
     }
 
-    var MOVE = { day: 15, extra: 0, bus: 1 };
+    // seat is here because the confirm screen offers to change it, so it is a value the traveller
+    // owns from that point on -- not a literal in the frame. CONTEXT §10's rule about a constant
+    // that becomes user-editable: eleven call sites went wrong last time this was missed.
+    var MOVE = { day: 15, extra: 0, bus: 1, seat: 'U4' };
 
     // Every drawn value this flow rewrites, caught once while it still says what Figma drew.
     function leaf(root, id){ return root.querySelector('[data-node-id="' + id + '"]'); }
@@ -2071,25 +2156,37 @@
 
     function set(el, txt){ if (el) el.textContent = txt; }
 
+    // One card, every field of it. The card ids run in parallel -- 368:2851 and 368:2910 -- so the
+    // leaf lookup tries both prefixes rather than knowing which card it was handed.
+    function cardField(card, tail){
+      return leaf(card, 'I368:2851;' + tail) || leaf(card, 'I368:2910;' + tail);
+    }
     function paintBuses(){
-      var f = faresFor(MOVE.extra);
+      var buses = busesFor(MOVE.day, MOVE.extra);
       set(sub14, 'Nainital → Delhi · ' + label(MOVE.day));
       cards14.forEach(function(card, k){
-        set(leaf(card, 'I368:2851;39:118') || leaf(card, 'I368:2910;39:118'), rupee(f[k]));
-        set(notes14[k], diffLine(f[k]));
+        var b = buses[k];
+        set(cardField(card, '39:113'), b[2]);                   // departs
+        set(cardField(card, '39:115'), b[3]);                   // arrives
+        set(cardField(card, '39:116'), dur(b[2], b[3]) + ' · ' + b[6]);
+        set(cardField(card, '39:118'), rupee(b[7]));
+        set(cardField(card, '39:123'), b[0]);                   // operator
+        set(cardField(card, '39:125'), b[1]);                   // coach
+        set(cardField(card, '39:126;36:121'), b[4]);            // rating
+        set(cardField(card, '39:126;36:122'), b[5]);            // votes
+        set(notes14[k], diffLine(b[7]));
       });
     }
     function paintConfirm(){
-      var f = faresFor(MOVE.extra)[MOVE.bus];
-      var dep = MOVE.bus === 0 ? '20:30' : '23:55';
-      set(to15, label(MOVE.day) + ' · ' + dep);
-      set(seat15, 'Seat U4 · ' + rupee(f));
+      var b = busesFor(MOVE.day, MOVE.extra)[MOVE.bus], f = b[7];
+      set(to15, label(MOVE.day) + ' · ' + b[2]);
+      set(seat15, 'Seat ' + MOVE.seat + ' · ' + rupee(f));
       set(diff15, diffLine(f));
       set(pay15, rupee(Math.max(0, f - HELD.fare)));
     }
     function paintDone(){
-      var f = faresFor(MOVE.extra)[MOVE.bus];
-      var dep = MOVE.bus === 0 ? '20:30' : '23:55', arr = MOVE.bus === 0 ? '04:35' : '08:00';
+      var b = busesFor(MOVE.day, MOVE.extra)[MOVE.bus], f = b[7];
+      var dep = b[2], arr = b[3];
       var shift = MOVE.day - HELD.day;
       var n = Math.abs(shift);
       var when = shift === 0 ? 'the same day'
@@ -2101,6 +2198,11 @@
         set(leaf(card16, '103:802'), dep);
         set(leaf(card16, '103:804'), arr);
         set(leaf(card16, '103:805'), rupee(f));
+        // the receipt named Laxmi Holidays whichever operator was actually picked, and seat U4
+        // whichever seat -- the same class of bug as the fares before this flow was wired
+        set(leaf(card16, '103:808'), 'Nainital → Delhi · ' + dur(dep, arr));
+        set(leaf(card16, '103:809'), 'Seat ' + MOVE.seat);
+        set(leaf(card16, '103:812'), b[0]);
       }
       var d = f - HELD.fare;
       set(relief16, d < 0 ? 'The new day is ' + rupee(-d) + ' cheaper. You do not get that back.'
@@ -2140,6 +2242,18 @@
     cards14.forEach(function(card, k){
       card.addEventListener('click', function(){ MOVE.bus = k; }, true);
     });
+
+    // 16 · "View ticket" is the only way out of the receipt and it did nothing: 16 is the last
+    //      screen in ORDER, so there was no "next" for the flow map to point it at. It goes to the
+    //      ticket, which is the thing it names.
+    var i11 = ORDER.indexOf('11');
+    var viewTicket = s16.querySelector('[data-name="Button / Primary"]');
+    if (i11 >= 0 && viewTicket){
+      viewTicket.classList.add('hf-hot', 'hf-fwd');
+      viewTicket.addEventListener('click', function(e){
+        e.preventDefault(); e.stopPropagation(); go(i11);
+      }, true);
+    } else if (!viewTicket) console.warn('16: no View ticket button');
   })();
 
   // 09 / 09a · "View details" opens the booking-details sheet, and the × closes it. A sheet is not
