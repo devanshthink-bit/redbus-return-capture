@@ -9317,3 +9317,33 @@ repainted was the same kind as the look being copied.
 
 **LEARNED — an animation class that sets z-index must be removed, not just allowed to finish.** A
 finished CSS animation leaves every non-animated property in place.
+
+---
+
+CHANGE  ·  2026-09-12  ·  impeccable (polish)  ·  Source: user
+
+**A polish pass on the viewer shell. It fixes defects only; the look is unchanged.** Devansh asked
+Impeccable to see what could be improved in the viewer. The phone screens are out of scope because
+they must match the real app. Choices he made himself also stay: the mono labels, and the run
+headings he asked to drop.
+
+- **"26 screens" was stale.** The hi-fi has had 38 since the cancel and filter screens were added.
+  The count is now read from the loaded build, so it cannot go stale again.
+- **The rule above the footnote was invisible.** `--s-hair` and `--s-wash` were declared twice, and
+  the second pair was left over from the dark-red version: white on a pale page. That pair is
+  deleted.
+- **The screen list ended in half a row.** The panel scrolls with its scrollbar hidden, so the only
+  sign of more below was a name sliced by the bottom edge. It now fades out while there is more to
+  see, and the fade turns off at the end.
+- **The active Hi-fi / Lo-fi button failed contrast.** White on the logo red #D84E55 measures
+  4.1:1. It is now on #BF3A41. The logo keeps the brand red.
+- **The small mono labels went from 10px to 11px**, the floor for text that labels controls.
+- **Text selection in the panel** uses a pale brand red instead of the browser's blue.
+
+The detector also flagged some items inside the lo-fi (v4) prototype: a 3.0:1 grey section label,
+skipped heading levels, and tight padding. Those belong to the design under test, so they are left
+as they are and noted here.
+
+**LEARNED — a size watcher on a grid area misses content that overflows it.** The first fade never
+turned on at 1440px. In the two-column layout the column is a grid area of fixed size, so its box
+did not change when the list grew. The fix watches the lists themselves.

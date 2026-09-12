@@ -42,8 +42,8 @@ html,body{height:100%}
   --s-hair:rgba(23,23,28,.10);
   --s-wash:rgba(255,255,255,.62);
   --s-red-soft:#FCE3E5;
-  --s-hair:rgba(255,255,255,.18);
-  --s-wash:rgba(255,255,255,.12);
+  /* the dark-red version's white hair and wash sat here and overrode the two above, so the rule
+     over the footnote was white on a pale page -- invisible. Removed. */
   --s-display:Manrope,Inter,-apple-system,system-ui,sans-serif;    /* portfolio headings */
   --s-mono:ui-monospace,SFMono-Regular,Menlo,monospace;   /* the system mono the dev rails used
      originally. Geist Mono, the portfolio's mono, is one word away if he wants it back */
@@ -118,16 +118,21 @@ body.testing .layout{justify-content:center}
   .pcol.c{grid-column:1;grid-row:2}
 }
 .panel::-webkit-scrollbar{display:none}
+/* The panel scrolls with its scrollbar hidden, so the only sign of more below was a screen name
+   sliced in half at the bottom edge. It fades out instead, and only while there is more to see. */
+.panel.more{-webkit-mask-image:linear-gradient(#000 calc(100% - 64px),transparent);
+            mask-image:linear-gradient(#000 calc(100% - 64px),transparent)}
+.panel ::selection{background:#F4C6C9;color:var(--s-on)}
 .lock{display:block;margin-bottom:26px;color:var(--s-red)}   /* the mark is the brand red again */
 .lock svg{height:44px;width:auto;display:block}   /* the mark carries the page, so it is given room */
-.lock span{display:block;margin-top:13px;font-family:var(--s-mono);font-size:10px;font-weight:600;
+.lock span{display:block;margin-top:13px;font-family:var(--s-mono);font-size:11px;font-weight:600;
  letter-spacing:.16em;text-transform:uppercase;color:var(--s-on-45)}
 .panel h1{font-family:var(--s-display);font-size:31px;font-weight:800;letter-spacing:-.03em;
  line-height:1.1;margin-bottom:9px;color:var(--s-on)}
 .panel .lede{font-size:14px;line-height:1.55;color:var(--s-on-60);max-width:32ch}
 .panel .lede b{color:var(--s-on);font-weight:600}
 .grp{margin-top:22px}
-.grp>h2{font-family:var(--s-mono);font-size:10px;font-weight:600;letter-spacing:.16em;
+.grp>h2{font-family:var(--s-mono);font-size:11px;font-weight:600;letter-spacing:.16em;
  text-transform:uppercase;color:var(--s-on-45);margin:0 0 12px 2px}
 
 /* version switch */
@@ -138,7 +143,8 @@ body.testing .layout{justify-content:center}
  transition:background 160ms,color 160ms,box-shadow 160ms}
 .vers button:hover{color:var(--s-on)}
 .vers button:focus-visible{outline:0;box-shadow:0 0 0 2px rgba(216,78,85,.5)}
-.vers button[aria-pressed="true"]{background:var(--s-red);color:#fff;
+/* one step darker than the logo red: white on #D84E55 is 4.1:1, under the 4.5 floor for 13px */
+.vers button[aria-pressed="true"]{background:#BF3A41;color:#fff;
  box-shadow:0 1px 2px rgba(140,30,38,.22),0 6px 16px -6px rgba(140,30,38,.5)}
 .vnote{font-size:13px;line-height:1.5;color:var(--s-on-60);margin-top:10px;
  min-height:59px}   /* three lines: the longest of the three notes. Stops the swatches jumping */
@@ -494,12 +500,12 @@ body.hifi-on .phone,body.hifi-on .legacy{display:none}
 
 .dev.states{display:block;margin-top:22px}
 .dev.states>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;
- font-family:var(--s-mono);color:var(--s-on-45);font-weight:600;font-size:10px;
+ font-family:var(--s-mono);color:var(--s-on-45);font-weight:600;font-size:11px;
  letter-spacing:.16em;text-transform:uppercase;
  padding:6px 10px;border-radius:9px;transition:color 130ms,background 130ms}
 .dev.states>summary::-webkit-details-marker{display:none}
 .dev.states>summary:hover{color:var(--s-on);background:rgba(255,255,255,.7)}
-.dev.states>summary .cnt{font-size:10px;letter-spacing:0;color:var(--s-on-30);font-weight:600}
+.dev.states>summary .cnt{font-size:11px;letter-spacing:0;color:var(--s-on-30);font-weight:600}
 .dev.states>summary .chev{font-size:12px;letter-spacing:0;transition:transform 180ms}
 .dev.states[open]>summary .chev{transform:rotate(90deg)}
 .statelist{display:flex;flex-direction:column;align-items:flex-start;gap:1px;margin-top:6px}
@@ -3088,8 +3094,14 @@ document.getElementById('legacyframe').addEventListener('load', () => {
    builds; the hi-fi is the Figma screens, built from the file and loaded whole into an
    iframe from hifi/app.html -- nothing in it is edited or overridden from here. Version
    only means anything inside the lo-fi, so that group hides when the hi-fi is on. */
+function hifiNote(n){
+  return '<b>Hi-fi</b> is the Figma build &mdash; ' + (n ? n + ' screens ' : '') +
+         'at iPhone&nbsp;14 size, walked in the order they are arranged on the canvas.';
+}
 const FIDELITY = {
-  hifi:{note:'<b>Hi-fi</b> is the Figma build &mdash; 26 screens at iPhone&nbsp;14 size, walked in the order they are arranged on the canvas.'},
+  /* The count is read off the loaded build (see buildHifiRail). Typed here, it said 26 for weeks
+     after the build reached 38. */
+  hifi:{note:hifiNote(null)},
   lofi:{note:'<b>Lo-fi</b> is the working prototype, in four versions. Every screen responds.'}
 };
 let fidelity = 'hifi';
@@ -3168,6 +3180,8 @@ function buildHifiRail(){
     '20':'Ticket cancelled',  '21':'Filter Buses',
     '21a':'Filter · AI',      '22':'No buses'
   };
+  FIDELITY.hifi.note = hifiNote(rows.length);
+  if(fidelity === 'hifi') document.getElementById('fnote').innerHTML = FIDELITY.hifi.note;
   const names = rows.map(src => {
     const id = (src.querySelector('.railn') || {}).textContent || '';
     return {id:id, name: HIFI_NAMES[id] || src.textContent.slice(id.length)};
@@ -3203,10 +3217,28 @@ function buildHifiRail(){
       {subtree:true, attributes:true, attributeFilter:['hidden']});
   } catch(e){}
   sync();
+  if(typeof panelFade === 'function') panelFade();
 }
 document.getElementById('hififrame').addEventListener('load', () => {
   if(fidelity === 'hifi') buildHifiRail();
 });
+
+/* the panel's fade: on while there is more below, off at the end. The screen list changes length
+   with the version and the fidelity, so its size is watched rather than guessed at. */
+const panelEl = document.querySelector('.panel');
+function panelFade(){
+  panelEl.classList.toggle('more', panelEl.scrollHeight - panelEl.clientHeight - panelEl.scrollTop > 4);
+}
+panelEl.addEventListener('scroll', panelFade, {passive:true});
+window.addEventListener('resize', panelFade);
+/* The lists, not their column: in the two-column layout the column is a grid area of fixed size
+   and the list overflows it, so the column's own box never changes when rows arrive. */
+if(window.ResizeObserver){
+  const ro = new ResizeObserver(panelFade);
+  ['hifirail','legacyrail','screenrail','staterail'].forEach(id => {
+    const el = document.getElementById(id); if(el) ro.observe(el);
+  });
+}
 
 /* v1.html, v2.html, v3.html and prototype.html are redirects into here, each carrying the version
    it used to be. Anything outside 1..4 is ignored rather than trusted. */
