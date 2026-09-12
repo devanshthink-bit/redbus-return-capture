@@ -9966,3 +9966,38 @@ once he saw it.
 **Not fixed, found while testing:** at a 400×800 window, v1's Search buses falls below the
 screen. The frozen page keeps its 874px frame there, because its own phone rule never fires inside
 a 1000-wide iframe. It worked the same way before today's change and was not part of this request.
+
+---
+
+CHANGE  ·  2026-09-13  ·  direct request  ·  Source: user
+
+**Black curves under the status bar on v1–v3, fixed.** Devansh: *"why they have this black curved
+bugs"*. Each frozen build draws its `.phone` with 24px rounded corners and a dark shadow on a dark
+page. While the frame started at the very top of the screen, the viewer's own rounded clip covered
+those corners exactly. Once `fitLegacy` moved the frame under the bar, its top two corners showed
+the dark page. The same injected rule now also sets `border-radius:0` and `box-shadow:none`. The
+viewer's clip still gives the bottom its real phone curve.
+
+**LEARNED — moving a frozen frame exposes its own chrome.** Its corners and shadow were drawn for a
+page where the frame was the outermost thing. Any offset reveals them, so check the frame's own
+edges, not only its content, whenever it moves.
+
+---
+
+CHANGE  ·  2026-09-13  ·  direct request  ·  Source: user
+
+**v1–v3 now draw in Inter, like v4.** Devansh: *"font size of v1, v2, v3 not matching exactly with
+v4"*. The sizes were never different. v1–v3 set exactly v4's values (18px title and values, 12px
+labels, 16px text, same weights and line heights). But they only name Inter and never load it, and
+this Mac has no Inter installed. So they have always drawn in the system font, which is narrower.
+Measured with the same line, "ISBT Kashmiri Gate, Delhi" at 700 18px: 222.6px in v4, 210.0px in
+the frozen page. That is the same as the system font and the same as a made-up font name, so
+nothing was loading. The viewer now adds v4's own Google Fonts link to each loaded v1–v3 page
+(`fontLegacy`), at every window width. Checked in v1, v2 and v3: the line draws at 222.63px, the
+same as v4.
+
+**LEARNED — a computed `font-family` says what was asked for, not what was drawn.** Every element
+reported "Inter" in all four versions, and `document.fonts.check('16px Inter')` returned true in
+the frozen page too, because it does that when no face needs loading. Only measuring the drawn width
+against a known fallback showed the font was missing. This has probably been true of v1–v3 since
+they were built, on any machine without Inter.

@@ -334,9 +334,11 @@ design-language tokens.
   phone standing on it. Session mode still fills (`?test`, ~93%)
 - **All three versions in one file.** The switch loads v1 and v2 whole into an iframe sized so
   their own centred 402×874 frame lands exactly on the crop; nothing in either file is edited.
-  **Since 13 Sep one thing is overridden in the loaded page:** `.phone`'s height, set to 825 so the
-  build fits under the status bar at full size (`fitLegacy()`; see the iPhone mock below). The
-  files themselves are still byte-identical, which is what the md5 check guards. Their screen and state rails are **read out of the loaded frame** and mirrored into
+  **Since 13 Sep the viewer adds two things to the loaded page:** `.phone` set to 825 tall, square,
+  without its shadow, so the build fits under the status bar at full size (`fitLegacy()`; see the
+  iPhone mock below), and v4's Inter stylesheet (`fontLegacy()`). v1–v3 name Inter but never loaded
+  it, so without Inter installed they drew in the system font, about 6% narrower than v4 at the same
+  sizes. The files themselves are still byte-identical, which is what the md5 check guards. Their screen and state rails are **read out of the loaded frame** and mirrored into
   the panel, so this never has to hardcode — or restate — v1's or v2's screens. Same origin, so
   it works on the published site; opened off the disk the browser blocks it and a note says so
 - **Watch for class-name collisions.** The shell shares a stylesheet with the prototype. `.leg`,
@@ -362,8 +364,9 @@ design-language tokens.
   screen stays 402 × 874; the bar (`.sbar`, 49px, with the Dynamic Island over it) takes the top of
   it and the content gets what is left. The hi-fi draws its own. **v4:** `.phone` is 825 tall.
   **v1–v3 (13 Sep): full size, like v4.** Their files stay byte-identical; once a build loads,
-  `fitLegacy()` adds `.phone{height:825px!important}` to the *loaded page* and moves the iframe so
-  that shorter frame sits flush under the bar. Measured: full width, flush top and bottom, none of
+  `fitLegacy()` adds `.phone{height:825px!important}` to the *loaded page* (plus `border-radius:0`
+  and `box-shadow:none`: the frozen frame's own 24px corners showed as black curves under the bar)
+  and moves the iframe so that shorter frame sits flush under the bar. Measured: full width, flush top and bottom, none of
   their 51 screens cut off. Two earlier tries were dropped: starting the 874 frame 49px lower hid
   Home's *Search buses*, and drawing it at 94.4% gave side strips and smaller type (Devansh: *"i dont
   want shrinked ui"*). On a phone-width window (≤520px) the bar is hidden and nothing is set.

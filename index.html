@@ -3205,15 +3205,34 @@ function fitLegacy(){
   if(!doc.getElementById('viewer-fit')){
     const s = doc.createElement('style');
     s.id = 'viewer-fit';
-    s.textContent = '.phone{height:825px!important}';
+    // and square, without its shadow: the frozen .phone has its own 24px corners on a dark page,
+    // which the viewer's rounded clip hid while the frame started at the top. Under the bar its top
+    // two corners showed as black curves (Devansh, 13 Sep). The viewer's clip still rounds the bottom.
+    s.textContent = '.phone{height:825px!important;border-radius:0!important;box-shadow:none!important}';
     doc.head.appendChild(s);
   }
   const r = doc.querySelector('.phone').getBoundingClientRect();
   frame.style.left = -Math.round(r.left) + 'px';
   frame.style.top  = -Math.round(r.top) + 'px';
 }
+/* Give a frozen build the font it names. v1-v3 ask for Inter but never load it, so on a machine
+   without Inter installed they drew in the system font -- same sizes as v4, about 6% narrower
+   (measured 13 Sep: the same line 210.0px against v4's 222.6px, and 0 Inter faces in the frozen
+   page against 35 here). Devansh: "font size of v1, v2, v3 not matching exactly with v4". The
+   loaded page gets the same stylesheet this page links; the file itself is untouched. Every width,
+   phones included: this is about the font, not the fit. */
+function fontLegacy(){
+  let doc = null;
+  try { doc = document.getElementById('legacyframe').contentDocument; } catch(e){}
+  if(!doc || !doc.head || doc.getElementById('viewer-font')) return;
+  const src = document.querySelector('link[href*="fonts.googleapis.com/css2"]');
+  if(!src) return;
+  const l = doc.createElement('link');
+  l.id = 'viewer-font'; l.rel = 'stylesheet'; l.href = src.href;
+  doc.head.appendChild(l);
+}
 document.getElementById('legacyframe').addEventListener('load', () => {
-  if(version !== 4){ fitLegacy(); buildLegacyRail(); }
+  if(version !== 4){ fontLegacy(); fitLegacy(); buildLegacyRail(); }
 });
 
 /* ---- prototype switch: lo-fi | hi-fi ---------------------------------------
