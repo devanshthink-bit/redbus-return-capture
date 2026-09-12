@@ -321,7 +321,7 @@ export default function Component17Profile() {
       <p className="[word-break:break-word] absolute font-['Inter:Regular'] font-normal leading-[normal] left-[169px] not-italic text-[#969696] text-[14px] top-[1825px] whitespace-nowrap" data-node-id="761:4324">
         V8.7.2.3
       </p>
-      <div className="absolute content-stretch flex h-[47px] items-center justify-between left-0 pb-[14px] pl-[27px] pr-[14px] pt-[12px] top-0 w-[390px]" data-node-id="762:4199" data-name="Status Bar / Light">
+      <div className="absolute content-stretch flex h-[47px] items-center justify-between left-0 pb-[8px] pl-[27px] pr-[14px] pt-[18px] top-0 w-[390px]" data-node-id="762:4199" data-name="Status Bar / Light">
         <p className="[word-break:break-word] font-['Inter:Semi_Bold'] font-semibold leading-[21px] not-italic relative shrink-0 text-[17px] text-white tracking-[-0.4px] whitespace-nowrap" data-node-id="I762:4199;13:3">
           9:41
         </p>

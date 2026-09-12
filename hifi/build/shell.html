@@ -402,6 +402,33 @@
     });
   });
 
+  // 1b · The status bar stays put. Devansh, 12 Sep: "While scrolling, why the time, Wi-Fi, and other
+  //      icons are also scrolling?" -- on a phone they never do. Figma draws the bar inside each
+  //      screen's header, so it scrolled with the page. A copy is pinned to the top of the overlay,
+  //      and the original keeps its space, invisible, so no layout moves. The copy takes the header's
+  //      own colour; where the header is see-through (Home's gradient) it is a frosted near-white,
+  //      the way iOS keeps the time legible over content.
+  screens.forEach(function(sec){
+    var root = sec.querySelector('.scroll > div');
+    var layer = sec.querySelector('.overlay');
+    var bar = root && root.querySelector('[data-name="Status Bar / Light"]');
+    if (!bar || !layer) return;
+    var pin = bar.cloneNode(true);
+    pin.removeAttribute('data-node-id');
+    pin.classList.add('hf-statusbar');
+    var bg = 'transparent', p = bar.parentElement;
+    while (p && p !== root.parentElement) {
+      var c = getComputedStyle(p).backgroundColor;
+      if (c && c !== 'transparent' && !/rgba\([^)]*,\s*0\)$/.test(c)) { bg = c; break; }
+      if (p === root) break;
+      p = p.parentElement;
+    }
+    pin.style.background = bg === 'transparent' ? 'rgba(252,252,255,.88)' : bg;
+    if (bg === 'transparent') pin.classList.add('hf-statusbar-frost');
+    bar.style.visibility = 'hidden';
+    layer.insertBefore(pin, layer.firstChild);
+  });
+
   // Whatever was pinned now covers the bottom of the scroller. Without clearance the last section
   // cannot be scrolled clear of it -- "Know your seat types" stops under the price sheet -- and the
   // gap between the end of the content and the sheet reads as a grey band. CONTEXT §18 records this

@@ -53,7 +53,7 @@ export default function Component19AWhyCancel() {
       <div className="bg-white flex-[1_0_0] min-h-px overflow-clip relative w-full" data-node-id="785:4430" data-name="Backdrop">
         <div className="absolute bg-[var(--surface\/page,#f2f2f7)] content-stretch flex flex-col h-[844px] items-start left-0 overflow-x-clip overflow-y-auto top-0 w-[390px]" data-node-id="785:4431" data-name="Refund details · behind">
           <div className="bg-[#fcfcff] content-stretch flex flex-col items-start overflow-clip relative shrink-0 w-full" data-node-id="785:4432" data-name="Header">
-            <div className="content-stretch flex h-[47px] items-center justify-between pb-[14px] pl-[27px] pr-[14px] pt-[12px] relative shrink-0 w-full" data-node-id="785:4433" data-name="Status Bar / Light">
+            <div className="content-stretch flex h-[47px] items-center justify-between pb-[8px] pl-[27px] pr-[14px] pt-[18px] relative shrink-0 w-full" data-node-id="785:4433" data-name="Status Bar / Light">
               <p className="[word-break:break-word] font-['Inter:Semi_Bold'] font-semibold leading-[21px] not-italic relative shrink-0 text-[17px] text-[color:var(--text\/primary,#1d1d1d)] tracking-[-0.4px] whitespace-nowrap" data-node-id="I785:4433;13:3">
                 9:41
               </p>

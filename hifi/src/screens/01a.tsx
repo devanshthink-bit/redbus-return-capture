@@ -122,7 +122,7 @@ export default function Component01ASelectDate() {
   return (
     <div className="bg-white relative size-full" data-node-id="540:3888" data-name="01a · Select date">
       <div className="absolute bg-[var(--surface\/default,white)] content-stretch drop-shadow-[0px_4px_4px_rgba(0,0,0,0.05)] flex flex-col items-start left-0 top-0 w-[390px]" data-node-id="540:3889" data-name="Sticky header">
-        <div className="content-stretch flex h-[47px] items-center justify-between pb-[14px] pl-[27px] pr-[14px] pt-[12px] relative shrink-0 w-full" data-node-id="540:3890" data-name="Status Bar / Light">
+        <div className="content-stretch flex h-[47px] items-center justify-between pb-[8px] pl-[27px] pr-[14px] pt-[18px] relative shrink-0 w-full" data-node-id="540:3890" data-name="Status Bar / Light">
           <p className="[word-break:break-word] font-['Inter:Semi_Bold'] font-semibold leading-[21px] not-italic relative shrink-0 text-[17px] text-[color:var(--text\/primary,#1d1d1d)] tracking-[-0.4px] whitespace-nowrap" data-node-id="I540:3890;13:3">
             9:41
           </p>

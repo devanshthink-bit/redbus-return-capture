@@ -9764,3 +9764,41 @@ the earlier design of the hifi and lofi toggle was better."*
 **Measured in Hi-fi and Lo-fi v1–v4, at 720 and 812px page height:** the phone, the switch, the
 colours and the text scale are identical in all five, and nothing scrolls. The state matrix is
 clean.
+
+---
+
+CHANGE  ·  2026-09-12  ·  direct request  ·  Source: user
+
+**The status bar lines up with the Dynamic Island, stays put when the page scrolls, and Home has
+room under it.** Devansh: *"Time, battery, Wi-Fi, and network icon items should be centrally
+aligned vertically to the dynamic island. Wi-Fi icon is broken. While scrolling, why the time,
+Wi-Fi, and other icons are also scrolling? Also increase the gap between the dynamic island and
+the upper tabs of the redBus ... They look cramped right now."*
+
+- **Aligned (Figma and build).** The "Status Bar / Light" component (13:2, 51 instances) goes from
+  12/14 padding to 18/8. Its height stays 47, so no screen's layout moves, and the time and icons
+  now sit at y≈28.5, the island's centre in the frame's 390pt units. Measured in a fresh browser:
+  island centre 93.8px, time and icons 94.2px.
+- **How the 51 screen files were updated.** Home (01) was re-pulled, because it also changed. Its
+  diff was exactly two lines: the status bar padding and the category strip. That proves the
+  status bar edit is a pure class swap (`pb-[14px] … pt-[12px]` → `pb-[8px] … pt-[18px]`), which was
+  then applied to the other 50 files, one occurrence each, each asserted to be a 47pt status bar.
+- **Home's gap (Figma and build).** The Category strip (14:21) top padding goes from 5 to 13: 8pt
+  more room between the status bar and the Bus / Train / Hotels / Metro tiles.
+- **Pinned.** In `shell.html` (1b), a copy of each screen's status bar sits in the pinned top layer.
+  The original keeps its space, invisible, so nothing moves. The copy takes its header's
+  background; where the header is see-through it is frosted near-white. Measured: after 500px of
+  scroll the bar is still at the top.
+- **Wi-Fi.** All 13 status-icon files the screens use were rendered side by side. Every Wi-Fi
+  symbol draws whole: two arcs and the dot, the iOS glyph. Profile's file is white, drawn for its
+  dark header. No broken icon could be found. [Devansh to point at the screen where it looks
+  broken.]
+
+**LEARNED — the stylesheet was never cache-busted.** The viewer stamps `app.html?t=…` on every load,
+but the page linked plain `app.css`, and GitHub Pages serves it with max-age=600. After a rebuild a
+browser could draw fresh markup with a stale stylesheet for ten minutes. Here, the new `pt-[18px]`
+class didn't exist yet, so the time measured 9px from the top instead of 18. It is a likely cause of
+earlier "why isn't this updated" moments too. `build.mjs` now writes `app.css?v=<build time>`.
+
+Diffs: 01 11.99% (its baseline is 11.99%), 06 5.79%, 11 10.38% (its baseline is 10.35%). All three
+are ramps; the top band, where the status bar sits, is clean.

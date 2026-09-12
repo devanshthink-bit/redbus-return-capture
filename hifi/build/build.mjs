@@ -100,6 +100,11 @@ const rail = rendered
 const page = shell
   .replace('<!--SCREENS-->', screensHtml)
   .replace('<!--RAIL-->', rail)
+  // A new stylesheet URL on every build. The viewer already stamps app.html itself, but the
+  // stylesheet was linked as plain app.css, so a browser kept the old one for up to ten minutes
+  // (GitHub Pages' max-age=600) and a fresh page rendered with stale spacing -- 12 Sep, the status
+  // bar's new padding measured 9px instead of 18 until the cache was bypassed.
+  .replace('href="app.css"', `href="app.css?v=${Date.now()}"`)
   .replace('/*FLOW*/', `const FORWARD=${JSON.stringify(FORWARD)};` +
     `const ORDER=${JSON.stringify(rendered.map(s => s.id))};` +
     `const NAMES=${JSON.stringify(rendered.map(s => s.name))};`);
