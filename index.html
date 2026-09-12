@@ -3156,8 +3156,19 @@ function buildHifiRail(){
                      'controls. Open the published link to step through it from here.</p>';
     return;
   }
-  /* the same five runs the lo-fi rail uses, by position in the canvas order */
-  const RUN_START = ['01','05','08','11','13'];
+  /* the same five runs the lo-fi rail uses, by position in the canvas order, and cancelling */
+  const RUN_START = ['01','05','08','11','13','18'];
+  /* Devansh: "Only include important screens ... which signify important points of the whole flow
+     of my case study. There is no need to include every single screen or any bottom sheet." The
+     list carries the story -- book out, add a return, pay, the ticket, move the date, cancel --
+     and nothing else. Every other screen is still in the prototype and reached by tapping through
+     it; while one is showing, the list lights the key screen it belongs to. */
+  const KEY = ['01','02','03','04', '05','06', '08','09', '11','12', '13','14','15','16', '18'];
+  const PARENT = { '01a':'01', '03a':'03', '03b':'03', '04a':'04',
+                   '05a':'05', '05b':'05', '06a':'06', '06b':'06', '07':'06',
+                   '08a':'08', '08b':'08', '08c':'08', '09a':'09', '09b':'09',
+                   '11a':'11', '12a':'12', '17':'12',
+                   '19':'18', '19a':'18', '20':'18', '21':'02', '21a':'02', '22':'02' };
   const list = document.createElement('div');
   list.className = 'dev';
   /* Short names, one per screen, the way the lo-fi rail is written. Figma calls a state variant
@@ -3195,6 +3206,8 @@ function buildHifiRail(){
   const stateList = document.createElement('div');
   stateList.className = 'statelist';
   const mine = rows.map((src, i) => {
+    const isState = /^S\d/.test(names[i].id);
+    if(!isState && !KEY.includes(names[i].id)) return null;   // in the prototype, not in the list
     const b = document.createElement('button');
     b.type = 'button';
     b.textContent = names[i].name;
@@ -3217,10 +3230,15 @@ function buildHifiRail(){
   function sync(){
     let onIdx = -1;
     rows.forEach((src,i) => {
-      const p = src.getAttribute('aria-current') === 'true';
-      mine[i].setAttribute('aria-pressed', p ? 'true' : 'false');
-      if(p) onIdx = i;
+      if(mine[i]) mine[i].setAttribute('aria-pressed', 'false');
+      if(src.getAttribute('aria-current') === 'true') onIdx = i;
     });
+    /* a screen not in the list lights the key screen it belongs to */
+    if(onIdx >= 0){
+      const want = mine[onIdx] ? names[onIdx].id : PARENT[names[onIdx].id];
+      const k = names.findIndex(n => n.id === want);
+      if(k >= 0 && mine[k]) mine[k].setAttribute('aria-pressed', 'true');
+    }
     const cap = document.getElementById('caption');
     cap.textContent = '';
     if(onIdx >= 0){ const bold = document.createElement('b');

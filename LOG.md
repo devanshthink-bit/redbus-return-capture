@@ -9447,3 +9447,31 @@ those at runtime, so they stay. The other eight had no use at all, and Devansh a
 them: Icon / Info, Icon / Play, Button / Secondary, Row / Choice, Row / Return bus, Card / Return
 day, Card / Ticket, Logo / CRED pay. Each was checked again for zero instances right before it was
 removed. 173 components remain. No screen used any of the eight, so the build is unchanged.
+
+---
+
+DECISION  ·  2026-09-12  ·  direct request  ·  Source: user
+
+**The viewer's hi-fi list shows the key screens only: 15 instead of 38.** Devansh: *"There are so
+many screens in the prototype, and it looks very cluttered. Only include important screens ... which
+signify important points of the whole flow of my case study. There is no need to include every
+single screen or any bottom sheet named as a screen."*
+
+Kept, in five runs plus cancelling:
+- **Book out:** Home, Outbound buses, Outbound seat, Boarding points.
+- **Add a return:** Return calendar, Your return.
+- **Pay:** Review your trip, Pay.
+- **After booking:** Ticket details, My Bookings.
+- **Move the date:** Change day, Move buses, Confirm move, Return moved.
+- **Cancel:** Review and cancel.
+
+The 13 states stay in their closed list.
+
+Off the list, but still in the prototype and reached by tapping: the sheets (01a, 03a, 09a, 11a,
+19a, 21, 21a), the in-between states (03b, 04a, 05a, 05b, 06a, 06b), the steps inside a larger step
+(07, 08a–08c, 09b, 19, 20), and the side screens (12a, 17, 22). While one of those is showing, the
+list lights the key screen it belongs to (`PARENT`), and the caption under the phone still names the
+exact screen. So nothing is unreachable, and the viewer never shows a highlight on nothing.
+
+Which screens count as key is my reading of the case study's story. [Devansh to confirm or adjust:
+06b "Day fixed" and 07 "Choose your bus" were the closest calls.]

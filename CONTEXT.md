@@ -2171,7 +2171,7 @@ instance: a change to 05, 06, 08, 11, 13 or 15 needs its states redone in the sa
 has the table of which state sits on which screen.
 
 Adding a screen means four edits: `src/render.tsx`, the count guard and forward hotspot in
-`build.mjs`, and `HIFI_NAMES` in the root viewer. **A sheet is not a step** — 01a, 03a and 04a are
+`build.mjs`, and `HIFI_NAMES` in the root viewer. **And a decision about the viewer's list:** since 12 Sep it shows only the key screens (`KEY` in `buildHifiRail`), so a new screen either joins `KEY` or goes in `PARENT` under the key screen it belongs to. Leave it out of both and nothing lights while it is showing. **A sheet is not a step** — 01a, 03a and 04a are
 listed in `OVERLAY` in `build/shell.html`, so prev / next / Back / arrow keys skip them.
 
 **The fixed-height bar trap appeared four times in one session** — frames 08, 06, 06a, 06b. A frame
