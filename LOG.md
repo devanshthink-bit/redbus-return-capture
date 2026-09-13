@@ -10192,3 +10192,34 @@ Biggest step between neighbouring pixels outside the phone: 4 (was a ~40-level j
 the window on a wide screen, so the gradient was cut by a straight vertical line there. The layer is
 now `position:fixed; inset:0`: its only edges are the window's, and a fixed layer cannot add to the
 stage's sideways scroll (checked: 0px overflow at 2000 and 1440 wide).
+
+DECISION  ·  2026-09-13  ·  molades-case  ·  Source: user
+
+**The case study is written, and it is on the portfolio as card 2.** Devansh asked for the whole
+project as a story for senior design recruiters, in his portfolio's style, following his mentor's
+rule of one heading, one subheading and one image per section, with every word run through the
+humanizer skill. References: Jahanvi's portfolio (88 screenshots) and Manav Madaan's storytelling
+deck (Braindump, Characters, Plots, Arc, Narrative, Open mic).
+
+Decided:   A seven-point arc. Hook: Soumya, who booked early once and never did again. Pinch:
+           redBus already sells the fix in the wrong place. Turn: ask for the last day, not the
+           date. Midpoint: my own eight attacks and the lost mentor demo. Climax: the kill list
+           firing in testing. Resolution: the fix, the final flow and the live embed. 22 short
+           sections, 11 images from the real builds, the working hi-fi embedded from Pages.
+Rejected:  The chronological framing (research, ideation, design, testing), because it hides the
+           two failures that make the rest believable. Also rejected: skipping the failures.
+Because:   The log's strongest material is where things went wrong: the demo on 13 Aug, the kill
+           list on 6 Sep and CRITIQUE ranking my own idea second.
+Who wrote it: Devansh asked me to write every word and said he would review it at the end. The
+           molades-case rule is that the student writes the sentences, so the interview questions
+           he needs to practise come with the handoff.
+
+**Baseline recorded in `CASESTUDY.md`:** commit `33258c3`, 51 hi-fi screens, the v4 and hi-fi md5s
+and a section-by-section source map, so a later design change can be traced to the sections it
+affects. Portfolio commit `194cea6`.
+
+LEARNED  ·  2026-09-13  ·  molades-case
+
+**Rendering is too heavy for this laptop.** A Next.js dev server plus headless Chrome renders shut
+Devansh's laptop down twice. Portfolio changes are now checked by pushing (Vercel builds them) and
+curling the live page. Re-render case study images one at a time, only when their screen changed.

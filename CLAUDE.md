@@ -50,7 +50,7 @@ Do not start work, answer a question about the project, or change a file until y
 - `CRITIQUE.md` — eight attacks on the chosen idea, plus the idea ranking
 - `TEST_SCRIPT.md` — the usability script. **Tests v4**, at `/?test`. Written for v3; only the
   *Your return* screen changed. **Three of five sessions run 6 Sep, on v3; the kill list fired.**
-  Findings are in `LOG.md` under that date, none of them built yet
+  Findings are in `LOG.md` under that date, and the fixes were built into v4 the same day
 - `artefacts.html` — the board, generated from `NOTES.md`. Never retype note text
 - `index.html` — **the file you change: v4.** Also the viewer that carries all four versions.
   Served at the bare root URL, which is the one to hand anyone

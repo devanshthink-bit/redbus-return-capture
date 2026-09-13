@@ -68,6 +68,7 @@ on push. `raw/` (interview transcripts) is gitignored.
 | `frozen/v1.html` · `frozen/v2.html` · `frozen/prototype.html` | the other frozen builds |
 | `v1.html` · `v2.html` · `v3.html` · `prototype.html` | redirects to `/?version=N` |
 | `component-sheet.html` | Design-language component sheet |
+| `CASESTUDY.md` | **The portfolio case study** (devanshsomvanshi.com/work/redbus): the design version it was written against (commit `33258c3`, 13 Sep), and a map from each section to its sources and images. Check it after any design change |
 | `hifi/` | **The hi-fi prototype** — the 51 Figma frames (38 screens, 13 states) as working code, shown inside the root viewer. `app.html` and `app.css` are generated, `index.html` is a redirect; see §21 |
 
 **Source material** (not in the repo): `/Users/devansh/Downloads/RedBus Case Docs/` — 8 interview
