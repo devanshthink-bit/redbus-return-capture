@@ -10419,3 +10419,6 @@ Devansh: "When the user clicks on the fourth dock icon, I want the resume file o
 
 CORRECTION  ·  2026-09-14  ·  molades-case  ·  Source: user
 Devansh: "No, resume should not open like this. It should open on a new page, just like the About section is opening." The pop-up sheet is removed. The dock's resume icon is now a Link to /resume, a normal page in the site layout with a "Resume" section title and the PDF embedded below it (/resume/Devansh_Somvanshi_CV.pdf). The Drive link stays removed. The sheet's CSS and its cursor rules were deleted with it.
+
+CHANGE  ·  2026-09-14  ·  molades-case  ·  Source: user
+Devansh on /resume: "Nothing around it should be visible. Only the résumé should be visible." Chrome's PDF viewer adds a toolbar, a page-thumbnail strip and grey margins, and hiding the toolbar still leaves the margins. So the page now shows the CV as an image of the page: rendered from the PDF with macOS Quick Look at 1696 by 2400 (about twice the column width) and saved as WebP. There is no viewer, frame or heading. This also fixes Android, which won't show a PDF inside a page. The trade-off is that the links inside the CV (portfolio, LinkedIn, GitHub, email) are not clickable. The unused PDF was removed from the site.
