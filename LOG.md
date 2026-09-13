@@ -10307,3 +10307,6 @@ rule, and a list of assumptions. The Loom video slot is empty. [Devansh to recor
 
 Research board shown with interviewees' surnames masked (first names only, his 13 Sep call).
 Portfolio `30edebd`. Frozen hashes unchanged.
+
+DECISION  ·  2026-09-13  ·  molades-case  ·  Source: user
+The portfolio case study now links to the research board (artefacts.html: JTBDs, notes, brief), from a hero button and the board caption. The board page shows participants' full surnames, unlike the case study's masked image. Devansh saw this and chose "Push as it is." Portfolio commit fc9869a.
