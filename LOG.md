@@ -10430,3 +10430,6 @@ next/image picks a copy from its width list based on the displayed size, so a do
 
 CHANGE  ·  2026-09-14  ·  molades-case  ·  Source: user
 Devansh: "give a button to download the resume using the same icon as in the dock. I guess a recruiter would want to download it. If he wants to do any other thing with my resume, give option to do it as well and icon for that also." /resume now has a row of buttons above the CV: Download (the dock's résumé icon, now shared from BottomNav), Open PDF, Print (prints the PDF itself), Copy link, and Share on phones that support it. All icons are Solar Linear at the dock's stroke. The PDF is back on the site for these. The CV is sized down to leave room, so the page still shows whole with no scroll.
+
+CHANGE  ·  2026-09-14  ·  molades-case  ·  Source: user
+Devansh: "build a second card below redbus with some beautiful design signalling that second case study is in progress, use different bg color". The home page now has a second, non-clickable card on a soft blue panel: a pulsing "In progress" status, dashed phone outlines with shimmering placeholder bars in the RedBus card's three-phone layout (they fan on hover), and "Coming soon". It names no project and makes no claims, because the second case study's subject hasn't been given. Motion stops for reduced-motion users.
