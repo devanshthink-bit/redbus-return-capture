@@ -10395,3 +10395,6 @@ Note for interviews: the untested fixes and the sessions that never ran are stil
 
 CHANGE  ·  2026-09-14  ·  molades-case
 Ask Devansh knowledge was rebuilt from the rewritten page. It now describes the project as booking the return in the same checkout without a fixed date. Asked "How did testing go?", it still added that the fixes had not been re-tested, which Devansh asked to keep off the page. The fact is still in its background notes (the fact sheet and the hard-questions sheet), so its instruction is now firmer: never bring up headcounts, sessions that did not run, or untested fixes on its own. It answers them truthfully only if asked about exactly that point.
+
+CORRECTION  ·  2026-09-14  ·  molades-case  ·  Source: user
+Devansh: "why did u remove everything at the bottom, i only asked u to remove the end". I had taken "Remove the end and credits" to mean the whole closing section. It is back: "Thanks for reading.", the invite line, and the Email and LinkedIn buttons. Only the small "The end" label is gone, and "Credits" stays out of the contents list.
