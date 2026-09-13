@@ -10375,3 +10375,9 @@ Devansh: "This panel is overlapping with the content. remove DS. Pressing Escape
 
 CHANGE  ·  2026-09-14  ·  molades-case  ·  Source: user
 Devansh: "Cursor is hiding inside this ask panel... the whole content doesnt look centered. It is more towards the left." The site hides the native pointer everywhere for its custom cursor, and the panel hides the custom one, so no cursor showed. The native pointer is now restored on the Ask button and inside the panel. When the panel opens on screens 1360px and wider, where the contents list is fixed on the left, the page also leaves 200px on the left, so it sits centred between the list and the panel.
+
+LEARNED  ·  2026-09-14  ·  molades-case  ·  Source: user
+Two portfolio bugs behind "Cursor is hiding inside this ask panel" and "the whole content doesnt look centered". Both had causes worth keeping.
+1. A transformed ancestor breaks position: fixed. The page wrapper (.content-wrapper) runs a page-enter animation that leaves a transform. Any transform on an ancestor makes fixed elements position against that ancestor, not the screen. So the contents list and the Ask panel were fixed to the content column: the list moved when the page moved, and the panel's right edge was the column's, not the screen's. Fix: both now render on <body> through a React portal.
+2. A layered !important can't be overridden from outside its layer. The site's "cursor: none !important" sits in @layer base. My unlayered "cursor: auto !important" for the panel lost, because layered important declarations beat unlayered important ones. Fix: the panel's cursor rules now live in @layer base, next to the dock's pointer rule, which works the same way.
+Also noted: the in-app browser pane skews these checks, because a hidden tab doesn't advance CSS animations, so the wrapper's transform looked stuck.
