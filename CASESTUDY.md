@@ -20,7 +20,7 @@ It was written on **13 Sep 2026** against the design exactly as it stood at the 
 | Hi-fi screens | 51 (38 screens + 13 states), 51 files in `hifi/src/screens/` |
 | Frozen hashes | v1 and prototype `164de4e8…`, v2 `d1e7d291…`, v3 `2c7461d8…` |
 | Figma file | `t9srahcEB1ioKyytu0sEMs`, as of the 13 Sep token and red passes |
-| Portfolio commit | `194cea6` (Add the redBus case study as card 2) |
+| Portfolio commit | `194cea6` (Add the redBus case study as card 2), fixed in `8435761` |
 
 ## How to find what changed since
 

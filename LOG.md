@@ -10223,3 +10223,11 @@ LEARNED  ·  2026-09-13  ·  molades-case
 **Rendering is too heavy for this laptop.** A Next.js dev server plus headless Chrome renders shut
 Devansh's laptop down twice. Portfolio changes are now checked by pushing (Vercel builds them) and
 curling the live page. Re-render case study images one at a time, only when their screen changed.
+
+LEARNED  ·  2026-09-13  ·  molades-case
+
+**A value exported from a "use client" file is not a value in a server page.** The case study
+page imported the prototype URL from the embed component. On the server it arrived as a client
+reference, so `.replace()` threw and Vercel's build failed on /work/redbus. Type-checking and lint
+passed, because the types were right. Keep shared constants in plain modules, or in the page
+itself. Fixed in portfolio `8435761`, live and checked with curl.
