@@ -33,37 +33,48 @@ git log --oneline 33258c3..HEAD
 Then read the `LOG.md` entries dated after 13 Sep. For each change, find its row in the section
 map below, and update that section and its image.
 
-## Section map (the redo, 22 sections on a seven-point arc)
+## Section map (since 13 Sep, portfolio `30edebd`: four acts and credits)
 
-| # | Arc beat | Heading | Facts come from | Visual | Visual source |
-|---|---|---|---|---|---|
-| Home card | n/a | Booking the trip home · 2026 (Jahanvi's anatomy: brand, what I did, tags, screens, title + year, one line, impact) | RESEARCH, LOG 6 Sep kill list | three phones | hi-fi 06a, 05, 16 |
-| Hero | n/a | redBus · Booking the trip home | SCOPE; Devansh's answers (6 weeks, solo, self-initiated, Figma + Claude Code) | three phones | hi-fi 06a, 05, 16 |
-| 01 | Hook | Soumya booked her bus home early once. Never again. | NOTES n49 n51 | trip strip (code) | none |
-| 02 | Hook | Most people wait to book the return. Nobody forgets. | RESEARCH l.19–26, NOTES n72 | stat grid (code) | none |
-| 03 | Pinch 1 | The fix already exists. It's a badge on a bus. | RESEARCH l.27, TERMS 3a | `today.webp` | `RedBusScreenshots/IMG_4553.PNG` |
-| 04 | Pinch 1 | I couldn't hold a seat, set a fare or change a rule. | RESEARCH problem statement, SCOPE (input metric, guardrail), TERMS hard limits | rules card (code) | none |
-| 05 | Plot turn 1 | So I stopped asking for the date. | BRIEF l.113, CONTEXT §15 | `v1.webp` | `frozen/v1.html` `s-backby` |
-| 06 | Midpoint | Then I attacked my own idea, and it came second. | CRITIQUE §2, l.314–315 | merit card (code) | none |
-| 07 | Midpoint | I also wrote something false into the product. | LOG l.1036–1055, DEFENCE l.1034 | before/after (code) | none |
-| 08 | Midpoint | My mentor asked three questions I couldn't answer. | LOG l.2108–2176 | Q&A (code) | none |
-| 09 | Pinch 2 | It took four versions to ask one question well. | LOG l.34, 1349, 1391, 4794 | `versions.webp` | v1–v3 frozen, v4 |
-| 10 | Plot turn 2 | Three people tested it. By my own rules, it failed. | TEST_SCRIPT, LOG l.5480–5515 | kill list (code) | none |
-| 11 | Plot turn 2 | One line, read three wrong ways. | LOG l.5494, 5557, 5629 | quote cards (code) | none |
-| 12 | Plot turn 2 | Sai asked me to hide the risky buses. I didn't. | LOG l.5517–5534, 5573–5591, 5866–5888 | "Book a fixed date" bar (code) | hi-fi 06b copy |
-| 13 | Resolution | So now the calendar asks first. | LOG 6 Sep CHANGE entries, 8 Sep default | `fix.webp` | v3 and v4 `s-window` |
-| 14 | Resolution | First, say how sure you are. | LOG 8 Sep (default "I'm not sure yet"), RESEARCH 65.2% | `f1.webp` | hi-fi 05 |
-| 15 | Resolution | Then pick one day from your window. | CONTEXT §7 "Why v4 exists" | `f2.webp` | hi-fi 06a |
-| 16 | Resolution | See every rule before you pay. | TERMS, CONTEXT §8 | `f3.webp` | hi-fi 08 |
-| 17 | Resolution | Move it once, when plans settle. | TERMS §4, LOG 2 Sep real booking | `f4.webp` | hi-fi 13 |
-| 18 | Resolution | It tells you what changed, and what you gave up. | CONTEXT §8 "Nothing celebratory at payment" | `f5.webp` | hi-fi 16 |
-| 19 | Resolution | When it can't keep a promise, it says what still holds. | CONTEXT states, 13 states | `state.webp` | hi-fi S3 |
-| 20 | Resolution | Here's the real thing. Tap through it. | 51 screens | live embed | `/?test&fidelity=hifi` |
-| 21 | New world | What I still don't know. | CONTEXT §11, CRITIQUE, LOG l.5480 | numbered list (code) | none |
-| 22 | New world | What I'm taking to the next project. | LOG 13 Aug LEARNED, 6 Sep, DEFENCE | numbered list (code) | none |
+Structure borrowed from Ishita Sharma's EDGE case study at Devansh's request: the solution first
+as a guided trip, then "how I got here", then what's next. Every item on Devansh's must-have list
+is covered. All copy went through the humanizer skill.
 
-**Contents list (8):** The Problem (01) · The Idea (05) · Doubts (06) · Versions (09) · Testing (10) ·
-The Design (14) · Try It (20) · What's Next (21).
+| Part | Heading | Facts come from | Visual |
+|---|---|---|---|
+| Hero | RedBus · Booking the trip home, hook question, In short box, meta | RESEARCH l.23–24, LOG 6 Sep | phones 06a, 05, 16 |
+| Act 1 | Soumya booked her bus home early once. Never again. | NOTES n49 n51 | trip strip (code) |
+| | Most people wait to book the return. Nobody forgets. | RESEARCH l.19–26, n72 | stat grid |
+| | The fix already exists. It's a badge on a bus. | RESEARCH l.27 | real app IMG_4553 |
+| | The rules made waiting the safe choice. | BRIEF "7 rules across 2 products", TERMS FAQ 3 | knot card |
+| | A return booked later is often booked elsewhere. | RESEARCH 26.1%, artefacts.html business lens, DEFENCE counter-metric | 3 cards |
+| | I couldn't hold a seat, set a fare or change a rule. | RESEARCH problem statement, SCOPE, TERMS | rules card |
+| Act 2 | Scenes 1–5 of "Soumya's next trip" (imagined, labelled so) | CONTEXT §7–8, TERMS, LOG 8 Sep default | hi-fi 05, 06a, 08, 13, 16 |
+| | Scene 6: loading, empty, error | CONTEXT states | hi-fi S6, S9, S3 |
+| | Now try it yourself. | 51 screens | live embed |
+| Act 3 | It started as 102 sticky notes. | RESEARCH, artefacts.html | board crop, surnames masked |
+| | The obvious ideas died first. | CONTEXT §15 | 16-idea grid |
+| | Then I attacked my own idea, and it came second. | CRITIQUE §2, l.314–315 | merit card |
+| | I also wrote something false into the product. | LOG l.1036, DEFENCE l.1034 | before/after |
+| | My mentor asked three questions I couldn't answer. | LOG l.2108 | Q&A |
+| | How I stopped booking the cheapest day. | LOG l.1349, 1398, 4794 | lo-fi v1–v4 |
+| | So I booked a real ticket to check one rule. | TERMS l.249, LOG 2 Sep | real IMG_5199 |
+| | Then my mentor asked: isn't FlexiTicket better? | LOG 2 Sep ("the week picks the day"; 29 days) | before/after |
+| | Three people tested it. By my own rules, it failed. | LOG l.5490 | kill list |
+| | One line, read three wrong ways. | LOG l.5494, 5557, 5629 | quotes |
+| | How I made the calendar ask first. | LOG 6 Sep (mode question, Swiggy Crew toggle) | lo-fi v3, v4 |
+| | Sai asked me to hide the risky buses. I didn't. | LOG l.5573, 5882 | hi-fi 06b |
+| | Six weeks, one designer. Something had to go. | CONTEXT §8, §11, LOG 13 Aug, 12 Sep | MoSCoW (a look back, labelled) |
+| | Only the new part is mine. | DESIGN_LANGUAGE (amber, pills) | palette |
+| Act 4 | Three numbers, and when I'd pull it. | SCOPE, DEFENCE rollback rule | 3 cards |
+| | What I still don't know. | SCOPE, TERMS §9, CRITIQUE, LOG l.5480 | numbered list |
+| | What I'm taking to the next project. | LOG LEARNED | numbered list |
+| Credits | Thanks for reading. | Devansh's answers, LOG 6 Sep | credits roll, email and LinkedIn |
+
+**Contents list (8):** The Problem · The Trip · Try It · Behind the Scenes · Testing · Choices ·
+What's Next · Credits.
+
+**Walkthrough video:** `VIDEO_URL` in the page is empty. Set it to a Loom link and the hero shows
+a "Watch the walkthrough" button. [Devansh to record.]
 
 **The live embed follows the design by itself.** It loads the deployed prototype, so a design
 change shows up there with no case study edit. The images and the words don't follow it.
@@ -88,9 +99,9 @@ The screens are plain full-screen images in `public/images/redbus/screens/`:
 
 | File | Source |
 |---|---|
-| `hifi_05, 06a, 06b, 08, 13, 16, S3` | `hifi/app.html?screen=NN&filled`, headless at 2×, full frame; then cut to one 390×844 phone screen: the 47pt status bar, the content (06a from 818pt, 06b from 510pt, 08 from 1555pt, the others from the top), and the pinned bottom bar |
+| `hifi_05, 06a, 06b, 08, 13, 16, S3, S6, S9` | `hifi/app.html?screen=NN&filled`, headless at 2×, full frame; then cut to one 390×844 phone screen: the 47pt status bar, the content (06a from 818pt, 06b from 510pt, 08 from 1555pt, the others from the top), and the pinned bottom bar |
 | `lofi_v1` … `lofi_v4` | temp copies of `frozen/v1–v3.html` and `index.html` (v4), opened on `s-backby` / `s-window` at 402×825, 2×. The mock draws the 49px status bar on top, as the viewer does. Frozen files untouched |
-| `real_4553` | `RedBusScreenshots/IMG_4553.PNG` (in Downloads/RedBus Case Docs), scaled to 804 wide |
+| `real_4553`, `real_5199` | `RedBusScreenshots/IMG_4553.PNG` (in Downloads/RedBus Case Docs), scaled to 804 wide |
 
 Renders were one Chrome at a time with pauses (the laptop shut down twice on 13 Sep under batch
 rendering). To redo one screen, re-render that one only. The old composite images

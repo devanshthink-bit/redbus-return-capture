@@ -10287,3 +10287,23 @@ designs"*.
 - Section 12's hand-built "Book a fixed date" card became the real 06b screen.
 - **Privacy check:** 08 and S3 carry Devansh's email and phone lower down; both crops stop above them.
 Portfolio `bd8f379`. Frozen hashes unchanged.
+
+DECISION  ·  2026-09-13  ·  molades-case  ·  Source: user
+
+**The case study became a four-act story, covering every item on Devansh's must-have list.**
+He sent a braindump of must-haves and pointed at Ishita Sharma's EDGE case study on Medium for its
+storytelling: *"Add all of them. But don't write too many words... I also want a movie-like feeling
+while reading this case study, so borrow anything you want from Ishita's case study."*
+
+Borrowed: the solution first as a guided trip (her Tia becomes "Soumya's next trip", labelled as
+imagined), a scene line then a question then the screen, "How I..." iteration titles, the aside
+that I won't walk through every version, the messy process shown late, and a warm ending. Added
+for a movie feel: act dividers and a credits roll.
+
+Added from the list: an In short box, the rules knot (systems), why RedBus should care (business,
+counter-metric), a loading/empty/error state row, the real-ticket check as its own moment, the
+2 Sep FlexiTicket pushback, a look-back MoSCoW, the design look, what I'd watch with the rollback
+rule, and a list of assumptions. The Loom video slot is empty. [Devansh to record.]
+
+Research board shown with interviewees' surnames masked (first names only, his 13 Sep call).
+Portfolio `30edebd`. Frozen hashes unchanged.
