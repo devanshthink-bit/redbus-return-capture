@@ -1248,11 +1248,12 @@ thing in the product.
 
 ### "Have you tested it?"
 
-**Not yet — say this first, unprompted.** Five sessions are scripted, the participants are named,
-and each is chosen for a specific reason: Soumya booked early once, couldn't push the date, and
-never booked early again — she is the exact person this exists for. Anand knew the flexibility
-existed and refused it anyway — he is the hardest sceptic. Samarth refuses a ₹300 add-on when his
-plan is fixed. Until those run, **the deadline framing is a bet.**
+**Yes, three sessions on 6 Sep, and it failed its own kill list. Say that first.** Vivek, Soumya
+and Sai ran v3. Two of the three conditions that could be scored fired: nobody used the window, and
+Sai took the cheapest day without seeing it could not change. The fixes were built the same day and
+have not been tested again. Anand (the sceptic) and Samarth (fixed plans) never ran. The
+counter-evidence is Sai: unprompted, he said he would use it over today's flow and would not tap Skip.
+*(Updated 13 Sep. This answer said "Not yet" until the sessions ran.)*
 
 ### "What exactly would the sessions have to show for you to change the design?"
 
@@ -1299,7 +1300,7 @@ Say them plainly, early, without apology. Each one, followed by what you'd do ab
 
 | Gap | What to say |
 |---|---|
-| **No usability testing yet** | The biggest one. Say it first, unprompted. Five sessions are scripted and scheduled; the script names the specific person for each finding. Until they run, the deadline framing is a bet |
+| **Three of five sessions ran, and the fixes are untested** | Say it first. The kill list fired, 2 of 3 scoreable, on 6 Sep. Anand and Samarth never ran. The fixes from that round have not been tested again |
 | **Guardrail has no baseline** | 95% is a stated target. No live data exists for a concept study |
 | **No competitive landscape** | Not run. FlixBus looked at informally. That's not a landscape |
 | **~~Same-operator restriction unverified~~ — closed 2026-09-02** | Confirmed in the live app: same operator *and* same route. The design already assumed it, so nothing to rebuild |

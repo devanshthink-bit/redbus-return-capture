@@ -10231,3 +10231,26 @@ page imported the prototype URL from the embed component. On the server it arriv
 reference, so `.replace()` threw and Vercel's build failed on /work/redbus. Type-checking and lint
 passed, because the types were right. Keep shared constants in plain modules, or in the page
 itself. Fixed in portfolio `8435761`, live and checked with curl.
+
+DECISION  ·  2026-09-13  ·  molades-case  ·  Source: user
+
+**The case study was redone from zero, with a checklist ticked item by item.** Devansh: *"No, I don't
+trust you. Start again according to the plan and the original prompt… you said you are maintaining
+the checklist. You never sent any checklist."* The first attempt ticked items without proof and
+skipped some (no shared helpers file, no visual check, no draft of the facts).
+
+Decided:   `CASESTUDY_CHECKLIST.md` holds every prompt requirement and plan step, each ticked
+           with its proof and re-sent after each phase. Private notes in git-ignored
+           `casestudy-work/`. The page is rebuilt on 22 sections, with the three entries that
+           carry it given their own sections: the mentor demo (08), the false "later day" copy
+           (07) and Sai's hide-the-buses request rejected (12). Shared helpers moved to the
+           portfolio's `components/caseStudy.tsx`.
+Rejected:  Patching the first attempt. It had the failure and the rejected critique buried in
+           captions, and subheadings of three sentences where the mentor asked for few words.
+Because:   A fact sheet grepped against every source found two numbers not to use: per-version
+           screen counts disagree between CONTEXT §7 and the LOG, and the 10–20% commission has
+           no source. Both are off the page.
+Devansh's answers: Timeline "6 weeks". Role "Solo, self-initiated". Tools line names Claude Code.
+Also fixed, found in the same read: CONTEXT §6 and §11 still called same-operator unverified and
+the 6 Sep fixes unbuilt; DEFENCE §12 and §13 still said "not tested"; DESIGN_LANGUAGE still named
+#C54646 as the accent. Portfolio commit `d4a037a`, live and checked with curl (HTTP 200).

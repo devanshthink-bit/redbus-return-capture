@@ -145,7 +145,7 @@ Sai Srinivas Buddi · Samarth Kumar · Soumya Mishra · Vivek Nandoskar.
 - FlexiTicket FAQ: *"the 'date change fee' is zero. You will, however, be required to pay the fare difference (if any)."*
 - FlexiTicket gives a **minimum 50% refund** at 12h+ (50–100%, operator-dependent) — **not** free cancellation
 - **Free Cancellation** is a **separate paid add-on** (₹60 per passenger, observed on this route), voided by rescheduling
-- **Still unverified:** whether a date change is same-operator only
+- **Same operator only, verified 2 Sep** on a real booking (#TV9X11267641): a change stays with the same operator and route (`TERMS.md` §4)
 
 `TERMS.md` carries all of this in full — every clause quoted verbatim, the source named for each,
 the seven things still unverified, and the five places where v3 deliberately simplifies the real
@@ -517,10 +517,10 @@ isolate a section by hiding the others instead.
   Anand and Samarth were not, so the sceptic and the fixed-plan traveller are still untested and
   kill condition 4 cannot be scored. **The kill list fired: two clear hits of three evaluable.**
   Nobody discovered the week window, and one participant bought a non-changeable ticket believing
-  he had flexibility. Twenty-one entries in `LOG.md` under 2026-09-06. **The fixes are not built**
+  he had flexibility. Twenty-one entries in `LOG.md` under 2026-09-06. **The fixes were built the same day and have not been re-tested**
 - **No competitive landscape.** FlixBus looked at informally; that is not a landscape
 - **Guardrail has no baseline.** 95% is a stated target
-- **Same-operator-only unverified.** If wrong, the return list must be rebuilt around operator eligibility from the first screen
+- ~~Same-operator-only unverified~~ **Closed 2 Sep:** confirmed on a real booking (`TERMS.md` §4). The design already assumed it
 - **Group all-or-nothing moves** — specified in BRIEF, not built
 - **One-bus-a-day routes** and **overnight date semantics** — not addressed
 - **Badge naming unresolved** — *You can change this date once* vs RedBus's *Free date change*. There is a paper test in TEST_SCRIPT.md

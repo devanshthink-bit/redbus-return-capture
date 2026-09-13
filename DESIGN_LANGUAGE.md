@@ -80,7 +80,7 @@ departure from the reference and the only one in the spacing system.)*
 | Surface raised | `#FFFFFF` | cards, sheets, fields |
 | Ink | `#1D1D1D` | primary text. Never pure black |
 | Ink muted | `#636363` | secondary text, labels, captions |
-| Accent | `#C54646` | the redBus red. Primary buttons and links. **The one thing you want tapped** |
+| Accent | `#E81E38` | the redBus red. Primary buttons and links. **The one thing you want tapped**. *(Measured raw as `#C54646`; Devansh set `#E81E38` everywhere on 13 Sep, LOG.)* |
 | Rating | `#458442` on `#E0F3D9` | ratings only, nothing else |
 | Warning | `#A45729` | **one colour, two uses.** Inline as text for scarcity and validation errors; as a 42pt full-bleed banner fill with white text for connectivity failures |
 | Skeleton | `#F2F2F7` | loading placeholder blocks on white |
@@ -108,7 +108,7 @@ component sheet.** `#C54646` and `#458442` appear unchanged across four differen
 **Button height:** 48, full width less 16 margin
 **Inputs:** white, 1px `#E4E4E4` border, radius 12, label above value
 **Buttons are pills.** Radius = height ÷ 2 = **24**, not 8. Soft drop shadow `0 2px 6px rgba(0,0,0,.10)`.
-Primary `#C54646` white 16/700; secondary white with a `#D8D8DC` border and no shadow.
+Primary `#E81E38` white 16/700; secondary white with a `#D8D8DC` border and no shadow.
 Measured on IMG_4595: height 48.3pt, left edge 24pt in at the cap, 0pt at mid — a true pill.
 **Error banner:** full-bleed, 42 tall, `#A45729`, white 16pt with a circle-slash glyph, directly under the nav.
 **Feature pill:** height 24, radius 4, horizontal padding 12, **12pt** ink on `#E9EAF6`

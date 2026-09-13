@@ -18,18 +18,26 @@ Every line here has to be ticked by the end. The phase items below say how.
   *Proof: A2 below. All 60 pages, as images and as text.*
 - [x] P3. Learn from Jahanvi how she writes and structures case studies **and home page case study cards**
   *Proof: the notes end with a 10-point "What I take from all 88" list, including the six-part card anatomy.*
-- [ ] P4. Put the redBus case study in the **second** card of the portfolio
+- [x] P4. Put the redBus case study in the **second** card of the portfolio
+  *Proof: live at /work/redbus, card 2 links to it (F3).*
 - [x] P5. Do not look at the first card's case study (Sidedoor)
   *Proof: only lines 1–113 of the Sidedoor page were read, which are imports and seven helper components. Its content (lines 114–1126) was never opened. Card 1's data in `app/page.tsx` is left unchanged.*
-- [ ] P6. Use **the portfolio's own design language**
+- [x] P6. Use **the portfolio's own design language**
+  *Proof: site tokens, Manrope/Inter/Geist Mono, callout cards, Caveat for quotes, the existing TOC and back button (A4, F1).*
 - [x] P7. Invoke **/humanizer** before writing, and apply all of its rules to every word
   *Proof: D1 and D3 below.*
-- [ ] P8. Mentor's rule: **one heading, one subheading, one image** per section. Few words
-- [ ] P9. Use the real images, designs and the prototype link wherever possible
-- [ ] P10. Story format that covers research, trade-offs, constraints and iterations, at the level of a senior product designer at a top company
-- [ ] P11. **Creative headings like Jahanvi's.** No generic ones such as "Research" or "Iterations"
-- [ ] P12. Interesting to read. No clutter, no jargon, easy for anyone, structured end to end
-- [ ] P13. Record **which version of the design** the case study describes, so later changes can be traced to the right sections
+- [x] P8. Mentor's rule: **one heading, one subheading, one image** per section. Few words
+  *Proof: each of the 22 sections is a label, a heading, 1–2 sentences and one visual (D2).*
+- [x] P9. Use the real images, designs and the prototype link wherever possible
+  *Proof: 11 real screen images, the live hi-fi embed and a full-screen link (E1, E3).*
+- [x] P10. Story format that covers research, trade-offs, constraints and iterations, at the level of a senior product designer at a top company
+  *Proof: seven-point arc; constraints (04), trade-offs (06, 12, 14), iterations (09, 13), failure told first (07, 08, 10) (C1, C3).*
+- [x] P11. **Creative headings like Jahanvi's.** No generic ones such as "Research" or "Iterations"
+  *Proof: 22 sentence headings, chained (C2).*
+- [x] P12. Interesting to read. No clutter, no jargon, easy for anyone, structured end to end
+  *Proof: humanizer grep clean, subheadings under 45 words, open-mic pass (D3, D4).*
+- [x] P13. Record **which version of the design** the case study describes, so later changes can be traced to the right sections
+  *Proof: CASESTUDY.md baseline and section map; page comment; memory (G1–G4).*
 - [x] P14. Use **all the RedBus project files** (LOG and the rest) so every fact is correct
   *Proof: A3 below. Every file was read, and B2's fact sheet ties each number to one of them.*
 - [ ] P15. Ask Devansh whenever something is needed from him
@@ -83,21 +91,31 @@ Every line here has to be ticked by the end. The phase items below say how.
   *Skipped at Devansh's call on 13 Sep: "No, build straight away".*
 
 ### Phase E: Images, all from real project material
-- [ ] E1. Sources picked: hi-fi renders, real redBus screenshots, lo-fi v1–v4, artefacts board, CRITIQUE/BRIEF tables
-- [ ] E2. Each image composed and saved as WebP in `portfolio/public/images/redbus/`. Figma not edited. **One render at a time: the laptop shut down twice under batch rendering**
-- [ ] E3. The whole hi-fi prototype embedded (`?test&fidelity=hifi`), with a scaled phone on narrow screens, lazy loading, a fixed aspect and a caption
+- [x] E1. Sources picked: hi-fi renders, real redBus screenshots, lo-fi v1–v4, artefacts board, CRITIQUE/BRIEF tables
+  *Proof: all 11 existing images viewed one by one and checked against the facts (`CASESTUDY.md` image map). Section 12 has no image, so it uses a code visual of the hi-fi 06b bar.*
+- [~] E2. Each image composed and saved as WebP in `portfolio/public/images/redbus/`. Figma not edited. **One render at a time: the laptop shut down twice under batch rendering**
+  *Done differently: nothing was re-rendered. The 11 WebP images from the first attempt still match the current design, so they're reused. Figma was not edited. No rendering load on the laptop.*
+- [x] E3. The whole hi-fi prototype embedded (`?test&fidelity=hifi`), with a scaled phone on narrow screens, lazy loading, a fixed aspect and a caption
+  *Proof: `components/ProtoEmbed.tsx`: `?test&fidelity=hifi`, `loading="lazy"`, 402×874 scaled under 640px, fixed 820 height above, with the caption and a full-screen link in section 20.*
 
 ### Phase F: Build it in the portfolio
-- [ ] F1. `app/work/redbus/page.tsx` built on the Sidedoor pattern. Shared helpers in `components/caseStudy.tsx`. Sidedoor untouched
-- [ ] F2. redBus section labels passed to `CaseStudyTOC` through its `sections` prop
-- [ ] F3. Card 2 on `app/page.tsx`: title, desc, tag, slug, redBus-red tooltip, cover image. Gradient kept as fallback. Card 1 unchanged
+- [x] F1. `app/work/redbus/page.tsx` built on the Sidedoor pattern. Shared helpers in `components/caseStudy.tsx`. Sidedoor untouched
+  *Proof: portfolio `d4a037a`. `components/caseStudy.tsx` (T, SectionLabel, Beat, Figure, Card, Chip, Numbered, Pill, MetaStrip, RED). The page imports them. `git show --stat d4a037a` touches no Sidedoor file. eslint is clean on the new files.*
+- [x] F2. redBus section labels passed to `CaseStudyTOC` through its `sections` prop
+  *Proof: `RedbusTOCClient.tsx` has 8 labels. All 8 ids exist on the page (checked by diff).*
+- [x] F3. Card 2 on `app/page.tsx`: title, desc, tag, slug, redBus-red tooltip, cover image. Gradient kept as fallback. Card 1 unchanged
+  *Proof: card 2's desc is now "Book the return before you know the date. Tested with 3 travellers." The slug, cover, #C8102E tooltip and gradient fallback were kept. The diff touches only that line.*
 - [ ] F4. New styles in `globals.css` with the `cs-` prefix. Dark mode (`html.nerd-mode`) works
 
 ### Phase G: Record the design version
-- [ ] G1. `CASESTUDY.md`: baseline (commit, date, screen count, v4 md5, frozen hashes, Figma), section-to-source map, image-to-source map
-- [ ] G2. `LOG.md` DECISION entry. The stale "none built yet" line in `CLAUDE.md` fixed. CONTEXT pointer to CASESTUDY.md
-- [ ] G3. Memory file pointing to CASESTUDY.md
-- [ ] G4. A one-line comment at the top of the portfolio page naming the baseline commit
+- [x] G1. `CASESTUDY.md`: baseline (commit, date, screen count, v4 md5, frozen hashes, Figma), section-to-source map, image-to-source map
+  *Proof: rewritten for the redo, with 22 sections mapped to beat, heading, facts, visual and visual source.*
+- [x] G2. `LOG.md` DECISION entry. The stale "none built yet" line in `CLAUDE.md` fixed. CONTEXT pointer to CASESTUDY.md
+  *Proof: LOG DECISION of 13 Sep, for the redo. Stale lines fixed in CONTEXT §6 and §11, DEFENCE §12 and §13, and DESIGN_LANGUAGE's accent. The CLAUDE.md line and the CONTEXT pointer were already fixed in the first attempt.*
+- [x] G3. Memory file pointing to CASESTUDY.md
+  *Proof: `memory/redbus-case-study-baseline.md` updated with the redo commit, the helpers file, the checklist and the privacy rule.*
+- [x] G4. A one-line comment at the top of the portfolio page naming the baseline commit
+  *Proof: page.tsx lines 1–2 name 33258c3 and point to CASESTUDY.md.*
 
 ### Phase H: Interrogate
 - [ ] H1. Every big claim on the page asked the interviewer's question and rated *answerable · partly · not answerable*. The unanswerable ones cut or labelled
@@ -120,6 +138,7 @@ Every line here has to be ticked by the end. The phase items below say how.
 - **No draft review before building.** D6 is skipped at his call
 
 ## Log of this checklist
+- 13 Sep: **E, F (F1–F3), G done.** Redo live at portfolio `d4a037a`. F4 waits on the V2 dark-mode check.
 - 13 Sep: **Phase D done** (D1–D5; D6 skipped at Devansh's call). P7 ticked.
 - 13 Sep: **Phase C done** (C1–C3).
 - 13 Sep: **Phase B done** (B1–B4). Two questions for Devansh: timeline/role, and how to credit the AI-built prototype.
