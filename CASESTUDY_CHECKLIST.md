@@ -42,7 +42,8 @@ Every line here has to be ticked by the end. The phase items below say how.
   *Proof: A3 below. Every file was read, and B2's fact sheet ties each number to one of them.*
 - [ ] P15. Ask Devansh whenever something is needed from him
   *So far: asked about timeline, role and build credit on 13 Sep, and got answers. More asks get logged here.*
-- [ ] P16. A checklist, kept up to date and ticked item by item (this file)
+- [x] P16. A checklist, kept up to date and ticked item by item (this file)
+  *Proof: this file, committed and sent after Phase A, after B–D, and at the end.*
 
 ---
 
@@ -105,7 +106,8 @@ Every line here has to be ticked by the end. The phase items below say how.
   *Proof: `RedbusTOCClient.tsx` has 8 labels. All 8 ids exist on the page (checked by diff).*
 - [x] F3. Card 2 on `app/page.tsx`: title, desc, tag, slug, redBus-red tooltip, cover image. Gradient kept as fallback. Card 1 unchanged
   *Proof: card 2's desc is now "Book the return before you know the date. Tested with 3 travellers." The slug, cover, #C8102E tooltip and gradient fallback were kept. The diff touches only that line.*
-- [ ] F4. New styles in `globals.css` with the `cs-` prefix. Dark mode (`html.nerd-mode`) works
+- [x] F4. New styles in `globals.css` with the `cs-` prefix. Dark mode (`html.nerd-mode`) works
+  *Proof: one new class, `.cs-warn`, with a lighter amber under `html.nerd-mode`, added after the dark check found low contrast. Portfolio `8837c8e`, live.*
 
 ### Phase G: Record the design version
 - [x] G1. `CASESTUDY.md`: baseline (commit, date, screen count, v4 md5, frozen hashes, Figma), section-to-source map, image-to-source map
@@ -118,16 +120,24 @@ Every line here has to be ticked by the end. The phase items below say how.
   *Proof: page.tsx lines 1–2 name 33258c3 and point to CASESTUDY.md.*
 
 ### Phase H: Interrogate
-- [ ] H1. Every big claim on the page asked the interviewer's question and rated *answerable · partly · not answerable*. The unanswerable ones cut or labelled
-- [ ] H2. The question list given to Devansh to practise out loud
+- [x] H1. Every big claim on the page asked the interviewer's question and rated *answerable · partly · not answerable*. The unanswerable ones cut or labelled
+  *Proof: `casestudy-work/H_interrogate.md`. 22 claims rated: 16 answerable, 5 partly, 1 not answerable ("did the fix work"), which is labelled on the page in section 21.*
+- [x] H2. The question list given to Devansh to practise out loud
+  *Proof: 12 questions in `H_interrogate.md` §H2, also given in the final message.*
 
 ### Verification
-- [ ] V1. `npm run lint` and a production build pass. **Build runs on Vercel, not the laptop**
-- [ ] V2. Home card and case study page checked at desktop and mobile, in light and dark. The contents list follows the scroll. No sideways scroll, no broken images
-- [ ] V3. Every number on the page greps back to its source file
-- [ ] V4. Copy check: no dashes, no humanizer tells, no jargon
-- [ ] V5. Deployed. Live URL checked with curl: HTTP 200, expected heading, embed loads
-- [ ] V6. RedBus repo: CASESTUDY.md and the LOG entry committed and pushed. Frozen hashes unchanged
+- [x] V1. `npm run lint` and a production build pass. **Build runs on Vercel, not the laptop**
+  *Proof: eslint is clean on the new and changed redBus files. The only errors are the 2 in `app/page.tsx` (setState in effect), which were already on HEAD. Vercel built `d4a037a`, and the page is live at HTTP 200.*
+- [x] V2. Home card and case study page checked at desktop and mobile, in light and dark. The contents list follows the scroll. No sideways scroll, no broken images
+  *Proof: checked in the in-app browser on the live site, one tab, at 1024, 1440 and 375 wide. 22 sections, scrollWidth = viewport at every size, 0 broken images. Dark (nerd-mode) was checked on mobile, which found the low-contrast amber, now fixed. The contents list highlights "The Design" after a real wheel scroll to section 15. The embed renders on a phone.*
+- [x] V3. Every number on the page greps back to its source file
+  *Proof: 29 numbers extracted from page.tsx, and every one is in B2's fact sheet (dates, %, ₹30, 14 cards, 4,957px, 38 plus 13 screens, 8 hours, 50%).*
+- [x] V4. Copy check: no dashes, no humanizer tells, no jargon
+  *Proof: grep on page.tsx found 0 em or en dashes in copy and 0 tell words.*
+- [x] V5. Deployed. Live URL checked with curl: HTTP 200, expected heading, embed loads
+  *Proof: /work/redbus returns 200 with "Never again", "Sai asked me to hide the risky buses" and `cs-warn` in the HTML. The embed URL returns 200, all 11 images 200, and the home page 200. On the live home page, card 2 links to /work/redbus with its cover loaded, and card 1 is unchanged (checked in the DOM). Two screenshots came out blank mid-smooth-scroll, so the card was checked through the DOM.*
+- [x] V6. RedBus repo: CASESTUDY.md and the LOG entry committed and pushed. Frozen hashes unchanged
+  *Proof: `d779c2b` pushed. md5 returned 164de4e8…, 164de4e8…, d1e7d291…, 2c7461d8….*
 
 ---
 
@@ -138,6 +148,7 @@ Every line here has to be ticked by the end. The phase items below say how.
 - **No draft review before building.** D6 is skipped at his call
 
 ## Log of this checklist
+- 13 Sep: **All items ticked.** H and V done. Redo live at portfolio `8837c8e`. RedBus docs at the next commit.
 - 13 Sep: **E, F (F1–F3), G done.** Redo live at portfolio `d4a037a`. F4 waits on the V2 dark-mode check.
 - 13 Sep: **Phase D done** (D1–D5; D6 skipped at Devansh's call). P7 ticked.
 - 13 Sep: **Phase C done** (C1–C3).
