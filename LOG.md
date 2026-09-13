@@ -10422,3 +10422,8 @@ Devansh: "No, resume should not open like this. It should open on a new page, ju
 
 CHANGE  ·  2026-09-14  ·  molades-case  ·  Source: user
 Devansh on /resume: "Nothing around it should be visible. Only the résumé should be visible." Chrome's PDF viewer adds a toolbar, a page-thumbnail strip and grey margins, and hiding the toolbar still leaves the margins. So the page now shows the CV as an image of the page: rendered from the PDF with macOS Quick Look at 1696 by 2400 (about twice the column width) and saved as WebP. There is no viewer, frame or heading. This also fixes Android, which won't show a PDF inside a page. The trade-off is that the links inside the CV (portfolio, LinkedIn, GitHub, email) are not clickable. The unused PDF was removed from the site.
+
+CHANGE  ·  2026-09-14  ·  molades-case  ·  Source: user
+Devansh on /resume: "When the resume is open, the user should not scroll. All of the resume should be visible in one view, and also it should be of the original quality. Why am I seeing a pixelated resume?" The softness had two causes: Quick Look rendered the page at only 1696 px wide, and the Next image optimiser then sent a smaller copy. Now the CV is drawn from the PDF with PDFKit at 3x (2382 by 3369), saved as lossless WebP (340 KB), and served as a plain img, skipping the optimiser. The page is locked to the screen height and the CV is sized to fit above the dock, so the whole page shows with no scroll.
+LEARNED  ·  2026-09-14  ·  molades-case
+next/image picks a copy from its width list based on the displayed size, so a document image with fine text can arrive smaller than the screen needs. Serve text-heavy images unoptimised, at 2x to 3x the display size.
