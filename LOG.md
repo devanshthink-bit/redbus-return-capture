@@ -10360,3 +10360,6 @@ Devansh: "why these lines are running so close to phone edge keep some space". T
 CHANGE  ·  2026-09-14  ·  molades-case  ·  Source: user
 Devansh: "These headings and numbers are still too big. Make them a little smaller and the same size. In the top image of the mock inside the case study, make the middle mock bigger. Since the other two mocks on each side are smaller, don't make them slant; make them straight."
 The case-study title, the act titles and every big number (the survey stats, the "why RedBus" figures, the merit scores) are now all 26px. Section headings stay one step below, at 22px. In the hero, the middle phone went from 300 to 340px, and the two side phones (236px) now stand straight, tucked slightly behind and lower. The home card keeps its tilted trio; he only asked about the case-study hero.
+
+CORRECTION  ·  2026-09-14  ·  molades-case  ·  Source: user
+Devansh on the case-study hero: "No, earlier they were slanted. Keep the same size, but make them all straight and all centered vertically, with space between them. Don't hide them behind any." My last change had made the side phones straight but still tucked behind the middle one and set lower. Now all three stand upright at the same sizes (340px middle, 236px sides), share one vertical centre, sit 24px apart and don't overlap.
