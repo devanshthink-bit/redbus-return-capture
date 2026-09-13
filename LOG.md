@@ -10356,3 +10356,7 @@ CORRECTION, same day. Devansh: "number on the annotation were looking good i onl
 
 CHANGE  ·  2026-09-14  ·  molades-case  ·  Source: user
 Devansh: "why these lines are running so close to phone edge keep some space". The vertical part of each connector line had been placed halfway between the note and its box. When a box sits near the screen edge, halfway lands on the phone's bezel. The vertical run is now centred in the gap between the notes and the phone frame, and lines on the same side are staggered 8px so they don't overlap. The gap itself went from 40 to 64px.
+
+CHANGE  ·  2026-09-14  ·  molades-case  ·  Source: user
+Devansh: "These headings and numbers are still too big. Make them a little smaller and the same size. In the top image of the mock inside the case study, make the middle mock bigger. Since the other two mocks on each side are smaller, don't make them slant; make them straight."
+The case-study title, the act titles and every big number (the survey stats, the "why RedBus" figures, the merit scores) are now all 26px. Section headings stay one step below, at 22px. In the hero, the middle phone went from 300 to 340px, and the two side phones (236px) now stand straight, tucked slightly behind and lower. The home card keeps its tilted trio; he only asked about the case-study hero.
