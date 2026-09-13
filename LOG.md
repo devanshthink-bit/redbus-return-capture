@@ -10372,3 +10372,6 @@ Devansh: "There should not be a gap between them. Either two should be a little 
 
 CHANGE  ·  2026-09-14  ·  molades-case  ·  Source: user
 Devansh: "This panel is overlapping with the content. remove DS. Pressing Escape is not closing it. There should be a cross icon to close it." Ask Devansh now pushes the page aside on screens 1100px and wider, and still covers the page on smaller screens. "DS" is removed. A close cross sits beside the menu. Escape now listens in the capture phase, so nothing on the page can swallow the key first.
+
+CHANGE  ·  2026-09-14  ·  molades-case  ·  Source: user
+Devansh: "Cursor is hiding inside this ask panel... the whole content doesnt look centered. It is more towards the left." The site hides the native pointer everywhere for its custom cursor, and the panel hides the custom one, so no cursor showed. The native pointer is now restored on the Ask button and inside the panel. When the panel opens on screens 1360px and wider, where the contents list is fixed on the left, the page also leaves 200px on the left, so it sits centred between the list and the panel.
