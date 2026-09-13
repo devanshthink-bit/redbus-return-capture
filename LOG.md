@@ -10363,3 +10363,6 @@ The case-study title, the act titles and every big number (the survey stats, the
 
 CORRECTION  ·  2026-09-14  ·  molades-case  ·  Source: user
 Devansh on the case-study hero: "No, earlier they were slanted. Keep the same size, but make them all straight and all centered vertically, with space between them. Don't hide them behind any." My last change had made the side phones straight but still tucked behind the middle one and set lower. Now all three stand upright at the same sizes (340px middle, 236px sides), share one vertical centre, sit 24px apart and don't overlap.
+
+CHANGE  ·  2026-09-14  ·  molades-case  ·  Source: user
+Devansh: "The side screens are looking too small, and the middle one is looking too big." Hero phones are now closer in size: middle 296px (was 340), sides 262px (was 236), 22px apart, still upright and centred.
