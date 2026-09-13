@@ -10369,3 +10369,6 @@ Devansh: "The side screens are looking too small, and the middle one is looking 
 
 CHANGE  ·  2026-09-14  ·  molades-case  ·  Source: user
 Devansh: "There should not be a gap between them. Either two should be a little inside, only a little, not too much." The hero side phones (262px) now tuck 18px behind the middle one (296px), which sits in front. No gap, all upright and vertically centred.
+
+CHANGE  ·  2026-09-14  ·  molades-case  ·  Source: user
+Devansh: "This panel is overlapping with the content. remove DS. Pressing Escape is not closing it. There should be a cross icon to close it." Ask Devansh now pushes the page aside on screens 1100px and wider, and still covers the page on smaller screens. "DS" is removed. A close cross sits beside the menu. Escape now listens in the capture phase, so nothing on the page can swallow the key first.
