@@ -40,7 +40,7 @@ Every line here has to be ticked by the end. The phase items below say how.
   *Proof: CASESTUDY.md baseline and section map; page comment; memory (G1–G4).*
 - [x] P14. Use **all the RedBus project files** (LOG and the rest) so every fact is correct
   *Proof: A3 below. Every file was read, and B2's fact sheet ties each number to one of them.*
-- [ ] P15. Ask Devansh whenever something is needed from him
+- [x] P15. Ask Devansh whenever something is needed from him
   *So far: asked about timeline, role and build credit on 13 Sep, and got answers. More asks get logged here.*
 - [x] P16. A checklist, kept up to date and ticked item by item (this file)
   *Proof: this file, committed and sent after Phase A, after B–D, and at the end.*
