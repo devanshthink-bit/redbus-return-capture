@@ -37,8 +37,8 @@ map below, and update that section and its image.
 
 | # | Arc beat | Heading | Facts come from | Visual | Visual source |
 |---|---|---|---|---|---|
-| Home card | n/a | Booking the trip home · 2026 (Jahanvi's anatomy: brand, what I did, tags, screens, title + year, one line, impact) | RESEARCH, LOG 6 Sep kill list | `cover.webp` | hi-fi 06a, 05, 16 |
-| Hero | n/a | redBus · Booking the trip home | SCOPE; Devansh's answers (6 weeks, solo, self-initiated, Figma + Claude Code) | `cover.webp` | hi-fi 06a, 05, 16 |
+| Home card | n/a | Booking the trip home · 2026 (Jahanvi's anatomy: brand, what I did, tags, screens, title + year, one line, impact) | RESEARCH, LOG 6 Sep kill list | three phones | hi-fi 06a, 05, 16 |
+| Hero | n/a | redBus · Booking the trip home | SCOPE; Devansh's answers (6 weeks, solo, self-initiated, Figma + Claude Code) | three phones | hi-fi 06a, 05, 16 |
 | 01 | Hook | Soumya booked her bus home early once. Never again. | NOTES n49 n51 | trip strip (code) | none |
 | 02 | Hook | Most people wait to book the return. Nobody forgets. | RESEARCH l.19–26, NOTES n72 | stat grid (code) | none |
 | 03 | Pinch 1 | The fix already exists. It's a badge on a bus. | RESEARCH l.27, TERMS 3a | `today.webp` | `RedBusScreenshots/IMG_4553.PNG` |
@@ -77,15 +77,21 @@ change shows up there with no case study edit. The images and the words don't fo
 
 ## How the images were made
 
-The redo reused the first attempt's 11 images unchanged. Each one was checked against the
-current design before reuse. No image was re-rendered, and Figma was not edited.
+**Since 13 Sep (portfolio `bd8f379`), every screen sits in one iPhone mock built in code**
+(`components/IPhone.tsx`, copied from this viewer's `.deviceframe`: titanium rim, bezel, side
+buttons, Dynamic Island). All static screens are the same size (272px frame); the live prototype
+is bigger (430px) on the viewer's red glow with a "Live prototype" badge. Devansh asked for this:
+*"Use really realistic and polished mock of iphone everywhere... all of them should be of the same
+size"*, then *"prototype shud be big... it shud look different from normal designs"*.
 
-- **Hi-fi screens:** rendered headless from `hifi/app.html?screen=NN&filled` at 2×, then cropped
-  to one 844pt viewport.
-- **Lo-fi screens:** the frozen files and `index.html` at 402×874, dev rails hidden.
-- **Composition:** one HTML page per image (phone frame, blush background, Caveat notes),
-  screenshotted at 2×, saved as WebP at 2400px.
-- **Real app screenshot:** `IMG_4553.PNG`.
+The screens are plain full-screen images in `public/images/redbus/screens/`:
 
-Rendering is heavy on Devansh's laptop (headless Chrome shut it down twice on 13 Sep). Re-render
-only the images whose screens changed, one at a time.
+| File | Source |
+|---|---|
+| `hifi_05, 06a, 06b, 08, 13, 16, S3` | `hifi/app.html?screen=NN&filled`, headless at 2×, full frame; then cut to one 390×844 phone screen: the 47pt status bar, the content (06a from 818pt, 06b from 510pt, 08 from 1555pt, the others from the top), and the pinned bottom bar |
+| `lofi_v1` … `lofi_v4` | temp copies of `frozen/v1–v3.html` and `index.html` (v4), opened on `s-backby` / `s-window` at 402×825, 2×. The mock draws the 49px status bar on top, as the viewer does. Frozen files untouched |
+| `real_4553` | `RedBusScreenshots/IMG_4553.PNG` (in Downloads/RedBus Case Docs), scaled to 804 wide |
+
+Renders were one Chrome at a time with pauses (the laptop shut down twice on 13 Sep under batch
+rendering). To redo one screen, re-render that one only. The old composite images
+(cover, today, v1, versions, fix, f1–f5, state) were deleted.

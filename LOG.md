@@ -10266,3 +10266,24 @@ under it the title with a 2026 chip, one grey line, and an amber impact line ("T
 travellers. The two ways it failed shaped the final design."). Hover shows a dark "View project"
 pill. Fonts and tokens stay the site's. Card 1 (Sidedoor) keeps the old card, so the two cards now
 differ. [Devansh to decide whether card 1 moves to the same anatomy.] Portfolio `bcb9a03`.
+
+CHANGE  ·  2026-09-13  ·  molades-case  ·  Source: user
+
+**Every screen in the case study now sits in the viewer's own iPhone mock, and the live prototype
+stands apart.** Devansh: *"make redbus everywhere as 'RedBus'. Use really realistic and polished mock
+of iphone everywhere in the case study like [the viewer] uses... why few screens doesnt have mock?
+like first design? it shud always show full app screen UI with realistic mock. And all of them
+should be of the same size, including the working prototype"*, then mid-task: *"prototype shud be big
+not equal size but it shud feel different that its prototype shud look different from normal
+designs"*.
+
+- The mock is code (`components/IPhone.tsx` in the portfolio), not a picture: the same construction
+  as `.deviceframe` here, drawn at 430×902 and scaled as one piece. 18 static phones at 272px; the
+  prototype at 430px on the red glow with a pulsing "Live prototype" badge.
+- The old composites showed crops, some without a status bar (the v1 "first design"). Each screen
+  is now a full phone screen: 7 hi-fi renders cut to status bar + content + pinned bottom bar, 4
+  lo-fi renders under a drawn status bar, and the real app screenshot.
+- Brand written "RedBus" on the page and card, at his request. [Note: the app writes it "redBus".]
+- Section 12's hand-built "Book a fixed date" card became the real 06b screen.
+- **Privacy check:** 08 and S3 carry Devansh's email and phone lower down; both crops stop above them.
+Portfolio `bd8f379`. Frozen hashes unchanged.

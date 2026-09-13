@@ -148,6 +148,7 @@ Every line here has to be ticked by the end. The phase items below say how.
 - **No draft review before building.** D6 is skipped at his call
 
 ## Log of this checklist
+- 13 Sep: all screens moved into one realistic iPhone mock (same size), the prototype bigger on a red stage, brand written RedBus (E1–E3, P9). 11 fresh renders, one at a time. Checked live on desktop and on mobile in dark mode: 18 phones at 272px, prototype 430px, 0 broken images. Portfolio `bd8f379`.
 - 13 Sep, after review: card 2 rebuilt to Jahanvi's six-part card (P3, F3). The earlier F3 tick kept the site's simpler card, and Devansh flagged it. Checked live on desktop and on mobile in dark mode. Portfolio `bcb9a03`.
 - 13 Sep, sanity pass: found C3's traceability tick overclaimed. The problem statement had dropped out of the redo, and the success metric was missing. Both were added to section 04, which also traces the page to RESEARCH's problem statement and to SCOPE's input metric.
 - 13 Sep: **All items ticked.** H and V done. Redo live at portfolio `8837c8e`. RedBus docs at the next commit.
