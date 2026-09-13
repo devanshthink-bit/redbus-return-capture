@@ -10366,3 +10366,6 @@ Devansh on the case-study hero: "No, earlier they were slanted. Keep the same si
 
 CHANGE  ·  2026-09-14  ·  molades-case  ·  Source: user
 Devansh: "The side screens are looking too small, and the middle one is looking too big." Hero phones are now closer in size: middle 296px (was 340), sides 262px (was 236), 22px apart, still upright and centred.
+
+CHANGE  ·  2026-09-14  ·  molades-case  ·  Source: user
+Devansh: "There should not be a gap between them. Either two should be a little inside, only a little, not too much." The hero side phones (262px) now tuck 18px behind the middle one (296px), which sits in front. No gap, all upright and vertically centred.
