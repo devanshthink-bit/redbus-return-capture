@@ -37,6 +37,7 @@ map below, and update that section and its image.
 
 | # | Arc beat | Heading | Facts come from | Visual | Visual source |
 |---|---|---|---|---|---|
+| Home card | n/a | Booking the trip home · 2026 (Jahanvi's anatomy: brand, what I did, tags, screens, title + year, one line, impact) | RESEARCH, LOG 6 Sep kill list | `cover.webp` | hi-fi 06a, 05, 16 |
 | Hero | n/a | redBus · Booking the trip home | SCOPE; Devansh's answers (6 weeks, solo, self-initiated, Figma + Claude Code) | `cover.webp` | hi-fi 06a, 05, 16 |
 | 01 | Hook | Soumya booked her bus home early once. Never again. | NOTES n49 n51 | trip strip (code) | none |
 | 02 | Hook | Most people wait to book the return. Nobody forgets. | RESEARCH l.19–26, NOTES n72 | stat grid (code) | none |

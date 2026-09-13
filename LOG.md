@@ -10254,3 +10254,15 @@ Devansh's answers: Timeline "6 weeks". Role "Solo, self-initiated". Tools line n
 Also fixed, found in the same read: CONTEXT §6 and §11 still called same-operator unverified and
 the 6 Sep fixes unbuilt; DEFENCE §12 and §13 still said "not tested"; DESIGN_LANGUAGE still named
 #C54646 as the accent. Portfolio commit `d4a037a`, live and checked with curl (HTTP 200).
+
+CHANGE  ·  2026-09-13  ·  molades-case  ·  Source: user
+
+**Card 2 on the home page now follows Jahanvi's card anatomy.** Devansh: *"case study card in home
+page doesnt follow Jahanavi portfolio's reference on how to do it"*. Phase A4 had kept the site's own
+card (image, title, hover tooltip) on the reading that P6, "use the portfolio's design language",
+outranked the reference. That was the wrong call for the card: the reference was the brief.
+Now: a tinted panel with the redBus mark, one line on what I did and the tags over the screens;
+under it the title with a 2026 chip, one grey line, and an amber impact line ("Tested with 3
+travellers. The two ways it failed shaped the final design."). Hover shows a dark "View project"
+pill. Fonts and tokens stay the site's. Card 1 (Sidedoor) keeps the old card, so the two cards now
+differ. [Devansh to decide whether card 1 moves to the same anatomy.] Portfolio `bcb9a03`.
