@@ -14,12 +14,13 @@ Every line here has to be ticked by the end. The phase items below say how.
 
 - [x] P1. Read and understand **all** of Jahanvi's screenshots: home page and all three case studies
   *Proof: A1 below. 88 of 88, one note each.*
-- [ ] P2. Read the storytelling PDF **end to end**
+- [x] P2. Read the storytelling PDF **end to end**
+  *Proof: A2 below. All 60 pages, as images and as text.*
 - [x] P3. Learn from Jahanvi how she writes and structures case studies **and home page case study cards**
   *Proof: the notes end with a 10-point "What I take from all 88" list, including the six-part card anatomy.*
 - [ ] P4. Put the redBus case study in the **second** card of the portfolio
-- [ ] P5. Do not look at the first card's case study (Sidedoor)
-  *Restart so far: the Sidedoor page has not been opened. Its helper code gets read in A4, its content never.*
+- [x] P5. Do not look at the first card's case study (Sidedoor)
+  *Proof: only lines 1–113 of the Sidedoor page were read, which are imports and seven helper components. Its content (lines 114–1126) was never opened. Card 1's data in `app/page.tsx` is left unchanged.*
 - [ ] P6. Use **the portfolio's own design language**
 - [ ] P7. Invoke **/humanizer** before writing, and apply all of its rules to every word
 - [ ] P8. Mentor's rule: **one heading, one subheading, one image** per section. Few words
@@ -28,7 +29,8 @@ Every line here has to be ticked by the end. The phase items below say how.
 - [ ] P11. **Creative headings like Jahanvi's.** No generic ones such as "Research" or "Iterations"
 - [ ] P12. Interesting to read. No clutter, no jargon, easy for anyone, structured end to end
 - [ ] P13. Record **which version of the design** the case study describes, so later changes can be traced to the right sections
-- [ ] P14. Use **all the RedBus project files** (LOG and the rest) so every fact is correct
+- [x] P14. Use **all the RedBus project files** (LOG and the rest) so every fact is correct
+  *Proof: A3 below. Every file was read, and B2's fact sheet ties each number to one of them.*
 - [ ] P15. Ask Devansh whenever something is needed from him
 - [ ] P16. A checklist, kept up to date and ticked item by item (this file)
 
@@ -39,9 +41,12 @@ Every line here has to be ticked by the end. The phase items below say how.
 ### Phase A: Read everything, end to end
 - [x] A1. All 88 Jahanvi screenshots (Home 11, CS1 37, CS2 20, CS3 20). Pattern sheet saved
   *Proof: `casestudy-work/A1_jahanvi_notes.md` (private, git-ignored) has 88 notes, one per file name. Checked by matching against the folder listing. One home screenshot (5.17.31) was missed in the first pass, found by that check, and read.*
-- [ ] A2. The whole deck, text and page images. Framework and open-mic checks written down
-- [ ] A3. `CONTEXT.md` in full, `LOG.md` end to end, RESEARCH, NOTES, BRIEF, CRITIQUE, DEFENCE, TERMS, TEST_SCRIPT, SCOPE
-- [ ] A4. The portfolio's design language: `globals.css`, `Hero`, `CaseStudyTOC`, the home card, and the Sidedoor page's **helper components only**
+- [x] A2. The whole deck, text and page images. Framework and open-mic checks written down
+  *Proof: `casestudy-work/A2_deck_notes.md` has page notes for all 60 pages (read as 15 sheets of 4), the text of all 60 pages in `deck/deck_text.txt`, the 6-step framework, the 7-point arc, the conflict rules, the voice and tone choice, and the 5 open-mic checks. It ends with how the framework applies to redBus.*
+- [x] A3. `CONTEXT.md` in full, `LOG.md` end to end, RESEARCH, NOTES, BRIEF, CRITIQUE, DEFENCE, TERMS, TEST_SCRIPT, SCOPE
+  *Proof: `casestudy-work/A3_redbus_notes.md` has notes for every file, and for LOG.md in ranges from line 1 to the last line (10,234), read in chunks. It ends with the late facts that change the story: 51 screens, the hi-fi's default answer (8 Sep), the 85% refund, same-operator changes, and the red now being #E81E38.*
+- [x] A4. The portfolio's design language: `globals.css`, `Hero`, `CaseStudyTOC`, the home card, and the Sidedoor page's **helper components only**
+  *Proof: `casestudy-work/A4_portfolio_design.md`. Tokens, type, layout, the TOC, the back button, the cursor and the home card are all written down. Found: the card's `tag` field is never rendered, so the visible card copy is the title plus the hover line.*
 
 ### Phase B: Braindump and fact sheet
 - [ ] B1. The deck's facilitation questions answered from the files, each with a source
@@ -101,6 +106,7 @@ Every line here has to be ticked by the end. The phase items below say how.
 - **No draft review before building.** D6 is skipped at his call
 
 ## Log of this checklist
+- 13 Sep: **Phase A done** (A1–A4). Ticked with proof: P1, P2, P3, P5, P14.
 - 13 Sep: restarted from zero at Devansh's request. The first attempt is live at
   /work/redbus. It ticked some of these items without showing proof and skipped others
   (no shared helpers file, no local build, no visual check on mobile or dark, no draft review).
