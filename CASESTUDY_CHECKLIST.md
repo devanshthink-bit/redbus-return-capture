@@ -148,6 +148,7 @@ Every line here has to be ticked by the end. The phase items below say how.
 - **No draft review before building.** D6 is skipped at his call
 
 ## Log of this checklist
+- 13 Sep, sanity pass: found C3's traceability tick overclaimed. The problem statement had dropped out of the redo, and the success metric was missing. Both were added to section 04, which also traces the page to RESEARCH's problem statement and to SCOPE's input metric.
 - 13 Sep: **All items ticked.** H and V done. Redo live at portfolio `8837c8e`. RedBus docs at the next commit.
 - 13 Sep: **E, F (F1–F3), G done.** Redo live at portfolio `d4a037a`. F4 waits on the V2 dark-mode check.
 - 13 Sep: **Phase D done** (D1–D5; D6 skipped at Devansh's call). P7 ticked.

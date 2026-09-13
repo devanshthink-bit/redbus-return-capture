@@ -22,7 +22,7 @@ It was written on **13 Sep 2026**, against the design exactly as it stood at the
 | Hi-fi screens | 51 (38 screens + 13 states), 51 files in `hifi/src/screens/` |
 | Frozen hashes | v1 and prototype `164de4e8…`, v2 `d1e7d291…`, v3 `2c7461d8…` |
 | Figma file | `t9srahcEB1ioKyytu0sEMs`, as of the 13 Sep token and red passes |
-| Portfolio commits | first attempt `194cea6` and `8435761`. **The redo, which is live, is the commit after `8435761`** (message starts "redBus case study, redo") |
+| Portfolio commits | first attempt `194cea6` and `8435761`. redo `d4a037a`, dark-mode fix `8837c8e`, problem statement and metric added in the commit after that (live) |
 
 ## How to find what changed since
 
@@ -41,7 +41,7 @@ map below, and update that section and its image.
 | 01 | Hook | Soumya booked her bus home early once. Never again. | NOTES n49 n51 | trip strip (code) | none |
 | 02 | Hook | Most people wait to book the return. Nobody forgets. | RESEARCH l.19–26, NOTES n72 | stat grid (code) | none |
 | 03 | Pinch 1 | The fix already exists. It's a badge on a bus. | RESEARCH l.27, TERMS 3a | `today.webp` | `RedBusScreenshots/IMG_4553.PNG` |
-| 04 | Pinch 1 | I couldn't hold a seat, set a fare or change a rule. | SCOPE, TERMS hard limits | rules card (code) | none |
+| 04 | Pinch 1 | I couldn't hold a seat, set a fare or change a rule. | RESEARCH problem statement, SCOPE (input metric, guardrail), TERMS hard limits | rules card (code) | none |
 | 05 | Plot turn 1 | So I stopped asking for the date. | BRIEF l.113, CONTEXT §15 | `v1.webp` | `frozen/v1.html` `s-backby` |
 | 06 | Midpoint | Then I attacked my own idea, and it came second. | CRITIQUE §2, l.314–315 | merit card (code) | none |
 | 07 | Midpoint | I also wrote something false into the product. | LOG l.1036–1055, DEFENCE l.1034 | before/after (code) | none |
