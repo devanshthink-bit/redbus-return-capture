@@ -10449,3 +10449,6 @@ Devansh: "Make the background color of this case study card on the homepage a li
 
 CHANGE  ·  2026-09-14  ·  molades-case  ·  Source: user
 Devansh: "Make the background subtle for the second "In Progress" case study card as well." The in-progress panel goes from #eff2f9 to #dfe6f3 down to a near-neutral cool grey-blue, #f7f8fb to #edf0f5, to match the softened RedBus card.
+
+CHANGE  ·  2026-09-14  ·  molades-case  ·  Source: user
+Devansh asked for a less generic heading than "Let's get in touch?" above the footer email, saw two rounds of options, and picked "The inbox is open." It replaces the old heading on every page that shows the footer.
