@@ -10436,3 +10436,8 @@ Devansh: "build a second card below redbus with some beautiful design signalling
 
 CHANGE  ·  2026-09-14  ·  molades-case  ·  Source: user
 Devansh: "Move all these options vertically on the right side of the résumé. At first, only show icons, and when the user hovers over them, smoothly expand to show the text also ... For download, use the download icon." The résumé actions now sit in a column off the résumé's right edge, which keeps the résumé itself centred. They're icon-only at rest, and the label slides out on hover or keyboard focus. Download uses Solar's download icon, where it had borrowed the dock's résumé icon. On phones there's no room at the side, so they become a row of icons above the résumé with no labels. Also: the home intro now starts "Hey, I am Devansh."
+
+CHANGE  ·  2026-09-14  ·  molades-case  ·  Source: user
+Devansh: "make this ~74% At other places also use rounded-off values with ~." Every decimal survey figure on the portfolio is now a whole number with a tilde: 73.9% to ~74%, 65.2% to ~65%, 26.1% to ~26%, 39.1% to ~39% (nine places, home card and case study). Whole-number figures (0%, 10%, 95%) stay as they are. The Ask Devansh knowledge file still holds the exact decimals.
+CHANGE  ·  2026-09-14  ·  molades-case  ·  Source: user
+Devansh: "whenever a user is hovering over any tapable thing, the finger cursor should come, not this rounded black cursor." Links, buttons, role=button, summary, labels, selects and checkable inputs now show the native hand cursor site-wide, and the custom circle hides over them. The rule sits in @layer base beside the site's "cursor: none !important", because a layered important rule beats any unlayered override.
