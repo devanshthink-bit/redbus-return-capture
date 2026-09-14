@@ -10441,3 +10441,8 @@ CHANGE  ·  2026-09-14  ·  molades-case  ·  Source: user
 Devansh: "make this ~74% At other places also use rounded-off values with ~." Every decimal survey figure on the portfolio is now a whole number with a tilde: 73.9% to ~74%, 65.2% to ~65%, 26.1% to ~26%, 39.1% to ~39% (nine places, home card and case study). Whole-number figures (0%, 10%, 95%) stay as they are. The Ask Devansh knowledge file still holds the exact decimals.
 CHANGE  ·  2026-09-14  ·  molades-case  ·  Source: user
 Devansh: "whenever a user is hovering over any tapable thing, the finger cursor should come, not this rounded black cursor." Links, buttons, role=button, summary, labels, selects and checkable inputs now show the native hand cursor site-wide, and the custom circle hides over them. The rule sits in @layer base beside the site's "cursor: none !important", because a layered important rule beats any unlayered override.
+
+CHANGE  ·  2026-09-14  ·  molades-case  ·  Source: user
+Devansh, on the RedBus home card: "Inside this card, why is this black circular cursor still visible?" then "Finger cursor should also not be visible inside this card." The card's "View project" label is its cursor, so work cards are now a no-cursor zone: no hand and no circle. The circle was coming back because moving off a phone image inside the card counted as leaving an image. Now it only returns once the pointer leaves every zone that hides it (links, buttons, images, work cards).
+CHANGE  ·  2026-09-14  ·  molades-case  ·  Source: user
+Devansh: "Make the background color of this case study card on the homepage a little less red and more modern and subtle." The RedBus card panel goes from #fdf2f4 to #f7e2e6 down to a near-neutral blush, #fbf7f7 to #f4ebec.
