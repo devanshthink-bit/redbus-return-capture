@@ -10433,3 +10433,6 @@ Devansh: "give a button to download the resume using the same icon as in the doc
 
 CHANGE  ·  2026-09-14  ·  molades-case  ·  Source: user
 Devansh: "build a second card below redbus with some beautiful design signalling that second case study is in progress, use different bg color". The home page now has a second, non-clickable card on a soft blue panel: a pulsing "In progress" status, dashed phone outlines with shimmering placeholder bars in the RedBus card's three-phone layout (they fan on hover), and "Coming soon". It names no project and makes no claims, because the second case study's subject hasn't been given. Motion stops for reduced-motion users.
+
+CHANGE  ·  2026-09-14  ·  molades-case  ·  Source: user
+Devansh: "Move all these options vertically on the right side of the résumé. At first, only show icons, and when the user hovers over them, smoothly expand to show the text also ... For download, use the download icon." The résumé actions now sit in a column off the résumé's right edge, which keeps the résumé itself centred. They're icon-only at rest, and the label slides out on hover or keyboard focus. Download uses Solar's download icon, where it had borrowed the dock's résumé icon. On phones there's no room at the side, so they become a row of icons above the résumé with no labels. Also: the home intro now starts "Hey, I am Devansh."
