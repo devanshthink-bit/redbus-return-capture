@@ -10446,3 +10446,6 @@ CHANGE  ·  2026-09-14  ·  molades-case  ·  Source: user
 Devansh, on the RedBus home card: "Inside this card, why is this black circular cursor still visible?" then "Finger cursor should also not be visible inside this card." The card's "View project" label is its cursor, so work cards are now a no-cursor zone: no hand and no circle. The circle was coming back because moving off a phone image inside the card counted as leaving an image. Now it only returns once the pointer leaves every zone that hides it (links, buttons, images, work cards).
 CHANGE  ·  2026-09-14  ·  molades-case  ·  Source: user
 Devansh: "Make the background color of this case study card on the homepage a little less red and more modern and subtle." The RedBus card panel goes from #fdf2f4 to #f7e2e6 down to a near-neutral blush, #fbf7f7 to #f4ebec.
+
+CHANGE  ·  2026-09-14  ·  molades-case  ·  Source: user
+Devansh: "Make the background subtle for the second "In Progress" case study card as well." The in-progress panel goes from #eff2f9 to #dfe6f3 down to a near-neutral cool grey-blue, #f7f8fb to #edf0f5, to match the softened RedBus card.
