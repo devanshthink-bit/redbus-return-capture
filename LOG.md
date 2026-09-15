@@ -10470,3 +10470,6 @@ Devansh, on the case study's opening: "It looks very weird and odd and very clut
 
 DECISION  ·  2026-09-15  ·  molades-case  ·  Source: user
 Reversed within the hour. Devansh: "Use earlier red only. It's looking bad." The RedBus name and the home card logo are back to the brand red #E81E38, in light and dark mode (portfolio a3e600e). The deeper #B42335 is dropped. Then: "Maybe use the RedBus logo before RedBus in the intro section." The case study title now puts the same unaltered logo the home card uses before the name (295fd21).
+
+CHANGE  ·  2026-09-15  ·  molades-case  ·  Source: user
+Devansh: "the case study headings and the paragraph below it are the same black color, so they are not giving contrast ... use a gray shade which goes best with the black heading ... This heading of Intro section looks too cramped." Inside the case study, paragraph text moves from #4a4948 to a warm #67645f (#b3aea6 in dark mode), so the #1d1d1d headings stand apart. The title gets 10px between the RedBus line and the title line (portfolio ba441da).
