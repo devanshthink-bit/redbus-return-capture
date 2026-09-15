@@ -45,6 +45,7 @@ is covered. All copy went through the humanizer skill.
 | Act 1 | Soumya booked her bus home early once. Never again. | NOTES n49 n51 | trip strip (code) |
 | | Most people wait to book the return. Nobody forgets. | RESEARCH l.19–26, n72 | stat grid |
 | | The fix already exists. It's a badge on a bus. | RESEARCH l.27 | real app IMG_4553 |
+| | So why not just use FlexiTicket? (added 15 Sep) | DEFENCE "Why not just use FlexiTicket?", n73, n07 | 39.1% card and Anand's quote |
 | | The rules made waiting the safe choice. | BRIEF "7 rules across 2 products", TERMS FAQ 3 | knot card |
 | | A return booked later is often booked elsewhere. | RESEARCH 26.1%, artefacts.html business lens, DEFENCE counter-metric | 3 cards |
 | | I couldn't hold a seat, set a fare or change a rule. | RESEARCH problem statement, SCOPE, TERMS | rules card |
@@ -53,12 +54,14 @@ is covered. All copy went through the humanizer skill.
 | | Now try it yourself. | 51 screens | live embed |
 | Act 3 | It started as 102 sticky notes. | RESEARCH, artefacts.html | board crop, surnames masked |
 | | The obvious ideas died first. | CONTEXT §15 | 16-idea grid |
+| | I gave the return its own step, knowing it was the riskiest place. (added 15 Sep) | LOG 3 Aug Shape 1, 30 Aug no confirmation dialog | three rows: rejected, rejected, picked |
 | | Then I attacked my own idea, and it came second. | CRITIQUE §2, l.314–315 | merit card |
 | | I also wrote something false into the product. | LOG l.1036, DEFENCE l.1034 | before/after |
-| | My mentor asked three questions I couldn't answer. | LOG l.2108 | Q&A |
+| | Rajat asked three questions I couldn't answer. | LOG l.2108 | Q&A |
 | | How I stopped booking the cheapest day. | LOG l.1349, 1398, 4794 | lo-fi v1–v4 |
+| | I got the price on each day wrong twice. (added 15 Sep) | LOG 2 Sep "A day is priced at the cheapest bus that keeps the date change" | three rows: failed, failed, now |
 | | So I booked a real ticket to check one rule. | TERMS l.249, LOG 2 Sep | real IMG_5199 |
-| | Then my mentor asked: isn't FlexiTicket better? | LOG 2 Sep ("the week picks the day"; 29 days) | before/after |
+| | Then Rajat asked: isn't FlexiTicket better? | LOG 2 Sep ("the week picks the day"; 29 days) | before/after |
 | | Three people tested it. By my own rules, it failed. | LOG l.5490 | kill list |
 | | One line, read three wrong ways. | LOG l.5494, 5557, 5629 | quotes |
 | | How I made the calendar ask first. | LOG 6 Sep (mode question, Swiggy Crew toggle) | lo-fi v3, v4 |
