@@ -102,7 +102,7 @@ The screens are plain full-screen images in `public/images/redbus/screens/`:
 
 | File | Source |
 |---|---|
-| `hifi_05, 06a, 06b, 08, 13, 16, S3, S6, S9` | `hifi/app.html?screen=NN&filled`, headless at 2×, full frame; then cut to one 390×844 phone screen: the 47pt status bar, the content (06a from 818pt, 06b from 510pt, 08 from 1555pt, the others from the top), and the pinned bottom bar |
+| `hifi_05, 05a, 06a, 06b, 08, 13, 16, S3, S6, S9` | `hifi/app.html?screen=NN&filled`, headless at 2×, full frame; then cut to one 390×844 phone screen: the 47pt status bar, the content (06a from 818pt, 06b from 510pt, 08 from 1555pt, the others from the top), and the pinned bottom bar |
 | `lofi_v1` … `lofi_v4` | temp copies of `frozen/v1–v3.html` and `index.html` (v4), opened on `s-backby` / `s-window` at 402×825, 2×. The mock draws the 49px status bar on top, as the viewer does. Frozen files untouched |
 | `real_4553`, `real_5199` | `RedBusScreenshots/IMG_4553.PNG` (in Downloads/RedBus Case Docs), scaled to 804 wide |
 
