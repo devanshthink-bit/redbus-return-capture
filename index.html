@@ -568,21 +568,21 @@ body.hifi-on .phone,body.hifi-on .legacy{display:none}
 /* Numbered steps. The order is the story, so the number carries information: the presenter bar
    says "5 / 15" and the list says 05. Hidden rows take no number (display:none makes no box). */
 .pcol.b .dev:not(.states){counter-reset:step}
-.pcol.b .dev:not(.states) > button{counter-increment:step;display:flex;align-items:baseline;gap:10px}
+.pcol.b .dev:not(.states) > button{counter-increment:step;display:flex;align-items:center;gap:10px}
 .pcol.b .dev:not(.states) > button.minor{display:none}
-.pcol.b .dev:not(.states) > button::before{content:counter(step,decimal-leading-zero);
- font-family:var(--s-mono);font-size:10.5px;font-weight:600;color:var(--s-on-45);min-width:16px;
- font-variant-numeric:tabular-nums}
-.pcol.b .dev:not(.states) > button[aria-pressed="true"]::before,
-.pcol.b .dev:not(.states) > button[data-lit]::before{color:#C8102E}
+/* Drawn like the Figma annotation pins (Devansh, 15 Sep: "make numbers like this as in
+   annotations"): a red disc, the number in white, no leading zero. */
+.pcol.b .dev:not(.states) > button::before,
+.pcol.b .statelist > button::before{
+ flex:0 0 20px;width:20px;height:20px;border-radius:50%;background:#E81E38;color:#fff;
+ display:flex;align-items:center;justify-content:center;
+ font-size:10.5px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.pcol.b .dev:not(.states) > button::before{content:counter(step)}
 /* The states are numbered the same way, in their own run -- Devansh: "use the number in each state,
    just like there are numbers in the screens". The count on the heading went at the same time. */
 .pcol.b .statelist{counter-reset:state}
-.pcol.b .statelist > button{counter-increment:state;display:flex;align-items:baseline;gap:10px}
-.pcol.b .statelist > button::before{content:counter(state,decimal-leading-zero);
- font-family:var(--s-mono);font-size:10.5px;font-weight:600;color:var(--s-on-45);min-width:16px;
- font-variant-numeric:tabular-nums}
-.pcol.b .statelist > button[aria-pressed="true"]::before{color:#C8102E}
+.pcol.b .statelist > button{counter-increment:state;display:flex;align-items:center;gap:10px}
+.pcol.b .statelist > button::before{content:counter(state)}
 .dev button[data-lit]{background:var(--s-red-soft);color:#C8102E;font-weight:700}
 /* The highlight slides between rows, like the switches (Devansh, 13 Sep: "make it smooth and
    satisfying for screens and states also"). It is the list's own ::before, moved by variables,
