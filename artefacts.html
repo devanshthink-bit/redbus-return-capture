@@ -251,7 +251,56 @@ document.addEventListener('DOMContentLoaded',function(){
     });
   });
 });
-</script></head><body><div class="page"><header class="masthead"><h1>RedBus, Return capture at checkout</h1><p>Every artefact from the provisional bet through to the design brief, in the order it was made. 8 interviews &middot; 102 atomic notes &middot; 6 clusters &middot; survey n=23 qualified from 61.</p></header><section class="frame wide"><div class="flab">01 · The Business Lens</div><p class="fsub">How RedBus makes money, and the number that proves value was delivered. This sets the AARRR stage and the provisional metric on the scope card that follows.</p><div class="stephead">Business model &rarr; strategy &rarr; design pressure</div><div class="bmchain"><div class="bm"><span>Business model</span><h4>Transaction marketplace</h4><p>A commission on every ticket, paid by the operator, reported at roughly <b>10–20%</b>, and the large majority of revenue. A second line, the seat-inventory software sold to operators, is untouched by this work. Owned by MakeMyTrip. <span class="cav">Figures are publicly reported, not verified here.</span></p></div><div class="bmarw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div><div class="bm"><span>Strategic bet, as it bears on this work</span><h4>Win the whole journey, not half of it</h4><p>A round trip closed in one session is <b>two commissions at one acquisition cost</b>. The second leg is already intended by the traveller, 73.9% book it eventually, but 26.1% book it somewhere else.</p></div><div class="bmarw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div><div class="bm"><span>Design pressure this creates</span><h4>Frequency and trust</h4><p>A transaction model rewards fast, frictionless and confidence-building. It punishes anything that slows the outbound, which is why the return step is <b>skippable, never modal</b>, and sits behind a guardrail rather than a target.</p></div></div><div class="stephead">North Star Metric</div><div class="nsmwrap"><div class="nsmleft"><svg viewBox="0 0 460 460" class="rings" role="img" aria-label="North Star at the centre, the input metric around it as the lever, output metrics outside as consequences">
+</script><style>
+/* RedBus theme, 24 Sep 2026 (styles only, no content changed). Values from DESIGN_LANGUAGE.md: page #F1F1F6,
+   white cards, ink #1D1D1D, muted #636363, redBus red #E81E38 for what you act on, chips #E9EAF6,
+   rating green #458442 on #E0F3D9, radius 12, pill buttons. */
+body{background:#F1F1F6;color:#1D1D1D}
+::selection{background:rgba(232,30,56,.16)}
+.masthead{background:#E81E38;color:#fff;border-radius:16px;padding:30px 32px 32px;margin:0 0 32px;position:relative;overflow:hidden;
+ box-shadow:0 10px 30px -12px rgba(232,30,56,.55)}
+.masthead::after{content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.08)}
+.masthead::before{content:"";position:absolute;right:60px;bottom:-110px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.06)}
+.masthead h1{color:#fff;position:relative;z-index:1}
+.masthead p{color:rgba(255,255,255,.88);position:relative;z-index:1}
+.frame,.js .frame:not(.open){background:#fff;border:0;border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.frame.wide,.js .frame.open{background:#fff}
+.js .frame.open{box-shadow:0 1px 2px rgba(0,0,0,.05),0 12px 30px -14px rgba(29,29,29,.18)}
+.js .frame:not(:last-of-type)::after{background:#DADAE3}
+.fnum{background:#FDE8EB;color:#E81E38}
+.frame.open .fnum,.fhead:hover .fnum{background:#E81E38;color:#fff}
+.fhead .flab{color:#1D1D1D}
+.fhead .fsub,.masthead p,.fsub{color:#636363}
+.masthead p{color:rgba(255,255,255,.88)}
+.fhead:hover .fchev,.frame.open .fchev{color:#E81E38}
+.fhead:focus-visible{outline-color:#E81E38}
+.flab,.qlab,.crow span,.pmeta span,.stephead,.bm span,.cn span,.lp span,.nsmt th,.nsmcall span,.lbl{color:#636363}
+.card,.bm,.lp,.stat,.insight,.prob-final,.nsmt,.loopsvg,.mg,.quotecard,.van{border-color:#E6E6E6}
+.k{background:#F7F7FA;color:#636363}
+.brief .k{background:#FDE8EB;color:#B3122A}
+.jtbd b,.insjtbd b,.sowhat b{color:#B3122A}
+.cnt,.fromc,.subh span{background:#E9EAF6;color:#1D1D1D}
+.pill{border-radius:24px}
+.pill.in{background:#E0F3D9;color:#2E5C2A}.pill.out{background:#EDEDED;color:#636363}.pill.np{background:#E9EAF6;color:#1D1D1D}
+.nsmcall{background:#FDE8EB;border-color:#F8C3CB}
+.nsmcall span{color:#B3122A}
+.contra>div{background:#FDE8EB;border-color:#F8C3CB}
+.van{border-color:#F3C2C8}.van b{color:#B3122A}
+.cn.n{background:#FDE8EB}
+.loopsvg .ln rect{fill:#F7F7FA;stroke:#E3E3EA}
+.loopsvg path{stroke:#B9B9C4}.loopsvg marker path{fill:#B9B9C4;stroke:none}
+.loopsvg .lcap{fill:#B3122A}
+.loopsvg .ln.hi rect{fill:#FDE8EB;stroke:#F8C3CB}
+.rings .rg-cap-n{fill:#B3122A}
+.rings circle:nth-of-type(1){fill:#F4F4F8;stroke:#E3E3EA}
+.rings circle:nth-of-type(2){fill:#FEF1F3;stroke:#F8D3D9}
+.rings circle:nth-of-type(3){fill:#FBD9DF;stroke:#F2A9B4}
+.rings .rg-cap-o{fill:#636363}.rings .rg-cap-m{fill:#B3122A}
+.lm,.nsmt td.pass{color:#2E5C2A}.lm{background:#E0F3D9}
+a{color:#E81E38}
+@media(max-width:720px){.masthead{padding:22px 20px 24px;border-radius:14px}}
+</style>
+</head><body><div class="page"><header class="masthead"><h1>RedBus, Return capture at checkout</h1><p>Every artefact from the provisional bet through to the design brief, in the order it was made. 8 interviews &middot; 102 atomic notes &middot; 6 clusters &middot; survey n=23 qualified from 61.</p></header><section class="frame wide"><div class="flab">01 · The Business Lens</div><p class="fsub">How RedBus makes money, and the number that proves value was delivered. This sets the AARRR stage and the provisional metric on the scope card that follows.</p><div class="stephead">Business model &rarr; strategy &rarr; design pressure</div><div class="bmchain"><div class="bm"><span>Business model</span><h4>Transaction marketplace</h4><p>A commission on every ticket, paid by the operator, reported at roughly <b>10–20%</b>, and the large majority of revenue. A second line, the seat-inventory software sold to operators, is untouched by this work. Owned by MakeMyTrip. <span class="cav">Figures are publicly reported, not verified here.</span></p></div><div class="bmarw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div><div class="bm"><span>Strategic bet, as it bears on this work</span><h4>Win the whole journey, not half of it</h4><p>A round trip closed in one session is <b>two commissions at one acquisition cost</b>. The second leg is already intended by the traveller, 73.9% book it eventually, but 26.1% book it somewhere else.</p></div><div class="bmarw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div><div class="bm"><span>Design pressure this creates</span><h4>Frequency and trust</h4><p>A transaction model rewards fast, frictionless and confidence-building. It punishes anything that slows the outbound, which is why the return step is <b>skippable, never modal</b>, and sits behind a guardrail rather than a target.</p></div></div><div class="stephead">North Star Metric</div><div class="nsmwrap"><div class="nsmleft"><svg viewBox="0 0 460 460" class="rings" role="img" aria-label="North Star at the centre, the input metric around it as the lever, output metrics outside as consequences">
  <defs>
   <path id="rg-o-top" d="M 54,230 A 176,176 0 0,1 406,230"/>
   <path id="rg-o-bot" d="M 34,230 A 196,196 0 0,0 426,230"/>
