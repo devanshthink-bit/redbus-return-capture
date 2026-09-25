@@ -131,7 +131,7 @@ export default function Component06AYourReturnDayChosen() {
           </div>
         </div>
       </div>
-      <div className="content-stretch flex flex-col gap-[16px] items-start pb-[135px] pt-[13px] px-[16px] relative shrink-0 w-full" data-node-id="100:721" data-name="Content">
+      <div className="content-stretch flex flex-col gap-[16px] items-start pb-[149px] pt-[13px] px-[16px] relative shrink-0 w-full" data-node-id="100:721" data-name="Content">
         <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[25px] not-italic relative shrink-0 text-[20px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="514:3851" data-name="Question">
           Now pick one of your 7 days
         </p>
@@ -393,11 +393,13 @@ export default function Component06AYourReturnDayChosen() {
           </div>
         </div>
       </div>
-      <div className="absolute bg-[var(--surface\/default,white)] border-[var(--border\/divider,#e6e6e6)] border-solid border-t bottom-0 content-stretch flex flex-col items-center justify-between left-0 pb-[31px] pt-[20px] px-[16px] right-0" data-node-id="100:740" data-name="Action bar">
-        <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#636363] text-[12px] w-full" data-node-id="519:3808">
-          You choose the bus, seat and stops before you pay. The date can change later, to any day.
-        </p>
-        <div className="content-stretch flex gap-[16px] items-center overflow-clip relative shrink-0 w-full" data-node-id="519:3807" data-name="Action row">
+      <div className="absolute bg-[var(--surface\/default,white)] border-[var(--border\/divider,#e6e6e6)] border-solid border-t bottom-0 content-stretch flex flex-col gap-[12px] items-center left-0 pb-[31px] right-0" data-node-id="100:740" data-name="Action bar">
+        <div className="bg-[var(--surface\/accent-faint,#fcf0f0)] content-stretch flex items-start overflow-clip px-[16px] py-[10px] relative shrink-0 w-full" data-node-id="889:4513" data-name="Bar note">
+          <p className="[word-break:break-word] flex-[1_0_0] font-['Inter:Regular'] font-normal leading-[16px] min-w-px not-italic relative self-stretch text-[12px] text-[color:var(--text\/secondary,#636363)]" data-node-id="519:3808">
+            You choose the bus, seat and stops before you pay. The date can change later, to any day.
+          </p>
+        </div>
+        <div className="content-stretch flex gap-[16px] items-center overflow-clip px-[16px] relative shrink-0 w-full" data-node-id="519:3807" data-name="Action row">
           <div className="[word-break:break-word] content-stretch flex flex-col gap-[2px] items-start not-italic relative shrink-0 whitespace-nowrap" data-node-id="100:741" data-name="Summary">
             <p className="font-['Inter:Regular'] font-normal leading-[16px] relative shrink-0 text-[12px] text-[color:var(--text\/secondary,#636363)]" data-node-id="100:742">
               Return · Thu, 17 Sep · 23:55

@@ -426,7 +426,9 @@ body.hifi-on .phone,body.hifi-on .legacy{display:none}
 /* v3's accordion is gone in v4 -- .dayhead, .buses, .busrow, .bt and .bf went with it. */
 .bottombar.col{display:block}
 .bottombar.col .barrow{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.barnote{font-size:12px;color:var(--muted);margin-bottom:10px}
+/* 25 Sep: the note is a full-width strip on top of the bar, as in the hi-fi 06 frames, so it never crowds the button */
+.barnote{font-size:12px;line-height:16px;color:var(--muted);margin:-12px -16px 12px;padding:10px 16px;background:var(--page)}
+.barnote.warnink{background:#FDF1E7}
 /* ---------- home search ---------- */
 .searchcard{background:var(--raised);border:1px solid var(--edge);border-radius:12px;padding:4px 16px}
 .srow{padding:12px 0}

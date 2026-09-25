@@ -10518,3 +10518,10 @@ Because:   Devansh: "remove these".
 CHANGE · 2026-09-25 · viewer (index.html)
 Changed:   Screen and state rows drawn like the Sidedoor viewer's steps: pale number discs, solid red only on the current screen, a white lifted row, thin lines between numbers. An open States drawer takes the screen list's place instead of shrinking the panel.
 Because:   Devansh: "match all of these things so that these things look consistent".
+
+CHANGE · 2026-09-25 · The day list's bottom bar: the note becomes a strip
+Changed:   On 06, 06a and 06b the note sat inside the pay bar with no gap to the price and button, and read as overflowing. It is now a full-width strip on top of the bar (10/16 padding, 12/16 type): soft red (surface/accent-faint) for the plain note, amber (surface/warning-subtle, text/warning) for 06b's warning. The price and button sit alone in the row below, the way redBus's own pay bar looks. Content gets 14px more bottom room so nothing hides under the taller bar; 06a and 06b frames grew 14px.
+Where:     Figma (99:636, 100:717, 521:3805; strips 889:4512, 889:4513, 890:4510), hifi 06/06a/06b patched to the pull (the new get_design_context asset format breaks pull.py; only the bar and the Content padding changed), lo-fi .barnote in index.html, portfolio hifi_06a/06b.webp re-rendered at 2x from the build with the annotation boxes moved up 14px.
+Because:   Devansh: "This is overflowing in the button area... The real RedBus app would not show it like this."
+Verified:  Figma screenshots; viewer on localhost (hi-fi and lo-fi); diff vs Figma 06a 8.35%, 06b 8.81%, no band in the bar; case study beats on localhost.
+Note:      build/pull.py doesn't read the new `${assetPathPrefix}/x.svg` form yet. Fix before the next full re-pull.
