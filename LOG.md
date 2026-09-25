@@ -10510,3 +10510,7 @@ A friend's Windows laptop showed the home numbers under the dock. The web hero w
 CHANGE · 2026-09-25 · viewer (index.html)
 Changed:   Laid out like the Sidedoor viewer: one 340-400px column, 48px gap, the same side padding, the same phone size per window height and glow radius, the logo at the same top. Mark and "Return Capture" on one line with the eyebrow under it; screens in two numbered columns; States and Colours are drawers that start shut. The panel zooms down only when an opened drawer would not fit.
 Because:   Devansh preferred the Sidedoor presentation: "make it clean like SideDoor ... don't make it exactly the same", with every position consistent.
+
+CHANGE · 2026-09-25 · viewer (index.html)
+Changed:   Removed the "Colours from the live app" drawer and the footnote under it.
+Because:   Devansh: "remove these".

@@ -714,7 +714,7 @@ body.testing .devicewrap::before,body.testing .devicewrap::after{display:none}
    centred in the rest -- the same side padding, the same phone size per window height and the
    same glow radius, so the two presentations line up when switched between. The contents stay
    RedBus's own: the mark and name on one line, the screens in two numbered columns, the states
-   and the colours in two drawers that start shut.
+   in a drawer that starts shut.
    ============================================================================ */
 @media (min-width:521px){
   body:not(.testing) .stage{display:block;padding:0 clamp(32px,5vw,72px);overflow:hidden}
@@ -748,25 +748,18 @@ body.testing .layout{display:flex;justify-content:center}
 #hifirail > .dev:not(.states) > button,#screenrail > button{margin-top:0}
 .dev button{padding:4px 10px}
 
-/* States and Colours: two drawers in the Sidedoor shape, shut on arrival */
-.dev.states,.drawer{display:block;margin:16px 0 0;border-radius:12px;background:rgba(255,255,255,.62);
+/* States: a drawer in the Sidedoor shape, shut on arrival */
+.dev.states{display:block;margin:16px 0 0;border-radius:12px;background:rgba(255,255,255,.62);
  box-shadow:inset 0 0 0 1px rgba(23,23,28,.08)}
-.drawer{margin-top:8px}
-.dev.states>summary,.drawer>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;
+.dev.states>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;
  width:100%;padding:12px 14px;border-radius:12px;font-family:inherit;font-size:13px;font-weight:600;
  letter-spacing:-.006em;line-height:18px;text-transform:none;color:var(--s-on-80)}
-.drawer>summary::-webkit-details-marker{display:none}
-.dev.states>summary:hover,.drawer>summary:hover{background:rgba(255,255,255,.5)}
+.dev.states>summary:hover{background:rgba(255,255,255,.5)}
 .dev.states>summary .chev{margin-left:auto;font-size:0;width:16px;height:16px;transition:transform 200ms}
 .dev.states>summary .chev::before{content:'';display:block;width:6px;height:6px;margin:4px auto 0;
  border-right:1.6px solid var(--s-on-45);border-bottom:1.6px solid var(--s-on-45);transform:rotate(45deg)}
 .dev.states[open]>summary .chev{transform:rotate(180deg)}
-.drawer>summary svg{margin-left:auto;width:16px;height:16px;fill:none;stroke:var(--s-on-45);stroke-width:1.6;
- stroke-linecap:round;stroke-linejoin:round;transition:transform 200ms}
-.drawer[open]>summary svg{transform:rotate(180deg)}
 .statelist{margin:0;padding:0 4px 10px}
-.drawer .swatches{padding:2px 14px 14px}
-.panel .foot{margin-top:18px;border-top:0;padding-top:0;line-height:18px}
 </style>
 </head><body>
 
@@ -862,23 +855,6 @@ body.testing .layout{display:flex;justify-content:center}
 
 </div><!-- /pcol b -->
 
-<div class="pcol c">
-  <details class="drawer">
-    <summary><span>Colours from the live app</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></summary>
-    <div class="swatches">
-      <div class="tok"><i style="background:#E81E38"></i><div><b>Action</b><span>#E81E38</span></div></div>
-      <div class="tok"><i style="background:#458442"></i><div><b>Rating</b><span>#458442</span></div></div>
-      <div class="tok"><i style="background:#A45729"></i><div><b>Warning</b><span>#A45729</span></div></div>
-      <div class="tok"><i style="background:#E9EAF6"></i><div><b>Chip</b><span>#E9EAF6</span></div></div>
-      <div class="tok"><i style="background:#1D1D1D"></i><div><b>Ink</b><span>#1D1D1D</span></div></div>
-      <div class="tok"><i style="background:#F1F1F6"></i><div><b>Page</b><span>#F1F1F6</span></div></div>
-    </div>
-  </details>
-
-  <p class="foot">Everything on the phone works. Pick a return, change the bus, then move the
-    date from My&nbsp;Bookings. This is a concept, so none of it is live redBus data.</p>
-
-</div><!-- /pcol c -->
 </aside>
 
 <!-- ============ the phone ============ -->
@@ -3535,7 +3511,7 @@ function fitPanel(){
   if(!panel || document.body.classList.contains('testing') || innerWidth <= 520) return;
   const cols = [...panel.querySelectorAll('.pcol')];
   cols.forEach(c => c.style.zoom = '');
-  const last = panel.querySelector('.pcol.c');
+  const last = cols[cols.length - 1];
   if(!last) return;
   const top = cols[0].getBoundingClientRect().top, room = innerHeight - 24 - top;
   let z = 1;
