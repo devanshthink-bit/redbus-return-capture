@@ -10514,3 +10514,7 @@ Because:   Devansh preferred the Sidedoor presentation: "make it clean like Side
 CHANGE · 2026-09-25 · viewer (index.html)
 Changed:   Removed the "Colours from the live app" drawer and the footnote under it.
 Because:   Devansh: "remove these".
+
+CHANGE · 2026-09-25 · viewer (index.html)
+Changed:   Screen and state rows drawn like the Sidedoor viewer's steps: pale number discs, solid red only on the current screen, a white lifted row, thin lines between numbers. An open States drawer takes the screen list's place instead of shrinking the panel.
+Because:   Devansh: "match all of these things so that these things look consistent".

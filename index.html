@@ -760,6 +760,39 @@ body.testing .layout{display:flex;justify-content:center}
  border-right:1.6px solid var(--s-on-45);border-bottom:1.6px solid var(--s-on-45);transform:rotate(45deg)}
 .dev.states[open]>summary .chev{transform:rotate(180deg)}
 .statelist{margin:0;padding:0 4px 10px}
+
+/* 25 Sep: the screen and state rows drawn like the Sidedoor viewer's steps (Devansh: "match all of
+   these things so they look consistent"). Every number sits in a pale disc; only the screen on the
+   phone gets the solid red disc and a white row that lifts off the page. Numbers in a column are
+   joined by a thin line. */
+.panel .pcol.b .dev button{width:100%;gap:12px;padding:6px 10px 6px 4px;border-radius:10px;
+ font-size:14px;line-height:20px;font-weight:400;letter-spacing:-.011em;color:var(--s-on-80);position:relative}
+.panel .pcol.b .dev button:hover{background:rgba(255,255,255,.7);color:var(--s-on)}
+.panel .pcol.b .dev:not(.states) > button::before,
+.panel .pcol.b .statelist > button::before{flex:0 0 24px;width:24px;height:24px;background:#FDECEE;color:#C8102E;
+ font-size:11px;font-weight:600;box-shadow:0 0 0 3px #FBF6F6;position:relative;z-index:1;
+ transition:background 160ms ease,color 160ms ease,box-shadow 160ms ease}
+.panel .pcol.b .statelist > button::before{box-shadow:0 0 0 3px #FFFFFF}
+.panel .pcol.b .dev button[aria-pressed="true"],.panel .pcol.b .dev button[data-lit]{color:#17171C;font-weight:600;background:#fff;
+ box-shadow:0 1px 2px rgba(23,23,28,.06),0 4px 14px rgba(232,30,56,.10)}
+.panel .pcol.b .thumbed > button[aria-pressed="true"],.panel .pcol.b .thumbed > button[data-lit]{background:transparent;box-shadow:none}
+.panel .pcol.b .dev button[aria-pressed="true"]::before,.panel .pcol.b .dev button[data-lit]::before{background:#E81E38;color:#fff;box-shadow:0 0 0 3px #fff}
+/* the sliding highlight is the white row */
+.panel .pcol.b .thumbed::before{opacity:1}
+.panel .pcol.b .dev:not(details)::before,.panel .pcol.b .statelist::before{background:#fff;border-radius:10px;
+ box-shadow:0 1px 2px rgba(23,23,28,.06),0 4px 14px rgba(232,30,56,.10)}
+/* the thin line between numbers, one run per column (8 screens in the first) */
+.panel .pcol.b #hifirail > .dev:not(.states) > button::after,.panel .pcol.b .statelist > button::after{content:'';position:absolute;
+ left:15.5px;top:30px;width:1px;height:12px;background:rgba(232,30,56,.18)}
+.panel .pcol.b #hifirail > .dev:not(.states) > button:nth-child(8)::after,
+.panel .pcol.b #hifirail > .dev:not(.states) > button:last-child::after,
+.panel .pcol.b .statelist > button:last-child::after{display:none}
+.dev.states>summary{font-size:13px;color:var(--s-on-80)}
+/* as on the Sidedoor viewer: an open States drawer takes the screen list's place, so nothing shrinks */
+.pcol.b:has(details.states[open]) #hifirail > .dev:not(.states),
+.pcol.b:has(details.states[open]) #screenrail,
+.pcol.b:has(details.states[open]) #legacyrail > .dev,
+.pcol.b:has(details.states[open]) .grp > h2{display:none}
 </style>
 </head><body>
 
