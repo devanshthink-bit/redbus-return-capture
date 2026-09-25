@@ -10506,3 +10506,7 @@ Devansh, on the phone home hero: "This hero section is looking too cluttered on 
 
 LEARNED  ·  2026-09-16  ·  molades-case  ·  Source: user
 A friend's Windows laptop showed the home numbers under the dock. The web hero was only ever checked at 900px tall; Windows display scaling, the taskbar and browser toolbars leave laptops 600-790px, and the hero's content alone is ~564px, so the dock (bottom 100px) covered the numbers. Devansh: "You should have taken care of all these things while making it responsive." Responsive checks now include height, not just width: 1600×790, 1536×730, 1280×720, 1366×625 and 1280×600. The hero tightens below 861px and again below 701px tall, and the numbers clear the dock by 28-103px at those sizes.
+
+CHANGE · 2026-09-25 · viewer (index.html)
+Changed:   Laid out like the Sidedoor viewer: one 340-400px column, 48px gap, the same side padding, the same phone size per window height and glow radius, the logo at the same top. Mark and "Return Capture" on one line with the eyebrow under it; screens in two numbered columns; States and Colours are drawers that start shut. The panel zooms down only when an opened drawer would not fit.
+Because:   Devansh preferred the Sidedoor presentation: "make it clean like SideDoor ... don't make it exactly the same", with every position consistent.
