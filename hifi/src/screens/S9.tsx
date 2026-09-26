@@ -45,15 +45,15 @@ export default function S9NoOtherDaysChangeDay() {
           <div className="h-[8px] relative shrink-0 w-full" data-node-id="808:5036" data-name="gap" />
           <div className="[word-break:break-word] content-stretch flex font-['Inter:Bold'] font-bold items-center justify-between leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] w-full whitespace-nowrap" data-node-id="808:5037" data-name="Row">
             <p className="relative shrink-0" data-node-id="808:5038">
-              Wed, 16 Sep · 23:55
+              Thu, 17 Sep · 23:55
             </p>
             <p className="relative shrink-0" data-node-id="808:5039">
-              ₹1,090
+              ₹1,120
             </p>
           </div>
           <div className="h-[4px] relative shrink-0 w-full" data-node-id="808:5040" data-name="gap" />
           <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[18px] not-italic relative shrink-0 text-[13px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="808:5041">
-            Laxmi Holidays Pvt Ltd · Seat U5
+            Laxmi Holidays Pvt Ltd · Seat U4
           </p>
         </div>
         <div className="bg-white content-stretch flex flex-col gap-[8px] items-center overflow-clip p-[24px] relative rounded-[12px] shrink-0 w-full" data-node-id="808:5117" data-name="Blank state">
@@ -64,7 +64,7 @@ export default function S9NoOtherDaysChangeDay() {
             There is no other day in your range.
           </p>
           <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#636363] text-[16px] text-center w-full" data-node-id="808:5120">
-            Your Wed, 16 Sep booking is safe. Nothing was charged.
+            Your Thu, 17 Sep booking is safe. Nothing was charged.
           </p>
           <div className="content-stretch flex flex-col items-start overflow-clip pt-[16px] relative shrink-0 w-full" data-node-id="808:5121" data-name="Actions">
             <div className="bg-[var(--surface\/button-primary,#e81e38)] content-stretch flex h-[48px] items-center justify-center overflow-clip px-[24px] relative rounded-[24px] shrink-0 w-full" data-node-id="808:5122" data-name="Button / Show all returns">

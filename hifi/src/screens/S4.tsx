@@ -397,7 +397,7 @@ export default function S4PastCutoffTicketDetails() {
                   23:55
                 </p>
                 <p className="font-['Inter:Regular'] font-normal leading-[20px] opacity-90 relative shrink-0 text-[14px]" data-node-id="810:6050">
-                  Mon, 14 Sep
+                  Thu, 17 Sep
                 </p>
               </div>
             </div>
@@ -426,7 +426,7 @@ export default function S4PastCutoffTicketDetails() {
                   08:00
                 </p>
                 <p className="font-['Inter:Regular'] font-normal leading-[20px] opacity-90 relative shrink-0 text-[14px]" data-node-id="810:6065">
-                  Tue, 15 Sep
+                  Fri, 18 Sep
                 </p>
               </div>
             </div>
@@ -442,7 +442,7 @@ export default function S4PastCutoffTicketDetails() {
             </div>
             <div className="bg-[var(--colour\/neutral\/150,#e9eaf6)] content-stretch flex items-start px-[12px] py-[4px] relative rounded-[var(--radius\/8,8px)] shrink-0" data-node-id="810:6070" data-name="Seat badge">
               <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/link,#0000e4)] whitespace-nowrap" data-node-id="810:6071">
-                U2
+                U4
               </p>
             </div>
           </div>
@@ -487,7 +487,7 @@ export default function S4PastCutoffTicketDetails() {
                 Review and cancel
               </p>
               <p className="font-['Inter:Regular'] font-normal leading-[20px] min-w-full relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-[min-content]" data-node-id="810:6092">
-                85% refund if you cancel From 9th Sep 11:55 PM Until 13th Sep 11:55 PM
+                85% refund if you cancel From 9th Sep 11:55 PM Until 16th Sep 11:55 PM
               </p>
             </div>
             <div className="relative shrink-0 size-[20px]" data-node-id="810:6093" data-name="Icon / Chevron Right">
@@ -580,7 +580,7 @@ export default function S4PastCutoffTicketDetails() {
         </p>
         <div className="h-[8px] relative shrink-0 w-full" data-node-id="810:6132" data-name="gap" />
         <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[21px] not-italic relative shrink-0 text-[#1d1d1d] text-[15px] w-full" data-node-id="810:6133">
-          Tue, 15 Sep - Wed, 16 Sep
+          Fri, 18 Sep - Sat, 19 Sep
         </p>
         <div className="h-[12px] relative shrink-0 w-full" data-node-id="810:6134" data-name="gap" />
         <div className="content-stretch flex gap-[12px] items-start overflow-clip relative shrink-0 w-full" data-node-id="810:6135" data-name="Cards">
@@ -695,7 +695,7 @@ export default function S4PastCutoffTicketDetails() {
           <div className="content-stretch flex flex-col items-start overflow-clip p-[16px] relative shrink-0 w-full" data-node-id="810:6185" data-name="Body">
             <div className="bg-[#e4e4f6] content-stretch flex items-start overflow-clip px-[12px] py-[5px] relative rounded-[8px] shrink-0" data-node-id="810:6186" data-name="When">
               <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[18px] not-italic relative shrink-0 text-[#1d1d1d] text-[13px] w-[125px]" data-node-id="810:6187">
-                23:55 · Mon, 14 Sep
+                23:55 · Thu, 17 Sep
               </p>
             </div>
             <div className="h-[10px] relative shrink-0 w-full" data-node-id="810:6188" data-name="gap" />

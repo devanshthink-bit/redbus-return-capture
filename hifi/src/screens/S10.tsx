@@ -90,7 +90,7 @@ export default function S10SeatLostMidSwapConfirmTheMove() {
             That seat is gone
           </p>
           <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#636363] text-[14px] text-center w-full" data-node-id="808:5155">
-            Your Mon, 14 Sep booking is safe. Seat U5, ₹1,030. Nothing was charged.
+            Your Thu, 17 Sep booking is safe. Seat U4, ₹1,120. Nothing was charged.
           </p>
           <div className="bg-[var(--surface\/button-primary,#e81e38)] content-stretch flex h-[48px] items-center justify-center overflow-clip px-[24px] relative rounded-[24px] shrink-0 w-full" data-node-id="808:5156" data-name="Button / See other days">
             <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[16px] text-white whitespace-nowrap" data-node-id="808:5157">
@@ -104,10 +104,10 @@ export default function S10SeatLostMidSwapConfirmTheMove() {
               From
             </p>
             <p className="font-['Inter:Bold'] font-bold leading-[24px] relative shrink-0 text-[16px] w-full" data-node-id="808:5132">
-              Wed, 16 Sep · 23:55
+              Thu, 17 Sep · 23:55
             </p>
             <p className="font-['Inter:Regular'] font-normal leading-[18px] relative shrink-0 text-[13px] w-full" data-node-id="808:5133">
-              Seat U5 · ₹1,090
+              Seat U4 · ₹1,120
             </p>
           </div>
           <div className="content-stretch flex items-start py-[8px] relative shrink-0" data-node-id="808:5134" data-name="Arrow">
@@ -123,7 +123,7 @@ export default function S10SeatLostMidSwapConfirmTheMove() {
               Tue, 15 Sep · 23:55
             </p>
             <p className="font-['Inter:Regular'] font-normal leading-[18px] relative shrink-0 text-[13px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="808:5139">
-              Seat U4 · ₹1,060
+              Seat U5 · ₹1,060
             </p>
           </div>
           <div className="content-stretch flex items-start pt-[4px] relative shrink-0" data-node-id="808:5140" data-name="Change seat">
@@ -136,7 +136,7 @@ export default function S10SeatLostMidSwapConfirmTheMove() {
         </div>
         <div className="bg-[var(--surface\/default,white)] content-stretch drop-shadow-[0px_8px_12px_rgba(0,0,0,0.07),0px_2px_3px_rgba(0,0,0,0.05)] flex flex-col items-start p-[16px] relative rounded-[var(--radius\/12,12px)] shrink-0 w-full" data-node-id="808:5142" data-name="Fare">
           <RowFare className="[word-break:break-word] content-stretch flex font-['Inter:Regular'] font-normal items-center justify-between leading-[20px] not-italic overflow-clip py-[4px] relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-full whitespace-nowrap" label="Change fee" value="₹0" />
-          <RowFare className="[word-break:break-word] content-stretch flex font-['Inter:Regular'] font-normal items-center justify-between leading-[20px] not-italic overflow-clip py-[4px] relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-full whitespace-nowrap" label="Price difference" value="₹30 less — no refund" />
+          <RowFare className="[word-break:break-word] content-stretch flex font-['Inter:Regular'] font-normal items-center justify-between leading-[20px] not-italic overflow-clip py-[4px] relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-full whitespace-nowrap" label="Price difference" value="₹60 less — no refund" />
           <div className="content-stretch flex flex-col items-start py-[10px] relative shrink-0 w-full" data-node-id="808:5145" data-name="gap">
             <div className="bg-[var(--border\/divider,#e6e6e6)] h-px relative shrink-0 w-full" data-node-id="808:5146" data-name="Divider" />
           </div>

@@ -171,17 +171,17 @@ export default function Component16ReturnMoved() {
               Return moved to Tue, 15 Sep
             </p>
             <p className="font-['Inter:Regular'] font-normal leading-[20px] relative shrink-0 text-[#3d5a38] text-[14px] w-full" data-node-id="377:3132">
-              Back in Delhi a day earlier. Nothing else about the trip moved.
+              Back in Delhi two days earlier. Nothing else about the trip moved.
             </p>
           </div>
         </div>
-        <CardLeg caption="Nainital Bus Stand → ISBT Kashmiri Gate, Gate 4" className="bg-[var(--surface\/default,white)] content-stretch flex flex-col items-start overflow-clip p-[16px] relative rounded-[var(--radius\/16,16px)] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.07),0px_2px_6px_0px_rgba(0,0,0,0.05)] shrink-0 w-full" price="₹1,060" route="Nainital → Delhi" tag="RETURN · TUE, 15 SEP" />
+        <CardLeg caption="Nainital Bus Stand → ISBT Kashmiri Gate, Gate 4" seat="Seat U5" className="bg-[var(--surface\/default,white)] content-stretch flex flex-col items-start overflow-clip p-[16px] relative rounded-[var(--radius\/16,16px)] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.07),0px_2px_6px_0px_rgba(0,0,0,0.05)] shrink-0 w-full" price="₹1,060" route="Nainital → Delhi" tag="RETURN · TUE, 15 SEP" />
         <div className="[word-break:break-word] bg-[var(--surface\/default,white)] content-stretch drop-shadow-[0px_8px_12px_rgba(0,0,0,0.07),0px_2px_3px_rgba(0,0,0,0.05)] flex flex-col gap-[4px] items-start not-italic p-[16px] relative rounded-[var(--radius\/12,12px)] shrink-0 w-full" data-node-id="138:1455" data-name="What you paid">
           <p className="font-['Inter:Bold'] font-bold leading-[22px] relative shrink-0 text-[14px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="138:1456">
-            Changed from Wed, 16 Sep
+            Changed from Thu, 17 Sep
           </p>
           <p className="font-['Inter:Regular'] font-normal leading-[20px] relative shrink-0 text-[13px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="138:1457">
-            The new day is ₹30 cheaper. You do not get that back.
+            The new day is ₹60 cheaper. You do not get that back.
           </p>
         </div>
         <div className="content-stretch flex flex-col gap-[12px] items-start overflow-clip relative shrink-0 w-full" data-node-id="373:3120" data-name="Frame">

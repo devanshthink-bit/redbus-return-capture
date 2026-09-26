@@ -10539,3 +10539,24 @@ Finding:   The portfolio case study was checked line by line against RESEARCH, T
            - The mentor is named nowhere now ("my mentor"), matching Ask Devansh.
 Open:      Scenes 2 and 4 disagree. Scene 2 (hi-fi 06a) picks Thu 17 Sep; Scene 4 and 5 (hi-fi 13, 16, S9) show
            her booking as Wed 16 Sep. Needs a design data change; asked Devansh.
+
+CHANGE · 2026-09-26 · Source: Devansh ("Change the booked day to Thu 17")
+Cause:     Three different returns lived in one prototype. 06a books Thu 17 Sep (₹1,120, U4), but Review and Pay
+           (08, 09, 09a, 08b) and the ticket screens (11, 11a, 12, 20, S4, S11, S12) showed Mon 14 Sep in U2, and the
+           change flow (13 to 16, 18 to 19a, S9, S10) moved a Wed 16 Sep ₹1,090 U5 ticket. S10 even said "Your Mon,
+           14 Sep booking" above a Wed 16 ticket. 07, reached from "All 5 buses on Thu, 17 Sep", drew Mon 14's 4 buses.
+Changed:   One return everywhere: Thu 17 Sep 23:55 → Fri 18 Sep 08:00, Laxmi, seat U4, ₹1,120.
+           - Figma 📱 Hi-Fi UI, 100 text edits keeping styles; 13's calendar: Booked moves to 17, differences
+             recomputed from the Laxmi fares (+₹140, +₹40, +₹70, +₹290, +₹230).
+           - Moving to Tue 15 now saves ₹60 and lands two days earlier; U4 is taken on Tue 15, so she gets U5 (14,
+             15, 16, S10). Refund on cancel scales to ₹784 of ₹1,120 (₹336 kept). Hotel stay Fri 18 to Sat 19.
+           - S5 (already moved) shows the moved ticket: Tue 15 → Wed 16, U5.
+           - 07 rebuilt from the viewer's own Thu 17 timetable (B.days["17"]): 20:30 ₹1,030, 21:15 ₹970, 22:15
+             ₹1,080, 23:40 ₹1,010, 23:55 ₹1,120, all Free date change; pills from the data. The first card
+             keeps ids 367:2682/367:2735, which the viewer clones as its template.
+           - Viewer: DRAWN (the cold-load booking) is Thu 17 ₹1,120 U4; the template card's Free date change tag
+             hides on buses that can't change.
+           - hifi src mirrored (text), 07 and 13 rebuilt by hand to Figma's structure (get_design_context now returns
+             a prefixed asset format pull.py can't read). Diffs vs Figma: 07 5.5%, 13 5.0%, 15 1.5%, 16 2.7%, S9 2.4%.
+           - Portfolio images re-rendered at 2x: hifi_13, hifi_16, hifi_S9, hifi_S3; case study says ₹60 and +₹140.
+Not changed: CONTEXT/TERMS/DEFENCE still describe the old Wed 16 ₹1,090 example in places; they are history.

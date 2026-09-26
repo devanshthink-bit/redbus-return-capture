@@ -190,7 +190,7 @@ export default function S3ReturnSeatGoneReviewYourTrip() {
           Your return seat is gone
         </p>
         <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#636363] text-[16px] text-center w-full" data-node-id="810:5625">
-          Seat U5 is gone — someone just booked it. Your onward trip is fine.
+          Seat U4 is gone — someone just booked it. Your onward trip is fine.
         </p>
         <div className="content-stretch flex flex-col gap-[8px] items-start overflow-clip pt-[16px] relative shrink-0 w-full" data-node-id="810:5626" data-name="Actions">
           <div className="bg-[var(--surface\/button-primary,#e81e38)] content-stretch flex h-[48px] items-center justify-center overflow-clip px-[24px] relative rounded-[24px] shrink-0 w-full" data-node-id="810:5627" data-name="Button / Pick another return">
@@ -249,7 +249,7 @@ export default function S3ReturnSeatGoneReviewYourTrip() {
           <div className="content-stretch flex gap-[10px] items-start relative shrink-0 w-full" data-node-id="810:5396" data-name="Row">
             <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start leading-[18px] min-w-px not-italic relative whitespace-nowrap" data-node-id="810:5397" data-name="From">
               <p className="font-['Inter:Bold'] font-bold relative shrink-0 text-[14px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="810:5398">
-                Mon, 14 Sep · 23:55
+                Thu, 17 Sep · 23:55
               </p>
               <p className="font-['Inter:Regular'] font-normal relative shrink-0 text-[13px] text-[color:var(--text\/secondary,#636363)]" data-node-id="810:5399">
                 Nainital Bus Stand
@@ -262,7 +262,7 @@ export default function S3ReturnSeatGoneReviewYourTrip() {
             </div>
             <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-end leading-[18px] min-w-px not-italic relative text-right whitespace-nowrap" data-node-id="810:5402" data-name="To">
               <p className="font-['Inter:Bold'] font-bold relative shrink-0 text-[14px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="810:5403">
-                Tue, 15 Sep · 08:00
+                Fri, 18 Sep · 08:00
               </p>
               <p className="font-['Inter:Regular'] font-normal relative shrink-0 text-[13px] text-[color:var(--text\/secondary,#636363)]" data-node-id="810:5404">
                 ISBT Kashmiri Gate

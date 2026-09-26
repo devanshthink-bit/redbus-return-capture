@@ -283,7 +283,7 @@ export default function Component09ABookingDetails() {
               <div className="content-stretch flex gap-[10px] items-start relative shrink-0 w-full" data-node-id="721:4154" data-name="Row">
                 <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start leading-[18px] min-w-px not-italic relative whitespace-nowrap" data-node-id="721:4155" data-name="From">
                   <p className="font-['Inter:Bold'] font-bold relative shrink-0 text-[14px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="721:4156">
-                    Mon, 14 Sep · 23:55
+                    Thu, 17 Sep · 23:55
                   </p>
                   <p className="font-['Inter:Regular'] font-normal relative shrink-0 text-[13px] text-[color:var(--text\/secondary,#636363)]" data-node-id="721:4157">
                     Nainital Bus Stand
@@ -296,7 +296,7 @@ export default function Component09ABookingDetails() {
                 </div>
                 <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-end leading-[18px] min-w-px not-italic relative text-right whitespace-nowrap" data-node-id="721:4160" data-name="To">
                   <p className="font-['Inter:Bold'] font-bold relative shrink-0 text-[14px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="721:4161">
-                    Tue, 15 Sep · 08:00
+                    Fri, 18 Sep · 08:00
                   </p>
                   <p className="font-['Inter:Regular'] font-normal relative shrink-0 text-[13px] text-[color:var(--text\/secondary,#636363)]" data-node-id="721:4162">
                     ISBT Kashmiri Gate
@@ -869,7 +869,7 @@ export default function Component09ABookingDetails() {
                   23:55
                 </p>
                 <p className="font-['Inter:Regular'] font-normal leading-[18px] relative shrink-0 text-[#636363] text-[13px]" data-node-id="704:4185">
-                  14 Sep
+                  17 Sep
                 </p>
               </div>
               <div className="relative self-stretch shrink-0 w-[12px]" data-node-id="714:4136" data-name="Rail">
@@ -907,7 +907,7 @@ export default function Component09ABookingDetails() {
                   08:00
                 </p>
                 <p className="font-['Inter:Regular'] font-normal leading-[18px] relative shrink-0 text-[#636363] text-[13px]" data-node-id="704:4202">
-                  15 Sep
+                  18 Sep
                 </p>
               </div>
               <div className="h-[18px] relative shrink-0 w-[12px]" data-node-id="714:4144" data-name="Rail">

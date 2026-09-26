@@ -406,7 +406,7 @@ export default function S5AlreadyMovedTicketDetails() {
                   23:55
                 </p>
                 <p className="font-['Inter:Regular'] font-normal leading-[20px] opacity-90 relative shrink-0 text-[14px]" data-node-id="809:6660">
-                  Mon, 14 Sep
+                  Tue, 15 Sep
                 </p>
               </div>
             </div>
@@ -435,7 +435,7 @@ export default function S5AlreadyMovedTicketDetails() {
                   08:00
                 </p>
                 <p className="font-['Inter:Regular'] font-normal leading-[20px] opacity-90 relative shrink-0 text-[14px]" data-node-id="809:6675">
-                  Tue, 15 Sep
+                  Wed, 16 Sep
                 </p>
               </div>
             </div>
@@ -451,7 +451,7 @@ export default function S5AlreadyMovedTicketDetails() {
             </div>
             <div className="bg-[var(--colour\/neutral\/150,#e9eaf6)] content-stretch flex items-start px-[12px] py-[4px] relative rounded-[var(--radius\/8,8px)] shrink-0" data-node-id="809:6680" data-name="Seat badge">
               <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/link,#0000e4)] whitespace-nowrap" data-node-id="809:6681">
-                U2
+                U5
               </p>
             </div>
           </div>
@@ -594,7 +594,7 @@ export default function S5AlreadyMovedTicketDetails() {
         </p>
         <div className="h-[8px] relative shrink-0 w-full" data-node-id="809:6742" data-name="gap" />
         <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[21px] not-italic relative shrink-0 text-[#1d1d1d] text-[15px] w-full" data-node-id="809:6743">
-          Tue, 15 Sep - Wed, 16 Sep
+          Wed, 16 Sep - Thu, 17 Sep
         </p>
         <div className="h-[12px] relative shrink-0 w-full" data-node-id="809:6744" data-name="gap" />
         <div className="content-stretch flex gap-[12px] items-start overflow-clip relative shrink-0 w-full" data-node-id="809:6745" data-name="Cards">
@@ -709,7 +709,7 @@ export default function S5AlreadyMovedTicketDetails() {
           <div className="content-stretch flex flex-col items-start overflow-clip p-[16px] relative shrink-0 w-full" data-node-id="809:6795" data-name="Body">
             <div className="bg-[#e4e4f6] content-stretch flex items-start overflow-clip px-[12px] py-[5px] relative rounded-[8px] shrink-0" data-node-id="809:6796" data-name="When">
               <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[18px] not-italic relative shrink-0 text-[#1d1d1d] text-[13px] w-[125px]" data-node-id="809:6797">
-                23:55 · Mon, 14 Sep
+                23:55 · Tue, 15 Sep
               </p>
             </div>
             <div className="h-[10px] relative shrink-0 w-full" data-node-id="809:6798" data-name="gap" />

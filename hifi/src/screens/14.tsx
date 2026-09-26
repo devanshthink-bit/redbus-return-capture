@@ -187,14 +187,14 @@ export default function Component14MoveBuses() {
           </p>
           <div className="content-stretch flex font-['Inter:Bold'] font-bold items-center justify-between overflow-clip relative shrink-0 text-[#1d1d1d] text-[16px] w-full whitespace-nowrap" data-node-id="360:2692" data-name="Frame">
             <p className="relative shrink-0" data-node-id="360:2693">
-              Wed, 16 Sep · 23:55
+              Thu, 17 Sep · 23:55
             </p>
             <p className="relative shrink-0" data-node-id="360:2694">
-              ₹1,090
+              ₹1,120
             </p>
           </div>
           <p className="font-['Inter:Regular'] font-normal min-w-full relative shrink-0 text-[#636363] text-[14px] w-[min-content]" data-node-id="360:2695">
-            Laxmi Holidays Pvt Ltd · Seat U5
+            Laxmi Holidays Pvt Ltd · Seat U4
           </p>
         </div>
         <div className="content-stretch flex flex-col gap-[16px] items-start overflow-clip relative shrink-0 w-full" data-node-id="377:3133" data-name="Frame">
@@ -277,10 +277,10 @@ export default function Component14MoveBuses() {
           </a>
           <div className="[word-break:break-word] content-stretch flex font-['Inter:Regular'] font-normal items-center justify-between leading-[normal] not-italic overflow-clip pt-[2px] px-[16px] relative shrink-0 text-[#636363] text-[13px] w-full" data-node-id="368:2903" data-name="Frame">
             <p className="flex-[1_0_0] min-w-px relative" data-node-id="368:2904">
-              Seat U5 taken — you get U4
+              Seat U4 taken — you get U5
             </p>
             <p className="relative shrink-0 whitespace-nowrap" data-node-id="368:2905">
-              ₹120 less — no refund
+              ₹150 less — no refund
             </p>
           </div>
           <div className="content-start flex flex-wrap items-start overflow-clip pt-[6px] px-[16px] relative shrink-0 w-full" data-node-id="368:2906" data-name="Frame">
@@ -353,10 +353,10 @@ export default function Component14MoveBuses() {
           </div>
           <div className="[word-break:break-word] content-stretch flex font-['Inter:Regular'] font-normal items-center justify-between leading-[normal] not-italic overflow-clip pt-[2px] px-[16px] relative shrink-0 text-[#636363] text-[13px] w-full" data-node-id="368:2962" data-name="Frame">
             <p className="flex-[1_0_0] min-w-px relative" data-node-id="368:2963">
-              Seat U5 taken — you get U4
+              Seat U4 taken — you get U5
             </p>
             <p className="relative shrink-0 whitespace-nowrap" data-node-id="368:2964">
-              ₹30 less — no refund
+              ₹60 less — no refund
             </p>
           </div>
           <div className="content-start flex flex-wrap gap-[0px_8px] items-start overflow-clip pt-[6px] px-[16px] relative shrink-0 w-full" data-node-id="368:2965" data-name="Frame">

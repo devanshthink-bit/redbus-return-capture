@@ -85,7 +85,7 @@ export default function Component19AWhyCancel() {
               <div className="bg-white content-stretch flex gap-[8px] items-center overflow-clip relative shrink-0 w-full" data-node-id="785:4438" data-name="Route row">
                 <div className="bg-white content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px overflow-clip relative" data-node-id="785:4439" data-name="From">
                   <p className="font-['Inter:Regular'] font-normal leading-[18px] relative shrink-0 text-[#636363] text-[13px] w-full" data-node-id="785:4440">
-                    Wed, 16 Sep · 23:55
+                    Thu, 17 Sep · 23:55
                   </p>
                   <p className="font-['Inter:Bold'] font-bold leading-[22px] relative shrink-0 text-[#1d1d1d] text-[16px] w-full" data-node-id="785:4441">
                     Nainital
@@ -96,7 +96,7 @@ export default function Component19AWhyCancel() {
                 </p>
                 <div className="bg-white content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-end min-w-px overflow-clip relative text-right" data-node-id="785:4443" data-name="To">
                   <p className="font-['Inter:Regular'] font-normal leading-[18px] relative shrink-0 text-[#636363] text-[13px] w-full" data-node-id="785:4444">
-                    Thu, 17 Sep · 08:00
+                    Fri, 18 Sep · 08:00
                   </p>
                   <p className="font-['Inter:Bold'] font-bold leading-[22px] relative shrink-0 text-[#1d1d1d] text-[16px] w-full" data-node-id="785:4445">
                     Delhi
@@ -109,7 +109,7 @@ export default function Component19AWhyCancel() {
                 Seats to be cancelled:
               </p>
               <p className="font-['Inter:Bold'] font-bold leading-[22px] relative shrink-0 text-[16px] w-full" data-node-id="785:4448">
-                U5 (Devansh Somvanshi)
+                U4 (Devansh Somvanshi)
               </p>
             </div>
             <div className="[word-break:break-word] bg-white content-stretch flex font-['Inter:Regular'] font-normal gap-[8px] items-center leading-[22px] not-italic overflow-clip px-[16px] py-[18px] relative rounded-[16px] shrink-0 w-full" data-node-id="785:4449" data-name="View cancellation policy">
@@ -126,7 +126,7 @@ export default function Component19AWhyCancel() {
                   Refund amount
                 </p>
                 <p className="relative shrink-0 text-[19px] whitespace-nowrap" data-node-id="785:4455">
-                  ₹763.00
+                  ₹784.00
                 </p>
               </div>
               <div className="[word-break:break-word] content-stretch flex font-['Inter:Bold'] font-bold gap-[8px] items-center leading-[22px] not-italic overflow-clip px-[16px] py-[14px] relative shrink-0 text-[#1d1d1d] text-[16px] w-full" data-node-id="785:4456" data-name="Row / Total Paid">
@@ -134,7 +134,7 @@ export default function Component19AWhyCancel() {
                   Total Paid
                 </p>
                 <p className="relative shrink-0 whitespace-nowrap" data-node-id="785:4458">
-                  ₹1,090.00
+                  ₹1,120.00
                 </p>
               </div>
               <div className="bg-[#e6e6e6] relative shrink-0 size-px" data-node-id="785:4459" data-name="Divider" />
@@ -143,7 +143,7 @@ export default function Component19AWhyCancel() {
                   Total deductions
                 </p>
                 <p className="relative shrink-0 whitespace-nowrap" data-node-id="785:4462">
-                  ₹327.00
+                  ₹336.00
                 </p>
               </div>
               <div className="bg-[#e6e6e6] h-px relative shrink-0 w-full" data-node-id="785:4463" data-name="Divider" />
@@ -152,7 +152,7 @@ export default function Component19AWhyCancel() {
                   Cancellation Charges (incl GST)
                 </p>
                 <p className="relative shrink-0 whitespace-nowrap" data-node-id="785:4466">
-                  ₹327.00
+                  ₹336.00
                 </p>
               </div>
             </div>

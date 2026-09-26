@@ -77,7 +77,7 @@ export default function Component12MyBookings() {
                   23:55
                 </p>
                 <p className="font-['Inter:Regular'] font-normal leading-[22px] relative shrink-0 text-[16px]" data-node-id="I125:1341;121:1337">
-                  Mon, 14 Sep
+                  Thu, 17 Sep
                 </p>
               </div>
             </div>

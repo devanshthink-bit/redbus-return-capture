@@ -74,7 +74,7 @@ export default function Component18ReviewAndCancel() {
           <div className="bg-white content-stretch flex gap-[8px] items-center overflow-clip relative shrink-0 w-full" data-node-id="784:4529" data-name="Route row">
             <div className="bg-white content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px overflow-clip relative" data-node-id="784:4530" data-name="From">
               <p className="font-['Inter:Regular'] font-normal leading-[18px] relative shrink-0 text-[#636363] text-[13px] w-full" data-node-id="784:4531">
-                Wed, 16 Sep · 23:55
+                Thu, 17 Sep · 23:55
               </p>
               <p className="font-['Inter:Bold'] font-bold leading-[22px] relative shrink-0 text-[#1d1d1d] text-[16px] w-full" data-node-id="784:4532">
                 Nainital
@@ -85,7 +85,7 @@ export default function Component18ReviewAndCancel() {
             </p>
             <div className="bg-white content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-end min-w-px overflow-clip relative text-right" data-node-id="784:4534" data-name="To">
               <p className="font-['Inter:Regular'] font-normal leading-[18px] relative shrink-0 text-[#636363] text-[13px] w-full" data-node-id="784:4535">
-                Thu, 17 Sep · 08:00
+                Fri, 18 Sep · 08:00
               </p>
               <p className="font-['Inter:Bold'] font-bold leading-[22px] relative shrink-0 text-[#1d1d1d] text-[16px] w-full" data-node-id="784:4536">
                 Delhi
@@ -113,7 +113,7 @@ export default function Component18ReviewAndCancel() {
               </p>
             </div>
             <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[18px] not-italic relative shrink-0 text-[#636363] text-[13px] whitespace-nowrap" data-node-id="784:4545">
-              Seat: U5
+              Seat: U4
             </p>
           </div>
         </div>

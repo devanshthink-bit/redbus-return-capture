@@ -167,7 +167,7 @@ export default function Component09Pay() {
             Nainital → Delhi
           </p>
           <p className="font-['Inter:Bold'] font-bold relative shrink-0" data-node-id="109:1011">
-            Mon, 14 Sep · 23:55
+            Thu, 17 Sep · 23:55
           </p>
         </div>
         <div className="h-[14px] relative shrink-0 w-full" data-node-id="109:1012" data-name="gap" />

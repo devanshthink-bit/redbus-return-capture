@@ -1790,6 +1790,9 @@
         // instance takes no new children (CONTEXT §18) so Figma cannot put them inside.
         var amen = row.querySelector('[data-name="Amenities"]');
         if (amen && !amen.children.length) amen.hidden = true;
+        // The template card now carries the Free date change tag (Figma 07, 26 Sep). A bus that can't
+        // change keeps only its "No date change" pill.
+        if (amen && !b[3]) amen.hidden = true;
         var pills = row.querySelector('[data-node-id="367:2735"]');
         if (pills) {
           var ptpl = pills.children[0];
@@ -3203,11 +3206,11 @@
     if (i13 < 0 || i14 < 0 || i15 < 0 || i16 < 0) return;
     var s13 = screens[i13], s14 = screens[i14], s15 = screens[i15], s16 = screens[i16];
 
-    // The booking being moved. It was a literal -- Wed 16 Sep, ₹1,090, U5 -- so the change-of-plans
+    // The booking being moved. It was a literal -- Wed 16 Sep, ₹1,090, U5, now Thu 17 Sep, ₹1,120, U4 (26 Sep) -- so the change-of-plans
     // sheet, this whole flow and the cancel screens described that return whichever one was
     // booked. It is read from the return held, on the way in. The literal is the drawn example and
     // stays only for a cold load straight onto 13 from the rail; it is a real bus in the data.
-    var DRAWN = { day: 16, dep: '23:55', arr: '08:00', fare: 1090, seat: 'U5', op: 0 };
+    var DRAWN = { day: 17, dep: '23:55', arr: '08:00', fare: 1120, seat: 'U4', op: 0 };
     var HELD = {};
     function hold(){
       var m = /(\d+) Sep/.exec(RETURN.dayTag || '');

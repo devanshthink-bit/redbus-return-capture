@@ -91,7 +91,7 @@ export default function Component08BReturnPoints() {
                 23:55
               </p>
               <p className="font-['Inter:Regular'] font-normal relative shrink-0 text-[#636363] text-[13px]" data-node-id="695:4124">
-                14 Sep
+                17 Sep
               </p>
             </div>
             <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start leading-[normal] min-w-px not-italic overflow-clip relative" data-node-id="695:4125" data-name="Info">
@@ -120,7 +120,7 @@ export default function Component08BReturnPoints() {
                 23:55
               </p>
               <p className="font-['Inter:Regular'] font-normal relative shrink-0 text-[#636363] text-[13px]" data-node-id="695:4136">
-                14 Sep
+                17 Sep
               </p>
             </div>
             <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start leading-[normal] min-w-px not-italic overflow-clip relative" data-node-id="695:4137" data-name="Info">
@@ -142,7 +142,7 @@ export default function Component08BReturnPoints() {
                 00:20
               </p>
               <p className="font-['Inter:Regular'] font-normal relative shrink-0 text-[#636363] text-[13px]" data-node-id="695:4145">
-                15 Sep
+                18 Sep
               </p>
             </div>
             <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start leading-[normal] min-w-px not-italic overflow-clip relative" data-node-id="695:4146" data-name="Info">
@@ -164,7 +164,7 @@ export default function Component08BReturnPoints() {
                 00:45
               </p>
               <p className="font-['Inter:Regular'] font-normal relative shrink-0 text-[#636363] text-[13px]" data-node-id="695:4154">
-                15 Sep
+                18 Sep
               </p>
             </div>
             <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start leading-[normal] min-w-px not-italic overflow-clip relative" data-node-id="695:4155" data-name="Info">
@@ -186,7 +186,7 @@ export default function Component08BReturnPoints() {
                 01:30
               </p>
               <p className="font-['Inter:Regular'] font-normal relative shrink-0 text-[#636363] text-[13px]" data-node-id="695:4163">
-                15 Sep
+                18 Sep
               </p>
             </div>
             <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start leading-[normal] min-w-px not-italic overflow-clip relative" data-node-id="695:4164" data-name="Info">

@@ -400,7 +400,7 @@ export default function S11ReturnDroppedTicketDetails() {
                 Review and cancel
               </p>
               <p className="font-['Inter:Regular'] font-normal leading-[20px] min-w-full relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-[min-content]" data-node-id="810:6426">
-                85% refund if you cancel From 9th Sep 11:55 PM Until 13th Sep 11:55 PM
+                85% refund if you cancel From 9th Sep 11:55 PM Until 16th Sep 11:55 PM
               </p>
             </div>
             <div className="relative shrink-0 size-[20px]" data-node-id="810:6427" data-name="Icon / Chevron Right">
@@ -456,7 +456,7 @@ export default function S11ReturnDroppedTicketDetails() {
         </p>
         <div className="h-[8px] relative shrink-0 w-full" data-node-id="810:6466" data-name="gap" />
         <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[21px] not-italic relative shrink-0 text-[#1d1d1d] text-[15px] w-full" data-node-id="810:6467">
-          Tue, 15 Sep - Wed, 16 Sep
+          Fri, 18 Sep - Sat, 19 Sep
         </p>
         <div className="h-[12px] relative shrink-0 w-full" data-node-id="810:6468" data-name="gap" />
         <div className="content-stretch flex gap-[12px] items-start overflow-clip relative shrink-0 w-full" data-node-id="810:6469" data-name="Cards">
@@ -571,7 +571,7 @@ export default function S11ReturnDroppedTicketDetails() {
           <div className="content-stretch flex flex-col items-start overflow-clip p-[16px] relative shrink-0 w-full" data-node-id="810:6519" data-name="Body">
             <div className="bg-[#e4e4f6] content-stretch flex items-start overflow-clip px-[12px] py-[5px] relative rounded-[8px] shrink-0" data-node-id="810:6520" data-name="When">
               <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[18px] not-italic relative shrink-0 text-[#1d1d1d] text-[13px] w-[125px]" data-node-id="810:6521">
-                23:55 · Mon, 14 Sep
+                23:55 · Thu, 17 Sep
               </p>
             </div>
             <div className="h-[10px] relative shrink-0 w-full" data-node-id="810:6522" data-name="gap" />
