@@ -57,11 +57,11 @@ is covered. All copy went through the humanizer skill.
 | | I gave the return its own step, knowing it was the riskiest place. (added 15 Sep) | LOG 3 Aug Shape 1, 30 Aug no confirmation dialog | three rows: rejected, rejected, picked |
 | | Then I attacked my own idea, and it came second. | CRITIQUE §2, l.314–315 | merit card |
 | | I also wrote something false into the product. | LOG l.1036, DEFENCE l.1034 | before/after |
-| | Rajat asked three questions I couldn't answer. | LOG l.2108 | Q&A |
+| | My mentor asked three questions I couldn't answer. | LOG l.2108 | Q&A |
 | | How I stopped booking the cheapest day. | LOG l.1349, 1398, 4794 | lo-fi v1–v4 |
 | | I got the price on each day wrong twice. (added 15 Sep) | LOG 2 Sep "A day is priced at the cheapest bus that keeps the date change" | three rows: failed, failed, now |
 | | So I booked a real ticket to check one rule. | TERMS l.249, LOG 2 Sep | real IMG_5199 |
-| | Then Rajat asked: isn't FlexiTicket better? | LOG 2 Sep ("the week picks the day"; 29 days) | before/after |
+| | Then my mentor asked: isn't FlexiTicket better? | LOG 2 Sep ("the week picks the day"; 29 days) | before/after |
 | | Three people tested it. By my own rules, it failed. | LOG l.5490 | kill list |
 | | One line, read three wrong ways. | LOG l.5494, 5557, 5629 | quotes |
 | | How I made the calendar ask first. | LOG 6 Sep (mode question, Swiggy Crew toggle) | lo-fi v3, v4 |

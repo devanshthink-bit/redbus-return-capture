@@ -10525,3 +10525,17 @@ Where:     Figma (99:636, 100:717, 521:3805; strips 889:4512, 889:4513, 890:4510
 Because:   Devansh: "This is overflowing in the button area... The real RedBus app would not show it like this."
 Verified:  Figma screenshots; viewer on localhost (hi-fi and lo-fi); diff vs Figma 06a 8.35%, 06b 8.81%, no band in the bar; case study beats on localhost.
 Note:      build/pull.py doesn't read the new `${assetPathPrefix}/x.svg` form yet. Fix before the next full re-pull.
+
+CRITIQUE · 2026-09-26 · Source: Devansh ("check the whole case study if something is wrongly written")
+Finding:   The portfolio case study was checked line by line against RESEARCH, TERMS, CRITIQUE, DEFENCE, LOG, the
+           transcripts and every image with its notes. Wrong and fixed on the page (portfolio repo):
+           - "Now it says: Earlier days, in one tap…" was the v1 fix, not today's copy. Now "Move your return to any
+             date, earlier or later." (hi-fi 08).
+           - 26.1% "of the travellers who waited" booked on another app: the base is all 23 round-trippers. Now "of
+             the travellers I surveyed". Same in the lede.
+           - 39.1% "of travellers who knew their return date": the question asked about a fixed return date. Reworded.
+           - The 95% limit read as "95% of people finish". It is 95% of today's outbound completion. Reworded twice.
+           - Scene 1 note "every day shows its cheapest fare": it's the cheapest bus that can still change date.
+           - The mentor is named nowhere now ("my mentor"), matching Ask Devansh.
+Open:      Scenes 2 and 4 disagree. Scene 2 (hi-fi 06a) picks Thu 17 Sep; Scene 4 and 5 (hi-fi 13, 16, S9) show
+           her booking as Wed 16 Sep. Needs a design data change; asked Devansh.
