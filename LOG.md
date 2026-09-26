@@ -10560,3 +10560,14 @@ Changed:   One return everywhere: Thu 17 Sep 23:55 → Fri 18 Sep 08:00, Laxmi, 
              a prefixed asset format pull.py can't read). Diffs vs Figma: 07 5.5%, 13 5.0%, 15 1.5%, 16 2.7%, S9 2.4%.
            - Portfolio images re-rendered at 2x: hifi_13, hifi_16, hifi_S9, hifi_S3; case study says ₹60 and +₹140.
 Not changed: CONTEXT/TERMS/DEFENCE still describe the old Wed 16 ₹1,090 example in places; they are history.
+
+CRITIQUE · 2026-09-26 · Source: Devansh ("check the research board of both the case studies")
+Fixed on artefacts.html:
+- "73.9% book it eventually": 73.9% booked the outbound first and the return later. Reworded; 26.1% named as a
+  return booked on another app.
+- "Flew out" in C1 (these are bus trips). "one ₹50 pop-up" is ₹50–100 (n17). "halved his fare" is ₹300 against a
+  ₹700 outbound (n02). J4 "26.1% of them" is 26.1% of the survey. "usually a worse seat at a higher fare" is
+  "often … or" (39.1% seat gone, 30.4% price up). "39.1% who know their date" is the fixed-date question (n73).
+- n71 quoted a survey option as "were [gone]"; the option is cut off in the chart, so it now ends "…".
+- The chain's design decision still said "the last day they can travel"; the design is the window.
+- Six notes showed literal ** marks; now bold.
