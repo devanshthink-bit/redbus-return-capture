@@ -110,7 +110,7 @@ telling him it is live, and tell him to hard-refresh.
 
 ## 5. The research — numbers you will need constantly
 
-8 interviews + survey (61 responses, **23 qualified**) + 1 App Store review. Reddit never collected.
+8 interviews + survey (61 responses, **23 qualified**) + 1 App Store review + 2 Reddit posts (r/redbus, on cancellations and refunds, of little help to the return question).
 
 | | |
 |---|---|

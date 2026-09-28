@@ -10571,3 +10571,8 @@ Fixed on artefacts.html:
 - n71 quoted a survey option as "were [gone]"; the option is cut off in the chart, so it now ends "…".
 - The chain's design decision still said "the last day they can travel"; the design is the window.
 - Six notes showed literal ** marks; now bold.
+
+CHANGE · 28 Sep 2026 · correction
+Changed:   "Reddit never collected" was wrong. Two r/redbus posts were collected (supaayush, wild-promise3316),
+           both on cancellations and refunds. Fixed in the research board (artefacts.html), RESEARCH.md and CONTEXT.md.
+Because:   Devansh pointed out they were taken; they were of little help, which is why they were missed.

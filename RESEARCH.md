@@ -28,7 +28,7 @@ Anand Chauhan · Harshraj Vamanjoor · Jaimin Gagiya · Prayani Pohekar · Sai S
 - How much "can I change or cancel this later?" affects the decision (n=23): a lot **17.4%** · somewhat **60.9%** · only when expensive/group **17.4%** · not at all **4.3%**
 - Open text (5 responses): bundle/return discount ×2 · sleeper prices not visible on the listing card · don't cancel buses last minute · "don't think show"
 
-**Also collected:** at least one App Store review (see Synthesis). Reddit not collected.
+**Also collected:** at least one App Store review (see Synthesis), and two Reddit posts from r/redbus (see Synthesis). The Reddit posts were about cancellations and refunds, so they helped little with the return question.
 
 ## Status
 
@@ -45,7 +45,11 @@ Full note list and clusters: [NOTES.md](NOTES.md). 102 notes — 78 in scope, 17
 App Store reviews **were** collected — at least one is on the affinity board
 (JamesAndTheGiantDurian: *"When my travel plans were altered, I canceled the ticket...
 My refund request was denied... Would I recommend it? Not if your travel plans are prone
-to change."*). Reddit still not collected.
+to change."*).
+
+Reddit, r/redbus, two posts (the only ones I found that touched the topic, neither about booking a return):
+- supaayush: *"...redbus showed it wud return 90% in case i cancel but now it is not being canceled and there is no customer care executive too through which i can share my concern"*
+- wild-promise3316: *"The operator tells us to inquire with the redbus staff, while the redbus staff tells us the cancellation is up to the bus operator."*
 
 ## Six clusters
 
