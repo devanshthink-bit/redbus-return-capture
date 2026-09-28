@@ -651,6 +651,9 @@ body.testing .devicewrap::before,body.testing .devicewrap::after{display:none}
   .viewport{width:100%;height:100vh;height:100dvh;border-radius:0}
   .phone{width:100%;height:100vh;height:100dvh}
   .legacy{inset:0;height:100vh;height:100dvh;border-radius:0}
+  /* the hi-fi app was a fixed 402x874, taller and wider than most phones, so its sheets and
+     buttons sat below the screen where they couldn't be reached (Devansh, 28 Sep) */
+  .hifi iframe{width:100%;height:100%}
 }
 
 @media (prefers-reduced-motion: reduce){
