@@ -125,7 +125,7 @@ not refunded if lower · offered only by select operators · free date change up
 Same-operator-only is strongly indicated but not confirmed from a primary source.
 
 LEARNED · "Move earlier free, any number of times" was wrong — reschedule is once per booking.
-It turned out not to matter: people resolve their return date once, not repeatedly (Sai, Soumya,
+It turned out not to matter: people resolve their return date once, not repeatedly (Sai, Tia,
 Vivek). The over-promise was mine.
 
 LEARNED · A rescheduled ticket cannot be cancelled at all. Idea 16 therefore introduces a new
@@ -153,7 +153,7 @@ Causal chain for this feature:
 LEARNED · The scope card called in-session return-attach the "success metric". It is an INPUT
 metric. Reclassified.
 
-LEARNED · The feature captures share, it does not create demand. Soumya was coming home either way.
+LEARNED · The feature captures share, it does not create demand. Tia was coming home either way.
 Overclaiming demand creation would not survive a question.
 
 LEARNED · Growth loop: primarily an ENGAGEMENT loop. Return booked in-session becomes a held future
@@ -5478,7 +5478,7 @@ whose rule pointed the other way and which I should have raised as the question 
 footnote.
 
 NOTE · 2026-09-06 · molades-test · Source: user
-**The sessions were run. Three people, on v3.** Vivek Nandoskar, Soumya Mishra, Sai Srinivas
+**The sessions were run. Three people, on v3.** Vivek Nandoskar, Tia Sharma, Sai Srinivas
 Buddi — three of the five named in `TEST_SCRIPT.md`, all three from the original interview set.
 Anand Chauhan and Samarth Kumar were not run, so the sceptic and the fixed-plan traveller are
 both still untested, and kill condition 4 ("Samarth is slower than the unsure participants")
@@ -5492,13 +5492,13 @@ CRITIQUE · 2026-09-06 · molades-test · Source: user — all three
 
 - **"Three or more unsure people tap a single day."** Adjusted to two of three. **Nobody used
   the window.** Vivek read *"When can you travel back?"*, said *"Ok I am not sure"* out loud —
-  and tapped **Skip**. Soumya tapped one day, read the hint, and tapped the immediately
+  and tapped **Skip**. Tia tapped one day, read the hint, and tapped the immediately
   following day. Sai read *"tap two days instead"* and tapped two consecutive days. Three
   people, three different failures, one instruction. **HIT.**
 - **"They take the cheapest day and are then surprised they can't move."** Sai picked the
   cheapest day on the list, did not see the **No date change** tag, and left holding a ticket
   that cannot do the one thing he came for. **HIT.**
-- **"Nobody reads the four rules before paying."** Near-hit, not a hit. Soumya did read them —
+- **"Nobody reads the four rules before paying."** Near-hit, not a hit. Tia did read them —
   but only at Review, and she said most people including her would scan past. Vivek read
   headings only and missed the flexibility entirely.
 
@@ -5522,7 +5522,7 @@ tap Skip**, even though he had not understood the window on first contact. His r
 *"cutting his booking process time in half… the product is making them on his behalf and giving
 him freedom to change them if he wants."*
 
-**Why this is worth more than Soumya's praise for the same construct.** Soumya said she *"really
+**Why this is worth more than Tia's praise for the same construct.** Tia said she *"really
 liked the 7 day window thing"* — but she said it **after the moderator explained it to her**.
 `TEST_SCRIPT.md` warns about exactly that: people are polite, and they rate attractive things as
 more usable. Sai's is about what he would do; hers is about how she felt once told. Both are
@@ -5533,9 +5533,9 @@ Severity:  minor
 Layer:     the bet
 Action:    keep — do not lose this in the rework
 
-CRITIQUE · 2026-09-06 · molades-test · Source: user — Sai Srinivas Buddi, Soumya Mishra
+CRITIQUE · 2026-09-06 · molades-test · Source: user — Sai Srinivas Buddi, Tia Sharma
 **"Tap two days" means "tap the two ends of a range" to us, and "tap 2 days" to a user.**
-Sai read it literally and tapped two consecutive dates. Soumya did the same thing by a different
+Sai read it literally and tapped two consecutive dates. Tia did the same thing by a different
 route: one day, then the immediately following one. Neither produced a window; both thought they
 had answered the question.
 
@@ -5593,8 +5593,8 @@ Severity:  blocker
 Layer:     steps
 Action:    [blank]
 
-CRITIQUE · 2026-09-06 · molades-test · Source: user — Vivek Nandoskar, Soumya Mishra
-**The one-change limit arrives after the decision it should inform.** Soumya understood she
+CRITIQUE · 2026-09-06 · molades-test · Source: user — Vivek Nandoskar, Tia Sharma
+**The one-change limit arrives after the decision it should inform.** Tia understood she
 could change the date once only at **Review**. Vivek did not see it until the **confirm date
 change** screen — after booking, after paying, at the moment he was spending the change.
 
@@ -5607,10 +5607,10 @@ Severity:  blocker
 Layer:     steps
 Action:    [blank]
 
-CRITIQUE · 2026-09-06 · molades-test · Source: user — Vivek Nandoskar, Soumya Mishra
+CRITIQUE · 2026-09-06 · molades-test · Source: user — Vivek Nandoskar, Tia Sharma
 **"I already picked the dates — why am I picking again?"** Both said it, on the day list that
 follows the calendar. Vivek did not understand the screen even after reading the copy; it did
-not feel intuitive to him that having given a range he was now being asked for a date. Soumya
+not feel intuitive to him that having given a range he was now being asked for a date. Tia
 asked the same question the moment she was told to select a window.
 
 Sai recovered on his own — *"i got clear on the next screen that here i am being shown those 7
@@ -5628,7 +5628,7 @@ Action:    [blank]
 CRITIQUE · 2026-09-06 · molades-test · Source: user — all three
 **Nobody read a subheading. Not one, across three sessions.** Vivek: headings only, *"not even
 single subheading"*, and he *"ignored all the copies"* — he reached the flexibility hint only by
-accident, just before tapping Continue. Soumya said the Review screen had too much copy, that
+accident, just before tapping Continue. Tia said the Review screen had too much copy, that
 she would read headings and skip the rest, and that most people would scan straight to payment
 and *"later wonder when something goes wrong."*
 
@@ -5643,10 +5643,10 @@ Severity:  major
 Layer:     looks
 Action:    [blank]
 
-CRITIQUE · 2026-09-06 · molades-test · Source: user — Soumya Mishra, Sai Srinivas Buddi
+CRITIQUE · 2026-09-06 · molades-test · Source: user — Tia Sharma, Sai Srinivas Buddi
 **The shading is invisible and its explanation is unread.** Both of them tapped a first date and
 **did not notice** that some days became selectable and the rest went disabled. Both ignored
-*"Shaded days are within 7 days of your pick"*; Soumya read it and still did not find it clear.
+*"Shaded days are within 7 days of your pick"*; Tia read it and still did not find it clear.
 
 The calendar changes state under their hands and they do not see it happen. That is the state
 change carrying the entire 7-day rule.
@@ -5723,7 +5723,7 @@ Severity:  major
 Layer:     things
 Action:    [blank]
 
-CRITIQUE · 2026-09-06 · molades-test · Source: user — Soumya Mishra
+CRITIQUE · 2026-09-06 · molades-test · Source: user — Tia Sharma
 **"Pay the difference if it costs more" was not clear to her.** Recorded on its own because it
 is a specific string and it sits on the line that carries the whole cost of the flexibility.
 Related to the price-stability gap above, and probably not fixable without answering it.
@@ -5782,7 +5782,7 @@ NOTE · 2026-09-06 · molades-test · Source: user — Sai Srinivas Buddi
   anyone would have proposed from the desk.
 - **The change-date flow itself**: smooth, and he *"didn't need to think too much about it."*
 
-Also recorded, on what decides a bus for these three: Soumya named timings, ratings, price,
+Also recorded, on what decides a bus for these three: Tia named timings, ratings, price,
 pickup and drop points, and cancellation — and said she would look at nothing else. Sai added
 **trip duration**, faster being better. Both sit inside the seven factors `CONTEXT.md` §7
 already lists, which is a small independent check on that list.
@@ -5819,7 +5819,7 @@ changed nothing about how a day or a window is chosen, which is what the session
 
 CHANGE · 2026-09-06 · molades-build · Source: user
 **The mode question replaces the hint line.** Three participants failed one instruction three
-different ways: Vivek said *"Ok I am not sure"* out loud and tapped **Skip**; Soumya tapped a day
+different ways: Vivek said *"Ok I am not sure"* out loud and tapped **Skip**; Tia tapped a day
 and then the next day; Sai read *"tap two days instead"* as two consecutive dates. A hint line was
 being asked to teach a **mode**, which it cannot do.
 
@@ -5841,7 +5841,7 @@ Action:    fixed — findings 1 and 2
 
 CHANGE · 2026-09-06 · molades-build · Source: user
 **Every rule on the calendar is a heading now.** Vivek read *"not even a single subheading"*;
-Soumya said she and most people would read headings and skip to payment. `CONTEXT.md` §8's test —
+Tia said she and most people would read headings and skip to payment. `CONTEXT.md` §8's test —
 *"read only the bold lines and you have every rule"* — assumed the bold lines were read. They were
 not, and the rules were `<dd>`s. The `<dt>` carries the rule, the `<dd>` carries only detail.
 
@@ -5851,7 +5851,7 @@ Three things that were buried and are now headings:
   Vivek believed a seat was being held on every day he had marked (*"in this my seat is getting
   confirmed right?"*); Sai could not tell whether he was about to pay for several dates. The rule
   names the count, so it is never abstract.
-- **"You can change this date once, to any date"** — Soumya met this at Review, Vivek only at the
+- **"You can change this date once, to any date"** — Tia met this at Review, Vivek only at the
   confirm-change screen, after paying. It is the product; it was arriving three screens late.
   `changeRule()` is one writer with three outcomes — all buses movable, none, or some.
 - **"No refund on a cheaper day"**, in warning colour, in every state where a booking is in view.
@@ -5889,7 +5889,7 @@ Action:    fixed — finding 4
 
 CHANGE · 2026-09-06 · molades-build · Source: user
 **The day list now refers back to the tap that got them there.** *"I already picked the dates —
-why am I picking again?"* — Vivek and Soumya both, and Vivek never worked it out from the copy.
+why am I picking again?"* — Vivek and Tia both, and Vivek never worked it out from the copy.
 
 The screen gains a heading above the lead: **"Now pick one of your 4 days"**, naming the number
 they marked. A single date reads *Your return day* instead, so the certain traveller is never
@@ -5929,7 +5929,7 @@ Layer:     steps
 Action:    fixed — finding 15, plus a defect the sessions did not surface
 
 CHANGE · 2026-09-06 · molades-build · Source: user
-**The 7-day band now arrives where they can see it.** Soumya and Sai both tapped a first day and
+**The 7-day band now arrives where they can see it.** Tia and Sai both tapped a first day and
 did not notice the month go dark around it; both then ignored the line explaining it. The sweep
 animation already existed for ranges, so it now plays across the newly reachable days on the first
 tap. A state change nobody watches happen is a state change nobody knows about.
@@ -6084,7 +6084,7 @@ date looks like.
 date first, so in practice many land in fixed mode without having considered the other answer.
 What makes that acceptable and did not make a preselected default acceptable: the toggle sits
 directly above the calendar in the reading path with **both labels legible before anything is
-touched**, and switching is one tap that costs nothing. Soumya's failure was not knowing the
+touched**, and switching is one tap that costs nothing. Tia's failure was not knowing the
 option existed at all — it was a grey hint line at the bottom of the screen.
 
 **Unanswered, both labels are full ink** rather than muted. With neither segment lifted the control
@@ -10201,7 +10201,7 @@ rule of one heading, one subheading and one image per section, with every word r
 humanizer skill. References: Jahanvi's portfolio (88 screenshots) and Manav Madaan's storytelling
 deck (Braindump, Characters, Plots, Arc, Narrative, Open mic).
 
-Decided:   A seven-point arc. Hook: Soumya, who booked early once and never did again. Pinch:
+Decided:   A seven-point arc. Hook: Tia, who booked early once and never did again. Pinch:
            redBus already sells the fix in the wrong place. Turn: ask for the last day, not the
            date. Midpoint: my own eight attacks and the lost mentor demo. Climax: the kill list
            firing in testing. Resolution: the fix, the final flow and the live embed. 22 short
@@ -10295,7 +10295,7 @@ He sent a braindump of must-haves and pointed at Ishita Sharma's EDGE case study
 storytelling: *"Add all of them. But don't write too many words... I also want a movie-like feeling
 while reading this case study, so borrow anything you want from Ishita's case study."*
 
-Borrowed: the solution first as a guided trip (her Tia becomes "Soumya's next trip", labelled as
+Borrowed: the solution first as a guided trip (her Tia becomes "Tia's next trip", labelled as
 imagined), a scene line then a question then the screen, "How I..." iteration titles, the aside
 that I won't walk through every version, the messy process shown late, and a warm ending. Added
 for a movie feel: act dividers and a credits roll.

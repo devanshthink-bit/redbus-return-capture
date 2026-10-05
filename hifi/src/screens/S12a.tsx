@@ -412,7 +412,7 @@ export default function S12ASixPassengersReviewYourTrip() {
             </div>
             <div className="[word-break:break-word] content-stretch flex flex-col font-['Inter:Regular'] font-normal gap-[2px] items-start not-italic relative shrink-0" data-node-id="810:5946" data-name="Text">
               <p className="leading-[22px] relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="810:5947">
-                Soumya Mishra
+                Tia Sharma
               </p>
               <p className="leading-[20px] relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] whitespace-pre" data-node-id="810:5948">{`Female, 24 Years  ·  Seat U2 / U2`}</p>
             </div>

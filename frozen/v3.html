@@ -2090,7 +2090,7 @@ function paintSeats(){
   const pax=E('rv-pax');
   if(pax){
     pax.innerHTML = state==='crowded'
-      ? ['Devansh Somvanshi','Priyanka Ramachandran-Iyer','Sai Srinivas Buddi','Harshraj Vamanjoor','Soumya Mishra','Jaimin Gagiya']
+      ? ['Devansh Somvanshi','Priyanka Ramachandran-Iyer','Sai Srinivas Buddi','Harshraj Vamanjoor','Tia Sharma','Jaimin Gagiya']
           .map((nm,i)=>'<div class="paxname" style="margin-top:'+(i?10:0)+'px">'+nm+'</div><div class="cap">Seat '+[o+'/'+r,'L2/L3','U6/U8','L1/L1','U2/U2','L5/L6'][i]+'</div>').join('')
       : '<div class="paxname">Devansh Somvanshi</div><div class="cap">Male, 29 \u00B7 Seat '+(state==='noreturn'?o:o+' / '+r)+'</div>';
     const nv=document.querySelector('#s-review .navtxt p');

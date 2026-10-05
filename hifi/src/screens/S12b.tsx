@@ -508,7 +508,7 @@ export default function S12BSixPassengersTicketDetails() {
             <div className="content-stretch flex gap-[12px] items-center relative shrink-0 w-full" data-node-id="812:5411" data-name="Passenger">
               <div className="content-stretch flex flex-[1_0_0] flex-col items-start min-w-px relative" data-node-id="812:5412" data-name="Text">
                 <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[22px] not-italic relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="812:5413">
-                  Soumya Mishra
+                  Tia Sharma
                 </p>
               </div>
               <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[20px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="812:5414">

@@ -1197,7 +1197,7 @@ function setState(s){
   const pax=document.getElementById('rv-pax');
   if(pax){
     pax.innerHTML = s==='crowded'
-      ? ['Devansh Somvanshi','Priyanka Ramachandran-Iyer','Sai Srinivas Buddi','Harshraj Vamanjoor','Soumya Mishra','Jaimin Gagiya']
+      ? ['Devansh Somvanshi','Priyanka Ramachandran-Iyer','Sai Srinivas Buddi','Harshraj Vamanjoor','Tia Sharma','Jaimin Gagiya']
           .map((n,i)=>'<div class="paxname" style="margin-top:'+(i?10:0)+'px">'+n+'</div><div class="cap">Seat '+['SU4/U5','SL2/L3','SU6/U8','SL1/L1','SU2/U2','SL5/L6'][i]+'</div>').join('')
       : '<div class="paxname">Devansh Somvanshi</div><div class="cap">Male, 29 · Seat '+(dropped?'SU4':'SU4 / U5')+'</div>';
     document.querySelector('#s-review .navtxt p').textContent='Delhi ↔ Nainital · '+PAX()+' passenger'+(PAX()>1?'s':'');

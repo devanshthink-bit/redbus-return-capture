@@ -204,7 +204,7 @@ operator's promotion carried by redBus, not a platform-wide policy, so do not de
 **Why it matters, and it is not a threat to the construct.**
 
 **1. Price is not the blocker.** The discount exists today on some buses, and **39.1% of people with
-a fixed return date still book separately** (n73), and Soumya stopped booking early altogether (n49).
+a fixed return date still book separately** (n73), and Tia stopped booking early altogether (n49).
 A discount cannot buy a commitment somebody is not able to make.
 
 **2. It completes a pattern, and the pattern is the real finding.** Every return-side mechanism on

@@ -111,7 +111,7 @@ date change — no change fee, fare difference payable if any.
 
 **Why it won:**
 - It's the only idea where the traveller commits to something they actually possess. Four of eight described their constraint as a deadline, never a date (n41 n58 and Sai's and Prayani's weekend rules)
-- Travellers overwhelmingly **extend**, not shorten (Sai 5th→10th, Prayani weeks→six weeks, Anand n04, Vivek n59). The deadline is the far end of that drift, so every deviation runs into free territory. **Soumya's exact failure — booked early, wanted to push, couldn't, never booked early again (n49) — becomes impossible**
+- Travellers overwhelmingly **extend**, not shorten (Sai 5th→10th, Prayani weeks→six weeks, Anand n04, Vivek n59). The deadline is the far end of that drift, so every deviation runs into free territory. **Tia's exact failure — booked early, wanted to push, couldn't, never booked early again (n49) — becomes impossible**
 - It makes the safe choice and the booked choice the same choice. After it, there is no version of the trip where waiting is smarter
 - It clears the metric (a paid return in-session) and the guardrail (optional input, no blocking step)
 
@@ -169,7 +169,7 @@ rule) · Idea 15 (the guarantee).
 16. Overnight buses — a "Monday" bus departing 23:00 Sunday. Pick a rule and apply it everywhere.
 
 ### Groups
-17. Five booked, three seats earlier → **the group splits**, reproducing Soumya's failure (n52). Move-earlier must be all-or-nothing by default.
+17. Five booked, three seats earlier → **the group splits**, reproducing Tia's failure (n52). Move-earlier must be all-or-nothing by default.
 18. Group bookings will rarely be movable. Say so at booking.
 
 ### Edges
@@ -237,7 +237,7 @@ Anand knew and refused anyway (n07). A visibility fix reaches the first group an
 It does not restrict later. *Move earlier* is the surfaced path because that is the direction a
 deadline implies; a later change stays where it already lives. Travellers overwhelmingly extend
 within their window (n34 n04 n59 and Prayani's six weeks), so booking the deadline puts them at
-the far end of the drift and every deviation runs toward them. Soumya's failure — booked early,
+the far end of the drift and every deviation runs toward them. Tia's failure — booked early,
 wanted to push, couldn't, never booked early again (n49) — becomes impossible.
 **Operator argument:** a seat handed back early resells better than one cancelled near departure.
 This asks for something cheaper than what operators already offer, not a concession.
@@ -276,7 +276,7 @@ never built. Constraint 5 says the answer must never be forced on somebody who m
 **Not in the prototype. Stated here so it is a decision rather than an omission.**
 
 **3. Group moves are all-or-nothing.** Failures #19 and #20. If five seats are booked and only three are
-available earlier, the move is not offered. A partial move reproduces Soumya's split group (n52), which
+available earlier, the move is not offered. A partial move reproduces Tia's split group (n52), which
 is the failure this project is meant to prevent. **Not in the prototype.**
 
 ## Which build this document describes

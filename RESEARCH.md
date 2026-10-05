@@ -14,7 +14,7 @@
 ## What was actually collected
 
 **8 interviews** — transcripts in `raw/`:
-Anand Chauhan · Harshraj Vamanjoor · Jaimin Gagiya · Prayani Pohekar · Sai Srinivas Buddi · Samarth Kumar · Soumya Mishra · Vivek Nandoskar
+Anand Chauhan · Harshraj Vamanjoor · Jaimin Gagiya · Prayani Pohekar · Sai Srinivas Buddi · Samarth Kumar · Tia Sharma · Vivek Nandoskar
 
 **Survey** — Google Form, 61 responses at the top of the funnel, 23 in the qualified base:
 
@@ -95,11 +95,11 @@ Two ChatGPT-produced artefacts and one Figma affinity board were reviewed agains
 
 Second pass (5 clusters) is better than the first (6, heavily overlapping). Remaining faults:
 
-- **Cluster "User wants to secure the return early once their return plan is certain" has no friction in it** — it describes the desired behaviour, and its notes are people describing success. Dissolve: friction notes (Soumya's high prices/bad seats, Vivek's unavailable seats, Prayani's *"if the seats are not available then what"*) → C3; relief notes → C5.
+- **Cluster "User wants to secure the return early once their return plan is certain" has no friction in it** — it describes the desired behaviour, and its notes are people describing success. Dissolve: friction notes (Tia's high prices/bad seats, Vivek's unavailable seats, Prayani's *"if the seats are not available then what"*) → C3; relief notes → C5.
 - **The first pass had a cost-of-waiting cluster and the second pass deleted it.** A regression — it is the only cluster with survey quant behind it (n74). Restored as C3.
 - **Sub-group D (peak-season inventory) is misfiled** under external factors. Inventory doesn't prevent the decision; it punishes it afterwards. → C3.
 - **"Unsure what flexibility they'll have" (3 notes) and "wants flexibility, fears losing money" are one problem** — you can't price a risk you can't see. Merged into C2. What must not be lost in the merge: the ignorance is about a product RedBus already sells.
-- **"Delays hoping for a lower fare" is one participant.** Four quotes are Anand doing it, two are Soumya saying she stopped, one is Prayani reporting a companion. Marked `THIN` as C6.
+- **"Delays hoping for a lower fare" is one participant.** Four quotes are Anand doing it, two are Tia saying she stopped, one is Prayani reporting a companion. Marked `THIN` as C6.
 - The largest cluster sits under an "Outliers" header on the board.
 
 ### JTBD audit

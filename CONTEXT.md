@@ -125,11 +125,11 @@ telling him it is live, and tell him to hard-refresh.
 | **39.1%** | did not know FlexiTicket **or** the cancellation add-on existed |
 
 **Participants:** Anand Chauhan · Harshraj Vamanjoor · Jaimin Gagiya · Prayani Pohekar ·
-Sai Srinivas Buddi · Samarth Kumar · Soumya Mishra · Vivek Nandoskar.
+Sai Srinivas Buddi · Samarth Kumar · Tia Sharma · Vivek Nandoskar.
 
 **Quotes that get cited constantly:**
 - **n07 Anand** — *"I know there is an option but I just prefer okay this option doesn't exist"*
-- **n49 Soumya** — booked early once, wanted to push the date, couldn't, never booked early again
+- **n49 Tia** — booked early once, wanted to push the date, couldn't, never booked early again
 - **n72** — 0% forgot
 - **n73** — 39.1% with a fixed date still defer
 
@@ -513,7 +513,7 @@ isolate a section by hiding the others instead.
 
 ## 11. Open items — nothing here is done
 
-- **Three of the five usability sessions were run on 2026-09-06** — Vivek, Soumya, Sai, on **v3**.
+- **Three of the five usability sessions were run on 2026-09-06** — Vivek, Tia, Sai, on **v3**.
   Anand and Samarth were not, so the sceptic and the fixed-plan traveller are still untested and
   kill condition 4 cannot be scored. **The kill list fired: two clear hits of three evaluable.**
   Nobody discovered the week window, and one participant bought a non-changeable ticket believing

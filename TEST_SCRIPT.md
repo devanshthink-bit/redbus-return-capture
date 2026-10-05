@@ -57,7 +57,7 @@ Go back to the people you already interviewed. Each of these is the right person
 
 | Who | Why them |
 |---|---|
-| **Soumya Mishra** | She booked early once, wanted to push the date, couldn't, and **never booked early again** (n49). She is the exact person this idea exists for. If it doesn't convince her, it doesn't work |
+| **Tia Sharma** | She booked early once, wanted to push the date, couldn't, and **never booked early again** (n49). She is the exact person this idea exists for. If it doesn't convince her, it doesn't work |
 | **Anand Chauhan** | *"I know there is an option but I just prefer okay this option doesn't exist"* (n07). Your hardest sceptic. He priced flexibility and refused it without reading it |
 | **Samarth Kumar** | Refuses a ₹300 add-on when his plan is fixed (n45). Does a *free* change move him, or is the answer still no? |
 | **Sai Srinivas Buddi** | Bought the cancellation add-on precisely because he was unsure (n37). Should convert easily — if he doesn't, something is badly wrong |
@@ -130,7 +130,7 @@ Pick **one** per participant, set it quietly in your own tab before handing over
 | Vivek | `nothingearlier` | No other days to pick |
 | Sai | `seatgone` | Their return seat went while they were choosing |
 | Anand | `noguard` | No day in the range can be changed at all |
-| Soumya | `pastcutoff` | Too late to change — inside 8 hours |
+| Tia | `pastcutoff` | Too late to change — inside 8 hours |
 | Samarth | `swapfail` | The seat was lost mid-change |
 
 > "Something has gone differently here. What would you do?"
@@ -227,7 +227,7 @@ distraction, it's evidence the sorting was honest. Note it, say "that's on my li
 - Boarding point confusion — Samarth's 800m discrepancy (n90), Sai's missing stop (n89)
 - The listing card price not matching the seat price — Anand (n79), Sai (n88)
 - No written reviews shown — Anand (n80)
-- Bus number arriving by SMS at the last minute — Jaimin (n84), Soumya (n93)
+- Bus number arriving by SMS at the last minute — Jaimin (n84), Tia (n93)
 - Operator cancelling the bus with no alternative — Vivek (n94)
 
 ---

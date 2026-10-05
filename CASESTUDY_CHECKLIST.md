@@ -67,7 +67,7 @@ Every line here has to be ticked by the end. The phase items below say how.
 - [x] B3. The three entries that carry the story: the costliest lesson, the self-caused failure, the critique rightly rejected
   *Proof: §B3. Mentor demo 13 Aug (LOG l.2108); "You cannot move it to a later day" (LOG 3 Aug, DEFENCE); Sai's "show only flexi buses" rejected in favour of "Book a fixed date" (LOG l.5579, l.5882).*
 - [x] B4. Characters cast (main and side). Participants' names only if TEST_SCRIPT allows it
-  *Proof: §B4. Main is the traveller, with Soumya as the face. Authority is redBus's rules. Catalyst is the mentor, unnamed. Messengers are Vivek, Soumya and Sai. Sai is the contender turned supporter. First names are used, as Devansh approved on 13 Sep.*
+  *Proof: §B4. Main is the traveller, with Tia as the face. Authority is redBus's rules. Catalyst is the mentor, unnamed. Messengers are Vivek, Tia and Sai. Sai is the contender turned supporter. First names are used, as Devansh approved on 13 Sep.*
 
 ### Phase C: Story structure
 - [x] C1. The seven-point arc mapped onto the real events, one image per beat

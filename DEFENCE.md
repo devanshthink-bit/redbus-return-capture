@@ -250,7 +250,7 @@ random dates and changing later, the return attach problem would not exist. It d
 
 - **39.1% with a *fixed* return date still book separately** (n73). They have nothing to be unsure
   about and still do not book
-- **Soumya tried exactly that model.** Booked early, wanted to move the date, could not — *"we
+- **Tia tried exactly that model.** Booked early, wanted to move the date, could not — *"we
   regretted it"* — and never booked early again (n49)
 - **Anand knew the option existed and refused it** (n07)
 
@@ -689,11 +689,11 @@ policy. Do not describe it as redBus discounting return trips; it is an operator
 by redBus.
 
 It is the control experiment for this whole project. The discount is live **today**, and **39.1% of
-people with a fixed return date still book separately** (n73), and Soumya stopped booking early
+people with a fixed return date still book separately** (n73), and Tia stopped booking early
 altogether (n49). A discount cannot buy a commitment somebody is not able to make. Raising it buys
 more of the people who were already going to book.
 
-Soumya would have paid **more**, not less, for the ability to move the date.
+Tia would have paid **more**, not less, for the ability to move the date.
 
 ### "Why not just show FlexiTicket-eligible buses inside the window? Then every day is changeable."
 
@@ -1248,7 +1248,7 @@ thing in the product.
 
 ### "Have you tested it?"
 
-**Yes, three sessions on 6 Sep, and it failed its own kill list. Say that first.** Vivek, Soumya
+**Yes, three sessions on 6 Sep, and it failed its own kill list. Say that first.** Vivek, Tia
 and Sai ran v3. Two of the three conditions that could be scored fired: nobody used the window, and
 Sai took the cheapest day without seeing it could not change. The fixes were built the same day and
 have not been tested again. Anand (the sceptic) and Samarth (fixed plans) never ran. The

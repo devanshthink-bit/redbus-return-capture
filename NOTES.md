@@ -67,7 +67,7 @@ Nothing is deleted.
 - n46 Would buy it when travelling with parents — "300 rupees as a good ROI for me"
 - n47 Tyre burst en route to Chikmagalur, missed the bus, no option to reschedule
 
-### Soumya Mishra — Bhopal, ex-Trichy, group vacations
+### Tia Sharma — Bhopal, ex-Trichy, group vacations
 - n48 Has never booked both legs together
 - n49 Booked early once, wanted to push the date, couldn't — "we regretted it". After that, always 1–2 days before
 - n50 Group — "till the last day it was not final who wants to leave and who wants to stay"
@@ -122,7 +122,7 @@ Nothing is deleted.
 - n90 Samarth: boarding address text and the Google Maps pin 800m apart; nearly missed the bus
 - n91 Samarth: bus skipped an intermediate stop because no passengers were waiting
 - n92 Samarth: wants a 360° image of the boarding point
-- n93 Soumya: bus number not shared until the last moment — a safety issue her parents ask about
+- n93 Tia: bus number not shared until the last moment — a safety issue her parents ask about
 - n94 Vivek: operator cancelled the bus a day before, no alternate offered, charged him, refunded only after a complaint
 - n95 Vivek: won't use RedBus AI — "I don't trust AI with all of the money things"
 
@@ -148,7 +148,7 @@ Nothing is deleted.
 
 ### C1 — User can't commit to a return date that isn't theirs to set
 **Tension:** The date they'd have to commit to is owned by someone or something else
-**What they did:** Flew out with no return booked and waited until an event, a group or a recovery resolved itself — Jaimin, Sai, Prayani, Vivek, Soumya, Samarth · n04 n10 n16 n24 n34 n42 n43 n50 n59 n67 n68
+**What they did:** Flew out with no return booked and waited until an event, a group or a recovery resolved itself — Jaimin, Sai, Prayani, Vivek, Tia, Samarth · n04 n10 n16 n24 n34 n42 n43 n50 n59 n67 n68
 
 - a — waiting on an event with no defined end — n16, n34, n43, n59
 - b — waiting on other people — n24, n50, n68, n31
@@ -156,7 +156,7 @@ Nothing is deleted.
 
 ### C2 — User avoids booking at all, because every way of staying flexible costs money
 **Tension:** Undoing a commitment costs real money, so they avoid taking the position at all
-**What they did:** Skipped the cancellation add-on and simply didn't book, rather than book and risk the 20/40/80% cancellation ladder — Vivek, Samarth, Anand, Soumya, Harshraj · n07 n12 n45 n49 n56 n57 n62 n64 n70 n76
+**What they did:** Skipped the cancellation add-on and simply didn't book, rather than book and risk the 20/40/80% cancellation ladder — Vivek, Samarth, Anand, Tia, Harshraj · n07 n12 n45 n49 n56 n57 n62 n64 n70 n76
 
 - a — the cancellation ladder is the deterrent — n62, n56, n49, n64, n70
 - b — the change/cancel product is priced out or unknown — n07, n12, n45, n76, n27, n57
@@ -164,7 +164,7 @@ Nothing is deleted.
 
 ### C3 — User only finds out what waiting cost them after the decision is made
 **Tension:** Deferring feels free at the moment of choosing and expensive a week later
-**What they did:** Came back to an emptier bus — seat gone, price up, group split across two buses — Soumya, Vivek, Sai · n33 n51 n52 n60 n61 n71 n74
+**What they did:** Came back to an emptier bus — seat gone, price up, group split across two buses — Tia, Vivek, Sai · n33 n51 n52 n60 n61 n71 n74
 
 - a — the seat or bus is gone — n51, n61, n71, n74, n33
 - b — the price went up — n60, n74
@@ -180,7 +180,7 @@ Nothing is deleted.
 
 ### C5 — User carries the unbooked return around for the whole trip
 **Tension:** An open return is not free — it occupies them until it's closed
-**What they did:** Described booking both as relief, and described the open return as something they kept thinking about mid-trip — Sai, Prayani, Jaimin, Soumya · n18 n19 n29 n30 n39 n40 n53 n58
+**What they did:** Described booking both as relief, and described the open return as something they kept thinking about mid-trip — Sai, Prayani, Jaimin, Tia · n18 n19 n29 n30 n39 n40 n53 n58
 
 - a — booking both is described as relief — n30, n39, n18, n19
 - b — the open return occupies the trip itself — n40
@@ -188,7 +188,7 @@ Nothing is deleted.
 
 ### C6 — User is guessing which way the fare will move, and acts on the guess · THIN
 **Tension:** They're making a timing bet with no information, and their beliefs directly contradict each other
-**What they did:** One waited deliberately and halved his fare; two others stopped waiting after concluding prices only rise; one refuses to re-check at all in case checking raises the price — Anand, Sai, Soumya, Samarth · n02 n09 n26 n36 n38 n44 n54 n69
+**What they did:** One waited deliberately and halved his fare; two others stopped waiting after concluding prices only rise; one refuses to re-check at all in case checking raises the price — Anand, Sai, Tia, Samarth · n02 n09 n26 n36 n38 n44 n54 n69
 
 - a — waits on purpose, and has been rewarded — n02, n26, n36
 - b — concluded the opposite and stopped waiting — n38, n54

@@ -42,14 +42,14 @@ is covered. All copy went through the humanizer skill.
 | Part | Heading | Facts come from | Visual |
 |---|---|---|---|
 | Hero | RedBus · Booking the trip home, hook question, In short box, meta | RESEARCH l.23–24, LOG 6 Sep | phones 06a, 05, 16 |
-| Act 1 | Soumya booked her bus home early once. Never again. | NOTES n49 n51 | trip strip (code) |
+| Act 1 | Tia booked her bus home early once. Never again. | NOTES n49 n51 | trip strip (code) |
 | | Most people wait to book the return. Nobody forgets. | RESEARCH l.19–26, n72 | stat grid |
 | | The fix already exists. It's a badge on a bus. | RESEARCH l.27 | real app IMG_4553 |
 | | So why not just use FlexiTicket? (added 15 Sep) | DEFENCE "Why not just use FlexiTicket?", n73, n07 | 39.1% card and Anand's quote |
 | | The rules made waiting the safe choice. | BRIEF "7 rules across 2 products", TERMS FAQ 3 | knot card |
 | | A return booked later is often booked elsewhere. | RESEARCH 26.1%, artefacts.html business lens, DEFENCE counter-metric | 3 cards |
 | | I couldn't hold a seat, set a fare or change a rule. | RESEARCH problem statement, SCOPE, TERMS | rules card |
-| Act 2 | Scenes 1–5 of "Soumya's next trip" (imagined, labelled so) | CONTEXT §7–8, TERMS, LOG 8 Sep default | hi-fi 05, 06a, 08, 13, 16 |
+| Act 2 | Scenes 1–5 of "Tia's next trip" (imagined, labelled so) | CONTEXT §7–8, TERMS, LOG 8 Sep default | hi-fi 05, 06a, 08, 13, 16 |
 | | Scene 6: loading, empty, error | CONTEXT states | hi-fi S6, S9, S3 |
 | | Now try it yourself. | 51 screens | live embed |
 | Act 3 | It started as 102 sticky notes. | RESEARCH, artefacts.html | board crop, surnames masked |
