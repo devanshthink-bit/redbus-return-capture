@@ -10576,3 +10576,13 @@ CHANGE · 28 Sep 2026 · correction
 Changed:   "Reddit never collected" was wrong. Two r/redbus posts were collected (supaayush, wild-promise3316),
            both on cancellations and refunds. Fixed in the research board (artefacts.html), RESEARCH.md and CONTEXT.md.
 Because:   Devansh pointed out they were taken; they were of little help, which is why they were missed.
+
+DECISION · 2026-10-06 · reversal · Source: user
+Changed:   Lo-fi v4 now opens the return question on "I'm not sure yet", as the hi-fi has since 8 Sep.
+           resetMode() and the markup both set it; "I know my date" is one tap away and still works.
+Because:   Devansh: "Lo-fi version 4 should have an 'I'm not sure yet' tapped". The portfolio shot of v4 had
+           neither half filled, and it did not read as a toggle, which is the same reason the hi-fi changed.
+           65.2% of the survey did not know their return date, so the default is the majority answer.
+Reverses:  "v4 still has no default" (CONTEXT, 8 Sep). Cost: the screen assumes rather than asks.
+Also:      Portfolio lofi_v4.webp re-rendered from the new v4 (pushed to main). Frozen md5s no longer match
+           CLAUDE.md: commit 7828214 (Soumya to Tia) edited frozen/. Not changed here.

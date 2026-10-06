@@ -170,9 +170,9 @@ bought a ticket that could not change while believing he had flexibility. Twenty
 
 - **The calendar opens on a question, not a hint.** *I know my date* / *I'm not sure yet*, and the
   calendar does not appear until one is answered. `retMode` decides what a tap means: `fixed`
-  replaces the day on every tap, `unsure` opens the 7-day reach then closes the range. **No default
-  answer** — 65.2% were unsure, so defaulting to *I know my date* defaults against the target
-  segment. `resetMode()` is the sole writer, called from `afterOutbound()`.
+  replaces the day on every tap, `unsure` opens the 7-day reach then closes the range. **Opens on
+  *I'm not sure yet*** (6 Oct; it had no default until then) — 65.2% were unsure, and with
+  neither half filled it did not read as a control. `resetMode()` is the sole writer, called from `afterOutbound()`.
 - **Every rule on that screen is a `<dt>`.** Nobody in three sessions read a subheading, so §8's
   *"read only the bold lines"* test was being applied to lines nobody read. `changeRule()`,
   `cancelRule(crit)`, `refundRule`, `priceRule` and `oneDayRule(n)` are the five, and
@@ -941,7 +941,7 @@ and a rules card, two more cards is a third card layer. The segmented control is
 did not read as a control. The majority answer is the defensible one — 65.2% of the survey did not
 know their return date — and correcting it is one tap. The cost is that the screen now assumes
 rather than learns, and someone who does know their date gets a window on their first tap. **v4
-still has no default.**
+now opens the same way (6 Oct).**
 
 **Both the toggle and the calendar are live, and the pick follows the tap.** Tapping a half selects
 it and rewrites the hint; tapping a day goes forward on the answer — *I know my date* to 05b,

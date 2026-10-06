@@ -1033,9 +1033,9 @@ body.testing .layout{display:flex;justify-content:center}
       </div>
 
       <h2 class="q">When can you travel back?</h2>
-      <div class="seg" role="group" aria-label="Do you know your return date?">
+      <div class="seg answered" role="group" aria-label="Do you know your return date?">
         <button class="segbtn" id="mode-fixed" aria-pressed="false" onclick="pickMode('fixed')">I know my date</button>
-        <button class="segbtn" id="mode-unsure" aria-pressed="false" onclick="pickMode('unsure')">I&rsquo;m not sure yet</button>
+        <button class="segbtn" id="mode-unsure" aria-pressed="true" onclick="pickMode('unsure')">I&rsquo;m not sure yet</button>
       </div>
       <p class="qhint" id="q-hint"></p>
 
@@ -1803,7 +1803,7 @@ function lastMovableIn(a,b){ for(let d=b; d>=a; d--) if(MOVABLE(d) && SEAT[d]) r
 let sel = [];            // [] nothing · [d] one day · [a,b] a range
 // '' until they answer the question · 'fixed' they know the date · 'unsure' they want a range.
 // A mode the traveller states, not one inferred from how many days they happened to tap.
-let retMode = '';
+let retMode = 'unsure';
 let heldDay = 0;         // the day currently booked
 
 const RUPEE = n => '\u20B9'+n.toLocaleString('en-IN');
@@ -2865,13 +2865,11 @@ function dropReturn(){ if(retOnly) return abandonReturn(); setState('noreturn');
 const ROUTE_HAS_MOVABLE = () => state!=='noguard';
 // The question is asked again on every return booking -- the answer belongs to a trip, not to a
 // session, and a stale 'I know my date' would silently take the range away from the next traveller.
+// It opens on 'I'm not sure yet', as the hi-fi does: with neither half filled it did not read as a
+// control, and 65.2% of the survey did not know their return date. Changing it is one tap.
 function resetMode(){
-  retMode=''; sel=[]; sweepFrom=sweepTo=0;
-  const f=document.getElementById('mode-fixed'), u=document.getElementById('mode-unsure'),
-        g=document.querySelector('#s-window .seg');
-  if(f) f.setAttribute('aria-pressed','false');
-  if(u) u.setAttribute('aria-pressed','false');
-  if(g) g.classList.remove('answered');
+  sel=[]; sweepFrom=sweepTo=0;
+  applyMode('unsure');
   paintWindow();
 }
 
