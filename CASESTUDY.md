@@ -66,7 +66,7 @@ is covered. All copy went through the humanizer skill.
 | | One line, read three wrong ways. | LOG l.5494, 5557, 5629 | quotes |
 | | How I made the calendar ask first. | LOG 6 Sep (mode question, Swiggy Crew toggle) | lo-fi v3, v4 |
 | | Sai asked me to hide the risky buses. I didn't. | LOG l.5573, 5882 | hi-fi 06b |
-| | Six weeks, one designer. Something had to go. | CONTEXT §8, §11, LOG 13 Aug, 12 Sep | MoSCoW (a look back, labelled) |
+| | Four weeks, one designer. Something had to go. | CONTEXT §8, §11, LOG 13 Aug, 12 Sep | MoSCoW (a look back, labelled) |
 | | Only the new part is mine. | DESIGN_LANGUAGE (amber, pills) | palette |
 | Act 4 | Three numbers, and when I'd pull it. | SCOPE, DEFENCE rollback rule | 3 cards |
 | | What I still don't know. | SCOPE, TERMS §9, CRITIQUE, LOG l.5480 | numbered list |

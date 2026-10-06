@@ -10596,3 +10596,8 @@ Changed:   CONTEXT.md: new §22 lists 24 Sep to 6 Oct (viewer, day-list strip, T
            CASESTUDY.md: how lofi_v4 was re-shot. shell.html: the segmented-control comment said no default;
            hi-fi rebuilt (app.html changes only in that comment and the css cache tag).
 Not changed: CASESTUDY.md's 13 Sep baseline table and LOG history; they record what was true then.
+
+CHANGE · 2026-10-06 · portfolio · Source: Devansh ("Make the timeline of the RedBus case study as 4 weeks everywhere")
+Changed:   Timeline is 4 weeks, not 6 (his answer on 13 Sep was "6 weeks"). Case study meta and the "What made
+           the cut" title ("Four weeks, one designer.") on the portfolio, its Ask Devansh knowledge, and the
+           CASESTUDY.md section map. The research board names no timeline, so nothing changed there.
