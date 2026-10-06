@@ -1,7 +1,7 @@
 # RedBus — project context for a fresh chat
 
-**Read this first, then `LOG.md` if you need the full history.** Sections 1–13 are how the project works; **sections 14–17 carry the research, the ideas, the design language and the out-of-scope list**, so this file stands alone if the others are not to hand. Everything below is current as of
-2026-08-13. This is a **concept case study**, not shipped work. Nothing here is real RedBus data
+**Read this first, then `LOG.md` if you need the full history.** Sections 1–13 are how the project works; **sections 14–17 carry the research, the ideas, the design language and the out-of-scope list**, so this file stands alone if the others are not to hand. Sections 1–21 were written as the work happened; **§22 lists what
+changed from 24 Sep to 6 Oct 2026** and wins where they disagree. This is a **concept case study**, not shipped work. Nothing here is real RedBus data
 unless it says so.
 
 ---
@@ -56,15 +56,13 @@ on push. `raw/` (interview transcripts) is gitignored.
 | `NOTES.md` | **102 atomic notes** n01–n102, sorted 78 in scope / 17 out / 7 not-a-problem, plus the 6 clusters with sub-groups |
 | `BRIEF.md` | The build spec. Constraints, **verified RedBus terms**, 16 ideas + kill log, shapes, screens, states, 21 failure cases, known gaps, stakeholder Q&A |
 | `DESIGN_LANGUAGE.md` | Measured from 51 screenshots. Tokens, type scale, spacing, the attack-pass rules |
-| `TEST_SCRIPT.md` | Usability script — **tests v3**, 5 named participants, 4 tasks, 4 must-see moments, and what kills v3 |
+| `TEST_SCRIPT.md` | Usability script — written for v3, **now tests v4** at `/?test` (only *Your return* changed), 5 named participants, 4 tasks, 4 must-see moments, and what kills v3 |
 | `TERMS.md` | Every redBus rule the construct stands on — FlexiTicket, Free Cancellation, reschedule, refunds — quoted verbatim with its source, plus what is still unverified |
 | `DEFENCE.md` | **102 questions** in 15 sections with answers and pushbacks, for stakeholders and interviews |
 | `CRITIQUE.md` | Six attacks written against the chosen idea, each with its defence and where the defence fails. Plus the merit ranking of all ideas |
 | `artefacts.html` | The FigJam-style board — 11 sections, scope card → design brief. **Generated from NOTES.md**, not retyped |
-| `index.html` / `prototype.html` | **v1** — identical copies. index.html is what GitHub Pages serves |
-| `v2.html` | **v2** |
 | `index.html` | **the viewer and v4 — the file being changed.** Served at the bare root URL |
-| `frozen/v3.html` | **v3, frozen** the way v1 and v2 are. `2c7461d8…` (was `6e9c8a7c…` until the 13 Sep button red) |
+| `frozen/v3.html` | **v3, frozen** the way v1 and v2 are. `f9685ce0…` (was `2c7461d8…` until the 6 Oct Soumya-to-Tia rename, and `6e9c8a7c…` until the 13 Sep button red) |
 | `frozen/v1.html` · `frozen/v2.html` · `frozen/prototype.html` | the other frozen builds |
 | `v1.html` · `v2.html` · `v3.html` · `prototype.html` | redirects to `/?version=N` |
 | `component-sheet.html` | Design-language component sheet |
@@ -100,8 +98,8 @@ someone can share must never be a bare prototype outside the viewer.
 The root **is** the viewer — `index.html` — it holds **v4** and carries the version switch, so the
 URL names no version. `?test` works on it.
 **`index.html` is no longer v1.** v1's file is unchanged and served at `v1.html` and
-`prototype.html`, both `164de4e8…` (the only change since freezing: the button red, 13 Sep, at
-Devansh's request).
+`prototype.html`, both `fae397a6…` (the only changes since freezing, both at Devansh's request: the
+button red, 13 Sep, and the Soumya-to-Tia rename, 6 Oct). `CLAUDE.md` holds the full check.
 
 Deploys take **45–90 seconds**. Always verify with `curl` + `md5` against the local file before
 telling him it is live, and tell him to hard-refresh.
@@ -169,7 +167,7 @@ bought a ticket that could not change while believing he had flexibility. Twenty
 `LOG.md` under 2026-09-06. What is built:
 
 - **The calendar opens on a question, not a hint.** *I know my date* / *I'm not sure yet*, and the
-  calendar does not appear until one is answered. `retMode` decides what a tap means: `fixed`
+  calendar shows from the start. `retMode` decides what a tap means: `fixed`
   replaces the day on every tap, `unsure` opens the 7-day reach then closes the range. **Opens on
   *I'm not sure yet*** (6 Oct; it had no default until then) — 65.2% were unsure, and with
   neither half filled it did not read as a control. `resetMode()` is the sole writer, called from `afterOutbound()`.
@@ -270,6 +268,10 @@ defaulted and changed from Review your trip via *Change seat* / *Change points*.
 fill the window. Without the flag they stay, for building.
 
 ### The presentation shell (outside the prototype)
+
+> **Superseded 25 Sep.** The viewer is now laid out like the Sidedoor viewer: one 340–400px column,
+> screens in two numbered columns, States as a drawer that takes the screen list's place. The colour
+> swatches and footnote are gone. The two-column layout below is history. See §22.
 
 Everything around the phone is stakeholder chrome, not design under test. It is marked off in the
 stylesheet under *PRESENTATION SHELL* and uses `--s-` prefixed tokens so it can never collide with the
@@ -712,13 +714,18 @@ at checkout (n87) · no photos for government buses (n85).
 The prototype screens rebuilt pixel-exact in Figma, styled to the **real redBus iOS app**, for
 stakeholder presentation. This is a separate deliverable from the prototype, which is unchanged.
 
-**File:** `t9srahcEB1ioKyytu0sEMs` — three pages, and they stay separate:
+**File:** `t9srahcEB1ioKyytu0sEMs` — eight pages since the 6 Oct tidy-up, in this order:
 
 | Page | Holds |
 |---|---|
-| `Hi-Fi UI` | One section, "Screens". Frames only, every element an instance. Nothing else lives here |
-| `🧩 Components` | Eleven sections, one column, bucketed by the name prefix: Icons · Tab bar icons · Logos · Artwork · App chrome · Buttons · Chips, badges and controls · Rows · Cards · Seat map · Calendar |
-| `🎨 Foundations` | Colour, type, elevation and spacing/radius specimens, generated from the real variables |
+| `🪧 Cover` | The file cover |
+| `📱 Hi-Fi UI` | The 51 frames in **seven flow frames**, each a red header band and a wrapping body: Flow 1 Book the outbound · 2 Add a return · 3 Review and pay · 4 After booking · 5 Move the date · 6 Cancel and refund · States. Laid out as a grid: flows 1–3 and 4–6 in two rows, States as a full-height column at the end. Frames only, every element an instance |
+| `🧩 Components` | Nine sections, 2400 wide, one column: Icons · Tab bar icons · Buttons · Chips, badges and controls · Rows · Cards · App chrome · Seat map · Calendar |
+| `🎨 Colors` | The Colour specimen (was `🎨 Foundations`) |
+| `🔤 Typography` | The Type specimen |
+| `📐 Spacing, Radius & Elevation` | Spacing and radius, and Elevation |
+| `🎭 Illustrations & Logos` | Logos and Artwork (moved off the Components page) |
+| `📸 App Screenshots` | Real redBus app screenshots |
 
 **Tokens.** `1. Primitives` (colour ramps, `space/*`, `radius/*`, `size/*`) is hidden from publishing.
 `2. Semantic` aliases every one of them — `surface/*`, `text/*`, `icon/*`, `border/*`, `seat/*`.
@@ -1251,8 +1258,8 @@ the cancel screens described that return whatever was booked. Now `hold()` build
 the booked operator does not run, else the least that operator's buses cost over what was paid), and
 14 lists that operator's real buses, cheapest first. `window.__heldReturn()` is the one accessor for the
 return after booking — the moved bus once a move is made — and the ticket, cancelled ticket, My
-Bookings, Review and cancel and Refund details all read it. Refunds use the ticket's own 85% line. The
-drawn 16 Sep booking is still what a cold load shows, and 13's Figma frame was corrected to the
+Bookings, Review and cancel and Refund details all read it. Refunds use the ticket's own 85% line. A cold
+load shows the drawn booking, **Thu 17 Sep · ₹1,120 · U4** (since 26 Sep; it was Wed 16 Sep · ₹1,090 · U5), and 13's Figma frame was corrected to the
 operator-scoped prices (12 and 21 `None`, 18 +₹70, 25 +₹320, 26 +₹260), which the build reproduces.
 
 **The two bus screens compare against different things, and one of them compares against nothing.**
@@ -2303,3 +2310,31 @@ named it.
 **Take any visual-regression number from two renders, not one.** Screen 06 read 4.6% then 6.4%
 with nothing changed in between; two passes at a longer virtual-time budget agree to 0.00% and
 land back at 4.6%. The odd reading was Inter not having loaded.
+
+---
+
+## 22 · What changed from 24 Sep to 6 Oct 2026
+
+These came from separate chats. Each has its full entry in `LOG.md`. Where an older section says
+otherwise, this one is current.
+
+- **Viewer laid out like the Sidedoor viewer (25 Sep).** One column, screens in two numbered columns,
+  States as a drawer that replaces the screen list. The *Colours from the live app* drawer and the
+  footnote were removed. Rows: pale number discs, solid red only on the current screen.
+- **Day list bar (25 Sep).** On 06, 06a and 06b the note is a full-width strip above the price and
+  button: soft red for the plain note, amber for 06b's warning. Same in Figma, the hi-fi and the lo-fi
+  (`.barnote`).
+- **One booked return everywhere (26 Sep).** Thu 17 Sep 23:55 → Fri 18 Sep 08:00, Laxmi, U4, ₹1,120.
+  Moving to Tue 15 saves ₹60 and gives U5. Cancel refunds ₹784 of ₹1,120. Older text in this file
+  that says Mon 14 or Wed 16 ₹1,090 describes the old data.
+- **Research board fixes (26–28 Sep).** Survey bases and wording corrected, two r/redbus posts on
+  refunds are counted as collected, and all 8 survey charts from the Google Form are on the board.
+- **Phones (28 Sep).** Below 520px the hi-fi fills the screen, so its sheets and buttons can be reached.
+- **Figma file tidied (6 Oct).** Eight pages, flow frames in a grid, components in nine sections.
+  See §18. Canvas moves only; no frame changed, so the build needed no rebuild.
+- **Participant renamed (6 Oct).** Soumya is now Tia (Tia Sharma where a surname shows), across the
+  prototype, the frozen builds, the board and the notes. The frozen md5s changed with it; `CLAUDE.md`
+  has the new ones.
+- **v4 opens on *I'm not sure yet* (6 Oct)**, like the hi-fi. Before this, v4 had no default.
+- **Still open:** `hifi/build/pull.py` cannot read the new `${assetPathPrefix}/x.svg` asset form from
+  `get_design_context`. Fix it before the next full re-pull. 07 and 13 were rebuilt by hand meanwhile.

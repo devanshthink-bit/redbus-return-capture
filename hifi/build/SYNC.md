@@ -13,7 +13,8 @@ chat, whether or not he repeats the instruction.
 ### 1 · Change the frame in Figma
 
 Load the `figma-use` skill first, then `use_figma`. File key `t9srahcEB1ioKyytu0sEMs`,
-page `Hi-Fi UI`.
+page `📱 Hi-Fi UI` (id `0:1`). The frames sit inside seven flow frames, so find them by
+name, not as page children.
 
 ### 2 · Re-pull the frame — never hand-edit a screen file
 

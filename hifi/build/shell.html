@@ -161,8 +161,8 @@
   [data-name^="Segment / "],[data-name="Radio"]{
     transition:background-color 200ms ease, color 200ms ease, box-shadow 200ms ease,
                left 220ms cubic-bezier(.22,1,.36,1), opacity 200ms ease}
-  /* The return question is a segmented control. Neither half is selected until it is answered --
-     65.2% of travellers were unsure, so defaulting to "I know my date" defaults against them. */
+  /* The return question is a segmented control. It opens on "I'm not sure yet" (8 Sep): with
+     neither half filled it did not read as a control, and 65.2% of travellers were unsure. */
   .hf-seg-on{background:#fff!important;box-shadow:0 1px 3px 0 rgba(0,0,0,.12)}
   .hf-seg-on p{color:#e81e38!important}
   .hf-seg-off{background:transparent!important;box-shadow:none!important}

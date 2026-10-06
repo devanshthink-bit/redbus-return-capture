@@ -10586,3 +10586,13 @@ Because:   Devansh: "Lo-fi version 4 should have an 'I'm not sure yet' tapped". 
 Reverses:  "v4 still has no default" (CONTEXT, 8 Sep). Cost: the screen assumes rather than asks.
 Also:      Portfolio lofi_v4.webp re-rendered from the new v4 (pushed to main). Frozen md5s no longer match
            CLAUDE.md: commit 7828214 (Soumya to Tia) edited frozen/. Not changed here.
+
+CHANGE · 2026-10-06 · docs brought up to date · Source: Devansh ("Since I made a lot of changes in different chats, update everything if something is still old")
+Changed:   CONTEXT.md: new §22 lists 24 Sep to 6 Oct (viewer, day-list strip, Thu 17 return, phones, research
+           board, Figma tidy-up, Tia, v4 default, pull.py still open); frozen hashes; the Figma page table
+           (eight pages, flow frames); two stale file rows (index.html/prototype.html as v1, v2.html) removed;
+           TEST_SCRIPT now tests v4; the calendar shows from the start; the cold-load booking is Thu 17; the
+           two-column shell marked superseded. SYNC.md: page is 📱 Hi-Fi UI, frames are inside flow frames.
+           CASESTUDY.md: how lofi_v4 was re-shot. shell.html: the segmented-control comment said no default;
+           hi-fi rebuilt (app.html changes only in that comment and the css cache tag).
+Not changed: CASESTUDY.md's 13 Sep baseline table and LOG history; they record what was true then.
