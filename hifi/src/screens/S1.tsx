@@ -213,11 +213,11 @@ export default function S1RouteHasNoneReviewYourTrip() {
           </div>
         </div>
         <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="810:5153" data-name="Passengers">
-          <div className="bg-[#ecebf2] content-stretch flex gap-[6px] items-center pl-[12px] pr-[14px] py-[6px] relative rounded-[999px] shrink-0" data-name="Chip">
+          <div className="bg-[#ecebf2] content-stretch flex gap-[6px] items-center pl-[12px] pr-[14px] py-[6px] relative rounded-[999px] shrink-0" data-node-id="810:5154" data-name="Chip">
             <div className="relative shrink-0 size-[16px]" data-name="Icon">
               <img alt="" className="absolute block inset-0 max-w-none size-full" src="assets/ui-user-ink.svg" />
             </div>
-            <p className="[word-break:break-word] font-['Inter:Semi_Bold'] font-semibold leading-[18px] not-italic relative shrink-0 text-[14px] whitespace-nowrap text-[color:var(--text\/primary,#1d1d1d)]">
+            <p className="[word-break:break-word] font-['Inter:Semi_Bold'] font-semibold leading-[18px] not-italic relative shrink-0 text-[14px] whitespace-nowrap text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="810:5156">
               1 Passenger
             </p>
           </div>

@@ -162,17 +162,17 @@ export default function Component16ReturnMoved() {
         </div>
       </div>
       <div className="content-stretch flex flex-[1_0_0] flex-col gap-[16px] items-start min-h-px pb-[24px] pt-[13px] px-[16px] relative w-full" data-node-id="138:1416" data-name="Content">
-        <div className="bg-[var(--colour\/green\/70,#e7f4e9)] border border-[var(--colour\/green\/100,#c9e2c6)] border-solid content-stretch flex gap-[14px] items-center p-[16px] relative rounded-[12px] shrink-0 w-full" data-name="Relief">
+        <div className="bg-[var(--colour\/green\/70,#e7f4e9)] border border-[var(--colour\/green\/100,#c9e2c6)] border-solid content-stretch flex gap-[14px] items-center p-[16px] relative rounded-[12px] shrink-0 w-full" data-node-id="138:1417" data-name="Relief">
           <div className="bg-[var(--colour\/green\/600,#347933)] content-stretch flex items-center justify-center overflow-clip relative rounded-[18px] shrink-0 size-[36px]" data-name="Icon circle">
             <div className="relative shrink-0 size-[18px]" data-name="Icon">
               <img alt="" className="absolute block inset-0 max-w-none size-full" src="assets/ui-tick-white.svg" />
             </div>
           </div>
           <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[3px] items-start min-w-px not-italic overflow-clip relative" data-name="Frame">
-            <p className="font-['Inter:Bold'] font-bold leading-[normal] relative shrink-0 text-[17px] text-[color:var(--text\/positive,#2e5c2a)] w-full">
+            <p className="font-['Inter:Bold'] font-bold leading-[normal] relative shrink-0 text-[17px] text-[color:var(--text\/positive,#2e5c2a)] w-full" data-node-id="377:3131">
               Return moved to Tue, 15 Sep
             </p>
-            <p className="font-['Inter:Regular'] font-normal leading-[20px] relative shrink-0 text-[14px] text-[color:var(--colour\/green\/715,#3d5a38)] w-full">
+            <p className="font-['Inter:Regular'] font-normal leading-[20px] relative shrink-0 text-[14px] text-[color:var(--colour\/green\/715,#3d5a38)] w-full" data-node-id="377:3132">
               Back in Delhi two days earlier. Nothing else about the trip moved.
             </p>
           </div>

@@ -49,6 +49,17 @@ def blocks_named(code, name):
 def texts(block):
     return [re.sub(r'\s+', ' ', t).strip() for t in re.findall(r'<p\b[^>]*>([^<]*)</p>', block)]
 
+def nid(tag_text):
+    m = re.search(r'data-node-id="([^"]+)"', tag_text or '')
+    return m.group(1) if m else None
+
+def ptags(block):
+    return [(re.sub(r'\s+', ' ', m.group(2)).strip(), nid(m.group(1)))
+            for m in re.finditer(r'<p\b([^>]*)>([^<]*)</p>', block)]
+
+def A(i):
+    return f' data-node-id="{i}"' if i else ''
+
 def indent_of(code, pos):
     ls = code.rfind('\n', 0, pos) + 1
     return code[ls:pos]
@@ -59,7 +70,7 @@ TAGS = {  # kind: (bg, fg, icon)
     'info':   ('bg-[var(--colour\\/neutral\\/150,#e9eaf6)]', 'text-[color:var(--text\\/primary,#1d1d1d)]', None),
     'warn':   ('bg-[var(--colour\\/amber\\/50,#fdf1e7)]', 'text-[color:var(--colour\\/amber\\/500,#a45729)]', None),
 }
-def tag(label, ind):
+def tag(label, ind, cid=None, pid=None):
     if label == 'Cheapest':
         kind, icon = 'good', 'assets/ui-tag-good.svg'
     elif label.startswith('Different seat'):
@@ -77,11 +88,11 @@ def tag(label, ind):
     else:
         return None
     bg, fg, _ = TAGS[kind]
-    return (f'<div className="{bg} content-stretch flex gap-[5px] h-[24px] items-center pl-[8px] pr-[10px] relative rounded-[999px] shrink-0" data-name="Tag">\n'
+    return (f'<div className="{bg} content-stretch flex gap-[5px] h-[24px] items-center pl-[8px] pr-[10px] relative rounded-[999px] shrink-0"{A(cid)} data-name="Tag">\n'
             f'{ind}  <div className="relative shrink-0 size-[16px]" data-name="Icon">\n'
             f'{ind}    <img alt="" className="absolute block inset-0 max-w-none size-full" src="{icon}" />\n'
             f'{ind}  </div>\n'
-            f'{ind}  <p className="[word-break:break-word] font-[\'Inter:Bold\'] font-bold leading-[18px] not-italic relative shrink-0 text-[13px] {fg} whitespace-nowrap">\n'
+            f'{ind}  <p className="[word-break:break-word] font-[\'Inter:Bold\'] font-bold leading-[18px] not-italic relative shrink-0 text-[13px] {fg} whitespace-nowrap"{A(pid)}>\n'
             f'{ind}    {label}\n'
             f'{ind}  </p>\n'
             f'{ind}</div>')
@@ -93,41 +104,43 @@ def icon_circle(ind, src, bg='bg-white', size=40, isz=20):
             f'{ind}  </div>\n'
             f'{ind}</div>')
 
-def p(cls, txt, ind):
-    return f'<p className="{cls}">\n{ind}  {txt}\n{ind}</p>'
+def p(cls, txt, ind, i=None):
+    return f'<p className="{cls}"{A(i)}>\n{ind}  {txt}\n{ind}</p>'
 
 SEC = "text-[color:var(--text\\/secondary,#636363)]"
 INK = "text-[color:var(--text\\/primary,#1d1d1d)]"
 
-def onward(label, route, when, ind):
+def onward(label, route, when, ind, cid=None, ids=(None, None, None)):
     i2, i4 = ind + '  ', ind + '    '
-    return (f'<div className="bg-[var(--colour\\/neutral\\/150,#e9eaf6)] content-stretch flex gap-[12px] items-center pl-[12px] pr-[16px] py-[12px] relative rounded-[12px] shrink-0 w-full" data-name="Onward journey">\n'
+    return (f'<div className="bg-[var(--colour\\/neutral\\/150,#e9eaf6)] content-stretch flex gap-[12px] items-center pl-[12px] pr-[16px] py-[12px] relative rounded-[12px] shrink-0 w-full"{A(cid)} data-name="Onward journey">\n'
             f'{i2}{icon_circle(i2, "assets/ui-bus-accent.svg")}\n'
             f'{i2}<div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px not-italic overflow-clip relative whitespace-nowrap" data-name="Text">\n'
-            f'{i4}{p("font-[\'Inter:Regular\'] font-normal leading-[16px] relative shrink-0 text-[12px] " + SEC, label, i4)}\n'
-            f'{i4}{p("font-[\'Inter:Bold\'] font-bold leading-[20px] relative shrink-0 text-[15px] " + INK, route, i4)}\n'
-            f'{i4}{p("font-[\'Inter:Regular\'] font-normal leading-[18px] relative shrink-0 text-[13px] " + SEC, when, i4)}\n'
+            f'{i4}{p("font-[\'Inter:Regular\'] font-normal leading-[16px] relative shrink-0 text-[12px] " + SEC, label, i4, ids[0])}\n'
+            f'{i4}{p("font-[\'Inter:Bold\'] font-bold leading-[20px] relative shrink-0 text-[15px] " + INK, route, i4, ids[1])}\n'
+            f'{i4}{p("font-[\'Inter:Regular\'] font-normal leading-[18px] relative shrink-0 text-[13px] " + SEC, when, i4, ids[2])}\n'
             f'{i2}</div>\n'
             f'{ind}</div>')
 
-def toggle(selected_right, ind):
+def toggle(selected_right, ind, cid=None, segids=(), pids=()):
     i2, i4 = ind + '  ', ind + '    '
     on = "bg-[var(--surface\\/default,white)] content-stretch flex flex-[1_0_0] items-center justify-center min-w-px overflow-clip py-[11px] relative rounded-[20px] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.06),0px_2px_8px_0px_rgba(0,0,0,0.12)]"
     off = "content-stretch flex flex-[1_0_0] items-center justify-center min-w-px overflow-clip py-[11px] relative rounded-[20px]"
     lbl = "[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[14px] text-center whitespace-nowrap "
     acc = "text-[color:var(--text\\/accent,#e81e38)]"
     segs = [('I know my date', not selected_right), ('I’m not sure yet', selected_right)]
-    out = [f'<div className="content-stretch flex gap-[4px] items-start overflow-clip p-[4px] relative rounded-[24px] shrink-0 w-full" data-name="Mode toggle">',
+    out = [f'<div className="content-stretch flex gap-[4px] items-start overflow-clip p-[4px] relative rounded-[24px] shrink-0 w-full"{A(cid)} data-name="Mode toggle">',
            f'{i2}<div aria-hidden className="absolute bg-[#e4e4eb] inset-0 pointer-events-none rounded-[24px]" />']
-    for name, sel in segs:
-        out.append(f'{i2}<div className="{on if sel else off}" data-name="Segment / {name}">')
-        out.append(f'{i4}{p(lbl + (acc if sel else SEC), name, i4)}')
+    for k, (name, sel) in enumerate(segs):
+        sid = segids[k] if k < len(segids) else None
+        tid = pids[k] if k < len(pids) else None
+        out.append(f'{i2}<div className="{on if sel else off}"{A(sid)} data-name="Segment / {name}">')
+        out.append(f'{i4}{p(lbl + (acc if sel else SEC), name, i4, tid)}')
         out.append(f'{i2}</div>')
     out.append(f'{i2}<div className="absolute inset-0 pointer-events-none rounded-[inherit] shadow-[inset_0px_1px_3px_0px_rgba(0,0,0,0.07)]" />')
     out.append(f'{ind}</div>')
     return '\n'.join(out)
 
-def lead_note(text, good, ind):
+def lead_note(text, good, ind, pid=None):
     i2 = ind + '  '
     icon = 'assets/ui-checkc-good.svg' if good else 'assets/ui-calx-warn-lead.svg'
     col = "text-[color:var(--colour\\/green\\/700,#2e5c2a)]" if good else "text-[color:var(--colour\\/amber\\/500,#a45729)]"
@@ -135,41 +148,41 @@ def lead_note(text, good, ind):
             f'{i2}<div className="relative shrink-0 size-[16px]" data-name="Icon">\n'
             f'{i2}  <img alt="" className="absolute block inset-0 max-w-none size-full" src="{icon}" />\n'
             f'{i2}</div>\n'
-            f'{i2}{p("[word-break:break-word] font-[\'Inter:Semi_Bold\'] font-semibold leading-[20px] not-italic relative shrink-0 text-[14px] whitespace-nowrap " + col, text, i2)}\n'
+            f'{i2}{p("[word-break:break-word] font-[\'Inter:Semi_Bold\'] font-semibold leading-[20px] not-italic relative shrink-0 text-[14px] whitespace-nowrap " + col, text, i2, pid)}\n'
             f'{ind}</div>')
 
-def passenger(text, ind):
+def passenger(text, ind, cid=None, pid=None):
     i2 = ind + '  '
-    return (f'<div className="bg-[#ecebf2] content-stretch flex gap-[6px] items-center pl-[12px] pr-[14px] py-[6px] relative rounded-[999px] shrink-0" data-name="Chip">\n'
+    return (f'<div className="bg-[#ecebf2] content-stretch flex gap-[6px] items-center pl-[12px] pr-[14px] py-[6px] relative rounded-[999px] shrink-0"{A(cid)} data-name="Chip">\n'
             f'{i2}<div className="relative shrink-0 size-[16px]" data-name="Icon">\n'
             f'{i2}  <img alt="" className="absolute block inset-0 max-w-none size-full" src="assets/ui-user-ink.svg" />\n'
             f'{i2}</div>\n'
-            f'{i2}{p("[word-break:break-word] font-[\'Inter:Semi_Bold\'] font-semibold leading-[18px] not-italic relative shrink-0 text-[14px] whitespace-nowrap " + INK, text, i2)}\n'
+            f'{i2}{p("[word-break:break-word] font-[\'Inter:Semi_Bold\'] font-semibold leading-[18px] not-italic relative shrink-0 text-[14px] whitespace-nowrap " + INK, text, i2, pid)}\n'
             f'{ind}</div>')
 
-def booking(label, when, price, detail, white, ind):
+def booking(label, when, price, detail, white, ind, cid=None, ids=(None,)*4):
     i2, i4, i6 = ind + '  ', ind + '    ', ind + '      '
     bg = "bg-[var(--surface\\/default,white)]" if white else "bg-[var(--colour\\/neutral\\/150,#e9eaf6)]"
     cbg = "bg-[var(--colour\\/neutral\\/150,#e9eaf6)]" if white else "bg-white"
-    return (f'<div className="{bg} content-stretch flex gap-[12px] items-center pl-[12px] pr-[16px] py-[16px] relative rounded-[12px] shrink-0 w-full" data-name="Your booking">\n'
+    return (f'<div className="{bg} content-stretch flex gap-[12px] items-center pl-[12px] pr-[16px] py-[16px] relative rounded-[12px] shrink-0 w-full"{A(cid)} data-name="Your booking">\n'
             f'{i2}{icon_circle(i2, "assets/ui-ticket-accent.svg", cbg)}\n'
             f'{i2}<div className="content-stretch flex flex-[1_0_0] flex-col gap-[4px] items-start min-w-px relative" data-name="Text">\n'
-            f'{i4}{p("[word-break:break-word] font-[\'Inter:Regular\'] font-normal leading-[16px] not-italic relative shrink-0 text-[12px] w-full " + SEC, label, i4)}\n'
+            f'{i4}{p("[word-break:break-word] font-[\'Inter:Regular\'] font-normal leading-[16px] not-italic relative shrink-0 text-[12px] w-full " + SEC, label, i4, ids[0])}\n'
             f'{i4}<div className="content-stretch flex items-center justify-between relative shrink-0 w-full" data-name="Row">\n'
-            f'{i6}{p("[word-break:break-word] font-[\'Inter:Bold\'] font-bold leading-[22px] not-italic relative shrink-0 text-[16px] whitespace-nowrap " + INK, when, i6)}\n'
-            f'{i6}{p("[word-break:break-word] font-[\'Inter:Bold\'] font-bold leading-[22px] not-italic relative shrink-0 text-[16px] whitespace-nowrap " + INK, price, i6)}\n'
+            f'{i6}{p("[word-break:break-word] font-[\'Inter:Bold\'] font-bold leading-[22px] not-italic relative shrink-0 text-[16px] whitespace-nowrap " + INK, when, i6, ids[1])}\n'
+            f'{i6}{p("[word-break:break-word] font-[\'Inter:Bold\'] font-bold leading-[22px] not-italic relative shrink-0 text-[16px] whitespace-nowrap " + INK, price, i6, ids[2])}\n'
             f'{i4}</div>\n'
-            f'{i4}{p("[word-break:break-word] font-[\'Inter:Regular\'] font-normal leading-[18px] not-italic relative shrink-0 text-[13px] w-full " + SEC, detail, i4)}\n'
+            f'{i4}{p("[word-break:break-word] font-[\'Inter:Regular\'] font-normal leading-[18px] not-italic relative shrink-0 text-[13px] w-full " + SEC, detail, i4, ids[3])}\n'
             f'{i2}</div>\n'
             f'{ind}</div>')
 
-def relief(title, body, ind):
+def relief(title, body, ind, cid=None, ids=(None, None)):
     i2, i4 = ind + '  ', ind + '    '
-    return (f'<div className="bg-[var(--colour\\/green\\/70,#e7f4e9)] border border-[var(--colour\\/green\\/100,#c9e2c6)] border-solid content-stretch flex gap-[14px] items-center p-[16px] relative rounded-[12px] shrink-0 w-full" data-name="Relief">\n'
+    return (f'<div className="bg-[var(--colour\\/green\\/70,#e7f4e9)] border border-[var(--colour\\/green\\/100,#c9e2c6)] border-solid content-stretch flex gap-[14px] items-center p-[16px] relative rounded-[12px] shrink-0 w-full"{A(cid)} data-name="Relief">\n'
             f'{i2}{icon_circle(i2, "assets/ui-tick-white.svg", "bg-[var(--colour\\/green\\/600,#347933)]", 36, 18)}\n'
             f'{i2}<div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[3px] items-start min-w-px not-italic overflow-clip relative" data-name="Frame">\n'
-            f'{i4}{p("font-[\'Inter:Bold\'] font-bold leading-[normal] relative shrink-0 text-[17px] text-[color:var(--text\\/positive,#2e5c2a)] w-full", title, i4)}\n'
-            f'{i4}{p("font-[\'Inter:Regular\'] font-normal leading-[20px] relative shrink-0 text-[14px] text-[color:var(--colour\\/green\\/715,#3d5a38)] w-full", body, i4)}\n'
+            f'{i4}{p("font-[\'Inter:Bold\'] font-bold leading-[normal] relative shrink-0 text-[17px] text-[color:var(--text\\/positive,#2e5c2a)] w-full", title, i4, ids[0])}\n'
+            f'{i4}{p("font-[\'Inter:Regular\'] font-normal leading-[20px] relative shrink-0 text-[14px] text-[color:var(--colour\\/green\\/715,#3d5a38)] w-full", body, i4, ids[1])}\n'
             f'{i2}</div>\n'
             f'{ind}</div>')
 
@@ -208,7 +221,7 @@ def patch(code):
         head = code[s:head_end]
         sole = code[head_end:m.start()].strip() == '' and code[m.end():nxt].strip() == ''
         pill = sole and 'rounded' in head and re.search(r'\bbg-\[', head) and 'data-name="Tag"' not in head and 'w-full' not in head
-        new = tag(label, indent_of(code, s)) if pill else None
+        new = tag(label, indent_of(code, s), nid(head), nid(code[m.start():m.end()])) if pill else None
         if new:
             code = code[:s] + new + code[nxt + 6:]; n += 1; pos = s + len(new)
         else:
@@ -218,16 +231,17 @@ def patch(code):
         blk = code[s:e]
         if 'Icon circle' in blk:
             continue
-        t = texts(blk)
-        route, _, when = t[1].partition(' · ')
-        code = code[:s] + onward(t[0], route, when, indent_of(code, s)) + code[e:]; n += 1
+        pt = ptags(blk)
+        route, _, when = pt[1][0].partition(' · ')
+        code = code[:s] + onward(pt[0][0], route, when, indent_of(code, s), nid(blk[:blk.index('>')]), (pt[0][1], pt[1][1], None)) + code[e:]; n += 1
 
     for s, e in reversed(blocks_named(code, 'Mode toggle')):
         blk = code[s:e]
         if 'shadow-[inset' in blk:
             continue
         right = re.search(r'bg-\[var\(--surface\\/default,white\)\][^"]*"[^>]*data-name="Segment / I’m not sure yet"', blk) is not None
-        code = code[:s] + toggle(right, indent_of(code, s)) + code[e:]; n += 1
+        segids = [nid(blk[x:blk.index('>', x)]) for x, _ in blocks_named(blk, 'Segment / I know my date') + blocks_named(blk, 'Segment / I’m not sure yet')]
+        code = code[:s] + toggle(right, indent_of(code, s), nid(blk[:blk.index('>')]), segids, [i for _, i in ptags(blk)]) + code[e:]; n += 1
 
     for s, e in reversed(blocks_named(code, 'Lead')):
         blk = code[s:e]
@@ -239,14 +253,14 @@ def patch(code):
         sub = re.sub(r'\s+', ' ', ps[1].group(1)).strip()
         good = 'cannot' not in sub.lower()
         ind = indent_of(code, s + ps[1].start())
-        new = blk[:ps[1].start()] + lead_note(sub, good, ind) + blk[ps[1].end():]
+        new = blk[:ps[1].start()] + lead_note(sub, good, ind, nid(ps[1].group(0)[:ps[1].group(0).index('>')])) + blk[ps[1].end():]
         code = code[:s] + new + code[e:]; n += 1
 
     for s, e in reversed(blocks_named(code, 'Chip')):
         blk = code[s:e]
         t = texts(blk)
         if ('Icon / Seat' in blk or 'IconSeat' in blk) and t and re.match(r'\d+ Passengers?$', t[-1]):
-            code = code[:s] + passenger(t[-1], indent_of(code, s)) + code[e:]; n += 1
+            code = code[:s] + passenger(t[-1], indent_of(code, s), nid(blk[:blk.index('>')]), ptags(blk)[-1][1]) + code[e:]; n += 1
 
     # "Your booking" cards: the named frame (13, S9) or the white frame on 14
     starts = [s for s, _ in blocks_named(code, 'Your booking')]
@@ -261,18 +275,18 @@ def patch(code):
         blk = code[s:e]
         if 'Icon circle' in blk:
             continue
-        t = texts(blk)
+        pt = ptags(blk); t = [x for x, _ in pt]
         if len(t) < 4 or t[0] != 'Your booking':
             continue
         white = 'surface\\/default,white' in blk[:blk.index('>')]
-        code = code[:s] + booking(t[0], t[1], t[2], t[3], white, indent_of(code, s)) + code[e:]; n += 1
+        code = code[:s] + booking(t[0], t[1], t[2], t[3], white, indent_of(code, s), nid(blk[:blk.index('>')]), [i for _, i in pt[:4]]) + code[e:]; n += 1
 
     for s, e in reversed(blocks_named(code, 'Relief')):
         blk = code[s:e]
         if 'Icon circle' in blk:
             continue
-        t = texts(blk)
-        code = code[:s] + relief(t[0], t[1], indent_of(code, s)) + code[e:]; n += 1
+        pt = ptags(blk)
+        code = code[:s] + relief(pt[0][0], pt[1][0], indent_of(code, s), nid(blk[:blk.index('>')]), (pt[0][1], pt[1][1])) + code[e:]; n += 1
 
     # the date-change pill inside Card / Leg, now a full pill like redBus's chip
     code2 = re.sub(r'(className="[^"]*?)h-\[26px\]([^"]*?)px-\[10px\]([^"]*?)rounded-\[var\(--radius\\/6,6px\)\]([^"]*"[^>]*data-name="Change pill")',

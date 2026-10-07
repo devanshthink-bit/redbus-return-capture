@@ -1468,26 +1468,45 @@
         var e = document.querySelector('.screen [data-name="' + n + '"]');
         if (e) ICONS[n] = e;
       });
-    function chip(from, text, tone, icon){   // tone: 'warn' amber, 'note' lavender, 'mute' grey
-      var c = from.cloneNode(true);
-      c.className = c.className
-        .replace(/bg-\[#[0-9a-f]+\]/, tone === 'warn' ? 'bg-[#f6ede6]'
-                                     : tone === 'mute' ? 'bg-[#f1f1f1]' : 'bg-[#e9eaf6]')
-        .replace(/rounded-\[[^\]]*\]/, 'rounded-[999px]');
-      c.classList.add('hf-chip');
-      var t = c.querySelector('p');
-      t.className = t.className.replace(/text-\[#[0-9a-f]+\]/,
-        tone === 'warn' ? 'text-[#a45729]' : tone === 'mute' ? 'text-[#636363]' : 'text-[#1d1d1d]');
-      // the frames prefixed these with a bare arrow glyph; a real icon replaces it
-      t.textContent = String(text).replace(/^[\u21bb\u21BB]\s*/, '');
-      Array.prototype.slice.call(c.children).forEach(function(k){ if (k !== t) c.removeChild(k); });
-      if (icon && ICONS[icon]) {
+    // 7 Oct 2026: the same Tag the screens use (Figma set 1042:95): a 24pt full pill, a 16pt
+    // icon, Inter Bold 13. Built fresh rather than cloned, so no old bg or icon leaks through.
+    var TAG = {
+      good: ['bg-[var(--colour\\/green\\/50,#e0f3d9)]', 'text-[color:var(--colour\\/green\\/700,#2e5c2a)]', 'assets/ui-tag-good.svg'],
+      warn: ['bg-[var(--colour\\/amber\\/50,#fdf1e7)]', 'text-[color:var(--colour\\/amber\\/500,#a45729)]'],
+      info: ['bg-[var(--colour\\/neutral\\/150,#e9eaf6)]', 'text-[color:var(--text\\/primary,#1d1d1d)]'],
+      mute: ['bg-[#f1f1f1]', 'text-[#636363]']
+    };
+    function chip(from, text, tone, icon){   // tone: good, warn, info, mute; icon: an assets/ svg, or an ICONS name for mute
+      var k = TAG[tone] || TAG.info, c = document.createElement('div');
+      c.className = k[0] + ' content-stretch flex gap-[5px] h-[24px] items-center pl-[8px] pr-[10px] relative rounded-[999px] shrink-0 hf-chip';
+      c.setAttribute('data-name', 'Tag');
+      var src = icon && icon.indexOf('assets/') === 0 ? icon : (tone === 'good' ? k[2] : null);
+      if (src) {
+        var w = document.createElement('div'), im = document.createElement('img');
+        w.className = 'relative shrink-0 size-[16px]';
+        im.className = 'absolute block inset-0 max-w-none size-full'; im.alt = ''; im.src = src;
+        w.appendChild(im); c.appendChild(w);
+      } else if (icon && ICONS[icon]) {
         var g = ICONS[icon].cloneNode(true);
         g.className = 'hf-chip-i';
         g.removeAttribute('data-node-id');
-        c.insertBefore(g, t);
+        c.appendChild(g);
       }
+      var t = document.createElement('p');
+      t.className = "[word-break:break-word] font-['Inter:Bold'] font-bold leading-[18px] not-italic relative shrink-0 text-[13px] whitespace-nowrap " + k[1];
+      t.textContent = String(text).replace(/^[\u21bb\u21BB]\s*/, '');
+      c.appendChild(t);
       return c;
+    }
+    // "1 change left" becomes the amber "No changes left" tag the static screens show
+    function spendTag(t){
+      if (!t) return;
+      t.textContent = 'No changes left';
+      t.className = t.className.replace(TAG.info[1], TAG.warn[1]);
+      var c = t.parentNode;
+      c.className = c.className.replace(TAG.info[0], TAG.warn[0]);
+      var im = c.querySelector('img');
+      if (im) im.src = 'assets/ui-repeat-warn.svg';
     }
 
     // v4's tradeRows: not three arbitrary services, the ones that BEAT the pick on something this
@@ -1571,10 +1590,10 @@
         // Cannot-change only on a day that still has a seat; and Different seat only where the
         // day runs ONE bus -- with several, the seat is a property of the bus you pick next.
         if (tags) {
-          if (count > 1 && spread && d === cheap) tags.appendChild(chip(tpl, 'Cheapest', 'note', 'Icon / Percent'));
-          if (seat && mov === 0) tags.appendChild(chip(tpl, 'Cannot change this date', 'warn', 'Icon / Hourglass'));
+          if (count > 1 && spread && d === cheap) tags.appendChild(chip(tpl, 'Cheapest', 'good'));
+          if (seat && mov === 0) tags.appendChild(chip(tpl, 'Cannot change this date', 'warn', 'assets/ui-calx-warn.svg'));
           if (n === 1 && seat && seat !== OUT.seat)
-            tags.appendChild(chip(tpl, 'Different seat \u2014 ' + OUT.seat + ' taken', 'warn', 'Icon / Info'));
+            tags.appendChild(chip(tpl, 'Different seat \u00b7 ' + OUT.seat + ' taken', 'warn', 'assets/ui-seat-warn.svg'));
           tags.hidden = !tags.children.length;
           tags.classList.add('hf-pillrow');
         }
@@ -1608,10 +1627,10 @@
       set(sec, m.rate, bus[8].toFixed(1)); set(sec, m.votes, String(bus[9]));
       set(sec, m.dcText, bus[3] ? 'Free date change' : 'No date change');
       set(sec, m.seat, RETURN.seatByUser
-        ? 'Seat ' + seatOf + ' \u00b7 ' + seatDesc(seatOf) + ' \u2014 the one you picked'
+        ? 'Seat ' + seatOf + ' \u00b7 ' + seatDesc(seatOf) + ', the one you picked'
         : seatOf === OUT.seat
-          ? 'Seat ' + OUT.seat + ' \u00b7 ' + seatDesc(seatOf) + ' \u2014 same as your onward'
-          : 'Seat ' + seatOf + ' \u00b7 ' + seatDesc(seatOf) + ' \u2014 ' + OUT.seat + ' is taken on this bus');
+          ? 'Seat ' + OUT.seat + ' \u00b7 ' + seatDesc(seatOf) + ', same as your onward'
+          : 'Seat ' + seatOf + ' \u00b7 ' + seatDesc(seatOf) + ' \u00b7 ' + OUT.seat + ' is taken on this bus');
       show(sec, m.fcPill, !!bus[4]);
       show(sec, m.closePill, pick === defIdx(chosen));
 
@@ -1657,7 +1676,7 @@
           el.children[0].querySelector('[data-name="Why"] p').textContent = t.why;
           el.children[0].querySelectorAll('p')[el.children[0].querySelectorAll('p').length - 1].textContent =
             diff === 0 ? 'Same price' : diff < 0 ? money(-diff) + ' less' : money(diff) + ' more';
-          el.children[1].textContent = alt[0] + ' \u2014 ' + alt[1] + ' \u00b7 \u2605 ' +
+          el.children[1].textContent = alt[0] + ' \u2192 ' + alt[1] + ' \u00b7 \u2605 ' +
             alt[8].toFixed(1) + ' (' + alt[9] + ')' + (alt[3] ? '' : ' \u00b7 cannot change date');
           el.classList.add('hf-hot');
           if (!el.__wired) { el.__wired = 1;
@@ -1798,9 +1817,9 @@
           var ptpl = pills.children[0];
           while (pills.firstChild) pills.removeChild(pills.firstChild);
           if (!b[3]) pills.appendChild(chip(ptpl, 'No date change', 'mute', 'Icon / Hourglass'));
-          if (i === cheapest && all.length > 1) pills.appendChild(chip(ptpl, 'Cheapest', 'note', 'Icon / Percent'));
-          if (b[4]) pills.appendChild(chip(ptpl, 'Free Cancellation', 'note', 'Icon / Tick Circle'));
-          if (i === defIdx(chosen)) pills.appendChild(chip(ptpl, 'Closest to your onward', 'note', 'Icon / Star Filled'));
+          if (i === cheapest && all.length > 1) pills.appendChild(chip(ptpl, 'Cheapest', 'good'));
+          if (b[4]) pills.appendChild(chip(ptpl, 'Free Cancellation', 'info', 'assets/ui-shield-ink.svg'));
+          if (i === defIdx(chosen)) pills.appendChild(chip(ptpl, 'Closest to your onward', 'info', 'assets/ui-clock-ink.svg'));
           pills.hidden = !pills.children.length;
           pills.classList.add('hf-pillrow');
         }
@@ -2639,7 +2658,7 @@
       row.classList.add('hf-spent');
       row.classList.remove('hf-hot', 'hf-fwd');
       var pill = row.querySelector('[data-node-id="I127:1371;116:1179"]');
-      if (pill) pill.textContent = 'No changes left';
+      spendTag(pill);
       var chev = row.querySelector('[data-name="Icon / Chevron Right"]');
       if (chev) chev.style.visibility = 'hidden';
 
@@ -2660,7 +2679,7 @@
           row12.classList.add('hf-spent');
           row12.classList.remove('hf-hot', 'hf-fwd');
           var pill12 = row12.querySelector('[data-node-id="I125:1341;132:1365"]');
-          if (pill12) pill12.textContent = 'No changes left';
+          spendTag(pill12);
           var chev12 = row12.querySelector('[data-name="Icon / Chevron Right"]');
           if (chev12) chev12.style.visibility = 'hidden';
         } else console.warn('12: no Change day row to spend');

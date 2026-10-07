@@ -162,25 +162,25 @@ export default function Component13ChangeDay() {
         </div>
       </div>
       <div className="content-stretch flex flex-col gap-[16px] items-start pb-[24px] pt-[13px] px-[16px] relative shrink-0 w-full" data-node-id="118:1284" data-name="Content">
-        <div className="bg-[var(--colour\/neutral\/150,#e9eaf6)] content-stretch flex gap-[12px] items-center pl-[12px] pr-[16px] py-[16px] relative rounded-[12px] shrink-0 w-full" data-name="Your booking">
+        <div className="bg-[var(--colour\/neutral\/150,#e9eaf6)] content-stretch flex gap-[12px] items-center pl-[12px] pr-[16px] py-[16px] relative rounded-[12px] shrink-0 w-full" data-node-id="118:1285" data-name="Your booking">
           <div className="bg-white content-stretch flex items-center justify-center overflow-clip relative rounded-[20px] shrink-0 size-[40px]" data-name="Icon circle">
             <div className="relative shrink-0 size-[20px]" data-name="Icon">
               <img alt="" className="absolute block inset-0 max-w-none size-full" src="assets/ui-ticket-accent.svg" />
             </div>
           </div>
           <div className="content-stretch flex flex-[1_0_0] flex-col gap-[4px] items-start min-w-px relative" data-name="Text">
-            <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[16px] not-italic relative shrink-0 text-[12px] w-full text-[color:var(--text\/secondary,#636363)]">
+            <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[16px] not-italic relative shrink-0 text-[12px] w-full text-[color:var(--text\/secondary,#636363)]" data-node-id="118:1286">
               Your booking
             </p>
             <div className="content-stretch flex items-center justify-between relative shrink-0 w-full" data-name="Row">
-              <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[22px] not-italic relative shrink-0 text-[16px] whitespace-nowrap text-[color:var(--text\/primary,#1d1d1d)]">
+              <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[22px] not-italic relative shrink-0 text-[16px] whitespace-nowrap text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="118:1289">
                 Thu, 17 Sep · 23:55
               </p>
-              <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[22px] not-italic relative shrink-0 text-[16px] whitespace-nowrap text-[color:var(--text\/primary,#1d1d1d)]">
+              <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[22px] not-italic relative shrink-0 text-[16px] whitespace-nowrap text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="118:1290">
                 ₹1,120
               </p>
             </div>
-            <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[18px] not-italic relative shrink-0 text-[13px] w-full text-[color:var(--text\/secondary,#636363)]">
+            <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[18px] not-italic relative shrink-0 text-[13px] w-full text-[color:var(--text\/secondary,#636363)]" data-node-id="118:1292">
               Laxmi Holidays Pvt Ltd · Seat U4
             </p>
           </div>
