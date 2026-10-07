@@ -316,9 +316,11 @@ export default function Component09ABookingDetails() {
               </div>
             </div>
             <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="721:4167" data-name="Passengers">
-              <div className="bg-[#ecebf2] content-stretch flex gap-[8px] items-center px-[12px] py-[6px] relative rounded-[8px] shrink-0" data-node-id="721:4168" data-name="Chip">
-                <IconSeat className="relative shrink-0 size-[24px]" />
-                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[18px] not-italic relative shrink-0 text-[13px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="721:4170">
+              <div className="bg-[#ecebf2] content-stretch flex gap-[6px] items-center pl-[12px] pr-[14px] py-[6px] relative rounded-[999px] shrink-0" data-name="Chip">
+                <div className="relative shrink-0 size-[16px]" data-name="Icon">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src="assets/ui-user-ink.svg" />
+                </div>
+                <p className="[word-break:break-word] font-['Inter:Semi_Bold'] font-semibold leading-[18px] not-italic relative shrink-0 text-[14px] whitespace-nowrap text-[color:var(--text\/primary,#1d1d1d)]">
                   1 Passenger
                 </p>
               </div>
@@ -918,7 +920,7 @@ export default function Component09ABookingDetails() {
                   ISBT Kashmiri Gate
                 </p>
                 <p className="font-['Inter:Regular'] font-normal leading-[20px] relative shrink-0 text-[#636363] text-[14px] w-full" data-node-id="704:4208">
-                  Gate Number 4 — where you started
+                  Gate Number 4, where you started
                 </p>
               </div>
             </div>

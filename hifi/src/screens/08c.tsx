@@ -122,7 +122,7 @@ export default function Component08CReturnDropping() {
                 ISBT Kashmiri Gate
               </p>
               <p className="font-['Inter:Regular'] font-normal relative shrink-0 text-[#636363] text-[14px] w-full" data-node-id="695:4227">
-                Gate Number 4 — where you started
+                Gate Number 4, where you started
               </p>
             </div>
             <div className="relative shrink-0 size-[26px]" data-node-id="695:4229" data-name="Radio">

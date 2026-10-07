@@ -190,7 +190,7 @@ export default function S3ReturnSeatGoneReviewYourTrip() {
           Your return seat is gone
         </p>
         <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#636363] text-[16px] text-center w-full" data-node-id="810:5625">
-          Seat U4 is gone — someone just booked it. Your onward trip is fine.
+          Seat U4 is gone. Someone just booked it. Your onward trip is fine.
         </p>
         <div className="content-stretch flex flex-col gap-[8px] items-start overflow-clip pt-[16px] relative shrink-0 w-full" data-node-id="810:5626" data-name="Actions">
           <div className="bg-[var(--surface\/button-primary,#e81e38)] content-stretch flex h-[48px] items-center justify-center overflow-clip px-[24px] relative rounded-[24px] shrink-0 w-full" data-node-id="810:5627" data-name="Button / Pick another return">
@@ -282,9 +282,11 @@ export default function S3ReturnSeatGoneReviewYourTrip() {
           </div>
         </div>
         <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="810:5409" data-name="Passengers">
-          <div className="bg-[#ecebf2] content-stretch flex gap-[8px] items-center px-[12px] py-[6px] relative rounded-[8px] shrink-0" data-node-id="810:5410" data-name="Chip">
-            <IconSeat className="relative shrink-0 size-[24px]" />
-            <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[18px] not-italic relative shrink-0 text-[13px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="810:5412">
+          <div className="bg-[#ecebf2] content-stretch flex gap-[6px] items-center pl-[12px] pr-[14px] py-[6px] relative rounded-[999px] shrink-0" data-name="Chip">
+            <div className="relative shrink-0 size-[16px]" data-name="Icon">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src="assets/ui-user-ink.svg" />
+            </div>
+            <p className="[word-break:break-word] font-['Inter:Semi_Bold'] font-semibold leading-[18px] not-italic relative shrink-0 text-[14px] whitespace-nowrap text-[color:var(--text\/primary,#1d1d1d)]">
               1 Passenger
             </p>
           </div>

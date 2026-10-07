@@ -27,6 +27,14 @@ else:
 if code is None or 'export default function' not in code:
     sys.exit('no code block in ' + result)
 
+# Newer get_design_context output declares one prefix and builds every URL from it:
+#   const assetPathPrefix = "https://www.figma.com/api/mcp/asset/<uuid>";
+#   const imgX = `${assetPathPrefix}/68dde.svg`;
+# Expand those to full URLs so the rewrite below handles both forms the same way.
+m = re.search(r'const assetPathPrefix = "(https://www\.figma\.com/api/mcp/asset/[0-9a-f-]+)";\n?', code)
+if m:
+    code = code.replace(m.group(0), '').replace('${assetPathPrefix}', m.group(1))
+
 # what we already have, by content hash
 have = {}
 for fn in os.listdir(assets):
@@ -34,7 +42,7 @@ for fn in os.listdir(assets):
     if os.path.isfile(p):
         have.setdefault(hashlib.sha1(open(p, 'rb').read()).hexdigest(), fn)
 
-urls = sorted(set(re.findall(r'https://www\.figma\.com/api/mcp/asset/[0-9a-f-]+\.\w+', code)))
+urls = sorted(set(re.findall(r'https://www\.figma\.com/api/mcp/asset/[0-9a-f-]+(?:/[\w-]+)?\.\w+', code)))
 reused = new = 0
 for url in urls:
     ext = url.rsplit('.', 1)[1]
@@ -45,7 +53,7 @@ for url in urls:
     if h in have:
         name = have[h]; reused += 1
     else:
-        name = url.rsplit('/', 1)[1]
+        name = url.split('/asset/', 1)[1].replace('/', '-')
         open(os.path.join(assets, name), 'wb').write(blob)
         have[h] = name; new += 1
     code = code.replace(url, 'assets/' + name)

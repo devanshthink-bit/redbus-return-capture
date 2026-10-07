@@ -123,7 +123,7 @@ export default function Component15ConfirmTheMove() {
         </div>
         <div className="bg-[var(--surface\/default,white)] content-stretch drop-shadow-[0px_8px_12px_rgba(0,0,0,0.07),0px_2px_3px_rgba(0,0,0,0.05)] flex flex-col items-start p-[16px] relative rounded-[var(--radius\/12,12px)] shrink-0 w-full" data-node-id="137:1403" data-name="Fare">
           <RowFare className="[word-break:break-word] content-stretch flex font-['Inter:Regular'] font-normal items-center justify-between leading-[20px] not-italic overflow-clip py-[4px] relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-full whitespace-nowrap" label="Change fee" value="₹0" />
-          <RowFare className="[word-break:break-word] content-stretch flex font-['Inter:Regular'] font-normal items-center justify-between leading-[20px] not-italic overflow-clip py-[4px] relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-full whitespace-nowrap" label="Price difference" value="₹60 less — no refund" />
+          <RowFare className="[word-break:break-word] content-stretch flex font-['Inter:Regular'] font-normal items-center justify-between leading-[20px] not-italic overflow-clip py-[4px] relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-full whitespace-nowrap" label="Price difference" value="₹60 less · no refund" />
           <div className="content-stretch flex flex-col items-start py-[10px] relative shrink-0 w-full" data-node-id="137:1411" data-name="gap">
             <div className="bg-[var(--border\/divider,#e6e6e6)] h-px relative shrink-0 w-full" data-node-id="137:1410" data-name="Divider" />
           </div>

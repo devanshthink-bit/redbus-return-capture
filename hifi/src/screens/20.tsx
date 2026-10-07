@@ -466,8 +466,11 @@ export default function Component20TicketCancelled() {
               <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[18px] min-w-full not-italic relative shrink-0 text-[13px] text-[color:var(--text\/secondary,#636363)] w-[min-content]" data-node-id="I785:4652;116:1177">
                 Any date, earlier or later. Pay only the price difference.
               </p>
-              <div className="bg-[var(--colour\/neutral\/150,#e9eaf6)] content-stretch flex items-start px-[8px] py-[4px] relative rounded-[var(--radius\/4,4px)] shrink-0" data-node-id="I785:4652;116:1178" data-name="Balance">
-                <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[16px] not-italic relative shrink-0 text-[12px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap" data-node-id="I785:4652;116:1179">
+              <div className="bg-[var(--colour\/neutral\/150,#e9eaf6)] content-stretch flex gap-[5px] h-[24px] items-center pl-[8px] pr-[10px] relative rounded-[999px] shrink-0" data-name="Tag">
+                <div className="relative shrink-0 size-[16px]" data-name="Icon">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src="assets/ui-repeat-ink.svg" />
+                </div>
+                <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[18px] not-italic relative shrink-0 text-[13px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap">
                   1 change left
                 </p>
               </div>

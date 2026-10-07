@@ -139,9 +139,14 @@ export default function Component06AYourReturnDayChosen() {
           <p className="font-['Inter:Bold'] font-bold leading-[24px] relative shrink-0 text-[16px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="100:723">
             Thu, 17 Sep, your last day.
           </p>
-          <p className="font-['Inter:Regular'] font-normal leading-[20px] relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="100:724">
-            You never need to change it.
-          </p>
+          <div className="content-stretch flex gap-[6px] items-center relative shrink-0" data-name="Lead note">
+            <div className="relative shrink-0 size-[16px]" data-name="Icon">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src="assets/ui-checkc-good.svg" />
+            </div>
+            <p className="[word-break:break-word] font-['Inter:Semi_Bold'] font-semibold leading-[20px] not-italic relative shrink-0 text-[14px] whitespace-nowrap text-[color:var(--colour\/green\/700,#2e5c2a)]">
+              You never need to change it.
+            </p>
+          </div>
         </div>
         <div className="bg-[var(--surface\/default,white)] content-stretch flex flex-col items-start p-[16px] relative rounded-[var(--radius\/12,12px)] shrink-0 w-full" data-node-id="100:725" data-name="Rules">
           <div className="h-[16px] relative shrink-0 w-full" data-node-id="100:729" data-name="gap" />
@@ -180,9 +185,12 @@ export default function Component06AYourReturnDayChosen() {
               </p>
             </div>
             <div className="content-stretch flex items-start overflow-clip relative shrink-0" data-node-id="411:2973" data-name="Frame">
-              <div className="bg-[#f6ede6] content-stretch flex items-start overflow-clip px-[8px] py-[4px] relative rounded-[999px] shrink-0" data-node-id="411:2974" data-name="Frame">
-                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#a45729] text-[12px] whitespace-nowrap" data-node-id="411:2975">
-                  ↻ Different seat — U4 taken
+              <div className="bg-[var(--colour\/amber\/50,#fdf1e7)] content-stretch flex gap-[5px] h-[24px] items-center pl-[8px] pr-[10px] relative rounded-[999px] shrink-0" data-name="Tag">
+                <div className="relative shrink-0 size-[16px]" data-name="Icon">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src="assets/ui-seat-warn.svg" />
+                </div>
+                <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[18px] not-italic relative shrink-0 text-[13px] text-[color:var(--colour\/amber\/500,#a45729)] whitespace-nowrap">
+                  Different seat · U4 taken
                 </p>
               </div>
             </div>
@@ -241,9 +249,12 @@ export default function Component06AYourReturnDayChosen() {
               </p>
             </div>
             <div className="content-stretch flex items-start overflow-clip relative shrink-0" data-node-id="411:2994" data-name="Frame">
-              <div className="bg-[#e9eaf6] content-stretch flex items-start overflow-clip px-[8px] py-[4px] relative rounded-[999px] shrink-0" data-node-id="411:2995" data-name="Frame">
-                <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[12px] whitespace-nowrap" data-node-id="411:2996">
-                  ↻ Cheapest
+              <div className="bg-[var(--colour\/green\/50,#e0f3d9)] content-stretch flex gap-[5px] h-[24px] items-center pl-[8px] pr-[10px] relative rounded-[999px] shrink-0" data-name="Tag">
+                <div className="relative shrink-0 size-[16px]" data-name="Icon">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src="assets/ui-tag-good.svg" />
+                </div>
+                <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[18px] not-italic relative shrink-0 text-[13px] text-[color:var(--colour\/green\/700,#2e5c2a)] whitespace-nowrap">
+                  Cheapest
                 </p>
               </div>
             </div>
@@ -353,16 +364,22 @@ export default function Component06AYourReturnDayChosen() {
               </div>
               <div className="content-stretch flex flex-col gap-[12px] items-start overflow-clip pb-[16px] px-[16px] relative shrink-0 w-full" data-node-id="414:2953" data-name="Seat and pills">
                 <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#636363] text-[14px] whitespace-nowrap" data-node-id="413:2962">
-                  Seat U4 — same as your onward
+                  Seat U4, same as your onward
                 </p>
                 <div className="content-start flex flex-wrap gap-[8px] items-start overflow-clip relative shrink-0 w-full" data-node-id="413:2963" data-name="Pills">
-                  <div className="bg-[#e9eaf6] content-stretch flex h-[24px] items-center justify-center overflow-clip px-[12px] relative rounded-[4px] shrink-0" data-node-id="413:2964" data-name="Pill">
-                    <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[12px] whitespace-nowrap" data-node-id="413:2965">
+                  <div className="bg-[var(--colour\/neutral\/150,#e9eaf6)] content-stretch flex gap-[5px] h-[24px] items-center pl-[8px] pr-[10px] relative rounded-[999px] shrink-0" data-name="Tag">
+                    <div className="relative shrink-0 size-[16px]" data-name="Icon">
+                      <img alt="" className="absolute block inset-0 max-w-none size-full" src="assets/ui-shield-ink.svg" />
+                    </div>
+                    <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[18px] not-italic relative shrink-0 text-[13px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap">
                       Free Cancellation
                     </p>
                   </div>
-                  <div className="bg-[#e9eaf6] content-stretch flex h-[24px] items-center justify-center overflow-clip px-[12px] relative rounded-[4px] shrink-0" data-node-id="413:2966" data-name="Pill">
-                    <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[12px] whitespace-nowrap" data-node-id="413:2967">
+                  <div className="bg-[var(--colour\/neutral\/150,#e9eaf6)] content-stretch flex gap-[5px] h-[24px] items-center pl-[8px] pr-[10px] relative rounded-[999px] shrink-0" data-name="Tag">
+                    <div className="relative shrink-0 size-[16px]" data-name="Icon">
+                      <img alt="" className="absolute block inset-0 max-w-none size-full" src="assets/ui-clock-ink.svg" />
+                    </div>
+                    <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[18px] not-italic relative shrink-0 text-[13px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap">
                       Closest to your onward
                     </p>
                   </div>
@@ -374,8 +391,11 @@ export default function Component06AYourReturnDayChosen() {
             </p>
             <div className="bg-white content-stretch flex flex-col gap-[8px] items-start overflow-clip px-[16px] py-[12px] relative rounded-[12px] shrink-0 w-full" data-node-id="413:2969" data-name="Trade · Cheapest">
               <div className="content-stretch flex items-center justify-between overflow-clip relative shrink-0 w-full" data-node-id="413:2970" data-name="Top">
-                <div className="bg-[#e9eaf6] content-stretch flex h-[24px] items-center justify-center overflow-clip px-[12px] relative rounded-[4px] shrink-0" data-node-id="413:2971" data-name="Why">
-                  <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[12px] whitespace-nowrap" data-node-id="413:2972">
+                <div className="bg-[var(--colour\/green\/50,#e0f3d9)] content-stretch flex gap-[5px] h-[24px] items-center pl-[8px] pr-[10px] relative rounded-[999px] shrink-0" data-name="Tag">
+                  <div className="relative shrink-0 size-[16px]" data-name="Icon">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src="assets/ui-tag-good.svg" />
+                  </div>
+                  <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[18px] not-italic relative shrink-0 text-[13px] text-[color:var(--colour\/green\/700,#2e5c2a)] whitespace-nowrap">
                     Cheapest
                   </p>
                 </div>
@@ -384,7 +404,7 @@ export default function Component06AYourReturnDayChosen() {
                 </p>
               </div>
               <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#636363] text-[14px] whitespace-nowrap" data-node-id="413:2974">
-                21:15 — 05:40 · ★ 4.5 (315)
+                21:15 → 05:40 · ★ 4.5 (315)
               </p>
             </div>
             <a className="[word-break:break-word] block cursor-pointer font-['Inter:Bold'] font-bold leading-[0] not-italic relative shrink-0 text-[#e81e38] text-[14px] whitespace-nowrap" data-node-id="413:2975">

@@ -10601,3 +10601,25 @@ CHANGE · 2026-10-06 · portfolio · Source: Devansh ("Make the timeline of the 
 Changed:   Timeline is 4 weeks, not 6 (his answer on 13 Sep was "6 weeks"). Case study meta and the "What made
            the cut" title ("Four weeks, one designer.") on the portfolio, its Ask Devansh knowledge, and the
            CASESTUDY.md section map. The research board names no timeline, so nothing changed there.
+
+CHANGE · 2026-10-07 · UI refresh · Source: Devansh ("looking flat and bland… make it like a real app would do")
+Changed:   Figma 📱 Hi-Fi UI, the coded hi-fi, the portfolio case-study screens and the interview deck, together.
+           - New `Tag` component (🧩 Components, 1042:95), built on redBus's own Date change chip: 24 tall pill,
+             16px icon, Inter Bold 13. Kinds: Cheapest (green), Closest (lavender, also "Same time as now"),
+             Different seat and Cannot change (amber), Free cancellation (lavender), Changes left / No changes left.
+             27 tags swapped on 28 screens; the "↻" glyph and "U4 taken" em dash are gone. Wrapped tag rows 8px.
+           - Onward journey card (05, 05a, 05b, S8): red bus icon in a white circle, route and time on two lines.
+           - Mode toggle: track #E4E4EB with an inner shadow, selected segment raised (two soft drop shadows).
+           - Lead line (06 green tick "Switching is free until you pay", 06a green tick, 06b amber calendar-cross).
+           - "1 Passenger" chip (08, 09a, S1, S3, S12a): pill, person icon, semibold. The seat icon's white box is gone.
+           - "Your booking" card (13, 14, S9): red ticket icon in a circle. "Return moved" (16): solid green tick circle.
+           - Card / Leg's "You can change this date once" pill is now a full pill like redBus's chip.
+           - 28 em dashes replaced (commas, full stops, "·", "→" for times, ":" in state labels). "Return —" kept.
+Hi-fi:     `build/patch_ui_refresh.py` patches the generated screens in place (idempotent), because a full
+           re-pull returns 20–40 KB inline per frame. Templates match the pulls of 05 and 16. `build/pull.py`
+           now reads the `${assetPathPrefix}` asset form. Oct grid was unhidden for the 05 pull and re-hidden.
+Portfolio: hifi_05, 05a, 06a, 06b, 08, 13, 16, S3, S6, S9 re-cut with `build/case_shots.sh` (08 offset 1549, was 1555,
+           because the passenger chip above it is 6pt shorter). Scene 1's note box moved to 30.6%.
+Deck:      14 screen copies updated in place (changed blocks swapped for scaled copies), so deck-only edits
+           (sample contact details, selected calendar days) stay. Slides 1, 5, 10, 12, 13 re-exported.
+Not changed: the RedBus film and trailer videos still show the old tags.

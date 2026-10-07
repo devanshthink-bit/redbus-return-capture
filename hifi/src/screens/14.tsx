@@ -181,21 +181,28 @@ export default function Component14MoveBuses() {
             </div>
           </div>
         </div>
-        <div className="[word-break:break-word] bg-white content-stretch flex flex-col gap-[6px] items-start leading-[normal] not-italic overflow-clip p-[16px] relative rounded-[12px] shrink-0 w-full" data-node-id="360:2690" data-name="Frame">
-          <p className="font-['Inter:Regular'] font-normal relative shrink-0 text-[#636363] text-[12px] whitespace-nowrap" data-node-id="360:2691">
-            Your booking
-          </p>
-          <div className="content-stretch flex font-['Inter:Bold'] font-bold items-center justify-between overflow-clip relative shrink-0 text-[#1d1d1d] text-[16px] w-full whitespace-nowrap" data-node-id="360:2692" data-name="Frame">
-            <p className="relative shrink-0" data-node-id="360:2693">
-              Thu, 17 Sep · 23:55
+        <div className="bg-[var(--colour\/neutral\/150,#e9eaf6)] content-stretch flex gap-[12px] items-center pl-[12px] pr-[16px] py-[16px] relative rounded-[12px] shrink-0 w-full" data-name="Your booking">
+          <div className="bg-white content-stretch flex items-center justify-center overflow-clip relative rounded-[20px] shrink-0 size-[40px]" data-name="Icon circle">
+            <div className="relative shrink-0 size-[20px]" data-name="Icon">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src="assets/ui-ticket-accent.svg" />
+            </div>
+          </div>
+          <div className="content-stretch flex flex-[1_0_0] flex-col gap-[4px] items-start min-w-px relative" data-name="Text">
+            <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[16px] not-italic relative shrink-0 text-[12px] w-full text-[color:var(--text\/secondary,#636363)]">
+              Your booking
             </p>
-            <p className="relative shrink-0" data-node-id="360:2694">
-              ₹1,120
+            <div className="content-stretch flex items-center justify-between relative shrink-0 w-full" data-name="Row">
+              <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[22px] not-italic relative shrink-0 text-[16px] whitespace-nowrap text-[color:var(--text\/primary,#1d1d1d)]">
+                Thu, 17 Sep · 23:55
+              </p>
+              <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[22px] not-italic relative shrink-0 text-[16px] whitespace-nowrap text-[color:var(--text\/primary,#1d1d1d)]">
+                ₹1,120
+              </p>
+            </div>
+            <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[18px] not-italic relative shrink-0 text-[13px] w-full text-[color:var(--text\/secondary,#636363)]">
+              Laxmi Holidays Pvt Ltd · Seat U4
             </p>
           </div>
-          <p className="font-['Inter:Regular'] font-normal min-w-full relative shrink-0 text-[#636363] text-[14px] w-[min-content]" data-node-id="360:2695">
-            Laxmi Holidays Pvt Ltd · Seat U4
-          </p>
         </div>
         <div className="content-stretch flex flex-col gap-[16px] items-start overflow-clip relative shrink-0 w-full" data-node-id="377:3133" data-name="Frame">
           <div className="bg-[#f5dcce] content-stretch flex flex-col items-start overflow-clip p-[14px] relative rounded-[10px] shrink-0 w-full" data-node-id="377:3134" data-name="Frame">
@@ -277,16 +284,19 @@ export default function Component14MoveBuses() {
           </a>
           <div className="[word-break:break-word] content-stretch flex font-['Inter:Regular'] font-normal items-center justify-between leading-[normal] not-italic overflow-clip pt-[2px] px-[16px] relative shrink-0 text-[#636363] text-[13px] w-full" data-node-id="368:2903" data-name="Frame">
             <p className="flex-[1_0_0] min-w-px relative" data-node-id="368:2904">
-              Seat U4 taken — you get U5
+              Seat U4 taken, you get U5
             </p>
             <p className="relative shrink-0 whitespace-nowrap" data-node-id="368:2905">
-              ₹150 less — no refund
+              ₹150 less · no refund
             </p>
           </div>
           <div className="content-start flex flex-wrap items-start overflow-clip pt-[6px] px-[16px] relative shrink-0 w-full" data-node-id="368:2906" data-name="Frame">
-            <div className="bg-[#f6ede6] content-stretch flex items-start overflow-clip px-[8px] py-[4px] relative rounded-[999px] shrink-0" data-node-id="368:2907" data-name="Frame">
-              <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#a45729] text-[12px] whitespace-nowrap" data-node-id="368:2908">
-                ↻ Different seat
+            <div className="bg-[var(--colour\/amber\/50,#fdf1e7)] content-stretch flex gap-[5px] h-[24px] items-center pl-[8px] pr-[10px] relative rounded-[999px] shrink-0" data-name="Tag">
+              <div className="relative shrink-0 size-[16px]" data-name="Icon">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src="assets/ui-seat-warn.svg" />
+              </div>
+              <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[18px] not-italic relative shrink-0 text-[13px] text-[color:var(--colour\/amber\/500,#a45729)] whitespace-nowrap">
+                Different seat
               </p>
             </div>
           </div>
@@ -353,20 +363,26 @@ export default function Component14MoveBuses() {
           </div>
           <div className="[word-break:break-word] content-stretch flex font-['Inter:Regular'] font-normal items-center justify-between leading-[normal] not-italic overflow-clip pt-[2px] px-[16px] relative shrink-0 text-[#636363] text-[13px] w-full" data-node-id="368:2962" data-name="Frame">
             <p className="flex-[1_0_0] min-w-px relative" data-node-id="368:2963">
-              Seat U4 taken — you get U5
+              Seat U4 taken, you get U5
             </p>
             <p className="relative shrink-0 whitespace-nowrap" data-node-id="368:2964">
-              ₹60 less — no refund
+              ₹60 less · no refund
             </p>
           </div>
-          <div className="content-start flex flex-wrap gap-[0px_8px] items-start overflow-clip pt-[6px] px-[16px] relative shrink-0 w-full" data-node-id="368:2965" data-name="Frame">
-            <div className="bg-[#f6ede6] content-stretch flex items-start overflow-clip px-[8px] py-[4px] relative rounded-[999px] shrink-0" data-node-id="368:2966" data-name="Frame">
-              <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#a45729] text-[12px] whitespace-nowrap" data-node-id="368:2967">
-                ↻ Different seat
+          <div className="content-start flex flex-wrap gap-[8px] items-start overflow-clip pt-[6px] px-[16px] relative shrink-0 w-full" data-node-id="368:2965" data-name="Frame">
+            <div className="bg-[var(--colour\/amber\/50,#fdf1e7)] content-stretch flex gap-[5px] h-[24px] items-center pl-[8px] pr-[10px] relative rounded-[999px] shrink-0" data-name="Tag">
+              <div className="relative shrink-0 size-[16px]" data-name="Icon">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src="assets/ui-seat-warn.svg" />
+              </div>
+              <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[18px] not-italic relative shrink-0 text-[13px] text-[color:var(--colour\/amber\/500,#a45729)] whitespace-nowrap">
+                Different seat
               </p>
             </div>
-            <div className="bg-[#e9eaf6] content-stretch flex items-start overflow-clip px-[8px] py-[4px] relative rounded-[999px] shrink-0" data-node-id="368:2968" data-name="Frame">
-              <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[#1d1d1d] text-[12px] whitespace-nowrap" data-node-id="368:2969">
+            <div className="bg-[var(--colour\/neutral\/150,#e9eaf6)] content-stretch flex gap-[5px] h-[24px] items-center pl-[8px] pr-[10px] relative rounded-[999px] shrink-0" data-name="Tag">
+              <div className="relative shrink-0 size-[16px]" data-name="Icon">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src="assets/ui-clock-ink.svg" />
+              </div>
+              <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[18px] not-italic relative shrink-0 text-[13px] text-[color:var(--text\/primary,#1d1d1d)] whitespace-nowrap">
                 Same time as now
               </p>
             </div>

@@ -106,7 +106,7 @@ function CardLeg({ className, arrival = "08:00", caption = "ISBT Kashmiri Gate, 
               08:00 · ISBT Kashmiri Gate
             </p>
             <p className="font-['Inter:Regular'] font-normal leading-[18px] relative shrink-0 text-[13px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="I103:819;102:800">
-              Gate Number 4 — where you started
+              Gate Number 4, where you started
             </p>
           </div>
           <div className="[word-break:break-word] content-stretch flex font-['Inter:Bold'] font-bold gap-[20px] items-start leading-[20px] not-italic overflow-clip pt-[8px] relative shrink-0 text-[14px] text-[color:var(--text\/accent,#e81e38)] w-full whitespace-nowrap" data-node-id="103:823" data-name="Actions">
@@ -118,7 +118,7 @@ function CardLeg({ className, arrival = "08:00", caption = "ISBT Kashmiri Gate, 
             </p>
           </div>
           <div className="h-[12px] relative shrink-0 w-px" data-node-id="103:826" data-name="gap" />
-          <div className="bg-[var(--colour\/neutral\/150,#e9eaf6)] content-stretch flex gap-[6px] h-[26px] items-center overflow-clip px-[10px] relative rounded-[var(--radius\/6,6px)] shrink-0" data-node-id="103:827" data-name="Change pill">
+          <div className="bg-[var(--colour\/neutral\/150,#e9eaf6)] content-stretch flex gap-[4px] h-[24px] items-center overflow-clip pl-[6px] pr-[10px] relative rounded-[999px] shrink-0" data-node-id="103:827" data-name="Change pill">
             <div className="relative shrink-0 size-[20px]" data-node-id="103:828" data-name="Icon / Hourglass">
               <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconHourglass} />
             </div>
@@ -162,15 +162,17 @@ export default function Component16ReturnMoved() {
         </div>
       </div>
       <div className="content-stretch flex flex-[1_0_0] flex-col gap-[16px] items-start min-h-px pb-[24px] pt-[13px] px-[16px] relative w-full" data-node-id="138:1416" data-name="Content">
-        <div className="bg-[#e7f4e9] content-stretch flex gap-[12px] h-[102px] items-center p-[16px] relative rounded-[12px] shrink-0 w-full" data-node-id="138:1417" data-name="Relief">
-          <div className="relative shrink-0 size-[24px]" data-node-id="377:3127" data-name="Icon / Tick Circle">
-            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconTickCircle} />
+        <div className="bg-[var(--colour\/green\/70,#e7f4e9)] border border-[var(--colour\/green\/100,#c9e2c6)] border-solid content-stretch flex gap-[14px] items-center p-[16px] relative rounded-[12px] shrink-0 w-full" data-name="Relief">
+          <div className="bg-[var(--colour\/green\/600,#347933)] content-stretch flex items-center justify-center overflow-clip relative rounded-[18px] shrink-0 size-[36px]" data-name="Icon circle">
+            <div className="relative shrink-0 size-[18px]" data-name="Icon">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src="assets/ui-tick-white.svg" />
+            </div>
           </div>
-          <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[3px] items-start min-w-px not-italic overflow-clip relative" data-node-id="377:3130" data-name="Frame">
-            <p className="font-['Inter:Bold'] font-bold leading-[normal] relative shrink-0 text-[#2e5c2a] text-[17px] w-full" data-node-id="377:3131">
+          <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[3px] items-start min-w-px not-italic overflow-clip relative" data-name="Frame">
+            <p className="font-['Inter:Bold'] font-bold leading-[normal] relative shrink-0 text-[17px] text-[color:var(--text\/positive,#2e5c2a)] w-full">
               Return moved to Tue, 15 Sep
             </p>
-            <p className="font-['Inter:Regular'] font-normal leading-[20px] relative shrink-0 text-[#3d5a38] text-[14px] w-full" data-node-id="377:3132">
+            <p className="font-['Inter:Regular'] font-normal leading-[20px] relative shrink-0 text-[14px] text-[color:var(--colour\/green\/715,#3d5a38)] w-full">
               Back in Delhi two days earlier. Nothing else about the trip moved.
             </p>
           </div>

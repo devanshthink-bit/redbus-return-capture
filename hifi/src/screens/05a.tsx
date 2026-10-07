@@ -190,30 +190,42 @@ export default function Component05AReturnWindowChosen() {
         </div>
       </div>
       <div className="content-stretch flex flex-col gap-[16px] items-start pb-[115px] pt-[13px] px-[16px] relative shrink-0 w-full" data-node-id="88:412" data-name="Content">
-        <div className="[word-break:break-word] bg-[var(--colour\/neutral\/150,#e9eaf6)] content-stretch flex flex-col gap-[4px] items-start not-italic px-[16px] py-[12px] relative rounded-[var(--radius\/8,8px)] shrink-0 w-full whitespace-nowrap" data-node-id="88:413" data-name="Onward journey">
-          <p className="font-['Inter:Regular'] font-normal leading-[16px] relative shrink-0 text-[12px] text-[color:var(--text\/secondary,#636363)]" data-node-id="88:414">
-            Onward journey
-          </p>
-          <p className="font-['Inter:Bold'] font-bold leading-[18px] relative shrink-0 text-[14px] text-[color:var(--text\/primary,#1d1d1d)]" data-node-id="88:415">
-            Delhi → Nainital · Thu, 10 Sep · 23:55
-          </p>
+        <div className="bg-[var(--colour\/neutral\/150,#e9eaf6)] content-stretch flex gap-[12px] items-center pl-[12px] pr-[16px] py-[12px] relative rounded-[12px] shrink-0 w-full" data-name="Onward journey">
+          <div className="bg-white content-stretch flex items-center justify-center overflow-clip relative rounded-[20px] shrink-0 size-[40px]" data-name="Icon circle">
+            <div className="relative shrink-0 size-[20px]" data-name="Icon">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src="assets/ui-bus-accent.svg" />
+            </div>
+          </div>
+          <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px not-italic overflow-clip relative whitespace-nowrap" data-name="Text">
+            <p className="font-['Inter:Regular'] font-normal leading-[16px] relative shrink-0 text-[12px] text-[color:var(--text\/secondary,#636363)]">
+              Onward journey
+            </p>
+            <p className="font-['Inter:Bold'] font-bold leading-[20px] relative shrink-0 text-[15px] text-[color:var(--text\/primary,#1d1d1d)]">
+              Delhi → Nainital
+            </p>
+            <p className="font-['Inter:Regular'] font-normal leading-[18px] relative shrink-0 text-[13px] text-[color:var(--text\/secondary,#636363)]">
+              Thu, 10 Sep · 23:55
+            </p>
+          </div>
         </div>
         <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-node-id="88:416" data-name="Question">
           <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[25px] not-italic relative shrink-0 text-[20px] text-[color:var(--text\/primary,#1d1d1d)] w-full" data-node-id="88:417">
             When can you travel back?
           </p>
         </div>
-        <div className="bg-[#ededf2] border border-[#e4e4e4] border-solid content-stretch flex gap-[4px] items-start overflow-clip p-[4px] relative rounded-[24px] shrink-0 w-full" data-node-id="612:4016" data-name="Mode toggle">
-          <div className="content-stretch flex flex-[1_0_0] items-center justify-center min-w-px overflow-clip py-[11px] relative rounded-[20px]" data-node-id="612:4017" data-name="Segment / I know my date">
-            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#636363] text-[14px] text-center whitespace-nowrap" data-node-id="612:4018">
+        <div className="content-stretch flex gap-[4px] items-start overflow-clip p-[4px] relative rounded-[24px] shrink-0 w-full" data-name="Mode toggle">
+          <div aria-hidden className="absolute bg-[#e4e4eb] inset-0 pointer-events-none rounded-[24px]" />
+          <div className="bg-[var(--surface\/default,white)] content-stretch flex flex-[1_0_0] items-center justify-center min-w-px overflow-clip py-[11px] relative rounded-[20px] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.06),0px_2px_8px_0px_rgba(0,0,0,0.12)]" data-name="Segment / I know my date">
+            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[14px] text-center whitespace-nowrap text-[color:var(--text\/accent,#e81e38)]">
               I know my date
             </p>
           </div>
-          <div className="bg-white content-stretch flex flex-[1_0_0] items-center justify-center min-w-px overflow-clip py-[11px] relative rounded-[20px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.12)]" data-node-id="612:4019" data-name="Segment / I’m not sure yet">
-            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[#e81e38] text-[14px] text-center whitespace-nowrap" data-node-id="612:4020">
+          <div className="content-stretch flex flex-[1_0_0] items-center justify-center min-w-px overflow-clip py-[11px] relative rounded-[20px]" data-name="Segment / I’m not sure yet">
+            <p className="[word-break:break-word] font-['Inter:Bold'] font-bold leading-[normal] not-italic relative shrink-0 text-[14px] text-center whitespace-nowrap text-[color:var(--text\/secondary,#636363)]">
               I’m not sure yet
             </p>
           </div>
+          <div className="absolute inset-0 pointer-events-none rounded-[inherit] shadow-[inset_0px_1px_3px_0px_rgba(0,0,0,0.07)]" />
         </div>
         <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic relative shrink-0 text-[14px] text-[color:var(--text\/secondary,#636363)] w-full" data-node-id="88:418">
           Fri, 11 Sep to Thu, 17 Sep · 7 days marked. Tap any day to start again.
